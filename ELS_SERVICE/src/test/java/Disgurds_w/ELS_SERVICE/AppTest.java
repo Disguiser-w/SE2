@@ -1,4 +1,4 @@
-package Disgurds_w.ELS_HOST;
+package Disgurds_w.ELS_SERVICE;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
