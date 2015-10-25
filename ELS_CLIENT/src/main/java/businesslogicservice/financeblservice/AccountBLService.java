@@ -3,7 +3,9 @@ package businesslogicservice.financeblservice;
 import java.util.ArrayList;
 
 import vo.AccountVO;
-
+/**
+ *对账户的增删改查
+ * */
 public interface AccountBLService {
 	//增加账户
 	public int addAccount(AccountVO vo);

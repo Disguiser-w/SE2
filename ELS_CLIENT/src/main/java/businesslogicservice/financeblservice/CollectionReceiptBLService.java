@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
-
+/**
+ * 创建入款单
+ * */
 public interface CollectionReceiptBLService {
 	//创建入款单
 	public int creatCollection(CollectionReceiptVO vo);

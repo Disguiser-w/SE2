@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import vo.CollectionReceiptVO;
 import vo.CostIncomeReceiptVO;
 import vo.PaymentReceiptVO;
-
+/**
+ * 创建成本收益表
+ * */
 public interface CostIncomeReceiptBLService {
 	//创建成本收益表
 	public int creatCostIncomeList(CostIncomeReceiptVO vo);

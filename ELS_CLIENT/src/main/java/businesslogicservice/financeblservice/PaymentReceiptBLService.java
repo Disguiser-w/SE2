@@ -1,12 +1,15 @@
 /*
  * 感觉这个我目前只能直接手动输入了
+ * 
  */
 package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
 
 import vo.PaymentReceiptVO;
-
+/**
+ * 创建付款单
+ * */
 public interface PaymentReceiptBLService {
 	//创建付款单
 	public int creatPaymentReceipt(PaymentReceiptVO vo);

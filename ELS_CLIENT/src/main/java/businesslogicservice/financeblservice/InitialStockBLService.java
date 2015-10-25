@@ -3,7 +3,9 @@ package businesslogicservice.financeblservice;
 import java.util.ArrayList;
 
 import vo.InitInfoVO;
-
+/**
+ * 期初建账
+ * */
 public interface InitialStockBLService {
 	//设置期初信息
 	public int initInfo(InitInfoVO vo,String Time );
