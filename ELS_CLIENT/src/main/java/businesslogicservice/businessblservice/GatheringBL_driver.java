@@ -1,4 +1,4 @@
-package businesslogic.businessbl;
+package businesslogicservice.businessblservice;
 
 import vo.GatheringReceiptVO;
 

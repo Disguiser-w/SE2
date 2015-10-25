@@ -2,6 +2,9 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.EnplaningReceiptVO;
+import vo.FareVO;
+import vo.OrderVO;
 import vo.TranferingReceiptVO;
 
 public class EnplaningBLService_driver {

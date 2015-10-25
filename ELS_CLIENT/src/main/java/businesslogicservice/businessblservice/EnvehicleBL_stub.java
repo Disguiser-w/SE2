@@ -1,11 +1,11 @@
-package businesslogic.businessbl;
+package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
 import vo.OrderVO;
 import vo.VehicleVO;
 
-public class TruckManagerBL_stub implements TruckManagerBLService{
+public class EnvehicleBL_stub implements EnVehicleBLService{
 
 	public String autoTruckLoading() {
 		// TODO Auto-generated method stub

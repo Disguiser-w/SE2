@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.OrderVO;
 
 public class AddOrderBL_driver {
 	public void drive(AddOrderBLService addOrderBLService) {
@@ -6,6 +8,6 @@ public class AddOrderBL_driver {
 	}
 
 	public void main(String[] args){
-		(new AddOrderBL_driver()).drive(new AddOrderBLService_stub());
+		(new AddOrderBL_driver()).drive(new AddOrderBL_stub());
 	}
 }

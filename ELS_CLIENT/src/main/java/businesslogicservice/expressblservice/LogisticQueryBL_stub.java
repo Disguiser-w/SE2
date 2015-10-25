@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.OrderVO;
 
 public class LogisticQueryBL_stub implements LogisticQueryBLService{
 

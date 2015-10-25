@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.OrderVO;
 
 public class ReceiptOrderBL_stub implements ReceiptOrderBLService{
 

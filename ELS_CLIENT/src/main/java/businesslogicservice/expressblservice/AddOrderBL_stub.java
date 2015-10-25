@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.OrderVO;
 
 public class AddOrderBL_stub implements AddOrderBLService {
 
@@ -7,5 +9,4 @@ public class AddOrderBL_stub implements AddOrderBLService {
 		System.out.println("AddOrder successfully!");
 		return false;
 	}
-
 }

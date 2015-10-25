@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.OrderVO;
 
 /**
  * 快递员-收费信息输入

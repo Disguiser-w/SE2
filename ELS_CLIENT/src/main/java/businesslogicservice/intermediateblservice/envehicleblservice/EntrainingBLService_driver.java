@@ -2,6 +2,11 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.EntrainingReceiptVO;
+import vo.FareVO;
+import vo.OrderVO;
+import vo.TranferingReceiptVO;
+
 public class EntrainingBLService_driver {
     public void drive(EntrainingBLService ebls){
     	ebls.showTrainList();

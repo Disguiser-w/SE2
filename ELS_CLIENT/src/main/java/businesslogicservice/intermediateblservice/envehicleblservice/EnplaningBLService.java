@@ -3,6 +3,7 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 import java.util.ArrayList;
 
 import vo.EnplaningReceiptVO;
+import vo.FareVO;
 import vo.OrderVO;
 import vo.PlaneVO;
 import vo.TranferingReceiptVO;
@@ -14,15 +15,15 @@ public interface EnplaningBLService {
     
     public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
     
-    public EnplaningReceiptVO enplane(ArrayList<OrderVO>);
+    public EnplaningReceiptVO enplane(ArrayList<OrderVO> al);
     
-    public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(EnplaningReceiptVO);
+    public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(EnplaningReceiptVO vo);
     
-    public fareVO computeFare(ArrayList<EnplaningReceiptVO>);
+    public FareVO computeFare(ArrayList<EnplaningReceiptVO> al);
     
-    public boolean updateFare(fareVO);
+    public boolean updateFare(FareVO fareVO);
     
-    public boolean showEnplaningReceipt(ArrayList<EnplaningReceiptVO>);
+    public boolean showEnplaningReceipt(ArrayList<EnplaningReceiptVO> al);
     
-    public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO>);
+    public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO> al);
 }

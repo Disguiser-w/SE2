@@ -2,22 +2,28 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.EntruckingReceiptVO;
+import vo.FareVO;
+import vo.OrderVO;
+import vo.TranferingReceiptVO;
+import vo.TruckVO;
+
 public interface EntruckingBLService {
     public ArrayList<TruckVO> showTruckList();
     
-    public TruckVO showTrain(String ID);
+    public TruckVO showTruck(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO);
+    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
     
-    public EntruckingReceiptVO entruck(ArrayList<OrderVO>);
+    public EntruckingReceiptVO entruck(ArrayList<OrderVO> al);
     
-    public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(EntruckingReceiptVO);
+    public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(EntruckingReceiptVO vo);
     
-    public fareVO computeFare(ArrayList<EntruckingReceiptVO>);
+    public FareVO computeFare(ArrayList<EntruckingReceiptVO> vo);
     
-    public boolean updateFare(fareVO);
+    public boolean updateFare(FareVO fareVO);
     
-    public boolean showEntruckingReceipt(ArrayList<EntruckingReceiptVO>);
+    public boolean showEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo);
     
-    public boolean updateEntruckingReceipt(ArrayList<EntruckingReceiptVO>);
+    public boolean updateEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo);
 }

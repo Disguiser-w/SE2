@@ -2,60 +2,57 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
-public class EntrainingBLService_stub implements EntrainingBLService {
+import vo.EntrainingReceiptVO;
+import vo.FareVO;
+import vo.OrderVO;
+import vo.TrainVO;
+import vo.TranferingReceiptVO;
 
+public class EntrainingBLService_stub implements EntrainingBLService {
 	public ArrayList<TrainVO> showTrainList() {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");
 		return null;
 	}
-
 	public TrainVO showTrain(String ID) {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");
 		return null;
 	}
-
-	public ArrayList<OrderVO> updateWaitingList() {
+	public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return null;
 	}
-
-	public EntrainingReceiptVO entrain() {
+	public EntrainingReceiptVO entrain(ArrayList<OrderVO> al) {
 		// TODO 自动生成的方法存根
 		System.out.println("entrain successfully!");
 		return null;
 	}
-
-	public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList() {
-		// TODO 自动生成的方法存根
+	public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList(
+			EntrainingReceiptVO vo) {
 		System.out.println("update successfully!");
+		// TODO 自动生成的方法存根
 		return null;
 	}
-
-	public fareVO computeFare() {
+	public FareVO computeFare(ArrayList<EntrainingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("compute successfully!");
 		return null;
 	}
-
-	public boolean updateFare() {
+	public boolean updateFare(FareVO fareVO) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
-		return true;
+		return false;
 	}
-
-	public boolean showEntraningReceipt() {
+	public boolean showEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");
-		return true;
+		return false;
 	}
-
-	public boolean updateEntraningReceipt() {
+	public boolean updateEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
-		return true;
+		return false;
 	}
-
 }

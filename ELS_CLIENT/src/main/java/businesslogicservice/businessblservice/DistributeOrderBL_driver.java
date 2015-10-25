@@ -1,4 +1,4 @@
-package businesslogic.businessbl;
+package businesslogicservice.businessblservice;
 
 public class DistributeOrderBL_driver {
 	public void drive(DistributeOrderBLService distributeOrdeBLService) {

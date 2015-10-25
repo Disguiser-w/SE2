@@ -1,4 +1,4 @@
-package businesslogic.businessbl;
+package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import vo.VehicleVO;
 /**
  * 营业厅业务员-装车管理
  */
-public interface TruckManagerBLService {
+public interface EnVehicleBLService {
 	/**
 	 * 系统根据空闲车辆的信息和待转发的订单自动分配订单，生成装车单，更新到装车单列表，并返回分配信息
 	 */

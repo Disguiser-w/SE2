@@ -2,22 +2,28 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.EntrainingReceiptVO;
+import vo.FareVO;
+import vo.OrderVO;
+import vo.TrainVO;
+import vo.TranferingReceiptVO;
+
 public interface EntrainingBLService {
     public ArrayList<TrainVO> showTrainList();
     
     public TrainVO showTrain(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO);
+    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
     
-    public EntrainingReceiptVO entrain(ArrayList<OrderVO>);
+    public EntrainingReceiptVO entrain(ArrayList<OrderVO> al);
     
-    public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList(EntrainingReceiptVO);
+    public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList(EntrainingReceiptVO vo);
     
-    public fareVO computeFare(ArrayList<EntrainingReceiptVO>);
+    public FareVO computeFare(ArrayList<EntrainingReceiptVO> vo);
     
-    public boolean updateFare(fareVO);
+    public boolean updateFare(FareVO fareVO);
     
-    public boolean showEntraningReceipt(ArrayList<EntraningReceiptVO>);
+    public boolean showEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo);
     
-    public boolean updateEntraningReceipt(ArrayList<EntraningReceiptVO>);
+    public boolean updateEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo);
 }

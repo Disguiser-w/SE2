@@ -1,11 +1,11 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
 
 public class LogisticQueryBL_driver {
-	public void drive(LogisticQueryBLService sogisticQueryBLService ) {
-		LogisticQueryBLService.query(orderNum);
+	public void drive(LogisticQueryBLService logisticQueryBLService ) {
+		logisticQueryBLService.query(1000);
 	}
 
 	public void main(String[] args){
-		(new LogisticQueryBLService_driver()).drive(new LogisticQueryBL_stub());
+		(new LogisticQueryBL_driver()).drive(new LogisticQueryBL_stub());
 	}
 }

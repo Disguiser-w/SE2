@@ -1,4 +1,6 @@
-package businesslogic.adminbl;
+package businesslogicservice.expressblservice;
+
+import vo.ExpressVO;
 
 public class ChargeCollectionBL_stub implements ChargeCollectionBLService {
 
