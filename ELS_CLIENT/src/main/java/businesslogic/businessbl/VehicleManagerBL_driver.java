@@ -1,6 +1,6 @@
 package businesslogic.businessbl;
 
-import java.util.ArrayList;
+import vo.VehicleVO;
 
 public class VehicleManagerBL_driver {
 	public void drive(VehicleManagerBLService vehicleManagerBLService) {
@@ -13,7 +13,7 @@ public class VehicleManagerBL_driver {
 		vehicleManagerBLService.deleteVehicle(new VehicleVO());
 
 
-		vehicleManagerBLService.modifyVehicle(new VehicleVO())
+		vehicleManagerBLService.modifyVehicle(new VehicleVO());
 	}
 
 	public void main(String[] args) {

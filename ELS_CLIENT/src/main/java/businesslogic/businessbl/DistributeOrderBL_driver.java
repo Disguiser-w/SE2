@@ -10,6 +10,6 @@ public class DistributeOrderBL_driver {
 	}
 
 	public void main(String[] args) {
-		(new DistributeOrderBL_driver()).drive(new DistributeOrdeBL_stub());
+		(new DistributeOrderBL_driver()).drive(new DistributeOrderBL_stub());
 	}
 }

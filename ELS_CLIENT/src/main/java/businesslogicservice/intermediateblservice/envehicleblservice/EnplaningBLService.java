@@ -2,12 +2,17 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.EnplaningReceiptVO;
+import vo.OrderVO;
+import vo.PlaneVO;
+import vo.TranferingReceiptVO;
+
 public interface EnplaningBLService {
     public ArrayList<PlaneVO> showPlaneList();
     
     public PlaneVO showPlane(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO);
+    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
     
     public EnplaningReceiptVO enplane(ArrayList<OrderVO>);
     

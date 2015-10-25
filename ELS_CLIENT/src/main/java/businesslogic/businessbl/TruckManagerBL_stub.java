@@ -2,6 +2,9 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
+import vo.OrderVO;
+import vo.VehicleVO;
+
 public class TruckManagerBL_stub implements TruckManagerBLService{
 
 	public String autoTruckLoading() {

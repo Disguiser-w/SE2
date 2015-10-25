@@ -1,5 +1,7 @@
 package businesslogic.businessbl;
 
+import vo.OrderAcceptReceiptVO;
+
 public class AcceptCargoBL_driver {
 	public void drive(AcceptCargoBLService acceptCargoBLService) {
 		acceptCargoBLService.acceptCargo(new OrderAcceptReceiptVO());

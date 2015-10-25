@@ -2,6 +2,8 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
+import vo.VehicleVO;
+
 public class DriverManagerBL_stub implements DriverManagerBLService {
 
 	public ArrayList<VehicleVO> getVehicleInfo(String ID) {

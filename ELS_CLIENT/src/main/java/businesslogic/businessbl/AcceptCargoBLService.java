@@ -1,5 +1,7 @@
 package businesslogic.businessbl;
 
+import vo.OrderAcceptReceiptVO;
+
 /**
  * 营业厅业务员-接收货物
  */

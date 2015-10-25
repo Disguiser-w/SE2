@@ -2,6 +2,9 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
+import vo.OrderVO;
+import vo.VehicleVO;
+
 /**
  * 营业厅业务员-装车管理
  */

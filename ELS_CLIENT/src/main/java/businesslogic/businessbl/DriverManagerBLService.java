@@ -2,6 +2,8 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
+import vo.VehicleVO;
+
 /**
  * 营业厅业务员-车辆信息管理
  */

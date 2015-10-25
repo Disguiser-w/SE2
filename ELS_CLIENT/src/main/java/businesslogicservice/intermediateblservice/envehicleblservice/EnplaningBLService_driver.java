@@ -2,6 +2,8 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 
 import java.util.ArrayList;
 
+import vo.TranferingReceiptVO;
+
 public class EnplaningBLService_driver {
     public void drive(EnplaningBLService ebls){
     	ebls.showPlaneList();

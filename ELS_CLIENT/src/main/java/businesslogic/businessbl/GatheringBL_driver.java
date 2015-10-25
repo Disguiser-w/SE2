@@ -1,6 +1,6 @@
 package businesslogic.businessbl;
 
-import java.util.ArrayList;
+import vo.GatheringReceiptVO;
 
 public class GatheringBL_driver {
 	public void drive(GatheringBLService gathingBLService) {

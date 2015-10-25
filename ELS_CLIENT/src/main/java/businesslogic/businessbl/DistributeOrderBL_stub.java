@@ -2,6 +2,9 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
+import vo.ExpressVO;
+import vo.OrderVO;
+
 public class DistributeOrderBL_stub implements DistributeOrderBLService{
 
 	public String distributeOrder() {
