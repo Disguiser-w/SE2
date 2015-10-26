@@ -2,7 +2,7 @@ package businesslogicservice.businessblservice;
 
 import vo.OrderAcceptReceiptVO;
 
-public class AcceptCargoBL_stub implements  AcceptCargoBLService {
+public class AcceptCargoBLService_stub implements  AcceptCargoBLService {
 
 	public boolean acceptCargo(OrderAcceptReceiptVO vo) {
 		// TODO Auto-generated method stub

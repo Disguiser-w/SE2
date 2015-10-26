@@ -2,12 +2,12 @@ package businesslogicservice.businessblservice;
 
 import vo.OrderAcceptReceiptVO;
 
-public class AcceptCargoBL_driver {
+public class AcceptCargoBLService_driver {
 	public void drive(AcceptCargoBLService acceptCargoBLService) {
 		acceptCargoBLService.acceptCargo(new OrderAcceptReceiptVO());
 	}
 
 	public void main(String[] args){
-		(new AcceptCargoBL_driver()).drive(new AcceptCargoBL_stub());
+		(new AcceptCargoBLService_driver()).drive(new AcceptCargoBLService_stub());
 	}
 }

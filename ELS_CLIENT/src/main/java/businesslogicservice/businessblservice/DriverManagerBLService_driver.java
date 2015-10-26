@@ -2,7 +2,7 @@ package businesslogicservice.businessblservice;
 
 import vo.VehicleVO;
 
-public class DriverManagerBL_driver {
+public class DriverManagerBLService_driver {
 	public void drive(DriverManagerBLService driverManagerBLService) {
 		driverManagerBLService.getVehicleInfo(new String());
 
@@ -14,6 +14,6 @@ public class DriverManagerBL_driver {
 	}
 
 	public void main(String[] args) {
-		(new DriverManagerBL_driver()).drive(new DriverManagerBL_stub());
+		(new DriverManagerBLService_driver()).drive(new DriverManagerBLService_stub());
 	}
 }

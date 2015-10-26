@@ -2,7 +2,7 @@ package businesslogicservice.businessblservice;
 
 import vo.GatheringReceiptVO;
 
-public class GatheringBL_driver {
+public class GatheringBLService_driver {
 	public void drive(GatheringBLService gathingBLService) {
 		gathingBLService.getChargeInfo();
 
@@ -10,6 +10,6 @@ public class GatheringBL_driver {
 	}
 
 	public void main(String[] args) {
-		(new GatheringBL_driver()).drive(new GatheringBL_stub());
+		(new GatheringBLService_driver()).drive(new GatheringBLService_stub());
 	}
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import vo.VehicleVO;
 
-public class DriverManagerBL_stub implements DriverManagerBLService {
+public class VehicleManagerBLService_stub implements VehicleManagerBLService {
 	public ArrayList<VehicleVO> getVehicleInfo(String ID) {
 		// TODO Auto-generated method stub
-		System.out.println("Show VehicleVOs!");
+		System.out.println("Show VehicleVOs");
 		return null;
 	}
 	public boolean addVehicle(VehicleVO vo) {
@@ -25,4 +25,5 @@ public class DriverManagerBL_stub implements DriverManagerBLService {
 		System.out.println("ModifyVehicle successfully!");
 		return false;
 	}
+
 }

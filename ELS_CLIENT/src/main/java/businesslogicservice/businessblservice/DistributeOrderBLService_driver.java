@@ -1,6 +1,6 @@
 package businesslogicservice.businessblservice;
 
-public class DistributeOrderBL_driver {
+public class DistributeOrderBLService_driver {
 	public void drive(DistributeOrderBLService distributeOrdeBLService) {
 		distributeOrdeBLService.distributeOrder();
 
@@ -10,6 +10,6 @@ public class DistributeOrderBL_driver {
 	}
 
 	public void main(String[] args) {
-		(new DistributeOrderBL_driver()).drive(new DistributeOrderBL_stub());
+		(new DistributeOrderBLService_driver()).drive(new DistributeOrderBLService_stub());
 	}
 }

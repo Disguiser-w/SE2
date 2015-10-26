@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import vo.OrderVO;
 import vo.VehicleVO;
 
-public class EnvehicleBL_stub implements EnVehicleBLService{
+public class EnvehicleBLService_stub implements EnVehicleBLService{
 
 	public String autoTruckLoading() {
 		// TODO Auto-generated method stub

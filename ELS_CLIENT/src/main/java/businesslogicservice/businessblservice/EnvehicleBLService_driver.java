@@ -1,6 +1,6 @@
 package businesslogicservice.businessblservice;
 
-public class EnvehicleBL_driver {
+public class EnvehicleBLService_driver {
 	public void drive(EnVehicleBLService truckManagerBLService) {
 		truckManagerBLService.autoTruckLoading();
 
@@ -10,6 +10,6 @@ public class EnvehicleBL_driver {
 	}
 
 	public void main(String[] args) {
-		(new EnvehicleBL_driver()).drive(new EnvehicleBL_stub());
+		(new EnvehicleBLService_driver()).drive(new EnvehicleBLService_stub());
 	}
 }

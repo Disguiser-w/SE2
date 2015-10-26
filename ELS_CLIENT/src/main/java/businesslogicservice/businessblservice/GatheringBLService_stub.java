@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import vo.ExpressVO;
 import vo.GatheringReceiptVO;
 
-public class GatheringBL_stub implements GatheringBLService{
+public class GatheringBLService_stub implements GatheringBLService{
 
 	public ArrayList<ExpressVO> getChargeInfo() {
 		// TODO Auto-generated method stub
