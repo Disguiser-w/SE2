@@ -1,8 +1,9 @@
 package dataservice.businessdataservice;
 
-import java.util.ArrayList;
+import po.DriverPO;
+import po.VehiclePO;
 
-public class BusinessData_driver {
+public class BusinessDataService_driver {
 	public void drive(BusinessDataService businessDataService) {
 		businessDataService.getVehicleInfos();
 		businessDataService.addVehicle(new VehiclePO());
@@ -10,13 +11,13 @@ public class BusinessData_driver {
 		businessDataService.modifyVehicle(new VehiclePO());
 		businessDataService.getDriverInfos(new String());
 		businessDataService.addDriver(new DriverPO());
-		businessDataService.deleteDriver(new Driver());
+		businessDataService.deleteDriver(new DriverPO());
 		businessDataService.modifyDriver(new DriverPO());
 		businessDataService.getTransferOrders();
 		businessDataService.getFreeVehicles();
 	}
 
 	public void main(String[] args) {
-		(new BusinessData_driver()).drive(new BusinessData_stub());
+		(new BusinessDataService_driver()).drive(new BusinessDataService_stub());
 	}
 }

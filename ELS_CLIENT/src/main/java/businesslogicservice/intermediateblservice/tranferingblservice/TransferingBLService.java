@@ -1,5 +1,7 @@
 package businesslogicservice.intermediateblservice.tranferingblservice;
 
+import vo.TransferingReceiptVO;
+
 public interface TransferingBLService {
     public TransferingReceiptVO showTransferingReceipt();
     
@@ -9,5 +11,5 @@ public interface TransferingBLService {
     
     public boolean modifyOrder(String ID);
     
-    public void updateTransferingReceipt(TransferingReceiptVO);
+    public void updateTransferingReceipt(TransferingReceiptVO vo);
 }

@@ -1,6 +1,9 @@
 package dataservice.expressdataservice;
 
-public class ExpressData_stub implements ExpressDataService{
+import po.CostBasePO;
+import po.ExpressPO;
+
+public class ExpressDataService_stub implements ExpressDataService{
 
 	public CostBasePO getBaseCost() {
 		// TODO Auto-generated method stub

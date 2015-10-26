@@ -2,7 +2,7 @@ package businesslogicservice.expressblservice;
 
 import vo.OrderVO;
 
-public class LogisticQueryBL_stub implements LogisticQueryBLService{
+public class LogisticQueryBLService_stub implements LogisticQueryBLService{
 
 	public OrderVO query(long orderNum) {
 		// TODO Auto-generated method stub

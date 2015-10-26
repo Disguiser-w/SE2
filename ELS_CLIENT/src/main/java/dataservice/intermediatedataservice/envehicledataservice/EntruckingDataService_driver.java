@@ -2,6 +2,11 @@ package dataservice.intermediatedataservice.envehicledataservice;
 
 import java.util.ArrayList;
 
+import po.EntruckingReceiptPO;
+import po.OrderPO;
+import po.TranferingReceiptPO;
+import po.farePO;
+
 public class EntruckingDataService_driver {
     public void drive(EntruckingDataService ebls){
     	ebls.getTruckList();
@@ -10,7 +15,7 @@ public class EntruckingDataService_driver {
     	ebls.entruck(new ArrayList<OrderPO>());
     	ebls.updateEntruckingReceiptList(new EntruckingReceiptPO());
     	ebls.computeFare(new ArrayList<EntruckingReceiptPO>());
-    	ebls.updateFare(new FarePO());
+    	ebls.updateFare(new farePO());
     	ebls.getEntruckingReceipt(new ArrayList<EntruckingReceiptPO>());
     	ebls.updateEntruckingReceipt(new ArrayList<EntruckingReceiptPO>());
     }

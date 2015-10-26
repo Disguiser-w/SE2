@@ -2,6 +2,11 @@ package dataservice.intermediatedataservice.envehicledataservice;
 
 import java.util.ArrayList;
 
+import po.EntrainingReceiptPO;
+import po.OrderPO;
+import po.TranferingReceiptPO;
+import po.farePO;
+
 public class EntrainingDataService_driver {
     public void drive(EntrainingDataService ebls){
     	ebls.getTrainList();
@@ -10,9 +15,10 @@ public class EntrainingDataService_driver {
     	ebls.entrain(new ArrayList<OrderPO>());
     	ebls.updateEntrainingReceiptList(new EntrainingReceiptPO());
     	ebls.computeFare(new ArrayList<EntrainingReceiptPO>());
-    	ebls.updateFare(new FarePO());
-    	ebls.getEntrainingReceipt(new ArrayList<EntrainingReceiptPO>());
-    	ebls.updateEntrainingReceipt(new ArrayList<EntrainingReceiptPO>());
+    	ebls.updateFare(new farePO());
+    	//拼写2333333
+    	ebls.getEntraningReceipt(new ArrayList<EntrainingReceiptPO>());
+    	ebls.updateEntraningReceipt(new ArrayList<EntrainingReceiptPO>());
     }
     
     public static void main(String[] args){

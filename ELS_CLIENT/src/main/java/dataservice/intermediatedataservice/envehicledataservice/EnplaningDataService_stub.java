@@ -2,6 +2,12 @@ package dataservice.intermediatedataservice.envehicledataservice;
 
 import java.util.ArrayList;
 
+import po.EnplaningReceiptPO;
+import po.OrderPO;
+import po.PlanePO;
+import po.TranferingReceiptPO;
+import po.farePO;
+
 public class EnplaningDataService_stub implements EnplaningDataService{
 
 	public ArrayList<PlanePO> getPlaneList() {
@@ -56,6 +62,42 @@ public class EnplaningDataService_stub implements EnplaningDataService{
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return true;
+	}
+
+	public ArrayList<OrderPO> updateWaitingList(TranferingReceiptPO po) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public EnplaningReceiptPO enplane(ArrayList<OrderPO> po) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<EnplaningReceiptPO> updateEnplaningReceiptList(
+			EnplaningReceiptPO po) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public farePO computeFare(ArrayList<EnplaningReceiptPO> po) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean updateFare(farePO po) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean getEnplaningReceipt(ArrayList<EnplaningReceiptPO> po) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptPO> po) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

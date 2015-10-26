@@ -1,11 +1,11 @@
 package businesslogicservice.expressblservice;
 
-public class LogisticQueryBL_driver {
+public class LogisticQueryBLService_driver {
 	public void drive(LogisticQueryBLService logisticQueryBLService ) {
 		logisticQueryBLService.query(1000);
 	}
 
 	public void main(String[] args){
-		(new LogisticQueryBL_driver()).drive(new LogisticQueryBL_stub());
+		(new LogisticQueryBLService_driver()).drive(new LogisticQueryBLService_stub());
 	}
 }

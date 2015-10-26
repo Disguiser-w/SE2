@@ -1,5 +1,7 @@
 package businesslogicservice.intermediateblservice.tranferingblservice;
 
+import vo.TransferingReceiptVO;
+
 public class TransferingBLService_stub implements TransferingBLService {
 
 	public TransferingReceiptVO showTranferingReceipt() {
@@ -29,6 +31,16 @@ public class TransferingBLService_stub implements TransferingBLService {
 	public void updateTranferingReceipt() {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
+	}
+
+	public TransferingReceiptVO showTransferingReceipt() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void updateTransferingReceipt(TransferingReceiptVO vo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

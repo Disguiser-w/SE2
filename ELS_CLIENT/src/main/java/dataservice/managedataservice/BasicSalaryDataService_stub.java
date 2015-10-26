@@ -1,6 +1,7 @@
 package dataservice.managedataservice;
 
 import po.BasicSalaryPO;
+import type.ProfessionType;
 
 import java.rmi.RemoteException;
 
@@ -24,7 +25,7 @@ public class BasicSalaryDataService_stub {
         return 0;
     }
     
-    public double findBasicSalary(int profession) throws RemoteException {
+    public double findBasicSalary(ProfessionType courier) throws RemoteException {
         // TODO 自动生成的方法存根
         System.out.println("Find basic salary succeed!");
         return 0;

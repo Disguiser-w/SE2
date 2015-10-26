@@ -2,7 +2,7 @@ package businesslogicservice.expressblservice;
 
 import vo.ExpressVO;
 
-public class ChargeCollectionBL_stub implements ChargeCollectionBLService {
+public class ChargeCollectionBLService_stub implements ChargeCollectionBLService {
 
 	public ExpressVO getChargeInfo() {
 		// TODO Auto-generated method stub

@@ -1,6 +1,8 @@
 package dataservice.expressdataservice;
 
-public class ExpressData_driver {
+import po.ExpressPO;
+
+public class ExpressDataService_driver {
 	public void drive(ExpressDataService expressDataService) {
 		expressDataService.getBaseCost();
 
@@ -10,6 +12,6 @@ public class ExpressData_driver {
 	}
 
 	public void main(String[] args){
-		(new ExpressData_driver()).drive(new ExpressData_stub());
+		(new ExpressDataService_driver()).drive(new ExpressDataService_stub());
 	}
 }

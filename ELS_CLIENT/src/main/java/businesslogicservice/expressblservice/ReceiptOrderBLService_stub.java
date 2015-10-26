@@ -2,7 +2,7 @@ package businesslogicservice.expressblservice;
 
 import vo.OrderVO;
 
-public class ReceiptOrderBL_stub implements ReceiptOrderBLService{
+public class ReceiptOrderBLService_stub implements ReceiptOrderBLService{
 
 	public OrderVO getOrderInfo(long orderNum) {
 		// TODO Auto-generated method stub

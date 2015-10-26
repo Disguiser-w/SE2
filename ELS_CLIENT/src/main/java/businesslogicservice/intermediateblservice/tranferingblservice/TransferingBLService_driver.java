@@ -1,5 +1,7 @@
 package businesslogicservice.intermediateblservice.tranferingblservice;
 
+import vo.TransferingReceiptVO;
+
 public class TransferingBLService_driver {
     public void drive(TransferingBLService tbls){
     	tbls.showTransferingReceipt();
