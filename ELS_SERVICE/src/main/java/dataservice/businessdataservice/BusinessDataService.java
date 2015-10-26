@@ -3,6 +3,7 @@ package dataservice.businessdataservice;
 import java.util.ArrayList;
 
 import po.DriverPO;
+import po.EnVehicleReceiptPO;
 import po.OrderVO;
 import po.VehiclePO;
 
@@ -59,4 +60,9 @@ public interface BusinessDataService {
 	 * 返回待派送的订单的列表
 	 */
 	public ArrayList<VehiclePO> getFreeVehicles();
+	/**
+	 * 生成装车单
+	 * */
+	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po);
+	
 }
