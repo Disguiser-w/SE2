@@ -1,16 +1,16 @@
 package businesslogicservice.businessblservice;
 
-import vo.VehicleVO;
+import vo.DriverVO;
 
 public class DriverManagerBLService_driver {
 	public void drive(DriverManagerBLService driverManagerBLService) {
-		driverManagerBLService.getVehicleInfo(new String());
+		driverManagerBLService.getDriverInfo(new String());
 
-		driverManagerBLService.addVehicle(new VehicleVO());
+		driverManagerBLService.addDriver(new DriverVO());
 
-		driverManagerBLService.deleteVehicle(new VehicleVO());
+		driverManagerBLService.deleteDriver(new DriverVO());
 
-		driverManagerBLService.modifyVehicle(new VehicleVO());
+		driverManagerBLService.modifyDriver(new DriverVO());
 	}
 
 	public void main(String[] args) {

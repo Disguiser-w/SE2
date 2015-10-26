@@ -1,6 +1,7 @@
 package dataservice.businessdataservice;
 
 import po.DriverPO;
+import po.EnVehicleReceiptPO;
 import po.VehiclePO;
 
 public class BusinessDataService_driver {
@@ -15,6 +16,7 @@ public class BusinessDataService_driver {
 		businessDataService.modifyDriver(new DriverPO());
 		businessDataService.getTransferOrders();
 		businessDataService.getFreeVehicles();
+		businessDataService.addEnVehicleReceiptPO(new EnVehicleReceiptPO());
 	}
 
 	public void main(String[] args) {

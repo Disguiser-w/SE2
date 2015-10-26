@@ -2,27 +2,27 @@ package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
-import vo.VehicleVO;
+import vo.DriverVO;
 
 public class DriverManagerBLService_stub implements DriverManagerBLService {
-	public ArrayList<VehicleVO> getVehicleInfo(String ID) {
+	public ArrayList<DriverVO> getDriverInfo(String ID) {
 		// TODO Auto-generated method stub
-		System.out.println("Show VehicleVOs!");
+		System.out.println("Show DriverVOs!");
 		return null;
 	}
-	public boolean addVehicle(VehicleVO vo) {
+	public boolean addDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		System.out.println("AddVehicle successfully!");
+		System.out.println("AddDriver successfully!");
 		return false;
 	}
-	public boolean deleteVehicle(VehicleVO vo) {
+	public boolean deleteDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		System.out.println("DeleteVehicle successfully!");
+		System.out.println("DeleteDriver successfully!");
 		return false;
 	}
-	public boolean modifyVehicle(VehicleVO vo) {
+	public boolean modifyDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		System.out.println("ModifyVehicle successfully!");
+		System.out.println("ModifyDriver successfully!");
 		return false;
 	}
 }

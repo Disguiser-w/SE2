@@ -3,6 +3,7 @@ package dataservice.businessdataservice;
 import java.util.ArrayList;
 
 import po.DriverPO;
+import po.EnVehicleReceiptPO;
 import po.OrderVO;
 import po.VehiclePO;
 
@@ -66,6 +67,12 @@ public class BusinessDataService_stub implements BusinessDataService {
 		// TODO Auto-generated method stub
 		System.out.println("Show VehiclePOList!");
 		return null;
+	}
+
+	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po) {
+		// TODO Auto-generated method stub
+		System.out.println("AddEnVehicleReceiptPO successfully!");
+		return false;
 	}
 
 }

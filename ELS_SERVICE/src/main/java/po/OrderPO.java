@@ -1,6 +1,5 @@
 package po;
 
-import type.ExpressType;
 import type.PackType;
 
 public class OrderPO {

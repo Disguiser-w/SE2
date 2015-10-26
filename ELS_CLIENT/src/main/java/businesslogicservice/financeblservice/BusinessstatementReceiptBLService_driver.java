@@ -1,6 +1,6 @@
 package businesslogicservice.financeblservice;
 
-import vo.BusinessstatementReceiptVO;
+import vo.BusinessStatementReceiptVO;
 
 public class BusinessstatementReceiptBLService_driver {
 	public void drive(BusinessstatementReceiptBLService bsls){
@@ -9,7 +9,7 @@ public class BusinessstatementReceiptBLService_driver {
 		String endTime="20151001";
 		bsls.showBSList(beginTime , endTime);	
 		bsls.showAllBSList();
-		bsls.export(new BusinessstatementReceiptVO());
+		bsls.export(new BusinessStatementReceiptVO());
 	}
 	
 	public static void main(String[] args){
