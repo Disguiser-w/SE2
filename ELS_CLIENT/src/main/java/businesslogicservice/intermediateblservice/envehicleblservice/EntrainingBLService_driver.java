@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import vo.EntrainingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 
 public class EntrainingBLService_driver {
     public void drive(EntrainingBLService ebls){
     	ebls.showTrainList();
     	ebls.showTrain(new String());
-    	ebls.updateWaitingList(new TranferingReceiptVO());
+    	ebls.updateWaitingList(new TransferingReceiptVO());
     	ebls.entrain(new ArrayList<OrderVO>());
     	ebls.updateEntrainingReceiptList(new EntrainingReceiptVO());
     	ebls.computeFare(new ArrayList<EntrainingReceiptVO>());

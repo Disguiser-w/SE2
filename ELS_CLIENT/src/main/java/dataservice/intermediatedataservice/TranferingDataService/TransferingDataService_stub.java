@@ -1,10 +1,10 @@
 package dataservice.intermediatedataservice.TranferingDataService;
 
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 
 public class TransferingDataService_stub implements TransferingDataService {
 
-	public TranferingReceiptPO getTransferingReceipt() {
+	public TransferingReceiptPO getTransferingReceipt() {
 		// TODO 自动生成的方法存根
 		System.out.println("get successfully!");
 		return null;
@@ -29,7 +29,7 @@ public class TransferingDataService_stub implements TransferingDataService {
 	}
 
 
-	public void updateTransferingReceipt(TranferingReceiptPO po) {
+	public void updateTransferingReceipt(TransferingReceiptPO po) {
 		// TODO Auto-generated method stub
 		
 	}

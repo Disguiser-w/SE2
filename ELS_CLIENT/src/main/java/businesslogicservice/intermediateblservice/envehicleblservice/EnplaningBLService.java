@@ -6,14 +6,14 @@ import vo.EnplaningReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
 import vo.PlaneVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 
 public interface EnplaningBLService {
     public ArrayList<PlaneVO> showPlaneList();
     
     public PlaneVO showPlane(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
+    public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo);
     
     public EnplaningReceiptVO enplane(ArrayList<OrderVO> al);
     

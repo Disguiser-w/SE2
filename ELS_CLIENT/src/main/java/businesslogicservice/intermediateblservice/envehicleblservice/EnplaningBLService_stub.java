@@ -6,7 +6,7 @@ import vo.EnplaningReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
 import vo.PlaneVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 
 public class EnplaningBLService_stub implements EnplaningBLService {
 	public ArrayList<PlaneVO> showPlaneList() {
@@ -19,7 +19,7 @@ public class EnplaningBLService_stub implements EnplaningBLService {
 		System.out.println("show successfully!");
 		return null;
 	}
-	public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo) {
+	public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return null;

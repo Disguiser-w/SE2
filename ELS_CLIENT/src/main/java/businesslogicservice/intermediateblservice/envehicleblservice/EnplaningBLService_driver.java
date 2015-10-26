@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import vo.EnplaningReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
+import vo.TransferingReceiptVO;
 
 public class EnplaningBLService_driver {
     public void drive(EnplaningBLService ebls){
     	ebls.showPlaneList();
     	ebls.showPlane(new String());
-    	ebls.updateWaitingList(new TranferingReceiptVO());
+    	ebls.updateWaitingList(new TransferingReceiptVO());
     	ebls.enplane(new ArrayList<OrderVO>());
     	ebls.updateEnplaningReceiptList(new EnplaningReceiptVO());
     	ebls.computeFare(new ArrayList<EnplaningReceiptVO>());

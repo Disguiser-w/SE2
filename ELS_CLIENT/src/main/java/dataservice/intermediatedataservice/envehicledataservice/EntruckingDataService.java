@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import po.EntruckingReceiptPO;
 import po.OrderPO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.TruckPO;
 import po.farePO;
 
@@ -13,7 +13,7 @@ public interface EntruckingDataService {
     
     public TruckPO getTruck(String ID);
     
-    public ArrayList<OrderPO> updateWaitingList(TranferingReceiptPO po);
+    public ArrayList<OrderPO> updateWaitingList(TransferingReceiptPO po);
     
     public EntruckingReceiptPO entruck(ArrayList<OrderPO> po);
     

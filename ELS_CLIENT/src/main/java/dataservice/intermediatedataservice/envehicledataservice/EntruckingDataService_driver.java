@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import po.EntruckingReceiptPO;
 import po.OrderPO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.farePO;
 
 public class EntruckingDataService_driver {
     public void drive(EntruckingDataService ebls){
     	ebls.getTruckList();
     	ebls.getTruck(new String());
-    	ebls.updateWaitingList(new TranferingReceiptPO());
+    	ebls.updateWaitingList(new TransferingReceiptPO());
     	ebls.entruck(new ArrayList<OrderPO>());
     	ebls.updateEntruckingReceiptList(new EntruckingReceiptPO());
     	ebls.computeFare(new ArrayList<EntruckingReceiptPO>());

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.OrderPO;
 import po.PlanePO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.farePO;
 
 public interface EnplaningDataService {
@@ -13,7 +13,7 @@ public interface EnplaningDataService {
     
     public PlanePO getPlane(String ID);
     
-    public ArrayList<OrderPO> updateWaitingList(TranferingReceiptPO po);
+    public ArrayList<OrderPO> updateWaitingList(TransferingReceiptPO po);
     
     public EnplaningReceiptPO enplane(ArrayList<OrderPO> po);
     

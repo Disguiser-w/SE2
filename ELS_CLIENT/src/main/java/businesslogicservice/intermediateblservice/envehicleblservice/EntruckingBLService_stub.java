@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 import vo.TruckVO;
 
 public class EntruckingBLService_stub implements EntruckingBLService {
@@ -22,7 +22,7 @@ public class EntruckingBLService_stub implements EntruckingBLService {
 		return null;
 	}
 
-	public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo) {
+	public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return null;

@@ -1,9 +1,9 @@
 package dataservice.intermediatedataservice.TranferingDataService;
 
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 
 public interface TransferingDataService {
-    public TranferingReceiptPO getTransferingReceipt();
+    public TransferingReceiptPO getTransferingReceipt();
     
     public boolean addOrder(String ID);
     
@@ -11,5 +11,5 @@ public interface TransferingDataService {
     
     public boolean modifyOrder(String ID);
     
-    public void updateTransferingReceipt(TranferingReceiptPO po);
+    public void updateTransferingReceipt(TransferingReceiptPO po);
 }

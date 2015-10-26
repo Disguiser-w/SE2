@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 import vo.TruckVO;
 
 public interface EntruckingBLService {
@@ -13,7 +13,7 @@ public interface EntruckingBLService {
     
     public TruckVO showTruck(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
+    public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo);
     
     public EntruckingReceiptVO entruck(ArrayList<OrderVO> al);
     

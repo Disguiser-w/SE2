@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import po.EntrainingReceiptPO;
 import po.OrderPO;
 import po.TrainPO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.farePO;
 
 public interface EntrainingDataService {
@@ -13,7 +13,7 @@ public interface EntrainingDataService {
     
     public TrainPO getTrain(String ID);
     
-    public ArrayList<OrderPO> updateWaitingList(TranferingReceiptPO po);
+    public ArrayList<OrderPO> updateWaitingList(TransferingReceiptPO po);
     
     public EntrainingReceiptPO entrain(ArrayList<OrderPO> po);
     

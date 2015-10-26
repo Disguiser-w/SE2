@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import po.EntrainingReceiptPO;
 import po.OrderPO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.farePO;
 
 public class EntrainingDataService_driver {
     public void drive(EntrainingDataService ebls){
     	ebls.getTrainList();
     	ebls.getTrain(new String());
-    	ebls.updateWaitingList(new TranferingReceiptPO());
+    	ebls.updateWaitingList(new TransferingReceiptPO());
     	ebls.entrain(new ArrayList<OrderPO>());
     	ebls.updateEntrainingReceiptList(new EntrainingReceiptPO());
     	ebls.computeFare(new ArrayList<EntrainingReceiptPO>());

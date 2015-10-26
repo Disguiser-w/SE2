@@ -6,14 +6,14 @@ import vo.EntrainingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
 import vo.TrainVO;
-import vo.TranferingReceiptVO;
+import vo.TransferingReceiptVO;
 
 public interface EntrainingBLService {
     public ArrayList<TrainVO> showTrainList();
     
     public TrainVO showTrain(String ID);
     
-    public ArrayList<OrderVO> updateWaitingList(TranferingReceiptVO vo);
+    public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo);
     
     public EntrainingReceiptVO entrain(ArrayList<OrderVO> al);
     

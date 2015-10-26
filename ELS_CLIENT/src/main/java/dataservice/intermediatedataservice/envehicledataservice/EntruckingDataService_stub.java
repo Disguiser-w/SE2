@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import po.EntruckingReceiptPO;
 import po.OrderPO;
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 import po.TruckPO;
 import po.farePO;
 
@@ -64,7 +64,7 @@ public class EntruckingDataService_stub implements EntruckingDataService {
 		return true;
 	}
 
-	public ArrayList<OrderPO> updateWaitingList(TranferingReceiptPO po) {
+	public ArrayList<OrderPO> updateWaitingList(TransferingReceiptPO po) {
 		// TODO Auto-generated method stub
 		return null;
 	}

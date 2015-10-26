@@ -1,6 +1,6 @@
 package dataservice.intermediatedataservice.TranferingDataService;
 
-import po.TranferingReceiptPO;
+import po.TransferingReceiptPO;
 
 public class TransferingDataService_driver {
     public void drive(TransferingDataService tbls){
@@ -8,7 +8,7 @@ public class TransferingDataService_driver {
     	tbls.addOrder(new String());
     	tbls.deleteOrder(new String());
     	tbls.modifyOrder(new String());
-    	tbls.updateTransferingReceipt(new TranferingReceiptPO());
+    	tbls.updateTransferingReceipt(new TransferingReceiptPO());
     }
     
     public static void main(String[] args){
