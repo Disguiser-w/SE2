@@ -6,7 +6,7 @@ import po.EntrainingReceiptPO;
 import po.OrderPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
-import po.farePO;
+import po.FarePO;
 
 public class EntrainingDataService_stub implements EntrainingDataService {
 
@@ -40,7 +40,7 @@ public class EntrainingDataService_stub implements EntrainingDataService {
 		return null;
 	}
 
-	public farePO computeFare() {
+	public FarePO computeFare() {
 		// TODO 自动生成的方法存根
 		System.out.println("compute successfully!");
 		return null;
@@ -80,12 +80,12 @@ public class EntrainingDataService_stub implements EntrainingDataService {
 		return null;
 	}
 
-	public farePO computeFare(ArrayList<EntrainingReceiptPO> po) {
+	public FarePO computeFare(ArrayList<EntrainingReceiptPO> po) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public boolean updateFare(farePO po) {
+	public boolean updateFare(FarePO po) {
 		// TODO Auto-generated method stub
 		return false;
 	}

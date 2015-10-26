@@ -6,7 +6,7 @@ import po.EnplaningReceiptPO;
 import po.OrderPO;
 import po.PlanePO;
 import po.TransferingReceiptPO;
-import po.farePO;
+import po.FarePO;
 
 public interface EnplaningDataService {
     public ArrayList<PlanePO> getPlaneList();
@@ -19,9 +19,9 @@ public interface EnplaningDataService {
     
     public ArrayList<EnplaningReceiptPO> updateEnplaningReceiptList(EnplaningReceiptPO po);
     
-    public farePO computeFare(ArrayList<EnplaningReceiptPO> po);
+    public FarePO computeFare(ArrayList<EnplaningReceiptPO> po);
     
-    public boolean updateFare(farePO po);
+    public boolean updateFare(FarePO po);
     
     public boolean getEnplaningReceipt(ArrayList<EnplaningReceiptPO> po);
     

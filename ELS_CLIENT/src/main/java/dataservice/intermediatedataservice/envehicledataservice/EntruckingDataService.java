@@ -6,7 +6,7 @@ import po.EntruckingReceiptPO;
 import po.OrderPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
-import po.farePO;
+import po.FarePO;
 
 public interface EntruckingDataService {
     public ArrayList<TruckPO> getTruckList();
@@ -19,9 +19,9 @@ public interface EntruckingDataService {
     
     public ArrayList<EntruckingReceiptPO> updateEntruckingReceiptList(EntruckingReceiptPO po);
     
-    public farePO computeFare(ArrayList<EntruckingReceiptPO> po);
+    public FarePO computeFare(ArrayList<EntruckingReceiptPO> po);
     
-    public boolean updateFare(farePO po);
+    public boolean updateFare(FarePO po);
     
     public boolean getEntruckingReceipt(ArrayList<EntruckingReceiptPO> po);
     

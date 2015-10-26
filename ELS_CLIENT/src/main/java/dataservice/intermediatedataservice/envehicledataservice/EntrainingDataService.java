@@ -6,7 +6,7 @@ import po.EntrainingReceiptPO;
 import po.OrderPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
-import po.farePO;
+import po.FarePO;
 
 public interface EntrainingDataService {
     public ArrayList<TrainPO> getTrainList();
@@ -19,9 +19,9 @@ public interface EntrainingDataService {
     
     public ArrayList<EntrainingReceiptPO> updateEntrainingReceiptList(EntrainingReceiptPO po);
     
-    public farePO computeFare(ArrayList<EntrainingReceiptPO> po);
+    public FarePO computeFare(ArrayList<EntrainingReceiptPO> po);
     
-    public boolean updateFare(farePO po);
+    public boolean updateFare(FarePO po);
     
     public boolean getEntraningReceipt(ArrayList<EntrainingReceiptPO> po);
     

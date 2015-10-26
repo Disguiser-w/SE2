@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.OrderPO;
 import po.TransferingReceiptPO;
-import po.farePO;
+import po.FarePO;
 
 public class EnplaningDataService_driver {
     public void drive(EnplaningDataService ebls){
@@ -15,7 +15,7 @@ public class EnplaningDataService_driver {
     	ebls.enplane(new ArrayList<OrderPO>());
     	ebls.updateEnplaningReceiptList(new EnplaningReceiptPO());
     	ebls.computeFare(new ArrayList<EnplaningReceiptPO>());
-    	ebls.updateFare(new farePO());
+    	ebls.updateFare(new FarePO());
     	ebls.getEnplaningReceipt(new ArrayList<EnplaningReceiptPO>());
     	ebls.updateEnplaningReceipt(new ArrayList<EnplaningReceiptPO>());
     }
