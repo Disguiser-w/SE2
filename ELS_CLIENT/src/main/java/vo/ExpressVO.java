@@ -11,7 +11,7 @@ public class ExpressVO {
 	private ArrayList<OrderVO> pendingOrders;
 	private ArrayList<OrderVO> finishedOrders;
 	private ArrayList<OrderVO> submitedOrder;
-	private ExpressVO(){}
+	public ExpressVO(){}
 	public ExpressVO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
 			OrganizationVO organization, ArrayList<OrderVO> pendingOrders, ArrayList<OrderVO> finishedOrders,
 			ArrayList<OrderVO> submitedOrder) {

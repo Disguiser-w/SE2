@@ -46,7 +46,7 @@ public class EnVehicleReceiptPO {
 		return OrderPOList;
 	}
 
-	public void setOrderPOList(ArrayList<OrderPO> orderVOList) {
-		OrderVOList = orderVOList;
+	public void setOrderPOList(ArrayList<OrderPO> orderPOList) {
+		this.OrderPOList = orderPOList;
 	}
 }

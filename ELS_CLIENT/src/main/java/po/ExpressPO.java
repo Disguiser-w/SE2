@@ -12,7 +12,7 @@ public class ExpressPO {
 	private ArrayList<OrderPO> finishedOrders;
 	private ArrayList<OrderPO> submitedOrder;
 
-	private ExpressPO() {
+	public ExpressPO() {
 	}
 
 	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
