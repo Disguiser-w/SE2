@@ -9,4 +9,10 @@ public class AddOrderBLService_stub implements AddOrderBLService {
 		System.out.println("AddOrder successfully!");
 		return false;
 	}
+
+	public OrderVO calculateCost(OrderVO vo) {
+		// TODO Auto-generated method stub
+		System.out.println("Show OrderVO!");
+		return null;
+	}
 }

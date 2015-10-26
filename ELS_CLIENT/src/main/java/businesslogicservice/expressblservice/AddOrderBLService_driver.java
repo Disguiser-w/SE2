@@ -5,6 +5,7 @@ import vo.OrderVO;
 public class AddOrderBLService_driver {
 	public void drive(AddOrderBLService addOrderBLService) {
 		addOrderBLService.addOrder(new OrderVO());
+		addOrderBLService.calculateCost(new OrderVO());
 	}
 
 	public void main(String[] args){
