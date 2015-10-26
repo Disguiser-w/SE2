@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
-import po.OrderVO;
+import po.OrderPO;
 import po.VehiclePO;
 
 public class BusinessDataService_stub implements BusinessDataService {
@@ -57,7 +57,7 @@ public class BusinessDataService_stub implements BusinessDataService {
 		return false;
 	}
 
-	public ArrayList<OrderVO> getTransferOrders() {
+	public ArrayList<OrderPO> getTransferOrders() {
 		// TODO Auto-generated method stub
 		System.out.println("Show OrderVOList!");
 		return null;
