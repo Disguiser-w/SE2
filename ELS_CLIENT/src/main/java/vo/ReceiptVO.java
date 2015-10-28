@@ -18,40 +18,4 @@ public class ReceiptVO {
 		this.type=type;
 		this.state=state;
 	}
-	
-public ReceiptVO(){
-	}
-	
-	public String getID(){
-		return ID;
-	}
-	
-	public String getUserID(){
-		return userID;
-	}
-	
-	public ReceiptType getType(){
-		return type;
-	}
-	
-	public ReceiptState getState(){
-		return state;
-	}
-	
-	//获取时间（单据ID）
-	public String getDate(){
-		String[] buffer=ID.split("-");
-		String s=buffer[1];
-		String year=s.substring(0,4);
-		String month=s.substring(4,6);
-		String day=s.substring(6,8);
-		return year+"/"+month+"/"+day;
-	}
-	
-	public void setState(ReceiptState state){
-		this.state=state;
-	}
-	
-	
-
 }

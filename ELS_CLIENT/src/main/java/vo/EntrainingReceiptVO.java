@@ -6,60 +6,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EntrainingReceiptVO {
-	ArrayList<OrderVO> enplaningReceipt;
-	String time;
-	String ID;
-	OrganizationVO intermediateCentre;
-	PlaneVO plane;
+	public final ArrayList<OrderVO> enplaningReceipt;
+	public final String time;
+	public final String ID;
+	public final OrganizationVO intermediateCentre;
+	public final TrainVO train;
 
-	public EntrainingReceiptVO() {
-	}
-
-	public EntrainingReceiptVO(ArrayList<OrderVO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
+	public EntrainingReceiptVO(ArrayList<OrderVO> enplaningReceipt,
+			String time, String ID, String intermediateCentre, TrainVO train) {
 		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public ArrayList<OrderVO> getEnplaningReceipt() {
-		return enplaningReceipt;
-	}
-
-	public void setEnplaningReceipt(ArrayList<OrderVO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
 		this.time = time;
+		this.ID = ID;
+		this.intermediateCentre = this.intermediateCentre;
+		this.train = train;
 	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public OrganizationVO getIntermediateCentre() {
-		return intermediateCentre;
-	}
-
-	public void setIntermediateCentre(OrganizationVO intermediateCentre) {
-		this.intermediateCentre = intermediateCentre;
-	}
-
-	public PlaneVO getPlane() {
-		return plane;
-	}
-
-	public void setPlane(PlaneVO plane) {
-		this.plane = plane;
-	}
-	
 }

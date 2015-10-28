@@ -6,50 +6,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TransferingReceiptVO {
-    String ID;
-    String time;
-    ArrayList<OrderVO> orderList;
-    OrganizationVO interdiatehall;
+	public final String ID;
+	public final String time;
+	public final ArrayList<OrderVO> orderList;
+	public final OrganizationVO interdiateCentre;
     
-    public TransferingReceiptVO(){
-    }
-    
-    public TransferingReceiptVO(ArrayList<OrderVO> orderList){
-    	Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
+    public TransferingReceiptVO(ArrayList<OrderVO> orderList,String ID,String time,OrganizationVO intermediateCentre){
 		this.orderList = orderList;
-    }
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
+		this.ID =ID;
 		this.time = time;
-	}
-
-	public ArrayList<OrderVO> getOrderList() {
-		return orderList;
-	}
-
-	public void setOrderList(ArrayList<OrderVO> orderList) {
-		this.orderList = orderList;
-	}
-
-	public OrganizationVO getInterdiatehall() {
-		return interdiatehall;
-	}
-
-	public void setInterdiatehall(OrganizationVO interdiatehall) {
-		this.interdiatehall = interdiatehall;
-	}
+		this.interdiateCentre = intermediateCentre;
+    }
 }

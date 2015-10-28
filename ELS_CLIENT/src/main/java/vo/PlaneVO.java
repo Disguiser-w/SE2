@@ -1,30 +1,11 @@
 package vo;
 
 public class PlaneVO {
-    String ID;
-    double farePrice;
+    public final String ID;
+    public final double farePrice;
     
-    public PlaneVO(){  	
-    }
-    
-    public PlaneVO(double farePrice){
+    public PlaneVO(double farePrice,String ID){
     	this.farePrice = farePrice;
+    	this.ID = ID;
     }
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public double getFarePrice() {
-		return farePrice;
-	}
-
-	public void setFarePrice(double farePrice) {
-		this.farePrice = farePrice;
-	}
-    
 }

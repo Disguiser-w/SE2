@@ -1,30 +1,11 @@
 package vo;
 
 public class TrainVO {
-	 String ID;
-	    double farePrice;
-	    
-	    public TrainVO(){  	
-	    }
-	    
-	    public TrainVO(double farePrice){
-	    	this.farePrice = farePrice;
-	    }
+	public final String ID;
+	public final double farePrice;
 
-		public String getID() {
-			return ID;
-		}
-
-		public void setID(String iD) {
-			ID = iD;
-		}
-
-		public double getFarePrice() {
-			return farePrice;
-		}
-
-		public void setFarePrice(double farePrice) {
-			this.farePrice = farePrice;
-		}
-	    
+	public TrainVO(double farePrice, String ID) {
+		this.farePrice = farePrice;
+		this.ID = ID;
+	}
 }
