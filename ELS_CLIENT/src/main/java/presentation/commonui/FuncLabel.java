@@ -67,13 +67,13 @@ public class FuncLabel extends JLabel {
 			g.drawImage(image, 0, 0, width, height, null);
 
 	}
-	
-	public void setPanel(JPanel panel){
-		this.panel=panel;
-	}
-	public JPanel getPanel(){
-		return panel;
+
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
 	}
 
+	public JPanel getPanel() {
+		return panel;
+	}
 
 }

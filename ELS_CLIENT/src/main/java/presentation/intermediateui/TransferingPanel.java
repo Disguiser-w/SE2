@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TransferingPanel extends JPanel {
-	public static final int PANEL_WIDTH = 720;
-	public static final int PANEL_HEIGHT = 480;
+	private int PANEL_WIDTH;
+	private int PANEL_HEIGHT;
 	TransferingReceiptVO transferingReceipt;
 	JButton addButton;
 	JButton deleteButton;
@@ -41,21 +41,7 @@ public class TransferingPanel extends JPanel {
 		// JScrollPane pane = new JScrollPane(info);
 		info.setTransferingReceipt(transferingReceipt);
 
-		addButton.setBounds(PANEL_WIDTH / 8, PANEL_HEIGHT / 30,
-				PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
-		deleteButton.setBounds(PANEL_WIDTH * 5 / 16, PANEL_HEIGHT / 30,
-				PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
-		sendButton.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 30,
-				PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
-		searchTextField.setBounds(PANEL_WIDTH * 3 / 4, PANEL_HEIGHT / 30,
-				PANEL_HEIGHT / 3, PANEL_WIDTH / 20);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
-
-		info.setBounds(PANEL_HEIGHT / 6, PANEL_HEIGHT / 6,
-				PANEL_HEIGHT * 5 / 4, PANEL_HEIGHT * 3 / 4);
+		setCmpLocation();
 
 		// for (int i = 0; i < 15; i++) {
 		// info[i][0] = new JLabel();
@@ -129,6 +115,26 @@ public class TransferingPanel extends JPanel {
 		add(info);
 		add(next);
 		add(previous);
+	}
+
+	public void setCmpLocation() {
+		addButton.setBounds(PANEL_WIDTH / 8, PANEL_HEIGHT / 30, PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
+		deleteButton.setBounds(PANEL_WIDTH * 5 / 16, PANEL_HEIGHT / 30, PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
+		sendButton.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 30, PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
+		searchTextField.setBounds(PANEL_WIDTH * 3 / 4, PANEL_HEIGHT / 30, PANEL_HEIGHT / 3, PANEL_WIDTH / 20);
+		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48, PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
+		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48, PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
+
+		info.setBounds(PANEL_HEIGHT / 6, PANEL_HEIGHT / 6, PANEL_HEIGHT * 5 / 4, PANEL_HEIGHT * 3 / 4);
+	}
+
+	public void setBounds(int x, int y, int width, int height) {
+		
+		super.setBounds(x, y, width, height);
+		PANEL_WIDTH = width;
+		PANEL_HEIGHT = height;
+		setCmpLocation();
+		repaint();
 	}
 
 	public static void main(String[] args) {

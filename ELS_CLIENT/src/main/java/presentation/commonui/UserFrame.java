@@ -1,6 +1,7 @@
 package presentation.commonui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -41,6 +42,10 @@ public class UserFrame extends JFrame {
 		functionPanel = new FunctionPanel();
 		operationPanel = new JPanel();
 
+		imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		functionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		operationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		setCmpLocation();
 
 		panel.setLayout(null);
@@ -63,9 +68,11 @@ public class UserFrame extends JFrame {
 
 		setTitle("ELS");
 		setSize(960, 640);
+
+		setMinimumSize(new Dimension(700, 500));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
+		// setResizable(false);
 
 	}
 
@@ -79,7 +86,7 @@ public class UserFrame extends JFrame {
 		int height = getHeight();
 
 		imageLabel.setBounds(0, 0, height / 5, height / 5);
-		messagePanel.setBounds(height / 5, height / 15, width - height * 6 / 25, height / 15);
+		messagePanel.setBounds(height * 6 / 25, height / 15, width - height * 7 / 25, height / 15);
 		functionPanel.setBounds(height / 25, height / 5, height * 4 / 25, height * 19 / 25);
 		operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
 
@@ -141,15 +148,17 @@ class MessagePanel extends JPanel {
 	private JButton changePasswordButton;
 
 	public MessagePanel() {
-		name = "";
-		ID = "";
+		name = "狗盛";
+		ID = "gs-007";
 		changePasswordButton = new JButton("修改密码");
+
+		add(changePasswordButton);
 		setLayout(null);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		changePasswordButton.setBounds(width / 3, height / 5, height * 6 / 5, height * 3 / 5);
+		changePasswordButton.setBounds(width * 3 / 4, height / 5, height * 5 / 2, height * 3 / 5);
 	}
 
 	public void setMessage(String name, String ID) {

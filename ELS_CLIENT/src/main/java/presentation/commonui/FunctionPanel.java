@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class FunctionPanel extends JPanel {
@@ -25,8 +26,23 @@ public class FunctionPanel extends JPanel {
 		tooMuchFunc = false;
 		isMoving = false;
 
+		
 		setLayout(null);
 
+	}
+
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+		if (labelPanel != null) {
+			labelPanel.setBounds(0, width / 5, width, height - width * 2 / 5);
+
+			for (FuncLabel label : funcLabels) {
+				if (onTheTop)
+					onButtom();
+				else
+					onTop();
+			}
+		}
 	}
 
 	public void addFuncLabel(FuncLabel funcLabel) {
@@ -114,15 +130,20 @@ public class FunctionPanel extends JPanel {
 		}
 		isMoving = false;
 
-		int i = 0;
-		int width = labelPanel.getWidth();
-		for (FuncLabel label : funcLabels) {
-			label.setLocation(0, width * i);
-			i++;
-		}
+		onButtom();
 
 		repaint();
 
+	}
+
+	private void onButtom() {
+		int i = 0;
+		int width = labelPanel.getWidth();
+		for (FuncLabel label : funcLabels) {
+			label.setBounds(0, width * i, width, width);
+			i++;
+
+		}
 	}
 
 	public void up() {
@@ -148,17 +169,21 @@ public class FunctionPanel extends JPanel {
 			labelPanel.repaint();
 		}
 		isMoving = false;
+		onTop();
+		repaint();
+	}
 
+	private void onTop() {
 		int i = 0;
 		int size = funcLabels.size();
 		int width = labelPanel.getWidth();
 		int height = labelPanel.getHeight();
 		for (FuncLabel label : funcLabels) {
-			label.setLocation(0, height - (size - i) * width);
+			label.setBounds(0, height - (size - i) * width, width, width);
 			i++;
+
 		}
 
-		repaint();
 	}
 
 	public int getIndex(FuncLabel label) {
