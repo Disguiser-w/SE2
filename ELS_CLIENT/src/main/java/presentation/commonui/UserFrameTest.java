@@ -21,6 +21,7 @@ public class UserFrameTest extends UserFrame {
 		}
 		addFuncLabel(new TransferingPanel());
 
+
 		setMessage("pig", "king");
 		showFrame();
 	}
