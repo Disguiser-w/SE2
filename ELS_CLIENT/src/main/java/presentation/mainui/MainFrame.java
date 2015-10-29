@@ -16,8 +16,8 @@ import javax.swing.JTextField;
 public class MainFrame extends JFrame {
 
 	// 宽度和长度
-	public static final int MAIN_WIDTH = 400;
-	public static final int MAIN_HEIGHT = 300;
+	public static final int MAIN_WIDTH = 960;
+	public static final int MAIN_HEIGHT = 640;
 	private JFrame frame = this;
 	private JPanel mainPanel;
 	private JPanel queryPanel;

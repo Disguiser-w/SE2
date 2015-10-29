@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EntruckingReceiptPO {
-	ArrayList<OrderPO> enplaningReceipt;
-	String time;
-	String ID;
-	OrganizationPO intermediateCentre;
-	PlanePO plane;
+	private ArrayList<OrderPO> enplaningReceipt;
+	private String date;
+	private String ID;
+	private OrganizationPO intermediateCentre;
+	private TruckPO truck;
 
 	public EntruckingReceiptPO() {
 	}
@@ -18,7 +18,7 @@ public class EntruckingReceiptPO {
 	public EntruckingReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
 		Date date = new Date();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
+		this.date = format.format(date);
 		this.enplaningReceipt = enplaningReceipt;
 	}
 
@@ -28,14 +28,6 @@ public class EntruckingReceiptPO {
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
 		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
 	}
 
 	public String getID() {
@@ -54,11 +46,11 @@ public class EntruckingReceiptPO {
 		this.intermediateCentre = intermediateCentre;
 	}
 
-	public PlanePO getPlane() {
-		return plane;
+	public TruckPO getTruck() {
+		return truck;
 	}
 
-	public void setPlane(PlanePO plane) {
-		this.plane = plane;
+	public void setTruck(TruckPO truck) {
+		this.truck = truck;
 	}
 }
