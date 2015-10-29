@@ -23,9 +23,7 @@ public class PaymentReceiptVO extends ReceiptVO{
 		account=d;
 		name=e;
 	}
-	public PaymentReceiptVO(){
-		
-	}
+
 	
 	public String getClause(){
 		return clause;

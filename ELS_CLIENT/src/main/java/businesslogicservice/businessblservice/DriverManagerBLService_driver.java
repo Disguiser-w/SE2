@@ -6,11 +6,11 @@ public class DriverManagerBLService_driver {
 	public void drive(DriverManagerBLService driverManagerBLService) {
 		driverManagerBLService.getDriverInfo(new String());
 
-		driverManagerBLService.addDriver(new DriverVO());
+		driverManagerBLService.addDriver(null);
 
-		driverManagerBLService.deleteDriver(new DriverVO());
+		driverManagerBLService.deleteDriver(null);
 
-		driverManagerBLService.modifyDriver(new DriverVO());
+		driverManagerBLService.modifyDriver(null);
 	}
 
 	public void main(String[] args) {

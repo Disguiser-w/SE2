@@ -7,13 +7,13 @@ public class VehicleManagerBLService_driver {
 		vehicleManagerBLService.getVehicleInfo(new String());
 
 
-		vehicleManagerBLService.addVehicle(new VehicleVO());
+		vehicleManagerBLService.addVehicle(null);
 
 
-		vehicleManagerBLService.deleteVehicle(new VehicleVO());
+		vehicleManagerBLService.deleteVehicle(null);
 
 
-		vehicleManagerBLService.modifyVehicle(new VehicleVO());
+		vehicleManagerBLService.modifyVehicle(null);
 	}
 
 	public void main(String[] args) {

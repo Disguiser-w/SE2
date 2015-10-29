@@ -10,38 +10,34 @@ public class OrderVO {
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
-	private String ID;
+	public final String ID;
 
-	private String senderName;
-	private String senderAddress;
-	private String senderOrganization;
-	private String senderPhoneNumber;
-	private String senderMobilePhoneNumber;
+	public final String senderName;
+	public final String senderAddress;
+	public final String senderOrganization;
+	public final String senderPhoneNumber;
+	public final String senderMobilePhoneNumber;
 
-	private String recipientName;
-	private String recipientAddress;
-	private String recipientOrganization;
-	private String recipientPhoneNumber;
-	private String recipientMobilePhoneNumber;
+	public final String recipientName;
+	public final String recipientAddress;
+	public final String recipientOrganization;
+	public final String recipientPhoneNumber;
+	public final String recipientMobilePhoneNumber;
 
-	private int numOfGoods;
-	private String weight;
-	private String volume;
-	private String goodsName;
+	public final int numOfGoods;
+	public final String weight;
+	public final String volume;
+	public final String goodsName;
 
-	private ExpressType expressType;
-	private PackType packType;
+	public final ExpressType expressType;
+	public final PackType packType;
 
-	private float freight;
-	private float packingExpense;
+	public final float freight;
+	public final float packingExpense;
 
-	private String builtData;
-	private String finishedData;
-	private String finishedID;
-
-	public OrderVO() {
-
-	}
+	public final String builtData;
+	public final String finishedData;
+	public final String finishedID;
 
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
@@ -70,182 +66,6 @@ public class OrderVO {
 		this.packingExpense = packingExpense;
 		this.builtData = builtData;
 		this.finishedData = finishedData;
-		this.finishedID = finishedID;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
-
-	public String getSenderName() {
-		return senderName;
-	}
-
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
-
-	public String getSenderAddress() {
-		return senderAddress;
-	}
-
-	public void setSenderAddress(String senderAddress) {
-		this.senderAddress = senderAddress;
-	}
-
-	public String getSenderOrganization() {
-		return senderOrganization;
-	}
-
-	public void setSenderOrganization(String senderOrganization) {
-		this.senderOrganization = senderOrganization;
-	}
-
-	public String getSenderPhoneNumber() {
-		return senderPhoneNumber;
-	}
-
-	public void setSenderPhoneNumber(String senderPhoneNumber) {
-		this.senderPhoneNumber = senderPhoneNumber;
-	}
-
-	public String getSenderMobilePhoneNumber() {
-		return senderMobilePhoneNumber;
-	}
-
-	public void setSenderMobilePhoneNumber(String senderMobilePhoneNumber) {
-		this.senderMobilePhoneNumber = senderMobilePhoneNumber;
-	}
-
-	public String getRecipientName() {
-		return recipientName;
-	}
-
-	public void setRecipientName(String recipientName) {
-		this.recipientName = recipientName;
-	}
-
-	public String getRecipientAddress() {
-		return recipientAddress;
-	}
-
-	public void setRecipientAddress(String recipientAddress) {
-		this.recipientAddress = recipientAddress;
-	}
-
-	public String getRecipientOrganization() {
-		return recipientOrganization;
-	}
-
-	public void setRecipientOrganization(String recipientOrganization) {
-		this.recipientOrganization = recipientOrganization;
-	}
-
-	public String getRecipientPhoneNumber() {
-		return recipientPhoneNumber;
-	}
-
-	public void setRecipientPhoneNumber(String recipientPhoneNumber) {
-		this.recipientPhoneNumber = recipientPhoneNumber;
-	}
-
-	public String getRecipientMobilePhoneNumber() {
-		return recipientMobilePhoneNumber;
-	}
-
-	public void setRecipientMobilePhoneNumber(String recipientMobilePhoneNumber) {
-		this.recipientMobilePhoneNumber = recipientMobilePhoneNumber;
-	}
-
-	public int getNumOfGoods() {
-		return numOfGoods;
-	}
-
-	public void setNumOfGoods(int numOfGoods) {
-		this.numOfGoods = numOfGoods;
-	}
-
-	public String getWeight() {
-		return weight;
-	}
-
-	public void setWeight(String weight) {
-		this.weight = weight;
-	}
-
-	public String getVolume() {
-		return volume;
-	}
-
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
-
-	public String getGoodsName() {
-		return goodsName;
-	}
-
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
-	}
-
-	public ExpressType getExpressType() {
-		return expressType;
-	}
-
-	public void setExpressType(ExpressType expressType) {
-		this.expressType = expressType;
-	}
-
-	public PackType getPackType() {
-		return packType;
-	}
-
-	public void setPackType(PackType packType) {
-		this.packType = packType;
-	}
-
-	public float getFreight() {
-		return freight;
-	}
-
-	public void setFreight(float freight) {
-		this.freight = freight;
-	}
-
-	public float getPackingExpense() {
-		return packingExpense;
-	}
-
-	public void setPackingExpense(float packingExpense) {
-		this.packingExpense = packingExpense;
-	}
-
-	public String getBuiltData() {
-		return builtData;
-	}
-
-	public void setBuiltData(String builtData) {
-		this.builtData = builtData;
-	}
-
-	public String getFinishedData() {
-		return finishedData;
-	}
-
-	public void setFinishedData(String finishedData) {
-		this.finishedData = finishedData;
-	}
-
-	public String getFinishedID() {
-		return finishedID;
-	}
-
-	public void setFinishedID(String finishedID) {
 		this.finishedID = finishedID;
 	}
 }

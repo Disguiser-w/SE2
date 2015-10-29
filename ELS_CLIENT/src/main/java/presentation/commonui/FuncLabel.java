@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class FuncLabel extends JLabel {
 	private Image image;
@@ -14,6 +15,7 @@ public class FuncLabel extends JLabel {
 
 	private boolean isPressed;
 	private boolean isMouseOn;
+	private JPanel panel;
 
 	public FuncLabel() {
 
@@ -63,5 +65,15 @@ public class FuncLabel extends JLabel {
 			g.drawImage(rolloverImage, 0, 0, width, height, null);
 		else
 			g.drawImage(image, 0, 0, width, height, null);
+
 	}
+	
+	public void setPanel(JPanel panel){
+		this.panel=panel;
+	}
+	public JPanel getPanel(){
+		return panel;
+	}
+
+
 }

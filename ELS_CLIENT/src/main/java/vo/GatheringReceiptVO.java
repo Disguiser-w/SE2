@@ -8,64 +8,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class GatheringReceiptVO {
-    OrganizationVO businesshall;
-    String time;
-    ArrayList<ExpressVO> expressList;
-    ArrayList<Double> money;
-    double totalmoney;
-    
-    public GatheringReceiptVO(){
-    }
-    
-    public GatheringReceiptVO(ArrayList<ExpressVO> expressList, ArrayList<Double> money){
-    	this.expressList = expressList;
-    	this.money = money;
-    	Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
-    }
-
-	public OrganizationVO getBusinesshall() {
-		return businesshall;
-	}
-
-	public void setBusinesshall(OrganizationVO businesshall) {
+	public final OrganizationVO businesshall;
+	public final String time;
+	public final ArrayList<ExpressVO> expressList;
+	public final ArrayList<Double> money;
+	public final double totalmoney;
+	public GatheringReceiptVO(OrganizationVO businesshall, String time, ArrayList<ExpressVO> expressList,
+			ArrayList<Double> money, double totalmoney) {
+		super();
 		this.businesshall = businesshall;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
 		this.time = time;
-	}
-
-	public ArrayList<ExpressVO> getExpressList() {
-		return expressList;
-	}
-
-	public void setExpressList(ArrayList<ExpressVO> expressList) {
 		this.expressList = expressList;
-	}
-
-	public ArrayList<Double> getMoney() {
-		return money;
-	}
-
-	public void setMoney(ArrayList<Double> money) {
 		this.money = money;
-	}
-
-	public double getTotalmoney() {
-		return totalmoney;
-	}
-
-	public void setTotalmoney(double totalmoney) {
 		this.totalmoney = totalmoney;
 	}
-    
-    
+
+
 }

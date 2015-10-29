@@ -2,8 +2,8 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -15,69 +15,94 @@ public class FunctionPanel extends JPanel {
 	private boolean isMoving;
 
 	private boolean tooMuchFunc;
+	private JPanel labelPanel;
 
 	public FunctionPanel() {
 		funcLabels = new ArrayList<FuncLabel>();
 		numOfFunc = 0;
 
-		onTheTop = false;
+		onTheTop = true;
 		tooMuchFunc = false;
 		isMoving = false;
 
-		addMouseMotionListener(new MouseMotionAdapter() {
+		setLayout(null);
 
-			public void mouseMoved(MouseEvent e) {
-
-				int height = getHeight();
-
-				int y = e.getY();
-				if (y < height / 4 && !onTheTop) {
-					onTheTop = true;
-
-					if (tooMuchFunc) {
-						// 下来
-						down();
-					}
-				}
-
-				if (y > height * 3 / 4 && onTheTop) {
-					onTheTop = false;
-
-					if (tooMuchFunc) {
-						// 上去
-						up();
-					}
-				}
-
-			}
-
-		});
 	}
 
 	public void addFuncLabel(FuncLabel funcLabel) {
-		int width = getWidth();
-		int height = getHeight();
-		numOfFunc++;
 
-		funcLabel.setBounds(0, width * (numOfFunc - 1), width, width);
 		funcLabels.add(funcLabel);
 
+		if (labelPanel == null) {
+			int width = getWidth();
+			int height = getHeight();
+
+			labelPanel = new JPanel();
+			labelPanel.setBounds(0, width / 5, width, height - width * 2 / 5);
+			labelPanel.setLayout(null);
+
+			addMouseListener(new MouseAdapter() {
+
+				public void mouseClicked(MouseEvent e) {
+
+					int height = getHeight();
+					int width = getWidth();
+					System.out.println("Click!");
+					int y = e.getY();
+
+					if (0 < y && y < width / 5 && !onTheTop) {
+						onTheTop = true;
+
+						if (tooMuchFunc) {
+							// 下来
+							(new Thread(new Runnable() {
+								public void run() {
+									down();
+								}
+							})).start();
+						}
+					}
+
+					if (height - width / 5 < y && y < height && onTheTop) {
+						onTheTop = false;
+
+						if (tooMuchFunc) {
+							// 上去
+							(new Thread(new Runnable() {
+								public void run() {
+									up();
+								}
+							})).start();
+						}
+					}
+
+				}
+
+			});
+			add(labelPanel);
+		}
+
+		int width = getWidth();
+		numOfFunc++;
+		funcLabel.setBounds(0, width * (numOfFunc - 1), width, width);
+
+		labelPanel.add(funcLabel);
+		labelPanel.setBackground(Color.gray);
 		repaint();
 	}
 
-	public int getIndex(FuncLabel funcLabel) {
-		return funcLabels.indexOf(funcLabel);
-	}
-
 	public void down() {
+
 		if (isMoving)
 			return;
 		isMoving = true;
+		System.out.println("down");
 		int distance = -funcLabels.get(0).getY();
-		int times = distance / 10;
+		int times = distance / 20;
 		for (int i = 0; i < times; i++) {
 			for (FuncLabel label : funcLabels) {
-				label.setLocation(0, getY() + distance);
+				label.setLocation(0, label.getY() + 20);
+
 			}
 			try {
 				Thread.sleep(30);
@@ -85,21 +110,34 @@ public class FunctionPanel extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			labelPanel.repaint();
 		}
 		isMoving = false;
+
+		int i = 0;
+		int width = labelPanel.getWidth();
+		for (FuncLabel label : funcLabels) {
+			label.setLocation(0, width * i);
+			i++;
+		}
+
+		repaint();
 
 	}
 
 	public void up() {
+
 		if (isMoving)
 			return;
 		isMoving = true;
-		int distance = funcLabels.get(numOfFunc).getY() - getHeight();
 
-		int times = distance / 10;
+		int distance = funcLabels.get(numOfFunc - 1).getY() + labelPanel.getWidth() - labelPanel.getHeight();
+
+		int times = distance / 20;
+
 		for (int i = 0; i < times; i++) {
 			for (FuncLabel label : funcLabels) {
-				label.setLocation(0, getY() - distance);
+				label.setLocation(0, label.getY() - 20);
 			}
 			try {
 				Thread.sleep(30);
@@ -107,8 +145,24 @@ public class FunctionPanel extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			labelPanel.repaint();
 		}
 		isMoving = false;
+
+		int i = 0;
+		int size = funcLabels.size();
+		int width = labelPanel.getWidth();
+		int height = labelPanel.getHeight();
+		for (FuncLabel label : funcLabels) {
+			label.setLocation(0, height - (size - i) * width);
+			i++;
+		}
+
+		repaint();
+	}
+
+	public int getIndex(FuncLabel label) {
+		return funcLabels.indexOf(label);
 	}
 
 	// 待修改
@@ -117,7 +171,7 @@ public class FunctionPanel extends JPanel {
 		int width = getWidth();
 		int height = getHeight();
 
-		if (numOfFunc * width > height) {
+		if (numOfFunc * width > height - width * 2 / 5) {
 			tooMuchFunc = true;
 		}
 
@@ -127,7 +181,8 @@ public class FunctionPanel extends JPanel {
 
 		g.setColor(Color.BLACK);
 		if (tooMuchFunc) {
-			if (onTheTop)
+
+			if (!onTheTop)
 				g.fillRect(0, 0, width, width / 5);
 			else
 				g.fillRect(0, height - width / 5, width, width / 5);

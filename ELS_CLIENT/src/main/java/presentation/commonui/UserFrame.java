@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ public class UserFrame extends JFrame {
 	private ArrayList<JPanel> operationPanels;
 
 	public UserFrame() {
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		operationPanels = new ArrayList<JPanel>();
 		// panel.setBackground(Color.gray);
 		add(panel);
@@ -49,17 +50,10 @@ public class UserFrame extends JFrame {
 		panel.add(functionPanel);
 		panel.add(operationPanel);
 
-		imageLabel.setBackground(Color.red);
-		messagePanel.setBackground(Color.yellow);
-		functionPanel.setBackground(Color.blue);
-		operationPanel.setBackground(Color.green);
-
-		setTitle("ELS");
-		setSize(960, 640);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-		setVisible(true);
+		// imageLabel.setBackground(Color.red);
+		// messagePanel.setBackground(Color.yellow);
+		// functionPanel.setBackground(Color.blue);
+		// operationPanel.setBackground(Color.green);
 
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -67,6 +61,17 @@ public class UserFrame extends JFrame {
 			}
 		});
 
+		setTitle("ELS");
+		setSize(960, 640);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+
+	}
+
+	public void showFrame() {
+
+		setVisible(true);
 	}
 
 	public void setCmpLocation() {
@@ -91,6 +96,7 @@ public class UserFrame extends JFrame {
 	}
 
 	public void addFuncLabel(JPanel panel) {
+		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		addFuncLabel(null, null, null, panel);
 	}
 
@@ -98,18 +104,30 @@ public class UserFrame extends JFrame {
 	public void addFuncLabel(Image image, Image pressImage, Image rolloverImage, JPanel newPanel) {
 		int height = getHeight();
 		int width = getWidth();
+
 		newPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
 		operationPanels.add(newPanel);
-		FuncLabel funcLabel = new FuncLabel();
-		funcLabel.setImage(image);
-		funcLabel.setPressImage(pressImage);
-		funcLabel.setRolloverImage(rolloverImage);
-		functionPanel.addFuncLabel(funcLabel);
 
+		FuncLabel funcLabel = new FuncLabel();
+		funcLabel.setPanel(newPanel);
+
+		if (image != null)
+			funcLabel.setImage(image);
+		if (image != null)
+			funcLabel.setPressImage(pressImage);
+		if (image != null)
+			funcLabel.setRolloverImage(rolloverImage);
+		functionPanel.addFuncLabel(funcLabel);
+		if (operationPanels.size() == 1) {
+			panel.remove(operationPanel);
+			operationPanel = operationPanels.get(0);
+			panel.add(operationPanel);
+			panel.repaint();
+		}
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				panel.remove(operationPanel);
-				operationPanel = operationPanels.get(functionPanel.getIndex((FuncLabel) e.getSource()));
+				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
 				panel.add(operationPanel);
 				panel.repaint();
 			}
@@ -142,10 +160,10 @@ class MessagePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		g.setFont(new Font("", Font.BOLD, 15));
 		FontMetrics fm = g.getFontMetrics();
-		int width1 = fm.stringWidth(name);
-		int width2 = fm.stringWidth(ID);
-		int strHeight = fm.getHeight();
 
+		int strHeight = fm.getHeight();
+		g.drawString("姓名:" + name, getWidth() / 10, (getHeight() + strHeight) / 2);
+		g.drawString("编号:" + name, getWidth() * 2 / 5, (getHeight() + strHeight) / 2);
 	}
 
 }
