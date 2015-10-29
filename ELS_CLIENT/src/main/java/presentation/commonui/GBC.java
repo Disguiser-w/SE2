@@ -1,4 +1,4 @@
-package presentation.mainui;
+package presentation.commonui;
 
 import java.awt.*;
 
