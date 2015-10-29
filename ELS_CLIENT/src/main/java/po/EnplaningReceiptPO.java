@@ -18,7 +18,7 @@ public class EnplaningReceiptPO {
 	public EnplaningReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
 		Date date = new Date();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.date = format.format(date);
+		this.date = format.format(date).substring(0, 10);
 		this.enplaningReceipt = enplaningReceipt;
 	}
 

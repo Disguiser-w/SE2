@@ -5,13 +5,14 @@ import javax.swing.*;
 import vo.TransferingReceiptVO;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TransferingPanel extends JPanel {
 	public static final int PANEL_WIDTH = 720;
 	public static final int PANEL_HEIGHT = 480;
-	public TransferingReceiptVO transferingReceipt;
+	TransferingReceiptVO transferingReceipt;
 	JButton addButton;
 	JButton deleteButton;
 	JButton sendButton;
@@ -20,6 +21,7 @@ public class TransferingPanel extends JPanel {
 	JButton previous;
 	InfoTable info;
 	JTextField searchTextField;
+	JDialog addDialog;
 
 	public TransferingPanel() {
 		// int numOfOrder = transferingReceiptVO.orderList.size();
@@ -36,6 +38,7 @@ public class TransferingPanel extends JPanel {
 		// info = new JLabel[15][3];
 
 		info = new InfoTable(15, 3);
+		// JScrollPane pane = new JScrollPane(info);
 		info.setTransferingReceipt(transferingReceipt);
 
 		addButton.setBounds(PANEL_WIDTH / 8, PANEL_HEIGHT / 30,
@@ -46,9 +49,9 @@ public class TransferingPanel extends JPanel {
 				PANEL_HEIGHT / 7, PANEL_WIDTH / 20);
 		searchTextField.setBounds(PANEL_WIDTH * 3 / 4, PANEL_HEIGHT / 30,
 				PANEL_HEIGHT / 3, PANEL_WIDTH / 20);
-		next.setBounds(PANEL_WIDTH * 3 / 4, PANEL_HEIGHT * 45 / 48,
+		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 45 / 48,
+		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_HEIGHT / 16, PANEL_HEIGHT / 24);
 
 		info.setBounds(PANEL_HEIGHT / 6, PANEL_HEIGHT / 6,
@@ -81,7 +84,7 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-
+				addui();
 			}
 		});
 
@@ -89,7 +92,7 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-
+				deleteui();
 			}
 		});
 
@@ -97,7 +100,7 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-
+				sendui();
 			}
 		});
 
@@ -105,7 +108,7 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-
+				nextui();
 			}
 		});
 
@@ -113,7 +116,7 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-
+				preui();
 			}
 		});
 
@@ -137,5 +140,28 @@ public class TransferingPanel extends JPanel {
 
 	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
 		this.transferingReceipt = transferingReceipt;
+	}
+
+	public void addui() {
+		if (addDialog == null)
+			addDialog = new JDialog(addDialog, "add");
+		addDialog.setVisible(true);
+		addDialog.setSize(400, 300);
+	}
+
+	public void deleteui() {
+
+	}
+
+	public void sendui() {
+
+	}
+
+	public void nextui() {
+
+	}
+
+	public void preui() {
+
 	}
 }
