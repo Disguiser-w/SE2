@@ -12,14 +12,15 @@ public class UserFrameTest extends UserFrame {
 
 	public UserFrameTest() {
 		super();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			JPanel panel = new JPanel();
 			panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-			panel.setBackground(new Color(1 * i, 12 * i, 25 * i));
+			panel.add(new JButton("第 " + i + " 个"));
+			panel.setBackground(new Color(10 * i, 20 * i, 30 * i));
 			addFuncLabel(panel);
 		}
 		addFuncLabel(new TransferingPanel());
+
 
 		setMessage("pig", "king");
 		showFrame();
