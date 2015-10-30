@@ -90,8 +90,8 @@ public class UserFrame extends JFrame {
 
 		imageLabel.setBounds(0, 0, height / 5, height / 5);
 		messagePanel.setBounds(height * 6 / 25, height / 15, width - height * 7 / 25, height / 15);
-		functionPanel.setBounds(height / 25, height / 5, height * 4 / 25, height * 19 / 25);
-		operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
+		functionPanel.setBounds(height / 25, height / 5, height * 4 / 25, height * 7 / 10);
+		operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 7 / 10);
 
 	}
 
