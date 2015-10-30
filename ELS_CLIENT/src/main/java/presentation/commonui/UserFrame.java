@@ -10,6 +10,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -82,6 +84,7 @@ public class UserFrame extends JFrame {
 	}
 
 	public void setCmpLocation() {
+
 		int width = getWidth();
 		int height = getHeight();
 
@@ -135,8 +138,12 @@ public class UserFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panel.remove(operationPanel);
 				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
+				int height = getHeight();
+				int width = getWidth();
+				operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
 				panel.add(operationPanel);
 				panel.repaint();
+
 			}
 		});
 	}
@@ -157,6 +164,7 @@ class MessagePanel extends JPanel {
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
+
 		super.setBounds(x, y, width, height);
 		changePasswordButton.setBounds(width * 3 / 4, height / 5, height * 5 / 2, height * 3 / 5);
 	}
@@ -167,12 +175,13 @@ class MessagePanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+
 		g.setFont(new Font("", Font.BOLD, 15));
 		FontMetrics fm = g.getFontMetrics();
 
 		int strHeight = fm.getHeight();
-		g.drawString("姓名:" + name, getWidth() / 10, (getHeight() + strHeight) / 2);
-		g.drawString("编号:" + name, getWidth() * 2 / 5, (getHeight() + strHeight) / 2);
+		g.drawString("姓名 : " + name, getWidth() / 10, (getHeight() + strHeight) / 2);
+		g.drawString("编号 : " + ID, getWidth() * 2 / 5, (getHeight() + strHeight) / 2);
 	}
 
 }

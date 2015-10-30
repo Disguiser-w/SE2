@@ -26,7 +26,6 @@ public class FunctionPanel extends JPanel {
 		tooMuchFunc = false;
 		isMoving = false;
 
-		
 		setLayout(null);
 
 	}
@@ -63,7 +62,7 @@ public class FunctionPanel extends JPanel {
 
 					int height = getHeight();
 					int width = getWidth();
-					System.out.println("Click!");
+
 					int y = e.getY();
 
 					if (0 < y && y < width / 5 && !onTheTop) {
@@ -112,7 +111,7 @@ public class FunctionPanel extends JPanel {
 		if (isMoving)
 			return;
 		isMoving = true;
-		System.out.println("down");
+
 		int distance = -funcLabels.get(0).getY();
 		int times = distance / 20;
 		for (int i = 0; i < times; i++) {
