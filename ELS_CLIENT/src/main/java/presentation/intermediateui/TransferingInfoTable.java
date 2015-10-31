@@ -7,12 +7,14 @@ import javax.swing.table.TableColumn;
 
 import vo.TransferingReceiptVO;
 
-public class InfoTable extends JTable {
+public class TransferingInfoTable extends JTable {
 	private int width;
 	private int height;
+	TableColumn tc;
+
 	TransferingReceiptVO transferingReceipt;
 
-	public InfoTable(int row, int column) {
+	public TransferingInfoTable(int row, int column) {
 		super(row, column);
 		width = 720;
 		height = 480;
@@ -27,16 +29,16 @@ public class InfoTable extends JTable {
 		this.setRowHeight(height / 15);
 		this.setRowSelectionAllowed(false);
 
-		TableColumn tc = this.columnModel.getColumn(0);
-		tc.setPreferredWidth(width * 1 / 2);
+		tc = this.columnModel.getColumn(0);
+		tc.setPreferredWidth(width / 2);
 		tc.setResizable(false);
 
 		tc = this.columnModel.getColumn(1);
-		tc.setPreferredWidth(width * 1 / 4);
+		tc.setPreferredWidth(width / 4);
 		tc.setResizable(false);
 
 		tc = this.columnModel.getColumn(2);
-		tc.setPreferredWidth(width * 1 / 4);
+		tc.setPreferredWidth(width / 4);
 		tc.setResizable(false);
 
 	}
@@ -47,13 +49,12 @@ public class InfoTable extends JTable {
 		this.height = height;
 	}
 
-	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
-		this.transferingReceipt = transferingReceipt;
-	}
-
 	public void paint(Graphics g) {
 		setInfo();
 		super.paint(g);
 	}
 
+	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
+		this.transferingReceipt = transferingReceipt;
+	}
 }

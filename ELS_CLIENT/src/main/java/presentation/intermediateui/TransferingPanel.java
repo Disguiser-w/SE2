@@ -19,7 +19,7 @@ public class TransferingPanel extends JPanel {
 	JButton[] modify;
 	JButton next;
 	JButton previous;
-	InfoTable info;
+	TransferingInfoTable info;
 	JTextField searchTextField;
 	JDialog addDialog;
 
@@ -37,7 +37,7 @@ public class TransferingPanel extends JPanel {
 		previous = new JButton("pre");
 		// info = new JLabel[15][3];
 
-		info = new InfoTable(15, 3);
+		info = new TransferingInfoTable(15, 3);
 		// JScrollPane pane = new JScrollPane(info);
 		info.setTransferingReceipt(transferingReceipt);
 
@@ -119,11 +119,11 @@ public class TransferingPanel extends JPanel {
 
 	public void setCmpLocation() {
 		addButton.setBounds(PANEL_WIDTH / 8, PANEL_HEIGHT / 30,
-				PANEL_WIDTH * 6 / 28, PANEL_HEIGHT * 3 / 40);
+				PANEL_WIDTH * 3 / 28, PANEL_HEIGHT / 16);
 		deleteButton.setBounds(PANEL_WIDTH * 5 / 16, PANEL_HEIGHT / 30,
-				PANEL_WIDTH * 6 / 28, PANEL_HEIGHT * 3 / 40);
+				PANEL_WIDTH * 3 / 28, PANEL_HEIGHT / 16);
 		sendButton.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 30,
-				PANEL_WIDTH * 6 / 28, PANEL_HEIGHT * 3 / 40);
+				PANEL_WIDTH * 3 / 28, PANEL_HEIGHT / 16);
 		searchTextField.setBounds(PANEL_WIDTH * 3 / 4, PANEL_HEIGHT / 30,
 				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 16);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
@@ -142,13 +142,6 @@ public class TransferingPanel extends JPanel {
 		PANEL_HEIGHT = height;
 		setCmpLocation();
 		repaint();
-	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TransferingPanel());
-		frame.setVisible(true);
 	}
 
 	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
@@ -176,5 +169,12 @@ public class TransferingPanel extends JPanel {
 
 	public void preui() {
 
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new TransferingPanel());
+		frame.setVisible(true);
 	}
 }
