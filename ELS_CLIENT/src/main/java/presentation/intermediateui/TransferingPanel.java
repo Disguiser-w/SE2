@@ -12,11 +12,14 @@ import java.awt.event.ActionListener;
 public class TransferingPanel extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	
 	TransferingReceiptVO transferingReceipt;
+	
 	JButton addButton;
 	JButton deleteButton;
 	JButton sendButton;
-	JButton[] modify;
+//	JButton[] modify;
+	
 	JButton next;
 	JButton previous;
 	TransferingInfoTable info;
@@ -35,36 +38,10 @@ public class TransferingPanel extends JPanel {
 		searchTextField = new JTextField("Input", 10);
 		next = new JButton("next");
 		previous = new JButton("pre");
-		// info = new JLabel[15][3];
 
 		info = new TransferingInfoTable(15, 3);
-		// JScrollPane pane = new JScrollPane(info);
-		info.setTransferingReceipt(transferingReceipt);
 
 		setCmpLocation();
-
-		// for (int i = 0; i < 15; i++) {
-		// info[i][0] = new JLabel();
-		// info[i][1] = new JLabel();
-		// info[i][2] = new JLabel();
-		//
-		// info[i][0].setBounds(PANEL_HEIGHT / 6 + i * PANEL_HEIGHT / 20,
-		// PANEL_HEIGHT / 6, PANEL_HEIGHT * 5 / 8, PANEL_HEIGHT / 20);
-		// info[i][1].setBounds(PANEL_HEIGHT / 6 + PANEL_HEIGHT * 5 / 8,
-		// PANEL_HEIGHT / 6 + i * PANEL_HEIGHT / 20,
-		// PANEL_HEIGHT * 5 / 16, PANEL_HEIGHT / 20);
-		// info[i][2].setBounds(PANEL_HEIGHT / 6 + PANEL_HEIGHT * 5 / 4,
-		// PANEL_HEIGHT / 6 + i * PANEL_HEIGHT / 20,
-		// PANEL_HEIGHT * 5 / 16, PANEL_HEIGHT / 20);
-		//
-		// info[i][0].setBorder(BorderFactory.createLineBorder(Color.black));
-		// info[i][1].setBorder(BorderFactory.createLineBorder(Color.black));
-		// info[i][2].setBorder(BorderFactory.createLineBorder(Color.black));
-		//
-		// add(info[i][0]);
-		// add(info[i][1]);
-		// add(info[i][2]);
-		// }
 
 		addButton.addActionListener(new ActionListener() {
 
@@ -136,7 +113,6 @@ public class TransferingPanel extends JPanel {
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
-
 		super.setBounds(x, y, width, height);
 		PANEL_WIDTH = width;
 		PANEL_HEIGHT = height;

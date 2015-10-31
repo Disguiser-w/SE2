@@ -1,61 +1,56 @@
-package presentation.intermediateui;
+package presentation.financeui;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-import vo.TransferingReceiptVO;
+import vo.InitInfoVO;
 
-public class TransferingInfoTable extends JTable {
+public class InitialStockInfoTable_main extends JTable{
 	private int width;
 	private int height;
-	
 	TableColumn tc;
-
-	TransferingReceiptVO transferingReceipt;
-
-	public TransferingInfoTable(int row, int column) {
+	
+	ArrayList<InitInfoVO> initInfoList;
+	
+	public InitialStockInfoTable_main(int row,int column){
 		super(row, column);
 		width = 720;
 		height = 480;
 		setInfo();
 	}
-
-	private void setInfo() {
-
-		height = height / 15 * 15;
+	
+	public void setInfo() {
+		height = height / 13 * 13;
 		setSize(width, height);
-
-		this.setRowHeight(height / 15);
+		
+		this.setRowHeight(height/13);
 		this.setRowSelectionAllowed(false);
-
+		
 		tc = this.columnModel.getColumn(0);
-		tc.setPreferredWidth(width / 2);
+		tc.setPreferredWidth(width*35/72);
 		tc.setResizable(false);
-
+		
 		tc = this.columnModel.getColumn(1);
-		tc.setPreferredWidth(width / 4);
+		tc.setPreferredWidth(width*25/72);
 		tc.setResizable(false);
-
-		tc = this.columnModel.getColumn(2);
-		tc.setPreferredWidth(width / 4);
-		tc.setResizable(false);
-
+		
 	}
-
+	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		this.width = width;
 		this.height = height;
 	}
-
+	
 	public void paint(Graphics g) {
 		setInfo();
 		super.paint(g);
 	}
-
-	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
-		this.transferingReceipt = transferingReceipt;
+	
+	public void setList(ArrayList<InitInfoVO> initInfoList){
+		this.initInfoList = initInfoList;
 	}
 }

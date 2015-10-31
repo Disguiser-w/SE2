@@ -8,55 +8,55 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import presentation.intermediateui.TransferingPanel;
-import vo.CollectionReceiptVO;
-import vo.PaymentReceiptVO;
+import vo.InitInfoVO;
 
-public class BusinessStateReceiptPanel extends JPanel {
+public class InitialStockPanel_main extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
-
-	ArrayList<CollectionReceiptVO> collectionReceiptList;
-	ArrayList<PaymentReceiptVO> paymentReceiptList;
-
+	
+	ArrayList<InitInfoVO> initInfoList;
+	
+	JButton newButton;
 	JButton startDate;
 	JButton endDate;
 	JButton dateOKButton;
-	JButton printButton;
-	JButton sendButton;
 	JButton next;
 	JButton previous;
-
+	
 	JLabel function;
 	JLabel dateRange;
 
 	JTextField inputStartDate;
 	JTextField inputEndDate;
-
-	BusinessStateReceiptInfoTable info;
-
-	public BusinessStateReceiptPanel() {
+	
+	InitialStockInfoTable_main info;
+	
+	public InitialStockPanel_main(){
+		newButton = new JButton("new");
 		startDate = new JButton("start");
 		endDate = new JButton("end");
 		dateOKButton = new JButton("ok");
-		printButton = new JButton("print");
-		sendButton = new JButton("send");
 		next = new JButton("next");
 		previous = new JButton("previous");
-
-		function = new JLabel("经营情况表");
+		
+		function = new JLabel("期初建账");
 		dateRange = new JLabel("日期范围");
 
 		inputStartDate = new JTextField("2015/10/30", 11);
 		inputEndDate = new JTextField("2015/11/05", 11);
-
-		info = new BusinessStateReceiptInfoTable(13, 4);
-
-		setCmpLocation();
-
+		
+		info = new InitialStockInfoTable_main(13,2);
+		
+		newButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO 自动生成的方法存根
+				newInitInfoui();
+			}
+		});
+		
 		startDate.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -80,23 +80,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 				dateOK();
 			}
 		});
-
-		printButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				printui();
-			}
-		});
-
-		sendButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				sendui();
-			}
-		});
-
+		
 		next.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -112,14 +96,13 @@ public class BusinessStateReceiptPanel extends JPanel {
 				previousui();
 			}
 		});
-
+		
 		setLayout(null);
-
+		
+		add(newButton);
 		add(startDate);
 		add(endDate);
 		add(dateOKButton);
-		add(printButton);
-		add(sendButton);
 		add(next);
 		add(previous);
 		add(function);
@@ -128,13 +111,11 @@ public class BusinessStateReceiptPanel extends JPanel {
 		add(inputStartDate);
 		add(info);
 	}
-
-	public void setCmpLocation() {
+	
+	public void setCmpLocation(){
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 5 / 18, PANEL_HEIGHT / 12);
-		printButton.setBounds(PANEL_WIDTH * 7 / 9, PANEL_HEIGHT / 24,
-				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
-		sendButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
+		newButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
 		dateRange.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
@@ -154,7 +135,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
 				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
 	}
-
+	
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
@@ -163,14 +144,13 @@ public class BusinessStateReceiptPanel extends JPanel {
 		setCmpLocation();
 		repaint();
 	}
-
-	public void setList(ArrayList<CollectionReceiptVO> collectionReceiptList,
-			ArrayList<PaymentReceiptVO> paymentReceiptList) {
-		this.collectionReceiptList = collectionReceiptList;
-		this.paymentReceiptList = paymentReceiptList;
+	
+	public void setList(ArrayList<InitInfoVO> initInfoList){
+		this.initInfoList = initInfoList;
 		
-		info.setList(collectionReceiptList, paymentReceiptList);
+		info.setList(initInfoList);
 	}
+	
 
 	public void startui() {
 
@@ -184,11 +164,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 	}
 
-	public void printui() {
-
-	}
-
-	public void sendui() {
+	public void newInitInfoui() {
 
 	}
 
@@ -203,7 +179,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new BusinessStateReceiptPanel());
+		frame.add(new InitialStockPanel_main());
 		frame.setVisible(true);
 	}
 }
