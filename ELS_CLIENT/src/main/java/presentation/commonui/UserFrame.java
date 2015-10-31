@@ -10,12 +10,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,25 +23,32 @@ import javax.swing.JPanel;
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
  */
 public class UserFrame extends JFrame {
-	private JPanel panel;
-
+//	private JLabel panel;
 	private JLabel imageLabel;
 	private MessagePanel messagePanel;
 	private FunctionPanel functionPanel;
 	private JPanel operationPanel;
-
+	private HeaderPanel headerPanel;
 	private ArrayList<JPanel> operationPanels;
 
 	public UserFrame() {
-		panel = new JPanel();
+
+//		panel = new JLabel();
 		operationPanels = new ArrayList<JPanel>();
-		// panel.setBackground(Color.gray);
-		add(panel);
+//		panel.setBackground(Color.gray);
+//		add(panel);
 
 		imageLabel = new JLabel();
 		messagePanel = new MessagePanel();
 		functionPanel = new FunctionPanel();
 		operationPanel = new JPanel();
+
+		headerPanel = new HeaderPanel(this);
+
+		// 舍颜色看效果
+		headerPanel.setBackground(Color.BLACK);
+		imageLabel.setOpaque(true);
+		imageLabel.setBackground(Color.BLUE);
 
 		imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -50,12 +56,13 @@ public class UserFrame extends JFrame {
 		operationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		setCmpLocation();
 
-		panel.setLayout(null);
+		setLayout(null);
 
-		panel.add(imageLabel);
-		panel.add(messagePanel);
-		panel.add(functionPanel);
-		panel.add(operationPanel);
+		add(imageLabel);
+		add(messagePanel);
+		add(functionPanel);
+		add(operationPanel);
+		add(headerPanel);
 
 		// imageLabel.setBackground(Color.red);
 		// messagePanel.setBackground(Color.yellow);
@@ -74,6 +81,7 @@ public class UserFrame extends JFrame {
 		setMinimumSize(new Dimension(700, 500));
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUndecorated(true);
 		// setResizable(false);
 
 	}
@@ -88,10 +96,11 @@ public class UserFrame extends JFrame {
 		int width = getWidth();
 		int height = getHeight();
 
-		imageLabel.setBounds(0, 0, height / 5, height / 5);
-		messagePanel.setBounds(height * 6 / 25, height / 15, width - height * 7 / 25, height / 15);
-		functionPanel.setBounds(height / 25, height / 5, height * 4 / 25, height * 7 / 10);
-		operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 7 / 10);
+		imageLabel.setBounds(height / 25, height * 3 / 50, height * 4 / 25, height * 4 / 25);
+		messagePanel.setBounds(height * 6 / 25, height * 8 / 75, width - height * 7 / 25, height / 15);
+		functionPanel.setBounds(height / 25, height * 6 / 25, height * 4 / 25, height * 7 / 10);
+		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
+		headerPanel.setBounds(0, 0, width, height / 25);
 
 	}
 
@@ -129,59 +138,22 @@ public class UserFrame extends JFrame {
 			funcLabel.setRolloverImage(rolloverImage);
 		functionPanel.addFuncLabel(funcLabel);
 		if (operationPanels.size() == 1) {
-			panel.remove(operationPanel);
+			remove(operationPanel);
 			operationPanel = operationPanels.get(0);
-			panel.add(operationPanel);
-			panel.repaint();
+			add(operationPanel);
+			repaint();
 		}
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				panel.remove(operationPanel);
+				remove(operationPanel);
 				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
 				int height = getHeight();
 				int width = getWidth();
-				operationPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
-				panel.add(operationPanel);
-				panel.repaint();
+				operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
+				add(operationPanel);
+				repaint();
 
 			}
 		});
 	}
-}
-
-class MessagePanel extends JPanel {
-	private String name;
-	private String ID;
-	private JButton changePasswordButton;
-
-	public MessagePanel() {
-		name = "狗盛";
-		ID = "gs-007";
-		changePasswordButton = new JButton("修改密码");
-
-		add(changePasswordButton);
-		setLayout(null);
-	}
-
-	public void setBounds(int x, int y, int width, int height) {
-
-		super.setBounds(x, y, width, height);
-		changePasswordButton.setBounds(width * 3 / 4, height / 5, height * 5 / 2, height * 3 / 5);
-	}
-
-	public void setMessage(String name, String ID) {
-		this.name = name;
-		this.ID = ID;
-	}
-
-	public void paintComponent(Graphics g) {
-
-		g.setFont(new Font("", Font.BOLD, 15));
-		FontMetrics fm = g.getFontMetrics();
-
-		int strHeight = fm.getHeight();
-		g.drawString("姓名 : " + name, getWidth() / 10, (getHeight() + strHeight) / 2);
-		g.drawString("编号 : " + ID, getWidth() * 2 / 5, (getHeight() + strHeight) / 2);
-	}
-
 }

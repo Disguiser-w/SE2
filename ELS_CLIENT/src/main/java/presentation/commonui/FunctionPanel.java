@@ -2,11 +2,11 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class FunctionPanel extends JPanel {
@@ -101,6 +101,13 @@ public class FunctionPanel extends JPanel {
 		numOfFunc++;
 		funcLabel.setBounds(0, width * (numOfFunc - 1), width, width);
 
+		// test
+		//
+		Image image = Images.getImageByName("test" + numOfFunc + ".png");
+		funcLabel.setImage(image);
+		funcLabel.setRolloverImage(image);
+		funcLabel.setPressImage(image);
+
 		labelPanel.add(funcLabel);
 		labelPanel.setBackground(Color.gray);
 		repaint();
@@ -120,7 +127,7 @@ public class FunctionPanel extends JPanel {
 
 			}
 			try {
-				Thread.sleep(30);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -160,7 +167,7 @@ public class FunctionPanel extends JPanel {
 				label.setLocation(0, label.getY() - 20);
 			}
 			try {
-				Thread.sleep(30);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -209,7 +216,7 @@ public class FunctionPanel extends JPanel {
 			if (!onTheTop)
 				g.fillRect(0, 0, width, width / 5);
 			else
-				g.fillRect(0, height - width / 5, width, width / 5);
+				g.fillRect(0, height - width / 5 - 1, width, width / 5 + 1);
 		}
 
 	}

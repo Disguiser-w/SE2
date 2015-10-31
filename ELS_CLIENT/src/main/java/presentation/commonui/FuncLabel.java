@@ -19,7 +19,7 @@ public class FuncLabel extends JLabel {
 
 	public FuncLabel() {
 
-		image = pressImage = rolloverImage = Images.getFuncImage();
+		image = pressImage = rolloverImage = Images.getImageByName("func.png");
 
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
