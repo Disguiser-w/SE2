@@ -1,33 +1,42 @@
 package presentation.commonui;
 
-import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import presentation.intermediateui.TransferingPanel;
+import presentation.businessui.OrderDistributePanel;
+import presentation.businessui.OrderReceiveManagerPanel;
+import presentation.expressui.AddOrderPanel;
+import presentation.expressui.ChargeMessageCollectionPanel;
+import presentation.expressui.QueryPanel;
 
 public class UserFrameTest extends UserFrame {
 
 	public UserFrameTest() {
+
 		super();
-		for (int i = 0; i < 5; i++) {
-			JPanel panel = new JPanel();
+		addFuncLabel(new OrderReceiveManagerPanel());
 
-			panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		addFuncLabel(new OrderDistributePanel());
 
-			panel.setBackground(new Color(1 * i, 12 * i, 25 * i));
-			addFuncLabel(panel);
-		}
-		addFuncLabel(new TransferingPanel());
+		addFuncLabel(new ChargeMessageCollectionPanel());
+
+		addFuncLabel(new AddOrderPanel());
+
+		addFuncLabel(new QueryPanel());
+
+		// addFuncLabel(new ChargeCollectionPanel());
 
 		showFrame();
+		addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				System.out.println("key presssss");
+			}
+		});
+		setFocusable(false);
 	}
 
 	public static void main(String[] args) {
-		
-		
+
 		new UserFrameTest();
 
 	}

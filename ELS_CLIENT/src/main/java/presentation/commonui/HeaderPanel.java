@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sun.glass.ui.Cursor;
+
 class HeaderPanel extends JPanel {
 	private JLabel minimizeLabel;
 	private JLabel maximizeLabel;
@@ -51,6 +53,9 @@ class HeaderPanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				x = e.getX();
 				y = e.getY();
+			}
+
+			public void mouseReleased(MouseEvent e) {
 
 			}
 
@@ -78,17 +83,21 @@ class HeaderPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (!isMaximum) {
 					isMaximum = true;
+					// containFrame.setResizable(true);
 					containFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					// containFrame.setResizable(false);
 				} else {
 					isMaximum = false;
+					// containFrame.setResizable(true);
 					containFrame.setExtendedState(JFrame.NORMAL);
+					// containFrame.setResizable(false);
 				}
 			}
 		});
 
 		exitLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				((UserFrame) (containFrame)).exitSystem();
 			}
 		});
 
