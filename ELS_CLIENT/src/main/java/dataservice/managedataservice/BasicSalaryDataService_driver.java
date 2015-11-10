@@ -3,7 +3,6 @@ package dataservice.managedataservice;
 import java.rmi.RemoteException;
 
 import po.BasicSalaryPO;
-import po.PerWagePO;
 import type.ProfessionType;
 
 public class BasicSalaryDataService_driver {

@@ -6,9 +6,9 @@ import vo.CityDistanceVO;
 public class CityDistanceBLService_driver {
 
 	public void drive(CityDistanceBLService_stub cityDistanceBLService){
-		cityDistanceBLService.addCityDistance(new CityDistanceVO("南京", "上海", 23));
-        cityDistanceBLService.deleteCityDistance(new CityDistanceVO("南京", "上海", 23));
-        cityDistanceBLService.modifyCityDistance(new CityDistanceVO("南京", "上海", 23));
+		cityDistanceBLService.addCityDistance(new CityDistanceVO("南京", "上海", 266));
+        cityDistanceBLService.deleteCityDistance(new CityDistanceVO("南京", "上海", 266));
+        cityDistanceBLService.modifyCityDistance(new CityDistanceVO("南京", "上海", 266));
         cityDistanceBLService.findCityDistance("南京", "上海");
 	}
 	
