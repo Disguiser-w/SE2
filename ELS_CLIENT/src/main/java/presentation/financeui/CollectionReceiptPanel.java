@@ -52,7 +52,6 @@ public class CollectionReceiptPanel extends JPanel {
 
 		dateChoose.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				dateChooseui();
@@ -61,7 +60,6 @@ public class CollectionReceiptPanel extends JPanel {
 
 		infook.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				infookui();
@@ -70,7 +68,6 @@ public class CollectionReceiptPanel extends JPanel {
 
 		ok.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				okui();
@@ -79,7 +76,6 @@ public class CollectionReceiptPanel extends JPanel {
 
 		total.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				totalui();

@@ -1,10 +1,9 @@
 package businesslogicservice.financeblservice;
 
-import vo.PaymentReceiptVO;
 
 public class PaymentReceiptBLService_driver {
 	public void drive(PaymentReceiptBLService pbs){
-		pbs.creatPaymentReceipt(new PaymentReceiptVO());
+		pbs.creatPaymentReceipt(null);
 		String s="FKD-20151010-00001";
 		pbs.getPaymentReceipt(s);
 		pbs.getAllPaymentReceipt();

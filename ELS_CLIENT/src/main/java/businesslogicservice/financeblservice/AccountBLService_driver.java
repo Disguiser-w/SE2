@@ -4,10 +4,10 @@ import vo.AccountVO;
 
 public class AccountBLService_driver {
 	public void drive(AccountBLService abs){
-		abs.addAccount(new AccountVO());
-		abs.deleteAccount(new AccountVO());
+		abs.addAccount(new AccountVO(null, 0));
+		abs.deleteAccount(new AccountVO(null, 0));
 		String name="金三胖";
-		abs.modifyAccount(new AccountVO(),name);
+		abs.modifyAccount(new AccountVO(name, 0),name);
 		abs.findbyName(name);
 		String keyword="胖";
 		abs.findByKeyword(keyword);

@@ -9,7 +9,7 @@ public class BusinessstatementReceiptBLService_driver {
 		String endTime="20151001";
 		bsls.showBSList(beginTime , endTime);	
 		bsls.showAllBSList();
-		bsls.export(new BusinessStatementReceiptVO());
+		bsls.export(new BusinessStatementReceiptVO(endTime, endTime, null, null));
 	}
 	
 	public static void main(String[] args){

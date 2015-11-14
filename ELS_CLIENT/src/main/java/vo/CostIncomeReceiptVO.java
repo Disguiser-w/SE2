@@ -22,7 +22,8 @@ public class CostIncomeReceiptVO extends ReceiptVO{
 	}
 	
 
-	
+
+
 	public ArrayList<CollectionReceiptVO> getCollection(){
 		return cvo;
 	}

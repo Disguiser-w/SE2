@@ -25,6 +25,8 @@ public class PaymentReceiptVO extends ReceiptVO{
 	}
 
 	
+
+
 	public String getClause(){
 		return clause;
 	}
