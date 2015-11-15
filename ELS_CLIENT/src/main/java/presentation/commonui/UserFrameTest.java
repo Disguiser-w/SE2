@@ -14,24 +14,16 @@ public class UserFrameTest extends UserFrame {
 	public UserFrameTest() {
 
 		super();
-		addFuncLabel(new OrderReceiveManagerPanel());
-
-		addFuncLabel(new OrderDistributePanel());
-
-		addFuncLabel(new ChargeMessageCollectionPanel());
-
 		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new AddOrderPanel());
 
-		addFuncLabel(new QueryPanel());
-
-		// addFuncLabel(new ChargeCollectionPanel());
 
 		showFrame();
-		addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				System.out.println("key presssss");
-			}
-		});
+
 		setFocusable(false);
 	}
 

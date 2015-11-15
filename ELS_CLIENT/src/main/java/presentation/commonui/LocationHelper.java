@@ -147,10 +147,13 @@ public class LocationHelper {
 	}
 
 	public void addCmp(JComponent c) {
-		c.setBounds(0, 20 * num + 20, 20, 20);
+		c.setBounds(0 + num / 7 * 20, 20 * num % 140, 20, 20);
 		c.setFocusable(false);
 		if (c instanceof JLabel || c instanceof JTable)
 			c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		if (c instanceof JLabel) {
+			((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
+		}
 		components.add(new ComponentStates(c));
 		num++;
 		// 添加监听
