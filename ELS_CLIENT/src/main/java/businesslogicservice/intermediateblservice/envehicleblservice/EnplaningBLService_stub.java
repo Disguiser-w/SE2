@@ -55,4 +55,12 @@ public class EnplaningBLService_stub implements EnplaningBLService {
 		System.out.println("update successfully!");
 		return true;
 	}
+	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	public boolean showEnplaningReceiptList(ArrayList<EnplaningReceiptVO> al) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
 }

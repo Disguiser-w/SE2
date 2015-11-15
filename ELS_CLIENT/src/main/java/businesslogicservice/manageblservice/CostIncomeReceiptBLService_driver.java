@@ -11,8 +11,8 @@ public class CostIncomeReceiptBLService_driver {
 		cbs.getAllCostIncomeList();
 		cbs.getCollection();
 		cbs.getPayment();
-		cbs.getIncome(new CollectionReceiptVO());
-		cbs.getCost(new PaymentReceiptVO());
+		cbs.getIncome(null);
+		cbs.getCost(null);
 		cbs.getProfit(0, 0);
 		cbs.getCostIncomeListID();
 	}

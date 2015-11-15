@@ -4,7 +4,7 @@ import vo.ReceiptVO;
 
 public class ReceiptBLService_driver {
     public void drive(ReceiptBLService receiptBLService){
-    	boolean addResult = receiptBLService.add(new ReceiptVO());
+    	boolean addResult = receiptBLService.add(new ReceiptVO(null,null,null,null));
     	boolean modifyResult = receiptBLService.modify(new String());
     	if(addResult)
     		System.out.println("modify receipt successfully!");
@@ -12,7 +12,7 @@ public class ReceiptBLService_driver {
     	boolean BatchResult = receiptBLService.batch(ID);
     	boolean ApproveResult = receiptBLService.approve("141250185");
     	
-    	ReceiptVO vo = new ReceiptVO();
+    	ReceiptVO vo = new ReceiptVO(null,null,null,null);
     	receiptBLService.update(vo);
     	receiptBLService.reply("141250185");
     	receiptBLService.view();

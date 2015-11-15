@@ -59,4 +59,14 @@ public class EntruckingBLService_stub implements EntruckingBLService {
 		System.out.println("update successfully!");
 		return false;
 	}
+
+	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	public boolean showEntruckingReceiptList(ArrayList<EntruckingReceiptVO> vo) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
 }

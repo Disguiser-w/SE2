@@ -55,4 +55,12 @@ public class EntrainingBLService_stub implements EntrainingBLService {
 		System.out.println("update successfully!");
 		return false;
 	}
+	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+	public boolean showEntrainingReceiptList(ArrayList<EntrainingReceiptVO> vo) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
 }

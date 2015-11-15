@@ -11,12 +11,11 @@ public class EntrainingBLService_driver {
     public void drive(EntrainingBLService ebls){
     	ebls.showTrainList();
     	ebls.showTrain(new String());
-    	ebls.updateWaitingList(new TransferingReceiptVO());
     	ebls.entrain(new ArrayList<OrderVO>());
-    	ebls.updateEntrainingReceiptList(new EntrainingReceiptVO());
+    	ebls.updateEntrainingReceiptList(new EntrainingReceiptVO(null,null,null,null,null));
     	ebls.computeFare(new ArrayList<EntrainingReceiptVO>());
-    	ebls.updateFare(new FareVO());
-    	ebls.showEntrainingReceipt(new ArrayList<EntrainingReceiptVO>());
+    	ebls.updateFare(null);
+    	ebls.showEntrainingReceiptList(new ArrayList<EntrainingReceiptVO>());
     	ebls.updateEntrainingReceipt(new ArrayList<EntrainingReceiptVO>());
     }
     
