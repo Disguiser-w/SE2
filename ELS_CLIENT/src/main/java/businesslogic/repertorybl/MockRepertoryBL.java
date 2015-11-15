@@ -11,7 +11,7 @@ public class MockRepertoryBL extends RepertoryBL{
 	InventoryVO inventory;
 	
 	public MockRepertoryBL(){
-		repertory = new RepertoryVO("-25-0","CK-00001",0,0,0,0);
+		repertory = new RepertoryVO("025-0","CK-00001",0,0,0,0);
 		inventory = new InventoryVO();
 	}
 	
