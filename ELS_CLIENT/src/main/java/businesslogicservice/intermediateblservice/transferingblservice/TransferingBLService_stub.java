@@ -1,4 +1,4 @@
-package businesslogicservice.intermediateblservice.tranferingblservice;
+package businesslogicservice.intermediateblservice.transferingblservice;
 
 import vo.TransferingReceiptVO;
 
