@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class FareVO {
-	public final double money;
-	public final String ID;
+	public  double money;
+	public  String ID;
 
-	public final ArrayList<EnplaningReceiptVO> enplaningReceiptVOList;
-	public final ArrayList<EntrainingReceiptVO> entrainingReceiptVOList;
-	public final ArrayList<EntruckingReceiptVO> entruckingReceiptVOList;
+	public  ArrayList<EnplaningReceiptVO> enplaningReceiptVOList;
+	public  ArrayList<EntrainingReceiptVO> entrainingReceiptVOList;
+	public  ArrayList<EntruckingReceiptVO> entruckingReceiptVOList;
 
-	public final String time;
-	public final OrganizationVO intermediateCentre;
+	public  String time;
+	public  OrganizationVO intermediateCentre;
 
 	public FareVO(ArrayList<EnplaningReceiptVO> enplaningReceiptVOList,
 			ArrayList<EntrainingReceiptVO> entrainingVOList,
@@ -28,4 +28,21 @@ public class FareVO {
 		this.time = time;
 		this.intermediateCentre = intermediateCentre;
 	}
+	
+	public FareVO(){
+		
+	}
+	public FareVO(String t,double m){
+		time=t;
+		money=m;
+	}
+	
+	public String getTime(){
+		return time;
+	}
+	
+	public double getMoney(){
+		return money;
+	}
+
 }
