@@ -1,4 +1,4 @@
-package businesslogic.intermediatebl.transferingbl;
+package intermediatetest;
 
 import java.util.ArrayList;
 

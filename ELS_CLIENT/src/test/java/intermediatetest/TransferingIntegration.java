@@ -1,6 +1,7 @@
-package businesslogic.intermediatebl.transferingbl;
+package intermediatetest;
 
 import vo.ReceiptVO;
+import businesslogic.intermediatebl.transferingbl.TransferingBL;
 import businesslogic.receiptbl.MockReceipt;
 import businesslogic.receiptbl.ReceiptBL;
 

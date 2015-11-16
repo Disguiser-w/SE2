@@ -1,6 +1,7 @@
-package businesslogic.intermediatebl.envehiclebl;
+package intermediatetest;
 
-import businesslogic.intermediatebl.transferingbl.MockTransferingReceipt;
+import businesslogic.intermediatebl.envehiclebl.AllocateWaitingOrderBL;
+import businesslogic.intermediatebl.envehiclebl.EntrainingBL;
 
 public class EntrainingIntegration {
 	 public void testEntraining(){
