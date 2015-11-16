@@ -10,7 +10,7 @@ public interface DriverManagerBLService {
 	/**
 	 * 系统返回所有的车辆信息
 	 */
-	public ArrayList<DriverVO> getDriverInfo(String ID);
+	public ArrayList<DriverVO> getDriverInfo();
 	/**
 	 * 系统根据车辆信息更新车辆信息列表，并返回更新结果
 	 */

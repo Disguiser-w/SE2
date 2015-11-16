@@ -9,5 +9,5 @@ public interface LogisticQueryBLService {
 	/**
 	 * 系统根据输入的订单号搜索并返回对应的订单信息，返回null说明订单不存在
 	 * */
-	public OrderVO query(long orderNum);
+	public OrderVO query(String orderID);
 }

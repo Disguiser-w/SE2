@@ -20,4 +20,8 @@ public interface ReceiptBLService {
     public ArrayList<ReceiptVO> refresh();
     
     public boolean approve(String ID);
+    
+    
+    
+    
 }

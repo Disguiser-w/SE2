@@ -1,26 +1,26 @@
-package businesslogic.businessbl;
+package businesslogic.businessbl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.businessbl.Gathering;
 import businesslogicservice.businessblservice.GatheringBLService;
-import dataservice.businessdataservice.BusinessDataService;
 import vo.ExpressVO;
 import vo.GatheringReceiptVO;
 
-public class Gathering{
-	private BusinessDataService businessData;
+public class GatheringController implements GatheringBLService{
+	private Gathering gathering;
 	
-	public Gathering(){
-		
+	public GatheringController(){
+		gathering=new Gathering();
 	}
 	public ArrayList<ExpressVO> getChargeInfo() {
 		// TODO Auto-generated method stub
-		return null;
+		return gathering.getChargeInfo();
 	}
 
 	public double gathering(GatheringReceiptVO vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return gathering.gathering(vo);
 	}
 
 }

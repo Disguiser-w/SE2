@@ -1,39 +1,36 @@
-package businesslogic.businessbl;
+package businesslogic.businessbl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.businessbl.VehicleManager;
 import businesslogicservice.businessblservice.VehicleManagerBLService;
-import dataservice.businessdataservice.BusinessDataService;
 import vo.VehicleVO;
 
-public class VehicleManager {
+public class VehicleManagerController implements VehicleManagerBLService {
+	private VehicleManager vehicleManager;
 
-	private BusinessDataService businessData;
-
-	public VehicleManager() {
-
+	public VehicleManagerController(){
+		vehicleManager=new VehicleManager();
 	}
-
+	
 	public ArrayList<VehicleVO> getVehicleInfo() {
 		// TODO Auto-generated method stub
-		ArrayList<VehicleVO> vos = new ArrayList<VehicleVO> ();
-		vos.add(new VehicleVO("025-001-112", null, null, null, null, null));
-		return vos;
+		return vehicleManager.getVehicleInfo();
 	}
 
 	public boolean addVehicle(VehicleVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return vehicleManager.addVehicle(vo);
 	}
 
 	public boolean deleteVehicle(VehicleVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return vehicleManager.addVehicle(vo);
 	}
 
 	public boolean modifyVehicle(VehicleVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return vehicleManager.addVehicle(vo);
 	}
 
 }

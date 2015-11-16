@@ -10,7 +10,7 @@ public interface VehicleManagerBLService {
 	/**
 	 * 系统根据车辆编号返回对于那个的车辆信息
 	 */
-	public ArrayList<VehicleVO> getVehicleInfo(String ID);
+	public ArrayList<VehicleVO> getVehicleInfo();
 	/**
 	 * 系统更新车辆列表，并返回更新结果
 	 * */

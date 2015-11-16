@@ -1,39 +1,37 @@
-package businesslogic.businessbl;
+package businesslogic.businessbl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.businessbl.DriverManager;
 import businesslogicservice.businessblservice.DriverManagerBLService;
-import dataservice.businessdataservice.BusinessDataService;
 import vo.DriverVO;
 
-public class DriverManager {
+public class DriverManagerController implements DriverManagerBLService {
 
-	private BusinessDataService businessData;
+	private DriverManager driverManager;
 
-	public DriverManager() {
-
+	public DriverManagerController() {
+		driverManager = new DriverManager();
 	}
 
 	public ArrayList<DriverVO> getDriverInfo() {
 		// TODO Auto-generated method stub
-		ArrayList<DriverVO> vos = new ArrayList<DriverVO>();
-		vos.add(new DriverVO("025-000-111", null, null, null, null, null, null, null));
-		return vos;
+		return driverManager.getDriverInfo();
 	}
 
 	public boolean addDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return driverManager.addDriver(vo);
 	}
 
 	public boolean deleteDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return driverManager.deleteDriver(vo);
 	}
 
 	public boolean modifyDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		return driverManager.modifyDriver(vo);
 	}
 
 }
