@@ -4,7 +4,7 @@ import businesslogic.financebl.AccountBL;
 import vo.MockAccountVO;
 import junit.framework.TestCase;
 
-public class AccountBLTester extends TestCase{
+public class AccountBLTest extends TestCase{
 	
 	public void testAccount(){
 	MockAccountVO mavo1=new MockAccountVO("汪狗",3000);

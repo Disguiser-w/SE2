@@ -4,7 +4,7 @@ import businesslogic.financebl.CollectionReceiptBL;
 import junit.framework.TestCase;
 import vo.MockGatheringReceiptVO;
 
-public class CollectionReceiptBLTester extends TestCase{
+public class CollectionReceiptBLTest extends TestCase{
 	public void testTotalMoney(){
 		MockGatheringReceiptVO mgrpo1=new MockGatheringReceiptVO("025-000", "2015/11/15", 300, "SDK-20151115-00000");
 		MockGatheringReceiptVO mgrpo2=new MockGatheringReceiptVO("025-001", "2015/11/15", 400, "SDK-20151115-00001");

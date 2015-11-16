@@ -6,7 +6,7 @@ import vo.MockFinanceCostVO;
 import vo.MockFareVO;
 import junit.framework.TestCase;
 
-public class PaymentReceiptBLTester extends TestCase{
+public class PaymentReceiptBLTest extends TestCase{
 	
 	public void testMoney(){
 	MockFareVO mfvo=new MockFareVO("2015/10",3000);

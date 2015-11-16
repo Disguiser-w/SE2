@@ -3,8 +3,7 @@ package vo;
 public class RepertoryVO {
 
 	private String repertoryID, ownerID;
-	private int maxRow, maxShelf, maxDigit;
-	private double warningRadio;
+	private int maxRow, maxShelf, maxDigit,warningRadio;
 
 	public RepertoryVO(String repertoryID, String ownerID, int maxRow, int maxShelf, int maxDigit, int warningRatio) {
 		// 仓库编号 对应仓库管理员编号 最多多少排 最多多少架 最多多少位 警戒比例
@@ -57,11 +56,11 @@ public class RepertoryVO {
 		this.maxDigit = maxDigit;
 	}
 
-	public double getWarningRatio() {
+	public int getWarningRatio() {
 		return this.warningRadio;
 	}
 
-	public void setWarningRatio(double warningRatio) {
+	public void setWarningRatio(int warningRatio) {
 		this.warningRadio = warningRatio;
 	}
 

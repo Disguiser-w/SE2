@@ -1,8 +1,9 @@
+package managetest;
 import junit.framework.TestCase;
 
 import vo.MockCostIncomeReceiptVO;
 
-public class CostIncomeReceiptTester extends TestCase {
+public class CostIncomeReceiptTest extends TestCase {
 
 	public void testCostIncomeReceipt(){
 		MockCostIncomeReceiptVO mcir = new MockCostIncomeReceiptVO(10000,20000,10000);

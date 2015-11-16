@@ -1,9 +1,10 @@
+package managetest;
 import junit.framework.TestCase;
 import vo.MockBusinessStatementReceiptVO;
 import vo.MockCollectionReceiptVO;
 import vo.MockPaymentReceiptVO;
 
-public class BusinessStatementReceiptTester extends TestCase {
+public class BusinessStatementReceiptTest extends TestCase {
 
 	public void testBusinessStatementReceipt(){
 		

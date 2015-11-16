@@ -1,3 +1,4 @@
+package repertorytest;
 
 import businesslogic.repertorybl.MockRepertoryBL;
 import vo.GoodsVO;
@@ -6,7 +7,7 @@ import vo.InventoryVO;
 import junit.framework.TestCase;
 import java.util.ArrayList;
 
-public class RepertoryTester extends TestCase {
+public class RepertoryTest extends TestCase {
 	
 	public void testRepertory(){
 		
