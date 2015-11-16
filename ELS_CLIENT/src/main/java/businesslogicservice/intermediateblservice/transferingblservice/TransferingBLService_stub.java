@@ -38,9 +38,9 @@ public class TransferingBLService_stub implements TransferingBLService {
 		return null;
 	}
 
-	public void updateTransferingReceipt(TransferingReceiptVO vo) {
+	public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }

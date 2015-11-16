@@ -11,7 +11,7 @@ public interface ReceiptBLService {
     
     public boolean batch(String[] ID);
     
-    public void update(ReceiptVO vo);
+    public boolean update(ReceiptVO vo);
     
     public void reply(String userID);
     

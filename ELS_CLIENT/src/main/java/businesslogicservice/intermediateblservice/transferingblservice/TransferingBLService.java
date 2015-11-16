@@ -11,5 +11,5 @@ public interface TransferingBLService {
     
     public boolean modifyOrder(String ID);
     
-    public void updateTransferingReceipt(TransferingReceiptVO vo);
+    public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo);
 }

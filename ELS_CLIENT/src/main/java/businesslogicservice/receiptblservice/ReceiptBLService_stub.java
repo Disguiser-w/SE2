@@ -24,9 +24,10 @@ public class ReceiptBLService_stub implements ReceiptBLService{
 		return true;
 	}
 
-	public void update(ReceiptVO vo) {
+	public boolean update(ReceiptVO vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update receipt successfully!");
+		return true;
 	}
 	
 	public void reply(String userID) {

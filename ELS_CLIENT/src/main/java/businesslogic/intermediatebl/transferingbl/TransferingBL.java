@@ -25,9 +25,9 @@ public class TransferingBL implements TransferingBLService{
 		return false;
 	}
 
-	public void updateTransferingReceipt(TransferingReceiptVO vo) {
+	public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo) {
 		// TODO 自动生成的方法存根
-		
+		return null;
 	}
 
 }

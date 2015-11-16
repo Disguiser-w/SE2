@@ -22,9 +22,10 @@ public class ReceiptBL implements ReceiptBLService {
 		return false;
 	}
 
-	public void update(ReceiptVO vo) {
+	public boolean update(ReceiptVO vo) {
 		// TODO 自动生成的方法存根
 
+		return false;
 	}
 
 	public void reply(String userID) {
