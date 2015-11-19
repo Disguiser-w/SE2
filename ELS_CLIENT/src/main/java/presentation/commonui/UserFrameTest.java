@@ -1,12 +1,8 @@
 package presentation.commonui;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import presentation.businessui.OrderDistributePanel;
-import presentation.businessui.OrderReceiveManagerPanel;
 import presentation.expressui.AddOrderPanel;
 import presentation.expressui.ChargeMessageCollectionPanel;
+import presentation.expressui.FinishedOrderPanel;
 import presentation.expressui.QueryPanel;
 
 public class UserFrameTest extends UserFrame {
@@ -14,13 +10,11 @@ public class UserFrameTest extends UserFrame {
 	public UserFrameTest() {
 
 		super();
-		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new AddOrderPanel());
 
+//		addFuncLabel(new AddOrderPanel());
+//		addFuncLabel(new ChargeMessageCollectionPanel());
+//		addFuncLabel(new FinishedOrderPanel());
+		addFuncLabel(new QueryPanel());
 
 		showFrame();
 

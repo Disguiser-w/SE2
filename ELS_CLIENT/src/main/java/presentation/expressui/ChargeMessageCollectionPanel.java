@@ -8,11 +8,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import presentation.commonui.LocationHelper;
+
 public class ChargeMessageCollectionPanel extends JPanel {
 
 	private JTable messageTable;
 	private JLabel totalMessageLabel;
 	private JButton collectionButton;
+//	private LocationHelper helper;
 
 	public ChargeMessageCollectionPanel() {
 
@@ -27,6 +30,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		add(totalMessageLabel);
 		add(collectionButton);
 
+//		helper = new LocationHelper(this);
 		setLayout(null);
 
 	}
@@ -34,11 +38,14 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
-		messageTable.setBounds(width / 25, height / 15, width * 23 / 25, height * 11 / 15);
-		totalMessageLabel.setBounds(width / 25, height * 21 / 25, width * 17 / 25, height * 1 / 10);
-		collectionButton.setBounds(width * 22 / 25, height * 17 / 20, width * 2 / 25, height * 2 / 25);
-		
-		
+
+		messageTable.setBounds((int) (width * 1.1523687580025608 / 25), (int) (height * 1.4285714285714286 / 20),
+				(int) (width * 22.471190781049938 / 25), (int) (height * 14.375 / 20));
+		totalMessageLabel.setBounds((int) (width * 1.1523687580025608 / 25), (int) (height * 17.008928571428573 / 20),
+				(int) (width * 16.99743918053777 / 25), (int) (height * 1.9642857142857142 / 20));
+		collectionButton.setBounds((int) (width * 21.638924455825865 / 25), (int) (height * 17.142857142857142 / 20),
+				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.5625 / 20));
+
 	}
 
 }

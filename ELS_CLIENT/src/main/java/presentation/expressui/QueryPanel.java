@@ -34,11 +34,11 @@ public class QueryPanel extends JPanel {
 		queryLabel = new ArrayList<JLabel>();
 
 		// 测试位置时使用
-		// timeInputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// timeSetLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// nextPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// messageTable.setBorder(BorderFactory.createLineBorder(Color.black));
+		timeInputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		timeSetLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		nextPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		messageTable.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		for (JLabel i : queryLabel)
 			i.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -63,22 +63,20 @@ public class QueryPanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		// setBounds
 		super.setBounds(x, y, width, height);
-
-		// timeInputLabel.setBounds(width / 20, height * 2 / 25, width * 2 / 20,
-		// height * 2 / 25);
-		// timeField.setBounds(width / 6, height * 2 / 25, width * 3 / 20,
-		// height * 2 / 25);
-		// timeSetLabel.setBounds(width * 7 / 20 + 5, height * 2 / 25, width * 1
-		// / 20, height * 2 / 25);
-		// confirmButton.setBounds(width * 2 / 3, height * 2 / 25, width * 1 /
-		// 15, height * 2 / 25);
-		// messageTable.setBounds(width / 20, height * 6 / 25, width * 9 / 10,
-		// height * 3 / 5);
-		// nextPageLabel.setBounds(width * 5 / 6, height * 22 / 25, height * 2 /
-		// 25, height * 2 / 25);
-		// previousPageLabel.setBounds(width * 43 / 48, height * 22 / 25, height
-		// * 2 / 25, height * 2 / 25);
-
+		timeInputLabel.setBounds((int) (width * 1.408450704225352 / 25), (int) (height * 0.9821428571428571 / 20),
+				(int) (width * 3.7451984635083226 / 25), (int) (height * 1.4285714285714286 / 20));
+		timeField.setBounds((int) (width * 6.113956466069142 / 25), (int) (height * 0.9821428571428571 / 20),
+				(int) (width * 4.481434058898848 / 25), (int) (height * 1.4732142857142858 / 20));
+		timeSetLabel.setBounds((int) (width * 10.59539052496799 / 25), (int) (height * 0.9821428571428571 / 20),
+				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4285714285714286 / 20));
+		confirmButton.setBounds((int) (width * 21.222791293213827 / 25), (int) (height * 0.9821428571428571 / 20),
+				(int) (width * 2.3367477592829706 / 25), (int) (height * 1.4285714285714286 / 20));
+		nextPageLabel.setBounds((int) (width * 21.9910371318822 / 25), (int) (height * 17.589285714285715 / 20),
+				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
+		previousPageLabel.setBounds((int) (width * 20.230473751600513 / 25), (int) (height * 17.589285714285715 / 20),
+				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
+		messageTable.setBounds((int) (width * 1.408450704225352 / 25), (int) (height * 3.392857142857143 / 20),
+				(int) (width * 22.151088348271447 / 25), (int) (height * 13.258928571428571 / 20));
 		for (JLabel i : queryLabel) {
 			i.setBounds(width, height, width, height);
 

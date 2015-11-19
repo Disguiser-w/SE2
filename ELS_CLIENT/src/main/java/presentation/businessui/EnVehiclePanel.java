@@ -1,8 +1,5 @@
 package presentation.businessui;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,44 +7,36 @@ import javax.swing.JTable;
 
 import presentation.commonui.LocationHelper;
 
-public class OrderDistributePanel extends JPanel {
+public class EnVehiclePanel extends JPanel {
 	private JTable messageTable;
 	private JLabel nextPageLabel;
 	private JLabel previousPageLabel;
 	private JButton confirmButton;
+	private JButton distributeButton;
 	private LocationHelper helper;
-	private JLabel sendLabel;
-	private JLabel printLabel;
 
-	public OrderDistributePanel() {
+	public EnVehiclePanel() {
 		messageTable = new JTable();
 		nextPageLabel = new JLabel();
 		previousPageLabel = new JLabel();
 		confirmButton = new JButton();
-		sendLabel = new JLabel();
-		printLabel = new JLabel();
-
-		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		nextPageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		distributeButton = new JButton();
 
 		add(messageTable);
 		add(nextPageLabel);
 		add(previousPageLabel);
 		add(confirmButton);
-		add(sendLabel);
-		add(printLabel);
+		add(distributeButton);
 
-		helper = new LocationHelper(this);
 		setLayout(null);
 
+		helper = new LocationHelper(this);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		// 设置组件位置
-		messageTable.setBounds((int) (width * 0.9923175416133163 / 25), (int) (height * 3.9732142857142856 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 11.964285714285714 / 20));
+		messageTable.setBounds((int) (width * 0.9923175416133163 / 25), (int) (height * 1.2946428571428572 / 20),
+				(int) (width * 23.01536491677337 / 25), (int) (height * 14.642857142857142 / 20));
 		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 		previousPageLabel.setBounds((int) (width * 11.555697823303458 / 25), (int) (height * 17.321428571428573 / 20),
@@ -55,10 +44,7 @@ public class OrderDistributePanel extends JPanel {
 
 		confirmButton.setBounds((int) (width * 21.9910371318822 / 25), (int) (height * 17.232142857142858 / 20),
 				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.3839285714285714 / 20));
-
-		sendLabel.setBounds((int) (width * 22.37516005121639 / 25), (int) (height * 0.8482142857142857 / 20),
-				(int) (width * 1.5685019206145967 / 25), (int) (height * 2.1875 / 20));
-		printLabel.setBounds((int) (width * 20.03841229193342 / 25), (int) (height * 0.8482142857142857 / 20),
-				(int) (width * 1.5685019206145967 / 25), (int) (height * 2.1875 / 20));
+		distributeButton.setBounds((int) (width * 19.206145966709347 / 25), (int) (height * 17.232142857142858 / 20),
+				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.3839285714285714 / 20));
 	}
 }

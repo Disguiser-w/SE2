@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import presentation.commonui.LocationHelper;
+
 /**
  * 打开客户端的第一个界面
  */
@@ -55,34 +57,40 @@ public class MainFrame extends JFrame {
 	// 主界面
 	class MainPanel extends JPanel {
 
-
 		// 查询按钮
 		private JButton queryButton;
 		// 登录按钮
 		private JButton signInButton;
+//		private LocationHelper helper;
 
 		public MainPanel() {
 			queryButton = new JButton("物流查询");
 			signInButton = new JButton("登录");
 
-			queryButton.setBounds(MAIN_WIDTH / 7, MAIN_HEIGHT / 3, MAIN_WIDTH * 2 / 7, MAIN_HEIGHT / 6);
-			signInButton.setBounds(MAIN_WIDTH * 4 / 7, MAIN_HEIGHT / 3, MAIN_WIDTH * 2 / 7, MAIN_HEIGHT / 6);
+			int width = MAIN_WIDTH;
+			int height = MAIN_HEIGHT;
 
-			queryButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					toQueryPanel();
-				}
-			});
-
-			signInButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					toSignInPanel();
-				}
-			});
+			queryButton.setBounds((int) (width * 15.1875 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
+					(int) (height * 2.533333333333333 / 20));
+			signInButton.setBounds((int) (width * 5.0625 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
+					(int) (height * 2.533333333333333 / 20));
+			// queryButton.addActionListener(new ActionListener() {
+			// public void actionPerformed(ActionEvent e) {
+			// toQueryPanel();
+			// }
+			// });
+			//
+			// signInButton.addActionListener(new ActionListener() {
+			// public void actionPerformed(ActionEvent e) {
+			// toSignInPanel();
+			// }
+			// });
 
 			setLayout(null);
 			add(queryButton);
 			add(signInButton);
+
+//			helper = new LocationHelper(this);
 
 		}
 	}
@@ -171,9 +179,9 @@ public class MainFrame extends JFrame {
 
 			// MAIN_WIDTH MAIN_HEIGHT
 			userNameLabel.setBounds(MAIN_WIDTH / 6, MAIN_HEIGHT / 7, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
-			userNameField.setBounds(MAIN_WIDTH *3/ 8, MAIN_HEIGHT / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
+			userNameField.setBounds(MAIN_WIDTH * 3 / 8, MAIN_HEIGHT / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
 			passwordLabel.setBounds(MAIN_WIDTH / 6, MAIN_HEIGHT * 3 / 7, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
-			passwordField.setBounds(MAIN_WIDTH *3/ 8, MAIN_HEIGHT * 3 / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
+			passwordField.setBounds(MAIN_WIDTH * 3 / 8, MAIN_HEIGHT * 3 / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
 			signInButton.setBounds(MAIN_WIDTH / 8, MAIN_HEIGHT * 11 / 15, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
 			cancelButton.setBounds(MAIN_WIDTH * 5 / 8, MAIN_HEIGHT * 11 / 15, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
 

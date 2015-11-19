@@ -12,7 +12,10 @@ public class AcceptCargoController implements AcceptCargoBLService{
 	
 	public boolean acceptCargo(OrderAcceptReceiptVO vo) {
 		// TODO Auto-generated method stub
+		String pig = "sdfa";
+		
 		return acceptCargo.acceptCargo(vo);
+		
 	}
 
 }
