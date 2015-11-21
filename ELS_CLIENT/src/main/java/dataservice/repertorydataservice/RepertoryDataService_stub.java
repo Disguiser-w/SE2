@@ -1,56 +1,63 @@
 package dataservice.repertorydataservice;
 
+import java.util.ArrayList;
+
 import dataservice.repertorydataservice.RepertoryDataService;
 import po.GoodsPO;
+import po.InventoryPO;
 import po.RepertoryPO;
-
-import java.rmi.RemoteException;
 
 public class RepertoryDataService_stub implements RepertoryDataService{
 	
-	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException {
+	public int modifyRepertory(RepertoryPO repertorypo){
         // TODO 自动生成的方法存根
         System.out.println("Modify repertory in file succeed!");
         return 0;
     }
  
-    public RepertoryPO findRepertory(String repertoryID) throws RemoteException {
+    public RepertoryPO findRepertory(String repertoryID){
         // TODO 自动生成的方法存根
         System.out.println("Find repertory in file succeed!");
         return null;
     }
     
-    public int addGoods(String repertoryID, GoodsPO goodspo) throws RemoteException {
+    public int addInventory(String repertoryID, InventoryPO inventorypo){
         // TODO 自动生成的方法存根
-        System.out.println("Add goods to repertory in file succeed!");
+        System.out.println("Add inventory to repertory in file succeed!");
         return 0;
     }
     
-    public int deleteGoods(String repertoryID, GoodsPO goodspo) throws RemoteException {
+    public int deleteInventory(String repertoryID, InventoryPO inventorypo) {
         // TODO 自动生成的方法存根
-        System.out.println("Delete goods from repertory in file succeed!");
+        System.out.println("Delete inventory from repertory in file succeed!");
         return 0;
     }
     
-    public int modifyGoods(String repertoryID, GoodsPO goodspo) throws RemoteException {
+    public int modifyInventory(String repertoryID, InventoryPO inventorypo){
         // TODO 自动生成的方法存根
-        System.out.println("Modify goods in repertory in file succeed!");
+        System.out.println("Modify inventory in repertory in file succeed!");
         return 0;
     }
     
-    public GoodsPO findGoodsbyID(String repertoryID, String JJD_ID) throws RemoteException {
+    public GoodsPO findGoodsbyID(String JJD_ID){
         // TODO 自动生成的方法存根
         System.out.println("Find goods by ID in repertory in file succeed!");
         return null;
     }
     
-   public GoodsPO findGoodsbyDate(String repertoryID, String beginDate, String endDate) throws RemoteException {
+    public InventoryPO findInventorybyID(String repertoryID, String JJD_ID){
+    	// TODO 自动生成的方法存根
+        System.out.println("Find inventory by ID in repertory in file succeed!");
+        return null;
+    }
+    
+   public ArrayList<InventoryPO> findInventorybyDate(String repertoryID, String beginDate, String endDate){
         // TODO 自动生成的方法存根
         System.out.println("Find goods by date in repertory in file succeed!");
         return null;
     }
     
-    public GoodsPO findGoodsbyTime(String repertoryID, String time) throws RemoteException {
+    public ArrayList<InventoryPO> findInventorybyTime(String repertoryID, String time){
         // TODO 自动生成的方法存根
         System.out.println("Find goods by time in repertory in file succeed!");
         return null;

@@ -5,22 +5,15 @@ import vo.GoodsVO;
 import java.util.ArrayList;
 
 public class InventoryVO {
-	public ArrayList<GoodsVO> Goods_List;
+	private GoodsVO good;
+	private int blockNum, rowNum, shelfNum, digitNum;
 	
-	public InventoryVO(){
-		Goods_List = new ArrayList<GoodsVO> ();
-	}
-	
-	public void addGoods(GoodsVO goods){
-		Goods_List.add(goods);
-	}
-	
-	public void deleteGoods(GoodsVO goods){
-		Goods_List.remove(goods);
-	}
-	
-	public ArrayList<GoodsVO> showInventory(){
-		return this.Goods_List;
+	public InventoryVO(GoodsVO good, int blockNum, int rowNum, int shelfNum, int digitNum){
+		this.good = good;
+		this.blockNum = blockNum;
+		this.rowNum = rowNum;
+		this.shelfNum  = shelfNum;
+		this.digitNum = digitNum;
 	}
 	
 }
