@@ -19,12 +19,19 @@ public class OrganizationPO {
 		
 		//如果新建机构是中转中心的话，同时新建一个对应的中转中心仓库
 		if(category.equals(OrganizationType.intermediateCenter)){
-			this.repertory = new RepertoryPO(organizationID+"-CK", null);
+			this.repertory = new RepertoryPO(organizationID+"-CK", "");
 		}
 		else{
 			this.repertory = null;
 		}
 		
+	}
+	
+	public OrganizationPO(OrganizationType category, String organizationID, String name){
+
+		this.category = category;
+		this.organizationID = organizationID;
+		this.name = name;
 	}
 	
 	public OrganizationType getCategory(){
