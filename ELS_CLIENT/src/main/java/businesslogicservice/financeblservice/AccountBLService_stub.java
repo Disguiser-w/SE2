@@ -12,7 +12,7 @@ public class AccountBLService_stub implements AccountBLService{
 		return 0;
 	}
 
-	public int deleteAccount(AccountVO vo) {
+	public int deleteAccount(String name) {
 		// TODO Auto-generated method stub
 		System.out.println("Delete successfully!");
 		return 0;
