@@ -1,5 +1,9 @@
 package presentation.expressui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -7,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.expressbl.controller.AddOrderController;
+import dataservice.managedataservice.CityDistanceDataService;
+import dataservice.managedataservice.CostDataService;
 
 public class AddOrderPanel extends JPanel {
 	private JLabel senderLabel;
@@ -57,9 +63,9 @@ public class AddOrderPanel extends JPanel {
 	private JTextField goodNameField;
 
 	private JComboBox<String> senderCountryList;
-	private JComboBox<String> senderCityList;
+	private JTextField senderCityField;
 	private JComboBox<String> receiverCountryList;
-	private JComboBox<String> receiverCityList;
+	private JTextField receiverCityField;
 	private JComboBox<String> expressTypeList;
 	private JComboBox<String> packageTypeList;
 
@@ -67,6 +73,8 @@ public class AddOrderPanel extends JPanel {
 	private JButton confirmButton;
 
 	private AddOrderController controller;
+	private CostDataService costData;
+	private CityDistanceDataService cityDistanceData;
 	// private LocationHelper helper;
 
 	public AddOrderPanel() {
@@ -113,10 +121,10 @@ public class AddOrderPanel extends JPanel {
 		goodNameField = new JTextField();
 
 		senderCountryList = new JComboBox<String>();
-		senderCityList = new JComboBox<String>();
+		senderCityField = new JTextField();
 
 		receiverCountryList = new JComboBox<String>();
-		receiverCityList = new JComboBox<String>();
+		receiverCityField = new JTextField();
 		expressTypeList = new JComboBox<String>();
 		packageTypeList = new JComboBox<String>();
 
@@ -242,9 +250,9 @@ public class AddOrderPanel extends JPanel {
 		add(volumnField);
 		add(goodNameField);
 		add(senderCountryList);
-		add(senderCityList);
+		add(senderCityField);
 		add(receiverCountryList);
-		add(receiverCityList);
+		add(receiverCityField);
 		add(expressTypeList);
 		add(packageTypeList);
 		add(calcuButton);
@@ -262,6 +270,10 @@ public class AddOrderPanel extends JPanel {
 		setLayout(null);
 
 		controller = new AddOrderController();
+
+		// RMI
+		// costData;
+		// CityDistanceData;
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -276,7 +288,7 @@ public class AddOrderPanel extends JPanel {
 
 		senderAddressLabel.setBounds(width * 1 / 25, height * 5 / 25, width / 20, height / 20);
 		senderCountryList.setBounds(width * 1 / 10, height * 5 / 25, width * 7 / 50, height / 20);
-		senderCityList.setBounds(width * 6 / 25, height * 5 / 25, width * 7 / 50, height / 20);
+		senderCityField.setBounds(width * 6 / 25, height * 5 / 25, width * 7 / 50, height / 20);
 
 		receiverLabel.setBounds(width / 50, height * 7 / 25, width / 8, height / 20);
 		receiverNameLabel.setBounds(width * 1 / 25, height * 9 / 25, width / 20, height / 20);
@@ -286,7 +298,7 @@ public class AddOrderPanel extends JPanel {
 
 		receiverAddressLabel.setBounds(width * 1 / 25, height * 11 / 25, width / 20, height / 20);
 		receiverCountryList.setBounds(width * 1 / 10, height * 11 / 25, width * 7 / 50, height / 20);
-		receiverCityList.setBounds(width * 6 / 25, height * 11 / 25, width * 7 / 50, height / 20);
+		receiverCityField.setBounds(width * 6 / 25, height * 11 / 25, width * 7 / 50, height / 20);
 
 		senderNameField.setBounds(width * 1 / 10, height * 3 / 25, width * 7 / 50, height / 20);
 		senderOrganizationField.setBounds(width * 17 / 50, height * 3 / 25, width * 7 / 50, height / 20);
@@ -333,11 +345,44 @@ public class AddOrderPanel extends JPanel {
 	}
 
 	private void setBaseInfo() {
+		// 获取城市信息，
+		// ArrayList<String> citys =
+		// cityDistanceData.getCitys();
+
+		ArrayList<String> citys = new ArrayList<String>();
+		citys.add("北京");
+		citys.add("上海");
+		citys.add("南京");
+		citys.add("广州");
+
+		for (String i : citys) {
+			senderCountryList.addItem(i);
+			receiverCountryList.addItem(i);
+		}
+
+		// PackType.CARTONS
+		packageTypeList.addItem("纸箱");
+		// WOODCASE
+		packageTypeList.addItem("木箱");
+		// COURIERBAGS
+		packageTypeList.addItem("快递袋");
+
+		// ECONOMICAL
+		expressTypeList.addItem("经济");
+		// STANDARD
+		expressTypeList.addItem("标准");
+		// VERY_FAST
+		expressTypeList.addItem("特快");
 
 	}
 
 	private void addListener() {
+		calcuButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 计算费用
 
+			}
+		});
 	}
 
 }

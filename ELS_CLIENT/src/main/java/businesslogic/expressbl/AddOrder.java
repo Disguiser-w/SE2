@@ -45,4 +45,9 @@ public class AddOrder {
 				po.getBuiltData(), po.getFinishedData(), po.getFinishedID());
 		return vo;
 	}
+
+	public ExpressDataService getExpressData() {
+		return expressData;
+	}
+
 }

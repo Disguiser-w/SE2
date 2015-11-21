@@ -19,28 +19,28 @@ public class BusinessStateReceiptPanel extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	ArrayList<CollectionReceiptVO> collectionReceiptList;
-	ArrayList<PaymentReceiptVO> paymentReceiptList;
+	private ArrayList<CollectionReceiptVO> collectionReceiptList;
+	private ArrayList<PaymentReceiptVO> paymentReceiptList;
 
-	JButton startDate;
-	JButton endDate;
-	JButton dateOKButton;
-	JButton printButton;
-	JButton sendButton;
-	JButton next;
-	JButton previous;
+	private JButton startDateButton;
+	private JButton endDateButton;
+	private JButton dateOKButton;
+	private JButton printButton;
+	private JButton sendButton;
+	private JButton next;
+	private JButton previous;
 
-	JLabel function;
-	JLabel dateRange;
+	private JLabel function;
+	private JLabel dateRange;
 
-	JTextField inputStartDate;
-	JTextField inputEndDate;
+	private JTextField startDate_Input;
+	private JTextField endDate_Input;
 
-	BusinessStateReceiptInfoTable info;
+	private BusinessStateReceiptInfoTable info;
 
 	public BusinessStateReceiptPanel() {
-		startDate = new JButton("start");
-		endDate = new JButton("end");
+		startDateButton = new JButton("start");
+		endDateButton = new JButton("end");
 		dateOKButton = new JButton("ok");
 		printButton = new JButton("print");
 		sendButton = new JButton("send");
@@ -50,14 +50,14 @@ public class BusinessStateReceiptPanel extends JPanel {
 		function = new JLabel("经营情况表");
 		dateRange = new JLabel("日期范围");
 
-		inputStartDate = new JTextField("2015/10/30", 11);
-		inputEndDate = new JTextField("2015/11/05", 11);
+		startDate_Input = new JTextField("2015/10/30", 11);
+		endDate_Input = new JTextField("2015/11/05", 11);
 
 		info = new BusinessStateReceiptInfoTable(13, 4);
 
 		setCmpLocation();
 
-		startDate.addActionListener(new ActionListener() {
+		startDateButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -65,7 +65,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 			}
 		});
 
-		endDate.addActionListener(new ActionListener() {
+		endDateButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -115,8 +115,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 		setLayout(null);
 
-		add(startDate);
-		add(endDate);
+		add(startDateButton);
+		add(endDateButton);
 		add(dateOKButton);
 		add(printButton);
 		add(sendButton);
@@ -124,8 +124,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 		add(previous);
 		add(function);
 		add(dateRange);
-		add(inputEndDate);
-		add(inputStartDate);
+		add(endDate_Input);
+		add(startDate_Input);
 		add(info);
 	}
 
@@ -138,13 +138,13 @@ public class BusinessStateReceiptPanel extends JPanel {
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
 		dateRange.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		startDate.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
+		startDateButton.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		inputStartDate.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
+		startDate_Input.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		endDate.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
+		endDateButton.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		inputEndDate.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
+		endDate_Input.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);

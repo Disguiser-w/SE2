@@ -7,7 +7,7 @@ import javax.swing.table.TableColumn;
 
 import vo.TransferingReceiptVO;
 
-public class TransferingInfoTable extends JTable {
+public class EnvehicleInfoTable extends JTable{
 	private int width;
 	private int height;
 	
@@ -15,7 +15,7 @@ public class TransferingInfoTable extends JTable {
 
 	TransferingReceiptVO transferingReceipt;
 
-	public TransferingInfoTable(int row, int column) {
+	public EnvehicleInfoTable(int row, int column) {
 		super(row, column);
 		width = 720;
 		height = 480;
@@ -31,15 +31,23 @@ public class TransferingInfoTable extends JTable {
 		this.setRowSelectionAllowed(false);
 
 		tc = this.columnModel.getColumn(0);
-		tc.setPreferredWidth(width / 2);
+		tc.setPreferredWidth(width / 3);
 		tc.setResizable(false);
 
 		tc = this.columnModel.getColumn(1);
-		tc.setPreferredWidth(width / 4);
+		tc.setPreferredWidth(width / 8);
 		tc.setResizable(false);
 
 		tc = this.columnModel.getColumn(2);
-		tc.setPreferredWidth(width / 4);
+		tc.setPreferredWidth(width / 8);
+		tc.setResizable(false);
+		
+		tc = this.columnModel.getColumn(3);
+		tc.setPreferredWidth(width / 8);
+		tc.setResizable(false);
+		
+		tc = this.columnModel.getColumn(4);
+		tc.setPreferredWidth(width / 8);
 		tc.setResizable(false);
 
 	}
@@ -53,9 +61,5 @@ public class TransferingInfoTable extends JTable {
 	public void paint(Graphics g) {
 		setInfo();
 		super.paint(g);
-	}
-
-	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
-		this.transferingReceipt = transferingReceipt;
 	}
 }

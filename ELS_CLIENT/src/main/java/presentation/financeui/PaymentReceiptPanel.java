@@ -15,26 +15,26 @@ public class PaymentReceiptPanel extends JLabel {
 	private int PANEL_HEIGHT = 480;
 	private String[] clauseType = { "运费", "租金", "工资" };
 
-	JButton dateChoose;
-	JButton ok;
-	JButton printButton;
-	JButton sendButton;
-	JButton next;
-	JButton previous;
+	private JButton dateChooseButton;
+	private JButton dateOKButton;
+	private JButton printButton;
+	private JButton sendButton;
+	private JButton next;
+	private JButton previous;
 
-	JLabel function;
-	JLabel clause;
-	JLabel date;
+	private JLabel function;
+	private JLabel clause;
+	private JLabel date;
 
-	JTextField dateInput;
+	private JTextField date_Input;
 
-	JComboBox clauseChoose;
+	private JComboBox clause_choose;
 
-	PaymentReceiptInfoTable info;
+	private PaymentReceiptInfoTable info;
 
 	public PaymentReceiptPanel() {
-		dateChoose = new JButton("date");
-		ok = new JButton("ok");
+		dateChooseButton = new JButton("date");
+		dateOKButton = new JButton("ok");
 		printButton = new JButton("print");
 		sendButton = new JButton("send");
 		next = new JButton("next");
@@ -44,15 +44,15 @@ public class PaymentReceiptPanel extends JLabel {
 		clause = new JLabel("条目");
 		date = new JLabel("日期");
 
-		dateInput = new JTextField("2015/11", 8);
+		date_Input = new JTextField("2015/11", 8);
 
-		clauseChoose = new JComboBox(clauseType);
+		clause_choose = new JComboBox(clauseType);
 
 		info = new PaymentReceiptInfoTable(13, 6);
 
 		setCmpLocation();
 
-		dateChoose.addActionListener(new ActionListener() {
+		dateChooseButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -60,7 +60,7 @@ public class PaymentReceiptPanel extends JLabel {
 			}
 		});
 
-		ok.addActionListener(new ActionListener() {
+		dateOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -102,8 +102,8 @@ public class PaymentReceiptPanel extends JLabel {
 
 		setLayout(null);
 
-		add(dateChoose);
-		add(ok);
+		add(dateChooseButton);
+		add(dateOKButton);
 		add(printButton);
 		add(sendButton);
 		add(next);
@@ -111,8 +111,8 @@ public class PaymentReceiptPanel extends JLabel {
 		add(function);
 		add(clause);
 		add(date);
-		add(dateInput);
-		add(clauseChoose);
+		add(date_Input);
+		add(clause_choose);
 		add(info);
 	}
 
@@ -124,12 +124,12 @@ public class PaymentReceiptPanel extends JLabel {
 		sendButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
 		clause.setBounds(PANEL_WIDTH/9, PANEL_HEIGHT*3/16, PANEL_WIDTH/18, PANEL_HEIGHT/24);
-		clauseChoose.setBounds(PANEL_WIDTH*7/36, PANEL_HEIGHT*3/16, PANEL_WIDTH/12, PANEL_HEIGHT/24);
+		clause_choose.setBounds(PANEL_WIDTH*7/36, PANEL_HEIGHT*3/16, PANEL_WIDTH/12, PANEL_HEIGHT/24);
 		date.setBounds(PANEL_WIDTH *11/36, PANEL_HEIGHT * 3 / 16, PANEL_WIDTH / 18,
 				PANEL_HEIGHT / 24);
-		dateInput.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
+		date_Input.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
-		ok.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 3 / 16,
+		dateOKButton.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);

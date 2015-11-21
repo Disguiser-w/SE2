@@ -8,7 +8,7 @@ import javax.swing.table.TableColumn;
 public class CollectionReceiptInfoTable extends JTable {
 	private int width;
 	private int height;
-	TableColumn tc;
+	private TableColumn tc;
 
 	public CollectionReceiptInfoTable(int row, int column) {
 		super(row, column);

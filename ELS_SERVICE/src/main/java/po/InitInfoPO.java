@@ -3,16 +3,48 @@ package po;
 import java.util.ArrayList;
 
 public class InitInfoPO {
-	    //机构信息
+	String date;
+	private ArrayList<AccountPO>  accoutPOs;
+	private ArrayList<OrganizationPO> organizationPOs;
+	private ArrayList<VehiclePO> vehiclePOs;
+	private ArrayList<InventoryPO> inventoryPOs;
+	private ArrayList<UserPO> userPOs;
+	public InitInfoPO(){
+	}
+	
+	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<InventoryPO> inventoryPOs,ArrayList<AccountPO>  accoutPOs){
+		super();
+		this.date=date;
+		this.userPOs=userPOs;
+		this.organizationPOs=organizationPOs;
+		this.vehiclePOs=vehiclePOs;
+		this.inventoryPOs=inventoryPOs;
+	}
+	
 	   //人员信息
-		//车辆信息
-		//库存信息
-		//账户信息
-		ArrayList<AccountPO>  accout;
-		public InitInfoPO(){
+		public ArrayList<UserPO> getUserPOs(){
+			return userPOs;
 		}
-		public ArrayList<AccountPO> getAccount(){
-			return accout;
+	    //机构信息
+	public ArrayList<OrganizationPO> getOrganizationPOs(){
+		return organizationPOs;		
+	}
+	
+		//车辆信息
+	public ArrayList<VehiclePO> getVehiclePOs(){
+		return vehiclePOs;
+		}
+		//库存信息
+	public ArrayList<InventoryPO> getInventoryPOs(){
+		return inventoryPOs;	
+	}
+		//账户信息
+		public ArrayList<AccountPO> getAccountPOs(){
+			return accoutPOs ;
+		}
+		
+		public String getDate(){
+			return date;
 		}
 		}
 

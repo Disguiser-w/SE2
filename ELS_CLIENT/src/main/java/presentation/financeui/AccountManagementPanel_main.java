@@ -1,58 +1,48 @@
-package presentation.intermediateui;
+package presentation.financeui;
 
-import javax.swing.*;
-
-import vo.TransferingReceiptVO;
-
-import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TransferingPanel extends JPanel {
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import presentation.intermediateui.TransferingPanel;
+
+public class AccountManagementPanel_main extends JLabel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	private TransferingReceiptVO transferingReceipt;
-
 	private JButton addButton;
 	private JButton deleteButton;
-	private JButton printButton;
-	private JButton sendButton;
-	// JButton[] modify;
 	private JButton next;
 	private JButton previous;
 
 	private JLabel function;
 
-	private TransferingInfoTable info;
-
 	private JTextField searchTextField;
 
-	private JDialog addDialog;
+	private AccountManagementInfoTable_main info;
 
-	public TransferingPanel() {
-		// int numOfOrder = transferingReceiptVO.orderList.size();
-		// for (int i = 0; i < numOfOrder; i++) {
-		// modify[i] = new JButton("M");
-		// }
-
-		addButton = new JButton("new");
-		deleteButton = new JButton("dele");
-		sendButton = new JButton("send");
-		printButton = new JButton("print");
-		searchTextField = new JTextField("Input", 10);
+	public AccountManagementPanel_main() {
+		addButton = new JButton("add");
+		deleteButton = new JButton("delete");
 		next = new JButton("next");
 		previous = new JButton("pre");
 
-		function = new JLabel("中转接收");
+		function = new JLabel("账户管理");
 
-		info = new TransferingInfoTable(13, 3);
+		searchTextField = new JTextField("CW-00001");
+
+		info = new AccountManagementInfoTable_main(13, 2);
 
 		setCmpLocation();
 
 		addButton.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				addui();
@@ -61,25 +51,10 @@ public class TransferingPanel extends JPanel {
 
 		deleteButton.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				deleteui();
-			}
-		});
-
-		sendButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				sendui();
-			}
-		});
-
-		printButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				printui();
 			}
 		});
 
@@ -103,12 +78,11 @@ public class TransferingPanel extends JPanel {
 
 		add(addButton);
 		add(deleteButton);
-		add(sendButton);
-		add(searchTextField);
-		add(info);
-		add(function);
 		add(next);
 		add(previous);
+		add(searchTextField);
+		add(function);
+		add(info);
 	}
 
 	public void setCmpLocation() {
@@ -118,10 +92,6 @@ public class TransferingPanel extends JPanel {
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		deleteButton.setBounds(PANEL_WIDTH * 5 / 9, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		printButton.setBounds(PANEL_WIDTH * 7 / 9, PANEL_HEIGHT / 24,
-				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
-		sendButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
-				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
 		searchTextField.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 24);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
@@ -141,26 +111,11 @@ public class TransferingPanel extends JPanel {
 		repaint();
 	}
 
-	public void setTransferingReceipt(TransferingReceiptVO transferingReceipt) {
-		this.transferingReceipt = transferingReceipt;
-	}
-
 	public void addui() {
-		if (addDialog == null)
-			addDialog = new JDialog(addDialog, "add");
-		addDialog.setVisible(true);
-		addDialog.setSize(400, 300);
+
 	}
 
 	public void deleteui() {
-
-	}
-
-	public void sendui() {
-
-	}
-
-	public void printui() {
 
 	}
 
@@ -171,11 +126,11 @@ public class TransferingPanel extends JPanel {
 	public void previousui() {
 
 	}
-
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new TransferingPanel());
+		frame.add(new AccountManagementPanel_main());
 		frame.setVisible(true);
 	}
 }

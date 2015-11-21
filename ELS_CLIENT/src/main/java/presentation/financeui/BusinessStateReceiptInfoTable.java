@@ -12,10 +12,10 @@ import vo.PaymentReceiptVO;
 public class BusinessStateReceiptInfoTable extends JTable {
 	private int width;
 	private int height;
-	TableColumn tc;
+	private TableColumn tc;
 
-	ArrayList<CollectionReceiptVO> collectionReceiptList;
-	ArrayList<PaymentReceiptVO> paymentReceiptList;
+	private ArrayList<CollectionReceiptVO> collectionReceiptList;
+	private ArrayList<PaymentReceiptVO> paymentReceiptList;
 
 	public BusinessStateReceiptInfoTable(int row, int column) {
 		super(row, column);

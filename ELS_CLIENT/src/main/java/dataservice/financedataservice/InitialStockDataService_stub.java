@@ -6,7 +6,7 @@ import po.InitInfoPO;
 
 public class InitialStockDataService_stub implements InitialStockDataService{
 
-	public int initInfo(InitInfoPO po) {
+	public int initInfo(InitInfoPO po,String time) {
 		// TODO Auto-generated method stub
 		System.out.println("Init Info successfully!");
 		return 0;

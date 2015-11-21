@@ -6,7 +6,7 @@ import po.InitInfoPO;
 
 public class InitialStockDataService_driver {
 	public void drive(InitialStockDataService ids) throws RemoteException{
-		ids.initInfo(new InitInfoPO());
+		ids.initInfo(new InitInfoPO(),null);
 		ids.getInitInfo(null);
 		ids.getAllInitInfo();
 	}
