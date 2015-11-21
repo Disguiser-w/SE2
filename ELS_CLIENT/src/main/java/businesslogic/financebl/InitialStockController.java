@@ -4,9 +4,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.financedataservice.InitialStockDataService;
+import dataservice.userdataservice.UserDataService;
 import businesslogicservice.financeblservice.InitialStockBLService;
 import po.AccountPO;
 import po.InitInfoPO;
+import po.InventoryPO;
 import po.OrganizationPO;
 import po.UserPO;
 import po.VehiclePO;
@@ -20,6 +22,8 @@ import vo.VehicleVO;
 public class InitialStockController implements InitialStockBLService{
 	
 	private InitialStockDataService initData;
+	private UserDataService userData;
+	
 	
 	public InitialStockController(){
 		
@@ -96,7 +100,7 @@ public class InitialStockController implements InitialStockBLService{
 		else{
 			inventoryPOs=new ArrayList<InventoryPO>();
 			for(InventoryVO v:inventoryVOs){
-				InventoryPO po=new InventoryPO(v.getID());
+				InventoryPO po=new InventoryPO(good, blockNum, rowNum, shelfNum, digitNum);
 				inventoryPOs.add(po);
 			}
 		}
