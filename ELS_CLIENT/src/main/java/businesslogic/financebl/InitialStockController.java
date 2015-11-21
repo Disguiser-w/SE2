@@ -8,14 +8,17 @@ import dataservice.userdataservice.UserDataService;
 import businesslogicservice.financeblservice.InitialStockBLService;
 import po.AccountPO;
 import po.InitInfoPO;
-import po.InventoryPO;
 import po.OrganizationPO;
+import po.RepertoryPO;
+import po.Organizatimport po.RepertoryPO;
+ionPO;
 import po.UserPO;
 import po.VehiclePO;
 import vo.AccountVO;
 import vo.InitInfoVO;
 import vo.InventoryVO;
 import vo.OrganizationVO;
+import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
 
@@ -74,7 +77,7 @@ public class InitialStockController implements InitialStockBLService{
 		else{
 			organizationPOs=new ArrayList<OrganizationPO>();
 			for(OrganizationVO v:organizationVOs){
-				OrganizationPO po=new OrganizationPO(v.getCategory(), v.getOrganizationID(), v.getName(), v.getRepertory());
+				OrganizationPO po=new OrganizationPO(category, organizationID, name, repertory);
 				organizationPOs.add(po);
 			}
 		}
@@ -92,16 +95,16 @@ public class InitialStockController implements InitialStockBLService{
 			}
 		}
 		
-		ArrayList<InventoryVO>  inventoryVOs=vo.getInventoryVOs();
-		ArrayList<InventoryPO> inventoryPOs;
-		if(inventoryVOs==null){
-			inventoryPOs=null;
+		ArrayList<RepertoryVO> repertoryVOs=vo.getRepertoryVOs()();
+		ArrayList<RepertoryPO> repInventoryPOs;
+		if(repertoryVOs==null){
+			repInventoryPOs=null;
 		}
 		else{
-			inventoryPOs=new ArrayList<InventoryPO>();
-			for(InventoryVO v:inventoryVOs){
-				InventoryPO po=new InventoryPO(good, blockNum, rowNum, shelfNum, digitNum);
-				inventoryPOs.add(po);
+			repInventoryPOs=new ArrayList<RepertoryPO>();
+			for(RepertoryVO v:repertoryVOs){
+				RepertoryPO po=new RepertoryPO(repertoryID, ownerID);
+				repInventoryPOs.add(po);
 			}
 		}
 		
@@ -118,7 +121,7 @@ public class InitialStockController implements InitialStockBLService{
 			}
 		}
 		
-		InitInfoPO initPO=new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, inventoryPOs, accountPOs);
+		InitInfoPO initPO=new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repInventoryPOs, accountPOs);
 		return initPO;
 	}
 	
@@ -187,14 +190,14 @@ public class InitialStockController implements InitialStockBLService{
 		}
 		}
 		
-		ArrayList<InventoryPO> inventoryPOs=po.getInventoryPOs();
+		ArrayList<RepertoryPO> inventoryPOs=po.getInventoryPOs();
 		ArrayList<InventoryVO> inventoryVOs;
 		if(inventoryPOs==null){
 			inventoryVOs=null;
 		}
 		else{
 			inventoryVOs=new ArrayList<InventoryVO>();
-			for(InventoryPO p:inventoryPOs){
+			for(RepertoryPO p:inventoryPOs){
 				InventoryVO vo=new InventoryVO(p.getID());
 				inventoryVOs.add(vo);
 			}

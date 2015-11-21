@@ -9,18 +9,18 @@ public class InitInfoVO {
 	private ArrayList<AccountVO>  accoutVOs;
 	private ArrayList<OrganizationVO> organizationVOs;
 	private ArrayList<VehicleVO> vehicleVOs;
-	private ArrayList<InventoryVO> inventoryVOs;
+	private ArrayList<RepertoryVO> repertoryVOs;
 	private ArrayList<UserVO> userVOs;
 	public InitInfoVO(){
 	}
 	
-	public InitInfoVO(String time,ArrayList<UserVO> userVOs,ArrayList<OrganizationVO> organizationVOs,ArrayList<VehicleVO> vehicleVOs,ArrayList<InventoryVO> inventoryVOs,ArrayList<AccountVO>  accountVOs){
+	public InitInfoVO(String time,ArrayList<UserVO> userVOs,ArrayList<OrganizationVO> organizationVOs,ArrayList<VehicleVO> vehicleVOs,ArrayList<RepertoryVO> repertoryVOs,ArrayList<AccountVO>  accountVOs){
 		super();
 		this.time=time;
 		this.userVOs=userVOs;
 		this.organizationVOs=organizationVOs;
 		this.vehicleVOs=vehicleVOs;
-		this.inventoryVOs=inventoryVOs;
+		this.repertoryVOs=repertoryVOs;
 	}
 	
 	   //人员信息
@@ -37,8 +37,8 @@ public class InitInfoVO {
 		return vehicleVOs;
 		}
 		//库存信息
-	public ArrayList<InventoryVO> getInventoryVOs(){
-		return inventoryVOs;	
+	public ArrayList<RepertoryVO> getRepertoryVOs(){
+		return repertoryVOs;	
 	}
 		//账户信息
 		public ArrayList<AccountVO> getAccountVOs(){
