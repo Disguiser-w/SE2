@@ -2,6 +2,7 @@ package po;
 
 import type.ExpressType;
 import type.PackType;
+import type.TransferingState;
 
 public class OrderPO {
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
@@ -10,6 +11,8 @@ public class OrderPO {
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
+	
+	// 装车状态（等待中，已装车）
 	private String ID;
 
 	private String senderName;
@@ -38,6 +41,8 @@ public class OrderPO {
 	private String builtData;
 	private String finishedData;
 	private String finishedID;
+	
+	private TransferingState transfer_state;
 
 	public OrderPO() {
 
