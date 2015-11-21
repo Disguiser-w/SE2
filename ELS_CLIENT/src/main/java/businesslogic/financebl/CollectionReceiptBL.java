@@ -16,32 +16,76 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 	BusinessDataService bdService;
 	
 	ArrayList<GatheringReceiptPO> gatheringReceiptPOs_Right;
-	
+	/**
+	 * gatheringVO to PO
+	 * */
 	public GatheringReceiptPO gvoToPO(GatheringReceiptVO vo){
 		return null;
 	}
+	/**
+	 * ArrayList<GaheringVO> to PO
+	 * */
 	public ArrayList<GatheringReceiptPO> gvosToPOs(ArrayList<GatheringReceiptVO> vos){
 		return null;
 	}
-	
+	/**
+	 * CollectionVO to PO
+	 * */
 	public CollectionReceiptPO cvoToPO(CollectionReceiptVO vo){
 		return null;
 	}
-	
+	/**
+	 * ArrayList<CollectionVO> to PO 
+	 * */
 	public ArrayList<CollectionReceiptPO> cvosToPOs(ArrayList<CollectionReceiptVO> vos){
 		return null;
 	}
-	
+	/**
+	 * GatheringPO to VO
+	 * */
 	public GatheringReceiptVO gpoToVO(GatheringReceiptPO po){
-		return null;
+		if(po==null){
+			return null;
+		}
+		else{
+			GatheringReceiptVO gatheringReceiptVO;
+			gatheringReceiptVO=new GatheringReceiptVO(po.getTime(), po.getHallID(), po.getTotalmoney());
+		return gatheringReceiptVO;
+		}
 	}
+	/**
+	 * ArrayList<GatheringPO> to  VO
+	 * */
 	public ArrayList<GatheringReceiptVO> gposToVOs(ArrayList<GatheringReceiptPO> pos){
+		ArrayList<GatheringReceiptVO> gatheringReceiptVOs;
+		if(pos==null){
+			return null;
+		}
+		else{
+			gatheringReceiptVOs=new ArrayList<GatheringReceiptVO>();
+			for(GatheringReceiptPO p:pos){
+				GatheringReceiptVO vo=gpoToVO(p);
+				gatheringReceiptVOs.add(vo);
+			}
+		}
 		return null;
 	}
-	
+	/**
+	 * ColletionPO to VO
+	 * */
 	public CollectionReceiptVO cpoToVO(CollectionReceiptPO po){
-		return null;
+		CollectionReceiptVO collectionReceiptVO;
+		if(po==null){
+			return null;
+		}
+		else{
+			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getState(), po.totalMoney(), po.getDate());
+			return collectionReceiptVO;
+		}
 	}
+	/**
+	 * CollectionPO to VO
+	 * */
 	public ArrayList<CollectionReceiptVO> cposToVOs(ArrayList<CollectionReceiptPO> pos){
 		return null;
 	}
@@ -53,7 +97,6 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 		return bdService.getGatheringReceiptPOs();
 	}
 	
-	@Override
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
 		// TODO Auto-generated method stub
 		ArrayList<GatheringReceiptPO> gatheringReceiptPOs=bdService.getGatheringReceiptPOs();
@@ -72,19 +115,16 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 		}
 	}
 	
-	@Override
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public CollectionReceiptVO getCollection(String s) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ArrayList<CollectionReceiptVO> getAllCollection() {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
@@ -94,13 +134,11 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 
 	
 
-	@Override
 	public double[] getMoney(GatheringReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public double getTotalMoney(ArrayList<Double> money) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -109,7 +147,6 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 	/**
 	 * 获取编号
 	 * */
-	@Override
 	public String getCollectionListID() {
 		// TODO Auto-generated method stub
 		return null;
@@ -161,6 +198,10 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 //		public double getTotalMoney(){
 //			return totalmoney;
 //		}
+	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptVO> vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 		

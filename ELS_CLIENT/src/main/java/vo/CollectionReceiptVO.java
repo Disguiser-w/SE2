@@ -12,12 +12,9 @@ public class CollectionReceiptVO extends ReceiptVO {
 	public  String hallID;
 	public  String date;
 	
-	public CollectionReceiptVO(String ID,String userID,ReceiptState state,ArrayList<GatheringReceiptVO> gvo,double[] money,double totalMoney,String hallID,String date){
+	public CollectionReceiptVO(String ID,String userID,ReceiptState state,double totalMoney,String date){
 		super(ID,userID,ReceiptType.COLLECTIONRECEIPT,state);
-		this.gvo = gvo;
-		this.money =money;
 		this.totalMoney = totalMoney;
-		this.hallID =hallID;
 		this.date = date;
 	}
     //account还需不需要呢？？？

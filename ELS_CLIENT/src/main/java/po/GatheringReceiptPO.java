@@ -11,6 +11,7 @@ public class GatheringReceiptPO {
 	    ArrayList<ExpressPO> expressList;
 	    ArrayList<Double> money;
 	    double totalmoney;
+	    String HallID;
 	    
 	    public GatheringReceiptPO(){
 	    }
@@ -61,6 +62,10 @@ public class GatheringReceiptPO {
 
 		public void setTotalmoney(double totalmoney) {
 			this.totalmoney = totalmoney;
+		}
+		
+		public String getHallID(){
+			return HallID;
 		}
 	    
 	    
