@@ -3,16 +3,22 @@ package po;
 public class RepertoryPO {
 
 	private String repertoryID, ownerID;
-	private int maxRow,  maxShelf, maxDigit;
-	private double warningRadio;
+	private int maxRow,  maxShelf, maxDigit, warningRadio;
+	//private int planeBlockStockNum, trainBlockStockNum, truckBlockStockNum, defaultBlockStockNum;
+	private int stockNum[];
 	
-	public RepertoryPO(String repertoryID, String ownerID, int maxRow, int maxShelf, int maxDigit, int warningRatio){
+	public RepertoryPO(String repertoryID, String ownerID){
 		this.repertoryID = repertoryID;
 		this.ownerID = ownerID;
-		this.maxRow = maxRow;
-		this.maxShelf = maxShelf;
-		this.maxDigit = maxDigit;
-		this.warningRadio = warningRatio;
+		this.maxRow = 10;
+		this.maxShelf = 10;
+		this.maxDigit = 10;
+		this.warningRadio = 80;
+		stockNum = new int [4];
+		/*this.planeBlockStockNum = 0;
+		this.trainBlockStockNum = 0;
+		this.truckBlockStockNum = 0;
+		this.defaultBlockStockNum = 0; */
 	}
 	
 	public String getRepertoryID(){
@@ -55,12 +61,71 @@ public class RepertoryPO {
 		this.maxDigit = maxDigit;
 	}
 	
-	public double getWarningRatio(){
+	public int getWarningRatio(){
 		return this.warningRadio;
 	}
 	
-	public void setWarningRatio(double warningRatio){
+	public void setWarningRatio(int warningRatio){
 		this.warningRadio = warningRatio;
 	}
 	
+	/*public int getPlaneBlockStockNum(){
+		return this.planeBlockStockNum;
+	}
+	
+	public void planeBlockStockNumPlus(){
+		this.planeBlockStockNum++;
+	}
+	
+	public void planeBlockStockNumSub(){
+		this.planeBlockStockNum--;
+	}
+	
+	public int getTrainBlockStockNum(){
+		return this.trainBlockStockNum;
+	}
+	
+	public void trainBlockStockNumPlus(){
+		this.trainBlockStockNum++;
+	}
+	
+	public void trainBlockStockNumSub(){
+		this.trainBlockStockNum--;
+	}
+	
+	public int getTruckBlockStockNum(){
+		return this.truckBlockStockNum;
+	}
+	
+	public void truckBlockStockNumPlus(){
+		this.truckBlockStockNum++;
+	}
+	
+	public void truckBlockStockNumSub(){
+		this.truckBlockStockNum--;
+	}
+	
+	public int getDefaultBlockStockNum(){
+		return this.defaultBlockStockNum;
+	}
+	
+	public void defaultBlockStockNumPlus(){
+		this.defaultBlockStockNum++;
+	}
+	
+	public void defaultBlockStockNumSub(){
+		this.defaultBlockStockNum--;
+	}*/
+	
+	public int getStockNum(int block){
+		return this.stockNum[block];
+	}
+	
+	public void stockNumPlus(int block){
+		this.stockNum[block]++;
+	}
+	
+	public void stockNumSub(int block){
+		this.stockNum[block]--;
+	}
 }

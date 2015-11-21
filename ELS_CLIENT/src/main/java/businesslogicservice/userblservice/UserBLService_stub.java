@@ -19,7 +19,7 @@ public class UserBLService_stub implements UserBLService{
     		return 0;
 		}
 
-	    public int deleteUser(UserVO uservo) {
+	    public int deleteUser(String userID) {
 	        // TODO 自动生成的方法存根
 	        System.out.println("Delete user succeed!");
 	        return 0;

@@ -10,16 +10,15 @@ import java.rmi.RemoteException;
 
 public class UserDataService_driver {
 
-	public void drive(UserDataService_stub userDataService) throws RemoteException {
+	public void drive(UserDataService_stub userDataService){
     	userDataService.check("KD-00001", "123456");
-        userDataService.add(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
+        userDataService.addUser(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
         		                        SalaryPlanType.countermanSalaryPlan, AuthorityType.lowest, 0));
-        userDataService.delete(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
+        userDataService.deleteUser("KD-00001");
+        userDataService.modifyUser(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
                 						  SalaryPlanType.countermanSalaryPlan, AuthorityType.lowest, 0));
-        userDataService.modify(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
-                						  SalaryPlanType.countermanSalaryPlan, AuthorityType.lowest, 0));
-        userDataService.find("KD-00001");
-        userDataService.showAll();
+        userDataService.findUser("KD-00001");
+        userDataService.showAllUsers();
     }
 	
 	public static void main(String[] args) throws RemoteException {

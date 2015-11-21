@@ -2,6 +2,7 @@ package vo;
 
 import type.ExpressType;
 import type.PackType;
+import type.TransferingState;
 
 public class OrderVO {
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
@@ -10,6 +11,8 @@ public class OrderVO {
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
+	
+	// 装车状态（等待中，已装车）
 	public final String ID;
 
 	public final String senderName;
@@ -35,15 +38,17 @@ public class OrderVO {
 	public final float freight;
 	public final float packingExpense;
 
-	public final String builtData;
-	public final String finishedData;
+	public final String builtDate;
+	public final String finishedDate;
 	public final String finishedID;
 
+	public final TransferingState transfer_state;
+	
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
-			float freight, float packingExpense, String builtData, String finishedData, String finishedID) {
+			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,TransferingState transfer_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -64,8 +69,9 @@ public class OrderVO {
 		this.packType = packType;
 		this.freight = freight;
 		this.packingExpense = packingExpense;
-		this.builtData = builtData;
-		this.finishedData = finishedData;
+		this.builtDate = builtDate;
+		this.finishedDate = finishedDate;
 		this.finishedID = finishedID;
+		this.transfer_state = transfer_state;
 	}
 }
