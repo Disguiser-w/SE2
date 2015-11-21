@@ -21,6 +21,8 @@ public class RepertoryPO {
 		this.defaultBlockStockNum = 0; */
 	}
 	
+	
+	
 	public String getRepertoryID(){
 		return this.repertoryID;
 	}

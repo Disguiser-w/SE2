@@ -25,19 +25,19 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return null;
 	}
 
-	public ArrayList<GatheringReceiptVO> getGathering(String HallID,String Time) {
+	public ArrayList<GatheringReceiptVO> getGathering(String Time) {
 		// TODO Auto-generated method stub
 		System.out.println("Get Gathering successfully!");
 		return null;
 	}
 
-	public double[]  getMoney(GatheringReceiptVO vo) {
+	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo) {
 		// TODO Auto-generated method stub
 		System.out.println("Get each Gathering's money successfully!");
 		return null;
 	}
 
-	public double getTotalMoney(int[] money) {
+	public double getTotalMoney(ArrayList<Double> money) {
 		// TODO Auto-generated method stub
 		System.out.println("Get total money successfully!");
 		return 0;

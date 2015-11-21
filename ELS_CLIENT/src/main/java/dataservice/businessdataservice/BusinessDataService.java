@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
+import po.GatheringReceiptPO;
 import po.OrderPO;
 import po.VehiclePO;
 
@@ -64,5 +65,9 @@ public interface BusinessDataService {
 	 * 生成装车单
 	 * */
 	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po);
+	/**
+	 * 生成收款汇总单
+	 * */
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptPOs();
 	
 }

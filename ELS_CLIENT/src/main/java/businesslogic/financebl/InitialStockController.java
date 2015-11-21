@@ -16,7 +16,7 @@ import po.UserPO;
 import po.VehiclePO;
 import vo.AccountVO;
 import vo.InitInfoVO;
-import vo.InventoryVO;
+import vo.RepertoryVO;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
@@ -77,7 +77,7 @@ public class InitialStockController implements InitialStockBLService{
 		else{
 			organizationPOs=new ArrayList<OrganizationPO>();
 			for(OrganizationVO v:organizationVOs){
-				OrganizationPO po=new OrganizationPO(category, organizationID, name, repertory);
+				OrganizationPO po=new OrganizationPO(category, organizationID, name);
 				organizationPOs.add(po);
 			}
 		}
@@ -95,7 +95,7 @@ public class InitialStockController implements InitialStockBLService{
 			}
 		}
 		
-		ArrayList<RepertoryVO> repertoryVOs=vo.getRepertoryVOs()();
+		ArrayList<RepertoryVO> repertoryVOs=vo.getRepertoryVOs();
 		ArrayList<RepertoryPO> repInventoryPOs;
 		if(repertoryVOs==null){
 			repInventoryPOs=null;
@@ -103,7 +103,7 @@ public class InitialStockController implements InitialStockBLService{
 		else{
 			repInventoryPOs=new ArrayList<RepertoryPO>();
 			for(RepertoryVO v:repertoryVOs){
-				RepertoryPO po=new RepertoryPO(repertoryID, ownerID);
+				RepertoryPO po=new RepertoryPO(ownerID);
 				repInventoryPOs.add(po);
 			}
 		}
@@ -172,7 +172,7 @@ public class InitialStockController implements InitialStockBLService{
 		else{
 			organizationVOs=new ArrayList<OrganizationVO>();
 			for(OrganizationPO p:organizationPOs){
-				OrganizationVO vo=new OrganizationVO(p.getCategory(), p.getOrganizationID(), p.getName(), p.getRepertory());
+				OrganizationVO vo=new OrganizationVO(category, organizationID, name, repertory);
 				organizationVOs.add(vo);
 			}
 		}
@@ -190,16 +190,16 @@ public class InitialStockController implements InitialStockBLService{
 		}
 		}
 		
-		ArrayList<RepertoryPO> inventoryPOs=po.getInventoryPOs();
-		ArrayList<InventoryVO> inventoryVOs;
-		if(inventoryPOs==null){
-			inventoryVOs=null;
+		ArrayList<RepertoryPO> repertoryPOs=po.getRepertoryPOs();
+		ArrayList<RepertoryVO> repertoryVOs;
+		if(repertoryPOs==null){
+			repertoryVOs=null;
 		}
 		else{
-			inventoryVOs=new ArrayList<InventoryVO>();
-			for(RepertoryPO p:inventoryPOs){
-				InventoryVO vo=new InventoryVO(p.getID());
-				inventoryVOs.add(vo);
+			repertoryVOs=new ArrayList<RepertoryVO>();
+			for(RepertoryPO p:repertoryPOs){
+				RepertoryVO vo=new RepertoryVO(p.getRepertoryID(), p.getOwnerID(), p.getMaxRow(), p.getMaxShelf(), p.getMaxDigit(), p.getWarningRatio());
+				repertoryVOs.add(vo);
 			}
 		}
 		
@@ -215,7 +215,7 @@ public class InitialStockController implements InitialStockBLService{
 				accountVOs.add(vo);
 			}
 		}
-		InitInfoVO initInfoVO=new InitInfoVO(po.getDate(), userVOs, organizationVOs, vehicleVOs, inventoryVOs, accountVOs);
+		InitInfoVO initInfoVO=new InitInfoVO(po.getDate(), userVOs, organizationVOs, vehicleVOs, repertoryVOs, accountVOs);
 		return initInfoVO;
 	}
 	

@@ -20,13 +20,13 @@ public class InitInfoPO {
 	public InitInfoPO(){
 	}
 	
-	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> inventoryPOs,ArrayList<AccountPO>  accoutPOs){
+	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs){
 		super();
 		this.date=date;
 		this.userPOs=userPOs;
 		this.organizationPOs=organizationPOs;
 		this.vehiclePOs=vehiclePOs;
-		this.repertoryPOs=inventoryPOs;
+		this.repertoryPOs=repertoryPOs;
 	}
 	
 	   //人员信息
@@ -43,7 +43,7 @@ public class InitInfoPO {
 		return vehiclePOs;
 		}
 		//库存信息
-	public ArrayList<RepertoryPO> getInventoryPOs(){
+	public ArrayList<RepertoryPO> getRepertoryPOs(){
 		return repertoryPOs;	
 	}
 		//账户信息
