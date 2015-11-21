@@ -9,13 +9,24 @@ import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
 import businesslogicservice.financeblservice.CollectionReceiptBLService;
-
+/**
+ * 论没有考虑账户变化的本宝宝要爆炸了！！！
+ * 入款单：建立一个boss账户，所有钱累加到这个账户上
+ * 审批状态通过后，账户发生变化
+ * */
 public class CollectionReceiptBL implements CollectionReceiptBLService{
 
 	CollectionReceiptDataService crdService;
 	BusinessDataService bdService;
 	
 	ArrayList<GatheringReceiptPO> gatheringReceiptPOs_Right;
+	
+	/**
+	 * 这个运行表示什么意思==
+	 * */
+	public int excute(){
+		return 0;
+	}
 	/**
 	 * gatheringVO to PO
 	 * */
@@ -87,16 +98,32 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 	 * CollectionPO to VO
 	 * */
 	public ArrayList<CollectionReceiptVO> cposToVOs(ArrayList<CollectionReceiptPO> pos){
-		return null;
+		ArrayList<CollectionReceiptVO> collectionReceiptVOs;
+		if(pos==null){
+			return null;
+		}
+		else{
+			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
+			for(CollectionReceiptPO p:pos){
+				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getState(), p.totalMoney(), p.getDate());
+				collectionReceiptVOs.add(vo);
+			}
+			return collectionReceiptVOs;
+		}
 	}
 	
 	
 	
-	
+	/**
+	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
+	 * */
 	public ArrayList<GatheringReceiptPO> getGatheringPOs(){
 		return bdService.getGatheringReceiptPOs();
 	}
 	
+	/**
+	 * 获取符合时间条件的gatheringPO
+	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
 		// TODO Auto-generated method stub
 		ArrayList<GatheringReceiptPO> gatheringReceiptPOs=bdService.getGatheringReceiptPOs();
@@ -115,6 +142,44 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 		}
 	}
 	
+	/**
+	 * 获得符合时间条件的gatheringPO的money
+	 * */
+	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptVO> vo) {
+		// TODO Auto-generated method stub
+		ArrayList<Double> moneys ;
+		if(vo==null){
+			return null;
+		}
+		else{
+			moneys=new ArrayList<Double>();
+			for(GatheringReceiptVO v:vo){
+				Double money=v.getTotalmoney();
+				moneys.add(money);
+			}
+			return moneys;
+		}
+	}
+	
+	/**
+	 * 获取符合条件的总钱数
+	 * */
+	public double getTotalMoney(ArrayList<Double> money) {
+		// TODO Auto-generated method stub
+		double totalMoney=0;
+		if(money==null){
+			System.out.println("fail to get ArrayList<Double> money");
+			return 0;
+		}
+		else{
+			for(int i=0;i<money.size();i++){
+				totalMoney+=money.get(i);
+			}
+			return totalMoney;
+		}
+	}
+
+	
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -128,21 +193,13 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 	public ArrayList<CollectionReceiptVO> getAllCollection() {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		
-		return null;
+		return cposToVOs(collectionReceiptPOs);
 	}
 
 	
 
-	public double[] getMoney(GatheringReceiptVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public double getTotalMoney(ArrayList<Double> money) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	/**
 	 * 获取编号
@@ -198,10 +255,7 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 //		public double getTotalMoney(){
 //			return totalmoney;
 //		}
-	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptVO> vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 		
