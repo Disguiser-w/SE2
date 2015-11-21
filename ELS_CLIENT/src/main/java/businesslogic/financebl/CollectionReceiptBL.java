@@ -8,13 +8,16 @@ import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import businesslogic.receiptbl.ReceiptBL;
 import businesslogicservice.financeblservice.CollectionReceiptBLService;
 /**
  * 论没有考虑账户变化的本宝宝要爆炸了！！！
  * 入款单：建立一个boss账户，所有钱累加到这个账户上
  * 审批状态通过后，账户发生变化
+ * 
+ * 还少一个最关键的方法：怎样把gathering中得到的ID，money存进collectionVO
  * */
-public class CollectionReceiptBL implements CollectionReceiptBLService{
+public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptBLService{
 
 	CollectionReceiptDataService crdService;
 	BusinessDataService bdService;
@@ -52,7 +55,7 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 		return null;
 	}
 	/**
-	 * GatheringPO to VO
+	 * GatheringPO to VO,显示所有的vo
 	 * */
 	public GatheringReceiptVO gpoToVO(GatheringReceiptPO po){
 		if(po==null){
@@ -179,17 +182,41 @@ public class CollectionReceiptBL implements CollectionReceiptBLService{
 		}
 	}
 
-	
+	/**
+	 * 将显示的CollectionVO转化为持久化对象PO
+	 * 发送给总经理
+	 * */
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		CollectionReceiptPO po=cvoToPO(vo);
+		update(vo);
+		return crdService.createCollection(po);
 	}
 
+	/**
+	 * 根据ID筛选出Collectionpo
+	 * */
 	public CollectionReceiptVO getCollection(String s) {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
+		if(collectionReceiptPOs==null){
+			System.out.println("CollectionReceiptPO is null");
+			return null;
+		}
+		else{
+			CollectionReceiptVO vo=new CollectionReceiptVO();
+			for(CollectionReceiptPO p:collectionReceiptPOs){
+				if(p.getID()==s){
+					vo=cpoToVO(p);
+				}
+			}
+			return vo;
+		}		
 	}
 
+	/**
+	 * 显示Po中存在的所有Collection记录
+	 * */
 	public ArrayList<CollectionReceiptVO> getAllCollection() {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
