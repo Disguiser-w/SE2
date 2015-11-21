@@ -13,44 +13,44 @@ public class CollectionReceiptPanel extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	JButton dateChoose;
-	JButton infook;
-	JButton ok;
-	JButton next;
-	JButton previous;
-	JButton total;
+	private JButton dateChooseButton;
+	private JButton infoOKButton;
+	private JButton collectionOKButton;
+	private JButton next;
+	private JButton previous;
+	private JButton totalButton;
 
-	JLabel function;
-	JLabel date;
-	JLabel businessHall;
-	JLabel infoLine;
+	private JLabel function;
+	private JLabel date;
+	private JLabel businessHall;
+	private JLabel infoLine;
 
-	JTextField dateInput;
-	JTextField businessHallIDInput;
+	private JTextField date_Input;
+	private JTextField businessHall_ID_Input;
 
-	CollectionReceiptInfoTable info;
+	private CollectionReceiptInfoTable info;
 
 	public CollectionReceiptPanel() {
-		dateChoose = new JButton("date");
-		infook = new JButton("infook");
-		ok = new JButton("ok");
+		dateChooseButton = new JButton("date");
+		infoOKButton = new JButton("infook");
+		collectionOKButton = new JButton("ok");
 		next = new JButton("next");
 		previous = new JButton("previous");
-		total = new JButton("total");
+		totalButton = new JButton("total");
 
 		function = new JLabel("新建入款单");
 		date = new JLabel("日期");
 		businessHall = new JLabel("营业厅");
 		infoLine = new JLabel("时间：2015/11/1  合计金额：970");
 
-		dateInput = new JTextField("2015/11/6");
-		businessHallIDInput = new JTextField("025-000");
+		date_Input = new JTextField("2015/11/6");
+		businessHall_ID_Input = new JTextField("025-000");
 
 		info = new CollectionReceiptInfoTable(13, 4);
 
 		setCmpLocation();
 
-		dateChoose.addActionListener(new ActionListener() {
+		dateChooseButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -58,7 +58,7 @@ public class CollectionReceiptPanel extends JPanel {
 			}
 		});
 
-		infook.addActionListener(new ActionListener() {
+		infoOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -66,7 +66,7 @@ public class CollectionReceiptPanel extends JPanel {
 			}
 		});
 
-		ok.addActionListener(new ActionListener() {
+		collectionOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -74,7 +74,7 @@ public class CollectionReceiptPanel extends JPanel {
 			}
 		});
 
-		total.addActionListener(new ActionListener() {
+		totalButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -100,18 +100,18 @@ public class CollectionReceiptPanel extends JPanel {
 
 		setLayout(null);
 
-		add(dateChoose);
-		add(infook);
-		add(ok);
-		add(total);
+		add(dateChooseButton);
+		add(infoOKButton);
+		add(collectionOKButton);
+		add(totalButton);
 		add(next);
 		add(previous);
 		add(function);
 		add(date);
 		add(infoLine);
 		add(businessHall);
-		add(dateInput);
-		add(businessHallIDInput);
+		add(date_Input);
+		add(businessHall_ID_Input);
 		add(info);
 	}
 
@@ -120,21 +120,21 @@ public class CollectionReceiptPanel extends JPanel {
 				PANEL_WIDTH * 5 / 18, PANEL_HEIGHT / 12);
 		date.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 24);
-		dateInput.setBounds(PANEL_WIDTH * 7 / 36, PANEL_HEIGHT * 3 / 16,
+		date_Input.setBounds(PANEL_WIDTH * 7 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
 		businessHall.setBounds(PANEL_WIDTH * 13 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 24);
-		businessHallIDInput.setBounds(PANEL_WIDTH * 4 / 9,
+		businessHall_ID_Input.setBounds(PANEL_WIDTH * 4 / 9,
 				PANEL_HEIGHT * 3 / 16, PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
-		ok.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
+		collectionOKButton.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		infook.setBounds(PANEL_WIDTH * 11 / 36, PANEL_HEIGHT * 3 / 16,
+		infoOKButton.setBounds(PANEL_WIDTH * 11 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		total.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 45 / 48,
+		totalButton.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		infoLine.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH * 5 / 12, PANEL_HEIGHT / 24);

@@ -16,27 +16,27 @@ public class InitialStockPanel_main extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 	
-	ArrayList<InitInfoVO> initInfoList;
+	private ArrayList<InitInfoVO> initInfoList;
 	
-	JButton newButton;
-	JButton startDate;
-	JButton endDate;
-	JButton dateOKButton;
-	JButton next;
-	JButton previous;
+	private JButton newButton;
+	private JButton startDateButton;
+	private JButton endDateButton;
+	private JButton dateOKButton;
+	private JButton next;
+	private JButton previous;
 	
-	JLabel function;
-	JLabel dateRange;
+	private JLabel function;
+	private JLabel dateRange;
 
-	JTextField inputStartDate;
-	JTextField inputEndDate;
+	private JTextField startDate_Input;
+	private JTextField endDate_Input;
 	
-	InitialStockInfoTable_main info;
+	private InitialStockInfoTable_main info;
 	
 	public InitialStockPanel_main(){
 		newButton = new JButton("new");
-		startDate = new JButton("start");
-		endDate = new JButton("end");
+		startDateButton = new JButton("start");
+		endDateButton = new JButton("end");
 		dateOKButton = new JButton("ok");
 		next = new JButton("next");
 		previous = new JButton("previous");
@@ -44,10 +44,12 @@ public class InitialStockPanel_main extends JPanel {
 		function = new JLabel("期初建账");
 		dateRange = new JLabel("日期范围");
 
-		inputStartDate = new JTextField("2015/10/30", 11);
-		inputEndDate = new JTextField("2015/11/05", 11);
+		startDate_Input = new JTextField("2015/10/30", 11);
+		endDate_Input = new JTextField("2015/11/05", 11);
 		
 		info = new InitialStockInfoTable_main(13,2);
+		
+		setCmpLocation();
 		
 		newButton.addActionListener(new ActionListener() {
 			
@@ -57,7 +59,7 @@ public class InitialStockPanel_main extends JPanel {
 			}
 		});
 		
-		startDate.addActionListener(new ActionListener() {
+		startDateButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -65,7 +67,7 @@ public class InitialStockPanel_main extends JPanel {
 			}
 		});
 
-		endDate.addActionListener(new ActionListener() {
+		endDateButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -100,15 +102,15 @@ public class InitialStockPanel_main extends JPanel {
 		setLayout(null);
 		
 		add(newButton);
-		add(startDate);
-		add(endDate);
+		add(startDateButton);
+		add(endDateButton);
 		add(dateOKButton);
 		add(next);
 		add(previous);
 		add(function);
 		add(dateRange);
-		add(inputEndDate);
-		add(inputStartDate);
+		add(endDate_Input);
+		add(startDate_Input);
 		add(info);
 	}
 	
@@ -119,13 +121,13 @@ public class InitialStockPanel_main extends JPanel {
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
 		dateRange.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		startDate.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
+		startDateButton.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		inputStartDate.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
+		startDate_Input.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		endDate.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
+		endDateButton.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		inputEndDate.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
+		endDate_Input.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
 		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);

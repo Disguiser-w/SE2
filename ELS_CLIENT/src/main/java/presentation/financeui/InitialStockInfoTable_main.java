@@ -11,7 +11,7 @@ import vo.InitInfoVO;
 public class InitialStockInfoTable_main extends JTable{
 	private int width;
 	private int height;
-	TableColumn tc;
+	private TableColumn tc;
 	
 	ArrayList<InitInfoVO> initInfoList;
 	

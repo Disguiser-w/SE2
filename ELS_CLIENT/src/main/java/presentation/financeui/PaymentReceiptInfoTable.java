@@ -12,7 +12,7 @@ import vo.PaymentReceiptVO;
 public class PaymentReceiptInfoTable extends JTable{
 	private int width;
 	private int height;
-	TableColumn tc;
+	private TableColumn tc;
 	
 	public PaymentReceiptInfoTable(int row, int column) {
 		super(row, column);
