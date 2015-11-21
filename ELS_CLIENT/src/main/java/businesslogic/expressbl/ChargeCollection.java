@@ -24,4 +24,7 @@ public class ChargeCollection {
 		return true;
 	}
 
+	public ExpressDataService getExpressData(){
+		return expressData;
+	}
 }

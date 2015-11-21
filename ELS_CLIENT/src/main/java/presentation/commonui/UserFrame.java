@@ -89,6 +89,7 @@ public class UserFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 //		setResizable(false);
+		setFocusable(false);
 
 	}
 

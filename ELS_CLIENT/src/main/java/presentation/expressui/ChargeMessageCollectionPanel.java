@@ -8,14 +8,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import presentation.commonui.LocationHelper;
+import businesslogic.expressbl.controller.ChargeCollectionController;
 
 public class ChargeMessageCollectionPanel extends JPanel {
 
 	private JTable messageTable;
 	private JLabel totalMessageLabel;
 	private JButton collectionButton;
-//	private LocationHelper helper;
+	// private LocationHelper helper;
+
+	private ChargeCollectionController controller;
 
 	public ChargeMessageCollectionPanel() {
 
@@ -30,9 +32,11 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		add(totalMessageLabel);
 		add(collectionButton);
 
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
-
+		controller = new ChargeCollectionController();
+		setBaseInfo();
+		addListener();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -45,6 +49,14 @@ public class ChargeMessageCollectionPanel extends JPanel {
 				(int) (width * 16.99743918053777 / 25), (int) (height * 1.9642857142857142 / 20));
 		collectionButton.setBounds((int) (width * 21.638924455825865 / 25), (int) (height * 17.142857142857142 / 20),
 				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.5625 / 20));
+
+	}
+
+	private void setBaseInfo() {
+
+	}
+
+	private void addListener() {
 
 	}
 

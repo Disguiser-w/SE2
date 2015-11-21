@@ -1,24 +1,31 @@
 package presentation.commonui;
 
-import presentation.expressui.AddOrderPanel;
-import presentation.expressui.ChargeMessageCollectionPanel;
-import presentation.expressui.FinishedOrderPanel;
-import presentation.expressui.QueryPanel;
+import presentation.repertoryui.EXwarehousePanel;
 
 public class UserFrameTest extends UserFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public UserFrameTest() {
 
 		super();
 
-//		addFuncLabel(new AddOrderPanel());
-//		addFuncLabel(new ChargeMessageCollectionPanel());
-//		addFuncLabel(new FinishedOrderPanel());
-		addFuncLabel(new QueryPanel());
+		// addFuncLabel(new OrganizationManagerPanel());
+		// addFuncLabel(new BasicDataManagerPanel());
+		// addFuncLabel(new CheckIncomePanel());
+		// addFuncLabel(new CheckOperatingPanel());
+		// addFuncLabel(new StaffManagerPanel());
+		// addFuncLabel(new CheckReceiptPanel());
+
+		// addFuncLabel(new InitializeInformationPanel());
+		// addFuncLabel(new EXwarehousePanel());
 
 		showFrame();
 
-		setFocusable(false);
+		// setFocusable(false);
 	}
 
 	public static void main(String[] args) {

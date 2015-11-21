@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
+import businesslogic.expressbl.controller.AddOrderController;
 
 public class AddOrderPanel extends JPanel {
 	private JLabel senderLabel;
@@ -66,6 +66,7 @@ public class AddOrderPanel extends JPanel {
 	private JButton calcuButton;
 	private JButton confirmButton;
 
+	private AddOrderController controller;
 	// private LocationHelper helper;
 
 	public AddOrderPanel() {
@@ -256,8 +257,11 @@ public class AddOrderPanel extends JPanel {
 
 		// helper = new LocationHelper(this);
 
+		setBaseInfo();
+		addListener();
 		setLayout(null);
 
+		controller = new AddOrderController();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -325,6 +329,14 @@ public class AddOrderPanel extends JPanel {
 
 		calcuButton.setBounds(width * 19 / 25, height * 22 / 25, width / 12, height / 15);
 		confirmButton.setBounds(width * 22 / 25, height * 22 / 25, width / 12, height / 15);
+
+	}
+
+	private void setBaseInfo() {
+
+	}
+
+	private void addListener() {
 
 	}
 
