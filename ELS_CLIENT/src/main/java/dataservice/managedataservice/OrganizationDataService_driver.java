@@ -15,7 +15,7 @@ public class OrganizationDataService_driver {
 
 	public void drive(OrganizationDataService_stub OrganizationDataService) throws RemoteException {
     	OrganizationDataService.addOrganization(new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",null));
-        OrganizationDataService.deleteOrganization(new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",null));
+        OrganizationDataService.deleteOrganization("025000");
         OrganizationDataService.modifyOrganization(new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",null));
         OrganizationDataService.findOrganization("025000");
         OrganizationDataService.modifyUser(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 

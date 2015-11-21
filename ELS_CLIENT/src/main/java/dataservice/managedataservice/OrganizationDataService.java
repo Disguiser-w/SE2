@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 public interface OrganizationDataService extends Remote{
 	
 	public int addOrganization(OrganizationPO organizationpo) throws RemoteException;
-	public int deleteOrganization(OrganizationPO organizationpo) throws RemoteException;
+	public int deleteOrganization(String organizationID) throws RemoteException;
 	public int modifyOrganization(OrganizationPO organizationpo) throws RemoteException;
 	public OrganizationPO findOrganization(String OrganizationID) throws RemoteException;
 	

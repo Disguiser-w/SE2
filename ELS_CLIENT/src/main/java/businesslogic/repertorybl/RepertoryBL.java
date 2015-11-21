@@ -2,6 +2,7 @@ package businesslogic.repertorybl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat; 
 
 import businesslogicservice.repertoryblservice.RepertoryBLService;
@@ -18,53 +19,68 @@ public class RepertoryBL implements RepertoryBLService{
 	
 	/**
 	 * @param String repertoryID, int maxRow, int maxShelf, int maxDigit, int warningRatio
-	 * @return 0
+	 * @return 0(initialize succeed), 1(server failed)
 	 * @see RepertoryPO
 	 * 
 	 * */
 	public int inventoryInitialization(String repertoryID, int maxRow, int maxShelf, 
 										int maxDigit, int warningRatio){
-		RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
-		repertorypo.setMaxRow(maxRow);
-		repertorypo.setMaxShelf(maxShelf);
-		repertorypo.setMaxDigit(maxDigit);
-		repertorypo.setWarningRatio(warningRatio);
-		return 0;
+		try{
+			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
+			repertorypo.setMaxRow(maxRow);
+			repertorypo.setMaxShelf(maxShelf);
+			repertorypo.setMaxDigit(maxDigit);
+			repertorypo.setWarningRatio(warningRatio);
+			return 0;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 1;
+		}
 	}
 	
 	/**
 	 * @param String repertoryID,, String JJD_ID, int blockNum, String date
-	 * @return 0
+	 * @return 0(enterRepertory succeed), 1(server failed)
 	 * @see RepertoryPO
 	 * 
 	 * */
 	public int enterRepertory(String repertoryID, String JJD_ID, int blockNum, String date){
-		String warningStr = inventoryWarning(repertoryID);
-		if((warningStr.contains("0")) || (warningStr.contains("1")) || (warningStr.contains("2")))
-			blockNum = 3;
-		
-		String vacantLocation = searchVacantLocation(repertoryID, blockNum);
-		if(admitEnterRepertory(vacantLocation)){
-			String locationParts[] = warningStr.split(" ");
-			int rowNum = Integer.parseInt(locationParts[0]);
-			int shelfNum = Integer.parseInt(locationParts[1]);
-			int digitNum = Integer.parseInt(locationParts[2]);
+		try{
+			String warningStr = inventoryWarning(repertoryID);
+			if((warningStr.contains("0")) || (warningStr.contains("1")) || (warningStr.contains("2")))
+				blockNum = 3;
 			
-			GoodsPO goodpo = rdService.findGoodsbyID(JJD_ID);
-			InventoryPO inventorypo = new InventoryPO(goodpo, blockNum, rowNum, shelfNum, digitNum);
-			rdService.addInventory(repertoryID, inventorypo);
-			//在repertoryDataService中的addInventory方法中，除了要把InventoryPO加入列表中，还要把GoodsPO的一个未填写的enterDate补充为今天的时间
+			String vacantLocation = searchVacantLocation(repertoryID, blockNum);
+			if(admitEnterRepertory(vacantLocation)){
+				String locationParts[] = warningStr.split(" ");
+				int rowNum = Integer.parseInt(locationParts[0]);
+				int shelfNum = Integer.parseInt(locationParts[1]);
+				int digitNum = Integer.parseInt(locationParts[2]);
+				
+				GoodsPO goodpo = rdService.findGoodsbyID(JJD_ID);
+				InventoryPO inventorypo = new InventoryPO(goodpo, blockNum, rowNum, shelfNum, digitNum);
+				rdService.addInventory(repertoryID, inventorypo);
+				//在repertoryDataService中的addInventory方法中，除了要把InventoryPO加入列表中，还要把GoodsPO的一个未填写的enterDate补充为今天的时间
+			}
+			return 0;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 1;
 		}
-		return 0;
 	}
 	
 	public int leaveRepertory(String repertoryID, String JJD_ID, int transType, String date){
-		InventoryPO inventorypo = rdService.findInventorybyID(repertoryID, JJD_ID);
-		InventoryVO inventoryvo = inventoryPOToVO(inventorypo);
-		if(admitLeaveRepertory(inventoryvo)){
-			rdService.deleteInventory(repertoryID, inventorypo);
+		try{
+			InventoryPO inventorypo = rdService.findInventorybyID(repertoryID, JJD_ID);
+			InventoryVO inventoryvo = inventoryPOToVO(inventorypo);
+			if(admitLeaveRepertory(inventoryvo)){
+				rdService.deleteInventory(repertoryID, inventorypo);
+			}
+			return 0;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 1;
 		}
-		return 0;
 	}
 	
 	/**
@@ -74,48 +90,68 @@ public class RepertoryBL implements RepertoryBLService{
 	 * 
 	 * */
 	public String inventoryWarning(String repertoryID){
-		RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
-		int blockMaxStockNum = repertorypo.getMaxRow() * repertorypo.getMaxShelf() * repertorypo.getMaxDigit();
-		int warningRatio = repertorypo.getWarningRatio();
-		double warningNumDouble = blockMaxStockNum * (warningRatio *1.0/100);
-		int warningNumInt = (int)warningNumDouble;
-		
-		String warningStr = "";
-		for(int i=0;i<3;i++){
-			if(repertorypo.getStockNum(i) >= warningNumInt)
-			warningStr += "i";
+		try{
+			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
+			int blockMaxStockNum = repertorypo.getMaxRow() * repertorypo.getMaxShelf() * repertorypo.getMaxDigit();
+			int warningRatio = repertorypo.getWarningRatio();
+			double warningNumDouble = blockMaxStockNum * (warningRatio *1.0/100);
+			int warningNumInt = (int)warningNumDouble;
+			
+			String warningStr = "";
+			for(int i=0;i<3;i++){
+				if(repertorypo.getStockNum(i) >= warningNumInt)
+				warningStr += "i";
+			}
+			
+			return warningStr;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return "Server failed!!";
 		}
-		
-		return warningStr;
 	}
 	
 	public ArrayList<InventoryVO> inventoryCheck(String repertoryID, String beginDate, String endDate){
-		ArrayList<InventoryPO> inventoryPOList= rdService.findInventorybyDate(repertoryID, beginDate, endDate);
-		ArrayList<InventoryVO> inventoryVOList = new ArrayList<InventoryVO>();
-		for(InventoryPO inventorypo: inventoryPOList){
-			inventoryVOList.add(inventoryPOToVO(inventorypo));
+		try{
+			ArrayList<InventoryPO> inventoryPOList= rdService.findInventorybyDate(repertoryID, beginDate, endDate);
+			ArrayList<InventoryVO> inventoryVOList = new ArrayList<InventoryVO>();
+			for(InventoryPO inventorypo: inventoryPOList){
+				inventoryVOList.add(inventoryPOToVO(inventorypo));
+			}
+			return inventoryVOList;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
 		}
-		return inventoryVOList;
 	}
 	
 	public ArrayList<InventoryVO> inventoryStockTaking(String repertoryID){
-		Date now = new Date(); 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String time = dateFormat.format(now); 
-		ArrayList<InventoryPO> inventoryPOList= rdService.findInventorybyTime(repertoryID, time);
-		ArrayList<InventoryVO> inventoryVOList = new ArrayList<InventoryVO>();
-		for(InventoryPO inventorypo: inventoryPOList){
-			inventoryVOList.add(inventoryPOToVO(inventorypo));
+		try{
+			Date now = new Date(); 
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String time = dateFormat.format(now); 
+			ArrayList<InventoryPO> inventoryPOList= rdService.findInventorybyTime(repertoryID, time);
+			ArrayList<InventoryVO> inventoryVOList = new ArrayList<InventoryVO>();
+			for(InventoryPO inventorypo: inventoryPOList){
+				inventoryVOList.add(inventoryPOToVO(inventorypo));
+			}
+			return inventoryVOList;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
 		}
-		return inventoryVOList;
 	}
 	
 	public String searchVacantLocation(String repertoryID, int blockNum){
-		RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
-		int rowNum = repertorypo.getStockNum(blockNum) / (repertorypo.getMaxShelf() * repertorypo.getMaxDigit());
-		int shelfNum = repertorypo.getStockNum(blockNum) / repertorypo.getMaxDigit();
-		int digitNum = repertorypo.getStockNum(blockNum) % repertorypo.getMaxDigit();
-		return rowNum+" "+shelfNum+" "+digitNum;
+		try{
+			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
+			int rowNum = repertorypo.getStockNum(blockNum) / (repertorypo.getMaxShelf() * repertorypo.getMaxDigit());
+			int shelfNum = repertorypo.getStockNum(blockNum) / repertorypo.getMaxDigit();
+			int digitNum = repertorypo.getStockNum(blockNum) % repertorypo.getMaxDigit();
+			return rowNum+" "+shelfNum+" "+digitNum;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return "Server failed!!";
+		}
 	}
 	
 	public boolean admitEnterRepertory(String vacantLocation){

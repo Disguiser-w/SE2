@@ -10,7 +10,7 @@ public class OrganizationBLService_stub implements OrganizationBLService{
 		return 0;
 	}
 
-    public int deleteOrganization(OrganizationVO organizationvo) {
+    public int deleteOrganization(String organizationID) {
         // TODO 自动生成的方法存根
         System.out.println("Delete organization succeed!");
         return 0;

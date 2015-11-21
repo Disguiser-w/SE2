@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 public class UserDataService_driver {
 
 	public void drive(UserDataService_stub userDataService){
-    	userDataService.check("KD-00001", "123456");
         userDataService.addUser(new UserPO("王梦娜", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅", 
         		                        SalaryPlanType.countermanSalaryPlan, AuthorityType.lowest, 0));
         userDataService.deleteUser("KD-00001");

@@ -5,44 +5,34 @@ public class CityDistancePO {
 	private String cityA;
 	private String cityB;
 	private double distance;
-	private double time;
-
-	public CityDistancePO(String cityA, String cityB, double distance, double time) {
+	
+	public CityDistancePO(String cityA, String cityB, double distance){
 		this.cityA = cityA;
 		this.cityB = cityB;
 		this.distance = distance;
-		this.time = time;
 	}
-
-	public double getTime() {
-		return time;
-	}
-
-	public void setTime(double time) {
-		this.time = time;
-	}
-
-	public String getCityA() {
+	
+	public String getCityA(){
 		return this.cityA;
 	}
-
-	public void setVCityA(String cityA) {
-		this.cityA = cityA;
+	
+	public void setVCityA(String cityA){
+		this.cityA  = cityA;
 	}
-
-	public String getCityB() {
+	
+	public String getCityB(){
 		return this.cityB;
 	}
-
-	public void setVCityB(String cityB) {
-		this.cityB = cityB;
+	
+	public void setVCityB(String cityB){
+		this.cityB  = cityB;
 	}
-
-	public double getDistance() {
+	
+	public double getDistance(){
 		return this.distance;
 	}
-
-	public void setDistance(double distance) {
+	
+	public void setDistance(double distance){
 		this.distance = distance;
 	}
 }
