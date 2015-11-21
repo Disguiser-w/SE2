@@ -1,10 +1,6 @@
 package businesslogicservice.financeblservice;
 
-import java.util.ArrayList;
-
-import vo.CollectionReceiptVO;
 import vo.CostIncomeReceiptVO;
-import vo.PaymentReceiptVO;
 
 public class CostIncomeReceiptBLService_stub implements CostIncomeReceiptBLService{
 
@@ -14,37 +10,32 @@ public class CostIncomeReceiptBLService_stub implements CostIncomeReceiptBLServi
 		return 0;
 	}
 
-	public CostIncomeReceiptVO getCostIncomeList(String s) {
-		// TODO Auto-generated method stub
-		System.out.println("Get CIL successfully!");
-		return null;
-	}
 
-	public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList() {
-		// TODO Auto-generated method stub
-		System.out.println("Get All CIL successfully!");
-		return null;
-	}
+//	public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList() {
+//		// TODO Auto-generated method stub
+//		System.out.println("Get All CIL successfully!");
+//		return null;
+//	}
 
-	public ArrayList<CollectionReceiptVO> getCollection() {
-		// TODO Auto-generated method stub
-		System.out.println("Get Collection successfully!");
-		return null;
-	}
+//	public ArrayList<CollectionReceiptVO> getCollection() {
+//		// TODO Auto-generated method stub
+//		System.out.println("Get Collection successfully!");
+//		return null;
+//	}
 
-	public ArrayList<PaymentReceiptVO> getPayment() {
-		// TODO Auto-generated method stub
-		System.out.println("Get Payment successfully!");
-		return null;
-	}
+//	public ArrayList<PaymentReceiptVO> getPayment() {
+//		// TODO Auto-generated method stub
+//		System.out.println("Get Payment successfully!");
+//		return null;
+//	}
 
-	public double getIncome(CollectionReceiptVO vo) {
+	public double getIncome() {
 		// TODO Auto-generated method stub
 		System.out.println("Get income successfully!");
 		return 0;
 	}
 
-	public double getCost(PaymentReceiptVO vo) {
+	public double getCost() {
 		// TODO Auto-generated method stub
 		System.out.println("Get cost successfully!");
 		return 0;

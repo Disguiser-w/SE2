@@ -4,7 +4,7 @@ import vo.CollectionReceiptVO;
 
 public class CollectionReceiptBLService_driver {
 	public void drive(CollectionReceiptBLService cbs){
-		cbs.creatCollection(new CollectionReceiptVO(null, null, null, null, null, 0, null, null));
+		cbs.creatCollection(new CollectionReceiptVO());
 //		String HallID="0250001";
 		String time="20151022";
 		String s="HJSKD-20151010-00001";
