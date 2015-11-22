@@ -2,14 +2,14 @@ package businesslogic.managebl;
 
 import java.rmi.RemoteException;
 
+import po.OrganizationPO;
+import po.RepertoryPO;
+import po.UserPO;
 import businesslogicservice.manageblservice.OrganizationBLService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
 import vo.OrganizationVO;
-import po.OrganizationPO;
 import vo.RepertoryVO;
-import po.RepertoryPO;
-import po.UserPO;
 
 public class OrganizationBL implements OrganizationBLService{
 	

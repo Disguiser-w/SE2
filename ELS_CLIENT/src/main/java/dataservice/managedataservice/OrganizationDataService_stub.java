@@ -1,11 +1,12 @@
 package dataservice.managedataservice;
 
 import dataservice.managedataservice.OrganizationDataService;
-import po.OrganizationPO;
-import po.UserPO;
 import type.OrganizationType;
 
 import java.rmi.RemoteException;
+
+import po.OrganizationPO;
+import po.UserPO;
 
 public class OrganizationDataService_stub implements OrganizationDataService{
 	

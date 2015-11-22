@@ -99,6 +99,7 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	/**
 	 * 自动获取ID
 	 * 这个在总的receipt里写应该就可以了
+	 * 其实这个好像根本不需要编号的呀
 	 * */
 	public String getCostIncomeListID() {
 		// TODO Auto-generated method stub

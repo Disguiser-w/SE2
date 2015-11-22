@@ -4,13 +4,13 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.UserPO;
 import businesslogicservice.userblservice.UserBLService;
 import dataservice.userdataservice.UserDataService;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.UserVO;
-import po.UserPO;
 
 public class UserBL implements UserBLService{
 

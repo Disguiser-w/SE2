@@ -1,19 +1,21 @@
 package po;
 
+import java.util.ArrayList;
+
 public class BusinessstatementReceiptPO {
 	String beginTime;
 	String endTime;
 	//可以有这种包含关系吗,还是要分到每个具体属性
-	CollectionReceiptPO cpo;
-	PaymentReceiptPO ppo;
+	ArrayList<CollectionReceiptPO> cpos;
+	ArrayList<PaymentReceiptPO> ppos;
 	public BusinessstatementReceiptPO(){
 		this(null,null,null,null);
 	}
-	public BusinessstatementReceiptPO(String a,String b,	CollectionReceiptPO c,PaymentReceiptPO d){
-		beginTime=a;
-		endTime=b;
-		cpo=c;
-		ppo=d;
+	public BusinessstatementReceiptPO(String beginTime,String endTime,	ArrayList<CollectionReceiptPO> cpos,ArrayList<PaymentReceiptPO> ppos){
+		this.beginTime=beginTime;
+		this.endTime=endTime;
+		this.cpos=cpos;
+		this.ppos=ppos;
 	}
 	
 	public String getBeginTime(){
@@ -24,12 +26,12 @@ public class BusinessstatementReceiptPO {
 		return endTime;
 	}
 	
-	public CollectionReceiptPO getCollectionPO(){
-		return cpo;	
+	public ArrayList<CollectionReceiptPO> getCollectionPOs(){
+		return cpos;	
 	}
 	
-	public PaymentReceiptPO getPaymentPO(){
-		return ppo;	
+	public ArrayList<PaymentReceiptPO> getPaymentPOs(){
+		return ppos;	
 	}
 	
 	public void setBeginTime(String a){

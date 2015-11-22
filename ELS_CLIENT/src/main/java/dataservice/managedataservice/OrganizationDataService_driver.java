@@ -2,14 +2,15 @@ package dataservice.managedataservice;
 
 
 import dataservice.managedataservice.OrganizationDataService_stub;
-import po.OrganizationPO;
-import po.UserPO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import type.OrganizationType;
 
 import java.rmi.RemoteException;
+
+import po.OrganizationPO;
+import po.UserPO;
 
 public class OrganizationDataService_driver {
 

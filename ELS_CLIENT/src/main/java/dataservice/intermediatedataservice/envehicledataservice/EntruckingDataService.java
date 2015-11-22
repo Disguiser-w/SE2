@@ -3,10 +3,10 @@ package dataservice.intermediatedataservice.envehicledataservice;
 import java.util.ArrayList;
 
 import po.EntruckingReceiptPO;
+import po.FarePO;
 import po.OrderPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
-import po.FarePO;
 
 public interface EntruckingDataService {
     public ArrayList<TruckPO> getTruckList();

@@ -2,8 +2,8 @@ package dataservice.managedataservice;
 
 import java.rmi.RemoteException;
 
-import type.ExpressType;
 import po.CostPO;
+import type.ExpressType;
 
 public interface CostDataService {
 

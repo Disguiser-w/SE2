@@ -3,6 +3,12 @@ package businesslogic.financebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.AccountPO;
+import po.InitInfoPO;
+import po.OrganizationPO;
+import po.RepertoryPO;
+import po.UserPO;
+import po.VehiclePO;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.InitialStockDataService;
@@ -10,12 +16,6 @@ import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 import businesslogicservice.financeblservice.InitialStockBLService;
-import po.AccountPO;
-import po.InitInfoPO;
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
-import po.VehiclePO;
 import vo.AccountVO;
 import vo.InitInfoVO;
 import vo.RepertoryVO;
@@ -117,7 +117,8 @@ public class InitialStockBL implements InitialStockBLService{
 			}
 		}
 		
-		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
+//		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
+		ArrayList<AccountPO> accountPOs=accontData.showAll();
 		ArrayList<AccountVO> accountVOs;
 		if(accountPOs==null){
 			accountVOs=null;

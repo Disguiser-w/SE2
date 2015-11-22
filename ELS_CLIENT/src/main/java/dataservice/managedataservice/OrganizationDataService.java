@@ -1,10 +1,10 @@
 package dataservice.managedataservice;
 
-import po.UserPO;
-import po.OrganizationPO;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import po.OrganizationPO;
+import po.UserPO;
 
 public interface OrganizationDataService extends Remote{
 	

@@ -1,12 +1,13 @@
 package dataservice.userdataservice;
 
 import dataservice.userdataservice.UserDataService_stub;
-import po.UserPO;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import type.AuthorityType;
 
 import java.rmi.RemoteException;
+
+import po.UserPO;
 
 public class UserDataService_driver {
 

@@ -2,11 +2,12 @@ package businesslogicservice.repertoryblservice;
 
 import vo.GoodsVO;
 import vo.InventoryVO;
-import po.GoodsPO;
-import po.InventoryPO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import po.GoodsPO;
+import po.InventoryPO;
 
 public interface RepertoryBLService {
 	public int inventoryInitialization(String repertoryID, int maxRow, int maxShelf, int maxDigit, int warningRatio) throws RemoteException;
