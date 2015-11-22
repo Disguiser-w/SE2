@@ -2,16 +2,16 @@ package po;
 
 import java.util.ArrayList;
 
-public class BusinessstatementReceiptPO {
+public class BusinessStatementReceiptPO {
 	String beginTime;
 	String endTime;
 	//可以有这种包含关系吗,还是要分到每个具体属性
 	ArrayList<CollectionReceiptPO> cpos;
 	ArrayList<PaymentReceiptPO> ppos;
-	public BusinessstatementReceiptPO(){
+	public BusinessStatementReceiptPO(){
 		this(null,null,null,null);
 	}
-	public BusinessstatementReceiptPO(String beginTime,String endTime,	ArrayList<CollectionReceiptPO> cpos,ArrayList<PaymentReceiptPO> ppos){
+	public BusinessStatementReceiptPO(String beginTime,String endTime,	ArrayList<CollectionReceiptPO> cpos,ArrayList<PaymentReceiptPO> ppos){
 		this.beginTime=beginTime;
 		this.endTime=endTime;
 		this.cpos=cpos;
