@@ -24,10 +24,30 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	
 	ArrayList<GatheringReceiptPO> gatheringReceiptPOs_Right;
 	
+	
 	/**
-	 * 这个运行表示什么意思==
+	 * 将显示的CollectionVO转化为持久化对象PO
+	 * 发送给总经理
 	 * */
-	public int excute(){
+	public int creatCollection(CollectionReceiptVO vo) {
+		// TODO Auto-generated method stub
+		CollectionReceiptPO po=cvoToPO(vo);
+		update(vo);
+		return crdService.createCollection(po);
+	}
+
+	/**
+	 * 账户金额的增减放在excute里
+	 * 先把入款金额记到每个营业厅编号上
+	 * */
+	public int excute(CollectionReceiptVO vo){
+		AccountBL a=new AccountBL();
+		ArrayList<GatheringReceiptVO> grvo=vo.getGathering();
+		for(GatheringReceiptVO v:grvo){
+			a.addMoney(v.getHallId(), v.getTotalmoney());
+		}
+		System.out.println("执行成功！");
+		
 		return 0;
 	}
 	/**
@@ -182,17 +202,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 	}
 
-	/**
-	 * 将显示的CollectionVO转化为持久化对象PO
-	 * 发送给总经理
-	 * */
-	public int creatCollection(CollectionReceiptVO vo) {
-		// TODO Auto-generated method stub
-		CollectionReceiptPO po=cvoToPO(vo);
-		update(vo);
-		return crdService.createCollection(po);
-	}
-
+	
 	/**
 	 * 根据ID筛选出Collectionpo
 	 * */

@@ -116,6 +116,14 @@ public class AccountBL implements AccountBLService{
 	public AccountDataService getAccountData(){
 		return accountData;
 	}
+	
+	public int addMoney(String name,double money){
+		return accountData.addMoney(name, money);
+	}
+	
+	public int delMoney(String name,double money){
+		return accountData.delMoney(name, money);
+	}
 
 
 	

@@ -17,5 +17,9 @@ public interface AccountDataService {
 		public ArrayList<AccountPO> findByKeyword(String s);
 		//输出所有账户
 		public ArrayList<AccountPO> showAll();
+		//金额++（入款单）
+		public int  addMoney(String name,double money);
+		//金额--（付款单）
+		public int delMoney(String name,double money);
 
 }

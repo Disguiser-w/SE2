@@ -42,4 +42,16 @@ public class AccountDataService_stub implements AccountDataService{
 		return null;
 	}
 
+	@Override
+	public int addMoney(String name, double money) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delMoney(String name, double money) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
