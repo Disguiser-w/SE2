@@ -93,7 +93,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 			return null;
 		}
 		else{
-			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getState(), po.totalMoney(), po.getDate());
+			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.totalMoney() , po.getDate(), po.getAccount());
 			return collectionReceiptVO;
 		}
 	}
@@ -108,7 +108,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		else{
 			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
 			for(CollectionReceiptPO p:pos){
-				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getState(), p.totalMoney(), p.getDate());
+				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(),p.totalMoney() , p.getDate(), p.getAccount());
 				collectionReceiptVOs.add(vo);
 			}
 			return collectionReceiptVOs;

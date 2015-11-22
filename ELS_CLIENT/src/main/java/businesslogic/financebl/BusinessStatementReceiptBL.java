@@ -2,7 +2,7 @@ package businesslogic.financebl;
 
 import java.util.ArrayList;
 
-import po.BusinessstatementReceiptPO;
+import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
 import po.PaymentReceiptPO;
 import dataservice.financedataservice.BusinessstatementReceiptDataService;
@@ -23,9 +23,8 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	
 
 	/**
-	 * 从po中获取入款单并转化为vo
+	 * 筛选后的结果好像不写在这里
 	 * */
-	
 	@Override
 	public BusinessStatementReceiptVO showBSList(String beginTime,
 			String endTime) {
@@ -39,10 +38,16 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		return null;
 	}
 	
-	public BusinessStatementReceiptVO bpoToVO(BusinessstatementReceiptPO businessstatementReceiptPOs){
+	/**
+	 * 从Collectionpo和PaymentPo中取出需要的数据转化为vo
+	 * 筛选不放在这里??
+	 * */
+	public BusinessStatementReceiptVO bpoToVO(BusinessStatementReceiptPO businessstatementReceiptPOs){
 
 		BusinessStatementReceiptVO businessStatementReceiptVO;
-
+		/**
+		 * 筛选可以放在取数据的时候
+		 * */
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
 		ArrayList<CollectionReceiptVO> collectionReceiptVOs;
 		if(collectionReceiptPOs==null){
@@ -52,7 +57,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		else{
 			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
 			for(CollectionReceiptPO p:collectionReceiptPOs){
-				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getState(), p.totalMoney(), p.getDate());
+				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.totalMoney(), p.getDate(), p.getAccount());
 				collectionReceiptVOs.add(vo);
 			}
 		}		
@@ -75,6 +80,25 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		return businessStatementReceiptVO;
 	}
 
+	/**
+	 * 将vo转化为po存入BusinessstatementReceiptPO
+	 * */
+	public BusinessStatementReceiptPO bvoToPO(BusinessStatementReceiptVO vo){
+		ArrayList<CollectionReceiptVO> collectionReceiptVOs=vo.cvos;
+		ArrayList<PaymentReceiptVO> paymentReceiptVOs=vo.pvos;
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=new ArrayList<CollectionReceiptPO>();
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs=new ArrayList<PaymentReceiptPO>();
+		for(CollectionReceiptVO v1:collectionReceiptVOs){
+			CollectionReceiptPO po=new CollectionReceiptPO(v1.getID()	,v1.getUserID(),v1.getType(), v1.getState(), v1.getIncome(),v1.getDate(),v1.getAccount());
+			collectionReceiptPOs.add(po);
+		}
+		for(PaymentReceiptVO v2:paymentReceiptVOs){
+			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getClause(), v2.getMoney(), v2.getDate(), v2.getAccount(), v2.getName());
+			paymentReceiptPOs.add(po);
+		}
+		BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
+		return po;
+	}
 	
 	/**
 	 * 获取特定时间段的VO

@@ -68,5 +68,21 @@ public class PaymentReceiptPO extends ReceiptPO implements Serializable{
 		name=n;
 	}
 	
+	public ReceiptState getState(){
+		return state;
+	}
+	
+	public ReceiptType getType(){
+		return type;
+	}
+	
+	public String getID(){
+		return ID;
+	}
+	
+	public String getUserID(){
+		return userID;
+	}
+	
 
 }

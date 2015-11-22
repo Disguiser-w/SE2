@@ -2,7 +2,7 @@ package businesslogic.managebl;
 
 import java.util.ArrayList;
 
-import po.BusinessstatementReceiptPO;
+import po.BusinessStatementReceiptPO;
 import vo.BusinessStatementReceiptVO;
 import po.CollectionReceiptPO;
 import vo.CollectionReceiptVO;
@@ -32,7 +32,7 @@ public class BusinessStatementReceiptBL implements BusinessStatementReceiptBLSer
 		
 	}
 	
-	public BusinessStatementReceiptVO BSRPOToVO(BusinessstatementReceiptPO bsrPO){
+	public BusinessStatementReceiptVO BSRPOToVO(BusinessStatementReceiptPO bsrPO){
 		return new BusinessStatementReceiptVO(bsrPO.getBeginTime(), bsrPO.getEndTime(), bsrPO.getCollectionPO(), bsrPO.getPaymentPO());
 	}
 	

@@ -47,5 +47,19 @@ public class PaymentReceiptVO extends ReceiptVO{
 		return name;
 	}
 	
+	public String getID(){
+		return ID;
+	}
+	
+	public String getUserID(){
+		return userID;
+	}
+	
+	public ReceiptType getType(){
+		return type;
+	}
+	public ReceiptState getState(){
+		return state;
+	}
 
 }
