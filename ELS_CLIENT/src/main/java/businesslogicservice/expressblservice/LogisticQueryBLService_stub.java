@@ -4,9 +4,12 @@ import vo.OrderVO;
 
 public class LogisticQueryBLService_stub implements LogisticQueryBLService{
 
-	public OrderVO query(long orderNum) {
+
+
+	@Override
+	public OrderVO query(String orderID) {
 		// TODO Auto-generated method stub
-		System.out.println("Query successfully!");
+		System.out.println("");
 		return null;
 	}
 

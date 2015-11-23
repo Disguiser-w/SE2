@@ -1,18 +1,13 @@
 package dataservice.userdataservice;
 
 import dataservice.userdataservice.UserDataService;
-import po.UserPO;
 
 import java.util.ArrayList;
 
+import po.UserPO;
+
 public class UserDataService_stub implements UserDataService{
 
-	public boolean check(String userID,String password){
-        // TODO 自动生成的方法存根
-        System.out.println("Check user in file succeed!");
-        return true;
-    }
-    
     public int addUser(UserPO userpo){
         // TODO 自动生成的方法存根
         System.out.println("Add user in file succeed!");

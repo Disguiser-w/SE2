@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import vo.DriverVO;
 
 public class DriverManagerBLService_stub implements DriverManagerBLService {
-	public ArrayList<DriverVO> getDriverInfo(String ID) {
+	public DriverVO getDriverInfo(String ID) {
 		// TODO Auto-generated method stub
 		System.out.println("Show DriverVOs!");
 		return null;
@@ -24,5 +24,10 @@ public class DriverManagerBLService_stub implements DriverManagerBLService {
 		// TODO Auto-generated method stub
 		System.out.println("ModifyDriver successfully!");
 		return false;
+	}
+	@Override
+	public ArrayList<DriverVO> getDriverInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

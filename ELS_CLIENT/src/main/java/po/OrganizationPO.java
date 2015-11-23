@@ -1,7 +1,7 @@
 package po;
 
-import type.OrganizationType;
 import po.RepertoryPO;
+import type.OrganizationType;
 
 public class OrganizationPO {
 	private OrganizationType category;

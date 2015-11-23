@@ -19,7 +19,7 @@ public class OrganizationVO {
 		
 		//如果新建机构是中转中心的话，同时新建一个对应的中转中心仓库
 		if(category.equals(OrganizationType.intermediateCenter)){
-			this.repertory = new RepertoryVO(organizationID+"-CK", null, 100, 10, 10, 90);
+			this.repertory = new RepertoryVO(organizationID+"-CK", "");
 		}
 		else{
 			this.repertory = null;

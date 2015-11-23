@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
+import po.GatheringReceiptPO;
+import po.OrderAcceptReceiptPO;
 import po.OrderPO;
 import po.VehiclePO;
 
@@ -72,6 +74,20 @@ public class BusinessDataService_stub implements BusinessDataService {
 	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po) {
 		// TODO Auto-generated method stub
 		System.out.println("AddEnVehicleReceiptPO successfully!");
+		return false;
+	}
+
+	@Override
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptPOs() {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+
+	@Override
+	public boolean addReceipt(OrderAcceptReceiptPO po) {
+		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

@@ -2,10 +2,10 @@ package dataservice.repertorydataservice;
 
 import java.util.ArrayList;
 
-import dataservice.repertorydataservice.RepertoryDataService;
 import po.GoodsPO;
 import po.InventoryPO;
 import po.RepertoryPO;
+import dataservice.repertorydataservice.RepertoryDataService;
 
 public class RepertoryDataService_stub implements RepertoryDataService{
 	

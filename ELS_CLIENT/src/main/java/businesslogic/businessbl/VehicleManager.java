@@ -2,8 +2,8 @@ package businesslogic.businessbl;
 
 import java.util.ArrayList;
 
-import businesslogicservice.businessblservice.VehicleManagerBLService;
 import dataservice.businessdataservice.BusinessDataService;
+import po.VehiclePO;
 import vo.VehicleVO;
 
 public class VehicleManager {
@@ -16,7 +16,7 @@ public class VehicleManager {
 
 	public ArrayList<VehicleVO> getVehicleInfo() {
 		// TODO Auto-generated method stub
-		ArrayList<VehicleVO> vos = new ArrayList<VehicleVO> ();
+		ArrayList<VehicleVO> vos = new ArrayList<VehicleVO>();
 		vos.add(new VehicleVO("025-001-112", null, null, null, null, null));
 		return vos;
 	}
@@ -34,6 +34,14 @@ public class VehicleManager {
 	public boolean modifyVehicle(VehicleVO vo) {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public static VehiclePO voToPO(VehicleVO vo) {
+		return null;
+	}
+
+	public static VehicleVO voToVO(VehiclePO po) {
+		return null;
 	}
 
 }

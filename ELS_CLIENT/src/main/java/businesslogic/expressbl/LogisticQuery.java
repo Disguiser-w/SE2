@@ -14,8 +14,14 @@ public class LogisticQuery {
 
 	public OrderVO query(String orderID) {
 		// TODO Auto-generated method stub
-		return expressData
+		OrderVO vo = null;
+		try {
+			vo = AddOrder.poToVO(expressData.find(orderID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return vo;
+
 	}
 
 }

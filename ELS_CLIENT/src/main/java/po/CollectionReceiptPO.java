@@ -17,10 +17,12 @@ public class CollectionReceiptPO extends ReceiptPO implements Serializable{
 	double totalMoney;
 	String hallID;
 	String date;
-	
-	public CollectionReceiptPO(String ID,String userID,ReceiptType type,ReceiptState state,double m){
+	String account;
+	public CollectionReceiptPO(String ID,String userID,ReceiptType type,ReceiptState state,double m,String date,String account){
 		super(ID,userID,ReceiptType.COLLECTIONRECEIPT,state);
 		totalMoney=m;
+		this.account=account;
+		this.date=date;
 	}
 	public CollectionReceiptPO(){
 		
@@ -58,6 +60,9 @@ public class CollectionReceiptPO extends ReceiptPO implements Serializable{
 		gpo=po;
 	}
 	
+	public String getAccount(){
+		return account;
+	}
 	
 
 }

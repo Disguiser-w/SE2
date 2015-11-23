@@ -1,8 +1,8 @@
 package dataservice.managedataservice;
 
-import po.PerWagePO;
-
 import java.rmi.RemoteException;
+
+import po.PerWagePO;
 import type.ProfessionType;
 
 public interface PerWageDataService {

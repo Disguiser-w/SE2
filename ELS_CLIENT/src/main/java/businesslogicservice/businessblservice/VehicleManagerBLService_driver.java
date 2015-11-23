@@ -4,8 +4,9 @@ import vo.VehicleVO;
 
 public class VehicleManagerBLService_driver {
 	public void drive(VehicleManagerBLService vehicleManagerBLService) {
-		vehicleManagerBLService.getVehicleInfo(new String());
+		vehicleManagerBLService.getVehicleInfo();
 
+		
 
 		vehicleManagerBLService.addVehicle(null);
 

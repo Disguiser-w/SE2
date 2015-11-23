@@ -41,6 +41,8 @@ public class OrderPO {
 	private float packingExpense;
 
 	private String builtData;
+
+	private String tRecipient;
 	private String finishedData;
 	private String finishedID;
 
@@ -56,7 +58,7 @@ public class OrderPO {
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtData, String finishedData, String finishedID,
-			TransferingState transfer_state, OrderState order_state) {
+			String tRecipient, TransferingState transfer_state, OrderState order_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -78,10 +80,19 @@ public class OrderPO {
 		this.freight = freight;
 		this.packingExpense = packingExpense;
 		this.builtData = builtData;
+		this.tRecipient = tRecipient;
 		this.finishedData = finishedData;
 		this.finishedID = finishedID;
 		this.transfer_state = transfer_state;
 		this.order_state = order_state;
+	}
+
+	public String gettRecipient() {
+		return tRecipient;
+	}
+
+	public void settRecipient(String tRecipient) {
+		this.tRecipient = tRecipient;
 	}
 
 	public String getID() {

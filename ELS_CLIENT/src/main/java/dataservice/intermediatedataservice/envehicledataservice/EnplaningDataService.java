@@ -3,10 +3,10 @@ package dataservice.intermediatedataservice.envehicledataservice;
 import java.util.ArrayList;
 
 import po.EnplaningReceiptPO;
+import po.FarePO;
 import po.OrderPO;
 import po.PlanePO;
 import po.TransferingReceiptPO;
-import po.FarePO;
 
 public interface EnplaningDataService {
     public ArrayList<PlanePO> getPlaneList();

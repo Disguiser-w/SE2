@@ -1,10 +1,11 @@
 package dataservice.repertorydataservice;
 
 import dataservice.repertorydataservice.RepertoryDataService_stub;
-import po.RepertoryPO;
-import po.InventoryPO;
 
 import java.rmi.RemoteException;
+
+import po.InventoryPO;
+import po.RepertoryPO;
 
 public class RepertoryDataService_driver {
 

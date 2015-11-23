@@ -1,10 +1,12 @@
 package businesslogicservice.manageblservice;
 
+import java.rmi.RemoteException;
+
 import vo.CityDistanceVO;
 
 public interface CityDistanceBLService {
-	public int addCityDistance(CityDistanceVO citydistancevo);
-	public int deleteCityDistance(CityDistanceVO citydistancevo);
-	public int modifyCityDistance(CityDistanceVO citydistancevo);
-	public double findCityDistance(String cityA, String cityB);
+	public int addCityDistance(CityDistanceVO citydistancevo) throws RemoteException;
+	public int deleteCityDistance(CityDistanceVO citydistancevo) throws RemoteException;
+	public int modifyCityDistance(CityDistanceVO citydistancevo) throws RemoteException;
+	public double findCityDistance(String cityA, String cityB) throws RemoteException;
 }

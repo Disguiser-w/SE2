@@ -13,7 +13,7 @@ import vo.OrderVO;
 
 public class AddOrder {
 
-	private ExpressDataService_stub expressData;
+	private ExpressDataService expressData;
 	private CostDataService costData;
 	private CityDistanceDataService cityDistanceData;
 
@@ -25,8 +25,15 @@ public class AddOrder {
 	}
 
 	public boolean addOrder(OrderVO vo) {
-		OrderPO po = voToPO(vo);
-		return expressData.addOrder(po);
+		boolean result = false;
+		try {
+			OrderPO po = voToPO(vo);
+			result = expressData.addOrder(po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public void calculateCost(OrderVO vo) {
@@ -78,8 +85,8 @@ public class AddOrder {
 		OrderPO po = new OrderPO(vo.ID, vo.senderName, vo.senderAddress, vo.senderOrganization, vo.senderPhoneNumber,
 				vo.senderMobilePhoneNumber, vo.recipientName, vo.recipientAddress, vo.recipientOrganization,
 				vo.recipientPhoneNumber, vo.recipientMobilePhoneNumber, vo.numOfGoods, vo.weight, vo.volume,
-				vo.goodsName, vo.expressType, vo.packType, vo.freight, vo.packingExpense, vo.builtDate, vo.finishedDate,
-				vo.finishedID, vo.transfer_state, vo.order_state);
+				vo.goodsName, vo.expressType, vo.packType, vo.freight, vo.packingExpense, vo.builtDate, vo.tRecipient,
+				vo.finishedDate, vo.finishedID, vo.transfer_state, vo.order_state);
 		return po;
 
 	}
@@ -91,7 +98,7 @@ public class AddOrder {
 				po.getRecipientAddress(), po.getRecipientOrganization(), po.getRecipientPhoneNumber(),
 				po.getRecipientMobilePhoneNumber(), po.getNumOfGoods(), po.getWeight(), po.getVolume(),
 				po.getGoodsName(), po.getExpressType(), po.getPackType(), po.getFreight(), po.getPackingExpense(),
-				po.getBuiltData(), po.getFinishedData(), po.getFinishedID(), po.getTransfer_state(),
+				po.getBuiltData(), po.gettRecipient(), po.getFinishedData(), po.getFinishedID(), po.getTransfer_state(),
 				po.getOrder_state());
 		return vo;
 	}

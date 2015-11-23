@@ -1,10 +1,11 @@
 package dataservice.managedataservice;
 
 import dataservice.managedataservice.PerWageDataService_stub;
-import po.PerWagePO;
 import type.ProfessionType;
 
 import java.rmi.RemoteException;
+
+import po.PerWagePO;
 
 public class PerWageDataService_driver {
 	public void drive(PerWageDataService_stub PerWageDataService) throws RemoteException {

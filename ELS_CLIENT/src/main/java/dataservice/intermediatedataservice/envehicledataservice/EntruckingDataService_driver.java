@@ -3,9 +3,9 @@ package dataservice.intermediatedataservice.envehicledataservice;
 import java.util.ArrayList;
 
 import po.EntruckingReceiptPO;
+import po.FarePO;
 import po.OrderPO;
 import po.TransferingReceiptPO;
-import po.FarePO;
 
 public class EntruckingDataService_driver {
     public void drive(EntruckingDataService ebls){

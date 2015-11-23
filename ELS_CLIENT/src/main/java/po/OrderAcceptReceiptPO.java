@@ -2,8 +2,10 @@ package po;
 
 import java.util.ArrayList;
 
+import vo.OrganizationVO;
+
 public class OrderAcceptReceiptPO {
-	private OrganizationPO local;
+	private OrganizationVO local;
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<OrderPO> orderPOList;
@@ -11,7 +13,7 @@ public class OrderAcceptReceiptPO {
 	public OrderAcceptReceiptPO() {
 	}
 
-	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO,
+	public OrderAcceptReceiptPO(OrganizationVO local, String time, VehiclePO vehiclePO,
 			ArrayList<OrderPO> orderPOList) {
 		this.local = local;
 		this.time = time;
@@ -19,11 +21,11 @@ public class OrderAcceptReceiptPO {
 		this.orderPOList = orderPOList;
 	}
 
-	public OrganizationPO getLocal() {
+	public OrganizationVO getLocal() {
 		return local;
 	}
 
-	public void setLocal(OrganizationPO local) {
+	public void setLocal(OrganizationVO local) {
 		this.local = local;
 	}
 

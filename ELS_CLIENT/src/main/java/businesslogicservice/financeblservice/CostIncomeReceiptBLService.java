@@ -1,10 +1,6 @@
 package businesslogicservice.financeblservice;
 
-import java.util.ArrayList;
-
-import vo.CollectionReceiptVO;
 import vo.CostIncomeReceiptVO;
-import vo.PaymentReceiptVO;
 /**
  * 创建成本收益表
  * */
@@ -12,17 +8,17 @@ public interface CostIncomeReceiptBLService {
 	//创建成本收益表
 	public int creatCostIncomeList(CostIncomeReceiptVO vo);
 	//获取成本收益表
-	public CostIncomeReceiptVO getCostIncomeList(String s);
+//	public CostIncomeReceiptVO getCostIncomeList(String s);
 	//获取所有成本收益表
-	public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList();
+//	public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList();
 	//获取入款单
-	public ArrayList<CollectionReceiptVO> getCollection();
+//	public ArrayList<CollectionReceiptVO> getCollection();
 	//获取付款单
-	public ArrayList<PaymentReceiptVO>getPayment();
+//	public ArrayList<PaymentReceiptVO>getPayment();
 	//获取总收入
-	public double getIncome(CollectionReceiptVO vo);
+	public double getIncome();
 	//获取总支出
-	public double getCost(PaymentReceiptVO vo);
+	public double getCost();
 	//获取总利润
 	public double getProfit(double income,double cost);
 	//自动生成ID

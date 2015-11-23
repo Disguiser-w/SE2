@@ -28,6 +28,13 @@ public class GatheringReceiptVO {
 		this.totalmoney = totalmoney;
 	}
 	
+	public GatheringReceiptVO(String time,String HallID,double totalmoney){
+		super();
+		this.time=time;
+		this.HallId=HallID;
+		this.totalmoney=totalmoney;
+	}
+	
 
    String HallId; //这个也加一下
    String Id;

@@ -12,9 +12,9 @@ public class ReceiptOrderController implements ReceiptOrderBLService {
 		receiptOrder = new ReceiptOrder();
 	}
 
-	public OrderVO getOrderInfo(long orderNum) {
+	public OrderVO getOrderInfo(String orderID) {
 		// TODO Auto-generated method stub
-		return receiptOrder.getOrderInfo(orderNum);
+		return receiptOrder.getOrderInfo(orderID);
 	}
 
 	public boolean receiptOrder(OrderVO vo) {

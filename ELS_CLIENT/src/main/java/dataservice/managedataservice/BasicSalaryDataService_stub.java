@@ -1,9 +1,10 @@
 package dataservice.managedataservice;
 
-import po.BasicSalaryPO;
 import type.ProfessionType;
 
 import java.rmi.RemoteException;
+
+import po.BasicSalaryPO;
 
 public class BasicSalaryDataService_stub {
 	

@@ -40,8 +40,10 @@ public class OrderVO {
 	public float packingExpense;
 
 	public final String builtDate;
-	public final String finishedDate;
-	public final String finishedID;
+
+	public String finishedDate;
+	public String finishedID;
+	public String tRecipient;
 
 	public final TransferingState transfer_state;
 	public final OrderState order_state;
@@ -51,7 +53,7 @@ public class OrderVO {
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
-			TransferingState transfer_state, OrderState order_state) {
+			String tRecipient, TransferingState transfer_state, OrderState order_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -70,13 +72,15 @@ public class OrderVO {
 		this.goodsName = goodsName;
 		this.expressType = expressType;
 		this.packType = packType;
-		this.freight = freight;
-		this.packingExpense = packingExpense;
 		this.builtDate = builtDate;
-		this.finishedDate = finishedDate;
-		this.finishedID = finishedID;
 		this.transfer_state = transfer_state;
 		this.order_state = order_state;
+
+		freight = 0;
+		packingExpense = 0;
+		finishedDate = "";
+		finishedID = "";
+		tRecipient = "";
 	}
 
 	public float getFreight() {

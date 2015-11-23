@@ -2,10 +2,10 @@ package dataservice.financedataservice;
 
 import java.util.ArrayList;
 
-import po.BusinessstatementReceiptPO;
+import po.BusinessStatementReceiptPO;
 
 public interface BusinessstatementReceiptDataService {
-	public BusinessstatementReceiptPO showBSL(String beginTime,String endTime) ;
-	public ArrayList<BusinessstatementReceiptPO> showAllBSList();
-	public int export(BusinessstatementReceiptPO po);
+	public BusinessStatementReceiptPO showBSL(String beginTime,String endTime) ;
+	public ArrayList<BusinessStatementReceiptPO> showAllBSList();
+	public int export(BusinessStatementReceiptPO po);
 }

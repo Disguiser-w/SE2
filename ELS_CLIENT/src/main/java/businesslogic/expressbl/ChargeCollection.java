@@ -1,5 +1,6 @@
 package businesslogic.expressbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.expressdataservice.ExpressDataService;
@@ -18,15 +19,33 @@ public class ChargeCollection {
 
 	public ExpressVO getChargeInfo(String ID) {
 
-		return poToVO(expressData.getExpressInfo(ID));
+		ExpressVO vo = null;
+		try {
+			vo = poToVO(expressData.getExpressInfo(ID));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vo;
 	}
 
-	public boolean chargeCollection(ExpressVO vo) {
-		return (expressData.chargeCollection(voToPO(vo)));
-	}
+	public boolean chargeCollection(String ID, String chargeInfo) {
+		ExpressVO vo = getChargeInfo(ID);
+		ArrayList<String> chargeCollection = vo.chargeCollection;
+		chargeCollection.add(chargeInfo);
+		double total = Double.parseDouble(chargeCollection.get(0));
+		double charge = Double.parseDouble(chargeInfo.split(" ")[1]);
+		chargeCollection.set(0, (total + charge) + "");
 
-	public ExpressDataService getExpressData() {
-		return expressData;
+		boolean result = false;
+		try {
+			result = expressData.update(voToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	public static ExpressPO voToPO(ExpressVO vo) {
@@ -63,5 +82,9 @@ public class ChargeCollection {
 
 		return new ExpressVO(po.getName(), po.getID(), po.getServiceTime(), po.getChargeCollection(),
 				po.getOrganization(), pendingOrderVOs, finishedOrderVOs, submitedOrderVOs);
+	}
+
+	public ExpressDataService getExpressData() {
+		return expressData;
 	}
 }

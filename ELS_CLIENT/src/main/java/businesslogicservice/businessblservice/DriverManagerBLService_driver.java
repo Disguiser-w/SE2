@@ -4,7 +4,7 @@ import vo.DriverVO;
 
 public class DriverManagerBLService_driver {
 	public void drive(DriverManagerBLService driverManagerBLService) {
-		driverManagerBLService.getDriverInfo(new String());
+		driverManagerBLService.getDriverInfo("");
 
 		driverManagerBLService.addDriver(null);
 

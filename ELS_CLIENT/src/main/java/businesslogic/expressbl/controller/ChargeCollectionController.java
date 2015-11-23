@@ -18,12 +18,12 @@ public class ChargeCollectionController implements ChargeCollectionBLService {
 		return chargeCollection.getChargeInfo(ID);
 	}
 
-	public boolean chargeCollection(ExpressVO vo) {
+	public boolean chargeCollection(String ID, String chargeInfo) {
 		// TODO Auto-generated method stub
-		return chargeCollection.chargeCollection(vo);
+		return chargeCollection.chargeCollection(ID, chargeInfo);
 	}
-	
-	public ExpressDataService getDataManager(){
+
+	public ExpressDataService getDataManager() {
 		return chargeCollection.getExpressData();
 	}
 

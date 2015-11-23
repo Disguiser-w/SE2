@@ -10,7 +10,7 @@ public interface CostIncomeReceiptBLService {
 		//获取成本收益表
 		public CostIncomeReceiptVO getCostIncomeList(String s);
 		//获取所有成本收益表
-		public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList();
+		/*public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList();
 		//获取入款单
 		public ArrayList<CollectionReceiptVO> getCollection();
 		//获取付款单
@@ -22,5 +22,5 @@ public interface CostIncomeReceiptBLService {
 		//获取总利润
 		public double getProfit(double income,double cost);
 		//自动生成ID
-		public String getCostIncomeListID();
+		public String getCostIncomeListID();*/
 }
