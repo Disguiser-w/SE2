@@ -2,12 +2,14 @@ package po;
 
 import java.util.ArrayList;
 
+import vo.OrganizationVO;
+
 public class ExpressPO {
 	private String name;
 	private String ID;
 	private String serviceTime;
 	private ArrayList<String> chargeCollection;
-	private OrganizationPO organization;
+	private OrganizationVO organization;
 	private ArrayList<OrderPO> pendingOrders;
 	private ArrayList<OrderPO> finishedOrders;
 	private ArrayList<OrderPO> submitedOrder;
@@ -16,7 +18,7 @@ public class ExpressPO {
 	}
 
 	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
-			OrganizationPO organization, ArrayList<OrderPO> pendingOrders, ArrayList<OrderPO> finishedOrders,
+			OrganizationVO organization, ArrayList<OrderPO> pendingOrders, ArrayList<OrderPO> finishedOrders,
 			ArrayList<OrderPO> submitedOrder) {
 		super();
 		this.name = name;
@@ -61,11 +63,11 @@ public class ExpressPO {
 		this.chargeCollection = chargeCollection;
 	}
 
-	public OrganizationPO getOrganization() {
+	public OrganizationVO getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(OrganizationPO organization) {
+	public void setOrganization(OrganizationVO organization) {
 		this.organization = organization;
 	}
 

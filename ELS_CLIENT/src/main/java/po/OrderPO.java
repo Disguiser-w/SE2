@@ -1,6 +1,7 @@
 package po;
 
 import type.ExpressType;
+import type.OrderState;
 import type.PackType;
 import type.TransferingState;
 
@@ -11,12 +12,13 @@ public class OrderPO {
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
-	
+
 	// 装车状态（等待中，已装车）
 	private String ID;
 
 	private String senderName;
 	private String senderAddress;
+
 	private String senderOrganization;
 	private String senderPhoneNumber;
 	private String senderMobilePhoneNumber;
@@ -41,8 +43,9 @@ public class OrderPO {
 	private String builtData;
 	private String finishedData;
 	private String finishedID;
-	
+
 	private TransferingState transfer_state;
+	private OrderState order_state;
 
 	public OrderPO() {
 
@@ -52,7 +55,8 @@ public class OrderPO {
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
-			float freight, float packingExpense, String builtData, String finishedData, String finishedID) {
+			float freight, float packingExpense, String builtData, String finishedData, String finishedID,
+			TransferingState transfer_state, OrderState order_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -76,6 +80,8 @@ public class OrderPO {
 		this.builtData = builtData;
 		this.finishedData = finishedData;
 		this.finishedID = finishedID;
+		this.transfer_state = transfer_state;
+		this.order_state = order_state;
 	}
 
 	public String getID() {
@@ -252,5 +258,21 @@ public class OrderPO {
 
 	public void setFinishedID(String finishedID) {
 		this.finishedID = finishedID;
+	}
+
+	public TransferingState getTransfer_state() {
+		return transfer_state;
+	}
+
+	public void setTransfer_state(TransferingState transfer_state) {
+		this.transfer_state = transfer_state;
+	}
+
+	public OrderState getOrder_state() {
+		return order_state;
+	}
+
+	public void setOrder_state(OrderState order_state) {
+		this.order_state = order_state;
 	}
 }

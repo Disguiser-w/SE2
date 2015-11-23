@@ -1,7 +1,6 @@
 package presentation.commonui;
 
 import presentation.expressui.AddOrderPanel;
-import presentation.managerui.BasicDataManagerPanel;
 
 public class UserFrameTest extends UserFrame {
 
@@ -15,15 +14,15 @@ public class UserFrameTest extends UserFrame {
 		super();
 
 		// addFuncLabel(new OrganizationManagerPanel());
-		addFuncLabel(new BasicDataManagerPanel());
+		// addFuncLabel(new BasicDataManagerPanel());
 		// addFuncLabel(new CheckIncomePanel());
 		// addFuncLabel(new CheckOperatingPanel());
-		// addFuncLabel(new StaffManagerPanel());
+//		 addFuncLabel(new StaffManagerPanel());
 		// addFuncLabel(new CheckReceiptPanel());
 
 		// addFuncLabel(new InitializeInformationPanel());
 		// addFuncLabel(new EXwarehousePanel());
-		addFuncLabel(new AddOrderPanel());
+		 addFuncLabel(new AddOrderPanel());
 
 		showFrame();
 

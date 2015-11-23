@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GatheringReceiptPO {
-	 OrganizationPO businesshall;
+	 OrganizationPO businesShall;
 	    String time;
 	    ArrayList<ExpressPO> expressList;
 	    ArrayList<Double> money;

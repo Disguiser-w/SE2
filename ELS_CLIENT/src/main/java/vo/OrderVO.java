@@ -1,6 +1,7 @@
 package vo;
 
 import type.ExpressType;
+import type.OrderState;
 import type.PackType;
 import type.TransferingState;
 
@@ -11,7 +12,7 @@ public class OrderVO {
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
-	
+
 	// 装车状态（等待中，已装车）
 	public final String ID;
 
@@ -35,20 +36,22 @@ public class OrderVO {
 	public final ExpressType expressType;
 	public final PackType packType;
 
-	public final float freight;
-	public final float packingExpense;
+	public float freight;
+	public float packingExpense;
 
 	public final String builtDate;
 	public final String finishedDate;
 	public final String finishedID;
 
 	public final TransferingState transfer_state;
-	
+	public final OrderState order_state;
+
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
-			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,TransferingState transfer_state) {
+			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
+			TransferingState transfer_state, OrderState order_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -73,5 +76,23 @@ public class OrderVO {
 		this.finishedDate = finishedDate;
 		this.finishedID = finishedID;
 		this.transfer_state = transfer_state;
+		this.order_state = order_state;
 	}
+
+	public float getFreight() {
+		return freight;
+	}
+
+	public void setFreight(float freight) {
+		this.freight = freight;
+	}
+
+	public float getPackingExpense() {
+		return packingExpense;
+	}
+
+	public void setPackingExpense(float packingExpense) {
+		this.packingExpense = packingExpense;
+	}
+
 }

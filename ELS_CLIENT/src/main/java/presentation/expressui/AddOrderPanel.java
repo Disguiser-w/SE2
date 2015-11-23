@@ -2,17 +2,28 @@ package presentation.expressui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.expressbl.controller.AddOrderController;
 import dataservice.managedataservice.CityDistanceDataService;
+import dataservice.managedataservice.CityDistanceDataService_stub;
 import dataservice.managedataservice.CostDataService;
+import dataservice.managedataservice.CostDataService_stub;
+import type.ExpressType;
+import type.OrderState;
+import type.PackType;
+import type.TransferingState;
+import vo.OrderVO;
 
 public class AddOrderPanel extends JPanel {
 	private JLabel senderLabel;
@@ -73,8 +84,8 @@ public class AddOrderPanel extends JPanel {
 	private JButton confirmButton;
 
 	private AddOrderController controller;
-	private CostDataService costData;
-	private CityDistanceDataService cityDistanceData;
+
+	private OrderVO newOrder;
 	// private LocationHelper helper;
 
 	public AddOrderPanel() {
@@ -271,9 +282,6 @@ public class AddOrderPanel extends JPanel {
 
 		controller = new AddOrderController();
 
-		// RMI
-		// costData;
-		// CityDistanceData;
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -377,12 +385,133 @@ public class AddOrderPanel extends JPanel {
 	}
 
 	private void addListener() {
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (controller.addOrder(newOrder)) {
+
+				} else {
+
+				}
+			}
+		});
+		// 费用计算
 		calcuButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 计算费用
+
+				String senderName = senderNameField.getText();
+				if (senderName.trim().equals("")) {
+					warnning(new String[] { "寄件人姓名不可为空！" });
+					return;
+				}
+
+				String senderOrganization = senderOrganizationField.getText();
+
+				String senderPhone = senderPhoneField.getText();
+				String senderMobilePhone = senderMobilePhoneField.getText();
+				String senderAddress = senderAddressField.getText();
+
+				String receiverName = receiverNameField.getText();
+				String receiverOrganization = receiverOrganizationField.getText();
+				String receiverPhone = receiverPhoneField.getText();
+				String receiverMobilePhone = receiverMobilePhoneField.getText();
+				String receiverAddress = receiverAddressField.getText();
+
+				String goods = goodsField.getText();
+				String number = numberField.getText();
+				String weight = weightField.getText();
+				String volumn = volumnField.getText();
+				String goodName = goodNameField.getText();
+
+				String senderCountry = (String) (senderCountryList.getSelectedItem());
+				String senderCity = senderCityField.getText();
+
+				String receiverCountry = (String) (receiverCountryList.getSelectedItem());
+				String receiverCity = receiverCityField.getText();
+
+				String expressType = (String) (expressTypeList.getSelectedItem());
+				String packageType = (String) (packageTypeList.getSelectedItem());
+
+				ExpressType expressT = null;
+				switch (expressType) {
+
+				case "经济":
+					expressT = ExpressType.ECONOMICAL;
+				case "标准":
+					expressT = ExpressType.STANDARD;
+				case "特快":
+					expressT = ExpressType.VERY_FAST;
+				}
+
+				PackType packageT = null;
+				switch (packageType) {
+				case "纸箱":
+					packageT = PackType.CARTONS;
+				case "木箱":
+					packageT = PackType.WOODCASE;
+				case "快递带":
+					packageT = PackType.COURIERBAGS;
+				}
+
+				TransferingState transfer_state;
+				if (senderCountry.equals(receiverCountry))
+					transfer_state = TransferingState.FINISHED_ENVEHICLE;
+				else
+					transfer_state = TransferingState.WAITING_ENVEHICLE;
+
+				OrderState orderState = OrderState.UNFINISHED;
+
+				Date d = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				String dateNowStr = sdf.format(d);
+
+				SimpleDateFormat build = new SimpleDateFormat("yyyy-MM-dd");
+				String buildData = build.format(d);
+
+				String ID = "DD-" + dateNowStr + "-" + (controller.getAddOrder().getExpressData().getOrderNum() + 1);
+
+				newOrder = new OrderVO(ID, senderName, senderCountry + senderCity + senderAddress, senderOrganization,
+						senderPhone, senderMobilePhone, receiverName, receiverCountry + receiverCity + receiverAddress,
+						receiverOrganization, receiverPhone, receiverMobilePhone, Integer.parseInt(number), weight,
+						volumn, goodName, expressT, packageT, 0f, 0f, buildData, "", "", transfer_state, orderState);
+				// 计算
+
+				controller.calculateCost(newOrder);
+				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
+				try {
+					time.setText(""
+							+ controller.getAddOrder().getCityDistanceData().findCityDistance(senderCity, receiverCity)
+							+ "天");
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				// 显示价格
 
 			}
 		});
 	}
 
+	private void clear() {
+
+	}
+
+	// 父类showMessage
+	public void showMessage(String msg) {
+		// 先显示在控制台
+
+	}
+
+	// 父类检测信息为空
+	public boolean isMsgEmpty(String message) {
+		if (message.trim().equals(""))
+			return true;
+		return false;
+
+	}
+
+	// 父类warnning
+	public void warnning(String[] message) {
+
+	}
 }
