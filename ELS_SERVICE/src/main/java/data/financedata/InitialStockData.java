@@ -52,9 +52,21 @@ public class InitialStockData implements InitialStockDataService{
 
 	public ArrayList<InitInfoPO> getAllInitInfo() throws RemoteException {
 		// TODO Auto-generated method stub
-		ArrayList<E>
+		ArrayList<InitInfoPO> initInfoPOs=new ArrayList<InitInfoPO>();
 		JXCFile file=new JXCFile("InitInfo.ser");
 		ArrayList<Object> o=file.read();
+		
+		if(o==null){
+			System.out.println("读取InitInfo.ser失败 或 为空");
+			return null;
+		}
+		
+		else{
+			for(Object obj:o){
+				InitInfoPO initInfoPO=(InitInfoPO) obj;
+				initInfoPOs.add(initInfoPO);
+			}
+		}
 		
 		
 		return null;

@@ -3,6 +3,8 @@ package dataservice.financedataservice;
 import java.util.ArrayList;
 
 import po.BusinessStatementReceiptPO;
+import po.CollectionReceiptPO;
+import po.PaymentReceiptPO;
 
 public class BusinessstatementReceiptDataService_stub implements BusinessstatementReceiptDataService{
 
@@ -22,6 +24,20 @@ public class BusinessstatementReceiptDataService_stub implements Businessstateme
 		// TODO Auto-generated method stub
 		System.out.println("Export successfully!");
 		return 0;
+	}
+
+	@Override
+	public ArrayList<CollectionReceiptPO> getCollection(String beginTime,
+			String endTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PaymentReceiptPO> getPayment(String beginTime,
+			String endTime) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

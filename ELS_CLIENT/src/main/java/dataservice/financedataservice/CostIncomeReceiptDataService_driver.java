@@ -6,14 +6,14 @@ public class CostIncomeReceiptDataService_driver {
 	public void driver(CostIncomeReceiptDataService cds){
 		cds.creatCostIncomeList(new CostIncomeReceiptPO());
 		cds.getAllCostIncomeList();
-		cds.findByID(null);
+//		cds.findByID(null);
 		cds.getCollection();
 		cds.getPayment();
 //		cds.getCost(null);
 //		cds.getIncome(null);
-		cds.getNum();
+//		cds.getNum();
 //		cds.getProfit(0, 0);
-		cds.modify(null);
+//		cds.modify(null);
 	}
 	
 	public static void main(String[] args){

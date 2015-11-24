@@ -32,23 +32,23 @@ public class CostIncomeReceiptDataService_stub implements CostIncomeReceiptDataS
 		return null;
 	}
 
-//	public double getIncome(CollectionReceiptPO po) {
-//		// TODO Auto-generated method stub
-//		System.out.println("get income successfully!");
-//		return 0;
-//	}
-//
-//	public double getCost(PaymentReceiptPO po) {
-//		// TODO Auto-generated method stub
-//		System.out.println("get cost successfully!");
-//		return 0;
-//	}
-//
-//	public double getProfit(double income, double cost) {
-//		// TODO Auto-generated method stub
-//		System.out.println("get profit successfully!");
-//		return 0;
-//	}
+	public double getIncome(ArrayList<CollectionReceiptPO> po) {
+		// TODO Auto-generated method stub
+		System.out.println("get income successfully!");
+		return 0;
+	}
+
+	public double getCost(ArrayList<PaymentReceiptPO> po) {
+		// TODO Auto-generated method stub
+		System.out.println("get cost successfully!");
+		return 0;
+	}
+
+	public double getProfit(double income, double cost) {
+		// TODO Auto-generated method stub
+		System.out.println("get profit successfully!");
+		return 0;
+	}
 
 	public int getNum() {
 		// TODO Auto-generated method stub

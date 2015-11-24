@@ -20,19 +20,14 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 		return null;
 	}
 
-	public ArrayList<GatheringReceiptPO> getGathering(String HallID, String Time) {
-		// TODO Auto-generated method stub
-		System.out.println("get Gathering successfully!");
-		return null;
-	}
 
-	public double[] getMoney(GatheringReceiptPO po) {
+	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptPO> po) {
 		// TODO Auto-generated method stub
 		System.out.println("get money  successfully!");
 		return null;
 	}
 
-	public double getTotalMoney(int[] money) {
+	public double getTotalMoney(ArrayList<Double>money) {
 		// TODO Auto-generated method stub
 		System.out.println("get total money successfully!");
 		return 0;
@@ -53,6 +48,13 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 	public CollectionReceiptPO modify(CollectionReceiptPO po) {
 		// TODO Auto-generated method stub
 		System.out.println("modify  successfully!");
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<GatheringReceiptPO> getGathering(String Time) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

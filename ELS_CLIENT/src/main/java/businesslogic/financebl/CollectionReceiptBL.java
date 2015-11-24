@@ -1,5 +1,6 @@
 package businesslogic.financebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
@@ -141,7 +142,13 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
 	 * */
 	public ArrayList<GatheringReceiptPO> getGatheringPOs(){
-		return bdService.getGatheringReceiptPOs();
+		try {
+			return bdService.getGatheringReceiptPOs();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -149,7 +156,13 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
 		// TODO Auto-generated method stub
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs=bdService.getGatheringReceiptPOs();
+		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
+		try {
+			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(gatheringReceiptPOs==null){
 			System.out.println("gatheringReceiptPOs==null");
 			return null;
