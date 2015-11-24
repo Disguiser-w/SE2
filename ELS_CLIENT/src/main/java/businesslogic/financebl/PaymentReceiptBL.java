@@ -15,7 +15,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	PaymentReceiptDataService prdService;
 
 	/**
-	 * 创建表单是从vo到po的过程
+	 * 创建付款单并发送给总经理
 	 * */
 	@Override
 	public int creatPaymentReceipt(PaymentReceiptVO vo) {
@@ -39,12 +39,17 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	/**
 	 * 试运行
 	 * paymentItems怎么用还没想好-------这个怎么写啊23333
+	 * 本宝宝要改付款单的用例了，，，之前写的功能太复杂了23333
 	 * 初步想法：所有判断付款类型，付款金额的操作都写在paymentItem里
 	 * */
 	public int excute(PaymentReceiptVO vo){
 		AccountBL account=new AccountBL();
 //		ArrayList<PaymentReceiptVO> pvos=vo.ge
 		ArrayList<PaymentItemVO> paymentItems=vo.getPaymentItems();
+		for(PaymentItemVO v:paymentItems){
+			account.delMoney(v.getAccount(), v.getMoney());
+		}
+		System.out.println("执行成功！");
 		return 0;
 	}
 	@Override
