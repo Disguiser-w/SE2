@@ -110,8 +110,16 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		try {
 			ArrayList<UserPO> userpos=udService.showAllUsers();
 			for(UserPO p:userpos){
+				//这个地方要是从两个类中来好奇怪.......
+				//快递员：提成+基础工资
 				if(p.getSalaryPlan()==SalaryPlanType.courierSalaryPlan){
-//					salary+=
+					salary+=p.getGrades();
+				}
+				//司机：计次
+				else if(p.getSalaryPlan()==SalaryPlanType.driverSalaryPlan){
+					salary+=p.getGrades();
+				}
+				else if(p.getSalaryPlan()==SalaryPlanType.countermanSalaryPlan){
 				}
 			}
 		} catch (RemoteException e) {
@@ -120,16 +128,23 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		}
 		
 		
-		return 0;
+		return salary;
 	}
 
 	@Override
+	/**
+	 * 运费：但是清0怎么处理
+	 * */
 	public double getFare() {
 		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
+	/**
+	 * 租金从哪里来的
+	 * */
 	public double getRent() {
 		// TODO Auto-generated method stub
 		return 0;
