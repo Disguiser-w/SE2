@@ -10,9 +10,9 @@ public interface CollectionReceiptDataService {
 	public int createCollection(CollectionReceiptPO po) throws RemoteException;
 	public ArrayList<CollectionReceiptPO> getAllCollection() throws RemoteException;
 	
-	public ArrayList<GatheringReceiptPO> getGathering(String HallID,String Time) throws RemoteException;
-	public double[]  getMoney(GatheringReceiptPO po) throws RemoteException;
-	public double getTotalMoney(int[] money) throws RemoteException;
+	public ArrayList<GatheringReceiptPO> getGathering(String Time) throws RemoteException;
+//	public ArrayList<Double>  getMoney(GatheringReceiptPO po) throws RemoteException;
+	public double getTotalMoney(ArrayList<GatheringReceiptPO> gathering) throws RemoteException;
 	
 	//当天存储的持久化对象个数
 	public int getNum() throws RemoteException;
