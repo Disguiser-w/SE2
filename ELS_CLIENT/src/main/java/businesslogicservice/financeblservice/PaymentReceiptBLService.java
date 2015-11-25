@@ -6,6 +6,8 @@ package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
 
+import po.FarePO;
+import po.UserPO;
 import vo.PaymentReceiptVO;
 /**
  * 创建付款单
@@ -19,6 +21,13 @@ public interface PaymentReceiptBLService {
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt();
 	//自动获取付款单编号
 	public String getPaymentReceiptListID();
+	
+	//获取薪水：关于业绩清0的事的处理
+	public double getSalary();
+	//获取运费
+	public double getFare();
+	//获取租金
+	public double getRent();
 	
 	
 	

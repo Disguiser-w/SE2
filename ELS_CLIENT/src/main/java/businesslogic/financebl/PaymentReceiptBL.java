@@ -1,9 +1,13 @@
 package businesslogic.financebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.userdataservice.UserDataService;
 import po.PaymentReceiptPO;
+import po.UserPO;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import businesslogic.receiptbl.ReceiptBL;
@@ -13,6 +17,8 @@ import businesslogicservice.financeblservice.PaymentReceiptBLService;
 public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLService{
 	
 	PaymentReceiptDataService prdService;
+	UserDataService udService;
+	BusinessDataService bdService;
 
 	/**
 	 * 创建付款单并发送给总经理
@@ -94,6 +100,36 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double getSalary() {
+		// TODO Auto-generated method stub
+		double salary=0;
+		try {
+			ArrayList<UserPO> userpos=udService.showAllUsers();
+			for(UserPO p:userpos){
+//				if(p.getSalaryPlan().courierSalaryPlan)
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return 0;
+	}
+
+	@Override
+	public double getFare() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getRent() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

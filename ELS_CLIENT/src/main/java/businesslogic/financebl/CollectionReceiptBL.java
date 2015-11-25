@@ -39,7 +39,8 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 
 	/**
 	 * 账户金额的增减放在excute里
-	 * 先把入款金额记到每个营业厅编号上
+	 * 先把入款金额记到每个营业厅编号上------把帐户名记为营业厅编号
+	 * 等一下，，，这里的getTotalMoney是什么，，，
 	 * */
 	public int excute(CollectionReceiptVO vo){
 		AccountBL a=new AccountBL();
@@ -152,7 +153,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	}
 	
 	/**
-	 * 获取符合时间条件的gatheringPO
+	 * 获取符合时间条件的gatheringPO，需要显示
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
 		// TODO Auto-generated method stub
@@ -178,38 +179,41 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 	}
 	
-	/**
-	 * 获得符合时间条件的gatheringPO的money
-	 * */
-	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptVO> vo) {
-		// TODO Auto-generated method stub
-		ArrayList<Double> moneys ;
-		if(vo==null){
-			return null;
-		}
-		else{
-			moneys=new ArrayList<Double>();
-			for(GatheringReceiptVO v:vo){
-				Double money=v.getTotalmoney();
-				moneys.add(money);
-			}
-			return moneys;
-		}
-	}
+//	/**
+//	 * 获得符合时间条件的gatheringPO的money
+//	 * */
+//	public ArrayList<Double> getMoney(ArrayList<GatheringReceiptVO> vo) {
+//		// TODO Auto-generated method stub
+//		ArrayList<Double> moneys ;
+//		if(vo==null){
+//			return null;
+//		}
+//		else{
+//			moneys=new ArrayList<Double>();
+//			for(GatheringReceiptVO v:vo){
+//				Double money=v.getTotalmoney();
+//				moneys.add(money);
+//			}
+//			return moneys;
+//		}
+//	}
 	
 	/**
 	 * 获取符合条件的总钱数
+	 * 参数：符合条件的收款单列表
 	 * */
-	public double getTotalMoney(ArrayList<Double> money) {
+	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo) {
 		// TODO Auto-generated method stub
 		double totalMoney=0;
-		if(money==null){
-			System.out.println("fail to get ArrayList<Double> money");
+		
+		if(vo==null){
+			System.out.println("获取收款单金额失败");
 			return 0;
 		}
 		else{
-			for(int i=0;i<money.size();i++){
-				totalMoney+=money.get(i);
+			for(GatheringReceiptVO v:vo){
+				double money=v.getTotalmoney();
+				totalMoney+=money;
 			}
 			return totalMoney;
 		}

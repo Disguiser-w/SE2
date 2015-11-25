@@ -16,4 +16,9 @@ public interface PaymentReceiptDataService {
 	//修改持久化对象
 	public  PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException;
 
+	public double getSalary() ;
+
+	public double getFare();
+
+	public double getRent();
 }

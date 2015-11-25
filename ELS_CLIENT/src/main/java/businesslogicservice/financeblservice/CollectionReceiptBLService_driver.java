@@ -11,7 +11,6 @@ public class CollectionReceiptBLService_driver {
 		cbs.getCollection(s);
 		cbs.getAllCollection();
 		cbs.getGathering(time);
-		cbs.getMoney(null);
 		cbs.getTotalMoney(null);
 	}
 	

@@ -31,13 +31,13 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return null;
 	}
 
-	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo) {
-		// TODO Auto-generated method stub
-		System.out.println("Get each Gathering's money successfully!");
-		return null;
-	}
+//	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo) {
+//		// TODO Auto-generated method stub
+//		System.out.println("Get each Gathering's money successfully!");
+//		return null;
+//	}
 
-	public double getTotalMoney(ArrayList<Double> money) {
+	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo) {
 		// TODO Auto-generated method stub
 		System.out.println("Get total money successfully!");
 		return 0;

@@ -36,4 +36,22 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 		return null;
 	}
 
+	@Override
+	public double getSalary() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getFare() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getRent() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

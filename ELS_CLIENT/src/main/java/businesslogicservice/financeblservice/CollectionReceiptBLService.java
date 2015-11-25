@@ -17,10 +17,10 @@ public interface CollectionReceiptBLService {
 	
 	//获取收款单
 	public ArrayList<GatheringReceiptVO> getGathering(String Time);
-	//获取金额
-	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo);
+//	//获取金额
+//	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo);
 	//获取合计数值
-	public double getTotalMoney(ArrayList<Double> money);
+	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo);
 	//自动生成入款单编号
 	public String getCollectionListID();
 	
