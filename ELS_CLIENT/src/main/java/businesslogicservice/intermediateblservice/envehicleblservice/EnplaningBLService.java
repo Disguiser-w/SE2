@@ -5,24 +5,25 @@ import java.util.ArrayList;
 import vo.EnplaningReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
+import vo.OrganizationVO;
 import vo.PlaneVO;
 import vo.TransferingReceiptVO;
 
 public interface EnplaningBLService {
 	public ArrayList<PlaneVO> showPlaneList();
 
-	public PlaneVO showPlane(String planeID);
+	public PlaneVO showPlane(String planeID) throws Exception;
 
 	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane);
 
-	public EnplaningReceiptVO enplane(ArrayList<OrderVO> al);
+	public void enplane(ArrayList<OrderVO> al);
 
 	public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(
 			EnplaningReceiptVO vo);
 
-	public boolean showEnplaningReceiptList(ArrayList<EnplaningReceiptVO> al);
+	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList();
 
-	public FareVO computeFare(ArrayList<EnplaningReceiptVO> al);
+	public FareVO computeFare(ArrayList<EnplaningReceiptVO> al,OrganizationVO intemediateCenter);
 
 	public boolean updateFare(FareVO fareVO);
 

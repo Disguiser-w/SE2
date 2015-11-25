@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EnplaningReceiptVO {
+	public final double fare;
 	public final ArrayList<OrderVO> enplaningReceipt;
 	public final String time;
 	public final String ID;
@@ -13,11 +14,12 @@ public class EnplaningReceiptVO {
 	public final PlaneVO plane;
 
 	public EnplaningReceiptVO(ArrayList<OrderVO> enplaningReceipt, String time,
-			String ID, OrganizationVO intermediateCentre, PlaneVO plane) {
+			String ID, OrganizationVO intermediateCentre, PlaneVO plane,double fare) {
 		this.enplaningReceipt = enplaningReceipt;
 		this.time = time;
 		this.ID = ID;
 		this.intermediateCentre = intermediateCentre;
 		this.plane = plane;
+		this.fare = fare;
 	}
 }

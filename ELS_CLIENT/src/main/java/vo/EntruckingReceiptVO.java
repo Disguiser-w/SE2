@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EntruckingReceiptVO {
-	public final ArrayList<OrderVO> enplaningReceipt;
-	public final String time;
-	public final String ID;
 	public final OrganizationVO intermediateCentre;
 	public final TruckVO truck;
+	
+	public final ArrayList<OrderVO> entruckingReceipt;
+	
+	public final String time;
+	public final String ID;
+	public final double fare = 0;
 
-	public EntruckingReceiptVO(ArrayList<OrderVO> enplaningReceipt,
+	public EntruckingReceiptVO(ArrayList<OrderVO> entruckingReceipt,
 			String time, String ID, OrganizationVO intermediateCentre,
 			TruckVO truck) {
-		this.enplaningReceipt = enplaningReceipt;
+		this.entruckingReceipt = entruckingReceipt;
 		this.time = time;
 		this.ID = ID;
 		this.intermediateCentre = intermediateCentre;
