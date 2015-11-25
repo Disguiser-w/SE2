@@ -56,26 +56,26 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 	 * 按时间获取所有的营业厅收款单------从文件中放到po中
 	 * 才看到钦gg的需求里竟然要按天按营业厅查询，我们愉快地忽略吧233333
 	 * 暂取名==
-	 * 但是我这里可以直接读营业厅的文件吗，，，并不清楚
+	 * 但是我这里可以直接读营业厅的文件吗，，，并不清楚——好像不行，应该是BL层直接调用BusinessService中的方法
 	 * */
-	public ArrayList<GatheringReceiptPO> getGathering(String Time)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		file=new JXCFile("gathering.ser");
-		ArrayList<Object> gathering=file.read();
-		if(gathering==null){
-			System.out.println("读取文件gathering.ser失败或文件为空");
-			return null;
-		}
-		else{
-			ArrayList<GatheringReceiptPO> buffer=new ArrayList<GatheringReceiptPO>();
-			for(Object o:gathering){
-				GatheringReceiptPO p=(GatheringReceiptPO) o;
-				buffer.add(p);
-			}
-			return buffer;
-		}
-	}
+//	public ArrayList<GatheringReceiptPO> getGathering(String Time)
+//			throws RemoteException {
+//		// TODO Auto-generated method stub
+//		file=new JXCFile("gathering.ser");
+//		ArrayList<Object> gathering=file.read();
+//		if(gathering==null){
+//			System.out.println("读取文件gathering.ser失败或文件为空");
+//			return null;
+//		}
+//		else{
+//			ArrayList<GatheringReceiptPO> buffer=new ArrayList<GatheringReceiptPO>();
+//			for(Object o:gathering){
+//				GatheringReceiptPO p=(GatheringReceiptPO) o;
+//				buffer.add(p);
+//			}
+//			return buffer;
+//		}
+//	}
 
 	/**
 	 * 但是这个在BL层好像写过了

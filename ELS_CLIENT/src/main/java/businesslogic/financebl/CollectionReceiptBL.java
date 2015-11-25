@@ -44,20 +44,82 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * */
 	public int excute(CollectionReceiptVO vo){
 		AccountBL a=new AccountBL();
-		ArrayList<GatheringReceiptVO> grvo=vo.getGathering();
-		for(GatheringReceiptVO v:grvo){
-			a.addMoney(v.getHallId(), v.getTotalmoney());
-		}
-		System.out.println("执行成功！");
+//		ArrayList<GatheringReceiptVO> grvo=vo.getGathering();
+//		for(GatheringReceiptVO v:grvo){
+//			a.addMoney(v.getHallId(), v.getTotalmoney());
+//		}
+		a.addMoney(vo.getAccount(), vo.getIncome());
+			System.out.println("执行成功！");
 		
 		return 0;
 	}
+	
+	/**
+	 * 获取符合时间条件的gatheringPO，需要显示
+	 * 这个筛选应该在bdService中
+	 * */
+	public ArrayList<GatheringReceiptVO> getGathering(String Time){
+		// TODO Auto-generated method stub
+		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
+		try {
+//			gatheringReceiptPOs=bdService.getGatheringReceiptPOs(Time);
+			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(gatheringReceiptPOs==null){
+			System.out.println("gatheringReceiptPOs==null");
+			return null;
+		}
+		else{
+			gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
+		for(GatheringReceiptPO p:gatheringReceiptPOs){
+			if(p.getTime()==Time){
+				gatheringReceiptPOs_Right.add(p);
+			}
+		}
+		return gposToVOs(gatheringReceiptPOs_Right);
+		}
+	}
+	
+	/**
+	 * 获取符合条件的总钱数
+	 * 参数：符合条件的收款单列表
+	 * */
+	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo){
+		// TODO Auto-generated method stub
+		double totalMoney=0;
+		
+		if(vo==null){
+			System.out.println("获取收款单金额失败");
+			return 0;
+		}
+		else{
+			for(GatheringReceiptVO v:vo){
+				double money=v.getTotalmoney();
+				totalMoney+=money;
+			}
+			return totalMoney;
+		}
+	}
+	
+	/**
+	 * 显示Po中存在的所有Collection记录
+	 * */
+	public ArrayList<CollectionReceiptVO> getAllCollection(){
+		// TODO Auto-generated method stub
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
+		return cposToVOs(collectionReceiptPOs);
+	}
+
+	
 	/**
 	 * gatheringVO to PO
 	 * */
-	public GatheringReceiptPO gvoToPO(GatheringReceiptVO vo){
-		return null;
-	}
+//	public GatheringReceiptPO gvoToPO(GatheringReceiptVO vo){
+//		return null;
+//	}
 	/**
 	 * ArrayList<GaheringVO> to PO
 	 * */
@@ -68,7 +130,8 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * CollectionVO to PO
 	 * */
 	public CollectionReceiptPO cvoToPO(CollectionReceiptVO vo){
-		return null;
+		CollectionReceiptPO collectionReceiptPO=new CollectionReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getIncome(), vo.getDate(), vo.getAccount());
+		return collectionReceiptPO;
 	}
 	/**
 	 * ArrayList<CollectionVO> to PO 
@@ -115,7 +178,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 			return null;
 		}
 		else{
-			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.totalMoney() , po.getDate(), po.getAccount());
+			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getIncome() , po.getDate(), po.getAccount());
 			return collectionReceiptVO;
 		}
 	}
@@ -130,7 +193,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		else{
 			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
 			for(CollectionReceiptPO p:pos){
-				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(),p.totalMoney() , p.getDate(), p.getAccount());
+				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(),p.getIncome() , p.getDate(), p.getAccount());
 				collectionReceiptVOs.add(vo);
 			}
 			return collectionReceiptVOs;
@@ -142,42 +205,17 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	/**
 	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
 	 * */
-	public ArrayList<GatheringReceiptPO> getGatheringPOs(){
-		try {
-			return bdService.getGatheringReceiptPOs();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	public ArrayList<GatheringReceiptPO> getGatheringPOs(){
+//		try {
+//			return bdService.getGatheringReceiptPOs();
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 	
-	/**
-	 * 获取符合时间条件的gatheringPO，需要显示
-	 * */
-	public ArrayList<GatheringReceiptVO> getGathering(String Time){
-		// TODO Auto-generated method stub
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
-		try {
-			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(gatheringReceiptPOs==null){
-			System.out.println("gatheringReceiptPOs==null");
-			return null;
-		}
-		else{
-			gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
-		for(GatheringReceiptPO p:gatheringReceiptPOs){
-			if(p.getTime()==Time){
-				gatheringReceiptPOs_Right.add(p);
-			}
-		}
-		return gposToVOs(gatheringReceiptPOs_Right);
-		}
-	}
+
 	
 //	/**
 //	 * 获得符合时间条件的gatheringPO的money
@@ -198,30 +236,10 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 //		}
 //	}
 	
-	/**
-	 * 获取符合条件的总钱数
-	 * 参数：符合条件的收款单列表
-	 * */
-	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo) {
-		// TODO Auto-generated method stub
-		double totalMoney=0;
-		
-		if(vo==null){
-			System.out.println("获取收款单金额失败");
-			return 0;
-		}
-		else{
-			for(GatheringReceiptVO v:vo){
-				double money=v.getTotalmoney();
-				totalMoney+=money;
-			}
-			return totalMoney;
-		}
-	}
-
+	
 	
 	/**
-	 * 根据ID筛选出Collectionpo
+	 * 根据ID筛选出Collectionpo,先写在这来不及就不写了
 	 * */
 	public CollectionReceiptVO getCollection(String s) {
 		// TODO Auto-generated method stub
@@ -241,14 +259,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}		
 	}
 
-	/**
-	 * 显示Po中存在的所有Collection记录
-	 * */
-	public ArrayList<CollectionReceiptVO> getAllCollection() {
-		// TODO Auto-generated method stub
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		return cposToVOs(collectionReceiptPOs);
-	}
+
 
 	
 

@@ -57,7 +57,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		else{
 			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
 			for(CollectionReceiptPO p:collectionReceiptPOs){
-				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.totalMoney(), p.getDate(), p.getAccount());
+				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getIncome(), p.getDate(), p.getAccount());
 				collectionReceiptVOs.add(vo);
 			}
 		}		
@@ -71,7 +71,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		else{
 			paymentReceiptVOs=new ArrayList<PaymentReceiptVO>();
 			for(PaymentReceiptPO p:paymentReceiptPOs){
-				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getClause(), p.getMoney(), p.getDate() , p.getAccount(), p.getName());
+				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getRent(), p.getFare(),p.getSalary(), p.getDate() , p.getAccount(), p.getName());
 				paymentReceiptVOs.add(vo);
 			}
 		}
@@ -93,7 +93,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			collectionReceiptPOs.add(po);
 		}
 		for(PaymentReceiptVO v2:paymentReceiptVOs){
-			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getClause(), v2.getMoney(), v2.getDate(), v2.getAccount(), v2.getName());
+			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getRent(), v2.getFare(),v2.getSalary(), v2.getDate(), v2.getAccount(), v2.getName());
 			paymentReceiptPOs.add(po);
 		}
 		BusinessstatementReceiptPO po=new BusinessstatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
