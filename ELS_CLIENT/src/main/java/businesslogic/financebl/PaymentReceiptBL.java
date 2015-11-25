@@ -8,6 +8,7 @@ import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.userdataservice.UserDataService;
 import po.PaymentReceiptPO;
 import po.UserPO;
+import type.SalaryPlanType;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import businesslogic.receiptbl.ReceiptBL;
@@ -109,7 +110,9 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		try {
 			ArrayList<UserPO> userpos=udService.showAllUsers();
 			for(UserPO p:userpos){
-//				if(p.getSalaryPlan().courierSalaryPlan)
+				if(p.getSalaryPlan()==SalaryPlanType.courierSalaryPlan){
+//					salary+=
+				}
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
