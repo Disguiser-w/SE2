@@ -2,6 +2,8 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
+import po.EnplaningReceiptPO;
+import po.OrderPO;
 import type.TransferingState;
 import vo.EnplaningReceiptVO;
 import vo.FareVO;
@@ -9,6 +11,7 @@ import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
 import vo.TransferingReceiptVO;
+import businesslogic.expressbl.AddOrder;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnplaningBLService;
 
 public class EnplaningBL implements EnplaningBLService {
@@ -37,9 +40,9 @@ public class EnplaningBL implements EnplaningBLService {
 	public PlaneVO showPlane(String planeID) throws Exception {
 		// TODO 自动生成的方法存根
 		int size = planeList.size();
-		for (int i = 0; i < size; i++) {
-			if (planeList.get(i).ID == planeID)
-				return planeList.get(i);
+		for (PlaneVO plane : planeList) {
+			if (plane.ID == planeID)
+				return plane;
 		}
 
 		throw new Exception("未找到该ID的飞机！");
@@ -54,16 +57,12 @@ public class EnplaningBL implements EnplaningBLService {
 		// TODO 自动生成的方法存根
 		waitingOrderList = awobl.updateWaitingList();
 
-		int order_num = waitingOrderList.size();
-		int plane_num = planeList.size();
-		for (int i = 0; i < order_num; i++) {
-			String[] address = waitingOrderList.get(i).recipientAddress
-					.split(" ");
-			for (int j = 0; j < plane_num; j++) {
-				if (address[0] == planeList.get(j).destination) {
-					planeList.get(j).enplaningReceipt.enplaningReceipt
-							.add(waitingOrderList.get(i));
-					waitingOrderList.get(i).transfer_state = TransferingState.FINISHED_ENVEHICLE;
+		for (OrderVO order : waitingOrderList) {
+			String[] address_city = order.recipientAddress.split(" ");
+			for (PlaneVO plane : planeList) {
+				if (address_city[0] == plane.destination) {
+					plane.enplaningReceipt.orderList.add(order);
+					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
 					continue;
 				}
 			}
@@ -79,8 +78,8 @@ public class EnplaningBL implements EnplaningBLService {
 	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList() {
 		// TODO 自动生成的方法存根
 		int plane_num = planeList.size();
-		for (int i = 0; i < plane_num; i++) {
-			enplaningReceipt_all.add(planeList.get(i).enplaningReceipt);
+		for (PlaneVO plane : planeList) {
+			enplaningReceipt_all.add(plane.enplaningReceipt);
 		}
 		return enplaningReceipt_all;
 	}
@@ -91,9 +90,10 @@ public class EnplaningBL implements EnplaningBLService {
 		// TODO 自动生成的方法存根
 		int plane_num = enplaningReceipt_all.size();
 		double fare_sum = 0;
-		for(int i = 0;i<plane_num;i++)
-			fare_sum+=enplaningReceipt_all.get(i).fare;
-		fare = new FareVO(enplaningReceipt_all, null, null, fare_sum, null, null, intermediateCentre);
+		for (int i = 0; i < plane_num; i++)
+			fare_sum += enplaningReceipt_all.get(i).fare;
+		fare = new FareVO(enplaningReceipt_all, null, null, fare_sum, null,
+				null, intermediateCentre);
 		return fare;
 	}
 
@@ -105,5 +105,22 @@ public class EnplaningBL implements EnplaningBLService {
 	public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO> al) {
 		// TODO 自动生成的方法存根
 		return false;
+	}
+	
+	public static OrderPO voToPO(OrderVO order){
+		return AddOrder.voToPO(order); 
+	}
+
+	public static EnplaningReceiptPO voToPO(EnplaningReceiptVO enplaningReceipt){
+		ArrayList<OrderPO> orderList = new ArrayList<OrderPO>();
+		for(OrderVO order:enplaningReceipt.orderList)
+			orderList.add(EnplaningBL.voToPO(order));
+		
+		return new EnplaningReceiptPO(orderList, null, null, null);
+	}
+	 
+	public static ArrayList<EnplaningReceiptPO> voToPO(ArrayList<EnplaningReceiptVO> enplaningReceiptList){
+		int size = enplaningReceiptList.size();
+		for(int )
 	}
 }

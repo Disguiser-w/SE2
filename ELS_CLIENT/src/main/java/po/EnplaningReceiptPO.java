@@ -6,28 +6,28 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EnplaningReceiptPO {
-	private ArrayList<OrderPO> enplaningReceipt;
+	private ArrayList<OrderPO> orderList;
 	private String date;
 	private String ID;
 	private OrganizationPO intermediateCentre;
 	private PlanePO plane;
 
-	public EnplaningReceiptPO() {
-	}
-
-	public EnplaningReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
+	public EnplaningReceiptPO(ArrayList<OrderPO> orderList,String ID,OrganizationPO intermediateCentre,PlanePO plane) {
 		Date date = new Date();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.date = format.format(date).substring(0, 10);
-		this.enplaningReceipt = enplaningReceipt;
+		this.orderList = orderList;
+		this.ID = ID;
+		this.intermediateCentre = intermediateCentre;
+		this.plane = plane;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {

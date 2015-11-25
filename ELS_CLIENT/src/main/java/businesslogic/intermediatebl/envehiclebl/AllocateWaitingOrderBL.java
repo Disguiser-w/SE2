@@ -17,10 +17,9 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 
 	public ArrayList<OrderVO> updateWaitingList() {
 		// TODO 自动生成的方法存根
-		int size = transferingReceipt.orderList.size();
-		for (int i = 0; i < size; i++) {
-			if (transferingReceipt.orderList.get(i).transfer_state == TransferingState.WAITING_ENVEHICLE)
-				waitingOrderList.add(transferingReceipt.orderList.get(i));
+		for(OrderVO order:transferingReceipt.orderList) {
+			if (order.transfer_state == TransferingState.WAITING_ENVEHICLE)
+				waitingOrderList.add(order);
 		}
 		return waitingOrderList;
 	}
@@ -28,10 +27,9 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	public OrderVO showOrder(String orderID)
 			throws Exception {
 		// TODO 自动生成的方法存根
-		int size = transferingReceipt.orderList.size();
-		for (int i = 0; i < size; i++) {
-			if (transferingReceipt.orderList.get(i).ID == orderID)
-				return transferingReceipt.orderList.get(i);
+		for(OrderVO order:transferingReceipt.orderList){
+			if (order.ID == orderID)
+				return order;
 		}
 
 		throw new Exception("未找到该ID的订单！");
