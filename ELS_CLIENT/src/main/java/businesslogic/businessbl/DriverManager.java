@@ -1,9 +1,11 @@
 package businesslogic.businessbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogicservice.businessblservice.DriverManagerBLService;
 import dataservice.businessdataservice.BusinessDataService;
+import dataservice.businessdataservice.BusinessDataService_stub;
+import po.DriverPO;
 import vo.DriverVO;
 
 public class DriverManager {
@@ -11,29 +13,68 @@ public class DriverManager {
 	private BusinessDataService businessData;
 
 	public DriverManager() {
-
+		businessData = new BusinessDataService_stub();
 	}
 
 	public ArrayList<DriverVO> getDriverInfo() {
-		// TODO Auto-generated method stub
 		ArrayList<DriverVO> vos = new ArrayList<DriverVO>();
-		vos.add(new DriverVO("025-000-111", null, null, null, null, null, null, null));
+		ArrayList<DriverPO> pos = null;
+		try {
+			pos = businessData.getDriverInfos();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		for (DriverPO i : pos)
+			vos.add(poToVO(i));
 		return vos;
 	}
 
 	public boolean addDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		boolean result = false;
+		try {
+			result = businessData.addDriver(voToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public boolean deleteDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		boolean result = false;
+		try {
+			result = businessData.deleteDriver(voToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public boolean modifyDriver(DriverVO vo) {
 		// TODO Auto-generated method stub
-		return true;
+		boolean result = false;
+		try {
+			result = businessData.modifyDriver(voToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public DriverVO poToVO(DriverPO po) {
+
+		return new DriverVO(po.getID(), po.getName(), po.getDateOfBirth(), po.getIdCardNumber(), po.getPhoneNumber(),
+				po.getVehicleOrganization(), po.getSexuality(), po.getRegistrationDeadline());
+	}
+
+	public DriverPO voToPO(DriverVO vo) {
+		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber, vo.vehicleOrganization,
+				vo.sexuality, vo.registrationDeadline);
 	}
 
 }

@@ -38,7 +38,12 @@ public interface BusinessDataService extends Remote {
 	/**
 	 * 返回司机信息列表
 	 */
-	public DriverPO getDriverInfos(String ID) throws RemoteException;
+	public ArrayList<DriverPO> getDriverInfos() throws RemoteException;
+
+	/**
+	 * 查找司机
+	 */
+	public DriverPO getDriverInfo(String ID) throws RemoteException;
 
 	/**
 	 * 增加一个司机信息DriverPO到DriverPOList中
@@ -71,7 +76,7 @@ public interface BusinessDataService extends Remote {
 	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po) throws RemoteException;
 
 	/**
-	 * 生成收款汇总单
+	 * 获取收款汇总单
 	 */
 	public ArrayList<GatheringReceiptPO> getGatheringReceiptPOs() throws RemoteException;
 
@@ -79,4 +84,10 @@ public interface BusinessDataService extends Remote {
 	 * 增加收货单
 	 */
 	public boolean addReceipt(OrderAcceptReceiptPO po) throws RemoteException;
+
+	/**
+	 * 增加收款汇总单
+	 */
+
+	public boolean addGatheringReceipt(GatheringReceiptPO po);
 }

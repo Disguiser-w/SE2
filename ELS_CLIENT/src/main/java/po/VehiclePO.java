@@ -8,12 +8,13 @@ public class VehiclePO {
 	private String lowNumberPlate;
 	private String buyTime;
 	private String serviceTime;
+	private String location;
 
 	public VehiclePO() {
 	}
 
 	public VehiclePO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime) {
+			String serviceTime, String location) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;
@@ -21,6 +22,15 @@ public class VehiclePO {
 		this.lowNumberPlate = lowNumberPlate;
 		this.buyTime = buyTime;
 		this.serviceTime = serviceTime;
+		this.location = location;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getID() {

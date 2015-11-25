@@ -15,7 +15,7 @@ public interface RepertoryDataService extends Remote{
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException;
 	public int deleteInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException;
 	public int modifyInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException;
-	//public GoodsPO findGoodsbyID(String repertoryID, String JJD_ID);
+	//public GoodsPO findGoodsbyID(String repertoryID, String JJD_ID);	
 	public GoodsPO findGoodsbyID(String JJD_ID) throws RemoteException;
 	public InventoryPO findInventorybyID(String repertoryID, String JJD_ID) throws RemoteException;
 	public ArrayList<InventoryPO> findInventorybyDate(String repertoryID, String beginDate, String endDate) throws RemoteException;

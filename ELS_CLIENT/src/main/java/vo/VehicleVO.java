@@ -8,9 +8,10 @@ public class VehicleVO {
 	public final String lowNumberPlate;
 	public final String buyTime;
 	public final String serviceTime;
+	public final String location;
 
 	public VehicleVO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime) {
+			String serviceTime,String location) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;
@@ -18,6 +19,7 @@ public class VehicleVO {
 		this.lowNumberPlate = lowNumberPlate;
 		this.buyTime = buyTime;
 		this.serviceTime = serviceTime;
+		this.location = location;
 	}
 
 }

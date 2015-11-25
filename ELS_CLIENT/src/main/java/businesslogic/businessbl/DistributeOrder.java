@@ -3,12 +3,14 @@ package businesslogic.businessbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.expressbl.AddOrder;
 import businesslogic.expressbl.ChargeCollection;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
 import dataservice.expressdataservice.ExpressDataService;
 import dataservice.expressdataservice.ExpressDataService_stub;
 import po.ExpressPO;
+import po.OrderPO;
 import vo.ExpressVO;
 import vo.OrderVO;
 
@@ -19,9 +21,12 @@ public class DistributeOrder {
 	public DistributeOrder() {
 		businessData = new BusinessDataService_stub();
 		expressData = new ExpressDataService_stub();
+
 	}
 
 	public String distributeOrder() {
+		ArrayList<ExpressVO> ExpressVOs = getExpressInfos();
+		ArrayList<OrderVO> OrderVOs = getSendOrder();
 
 		return "狗剩 2015-11-11";
 	}
@@ -43,7 +48,18 @@ public class DistributeOrder {
 
 	public ArrayList<OrderVO> getSendOrder() {
 		ArrayList<OrderVO> vos = new ArrayList<OrderVO>();
-		ArrayList<OrderPO> pos = expressData.get
+		ArrayList<OrderPO> pos = null;
+		try {
+			pos = expressData.getOrderInfos();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (OrderPO i : pos)
+			vos.add(AddOrder.poToVO(i));
+
+		return vos;
 	}
 
 }

@@ -1,6 +1,7 @@
 package po;
 
 import type.Sexuality;
+import vo.OrganizationVO;
 
 public class DriverPO {
 
@@ -10,7 +11,7 @@ public class DriverPO {
 	private String DateOfBirth;
 	private String IdCardNumber;
 	private String phoneNumber;
-	private OrganizationPO vehicleOrganization;
+	private OrganizationVO vehicleOrganization;
 	private Sexuality sexuality;
 	private String registrationDeadline;
 
@@ -18,7 +19,7 @@ public class DriverPO {
 	}
 
 	public DriverPO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
-			OrganizationPO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
+			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -70,11 +71,11 @@ public class DriverPO {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public OrganizationPO getVehicleOrganization() {
+	public OrganizationVO getVehicleOrganization() {
 		return vehicleOrganization;
 	}
 
-	public void setVehicleOrganization(OrganizationPO vehicleOrganization) {
+	public void setVehicleOrganization(OrganizationVO vehicleOrganization) {
 		this.vehicleOrganization = vehicleOrganization;
 	}
 

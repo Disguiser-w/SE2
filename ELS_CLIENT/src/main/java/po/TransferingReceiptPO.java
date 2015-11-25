@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TransferingReceiptPO {
-	 String ID;
+		String ID;
 	    String time;
 	    ArrayList<OrderPO> orderList;
 	    OrganizationPO interdiatehall;

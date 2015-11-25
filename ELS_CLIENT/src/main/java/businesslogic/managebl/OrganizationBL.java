@@ -76,19 +76,19 @@ public class OrganizationBL implements OrganizationBLService{
 		
 	}
 	
-	public RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
+	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
 		return new RepertoryVO(repertorypo.getRepertoryID(),repertorypo.getOwnerID(),repertorypo.getMaxRow(),repertorypo.getMaxShelf(), repertorypo.getMaxDigit(),repertorypo.getWarningRatio(), repertorypo.getStockNumArray());
 	}
 	
-	public RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo){
+	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo){
 		return new RepertoryPO(repertoryvo.getRepertoryID(),repertoryvo.getOwnerID(),repertoryvo.getMaxRow(),repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(),repertoryvo.getWarningRatio(),repertoryvo.getStockNumArray());
 	}
 	
-	public OrganizationVO organizationPOToVO(OrganizationPO organizationpo){
+	public static OrganizationVO organizationPOToVO(OrganizationPO organizationpo){
 		return new OrganizationVO(organizationpo.getCategory(),organizationpo.getOrganizationID(),organizationpo.getName(),repertoryPOToVO(organizationpo.getRepertory()));
 	}
 	
-	public OrganizationPO organizationVOToPO(OrganizationVO organizationvo){
+	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo){
 		return new OrganizationPO(organizationvo.getCategory(),organizationvo.getOrganizationID(),organizationvo.getName(),repertoryVOToPO(organizationvo.getRepertory()));
 	}
 	

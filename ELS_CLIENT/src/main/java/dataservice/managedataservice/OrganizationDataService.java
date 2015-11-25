@@ -14,5 +14,6 @@ public interface OrganizationDataService extends Remote{
 	public OrganizationPO findOrganization(String OrganizationID) throws RemoteException;
 	
 	public int modifyUser(UserPO userpo) throws RemoteException;
+	//
 	
 }
