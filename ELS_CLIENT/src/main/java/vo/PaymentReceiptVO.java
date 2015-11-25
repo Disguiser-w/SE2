@@ -6,10 +6,16 @@ import po.ReceiptPO.ReceiptState;
 import type.ReceiptType;
 
 public class PaymentReceiptVO extends ReceiptVO{
-	//条目
-	String clause;
+//	//条目
+//	String clause;
 	//付款金额
-	double money;
+	double cost;
+	//租金
+	double rent;
+	//运费
+	double fare;
+	//工资
+	double salary;
 	//付款日期
 	String date;
 	//付款账户
@@ -19,10 +25,11 @@ public class PaymentReceiptVO extends ReceiptVO{
 	//付款记录
 	ArrayList<PaymentItemVO> paymentItemVOs;
 	
-	public PaymentReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,String clause,double money,String date,String account,String name ){
+	public PaymentReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double rent,double fare,double salary,String date,String account,String name ){
 		super(ID,userID,ReceiptType.PAYMENTRECEIPT,state);
-		this.clause=clause;
-		this.money=money;
+		this.rent= rent;
+		this.fare=fare;
+		this.salary=salary;
 		this.date=date;
 		this.account=account;
 		this.name=name;
@@ -31,14 +38,26 @@ public class PaymentReceiptVO extends ReceiptVO{
 	
 
 
-	public String getClause(){
-		return clause;
+//	public String getClause(){
+//		return clause;
+//	}
+	
+	//
+	public double getCost(){
+		return rent+fare+salary;
 	}
 	
-	public double getMoney(){
-		return money;
+	public double getRent(){
+		return rent;
 	}
 	
+	public double getFare(){
+		return fare;
+	}
+	
+	public double getSalary(){
+		return salary;
+	}
 	public String getDate(){
 		return date;
 	}

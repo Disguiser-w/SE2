@@ -39,7 +39,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 			return null;
 		}
 		else{
-			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getClause(), vo.getMoney(), vo.getDate(), vo.getAccount(), vo.getName());
+			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
 			return ppo;
 		}
 	}
@@ -75,7 +75,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	}
 	
 	public PaymentReceiptVO ppoToVO(PaymentReceiptPO po){
-		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getClause(), po.getMoney(), po.getDate(), po.getAccount(), po.getName());
+		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(),po.getRent(), po.getFare(), po.getSalary(),po.getDate(), po.getAccount(), po.getName());
 		return vo;
 	}
 	public ArrayList<PaymentReceiptVO> pposToVOs(ArrayList<PaymentReceiptPO> pos){
@@ -86,7 +86,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		}
 		else{
 			for(PaymentReceiptPO p:pos){
-				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getClause(), p.getMoney(), p.getDate(), p.getAccount(),p.getName());
+				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getRent(),p.getFare(),p.getSalary(),p.getDate(), p.getAccount(),p.getName());
 				paymentReceiptVOs.add(vo);
 			}
 			return paymentReceiptVOs;

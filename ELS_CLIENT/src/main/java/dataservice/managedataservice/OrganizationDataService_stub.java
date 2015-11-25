@@ -4,6 +4,7 @@ import dataservice.managedataservice.OrganizationDataService;
 import type.OrganizationType;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.OrganizationPO;
 import po.UserPO;
@@ -39,5 +40,11 @@ public class OrganizationDataService_stub implements OrganizationDataService{
         System.out.println("Modify User succeed!");
         return 0;
     }
+
+	@Override
+	public ArrayList<OrganizationPO> getOrganizations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
