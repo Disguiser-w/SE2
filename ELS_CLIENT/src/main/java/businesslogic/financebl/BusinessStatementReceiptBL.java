@@ -2,7 +2,7 @@ package businesslogic.financebl;
 
 import java.util.ArrayList;
 
-import po.BusinessStatementReceiptPO;
+import po.BusinessstatementReceiptPO;
 import po.CollectionReceiptPO;
 import po.PaymentReceiptPO;
 import dataservice.financedataservice.BusinessstatementReceiptDataService;
@@ -42,7 +42,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	 * 从Collectionpo和PaymentPo中取出需要的数据转化为vo
 	 * 筛选不放在这里??
 	 * */
-	public BusinessStatementReceiptVO bpoToVO(BusinessStatementReceiptPO businessstatementReceiptPOs){
+	public BusinessStatementReceiptVO bpoToVO(BusinessstatementReceiptPO businessstatementReceiptPOs){
 
 		BusinessStatementReceiptVO businessStatementReceiptVO;
 		/**
@@ -83,7 +83,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	/**
 	 * 将vo转化为po存入BusinessstatementReceiptPO
 	 * */
-	public BusinessStatementReceiptPO bvoToPO(BusinessStatementReceiptVO vo){
+	public BusinessstatementReceiptPO bvoToPO(BusinessStatementReceiptVO vo){
 		ArrayList<CollectionReceiptVO> collectionReceiptVOs=vo.cvos;
 		ArrayList<PaymentReceiptVO> paymentReceiptVOs=vo.pvos;
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=new ArrayList<CollectionReceiptPO>();
@@ -96,7 +96,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getClause(), v2.getMoney(), v2.getDate(), v2.getAccount(), v2.getName());
 			paymentReceiptPOs.add(po);
 		}
-		BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
+		BusinessstatementReceiptPO po=new BusinessstatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
 		return po;
 	}
 	
