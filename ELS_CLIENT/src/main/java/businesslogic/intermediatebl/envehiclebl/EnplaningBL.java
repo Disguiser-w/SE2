@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import po.EnplaningReceiptPO;
 import po.OrderPO;
+import po.OrganizationPO;
+import po.PlanePO;
 import type.TransferingState;
 import vo.EnplaningReceiptVO;
 import vo.FareVO;
@@ -48,12 +50,16 @@ public class EnplaningBL implements EnplaningBLService {
 		throw new Exception("未找到该ID的飞机！");
 	}
 
-	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane) {
+	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane) throws Exception {
 		// TODO 自动生成的方法存根
-		return plane.enplaningReceipt;
+		for(EnplaningReceiptVO enplaningReceipt:enplaningReceipt_all){
+			if(enplaningReceipt.plane == plane)
+				return enplaningReceipt;
+		}
+		throw new Exception("未找到该飞机！");
 	}
 
-	public void enplane(ArrayList<OrderVO> waitingOrderList) {
+	public void enplane(ArrayList<OrderVO> waitingOrderList) throws Exception {
 		// TODO 自动生成的方法存根
 		waitingOrderList = awobl.updateWaitingList();
 
@@ -61,7 +67,7 @@ public class EnplaningBL implements EnplaningBLService {
 			String[] address_city = order.recipientAddress.split(" ");
 			for (PlaneVO plane : planeList) {
 				if (address_city[0] == plane.destination) {
-					plane.enplaningReceipt.orderList.add(order);
+					showEnplaningReceipt(plane).orderList.add(order);
 					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
 					continue;
 				}
@@ -72,14 +78,15 @@ public class EnplaningBL implements EnplaningBLService {
 	public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(
 			EnplaningReceiptVO vo) {
 		// TODO 自动生成的方法存根
-		return null;
+		enplaningReceipt_all.add(vo);
+		return enplaningReceipt_all;
 	}
 
-	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList() {
+	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList() throws Exception {
 		// TODO 自动生成的方法存根
 		int plane_num = planeList.size();
 		for (PlaneVO plane : planeList) {
-			enplaningReceipt_all.add(plane.enplaningReceipt);
+			enplaningReceipt_all.add(showEnplaningReceipt(plane));
 		}
 		return enplaningReceipt_all;
 	}
@@ -106,21 +113,35 @@ public class EnplaningBL implements EnplaningBLService {
 		// TODO 自动生成的方法存根
 		return false;
 	}
-	
-	public static OrderPO voToPO(OrderVO order){
-		return AddOrder.voToPO(order); 
+
+	public static OrderPO voToPO(OrderVO order) {
+		return AddOrder.voToPO(order);
 	}
 
-	public static EnplaningReceiptPO voToPO(EnplaningReceiptVO enplaningReceipt){
-		ArrayList<OrderPO> orderList = new ArrayList<OrderPO>();
-		for(OrderVO order:enplaningReceipt.orderList)
-			orderList.add(EnplaningBL.voToPO(order));
-		
-		return new EnplaningReceiptPO(orderList, null, null, null);
+	public static PlanePO voToPO(PlaneVO planeVO) {
+		return new PlanePO(planeVO.farePrice, planeVO.ID, planeVO.destination);
 	}
-	 
-	public static ArrayList<EnplaningReceiptPO> voToPO(ArrayList<EnplaningReceiptVO> enplaningReceiptList){
-		int size = enplaningReceiptList.size();
-		for(int )
+
+	public static OrganizationPO voToPO(OrganizationVO intermediate) {
+		return new OrganizationPO(intermediate.category,
+				intermediate.organizationID, intermediate.name);
+	}
+
+	public static EnplaningReceiptPO voToPO(EnplaningReceiptVO enplaningReceipt) {
+		ArrayList<OrderPO> orderList = new ArrayList<OrderPO>();
+		for (OrderVO order : enplaningReceipt.orderList)
+			orderList.add(EnplaningBL.voToPO(order));
+
+		return new EnplaningReceiptPO(orderList, enplaningReceipt.ID,
+				EnplaningBL.voToPO(enplaningReceipt.intermediateCentre),
+				EnplaningBL.voToPO(enplaningReceipt.plane));
+	}
+
+	public static ArrayList<EnplaningReceiptPO> voToPO(ArrayList<EnplaningReceiptVO> list){
+		ArrayList<EnplaningReceiptPO> enplaningReceiptList = new ArrayList<EnplaningReceiptPO>();
+		for(EnplaningReceiptVO receipt:list)
+			enplaningReceiptList.add(EnplaningBL.voToPO(receipt));
+		
+		return enplaningReceiptList;
 	}
 }

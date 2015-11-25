@@ -14,14 +14,14 @@ public interface EnplaningBLService {
 
 	public PlaneVO showPlane(String planeID) throws Exception;
 
-	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane);
+	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane) throws Exception;
 
-	public void enplane(ArrayList<OrderVO> al);
+	public void enplane(ArrayList<OrderVO> al) throws Exception;
 
 	public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(
 			EnplaningReceiptVO vo);
 
-	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList();
+	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList() throws Exception;
 
 	public FareVO computeFare(ArrayList<EnplaningReceiptVO> al,OrganizationVO intemediateCenter);
 
