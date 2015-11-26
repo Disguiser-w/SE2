@@ -21,8 +21,20 @@ import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.expressbl.controller.ExpressMainController;
+import dataservice.intermediatedataservice.envehicledataservice.EnplaningDataService;
+import dataservice.intermediatedataservice.envehicledataservice.EntrainingDataService;
+import dataservice.intermediatedataservice.envehicledataservice.EntruckingDataService;
 
 public class IntermediateMainController {
+	private EnplaningDataService enplaningData;
+	private EntrainingDataService entrainingData;
+	private EntruckingDataService entruckingData;
+	
+	private IntermediateVO intermediate;
+	public IntermediateMainController(String intermediateID){
+		
+	}
+	
 	public static OrderPO voToPO(OrderVO order) {
 		return ExpressMainController.orderVOToPO(order);
 	}
