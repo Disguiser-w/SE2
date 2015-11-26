@@ -14,14 +14,14 @@ public interface EntruckingBLService {
 
 	public TruckVO showTruck(String truckID) throws Exception;
 
-	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck);
+	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck) throws Exception;
 
-	public void entruck(ArrayList<OrderVO> al);
+	public void entruck(ArrayList<OrderVO> al) throws Exception;
 
 	public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(
 			EntruckingReceiptVO vo);
 
-	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList();
+	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList() throws Exception;
 
 	public FareVO computeFare(ArrayList<EntruckingReceiptVO> vo,OrganizationVO intermediate);
 

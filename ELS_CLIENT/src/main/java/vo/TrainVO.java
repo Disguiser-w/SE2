@@ -1,15 +1,13 @@
 package vo;
 
-public class TrainVO {
-	public final EntrainingReceiptVO entrainingReceipt;
-	
+public class TrainVO {	
 	public final String ID;
 	public final double farePrice;
-	public final String destination = null;
+	public final String destination;
 
-	public TrainVO(double farePrice, String ID,EntrainingReceiptVO entraiingReceipt) {
+	public TrainVO(double farePrice, String ID,String destination) {
 		this.farePrice = farePrice;
 		this.ID = ID;
-		this.entrainingReceipt = entraiingReceipt;
+		this.destination = destination;
 	}
 }
