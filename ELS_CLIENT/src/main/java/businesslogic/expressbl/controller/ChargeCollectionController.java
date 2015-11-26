@@ -13,18 +13,9 @@ public class ChargeCollectionController implements ChargeCollectionBLService {
 		chargeCollection = new ChargeCollection();
 	}
 
-	public ExpressVO getChargeInfo(String ID) {
+	public boolean chargeCollection(String chargeInfo) {
 		// TODO Auto-generated method stub
-		return chargeCollection.getChargeInfo(ID);
-	}
-
-	public boolean chargeCollection(String ID, String chargeInfo) {
-		// TODO Auto-generated method stub
-		return chargeCollection.chargeCollection(ID, chargeInfo);
-	}
-
-	public ExpressDataService getDataManager() {
-		return chargeCollection.getExpressData();
+		return chargeCollection.chargeCollection(chargeInfo);
 	}
 
 }

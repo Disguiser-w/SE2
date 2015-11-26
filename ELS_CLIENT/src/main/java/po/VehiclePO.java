@@ -1,5 +1,7 @@
 package po;
 
+import vo.OrganizationVO;
+
 public class VehiclePO {
 	// 车辆代号、发动机号、车辆号、底盘号、购买时间、服役时间
 	private String ID;
@@ -8,13 +10,12 @@ public class VehiclePO {
 	private String lowNumberPlate;
 	private String buyTime;
 	private String serviceTime;
-	private String location;
-
-	public VehiclePO() {
-	}
+	private OrganizationPO destination;
+	private OrganizationPO local;
+	private DriverPO driver;
 
 	public VehiclePO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime, String location) {
+			String serviceTime, OrganizationPO destination, OrganizationPO local, DriverPO driver) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;
@@ -22,15 +23,33 @@ public class VehiclePO {
 		this.lowNumberPlate = lowNumberPlate;
 		this.buyTime = buyTime;
 		this.serviceTime = serviceTime;
-		this.location = location;
+		this.destination = destination;
+		this.local = local;
+		this.driver = driver;
 	}
 
-	public String getLocation() {
-		return location;
+	public DriverPO getDriver() {
+		return driver;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDriver(DriverPO driver) {
+		this.driver = driver;
+	}
+
+	public OrganizationPO getDestination() {
+		return destination;
+	}
+
+	public void setDestination(OrganizationPO destination) {
+		this.destination = destination;
+	}
+
+	public OrganizationPO getLocal() {
+		return local;
+	}
+
+	public void setLocal(OrganizationPO local) {
+		this.local = local;
 	}
 
 	public String getID() {

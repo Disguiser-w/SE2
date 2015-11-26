@@ -24,14 +24,12 @@ public class EnVehicle {
 		expressData = new ExpressDataService_stub();
 	}
 
-	public String autoTruckLoading() {
+	public ArrayList<String> autoTruckLoading(String OrganizationID) {
 		// TODO Auto-generated method stub
-		
-		
-		return "分配完成";
+		return null;
 	}
 
-	public ArrayList<VehicleVO> getFreeVehicles(String location) {
+	public ArrayList<VehicleVO> getFreeVehicles(String OrganizationID) {
 		ArrayList<VehicleVO> vos = new ArrayList<VehicleVO>();
 		ArrayList<VehiclePO> pos = null;
 		try {
@@ -41,7 +39,7 @@ public class EnVehicle {
 			e.printStackTrace();
 		}
 		for (VehiclePO i : pos)
-			if (i.getLocation().equals(location))
+			if (i.getLocal().getOrganizationID().equals(OrganizationID))
 				vos.add(VehicleManager.poToVO(i));
 
 		return vos;

@@ -30,6 +30,7 @@ public class OrderPO {
 	private String recipientMobilePhoneNumber;
 
 	private int numOfGoods;
+	
 	private String weight;
 	private String volume;
 	private String goodsName;

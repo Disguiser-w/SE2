@@ -8,13 +8,14 @@ public class ExpressVO {
 	public final String serviceTime;
 	public final ArrayList<String> chargeCollection;
 	public final OrganizationVO organization;
-	public final ArrayList<OrderVO> pendingOrders;
-	public final ArrayList<OrderVO> finishedOrders;
-	public final ArrayList<OrderVO> submitedOrder;
+	
+	public final ArrayList<String> pendingOrders;
+	public final ArrayList<String> finishedOrders;
+	public final ArrayList<String> submitedOrderID;
 
 	public ExpressVO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
-			OrganizationVO organization, ArrayList<OrderVO> pendingOrders, ArrayList<OrderVO> finishedOrders,
-			ArrayList<OrderVO> submitedOrder) {
+			OrganizationVO organization, ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
+			ArrayList<String> submitedOrderID) {
 		super();
 		this.name = name;
 		this.ID = ID;
@@ -23,7 +24,7 @@ public class ExpressVO {
 		this.organization = organization;
 		this.pendingOrders = pendingOrders;
 		this.finishedOrders = finishedOrders;
-		this.submitedOrder = submitedOrder;
+		this.submitedOrderID = submitedOrderID;
 	}
 
 }

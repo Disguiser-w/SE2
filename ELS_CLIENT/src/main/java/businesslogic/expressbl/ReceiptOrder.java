@@ -1,21 +1,20 @@
 package businesslogic.expressbl;
 
-import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
+import businesslogic.expressbl.controller.ExpressMainController;
+import po.OrderPO;
+import type.OrderState;
+import vo.ExpressVO;
 import vo.OrderVO;
 
 public class ReceiptOrder {
-	private ExpressDataService expressData;
 
-	public ReceiptOrder() {
-		expressData = new ExpressDataService_stub();
-	}
-
+	//
 	public OrderVO getOrderInfo(String orderID) {
+		ExpressMainController.updateExpressInfo();
 		// TODO Auto-generated method stub
 		OrderVO vo = null;
 		try {
-			vo = AddOrder.poToVO(expressData.find(orderID));
+			vo = ExpressMainController.orderPOToVO(ExpressMainController.expressData.find(orderID));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -23,10 +22,18 @@ public class ReceiptOrder {
 	}
 
 	public boolean receiptOrder(OrderVO vo) {
+		ExpressMainController.updateExpressInfo();
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = expressData.update(AddOrder.voToPO(vo));
+			// 此po原来在该快递员的pendingList中，现在要移动到finishedList中
+			OrderPO po = ExpressMainController.orderVOToPO(vo);
+			po.setOrder_state(OrderState.FINISHED);
+
+			//
+			ExpressVO expressVO = ExpressMainController.expressVO;
+			result = ExpressMainController.expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID,
+					po);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

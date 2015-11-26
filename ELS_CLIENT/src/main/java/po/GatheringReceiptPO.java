@@ -6,30 +6,30 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GatheringReceiptPO {
-	OrganizationPO businesShall;
+	OrganizationPO businessShall;
 	String time;
 	ArrayList<ExpressPO> expressList;
 	ArrayList<Double> money;
 	double totalmoney;
-	String HallID;
 
 	public GatheringReceiptPO() {
 	}
 
-	public GatheringReceiptPO(ArrayList<ExpressPO> expressList, ArrayList<Double> money) {
+	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<ExpressPO> expressList,
+			ArrayList<Double> money, double totalmoney) {
 		this.expressList = expressList;
 		this.money = money;
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
+		this.businessShall = businessShall;
+		this.totalmoney = totalmoney;
+		this.time = time;
 	}
 
 	public OrganizationPO getBusinesShall() {
-		return businesShall;
+		return businessShall;
 	}
 
 	public void setBusinesshall(OrganizationPO businesShall) {
-		this.businesShall = businesShall;
+		this.businessShall = businesShall;
 	}
 
 	public String getTime() {
@@ -62,10 +62,6 @@ public class GatheringReceiptPO {
 
 	public void setTotalmoney(double totalmoney) {
 		this.totalmoney = totalmoney;
-	}
-
-	public String getHallID() {
-		return HallID;
 	}
 
 }
