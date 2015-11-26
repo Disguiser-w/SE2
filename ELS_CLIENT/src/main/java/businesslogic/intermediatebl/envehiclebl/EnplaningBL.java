@@ -2,7 +2,6 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
-import type.TransferingState;
 import vo.EnplaningReceiptVO;
 import vo.OrderVO;
 import vo.PlaneVO;
@@ -13,8 +12,8 @@ public class EnplaningBL implements EnplaningBLService {
 	private TransferingReceiptVO transferingReceipt;
 	// private OrganizationVO intemediateCentre;
 
-	private AllocateWaitingOrderBL awobl = new AllocateWaitingOrderBL(
-			transferingReceipt);
+//	private AllocateWaitingOrderBL awobl = new AllocateWaitingOrderBL(
+//			transferingReceipt);
 
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
 	// private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
@@ -48,23 +47,7 @@ public class EnplaningBL implements EnplaningBLService {
 			if (enplaningReceipt.plane == plane)
 				return enplaningReceipt;
 		}
-		throw new Exception("未找到该飞机！");
-	}
-
-	public void enplane(ArrayList<OrderVO> waitingOrderList) throws Exception {
-		// TODO 自动生成的方法存根
-		waitingOrderList = awobl.updateWaitingList();
-
-		for (OrderVO order : waitingOrderList) {
-			String[] address = order.recipientAddress.split(" ");
-			for (PlaneVO plane : planeList) {
-				if (address[0] == plane.destination) {
-					showEnplaningReceipt(plane).orderList.add(order);
-					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
-					continue;
-				}
-			}
-		}
+		throw new Exception("未找到该飞机的装车单！");
 	}
 
 	public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(
@@ -105,6 +88,12 @@ public class EnplaningBL implements EnplaningBLService {
 	public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO> al) {
 		// TODO 自动生成的方法存根
 		return false;
+	}
+
+	@Override
+	public void enplane(ArrayList<OrderVO> al) throws Exception {
+		// TODO 自动生成的方法存根
+		
 	}
 
 }

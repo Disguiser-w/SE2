@@ -2,7 +2,7 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
-import type.TransferingState;
+import type.OrderState;
 import vo.EntrainingReceiptVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
@@ -63,7 +63,7 @@ public class EntrainingBL implements EntrainingBLService {
 				if (address[0] ==train.destination) {
 					showEntrainingReceiptVO(train).orderList
 							.add(order);
-					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
+					order.order_state = OrderState.WAITING_ENVEHICLE;
 					continue;
 				}
 			}

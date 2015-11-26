@@ -1,17 +1,37 @@
 package businesslogic.intermediatebl;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import type.OperationState;
 import type.OrderState;
 import vo.OrderVO;
+import vo.PlaneVO;
+import vo.TrainVO;
 import vo.TransferingReceiptVO;
+import vo.TruckVO;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.intermediatebl.envehiclebl.EnvehicleBL;
 import businesslogicservice.intermediateblservice.TransferingBLService;
 
 public class TransferingBL implements TransferingBLService {
+	private EnvehicleBL envehicle;
+
 	private TransferingReceiptVO transferingReceipt;
+
+	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
+	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+
+	public TransferingBL(ArrayList<PlaneVO> planeList,
+			ArrayList<TrainVO> trainList, ArrayList<TruckVO> truckList) {
+		this.planeList = planeList;
+		this.trainList = trainList;
+		this.truckList = truckList;
+		envehicle = new EnvehicleBL(transferingReceipt, planeList, trainList,
+				truckList);
+	}
 
 	// 显示（返回）中转中心到达单
 	public TransferingReceiptVO showTransferingReceipt() {

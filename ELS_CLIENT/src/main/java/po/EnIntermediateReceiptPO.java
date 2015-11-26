@@ -10,19 +10,17 @@ public class EnIntermediateReceiptPO {
 
 	private ArrayList<OrderPO> orderList;
 
-	private double fare;
 	private String ID;
 	private String date;
 
 	public EnIntermediateReceiptPO(OrganizationPO intermediateCentre,
-			ArrayList<OrderPO> orderList, double fare, String ID) {
+			ArrayList<OrderPO> orderList, String ID) {
 		Date date = new Date();
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.setDate(format.format(date).substring(0, 10));
 		this.ID = ID;
 		this.intermediateCentre = intermediateCentre;
 		this.orderList = orderList;
-		this.fare = fare;
 	}
 
 	public OrganizationPO getIntermediateCentre() {
@@ -39,14 +37,6 @@ public class EnIntermediateReceiptPO {
 
 	public void setOrderList(ArrayList<OrderPO> orderList) {
 		this.orderList = orderList;
-	}
-
-	public double getFare() {
-		return fare;
-	}
-
-	public void setFare(double fare) {
-		this.fare = fare;
 	}
 
 	public String getID() {

@@ -8,14 +8,16 @@ public class EnplaningReceiptPO extends EnIntermediateReceiptPO{
 
 	private ArrayList<OrderPO> orderList;
 
+	private final long OrderNum_max = 5000;
 	private double fare;
 	private String date;
 	private String ID;
 
 	public EnplaningReceiptPO(OrganizationPO intermediateCentre, PlanePO plane,
-			ArrayList<OrderPO> orderList, double fare, String ID) {
-		super(intermediateCentre, orderList, fare, ID);
+			ArrayList<OrderPO> orderList, String ID) {
+		super(intermediateCentre, orderList, ID);
 		this.plane = plane;
+		this.fare = plane.getFarePrice() * OrderNum_max;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {

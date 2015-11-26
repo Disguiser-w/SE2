@@ -25,4 +25,8 @@ public class TrainPO {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
+
+	public double getFarePrice() {
+		return farePrice;
+	}
 }

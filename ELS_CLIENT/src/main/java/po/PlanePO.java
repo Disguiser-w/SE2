@@ -25,4 +25,8 @@ public class PlanePO {
 	public void setID(String iD) {
 		ID = iD;
 	}
+
+	public double getFarePrice() {
+		return farePrice;
+	}
 }

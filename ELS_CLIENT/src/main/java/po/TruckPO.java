@@ -25,4 +25,8 @@ public class TruckPO {
 	public void setID(String iD) {
 		ID = iD;
 	}
+
+	public double getFarePrice() {
+		return farePrice;
+	}
 }

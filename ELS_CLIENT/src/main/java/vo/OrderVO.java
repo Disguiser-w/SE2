@@ -3,7 +3,6 @@ package vo;
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
-import type.TransferingState;
 
 public class OrderVO {
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
@@ -45,7 +44,6 @@ public class OrderVO {
 	public String finishedID;
 	public String tRecipient;
 
-	public TransferingState transfer_state;
 	public OrderState order_state;
 
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
@@ -53,7 +51,7 @@ public class OrderVO {
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
-			String tRecipient, TransferingState transfer_state, OrderState order_state) {
+			String tRecipient, OrderState order_state) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -73,7 +71,6 @@ public class OrderVO {
 		this.expressType = expressType;
 		this.packType = packType;
 		this.builtDate = builtDate;
-		this.transfer_state = transfer_state;
 		this.order_state = order_state;
 
 		freight = 0;

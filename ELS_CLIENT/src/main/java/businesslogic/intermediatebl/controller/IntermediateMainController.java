@@ -87,15 +87,15 @@ public class IntermediateMainController {
 	}
 
 	public static PlanePO voToPO(PlaneVO plane) {
-		return new PlanePO(plane.farePrice, plane.ID, plane.destination);
+		return new PlanePO(plane.ID, plane.destination);
 	}
 
 	public static TrainPO voToPO(TrainVO train) {
-		return new TrainPO(train.farePrice, train.ID, train.destination);
+		return new TrainPO(train.ID, train.destination);
 	}
 
 	public static TruckPO voToPO(TruckVO truck) {
-		return new TruckPO(truck.farePrice, truck.ID, truck.destination);
+		return new TruckPO(truck.ID, truck.destination);
 	}
 
 	public static OrganizationPO voToPO(OrganizationVO intermediate) {
@@ -112,7 +112,7 @@ public class IntermediateMainController {
 				IntermediateMainController
 						.voToPO(enplaningReceipt.intermediateCentre),
 				IntermediateMainController.voToPO(enplaningReceipt.plane),
-				orderList, enplaningReceipt.fare, enplaningReceipt.ID);
+				orderList, enplaningReceipt.ID);
 	}
 
 	public static EntrainingReceiptPO voToPO(
@@ -125,7 +125,7 @@ public class IntermediateMainController {
 				IntermediateMainController
 						.voToPO(entrainingReceipt.intermediateCentre),
 				IntermediateMainController.voToPO(entrainingReceipt.train),
-				orderList, entrainingReceipt.fare, entrainingReceipt.ID);
+				orderList, entrainingReceipt.ID);
 	}
 
 	public static EntruckingReceiptPO voToPO(
