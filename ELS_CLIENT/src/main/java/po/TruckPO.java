@@ -3,10 +3,9 @@ package po;
 public class TruckPO {
 	private String ID;
 	private String destination;
-    private double farePrice;
+    private final double farePrice = 0.02;
     
-	public TruckPO(double farePrice,String ID,String destination){
-    	this.farePrice = farePrice;
+	public TruckPO(String ID,String destination){
     	this.ID = ID;
     	this.destination = destination;
     }
@@ -26,13 +25,4 @@ public class TruckPO {
 	public void setID(String iD) {
 		ID = iD;
 	}
-
-	public double getFarePrice() {
-		return farePrice;
-	}
-
-	public void setFarePrice(double farePrice) {
-		this.farePrice = farePrice;
-	}
- 
 }
