@@ -1,5 +1,6 @@
 package businesslogicservice.intermediateblservice.transferingblservice;
 
+import type.OperationState;
 import vo.TransferingReceiptVO;
 
 public interface TransferingBLService {
@@ -7,7 +8,7 @@ public interface TransferingBLService {
     
     public boolean addOrder(String ID);
     
-    public boolean deleteOrder(String ID);
+    public OperationState deleteOrder(String ID) throws Exception;
     
     public boolean modifyOrder(String ID);
     

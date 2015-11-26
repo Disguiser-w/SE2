@@ -45,9 +45,6 @@ public CollectionReceiptVO(){
 		return totalMoney;
 	}
 	
-	public double totalMoney(){
-		return totalMoney;
-	}
 	
 	public String getID(){
 		return ID;

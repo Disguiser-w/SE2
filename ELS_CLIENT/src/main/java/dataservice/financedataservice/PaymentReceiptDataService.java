@@ -16,5 +16,12 @@ public interface PaymentReceiptDataService {
 		//修改持久化对象
 		public  PaymentReceiptPO modify(PaymentReceiptPO po);
 		
+		//获取薪水：关于业绩清0的事的处理
+		public double getSalary();
+		//获取运费
+		public double getFare();
+		//获取租金
+		public double getRent();
+		
 
 }

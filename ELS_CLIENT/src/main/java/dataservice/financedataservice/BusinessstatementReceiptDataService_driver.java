@@ -2,7 +2,7 @@ package dataservice.financedataservice;
 
 import java.rmi.RemoteException;
 
-import po.BusinessStatementReceiptPO;
+import po.BusinessstatementReceiptPO;
 
 public class BusinessstatementReceiptDataService_driver {
 	public void drive(BusinessstatementReceiptDataService bds) throws RemoteException{
@@ -10,7 +10,7 @@ public class BusinessstatementReceiptDataService_driver {
 		String endTime="20151001";
 		bds.showBSL(beginTime,endTime);
 		bds.showAllBSList();
-		bds.export(new BusinessStatementReceiptPO());
+		bds.export(new BusinessstatementReceiptPO());
 	}
 	
 	public static void main(String[] args) throws RemoteException{

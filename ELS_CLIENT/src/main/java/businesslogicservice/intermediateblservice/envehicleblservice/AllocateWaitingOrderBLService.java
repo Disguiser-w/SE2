@@ -6,7 +6,7 @@ import vo.OrderVO;
 import vo.TransferingReceiptVO;
 
 public interface AllocateWaitingOrderBLService {
-	public ArrayList<OrderVO> updateWaitingList(TransferingReceiptVO vo);
+	public ArrayList<OrderVO> updateWaitingList();
 
-	public OrderVO showOrder(String orderID);
+	public OrderVO showOrder(String orderID) throws Exception;
 }

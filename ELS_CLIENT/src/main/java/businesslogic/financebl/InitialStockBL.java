@@ -76,7 +76,7 @@ public class InitialStockBL implements InitialStockBLService{
 		}
 		
 //		ArrayList<OrganizationPO> organizationPOs=po.getOrganizationPOs();
-		ArrayList<OrganizationPO> organizationPOs=organizationData.getOrgnizationPOs();
+		ArrayList<OrganizationPO> organizationPOs=organizationData.getOrganizations();
 		ArrayList<OrganizationVO> organizationVOs;
 		if(organizationPOs==null){
 			organizationVOs=null;

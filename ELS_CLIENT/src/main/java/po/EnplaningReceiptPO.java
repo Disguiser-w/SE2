@@ -1,33 +1,45 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class EnplaningReceiptPO {
-	private ArrayList<OrderPO> enplaningReceipt;
-	private String date;
-	private String ID;
+public class EnplaningReceiptPO extends EnIntermediateReceiptPO{
 	private OrganizationPO intermediateCentre;
 	private PlanePO plane;
 
-	public EnplaningReceiptPO() {
-	}
+	private ArrayList<OrderPO> orderList;
 
-	public EnplaningReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.date = format.format(date).substring(0, 10);
-		this.enplaningReceipt = enplaningReceipt;
+	private double fare;
+	private String date;
+	private String ID;
+
+	public EnplaningReceiptPO(OrganizationPO intermediateCentre, PlanePO plane,
+			ArrayList<OrderPO> orderList, double fare, String ID) {
+		super(intermediateCentre, orderList, fare, ID);
+		this.plane = plane;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
+	}
+
+	public ArrayList<OrderPO> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(ArrayList<OrderPO> orderList) {
+		this.orderList = orderList;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {
@@ -53,5 +65,13 @@ public class EnplaningReceiptPO {
 	public void setPlane(PlanePO plane) {
 		this.plane = plane;
 	}
-	
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 }

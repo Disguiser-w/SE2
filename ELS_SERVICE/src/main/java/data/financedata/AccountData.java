@@ -8,8 +8,10 @@ import dataservice.financedataservice.AccountDataService;
 
 public class AccountData implements AccountDataService{
 
+	//本宝宝yy了一个读写文件的类
 	JXCFile file;
 	public AccountData(){
+		super();
 		file=new JXCFile();
 	}
 	public int addAccount(AccountPO po) throws RemoteException {

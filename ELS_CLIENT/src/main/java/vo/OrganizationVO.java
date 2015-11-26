@@ -9,7 +9,12 @@ public class OrganizationVO {
 	public final String name;
 	public final RepertoryVO repertory;
 
+<<<<<<< HEAD
 	public OrganizationVO(OrganizationType category, String organizationID, String name, RepertoryVO repertory) {
+=======
+	public OrganizationVO(OrganizationType category, String organizationID,
+			String name, RepertoryVO repertory) {
+>>>>>>> a5e3be93694445d76d32777a83b42be9ff054656
 		// 类别 编号 名称
 		// 025000 鼓楼营业厅
 		// 025-0 南京中转中心
@@ -25,4 +30,8 @@ public class OrganizationVO {
 		}
 
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5e3be93694445d76d32777a83b42be9ff054656
 }

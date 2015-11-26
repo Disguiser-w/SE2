@@ -1,33 +1,29 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class EntruckingReceiptPO {
-	private ArrayList<OrderPO> enplaningReceipt;
-	private String date;
-	private String ID;
+public class EntruckingReceiptPO extends EnIntermediateReceiptPO{
 	private OrganizationPO intermediateCentre;
 	private TruckPO truck;
 
-	public EntruckingReceiptPO() {
-	}
+	private ArrayList<OrderPO> orderList;
 
-	public EntruckingReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.date = format.format(date).substring(0, 10);
-		this.enplaningReceipt = enplaningReceipt;
+	private double fare;
+	private String date;
+	private String ID;
+
+	public EntruckingReceiptPO(OrganizationPO intermediateCentre,
+			TruckPO truck, ArrayList<OrderPO> orderList, double fare, String ID) {
+		super(intermediateCentre, orderList, fare, ID);
+		this.truck = truck;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {
@@ -52,5 +48,21 @@ public class EntruckingReceiptPO {
 
 	public void setTruck(TruckPO truck) {
 		this.truck = truck;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
 	}
 }

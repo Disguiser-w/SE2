@@ -40,11 +40,11 @@ public class CollectionReceiptPO extends ReceiptPO implements Serializable{
 		return date;
 	}
 	
-	public double[] getMoney(){
-		return money;
-	}
+//	public double[] getMoney(){
+//		return money;
+//	}
 	
-	public double totalMoney(){
+	public double getIncome(){
 		return totalMoney;
 	}
 	

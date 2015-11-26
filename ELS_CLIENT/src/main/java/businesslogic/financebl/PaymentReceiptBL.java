@@ -1,9 +1,14 @@
 package businesslogic.financebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.userdataservice.UserDataService;
 import po.PaymentReceiptPO;
+import po.UserPO;
+import type.SalaryPlanType;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import businesslogic.receiptbl.ReceiptBL;
@@ -13,6 +18,8 @@ import businesslogicservice.financeblservice.PaymentReceiptBLService;
 public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLService{
 	
 	PaymentReceiptDataService prdService;
+	UserDataService udService;
+	BusinessDataService bdService;
 
 	/**
 	 * 创建付款单并发送给总经理
@@ -32,7 +39,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 			return null;
 		}
 		else{
-			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getClause(), vo.getMoney(), vo.getDate(), vo.getAccount(), vo.getName());
+			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
 			return ppo;
 		}
 	}
@@ -68,7 +75,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	}
 	
 	public PaymentReceiptVO ppoToVO(PaymentReceiptPO po){
-		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getClause(), po.getMoney(), po.getDate(), po.getAccount(), po.getName());
+		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(),po.getRent(), po.getFare(), po.getSalary(),po.getDate(), po.getAccount(), po.getName());
 		return vo;
 	}
 	public ArrayList<PaymentReceiptVO> pposToVOs(ArrayList<PaymentReceiptPO> pos){
@@ -79,7 +86,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		}
 		else{
 			for(PaymentReceiptPO p:pos){
-				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getClause(), p.getMoney(), p.getDate(), p.getAccount(),p.getName());
+				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getRent(),p.getFare(),p.getSalary(),p.getDate(), p.getAccount(),p.getName());
 				paymentReceiptVOs.add(vo);
 			}
 			return paymentReceiptVOs;
@@ -94,6 +101,53 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public double getSalary() {
+		// TODO Auto-generated method stub
+		double salary=0;
+		try {
+			ArrayList<UserPO> userpos=udService.showAllUsers();
+			for(UserPO p:userpos){
+				//这个地方要是从两个类中来好奇怪.......
+				//快递员：提成+基础工资
+				if(p.getSalaryPlan()==SalaryPlanType.courierSalaryPlan){
+					salary+=p.getGrades();
+				}
+				//司机：计次
+				else if(p.getSalaryPlan()==SalaryPlanType.driverSalaryPlan){
+					salary+=p.getGrades();
+				}
+				else if(p.getSalaryPlan()==SalaryPlanType.countermanSalaryPlan){
+				}
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return salary;
+	}
+
+	@Override
+	/**
+	 * 运费：但是清0怎么处理
+	 * */
+	public double getFare() {
+		// TODO Auto-generated method stub
+		
+		return 0;
+	}
+
+	@Override
+	/**
+	 * 租金从哪里来的
+	 * */
+	public double getRent() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

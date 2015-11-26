@@ -63,7 +63,7 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 		}
 		else{
 		for(CollectionReceiptPO p:collectionReceiptPOs){
-			income+=p.totalMoney();
+			income+=p.getIncome();
 		}
 		return income;
 		}
@@ -82,7 +82,7 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 		}
 		else{
 			for(PaymentReceiptPO p:paymentReceiptPOs){
-				cost+=p.getMoney();
+				cost+=p.getCost();
 			}
 			return cost;
 		}
