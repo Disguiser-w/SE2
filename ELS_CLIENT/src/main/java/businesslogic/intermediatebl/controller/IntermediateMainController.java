@@ -1,4 +1,4 @@
-package businesslogic.intermediatebl;
+package businesslogic.intermediatebl.controller;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,11 @@ import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
-import businesslogic.expressbl.AddOrder;
+import businesslogic.expressbl.controller.ExpressMainController;
 
 public class IntermediateMainController {
 	public static OrderPO voToPO(OrderVO order) {
-		return AddOrder.voToPO(order);
+		return ExpressMainController.orderVOToPO(order);
 	}
 
 	public static PlanePO voToPO(PlaneVO plane) {
@@ -113,7 +113,7 @@ public class IntermediateMainController {
 	}
 
 	public static OrderVO poToVO(OrderPO order) {
-		return AddOrder.poToVO(order);
+		return ExpressMainController.orderPOToVO(order);
 	}
 
 	public static TransferingReceiptPO voToPO(

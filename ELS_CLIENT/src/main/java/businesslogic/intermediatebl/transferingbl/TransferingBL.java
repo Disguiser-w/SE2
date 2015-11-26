@@ -38,7 +38,7 @@ public class TransferingBL implements TransferingBLService{
 		// TODO 自动生成的方法存根
 		for(OrderVO order:transferingReceipt.orderList){
 			if(order.ID == ID){
-				OrderVO deleteOrder = order;
+				OrderVO modifyOrder = order;
 				//修改信息传入
 			}
 		}
