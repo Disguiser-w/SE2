@@ -28,7 +28,7 @@ public class AcceptCargo {
 		expressData = new ExpressDataService_stub();
 	}
 
-	public boolean acceptCargo(ArrayList<String> orderIDs, String driverName) {
+	public boolean acceptCargo(ArrayList<String> orderIDs, String driverName,String organizationID) {
 		// 根据以下两项可以到对应的营业厅文件夹中查找OrderPO
 
 		ArrayList<OrderPO> orderPOs = new ArrayList<OrderPO>();
@@ -36,6 +36,7 @@ public class AcceptCargo {
 		try {
 			for (String i : orderIDs)
 				orderPOs.add(ExpressMainController.expressData.find(i));
+				
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,13 +45,18 @@ public class AcceptCargo {
 		// 改变订单的状态
 		for (OrderPO i : orderPOs)
 			i.setOrder_state(OrderState.WAITING_DISTRIBUTE);
-		//将此状态更新到
+		
+		//将此状态更新到原营业厅文件中
+		
+		
+		//将OrderPOs添加到本营业厅的当日订单文件中,第二天派件
+		
 
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf.format(d);
 
-		// 要将订单信息从原营业厅orderID中删除（还是不要了），只是加到本营业厅的当日订单中
+
 
 		boolean result = false;
 		return result;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import po.CostBasePO;
 import po.ExpressPO;
 import po.OrderPO;
+import type.OrderState;
 
 /**
  * 快递员数据
@@ -31,6 +32,11 @@ public interface ExpressDataService extends Remote {
 	// 更新改订单的状态（改成了finished），以及该订单在ExpressPO中的状态（从PendingList移动到FinishedList）
 	// 在po的时间对应的文件中查找
 	public boolean receiptOrder(String organizationID, String expressId, OrderPO po);
+
+	//改变订单状态,先找再改
+	public boolean changeState(OrderState orderState, String orderID);
+	
+	//
 
 	/**
 	 * 返回订单费用的基本信息CostBasePO

@@ -62,31 +62,16 @@ public class ExpressMainController {
 
 	public static ExpressPO expressVOToPO(ExpressVO vo) {
 
-		ArrayList<OrderPO> pendingOrderPOs = new ArrayList<OrderPO>();
-		for (OrderVO i : vo.pendingOrders)
-			pendingOrderPOs.add(orderVOToPO(i));
-
-		ArrayList<OrderPO> finishedOrderPOs = new ArrayList<OrderPO>();
-		for (OrderVO i : vo.finishedOrders)
-			finishedOrderPOs.add(orderVOToPO(i));
-
 		return new ExpressPO(vo.name, vo.ID, vo.serviceTime, vo.chargeCollection,
-				OrganizationBL.organizationVOToPO(vo.organization), pendingOrderPOs, finishedOrderPOs,
+				OrganizationBL.organizationVOToPO(vo.organization), vo.pendingOrders, vo.finishedOrders,
 				vo.submitedOrderID);
 
 	}
 
 	public static ExpressVO expressPOToVO(ExpressPO po) {
-		ArrayList<OrderVO> pendingOrderVOs = new ArrayList<OrderVO>();
-		for (OrderPO i : po.getPendingOrders())
-			pendingOrderVOs.add(orderPOToVO(i));
-
-		ArrayList<OrderVO> finishedOrderVOs = new ArrayList<OrderVO>();
-		for (OrderPO i : po.getFinishedOrders())
-			finishedOrderVOs.add(orderPOToVO(i));
 
 		return new ExpressVO(po.getName(), po.getID(), po.getServiceTime(), po.getChargeCollection(),
-				OrganizationBL.organizationPOToVO(po.getOrganization()), pendingOrderVOs, finishedOrderVOs,
+				OrganizationBL.organizationPOToVO(po.getOrganization()), po.getPendingOrders(), po.getFinishedOrders(),
 				po.getSubmitedOrderID());
 	}
 
