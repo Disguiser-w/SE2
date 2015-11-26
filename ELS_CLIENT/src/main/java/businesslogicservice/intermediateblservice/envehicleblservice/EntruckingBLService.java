@@ -23,9 +23,9 @@ public interface EntruckingBLService {
 
 	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList() throws Exception;
 
-	public FareVO computeFare(ArrayList<EntruckingReceiptVO> vo,OrganizationVO intermediate);
-
-	public boolean updateFare(FareVO fareVO);
+//	public FareVO computeFare(ArrayList<EntruckingReceiptVO> vo,OrganizationVO intermediate);
+//
+//	public boolean updateFare(FareVO fareVO);
 
 	public boolean updateEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo);
 }

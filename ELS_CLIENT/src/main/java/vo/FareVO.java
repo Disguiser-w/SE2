@@ -6,43 +6,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class FareVO {
-	public  double money;
-	public  String ID;
+	public OrganizationVO intermediateCentre;
 
-	public  ArrayList<EnplaningReceiptVO> enplaningReceiptVOList;
-	public  ArrayList<EntrainingReceiptVO> entrainingReceiptVOList;
-	public  ArrayList<EntruckingReceiptVO> entruckingReceiptVOList;
+	public ArrayList<EnplaningReceiptVO> enplaningReceiptVOList;
+	public ArrayList<EntrainingReceiptVO> entrainingReceiptVOList;
+	public ArrayList<EntruckingReceiptVO> entruckingReceiptVOList;
 
-	public  String time;
-	public  OrganizationVO intermediateCentre;
+	public double fare_sum;
+	public String ID;
+	public String date;
 
-	public FareVO(ArrayList<EnplaningReceiptVO> enplaningReceiptVOList,
+	public FareVO(OrganizationVO intermediateCentre,
+			ArrayList<EnplaningReceiptVO> enplaningReceiptVOList,
 			ArrayList<EntrainingReceiptVO> entrainingVOList,
-			ArrayList<EntruckingReceiptVO> entruckingVOList, double money,
-			String ID, String time, OrganizationVO intermediateCentre) {
+			ArrayList<EntruckingReceiptVO> entruckingVOList, double fare_sum,
+			String ID, String date) {
 		this.enplaningReceiptVOList = enplaningReceiptVOList;
 		this.entrainingReceiptVOList = entrainingVOList;
 		this.entruckingReceiptVOList = entruckingVOList;
-		this.money = money;
+		this.fare_sum = fare_sum;
 		this.ID = ID;
-		this.time = time;
+		this.date = date;
 		this.intermediateCentre = intermediateCentre;
 	}
-	
-	public FareVO(){
-		
-	}
-	public FareVO(String t,double m){
-		time=t;
-		money=m;
-	}
-	
-	public String getTime(){
-		return time;
-	}
-	
-	public double getMoney(){
-		return money;
-	}
-
 }

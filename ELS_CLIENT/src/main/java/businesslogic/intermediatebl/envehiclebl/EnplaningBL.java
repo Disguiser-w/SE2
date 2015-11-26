@@ -4,16 +4,13 @@ import java.util.ArrayList;
 
 import type.TransferingState;
 import vo.EnplaningReceiptVO;
-import vo.FareVO;
 import vo.OrderVO;
-import vo.OrganizationVO;
 import vo.PlaneVO;
 import vo.TransferingReceiptVO;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnplaningBLService;
 
 public class EnplaningBL implements EnplaningBLService {
 	private TransferingReceiptVO transferingReceipt;
-	private FareVO fare;
 	// private OrganizationVO intemediateCentre;
 
 	private AllocateWaitingOrderBL awobl = new AllocateWaitingOrderBL(
@@ -86,23 +83,24 @@ public class EnplaningBL implements EnplaningBLService {
 		return enplaningReceipt_all;
 	}
 
-	public FareVO computeFare(
-			ArrayList<EnplaningReceiptVO> enplaningReceipt_all,
-			OrganizationVO intermediateCentre) {
-		// TODO 自动生成的方法存根
-		int plane_num = enplaningReceipt_all.size();
-		double fare_sum = 0;
-		for (int i = 0; i < plane_num; i++)
-			fare_sum += enplaningReceipt_all.get(i).fare;
-		fare = new FareVO(enplaningReceipt_all, null, null, fare_sum, null,
-				null, intermediateCentre);
-		return fare;
-	}
-
-	public boolean updateFare(FareVO fareVO) {
-		// TODO 自动生成的方法存根
-		return false;
-	}
+//	public FareVO computeFare(
+//			ArrayList<EnplaningReceiptVO> enplaningReceipt_all,
+//			OrganizationVO intermediateCentre) {
+//		// TODO 自动生成的方法存根
+//		int plane_num = enplaningReceipt_all.size();
+//		double fare_sum = 0;
+//		for (int i = 0; i < plane_num; i++)
+//			fare_sum += enplaningReceipt_all.get(i).fare;
+//		fare = new FareVO(enplaningReceipt_all, null, null, fare_sum, null,
+//				null, intermediateCentre);
+//		return fare;
+//	}
+//
+//	public boolean updateFare(FareVO fareVO) {
+//		// TODO 自动生成的方法存根
+//		
+//		return false;
+//	}
 
 	public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO> al) {
 		// TODO 自动生成的方法存根

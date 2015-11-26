@@ -1,4 +1,4 @@
-package businesslogicservice.intermediateblservice.transferingblservice;
+package businesslogicservice.intermediateblservice;
 
 import type.OperationState;
 import vo.TransferingReceiptVO;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
+import po.FarePO;
 import po.IntermediatePO;
 import po.OrderPO;
 import po.OrganizationPO;
@@ -16,6 +17,7 @@ import po.TruckPO;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
+import vo.FareVO;
 import vo.IntermediateVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
@@ -59,6 +61,27 @@ public class IntermediateMainController {
 
 	public static OrderPO voToPO(OrderVO order) {
 		return ExpressMainController.orderVOToPO(order);
+	}
+
+	public static FarePO voToPO(FareVO fare) {
+		ArrayList<EnplaningReceiptPO> enplaningReceiptList = new ArrayList<EnplaningReceiptPO>();
+		ArrayList<EntrainingReceiptPO> entrainingReceiptList = new ArrayList<EntrainingReceiptPO>();
+		ArrayList<EntruckingReceiptPO> entruckingReceiptList = new ArrayList<EntruckingReceiptPO>();
+
+		for (EnplaningReceiptVO enplaningReceipt : fare.enplaningReceiptVOList)
+			enplaningReceiptList.add(IntermediateMainController
+					.voToPO(enplaningReceipt));
+		for (EntrainingReceiptVO entrainingReceipt : fare.entrainingReceiptVOList)
+			entrainingReceiptList.add(IntermediateMainController
+					.voToPO(entrainingReceipt));
+		for (EntruckingReceiptVO entruckingReceipt : fare.entruckingReceiptVOList)
+			entruckingReceiptList.add(IntermediateMainController
+					.voToPO(entruckingReceipt));
+
+		return new FarePO(
+				IntermediateMainController.voToPO(fare.intermediateCentre),
+				enplaningReceiptList, entrainingReceiptList,
+				entruckingReceiptList, fare.fare_sum);
 	}
 
 	public static PlanePO voToPO(PlaneVO plane) {

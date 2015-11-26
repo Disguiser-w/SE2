@@ -23,9 +23,9 @@ public interface EnplaningBLService {
 
 	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList() throws Exception;
 
-	public FareVO computeFare(ArrayList<EnplaningReceiptVO> al,OrganizationVO intemediateCenter);
-
-	public boolean updateFare(FareVO fareVO);
+//	public FareVO computeFare(ArrayList<EnplaningReceiptVO> al,OrganizationVO intemediateCenter);
+//
+//	public boolean updateFare(FareVO fareVO);
 
 	public boolean updateEnplaningReceipt(ArrayList<EnplaningReceiptVO> al);
 }

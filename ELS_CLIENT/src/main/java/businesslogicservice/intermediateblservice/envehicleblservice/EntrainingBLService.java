@@ -22,9 +22,9 @@ public interface EntrainingBLService {
 
 	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList() throws Exception;
 
-	public FareVO computeFare(ArrayList<EntrainingReceiptVO> vo,OrganizationVO intermediate);
-
-	public boolean updateFare(FareVO fareVO);
+//	public FareVO computeFare(ArrayList<EntrainingReceiptVO> vo,OrganizationVO intermediate);
+//
+//	public boolean updateFare(FareVO fareVO);
 
 	public boolean updateEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo);
 }

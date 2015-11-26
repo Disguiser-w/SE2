@@ -1,4 +1,4 @@
-package businesslogic.intermediatebl.transferingbl;
+package businesslogic.intermediatebl;
 
 import type.OperationState;
 import vo.OrderVO;
