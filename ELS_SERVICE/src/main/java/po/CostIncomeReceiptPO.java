@@ -18,12 +18,11 @@ public class CostIncomeReceiptPO extends ReceiptPO implements Serializable{
 	double profit;
 	String date;
 	
-	public CostIncomeReceiptPO(String ID,String userID,ReceiptType type,ReceiptState state,ArrayList<CollectionReceiptPO> po1,
-			ArrayList<PaymentReceiptPO> po2,double a,double b,double c){
+	public CostIncomeReceiptPO(String ID,String userID,ReceiptType type,ReceiptState state,double cost,double income,double profit){
 		super(ID,userID,ReceiptType.COSTINCOMERECEPTION,state);
-		cost=a;
-		income=b;
-		profit=c;
+		this.cost=cost;
+		this.income=income;
+		this.profit=profit;
 	}
 	
 	public CostIncomeReceiptPO(){

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
 import po.PaymentReceiptPO;
 import po.UserPO;
@@ -20,6 +21,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	PaymentReceiptDataService prdService;
 	UserDataService udService;
 	BusinessDataService bdService;
+	OrganizationDataService odService;
 
 	/**
 	 * 创建付款单并发送给总经理
@@ -59,6 +61,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		System.out.println("执行成功！");
 		return 0;
 	}
+
 	public PaymentReceiptVO getPaymentReceipt(String s) {
 		// TODO Auto-generated method stub
 		return null;
@@ -100,6 +103,9 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		return null;
 	}
 
+	/**
+	 * 到时候ui层调用这个方法来计算成本，再加到vo里面
+	 * */
 	public double getSalary(String time){
 		// TODO Auto-generated method stub
 		double salary=0;
@@ -144,8 +150,8 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * */
 	public double getRent(String time) {
 		// TODO Auto-generated method stub
-		double rent=10000;
-		return rent;
+		odService.getOrgnization();
+		return 0;
 	}
 
 

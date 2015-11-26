@@ -59,28 +59,33 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * 这个筛选应该在bdService中
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
+		ArrayList<GatheringReceiptPO> gatheringReceiptPOs= bdService.getGatheringReceiptPO(Time);
+		 return gposToVOs(gatheringReceiptPOs);
+	
 		// TODO Auto-generated method stub
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
-		try {
-//			gatheringReceiptPOs=bdService.getGatheringReceiptPOs(Time);
-			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(gatheringReceiptPOs==null){
-			System.out.println("gatheringReceiptPOs==null");
-			return null;
-		}
-		else{
-			gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
-		for(GatheringReceiptPO p:gatheringReceiptPOs){
-			if(p.getTime()==Time){
-				gatheringReceiptPOs_Right.add(p);
-			}
-		}
-		return gposToVOs(gatheringReceiptPOs_Right);
-		}
+//		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
+//		try {
+////			gatheringReceiptPOs=bdService.getGatheringReceiptPOs(Time);
+//			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		if(gatheringReceiptPOs==null){
+//			System.out.println("gatheringReceiptPOs==null");
+//			return null;
+//		}
+//		else{
+//			gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
+//		for(GatheringReceiptPO p:gatheringReceiptPOs){
+//			if(p.getTime()==Time){
+//				gatheringReceiptPOs_Right.add(p);
+//			}
+//		}
+//		return gposToVOs(gatheringReceiptPOs_Right);
+//		}
+		
+		
 	}
 	
 	/**

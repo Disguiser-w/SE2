@@ -2,11 +2,8 @@ package data.financedata;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-
 import File.JXCFile;
 import po.CollectionReceiptPO;
-import po.ReceiptPO.ReceiptState;
-import type.ReceiptType;
 import dataservice.financedataservice.CollectionReceiptDataService;
 
 public class CollectionReceiptData implements CollectionReceiptDataService{
