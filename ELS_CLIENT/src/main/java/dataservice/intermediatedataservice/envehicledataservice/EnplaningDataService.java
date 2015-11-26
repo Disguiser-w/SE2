@@ -1,5 +1,6 @@
 package dataservice.intermediatedataservice.envehicledataservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import po.EnplaningReceiptPO;
@@ -8,7 +9,7 @@ import po.OrderPO;
 import po.PlanePO;
 import po.TransferingReceiptPO;
 
-public interface EnplaningDataService {
+public interface EnplaningDataService extends Remote {
     public ArrayList<PlanePO> getPlaneList();
     
     public PlanePO getPlane(String ID);

@@ -5,36 +5,58 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
+import po.IntermediatePO;
 import po.OrderPO;
 import po.OrganizationPO;
 import po.PlanePO;
+import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
+import vo.IntermediateVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
+import vo.RepertoryVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.expressbl.controller.ExpressMainController;
+import dataservice.intermediatedataservice.IntermediateDataService;
 import dataservice.intermediatedataservice.envehicledataservice.EnplaningDataService;
+import dataservice.intermediatedataservice.envehicledataservice.EnplaningDataService_stub;
 import dataservice.intermediatedataservice.envehicledataservice.EntrainingDataService;
+import dataservice.intermediatedataservice.envehicledataservice.EntrainingDataService_stub;
 import dataservice.intermediatedataservice.envehicledataservice.EntruckingDataService;
+import dataservice.intermediatedataservice.envehicledataservice.EntruckingDataService_stub;
 
 public class IntermediateMainController {
+	private IntermediateDataService intermediateDataService;
 	private EnplaningDataService enplaningData;
 	private EntrainingDataService entrainingData;
 	private EntruckingDataService entruckingData;
-	
+
 	private IntermediateVO intermediate;
-	public IntermediateMainController(String intermediateID){
-		
+
+	public IntermediateMainController(String intermediateID) {
+		enplaningData = new EnplaningDataService_stub();
+		entrainingData = new EntrainingDataService_stub();
+		entruckingData = new EntruckingDataService_stub();
+		intermediate = IntermediateMainController
+				.poToVO(intermediateDataService.getIntermediateInfo(null,
+						intermediateID));
 	}
-	
+
+	public void updateIntermediateInfo() {
+		intermediate = IntermediateMainController
+				.poToVO(intermediateDataService.getIntermediateInfo(
+						intermediate.organization.organizationID,
+						intermediate.ID));
+	}
+
 	public static OrderPO voToPO(OrderVO order) {
 		return ExpressMainController.orderVOToPO(order);
 	}
@@ -138,5 +160,22 @@ public class IntermediateMainController {
 				IntermediateMainController
 						.voToPO(transferingReceipt.interdiateCentre),
 				orderList, transferingReceipt.ID);
+	}
+
+	public static RepertoryVO poToVO(RepertoryPO repertory) {
+		return new RepertoryVO(repertory.getOwnerID(), repertory.getOwnerID());
+	}
+
+	public static OrganizationVO poToVO(OrganizationPO organization) {
+		return new OrganizationVO(organization.getCategory(),
+				organization.getOrganizationID(), organization.getName(),
+				IntermediateMainController.poToVO(organization.getRepertory()));
+	}
+
+	public static IntermediateVO poToVO(IntermediatePO intermediate) {
+		return new IntermediateVO(
+				IntermediateMainController.poToVO(intermediate
+						.getOrganization()), intermediate.getName(),
+				intermediate.getID());
 	}
 }
