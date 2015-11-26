@@ -3,6 +3,7 @@ package businesslogicservice.intermediateblservice;
 import java.rmi.RemoteException;
 
 import type.OperationState;
+import vo.OrderVO;
 import vo.TransferingReceiptVO;
 
 public interface TransferingBLService {
@@ -12,7 +13,7 @@ public interface TransferingBLService {
     
     public OperationState deleteOrder(String ID) throws Exception;
     
-    public OperationState modifyOrder(String ID);
+    public OperationState modifyOrder(OrderVO order) throws Exception;
     
-    public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo);
+    public OperationState updateTransferingReceipt(TransferingReceiptVO vo);
 }
