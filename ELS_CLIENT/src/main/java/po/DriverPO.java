@@ -11,15 +11,16 @@ public class DriverPO {
 	private String DateOfBirth;
 	private String IdCardNumber;
 	private String phoneNumber;
-	private OrganizationVO vehicleOrganization;
+	private OrganizationPO vehicleOrganization;
 	private Sexuality sexuality;
 	private String registrationDeadline;
+
 
 	public DriverPO() {
 	}
 
 	public DriverPO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
-			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
+			OrganizationPO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -71,11 +72,11 @@ public class DriverPO {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public OrganizationVO getVehicleOrganization() {
+	public OrganizationPO getVehicleOrganization() {
 		return vehicleOrganization;
 	}
 
-	public void setVehicleOrganization(OrganizationVO vehicleOrganization) {
+	public void setVehicleOrganization(OrganizationPO vehicleOrganization) {
 		this.vehicleOrganization = vehicleOrganization;
 	}
 

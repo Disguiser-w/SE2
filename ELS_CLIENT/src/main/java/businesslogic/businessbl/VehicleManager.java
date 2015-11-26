@@ -3,6 +3,7 @@ package businesslogic.businessbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
 import po.VehiclePO;
@@ -72,12 +73,14 @@ public class VehicleManager {
 	public static VehiclePO voToPO(VehicleVO vo) {
 
 		return new VehiclePO(vo.ID, vo.engineNumber, vo.licensePlateNumber, vo.lowNumberPlate, vo.buyTime,
-				vo.serviceTime, vo.location);
+				vo.serviceTime, OrganizationBL.organizationVOToPO(vo.destination),
+				OrganizationBL.organizationVOToPO(vo.local), DriverManager.voToPO(vo.driver));
 	}
 
 	public static VehicleVO poToVO(VehiclePO po) {
 		return new VehicleVO(po.getID(), po.getEngineNumber(), po.getLicensePlateNumber(), po.getLowNumberPlate(),
-				po.getBuyTime(), po.getServiceTime(), po.getLocation());
+				po.getBuyTime(), po.getServiceTime(), OrganizationBL.organizationPOToVO(po.getDestination()),
+				OrganizationBL.organizationPOToVO(po.getLocal()), DriverManager.poToVO(po.getDriver()));
 	}
 
 }

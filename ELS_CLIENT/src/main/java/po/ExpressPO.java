@@ -9,17 +9,17 @@ public class ExpressPO {
 	private String ID;
 	private String serviceTime;
 	private ArrayList<String> chargeCollection;
-	private OrganizationVO organization;
-	private ArrayList<OrderPO> pendingOrders;
-	private ArrayList<OrderPO> finishedOrders;
-	private ArrayList<OrderPO> submitedOrder;
+	private OrganizationPO organization;
+	private ArrayList<String> pendingOrders;
+	private ArrayList<String> finishedOrders;
+	private ArrayList<String> submitedOrderID;
 
 	public ExpressPO() {
 	}
 
 	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
-			OrganizationVO organization, ArrayList<OrderPO> pendingOrders, ArrayList<OrderPO> finishedOrders,
-			ArrayList<OrderPO> submitedOrder) {
+			OrganizationPO organization, ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
+			ArrayList<String> submitedOrderID) {
 		super();
 		this.name = name;
 		this.ID = ID;
@@ -28,7 +28,7 @@ public class ExpressPO {
 		this.organization = organization;
 		this.pendingOrders = pendingOrders;
 		this.finishedOrders = finishedOrders;
-		this.submitedOrder = submitedOrder;
+		this.submitedOrderID = submitedOrderID;
 	}
 
 	public String getName() {
@@ -63,36 +63,36 @@ public class ExpressPO {
 		this.chargeCollection = chargeCollection;
 	}
 
-	public OrganizationVO getOrganization() {
+	public OrganizationPO getOrganization() {
 		return organization;
 	}
 
-	public void setOrganization(OrganizationVO organization) {
+	public void setOrganization(OrganizationPO organization) {
 		this.organization = organization;
 	}
 
-	public ArrayList<OrderPO> getPendingOrders() {
+	public ArrayList<String> getPendingOrders() {
 		return pendingOrders;
 	}
 
-	public void setPendingOrders(ArrayList<OrderPO> pendingOrders) {
+	public void setPendingOrders(ArrayList<String> pendingOrders) {
 		this.pendingOrders = pendingOrders;
 	}
 
-	public ArrayList<OrderPO> getFinishedOrders() {
+	public ArrayList<String> getFinishedOrders() {
 		return finishedOrders;
 	}
 
-	public void setFinishedOrders(ArrayList<OrderPO> finishedOrders) {
+	public void setFinishedOrders(ArrayList<String> finishedOrders) {
 		this.finishedOrders = finishedOrders;
 	}
 
-	public ArrayList<OrderPO> getSubmitedOrder() {
-		return submitedOrder;
+	public ArrayList<String> getSubmitedOrderID() {
+		return submitedOrderID;
 	}
 
-	public void setSubmitedOrder(ArrayList<OrderPO> submitedOrder) {
-		this.submitedOrder = submitedOrder;
+	public void setSubmitedOrderID(ArrayList<String> submitedOrderID) {
+		this.submitedOrderID = submitedOrderID;
 	}
 
 }

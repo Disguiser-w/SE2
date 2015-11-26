@@ -8,10 +8,12 @@ public class VehicleVO {
 	public final String lowNumberPlate;
 	public final String buyTime;
 	public final String serviceTime;
-	public final String location;
+	public final OrganizationVO destination;
+	public final OrganizationVO local;
+	public final DriverVO driver;
 
 	public VehicleVO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime,String location) {
+			String serviceTime, OrganizationVO destination, OrganizationVO local,DriverVO driver) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;
@@ -19,7 +21,9 @@ public class VehicleVO {
 		this.lowNumberPlate = lowNumberPlate;
 		this.buyTime = buyTime;
 		this.serviceTime = serviceTime;
-		this.location = location;
+		this.destination = destination;
+		this.local = local;
+		this.driver = driver;
 	}
 
 }

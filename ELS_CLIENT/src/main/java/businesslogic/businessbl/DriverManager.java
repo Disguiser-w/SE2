@@ -3,6 +3,7 @@ package businesslogic.businessbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
 import po.DriverPO;
@@ -66,15 +67,16 @@ public class DriverManager {
 		return result;
 	}
 
-	public DriverVO poToVO(DriverPO po) {
+	public static DriverVO poToVO(DriverPO po) {
 
 		return new DriverVO(po.getID(), po.getName(), po.getDateOfBirth(), po.getIdCardNumber(), po.getPhoneNumber(),
-				po.getVehicleOrganization(), po.getSexuality(), po.getRegistrationDeadline());
+				OrganizationBL.organizationPOToVO(po.getVehicleOrganization()), po.getSexuality(),
+				po.getRegistrationDeadline());
 	}
 
-	public DriverPO voToPO(DriverVO vo) {
-		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber, vo.vehicleOrganization,
-				vo.sexuality, vo.registrationDeadline);
+	public static DriverPO voToPO(DriverVO vo) {
+		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber,
+				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline);
 	}
 
 }

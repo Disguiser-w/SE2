@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.BusinessPO;
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
 import po.GatheringReceiptPO;
@@ -15,6 +16,9 @@ import po.VehiclePO;
  * BusinessData
  */
 public interface BusinessDataService extends Remote {
+	// 根据营业厅ID（找到文件）和营业厅业务员ID（查找文件内容）
+	public BusinessPO getBusinessInfo(String organizationID, String ID);
+
 	/**
 	 * 返回车辆信息列表
 	 */
@@ -90,4 +94,5 @@ public interface BusinessDataService extends Remote {
 	 */
 
 	public boolean addGatheringReceipt(GatheringReceiptPO po);
+
 }
