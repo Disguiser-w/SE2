@@ -148,7 +148,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 		else{
 			GatheringReceiptVO gatheringReceiptVO;
-			gatheringReceiptVO=new GatheringReceiptVO(po.getTime(), po.getHallID(), po.getTotalmoney());
+			gatheringReceiptVO=new GatheringReceiptVO(po.getTime(), po.getBusinesShall().getName(), po.getTotalmoney());
 		return gatheringReceiptVO;
 		}
 	}

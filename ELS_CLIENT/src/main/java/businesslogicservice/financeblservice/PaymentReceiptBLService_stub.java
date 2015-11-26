@@ -2,8 +2,7 @@ package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
 
-import po.FarePO;
-import po.UserPO;
+
 import vo.PaymentReceiptVO;
 
 public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {
@@ -32,20 +31,18 @@ public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {
 		return null;
 	}
 
-	@Override
-	public double getSalary() {
+
+	public double getSalary(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public double getFare() {
+	public double getFare(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public double getRent() {
+	public double getRent(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

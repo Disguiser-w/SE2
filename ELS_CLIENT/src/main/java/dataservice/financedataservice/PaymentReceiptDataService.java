@@ -17,11 +17,11 @@ public interface PaymentReceiptDataService {
 		public  PaymentReceiptPO modify(PaymentReceiptPO po);
 		
 		//获取薪水：关于业绩清0的事的处理
-		public double getSalary();
+		public double getSalary(String time);
 		//获取运费
-		public double getFare();
+		public double getFare(String time);
 		//获取租金
-		public double getRent();
+		public double getRent(String time);
 		
 
 }

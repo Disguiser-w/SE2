@@ -2,7 +2,7 @@ package businesslogic.financebl;
 
 import java.util.ArrayList;
 
-import po.BusinessstatementReceiptPO;
+import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
 import po.PaymentReceiptPO;
 import dataservice.financedataservice.BusinessstatementReceiptDataService;
@@ -25,24 +25,22 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	/**
 	 * 筛选后的结果好像不写在这里
 	 * */
-	@Override
 	public BusinessStatementReceiptVO showBSList(String beginTime,
 			String endTime) {
 		// TODO Auto-generated method stub
-		return null;
+		return bpoToVO(brdService.showBSL(beginTime, endTime));
 	}
 	
-	@Override
 	public ArrayList<BusinessStatementReceiptVO> showAllBSList() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+       return null;
+		}
 	
 	/**
 	 * 从Collectionpo和PaymentPo中取出需要的数据转化为vo
 	 * 筛选不放在这里??
 	 * */
-	public BusinessStatementReceiptVO bpoToVO(BusinessstatementReceiptPO businessstatementReceiptPOs){
+	public BusinessStatementReceiptVO bpoToVO(BusinessStatementReceiptPO businessstatementReceiptPOs){
 
 		BusinessStatementReceiptVO businessStatementReceiptVO;
 		/**
@@ -83,7 +81,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	/**
 	 * 将vo转化为po存入BusinessstatementReceiptPO
 	 * */
-	public BusinessstatementReceiptPO bvoToPO(BusinessStatementReceiptVO vo){
+	public BusinessStatementReceiptPO bvoToPO(BusinessStatementReceiptVO vo){
 		ArrayList<CollectionReceiptVO> collectionReceiptVOs=vo.cvos;
 		ArrayList<PaymentReceiptVO> paymentReceiptVOs=vo.pvos;
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=new ArrayList<CollectionReceiptPO>();
@@ -96,7 +94,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getRent(), v2.getFare(),v2.getSalary(), v2.getDate(), v2.getAccount(), v2.getName());
 			paymentReceiptPOs.add(po);
 		}
-		BusinessstatementReceiptPO po=new BusinessstatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
+		BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
 		return po;
 	}
 	
@@ -105,11 +103,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	 * 怎么把时间限制在两个时间点之间???
 	 * 筛选什么的还是写在数据层????
 	 * */
-	
 
-	
-
-	@Override
 	public int export(BusinessStatementReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return 0;

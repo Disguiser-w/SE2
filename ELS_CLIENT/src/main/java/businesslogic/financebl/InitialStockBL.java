@@ -45,7 +45,6 @@ public class InitialStockBL implements InitialStockBLService{
 	 * @throws RemoteException 
 	 * */
 
-	@Override
 	public int initInfo(InitInfoVO vo,String time) throws RemoteException {
 		// TODO Auto-generated method stub
 		InitInfoPO po=voToPO(vo);
@@ -254,7 +253,6 @@ public class InitialStockBL implements InitialStockBLService{
 	 * 按时间查找期初信息
 	 * @throws RemoteException 
 	 * */
-	@Override
 	public InitInfoVO getInitInfo(String time) throws RemoteException {
 		// TODO Auto-generated method stub
 		InitInfoPO initInfoPO=initData.getInitInfo(time);
@@ -266,7 +264,6 @@ public class InitialStockBL implements InitialStockBLService{
 	 * 从持久化数据中取出所有的期初信息
 	 * 显示所有期初信息
 	 * */
-	@Override
 	public ArrayList<InitInfoVO> getAllInitInfo() {
 		// TODO Auto-generated method stub
 		ArrayList<InitInfoPO> pos=initData.getAllInitInfo();

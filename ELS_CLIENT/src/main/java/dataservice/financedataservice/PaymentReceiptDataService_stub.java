@@ -36,20 +36,17 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 		return null;
 	}
 
-	@Override
-	public double getSalary() {
+	public double getSalary(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public double getFare() {
+	public double getFare(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
-	public double getRent() {
+	public double getRent(String time) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

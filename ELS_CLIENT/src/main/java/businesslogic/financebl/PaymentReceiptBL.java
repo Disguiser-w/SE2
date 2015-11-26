@@ -24,7 +24,6 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	/**
 	 * 创建付款单并发送给总经理
 	 * */
-	@Override
 	public int creatPaymentReceipt(PaymentReceiptVO vo){
 		// TODO Auto-generated method stub
 		PaymentReceiptPO po=pvoToPO(vo);
@@ -60,7 +59,6 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		System.out.println("执行成功！");
 		return 0;
 	}
-	@Override
 	public PaymentReceiptVO getPaymentReceipt(String s) {
 		// TODO Auto-generated method stub
 		return null;
@@ -69,7 +67,6 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	/**
 	 * 获取所有的付款单
 	 * */
-	@Override
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt() {
 		// TODO Auto-generated method stub
 		return pposToVOs(prdService.getAllPaymentReceipt());
@@ -98,14 +95,12 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	/**
 	 * 自动获取ID
 	 * */
-	@Override
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public double getSalary(){
+	public double getSalary(String time){
 		// TODO Auto-generated method stub
 		double salary=0;
 		try {
@@ -132,24 +127,28 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		return salary;
 	}
 
-	@Override
+	
 	/**
 	 * 运费：但是清0怎么处理
 	 * */
-	public double getFare() {
+	public double getFare(String time) {
 		// TODO Auto-generated method stub
 		
 		return 0;
 	}
 
-	@Override
+	
 	/**
 	 * 租金从哪里来的
+	 * 
 	 * */
-	public double getRent() {
+	public double getRent(String time) {
 		// TODO Auto-generated method stub
-		return 0;
+		double rent=10000;
+		return rent;
 	}
+
+
 	
 	
 //	//根据条目和时间筛选
