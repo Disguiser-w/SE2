@@ -3,7 +3,7 @@ package businesslogic.intermediatebl;
 import type.OperationState;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
-import businesslogicservice.intermediateblservice.transferingblservice.TransferingBLService;
+import businesslogicservice.intermediateblservice.TransferingBLService;
 
 public class TransferingBL implements TransferingBLService{
 	private TransferingReceiptVO transferingReceipt;
