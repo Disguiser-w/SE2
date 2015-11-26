@@ -25,7 +25,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * 创建付款单并发送给总经理
 	 * */
 	@Override
-	public int creatPaymentReceipt(PaymentReceiptVO vo) {
+	public int creatPaymentReceipt(PaymentReceiptVO vo){
 		// TODO Auto-generated method stub
 		PaymentReceiptPO po=pvoToPO(vo);
 		update(vo);
@@ -52,10 +52,11 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	public int excute(PaymentReceiptVO vo){
 		AccountBL account=new AccountBL();
 //		ArrayList<PaymentReceiptVO> pvos=vo.ge
-		ArrayList<PaymentItemVO> paymentItems=vo.getPaymentItems();
-		for(PaymentItemVO v:paymentItems){
-			account.delMoney(v.getAccount(), v.getMoney());
-		}
+//		ArrayList<PaymentItemVO> paymentItems=vo.getPaymentItems();
+//		for(PaymentItemVO v:paymentItems){
+//			account.delMoney(v.getAccount(), v.getMoney());
+//		}
+		account.delMoney(vo.getAccount(), vo.getCost());
 		System.out.println("执行成功！");
 		return 0;
 	}
@@ -104,7 +105,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	}
 
 	@Override
-	public double getSalary() {
+	public double getSalary(){
 		// TODO Auto-generated method stub
 		double salary=0;
 		try {

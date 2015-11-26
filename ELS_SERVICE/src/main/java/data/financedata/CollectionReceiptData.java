@@ -3,6 +3,7 @@ package data.financedata;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import File.JXCFile;
 import po.CollectionReceiptPO;
 import po.GatheringReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
@@ -102,6 +103,12 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 	}
 
 	public CollectionReceiptPO modify(CollectionReceiptPO po)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<GatheringReceiptPO> getGathering(String Time)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;

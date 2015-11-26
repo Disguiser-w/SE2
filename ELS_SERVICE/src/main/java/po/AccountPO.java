@@ -1,6 +1,12 @@
 package po;
 
-public class AccountPO {
+import java.io.Serializable;
+
+public class AccountPO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String name;
 	double money;
 	
@@ -18,6 +24,18 @@ public class AccountPO {
 	public double getMoney(){
 		return money;
 	}
+	
+	public void setName(String s){
+		this.name=s;
+	}
+	
+	  public void addMoney(double m){
+    	  money+=m;
+      }
+      
+      public void delMoney(double m){
+    	  money-=m;
+      }
 
 
 }

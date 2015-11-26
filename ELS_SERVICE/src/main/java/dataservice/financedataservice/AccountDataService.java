@@ -18,5 +18,9 @@ public interface AccountDataService {
 	public ArrayList<AccountPO> findByKeyword(String s)throws RemoteException;
 	//输出所有的AccountPO记录
 	public ArrayList<AccountPO> showAll()throws RemoteException;
+	//金额++
+	  public int addMoney(String name,double m) throws RemoteException; 
+	  //金额--
+	    public int delMoney(String name,double m) throws RemoteException;
 
 }
