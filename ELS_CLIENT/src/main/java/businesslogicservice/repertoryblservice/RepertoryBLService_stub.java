@@ -3,6 +3,7 @@ package businesslogicservice.repertoryblservice;
 import businesslogicservice.repertoryblservice.RepertoryBLService;
 import vo.GoodsVO;
 import vo.InventoryVO;
+import vo.InventoryCheckVO;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class RepertoryBLService_stub implements RepertoryBLService{
         return "";
     }
     
-    public ArrayList<InventoryVO> inventoryCheck(String repertoryID, String beginDate, String endDate) {
+    public InventoryCheckVO inventoryCheck(String repertoryID, String beginDate, String endDate) {
         // TODO 自动生成的方法存根
         System.out.println("Inventory check succeed!");
         return null;

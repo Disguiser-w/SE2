@@ -2,6 +2,7 @@ package businesslogicservice.repertoryblservice;
 
 import vo.GoodsVO;
 import vo.InventoryVO;
+import vo.InventoryCheckVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -25,6 +26,6 @@ public interface RepertoryBLService {
 //                                                               1 火车转运
 //                                                               2 汽车转运
 	public String inventoryWarning(String repertoryID) throws RemoteException;
-	public ArrayList<InventoryVO> inventoryCheck(String repertoryID, String beginDate, String endDate) throws RemoteException;
+	public InventoryCheckVO inventoryCheck(String repertoryID, String beginDate, String endDate) throws RemoteException;
 	public ArrayList<InventoryVO> inventoryStockTaking(String repertoryID) throws RemoteException;
 }

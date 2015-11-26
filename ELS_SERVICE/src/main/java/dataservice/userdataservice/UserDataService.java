@@ -8,11 +8,10 @@ import java.util.ArrayList;
 
 public interface UserDataService extends Remote {
 	
-	public boolean check(String userID,String password) throws RemoteException;
-    public int add(UserPO userpo) throws RemoteException;
-    public int delete(UserPO userpo) throws RemoteException;
-    public int modify(UserPO userpo) throws RemoteException;
-    public UserPO find(String userID) throws RemoteException;
-    public ArrayList<UserPO> showAll() throws RemoteException;	
+	public int addUser(UserPO userpo) throws RemoteException;
+    public int deleteUser(String userID) throws RemoteException;
+    public int modifyUser(UserPO userpo) throws RemoteException;
+    public UserPO findUser(String userID) throws RemoteException;
+    public ArrayList<UserPO> showAllUsers() throws RemoteException;	
     
 }

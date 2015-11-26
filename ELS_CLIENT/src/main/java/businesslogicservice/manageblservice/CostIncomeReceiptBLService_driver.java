@@ -8,13 +8,13 @@ public class CostIncomeReceiptBLService_driver {
 	public void drive(CostIncomeReceiptBLService cbs){
 		String s="CBSYB-20151024-00001";
 		cbs.getCostIncomeList(s);
-		cbs.getAllCostIncomeList();
+/*		cbs.getAllCostIncomeList();
 		cbs.getCollection();
 		cbs.getPayment();
 		cbs.getIncome(null);
 		cbs.getCost(null);
 		cbs.getProfit(0, 0);
-		cbs.getCostIncomeListID();
+		cbs.getCostIncomeListID();*/
 	}
 	
 	public void main(){

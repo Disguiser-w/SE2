@@ -2,7 +2,7 @@ package businesslogic.managebl;
 
 import java.util.ArrayList;
 
-import po.BusinessstatementReceiptPO;
+import po.BusinessStatementReceiptPO;
 import vo.BusinessStatementReceiptVO;
 import po.CollectionReceiptPO;
 import vo.CollectionReceiptVO;
@@ -20,9 +20,9 @@ public class BusinessStatementReceiptBL implements BusinessStatementReceiptBLSer
 	}
 	//输出所有的经营情况表
 	public ArrayList<BusinessStatementReceiptVO> showAllBSList(){
-		ArrayList<BusinessstatementReceiptPO> bsrpoList= bsrdService.showAllBSList();
+		ArrayList<BusinessStatementReceiptPO> bsrpoList= bsrdService.showAllBSList();
 		ArrayList<BusinessStatementReceiptVO> bsrvoList= new ArrayList<BusinessStatementReceiptVO>();
-		for(BusinessstatementReceiptPO bsrpo: bsrpoList){
+		for(BusinessStatementReceiptPO bsrpo: bsrpoList){
 			bsrvoList.add(BSRPOToVO(bsrpo));
 		}
 		
@@ -32,7 +32,7 @@ public class BusinessStatementReceiptBL implements BusinessStatementReceiptBLSer
 		
 	}
 	
-	public BusinessStatementReceiptVO BSRPOToVO(BusinessstatementReceiptPO bsrPO){
+	public BusinessStatementReceiptVO BSRPOToVO(BusinessStatementReceiptPO bsrPO){
 		return new BusinessStatementReceiptVO(bsrPO.getBeginTime(), bsrPO.getEndTime(), bsrPO.getCollectionPO(), bsrPO.getPaymentPO());
 	}
 	

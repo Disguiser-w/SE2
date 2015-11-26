@@ -1,11 +1,14 @@
 package po;
 
+import java.util.ArrayList;
+
 public class RepertoryPO {
 
 	private String repertoryID, ownerID;
 	private int maxRow,  maxShelf, maxDigit, warningRadio;
 	//private int planeBlockStockNum, trainBlockStockNum, truckBlockStockNum, defaultBlockStockNum;
 	private int stockNum[];
+	private ArrayList<InventoryPO> inventoryList;
 	
 	public RepertoryPO(String repertoryID, String ownerID){
 		this.repertoryID = repertoryID;
@@ -15,6 +18,7 @@ public class RepertoryPO {
 		this.maxDigit = 10;
 		this.warningRadio = 80;
 		stockNum = new int [4];
+		inventoryList = new ArrayList<InventoryPO>(); 
 		/*this.planeBlockStockNum = 0;
 		this.trainBlockStockNum = 0;
 		this.truckBlockStockNum = 0;
@@ -144,5 +148,9 @@ public class RepertoryPO {
 	
 	public void stockNumSub(int block){
 		this.stockNum[block]--;
+	}
+	
+	public ArrayList<InventoryPO> getInventoryList(){
+		return this.inventoryList;
 	}
 }
