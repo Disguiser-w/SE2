@@ -3,12 +3,10 @@ package businesslogic.intermediatebl.envehiclebl;
 import java.util.ArrayList;
 
 import type.TransferingState;
-import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
-import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogicservice.intermediateblservice.envehicleblservice.EntruckingBLService;
@@ -36,36 +34,36 @@ public class EntruckingBL implements EntruckingBLService {
 		return truckList;
 	}
 
-	public TruckVO showTruck(String truckID) throws Exception{
+	public TruckVO showTruck(String truckID) throws Exception {
 		// TODO 自动生成的方法存根
-		int size = truckList.size();
-		for (int i = 0; i < size; i++) {
-			if (truckList.get(i).ID == truckID)
-				return truckList.get(i);
+		for (TruckVO truck : truckList) {
+			if (truck.ID == truckID)
+				return truck;
 		}
 
 		throw new Exception("未找到该ID的汽车！");
 	}
 
-	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck) {
+	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck)
+			throws Exception {
 		// TODO 自动生成的方法存根
-		return truck.entruckingReceipt;
+		for (EntruckingReceiptVO entruckingReceipt : entruckingReceipt_all) {
+			if (entruckingReceipt.truck == truck)
+				return entruckingReceipt;
+		}
+		throw new Exception("未找到该汽车！");
 	}
 
-	public void entruck(ArrayList<OrderVO> waitingOrderList) {
+	public void entruck(ArrayList<OrderVO> waitingOrderList) throws Exception {
 		// TODO 自动生成的方法存根
 		waitingOrderList = awobl.updateWaitingList();
 
-		int order_num = waitingOrderList.size();
-		int truck_num = truckList.size();
-		for (int i = 0; i < order_num; i++) {
-			String[] address = waitingOrderList.get(i).recipientAddress
-					.split(" ");
-			for (int j = 0; j < truck_num; j++) {
-				if (address[0] == truckList.get(j).destination) {
-					truckList.get(j).entruckingReceipt.entruckingReceipt
-							.add(waitingOrderList.get(i));
-					waitingOrderList.get(i).transfer_state = TransferingState.FINISHED_ENVEHICLE;
+		for (OrderVO order : waitingOrderList) {
+			String[] address = order.recipientAddress.split(" ");
+			for (TruckVO truck : truckList) {
+				if (address[0] == truck.destination) {
+					showEntruckingReceiptVO(truck).orderList.add(order);
+					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
 					continue;
 				}
 			}
@@ -78,11 +76,10 @@ public class EntruckingBL implements EntruckingBLService {
 		return null;
 	}
 
-	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList() {
+	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList() throws Exception {
 		// TODO 自动生成的方法存根
-		int truck_num = truckList.size();
-		for (int i = 0; i < truck_num; i++) {
-			entruckingReceipt_all.add(truckList.get(i).entruckingReceipt);
+		for (TruckVO truck:truckList) {
+			entruckingReceipt_all.add(showEntruckingReceiptVO(truck));
 		}
 		return entruckingReceipt_all;
 	}
@@ -92,9 +89,10 @@ public class EntruckingBL implements EntruckingBLService {
 		// TODO 自动生成的方法存根
 		int truck_num = entruckingReceipt_all.size();
 		double fare_sum = 0;
-		for(int i = 0;i<truck_num;i++)
-			fare_sum+=entruckingReceipt_all.get(i).fare;
-		fare = new FareVO(null, null, entruckingReceipt_all, fare_sum, null, null, intermediateCentre);
+		for (int i = 0; i < truck_num; i++)
+			fare_sum += entruckingReceipt_all.get(i).fare;
+		fare = new FareVO(null, null, entruckingReceipt_all, fare_sum, null,
+				null, intermediateCentre);
 		return fare;
 	}
 
@@ -106,6 +104,22 @@ public class EntruckingBL implements EntruckingBLService {
 	public boolean updateEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		return false;
+	}
+
+	public OrganizationVO getIntemediateCentre() {
+		return intemediateCentre;
+	}
+
+	public void setIntemediateCentre(OrganizationVO intemediateCentre) {
+		this.intemediateCentre = intemediateCentre;
+	}
+
+	public ArrayList<OrderVO> getWaitingOrderList() {
+		return waitingOrderList;
+	}
+
+	public void setWaitingOrderList(ArrayList<OrderVO> waitingOrderList) {
+		this.waitingOrderList = waitingOrderList;
 	}
 
 }

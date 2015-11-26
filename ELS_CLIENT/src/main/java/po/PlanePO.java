@@ -1,7 +1,5 @@
 package po;
 
-import vo.EnplaningReceiptVO;
-
 public class PlanePO {
 	private String ID;
 	private String destination;
@@ -15,6 +13,14 @@ public class PlanePO {
 
 		public String getID() {
 			return ID;
+		}
+
+		public String getDestination() {
+			return destination;
+		}
+
+		public void setDestination(String destination) {
+			this.destination = destination;
 		}
 
 		public void setID(String iD) {

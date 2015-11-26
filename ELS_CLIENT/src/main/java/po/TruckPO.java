@@ -1,15 +1,23 @@
 package po;
 
 public class TruckPO {
-	String ID;
-    double farePrice;
+	private String ID;
+	private String destination;
+    private double farePrice;
     
-    public TruckPO(){  	
-    }
-    
-	public TruckPO(double farePrice){
+	public TruckPO(double farePrice,String ID,String destination){
     	this.farePrice = farePrice;
+    	this.ID = ID;
+    	this.destination = destination;
     }
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 
 	public String getID() {
 		return ID;

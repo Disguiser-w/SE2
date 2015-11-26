@@ -1,27 +1,21 @@
 package vo;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class EntrainingReceiptVO {
-	public final OrganizationVO intermediateCentre;
-	public final TrainVO train;
-	
-	public final ArrayList<OrderVO> entrainingReceipt;
-	
-	public final String time;
-	public final String ID;
-	public final double fare;
+public class EntrainingReceiptVO extends EnIntermediateReceiptVO {
+	public OrganizationVO intermediateCentre;
+	public TrainVO train;
 
-	public EntrainingReceiptVO(ArrayList<OrderVO> entrainingReceipt,
-			String time, String ID, String intermediateCentre, TrainVO train,double fare) {
-		this.entrainingReceipt = entrainingReceipt;
-		this.time = time;
-		this.ID = ID;
-		this.intermediateCentre = this.intermediateCentre;
+	public ArrayList<OrderVO> orderList;
+
+	public double fare;
+	public String ID;
+	public String date;
+
+	public EntrainingReceiptVO(OrganizationVO intermediateCentre,
+			TrainVO train, ArrayList<OrderVO> orderList, double fare,
+			String ID, String date) {
+		super(intermediateCentre, orderList, fare, ID, date);
 		this.train = train;
-		this.fare = fare;
 	}
 }

@@ -7,21 +7,20 @@ import vo.FareVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.TrainVO;
-import vo.TransferingReceiptVO;
 
 public interface EntrainingBLService {
 	public ArrayList<TrainVO> showTrainList();
 
 	public TrainVO showTrain(String trainID) throws Exception;
 
-	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train);
+	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train) throws Exception;
 
-	public void entrain(ArrayList<OrderVO> al);
+	public void entrain(ArrayList<OrderVO> al) throws Exception;
 
 	public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList(
 			EntrainingReceiptVO vo);
 
-	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList();
+	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList() throws Exception;
 
 	public FareVO computeFare(ArrayList<EntrainingReceiptVO> vo,OrganizationVO intermediate);
 

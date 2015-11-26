@@ -3,12 +3,10 @@ package businesslogic.intermediatebl.envehiclebl;
 import java.util.ArrayList;
 
 import type.TransferingState;
-import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
-import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import businesslogicservice.intermediateblservice.envehicleblservice.EntrainingBLService;
@@ -38,34 +36,35 @@ public class EntrainingBL implements EntrainingBLService {
 
 	public TrainVO showTrain(String trainID) throws Exception {
 		// TODO 自动生成的方法存根
-		int size = trainList.size();
-		for (int i = 0; i < size; i++) {
-			if (trainList.get(i).ID == trainID)
-				return trainList.get(i);
+		for (TrainVO train : trainList) {
+			if (train.ID == trainID)
+				return train;
 		}
 
 		throw new Exception("未找到该ID的火车！");
 	}
 
-	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train) {
+	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train)
+			throws Exception {
 		// TODO 自动生成的方法存根
-		return train.entrainingReceipt;
+		for (EntrainingReceiptVO entrainingReceipt : entrainingReceipt_all) {
+			if (entrainingReceipt.train == train)
+				return entrainingReceipt;
+		}
+		throw new Exception("未找到该火车！");
 	}
 
-	public void entrain(ArrayList<OrderVO> waitingOrderList) {
+	public void entrain(ArrayList<OrderVO> waitingOrderList) throws Exception {
 		// TODO 自动生成的方法存根
 		waitingOrderList = awobl.updateWaitingList();
 
-		int order_num = waitingOrderList.size();
-		int train_num = trainList.size();
-		for (int i = 0; i < order_num; i++) {
-			String[] address = waitingOrderList.get(i).recipientAddress
-					.split(" ");
-			for (int j = 0; j < train_num; j++) {
-				if (address[0] == trainList.get(j).destination) {
-					trainList.get(j).entrainingReceipt.entrainingReceipt
-							.add(waitingOrderList.get(i));
-					waitingOrderList.get(i).transfer_state = TransferingState.FINISHED_ENVEHICLE;
+		for (OrderVO order : waitingOrderList) {
+			String[] address = order.recipientAddress.split(" ");
+			for (TrainVO train:trainList) {
+				if (address[0] ==train.destination) {
+					showEntrainingReceiptVO(train).orderList
+							.add(order);
+					order.transfer_state = TransferingState.FINISHED_ENVEHICLE;
 					continue;
 				}
 			}
@@ -78,11 +77,10 @@ public class EntrainingBL implements EntrainingBLService {
 		return null;
 	}
 
-	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList() {
+	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList() throws Exception {
 		// TODO 自动生成的方法存根
-		int train_num = trainList.size();
-		for (int i = 0; i < train_num; i++) {
-			entrainingReceipt_all.add(trainList.get(i).entrainingReceipt);
+		for (TrainVO train:trainList) {
+			entrainingReceipt_all.add(showEntrainingReceiptVO(train));
 		}
 		return entrainingReceipt_all;
 	}
@@ -93,9 +91,10 @@ public class EntrainingBL implements EntrainingBLService {
 		// TODO 自动生成的方法存根
 		int train_num = entrainingReceipt_all.size();
 		double fare_sum = 0;
-		for(int i = 0;i<train_num;i++)
-			fare_sum+=entrainingReceipt_all.get(i).fare;
-		fare = new FareVO(null, entrainingReceipt_all, null, fare_sum, null, null, intermediateCentre);
+		for (int i = 0; i < train_num; i++)
+			fare_sum += entrainingReceipt_all.get(i).fare;
+		fare = new FareVO(null, entrainingReceipt_all, null, fare_sum, null,
+				null, intermediateCentre);
 		return fare;
 	}
 
@@ -107,6 +106,22 @@ public class EntrainingBL implements EntrainingBLService {
 	public boolean updateEntrainingReceipt(ArrayList<EntrainingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		return false;
+	}
+
+	public OrganizationVO getIntemediateCentre() {
+		return intemediateCentre;
+	}
+
+	public void setIntemediateCentre(OrganizationVO intemediateCentre) {
+		this.intemediateCentre = intemediateCentre;
+	}
+
+	public ArrayList<OrderVO> getWaitingOrderList() {
+		return waitingOrderList;
+	}
+
+	public void setWaitingOrderList(ArrayList<OrderVO> waitingOrderList) {
+		this.waitingOrderList = waitingOrderList;
 	}
 
 }
