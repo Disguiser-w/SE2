@@ -46,7 +46,7 @@ public class OrderVO {
 	public String tRecipient;
 
 	public TransferingState transfer_state;
-	public final OrderState order_state;
+	public OrderState order_state;
 
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,

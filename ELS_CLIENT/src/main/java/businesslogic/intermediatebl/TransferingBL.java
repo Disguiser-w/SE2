@@ -9,7 +9,7 @@ import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.intermediateblservice.TransferingBLService;
 
-public class TransferingBL implements TransferingBLService{
+public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
 
 	// 显示（返回）中转中心到达单
@@ -20,31 +20,29 @@ public class TransferingBL implements TransferingBLService{
 
 	public OperationState addOrder(String ID) throws RemoteException {
 		// TODO 自动生成的方法存根
-		transferingReceipt.orderList.add(IntermediateMainController.poToVO(ExpressMainController.expressData.find(ID)));
+		transferingReceipt.orderList.add(IntermediateMainController
+				.poToVO(ExpressMainController.expressData.find(ID)));
 		return OperationState.SUCCEED_OPERATION;
 	}
 
 	public OperationState deleteOrder(String ID) throws Exception {
 		// TODO 自动生成的方法存根
-		int size = transferingReceipt.orderList.size();
-		for(int i = 0;i<size;i++){
-			if(transferingReceipt.orderList.get(i).ID == ID){
-				OrderVO deleteOrder = transferingReceipt.orderList.get(i);
-			    transferingReceipt.orderList.remove(i);
-			    // 货物中转接收状态是否需要设置
-			    return OperationState.SUCCEED_OPERATION; 
+		for (OrderVO order : transferingReceipt.orderList) {
+			if (order.ID == ID) {
+				transferingReceipt.orderList.remove(order);
+				// 货物中转接收状态是否需要设置
+				return OperationState.SUCCEED_OPERATION;
 			}
 		}
-		
 		throw new Exception("删除失败!");
 	}
 
 	public OperationState modifyOrder(String ID) {
 		// TODO 自动生成的方法存根
-		for(OrderVO order:transferingReceipt.orderList){
-			if(order.ID == ID){
+		for (OrderVO order : transferingReceipt.orderList) {
+			if (order.ID == ID) {
 				OrderVO modifyOrder = order;
-				//修改信息传入
+				// 修改信息传入
 			}
 		}
 		return OperationState.SUCCEED_OPERATION;
