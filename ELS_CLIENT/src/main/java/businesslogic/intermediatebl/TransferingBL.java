@@ -1,22 +1,27 @@
 package businesslogic.intermediatebl;
 
+import java.rmi.RemoteException;
+
 import type.OperationState;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
+import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.intermediateblservice.TransferingBLService;
 
 public class TransferingBL implements TransferingBLService{
 	private TransferingReceiptVO transferingReceipt;
 
+	// 显示（返回）中转中心到达单
 	public TransferingReceiptVO showTransferingReceipt() {
 		// TODO 自动生成的方法存根
 		return transferingReceipt;
 	}
 
-	public boolean addOrder(String ID) {
+	public OperationState addOrder(String ID) throws RemoteException {
 		// TODO 自动生成的方法存根
-		// 从序列化文件中得到需要加载的Ordervo信息的方法
-		return false;
+		transferingReceipt.orderList.add(IntermediateMainController.poToVO(ExpressMainController.expressData.find(ID)));
+		return OperationState.SUCCEED_OPERATION;
 	}
 
 	public OperationState deleteOrder(String ID) throws Exception {
@@ -34,7 +39,7 @@ public class TransferingBL implements TransferingBLService{
 		throw new Exception("删除失败!");
 	}
 
-	public boolean modifyOrder(String ID) {
+	public OperationState modifyOrder(String ID) {
 		// TODO 自动生成的方法存根
 		for(OrderVO order:transferingReceipt.orderList){
 			if(order.ID == ID){
@@ -42,7 +47,7 @@ public class TransferingBL implements TransferingBLService{
 				//修改信息传入
 			}
 		}
-		return false;
+		return OperationState.SUCCEED_OPERATION;
 	}
 
 	public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo) {

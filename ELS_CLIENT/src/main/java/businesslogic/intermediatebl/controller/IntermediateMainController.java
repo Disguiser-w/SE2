@@ -40,10 +40,12 @@ public class IntermediateMainController {
 	private EnplaningDataService enplaningData;
 	private EntrainingDataService entrainingData;
 	private EntruckingDataService entruckingData;
+	private ExpressMainController expressMainController;
 
 	private IntermediateVO intermediate;
 
 	public IntermediateMainController(String intermediateID) {
+		expressMainController = new ExpressMainController(null);
 		enplaningData = new EnplaningDataService_stub();
 		entrainingData = new EntrainingDataService_stub();
 		entruckingData = new EntruckingDataService_stub();

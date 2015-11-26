@@ -1,16 +1,18 @@
 package businesslogicservice.intermediateblservice;
 
+import java.rmi.RemoteException;
+
 import type.OperationState;
 import vo.TransferingReceiptVO;
 
 public interface TransferingBLService {
     public TransferingReceiptVO showTransferingReceipt();
     
-    public boolean addOrder(String ID);
+    public OperationState addOrder(String ID) throws RemoteException;
     
     public OperationState deleteOrder(String ID) throws Exception;
     
-    public boolean modifyOrder(String ID);
+    public OperationState modifyOrder(String ID);
     
     public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo);
 }
