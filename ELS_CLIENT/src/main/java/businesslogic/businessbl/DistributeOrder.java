@@ -6,97 +6,77 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
 import dataservice.expressdataservice.ExpressDataService;
 import dataservice.expressdataservice.ExpressDataService_stub;
+import po.DistributeReceiptPO;
 import po.ExpressPO;
 import po.OrderPO;
 import type.OrderState;
+import vo.OrganizationVO;
 
 public class DistributeOrder {
-	private BusinessDataService businessData;
-	private ExpressDataService expressData;
 
-	public DistributeOrder() {
-		businessData = new BusinessDataService_stub();
-		expressData = new ExpressDataService_stub();
-
-	}
-
-	public ArrayList<String> distributeOrder(String OrganizationID) {
-		ArrayList<ExpressPO> expressPOs = getExpressInfos(OrganizationID);
-
-		ArrayList<OrderPO> pos = getSendOrder();
-
-		int len = expressPOs.size();
-		int n = 0;
-		for (OrderPO i : pos) {
-			try {
-				expressData.addPendingOrder(i, expressPOs.get(n));
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			n++;
-			if (n == len)
-				n = 0;
+	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
+	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
+	public ArrayList<String> distributeOrder() {
+		BusinessMainController.updateBusinessVO();
+		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
+		ExpressDataService expressData = BusinessMainController.expressData;
+		ArrayList<ExpressPO> expressPOs = null;
+		try {
+			expressPOs = expressData.getExpressInfos(organizationVO.organizationID);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
-		expressPOs = getExpressInfos(OrganizationID);
+		ArrayList<OrderPO> pos = new ArrayList<OrderPO>();
 
+		// 获得改营业厅前一天接收的准备拍派件的订单
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -1); // 得到前一天
+		Date date = calendar.getTime();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String time = df.format(date);
+		
+		
 		ArrayList<String> result = new ArrayList<String>();
-		for (ExpressPO i : expressPOs)
-			for (OrderPO j : i.getPendingOrders())
-				result.add(j.getID() + " " + i.getID());
+		ArrayList<OrderPO> distributingOrders = null;
+		try {
+			distributingOrders = expressData.getOrderInfosByTime(organizationVO.organizationID, time);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
+		try {
+
+			int j = 0;
+			int size = expressPOs.size();
+			for (OrderPO i : distributingOrders)
+				if (i.getOrder_state() == OrderState.WAITING_DISTRIBUTE) {
+					expressData.changeState(OrderState.DISTRIBUEING, i.getID());
+					expressData.addHistory("正在派件", null, i.getID());
+					expressData.addPendingOrder(organizationVO.organizationID, expressPOs.get(j).getID(), i.getID());
+
+					result.add(i.getID() + " " + expressPOs.get(j).getID());
+					j++;
+					if (j == size)
+						j = 0;
+				}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		String nowTime = df.format(new Date());
+		此处增加ID
+		DistributeReceiptPO po = new DistributeReceiptPO(null,result,nowTime);
+		
 		return result;
-	}
-
-	public ArrayList<ExpressPO> getExpressInfos(String OrganizationID) {
-		ArrayList<ExpressPO> newPos = new ArrayList<ExpressPO>();
-		ArrayList<ExpressPO> pos = null;
-		try {
-			pos = expressData.getExpressInfos(OrganizationID);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (ExpressPO i : pos)
-			if (i.getOrganization().getOrganizationID().equals(OrganizationID))
-				newPos.add(i);
-		return newPos;
-	}
-
-	// 每天早上8点派送之前一天接收（AcceptCargo）的所有快件
-	public ArrayList<OrderPO> getSendOrder() {
-		ArrayList<OrderPO> newPos = new ArrayList<OrderPO>();
-		ArrayList<OrderPO> pos = null;
-		try {
-			Date dNow = new Date(); // 当前时间
-			Date dBefore = new Date();
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(dNow);// 把当前时间赋给日历
-			calendar.add(Calendar.DAY_OF_MONTH, -1);
-			dBefore = calendar.getTime();
-
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 设置时间格式
-			String timeStr = sdf.format(dBefore); // 格式化前一天
-
-			pos = expressData.getOrderInfosByTime(timeStr);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (OrderPO i : pos)
-			if (i.getOrder_state() == OrderState.WAITING_DISTRIBUTE) {
-				newPos.add(i);
-				i.setOrder_state(OrderState.DiSTRIBUEING);
-			}
-
-		return newPos;
 	}
 
 }

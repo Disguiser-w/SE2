@@ -3,6 +3,7 @@ package businesslogic.businessbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
@@ -22,13 +23,13 @@ public class VehicleManager {
 		ArrayList<VehicleVO> vos = new ArrayList<VehicleVO>();
 		ArrayList<VehiclePO> pos = null;
 		try {
-			pos = businessData.getVehicleInfos();
+			pos = businessData.getVehicleInfos(BusinessMainController.businessVO.organizationVO.organizationID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		for (VehiclePO i : pos)
-			vos.add(poToVO(i));
+			vos.add(BusinessMainController.vehiclePOToVO(i));
 
 		return vos;
 	}
@@ -37,7 +38,7 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.addVehicle(voToPO(vo));
+			result = businessData.addVehicle(BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +50,7 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteVehicle(voToPO(vo));
+			result = businessData.deleteVehicle(BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,25 +63,12 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteVehicle(voToPO(vo));
+			result = businessData.deleteVehicle(BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
-	}
-
-	public static VehiclePO voToPO(VehicleVO vo) {
-
-		return new VehiclePO(vo.ID, vo.engineNumber, vo.licensePlateNumber, vo.lowNumberPlate, vo.buyTime,
-				vo.serviceTime, OrganizationBL.organizationVOToPO(vo.destination),
-				OrganizationBL.organizationVOToPO(vo.local), DriverManager.voToPO(vo.driver));
-	}
-
-	public static VehicleVO poToVO(VehiclePO po) {
-		return new VehicleVO(po.getID(), po.getEngineNumber(), po.getLicensePlateNumber(), po.getLowNumberPlate(),
-				po.getBuyTime(), po.getServiceTime(), OrganizationBL.organizationPOToVO(po.getDestination()),
-				OrganizationBL.organizationPOToVO(po.getLocal()), DriverManager.poToVO(po.getDriver()));
 	}
 
 }

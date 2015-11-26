@@ -17,18 +17,9 @@ import vo.ExpressVO;
 import vo.OrganizationVO;
 
 public class Gathering {
-	private BusinessDataService businessData;
-	private ExpressDataService expressData;
-
-	private String organizationID;
-
-	public Gathering() {
-		businessData = new BusinessDataService_stub();
-		expressData = new ExpressDataService_stub();
-	}
 
 	// 返回所有该营业厅快递员的收费信息
-	public ArrayList<String> getChargeInfo(String organizationID) {
+	public ArrayList<String> getChargeInfo() {
 		ArrayList<String> infos = new ArrayList<String>();
 		ArrayList<ExpressPO> pos = null;
 		try {

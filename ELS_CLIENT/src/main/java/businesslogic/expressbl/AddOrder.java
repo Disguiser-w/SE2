@@ -63,22 +63,30 @@ public class AddOrder {
 			if (addr1[0].equals(addr2[0])) {
 				// 如果在同一城市，不需要经过中转中心转运
 				po.setTransfer_state(TransferingState.FINISHED_ENVEHICLE);
-				if (addr1[1].equals(addr2[1]))
+				if (addr1[1].equals(addr2[1])) {
 					// 如果同一营业厅,直接派送
 					po.setOrder_state(OrderState.WAITING_DISTRIBUTE);
-				else
+					po.getHistory().add("快件已发出");
+					po.getHistory().add("快件已到达" + ExpressMainController.expressVO.organization.name + ",正等待派送");
+
+				} else {
 					// 否则要经过一次转运,转运后状态变为等待派件
 					po.setOrder_state(OrderState.WAITING_ENVEHICLE);
+					po.getHistory().add("快件已发出");
+					po.getHistory().add("订单已到达" + ExpressMainController.expressVO.organization.name + ",正等待转运");
+				}
 			} else {
 				// 在不同城市,需要转运和中转
 				po.setTransfer_state(TransferingState.WAITING_ENVEHICLE);
 				po.setOrder_state(OrderState.WAITING_ENVEHICLE);
+				po.getHistory().add("快件已发出");
+				po.getHistory().add("订单已到达" + ExpressMainController.expressVO.organization.name + ",正等待中转");
 			}
 
 			// 增加订单到本营业厅当日订单列表中
 			String organizationID = ExpressMainController.expressVO.organization.organizationID;
-			result = ExpressMainController.expressData.addOrder(po, organizationID);
 
+			result = ExpressMainController.expressData.addOrder(po, organizationID);
 			// 增加此订单ID到此快递员的SubmitOrderID中
 			ExpressMainController.expressData.addSubmitOrder(organizationID, ExpressMainController.expressVO.ID, vo.ID);
 

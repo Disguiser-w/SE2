@@ -11,11 +11,13 @@ public class VehiclePO {
 	private String buyTime;
 	private String serviceTime;
 	private OrganizationPO destination;
+	private String destinationCity;
 	private OrganizationPO local;
 	private DriverPO driver;
 
 	public VehiclePO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime, OrganizationPO destination, OrganizationPO local, DriverPO driver) {
+			String serviceTime, OrganizationPO destination, String destinationCity, OrganizationPO local,
+			DriverPO driver) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;
@@ -26,6 +28,15 @@ public class VehiclePO {
 		this.destination = destination;
 		this.local = local;
 		this.driver = driver;
+		this.destinationCity = destinationCity;
+	}
+
+	public String getDestinationCity() {
+		return destinationCity;
+	}
+
+	public void setDestinationCity(String destinationCity) {
+		this.destinationCity = destinationCity;
 	}
 
 	public DriverPO getDriver() {

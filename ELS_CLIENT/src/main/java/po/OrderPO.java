@@ -1,5 +1,7 @@
 package po;
 
+import java.util.ArrayList;
+
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
@@ -30,7 +32,7 @@ public class OrderPO {
 	private String recipientMobilePhoneNumber;
 
 	private int numOfGoods;
-	
+
 	private String weight;
 	private String volume;
 	private String goodsName;
@@ -50,6 +52,8 @@ public class OrderPO {
 	private TransferingState transfer_state;
 	private OrderState order_state;
 
+	private ArrayList<String> history;
+
 	public OrderPO() {
 
 	}
@@ -59,7 +63,7 @@ public class OrderPO {
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtData, String finishedData, String finishedID,
-			String tRecipient, TransferingState transfer_state, OrderState order_state) {
+			String tRecipient, TransferingState transfer_state, OrderState order_state, ArrayList<String> history) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -86,6 +90,15 @@ public class OrderPO {
 		this.finishedID = finishedID;
 		this.transfer_state = transfer_state;
 		this.order_state = order_state;
+		this.history = history;
+	}
+
+	public ArrayList<String> getHistory() {
+		return history;
+	}
+
+	public void setHistory(ArrayList<String> history) {
+		this.history = history;
 	}
 
 	public String gettRecipient() {

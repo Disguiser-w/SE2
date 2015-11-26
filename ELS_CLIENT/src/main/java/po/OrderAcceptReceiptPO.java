@@ -5,25 +5,26 @@ import java.util.ArrayList;
 import vo.OrganizationVO;
 
 public class OrderAcceptReceiptPO {
-	private OrganizationVO local;
+	private OrganizationPO local;
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> orderIDs;
+
 	public OrderAcceptReceiptPO() {
 	}
 
-	public OrderAcceptReceiptPO(OrganizationVO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs) {
+	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.orderIDs = orderIDs;
 	}
 
-	public OrganizationVO getLocal() {
+	public OrganizationPO getLocal() {
 		return local;
 	}
 
-	public void setLocal(OrganizationVO local) {
+	public void setLocal(OrganizationPO local) {
 		this.local = local;
 	}
 
@@ -50,6 +51,5 @@ public class OrderAcceptReceiptPO {
 	public void setOrderIDs(ArrayList<String> orderIDs) {
 		this.orderIDs = orderIDs;
 	}
-
 
 }

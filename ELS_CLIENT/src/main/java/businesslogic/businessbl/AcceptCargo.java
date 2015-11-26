@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
@@ -12,10 +13,9 @@ import dataservice.expressdataservice.ExpressDataService;
 import dataservice.expressdataservice.ExpressDataService_stub;
 import po.OrderAcceptReceiptPO;
 import po.OrderPO;
-import po.VehiclePO;
+import po.OrganizationPO;
 import type.OrderState;
-import vo.OrderAcceptReceiptVO;
-import vo.VehicleVO;
+import vo.OrganizationVO;
 
 public class AcceptCargo {
 
@@ -28,52 +28,72 @@ public class AcceptCargo {
 		expressData = new ExpressDataService_stub();
 	}
 
-	public boolean acceptCargo(ArrayList<String> orderIDs, String driverName,String organizationID) {
-		// 根据以下两项可以到对应的营业厅文件夹中查找OrderPO
+	public boolean acceptCargo(String organizationID, String vehicleID, ArrayList<String> orderIDs) {
 
+		BusinessMainController.updateBusinessVO();
+		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
+		ExpressDataService expressData = BusinessMainController.expressData;
+		BusinessDataService businessData = BusinessMainController.businessData;
+		// 根据以下两项可以到对应的营业厅文件夹中查找OrderPO
+		// 将此状态更新到原营业厅文件中
+
+		try {
+			for (String i : orderIDs){
+				expressData.changeState(OrderState.WAITING_DISTRIBUTE, i);
+				expressData.addHistory("快件已到达"+organizationVO.name+",正准备派送", organizationID, i);
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// 获取更新后的OrderPOs
 		ArrayList<OrderPO> orderPOs = new ArrayList<OrderPO>();
 
 		try {
 			for (String i : orderIDs)
-				orderPOs.add(ExpressMainController.expressData.find(i));
-				
+				orderPOs.add(expressData.find(i));
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// 改变订单的状态
-		for (OrderPO i : orderPOs)
-			i.setOrder_state(OrderState.WAITING_DISTRIBUTE);
-		
-		//将此状态更新到原营业厅文件中
-		
-		
-		//将OrderPOs添加到本营业厅的当日订单文件中,第二天派件
-		
+		// 将OrderPOs添加到本营业厅的当日订单文件中,第二天派件
+
+		try {
+			for (OrderPO i : orderPOs)
+				expressData.addDistributingOrder(i, organizationVO.organizationID);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf.format(d);
 
-
-
 		boolean result = false;
+
+		OrganizationPO po = null;
+		try {
+			po = businessData.getBusinessInfo(organizationID, null).getOrganizationPO();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			此处增加ID
+			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
+					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs);
+			
+			result = businessData.addReceipt(organizationVO.organizationID, newPO);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return result;
-	}
-
-	public static OrderAcceptReceiptPO voToPO(OrderAcceptReceiptVO vo) {
-
-		VehiclePO vpo = VehicleManager.voToPO(vo.vehicleVO);
-		OrderAcceptReceiptPO opo = new OrderAcceptReceiptPO(vo.local, vo.time, vpo, vo.orderIDs);
-		return opo;
-
-	}
-
-	public static OrderAcceptReceiptVO poToVO(OrderAcceptReceiptPO po) {
-		VehicleVO vvo = VehicleManager.poToVO(po.getVehiclePO());
-		OrderAcceptReceiptVO Vpo = new OrderAcceptReceiptVO(po.getLocal(), po.getTime(), vvo, po.getOrderIDs());
-		return Vpo;
 	}
 
 }

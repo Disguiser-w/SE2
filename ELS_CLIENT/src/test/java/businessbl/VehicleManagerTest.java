@@ -1,4 +1,4 @@
-package businesslogic.businessbl;
+package businessbl;
 
 import static org.junit.Assert.*;
 

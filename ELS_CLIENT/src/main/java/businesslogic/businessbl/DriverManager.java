@@ -3,6 +3,7 @@ package businesslogic.businessbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
@@ -18,16 +19,17 @@ public class DriverManager {
 	}
 
 	public ArrayList<DriverVO> getDriverInfo() {
+		String organizationID = BusinessMainController.businessVO.organizationVO.organizationID;
 		ArrayList<DriverVO> vos = new ArrayList<DriverVO>();
 		ArrayList<DriverPO> pos = null;
 		try {
-			pos = businessData.getDriverInfos();
+			pos = businessData.getDriverInfos(organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
 		for (DriverPO i : pos)
-			vos.add(poToVO(i));
+			vos.add(BusinessMainController.driverPOToVO(i));
 		return vos;
 	}
 
@@ -35,7 +37,7 @@ public class DriverManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.addDriver(voToPO(vo));
+			result = businessData.addDriver(BusinessMainController.driverVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +49,7 @@ public class DriverManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteDriver(voToPO(vo));
+			result = businessData.deleteDriver(BusinessMainController.driverVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,24 +61,12 @@ public class DriverManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.modifyDriver(voToPO(vo));
+			result = businessData.modifyDriver(BusinessMainController.driverVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
-	}
-
-	public static DriverVO poToVO(DriverPO po) {
-
-		return new DriverVO(po.getID(), po.getName(), po.getDateOfBirth(), po.getIdCardNumber(), po.getPhoneNumber(),
-				OrganizationBL.organizationPOToVO(po.getVehicleOrganization()), po.getSexuality(),
-				po.getRegistrationDeadline());
-	}
-
-	public static DriverPO voToPO(DriverVO vo) {
-		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber,
-				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline);
 	}
 
 }
