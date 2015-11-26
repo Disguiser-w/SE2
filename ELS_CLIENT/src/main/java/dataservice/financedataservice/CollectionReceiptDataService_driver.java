@@ -7,9 +7,9 @@ public class CollectionReceiptDataService_driver {
 		cds.createCollection(new CollectionReceiptPO());
 		cds.getAllCollection();
 		cds.findByID(null);
-		cds.getGathering(null);
-		cds.getMoney(null);
-		cds.getTotalMoney(null);
+//		cds.getGathering(null);
+//		cds.getMoney(null);
+//		cds.getTotalMoney(null);
 		cds.getNum();
 		cds.modify(new CollectionReceiptPO());
 	}

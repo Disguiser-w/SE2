@@ -13,12 +13,11 @@ public class CostIncomeReceiptVO extends ReceiptVO{
 	double profit;
 	String date;
 	
-	public CostIncomeReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,ArrayList<CollectionReceiptVO> vo1,
-			ArrayList<PaymentReceiptVO> vo2,double a,double b,double c){
+	public CostIncomeReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double cost,double income,double profit){
 		super(ID,userID,ReceiptType.COSTINCOMERECEPTION,state);
-		cost=a;
-		income=b;
-		profit=c;
+		this.cost=cost;
+		this.income=income;
+		this.profit=profit;
 	}
 	
 
@@ -44,4 +43,15 @@ public class CostIncomeReceiptVO extends ReceiptVO{
 		return profit;
 	}
 	
+	public String getID(){
+		return ID;
+	}
+	
+	public String getUserID(){
+		return userID;
+	}
+	
+	public ReceiptState getState(){
+		return state;
+	}
 	}

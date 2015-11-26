@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import po.PaymentReceiptPO;
 
 public interface PaymentReceiptDataService {
-	public int creatPaymentReceipt(PaymentReceiptPO vo) throws RemoteException;
+	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException;
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt() throws RemoteException;
 	
 //	//当天存储的持久化对象个数
@@ -15,10 +15,13 @@ public interface PaymentReceiptDataService {
 //	public PaymentReceiptPO findByID(String ID) throws RemoteException;
 	//修改持久化对象
 	public  PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException;
+	
+	//筛选特定时间内的付款单
+	public ArrayList<PaymentReceiptPO> getRightPaymentReceipt(String beginTime,String endTime);
 
-	public double getSalary() ;
-
-	public double getFare();
-
-	public double getRent();
+//	public double getSalary() ;
+//
+//	public double getFare();
+//
+//	public double getRent();
 }

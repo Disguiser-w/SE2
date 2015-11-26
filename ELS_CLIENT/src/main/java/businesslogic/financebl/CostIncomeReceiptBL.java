@@ -3,12 +3,15 @@ package businesslogic.financebl;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
+import po.CostIncomeReceiptPO;
 import po.PaymentReceiptPO;
+import po.ReceiptPO.ReceiptState;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
+import type.ReceiptType;
 import vo.CostIncomeReceiptVO;
 
 public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptBLService{
@@ -30,6 +33,7 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	 * */
 	public int creatCostIncomeList(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
+		CostIncomeReceiptPO po=voToPO(vo);
 		return 0;
 	}
 //	public CostIncomeReceiptVO getCostIncomeList(String s) {
@@ -49,6 +53,12 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 //		return null;
 //	}
 	
+	public CostIncomeReceiptPO voToPO(CostIncomeReceiptVO vo) {
+		// TODO Auto-generated method stub
+		CostIncomeReceiptPO po=new CostIncomeReceiptPO(vo.getID(),vo.getUserID(),ReceiptType.COSTINCOMERECEPTION,vo.getState(),vo.getCost(),vo.getIncome(), vo.getProfit());
+		return null;
+	}
+
 	/**
 	 * 计算income
 	 * doge说这玩意儿写在bl里.........
