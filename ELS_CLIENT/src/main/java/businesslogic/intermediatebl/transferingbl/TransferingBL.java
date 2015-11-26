@@ -36,10 +36,9 @@ public class TransferingBL implements TransferingBLService{
 
 	public boolean modifyOrder(String ID) {
 		// TODO 自动生成的方法存根
-		int size = transferingReceipt.orderList.size();
-		for(int i = 0;i<size;i++){
-			if(transferingReceipt.orderList.get(i).ID == ID){
-				OrderVO deleteOrder = transferingReceipt.orderList.get(i);
+		for(OrderVO order:transferingReceipt.orderList){
+			if(order.ID == ID){
+				OrderVO deleteOrder = order;
 				//修改信息传入
 			}
 		}

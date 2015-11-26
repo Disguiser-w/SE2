@@ -9,6 +9,7 @@ import po.OrderPO;
 import po.OrganizationPO;
 import po.PlanePO;
 import po.TrainPO;
+import po.TransferingReceiptPO;
 import po.TruckPO;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
@@ -17,6 +18,7 @@ import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
 import vo.TrainVO;
+import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.expressbl.AddOrder;
 
@@ -89,24 +91,40 @@ public class IntermediateMainController {
 
 		return enplaningReceiptList;
 	}
-	
+
 	public static ArrayList<EntrainingReceiptPO> voToPO_EntrainingReceipt(
 			ArrayList<EntrainingReceiptVO> list) {
 		ArrayList<EntrainingReceiptPO> entrainingReceiptList = new ArrayList<EntrainingReceiptPO>();
 		for (EntrainingReceiptVO receipt : list)
-			entrainingReceiptList
-					.add(IntermediateMainController.voToPO(receipt));
+			entrainingReceiptList.add(IntermediateMainController
+					.voToPO(receipt));
 
 		return entrainingReceiptList;
 	}
-	
+
 	public static ArrayList<EntruckingReceiptPO> voToPO_EntruckingReceipt(
 			ArrayList<EntruckingReceiptVO> list) {
 		ArrayList<EntruckingReceiptPO> entruckingReceiptList = new ArrayList<EntruckingReceiptPO>();
 		for (EntruckingReceiptVO receipt : list)
-			entruckingReceiptList
-					.add(IntermediateMainController.voToPO(receipt));
+			entruckingReceiptList.add(IntermediateMainController
+					.voToPO(receipt));
 
 		return entruckingReceiptList;
+	}
+
+	public static OrderVO poToVO(OrderPO order) {
+		return AddOrder.poToVO(order);
+	}
+
+	public static TransferingReceiptPO voToPO(
+			TransferingReceiptVO transferingReceipt) {
+		ArrayList<OrderPO> orderList = new ArrayList<OrderPO>();
+		for (OrderVO order : transferingReceipt.orderList)
+			orderList.add(IntermediateMainController.voToPO(order));
+
+		return new TransferingReceiptPO(
+				IntermediateMainController
+						.voToPO(transferingReceipt.interdiateCentre),
+				orderList, transferingReceipt.ID);
 	}
 }
