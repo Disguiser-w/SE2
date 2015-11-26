@@ -40,7 +40,7 @@ public class InventoryPO implements Serializable{
 		this.blockNum = blockNum;
 	}
 	
-	public int getBlcokNum(){
+	public int getBlockNum(){
 		return this.blockNum;
 	}
 	

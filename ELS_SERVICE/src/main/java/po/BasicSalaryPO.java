@@ -1,8 +1,12 @@
 package po;
 
+import java.io.Serializable;
+
 import type.ProfessionType;
 
-public class BasicSalaryPO {
+public class BasicSalaryPO implements Serializable {
+	
+	private static final long serialVersionUID = 141250152L;
 
 	private ProfessionType profession;
 	private double basicSalary;

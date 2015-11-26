@@ -1,9 +1,13 @@
 package po;
 
+import java.io.Serializable;
+
 import type.ProfessionType;
 
-public class PerWagePO {
-
+public class PerWagePO implements Serializable {
+	
+	private static final long serialVersionUID = 141250155L;
+	
 	private ProfessionType profession;
 	private double perWage;
 	

@@ -9,7 +9,8 @@ import dataservice.userdataservice.UserDataService;
 
 public class UserData implements UserDataService {	//extends UnicastRemoteObject???
 
-	private static final long serialVersionUID = 141250147L;
+	//我也不知道下面这句话有什么用？？？
+	//private static final long serialVersionUID = 1L;
 
     JXCFile userFile;
     
@@ -18,7 +19,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
 	}
     
     public int addUser(UserPO userpo) throws RemoteException{
-    	if(findUser(userpo.getID())==null){
+    	if(findUser(userpo.getUserID())==null){
     		userFile.write(userpo);
     		return 0;
     	}
@@ -34,7 +35,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
 		
 		for(int i=0; i<objectList.size(); i++){
 			UserPO tempUserPO = (UserPO)(objectList.get(i));
-			if(tempUserPO.getID().equals(userID)){
+			if(tempUserPO.getUserID().equals(userID)){
 				objectList.remove(i);
 				break;
 			}
@@ -46,7 +47,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     }
     
     public int modifyUser(UserPO userpo) throws RemoteException{
-    	String userID = userpo.getID();
+    	String userID = userpo.getUserID();
     	if(deleteUser(userID)==0){
     		addUser(userpo);
     		return 0;
@@ -62,7 +63,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
 		
 		for(int i=0; i<objectList.size(); i++){
 			UserPO tempUserPO = (UserPO)(objectList.get(i));
-			if(tempUserPO.getID().equals(userID)){
+			if(tempUserPO.getUserID().equals(userID)){
 				return tempUserPO;
 			}
 		}

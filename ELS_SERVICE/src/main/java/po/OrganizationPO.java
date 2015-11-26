@@ -1,9 +1,14 @@
 package po;
 
+import java.io.Serializable;
+
 import type.OrganizationType;
 import po.RepertoryPO;
 
-public class OrganizationPO {
+public class OrganizationPO implements Serializable {
+	
+	private static final long serialVersionUID = 141250151L;
+	
 	private OrganizationType category;
 	private String organizationID;
 	private String name;

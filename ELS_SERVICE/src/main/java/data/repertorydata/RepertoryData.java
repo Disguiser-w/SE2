@@ -15,7 +15,8 @@ import po.InventoryCheckPO;
 
 public class RepertoryData implements RepertoryDataService{
 
-	private static final long serialVersionUID = 141250148L;
+	//我也不知道下面这句话有什么用？？？
+	//private static final long serialVersionUID = 1L;
 	
 	JXCFile repertoryFile;
 	JXCFile goodsFile;
@@ -121,11 +122,11 @@ public class RepertoryData implements RepertoryDataService{
 			String[] enterDate = tempGoods.getEnterDate();
 			String[] leaveDate = tempGoods.getLeaveDate();
 			for(int j=0;j<4;i++){
-				if((enterRepertory[j].equals(repertoryID)) && (enterDate[j].compareTo(beginDate)>=1) && (enterDate[j].compareTo(endDate)<=1)){
+				if((enterRepertory[j].equals(repertoryID)) && (enterDate[j].compareTo(beginDate)>=0) && (enterDate[j].compareTo(endDate)<=0)){
 					inventoryCheckPO.enterTotalPlus();
 					inventoryCheckPO.enterFeeTotalPlus(tempGoods.getFee());
 				}
-				if((leaveRepertory[j].equals(repertoryID)) && (leaveDate[j].compareTo(beginDate)>=1) && (leaveDate[j].compareTo(endDate)<=1)){
+				if((leaveRepertory[j].equals(repertoryID)) && (leaveDate[j].compareTo(beginDate)>=0) && (leaveDate[j].compareTo(endDate)<=0)){
 					inventoryCheckPO.leaveTotalPlus();
 					inventoryCheckPO.leaveFeeTotalPlus(tempGoods.getFee());
 				}
@@ -139,60 +140,40 @@ public class RepertoryData implements RepertoryDataService{
 		
 	} 
 	
-	/*我觉得这里有问题，我这样四轮排序下来相当于只是按位数去排序……怎么样按照区数、排数、架数、位数去排序*/
 	public ArrayList<InventoryPO> findInventorybyTime(String repertoryID, String time) throws RemoteException{
 		RepertoryPO repertory = findRepertory(repertoryID);
 		ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
-		sortInventoryByBlock(inventoryList);
-		sortInventoryByRow(inventoryList);
-		sortInventoryByShelf(inventoryList);
-		sortInventoryByDigit(inventoryList);
+		sortInventory(inventoryList);
 		return inventoryList;
 	}
 	
-	
-	public static void sortInventoryByBlock (ArrayList<InventoryPO> inventoryList){
+	//给inventoryList排序：先排区号，如果区号一样排行号，如果行号一样排架号，如果架号一样排位号
+	//这么恶心的排序还是用了Comparator方法，我也是醉了（觉得本宝宝越来越聪明了呢！！！）
+	public static void sortInventory(ArrayList<InventoryPO> inventoryList){
 		Collections.sort(inventoryList, new Comparator<InventoryPO>(){
 			public int compare(InventoryPO first, InventoryPO second){
-				if(first.getBlcokNum()>second.getBlcokNum())
-					return 1;
-				else 
-					return -1;
+				int cr= 0;
+				int a = first.getBlockNum() - second.getBlockNum();
+				if(a != 0)
+					cr = (a>0)? 4:-1;
+				else{
+					a = first.getRowNum() - second.getRowNum(); 
+					if(a != 0)
+						cr = (a>0)? 3:-2;
+					else{
+						a = first.getShelfNum() - second.getShelfNum(); 
+						if(a != 0)
+							cr = (a>0)? 2:-3;
+						else{
+							a = first.getDigitNum() - second.getDigitNum();
+							if(a != 0)
+								cr = (a>0)? 4:-1;
+						}
+					}
+				}
 			}
 		});
 	}
 	
-	public static void sortInventoryByRow (ArrayList<InventoryPO> inventoryList){
-		Collections.sort(inventoryList, new Comparator<InventoryPO>(){
-			public int compare(InventoryPO first, InventoryPO second){
-				if(first.getRowNum()>second.getRowNum())
-					return 1;
-				else 
-					return -1;
-			}
-		});
-	}
-	
-	public static void sortInventoryByShelf (ArrayList<InventoryPO> inventoryList){
-		Collections.sort(inventoryList, new Comparator<InventoryPO>(){
-			public int compare(InventoryPO first, InventoryPO second){
-				if(first.getShelfNum()>second.getShelfNum())
-					return 1;
-				else 
-					return -1;
-			}
-		});
-	}
-	
-	public static void sortInventoryByDigit (ArrayList<InventoryPO> inventoryList){
-		Collections.sort(inventoryList, new Comparator<InventoryPO>(){
-			public int compare(InventoryPO first, InventoryPO second){
-				if(first.getDigitNum()>second.getDigitNum())
-					return 1;
-				else 
-					return -1;
-			}
-		});
-	}
 	
 }

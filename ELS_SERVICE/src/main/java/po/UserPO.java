@@ -8,7 +8,7 @@ import type.SalaryPlanType;
 
 public class UserPO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 141250147L;
 	
 	private String userName;
 	private String userID;
@@ -36,7 +36,7 @@ public class UserPO implements Serializable {
 		return this.userName;
 	}
 
-	public String getID() {
+	public String getUserID() {
 		return this.userID;
 	}
 
