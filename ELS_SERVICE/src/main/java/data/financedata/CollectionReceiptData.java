@@ -2,6 +2,7 @@ package data.financedata;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
 import File.JXCFile;
 import po.CollectionReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
@@ -138,6 +139,34 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
+			String endTime) {
+		// TODO Auto-generated method stub
+		file=new JXCFile("collection.ser");
+		ArrayList<Object> os=file.read();
+		ArrayList<CollectionReceiptPO> pos=new ArrayList<CollectionReceiptPO>();
+		ArrayList<CollectionReceiptPO> pos_right=new ArrayList<CollectionReceiptPO>();
+		for(Object o:os){
+			CollectionReceiptPO po=(CollectionReceiptPO) o;
+			pos.add(po);
+		}
+		//判断格式这个是不是应该放到bl里？？？
+		if(beginTime.compareTo(endTime)>0){
+			System.out.println("输入时间区间格式不对");
+			return null;
+		}
+		else{
+			for(CollectionReceiptPO p:pos){
+				if((p.getDate().compareTo(beginTime)>0)&&(p.getDate().compareTo(endTime)<0)){
+					pos_right.add(p);
+				}
+			}
+			
+			
+		}
+		return pos_right;
 	}
 
 	

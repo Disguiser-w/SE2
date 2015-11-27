@@ -69,6 +69,27 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		return 0;
 	}
 
+	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
+			String endTime) {
+		// TODO Auto-generated method stub
+		file=new JXCFile("payment.ser");
+		ArrayList<Object> os=file.read();
+		ArrayList<PaymentReceiptPO> pos=new ArrayList<PaymentReceiptPO>();
+		if(beginTime.compareTo(endTime)>0){
+			System.out.println("输入时间区间格式不对");
+			return null;
+		}
+		else{
+			for(Object o:os){
+				PaymentReceiptPO p=(PaymentReceiptPO) o;
+				if((p.getDate().compareTo(beginTime)>0)&&(p.getDate().compareTo(endTime)<0)){
+					pos.add(p);
+				}
+			}
+			return pos;
+		}
+	}
+
 
 
 }
