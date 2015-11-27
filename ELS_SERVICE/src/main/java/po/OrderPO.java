@@ -1,18 +1,26 @@
 package po;
 
-import type.PackType;
+import java.util.ArrayList;
 
-public class OrderPO<ExpressType> {
+import type.ExpressType;
+import type.OrderState;
+import type.PackType;
+import type.TransferingState;
+
+public class OrderPO {
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
 	// 住址、单位、电话、手机；托运货物信息（原件数、实际重量、
 	// 体积、内件品名）；经济快递，标准快递，特快专递；包装费
 	// （纸箱（5元）、木箱（10元）、快递袋（1元）、其它）；费
 	// 用合计（自动计算，运费+包装费）；
 	// 订单条形码号（10位数）；
+
+	// 装车状态（等待中，已装车）
 	private String ID;
 
 	private String senderName;
 	private String senderAddress;
+
 	private String senderOrganization;
 	private String senderPhoneNumber;
 	private String senderMobilePhoneNumber;
@@ -24,6 +32,7 @@ public class OrderPO<ExpressType> {
 	private String recipientMobilePhoneNumber;
 
 	private int numOfGoods;
+
 	private String weight;
 	private String volume;
 	private String goodsName;
@@ -35,8 +44,15 @@ public class OrderPO<ExpressType> {
 	private float packingExpense;
 
 	private String builtData;
+
+	private String tRecipient;
 	private String finishedData;
 	private String finishedID;
+
+	private TransferingState transfer_state;
+	private OrderState order_state;
+
+	private ArrayList<String> history;
 
 	public OrderPO() {
 
@@ -46,7 +62,8 @@ public class OrderPO<ExpressType> {
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
-			float freight, float packingExpense, String builtData, String finishedData, String finishedID) {
+			float freight, float packingExpense, String builtData, String finishedData, String finishedID,
+			String tRecipient, TransferingState transfer_state, OrderState order_state, ArrayList<String> history) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -68,8 +85,28 @@ public class OrderPO<ExpressType> {
 		this.freight = freight;
 		this.packingExpense = packingExpense;
 		this.builtData = builtData;
+		this.tRecipient = tRecipient;
 		this.finishedData = finishedData;
 		this.finishedID = finishedID;
+		this.transfer_state = transfer_state;
+		this.order_state = order_state;
+		this.history = history;
+	}
+
+	public ArrayList<String> getHistory() {
+		return history;
+	}
+
+	public void setHistory(ArrayList<String> history) {
+		this.history = history;
+	}
+
+	public String gettRecipient() {
+		return tRecipient;
+	}
+
+	public void settRecipient(String tRecipient) {
+		this.tRecipient = tRecipient;
 	}
 
 	public String getID() {
@@ -246,5 +283,21 @@ public class OrderPO<ExpressType> {
 
 	public void setFinishedID(String finishedID) {
 		this.finishedID = finishedID;
+	}
+
+	public TransferingState getTransfer_state() {
+		return transfer_state;
+	}
+
+	public void setTransfer_state(TransferingState transfer_state) {
+		this.transfer_state = transfer_state;
+	}
+
+	public OrderState getOrder_state() {
+		return order_state;
+	}
+
+	public void setOrder_state(OrderState order_state) {
+		this.order_state = order_state;
 	}
 }

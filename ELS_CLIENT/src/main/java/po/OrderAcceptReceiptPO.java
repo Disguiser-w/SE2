@@ -9,15 +9,23 @@ public class OrderAcceptReceiptPO {
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> orderIDs;
+	private String receiptID;
 
-	public OrderAcceptReceiptPO() {
-	}
-
-	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs) {
+	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs,
+			String receiptID) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.orderIDs = orderIDs;
+		this.receiptID = receiptID;
+	}
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
 
 	public OrganizationPO getLocal() {

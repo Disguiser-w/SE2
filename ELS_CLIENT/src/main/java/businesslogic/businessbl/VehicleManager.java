@@ -38,7 +38,8 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.addVehicle(BusinessMainController.vehicleVOToPO(vo));
+			result = businessData.addVehicle(BusinessMainController.businessVO.organizationVO.organizationID,
+					BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,7 +51,8 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteVehicle(BusinessMainController.vehicleVOToPO(vo));
+			result = businessData.deleteVehicle(BusinessMainController.businessVO.organizationVO.organizationID,
+					BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +65,8 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteVehicle(BusinessMainController.vehicleVOToPO(vo));
+			result = businessData.deleteVehicle(BusinessMainController.businessVO.organizationVO.organizationID,
+					BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

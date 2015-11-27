@@ -1,5 +1,7 @@
 package businesslogic.businessbl.controller;
 
+import java.util.ArrayList;
+
 import businesslogic.businessbl.AcceptCargo;
 import businesslogicservice.businessblservice.AcceptCargoBLService;
 import vo.OrderAcceptReceiptVO;
@@ -10,11 +12,9 @@ public class AcceptCargoController implements AcceptCargoBLService{
 		acceptCargo = new AcceptCargo();
 	}
 	
-	public boolean acceptCargo(OrderAcceptReceiptVO vo) {
+	public boolean acceptCargo(String organizationID, String vehicleID, ArrayList<String> orderIDs) {
 		// TODO Auto-generated method stub
-		String pig = "sdfa";
-		
-		return acceptCargo.acceptCargo(vo);
+		return acceptCargo.acceptCargo(organizationID,vehicleID,orderIDs);
 		
 	}
 

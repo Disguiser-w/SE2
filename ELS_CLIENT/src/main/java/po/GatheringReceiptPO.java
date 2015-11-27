@@ -6,22 +6,24 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GatheringReceiptPO {
-	OrganizationPO businessShall;
-	String time;
-	ArrayList<ExpressPO> expressList;
-	ArrayList<Double> money;
-	double totalmoney;
+	private OrganizationPO businessShall;
+	private String time;
+	private ArrayList<String> expressIDs;
+	private ArrayList<Double> money;
+	private double totalmoney;
+	private String receiptID;
 
 	public GatheringReceiptPO() {
 	}
 
-	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<ExpressPO> expressList,
-			ArrayList<Double> money, double totalmoney) {
-		this.expressList = expressList;
+	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<String> expressList,
+			ArrayList<Double> money, double totalmoney, String receiptID) {
+		this.expressIDs = expressList;
 		this.money = money;
 		this.businessShall = businessShall;
 		this.totalmoney = totalmoney;
 		this.time = time;
+		this.receiptID = receiptID;
 	}
 
 	public OrganizationPO getBusinesShall() {
@@ -40,12 +42,12 @@ public class GatheringReceiptPO {
 		this.time = time;
 	}
 
-	public ArrayList<ExpressPO> getExpressList() {
-		return expressList;
+	public ArrayList<String> getExpressIDs() {
+		return expressIDs;
 	}
 
-	public void setExpressList(ArrayList<ExpressPO> expressList) {
-		this.expressList = expressList;
+	public void setExpressIDs(ArrayList<String> expressList) {
+		this.expressIDs = expressList;
 	}
 
 	public ArrayList<Double> getMoney() {

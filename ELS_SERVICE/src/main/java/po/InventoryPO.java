@@ -1,7 +1,7 @@
 package po;
 
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import po.GoodsPO;
 

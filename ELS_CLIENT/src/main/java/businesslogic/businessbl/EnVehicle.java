@@ -71,13 +71,11 @@ public class EnVehicle {
 		ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = new ArrayList<EnVehicleReceiptPO>();
 		ArrayList<String> result = new ArrayList<String>();
 
+		int j = 0;
 		for (VehiclePO i : vehiclePO) {
 			// 对每一辆车,生成一个装车单，放在装车单的ArrayList中
 			EnVehicleReceiptPO enVehicle = new EnVehicleReceiptPO();
-			// private OrganizationPO placeOfDeparture;
-			// private String time;
-			// private VehiclePO vehiclePO;
-			// private ArrayList<String> OrderPOList;
+
 			enVehicle.setPlaceOfDeparture(OrganizationBL.organizationVOToPO(organizationVO));
 			enVehicle.setTime(nowTime);
 			enVehicle.setVehiclePO(i);
@@ -90,8 +88,14 @@ public class EnVehicle {
 							+ i.getID());
 				}
 			enVehicle.setOrderPOList(orderIDs);
-			此处增加ID
+
+			String newTime = (new SimpleDateFormat("yyyMMdd")).format(new Date());
+
+			enVehicle.setReceiptID(organizationVO.organizationID + "-" + newTime + "-" + j);
+			j += 1;
+
 			enVehicleReceiptPOs.add(enVehicle);
+
 		}
 
 		// 存在今日文件中

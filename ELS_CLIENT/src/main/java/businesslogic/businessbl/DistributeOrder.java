@@ -41,8 +41,7 @@ public class DistributeOrder {
 		Date date = calendar.getTime();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String time = df.format(date);
-		
-		
+
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<OrderPO> distributingOrders = null;
 		try {
@@ -70,12 +69,16 @@ public class DistributeOrder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+
+		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 		String nowTime = df.format(new Date());
-		此处增加ID
-		DistributeReceiptPO po = new DistributeReceiptPO(null,result,nowTime);
+
+		DistributeReceiptPO po = new DistributeReceiptPO(organizationVO.organizationID + "-" + nowTime, result,
+				nowTime);
+		//增加派件单，一天一天
+		BusinessMainController.businessData.addDistributeReceipt(organizationVO.organizationID,po);
 		
+
 		return result;
 	}
 

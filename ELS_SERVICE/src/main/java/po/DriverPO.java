@@ -14,6 +14,7 @@ public class DriverPO {
 	private Sexuality sexuality;
 	private String registrationDeadline;
 
+
 	public DriverPO() {
 	}
 

@@ -10,16 +10,26 @@ public class EnVehicleReceiptPO {
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> OrderPOList;
+	private String receiptID;
 
 	public EnVehicleReceiptPO() {
 	}
 
 	public EnVehicleReceiptPO(OrganizationPO organizationPO, String time, VehiclePO vehiclePO,
-			ArrayList<String> OrderPOList) {
-		this.placeOfDeparture = placeOfDeparture;
+			ArrayList<String> OrderPOList, String receiptID) {
+		this.placeOfDeparture = organizationPO;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.OrderPOList = OrderPOList;
+		this.receiptID = receiptID;
+	}
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
 
 	public String getTime() {

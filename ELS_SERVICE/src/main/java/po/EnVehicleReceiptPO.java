@@ -1,23 +1,37 @@
 package po;
 
 import java.util.ArrayList;
+
 /**
- * 营业厅到达单
- * */
+ * 营业厅装车单
+ */
 public class EnVehicleReceiptPO {
 	private OrganizationPO placeOfDeparture;
 	private String time;
 	private VehiclePO vehiclePO;
-	private ArrayList<OrderPO> OrderPOList;
+	private ArrayList<String> OrderPOList;
+	private String receiptID;
 
 	public EnVehicleReceiptPO() {
 	}
 
-	public EnVehicleReceiptPO(VehiclePO vehiclePO, ArrayList<OrderPO> OrderPOList) {
+	public EnVehicleReceiptPO(OrganizationPO organizationPO, String time, VehiclePO vehiclePO,
+			ArrayList<String> OrderPOList, String receiptID) {
+		this.placeOfDeparture = organizationPO;
+		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.OrderPOList = OrderPOList;
+		this.receiptID = receiptID;
 	}
-	
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
+	}
+
 	public String getTime() {
 		return time;
 	}
@@ -42,11 +56,11 @@ public class EnVehicleReceiptPO {
 		this.vehiclePO = vehiclePO;
 	}
 
-	public ArrayList<OrderPO> getOrderPOList() {
+	public ArrayList<String> getOrderPOList() {
 		return OrderPOList;
 	}
 
-	public void setOrderPOList(ArrayList<OrderPO> orderPOList) {
+	public void setOrderPOList(ArrayList<String> orderPOList) {
 		this.OrderPOList = orderPOList;
 	}
 }

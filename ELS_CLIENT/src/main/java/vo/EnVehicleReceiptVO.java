@@ -10,13 +10,15 @@ public class EnVehicleReceiptVO {
 	public final String time;
 	public final VehicleVO vehicleVO;
 	public final ArrayList<String> OrderVOList;
+	public final String receiptID;
 
 	public EnVehicleReceiptVO(OrganizationVO placeOfDeparture, String time, VehicleVO vehicleVO,
-			ArrayList<String> OrderVOList) {
+			ArrayList<String> OrderVOList, String receiptID) {
 		this.placeOfDeparture = placeOfDeparture;
 		this.time = time;
 		this.vehicleVO = vehicleVO;
 		this.OrderVOList = OrderVOList;
+		this.receiptID = receiptID;
 
 	}
 }

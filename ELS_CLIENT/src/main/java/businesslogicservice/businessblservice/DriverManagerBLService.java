@@ -28,8 +28,4 @@ public interface DriverManagerBLService {
 	 */
 	public boolean modifyDriver(DriverVO vo);
 
-	/**
-	 * 系统返回对应的车辆信息
-	 */
-	public DriverVO getDriverInfo(String ID);
 }

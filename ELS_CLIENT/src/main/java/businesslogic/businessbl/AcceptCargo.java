@@ -38,9 +38,9 @@ public class AcceptCargo {
 		// 将此状态更新到原营业厅文件中
 
 		try {
-			for (String i : orderIDs){
+			for (String i : orderIDs) {
 				expressData.changeState(OrderState.WAITING_DISTRIBUTE, i);
-				expressData.addHistory("快件已到达"+organizationVO.name+",正准备派送", organizationID, i);
+				expressData.addHistory("快件已到达" + organizationVO.name + ",正准备派送", organizationID, i);
 			}
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
@@ -83,10 +83,14 @@ public class AcceptCargo {
 			e.printStackTrace();
 		}
 		try {
-			此处增加ID
+			//
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
+			String time2 = sdf2.format(d);
+			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
+			String receiptID = organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
-					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs);
-			
+					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID);
+
 			result = businessData.addReceipt(organizationVO.organizationID, newPO);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

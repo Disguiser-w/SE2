@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import businesslogic.businessbl.DistributeOrder;
 import businesslogicservice.businessblservice.DistributeOrderBLService;
-import vo.ExpressVO;
-import vo.OrderVO;
 
 public class DistributeOrderController implements DistributeOrderBLService{
 
@@ -15,19 +13,9 @@ public class DistributeOrderController implements DistributeOrderBLService{
 		distributeOrder = new DistributeOrder();
 	}
 
-	public String distributeOrder() {
+	public ArrayList<String> distributeOrder() {
 		// TODO Auto-generated method stub
 		return distributeOrder.distributeOrder();
-	}
-
-	public ArrayList<ExpressVO> getExpressInfos() {
-		// TODO Auto-generated method stub
-		return distributeOrder.getExpressInfos();
-	}
-
-	public ArrayList<OrderVO> getSendOrder() {
-		// TODO Auto-generated method stub
-		return distributeOrder.getSendOrder();
 	}
 
 }

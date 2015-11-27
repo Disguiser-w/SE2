@@ -6,62 +6,64 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GatheringReceiptPO {
-	 OrganizationPO businesshall;
-	    String time;
-	    ArrayList<ExpressPO> expressList;
-	    ArrayList<Double> money;
-	    double totalmoney;
-	    
-	    public GatheringReceiptPO(){
-	    }
-	    
-	    public GatheringReceiptPO(ArrayList<ExpressPO> expressList, ArrayList<Double> money){
-	    	this.expressList = expressList;
-	    	this.money = money;
-	    	Date date = new Date();
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			this.time = format.format(date);
-	    }
+	private OrganizationPO businessShall;
+	private String time;
+	private ArrayList<String> expressIDs;
+	private ArrayList<Double> money;
+	private double totalmoney;
+	private String receiptID;
 
-		public OrganizationPO getBusinesshall() {
-			return businesshall;
-		}
+	public GatheringReceiptPO() {
+	}
 
-		public void setBusinesshall(OrganizationPO businesshall) {
-			this.businesshall = businesshall;
-		}
+	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<String> expressList,
+			ArrayList<Double> money, double totalmoney, String receiptID) {
+		this.expressIDs = expressList;
+		this.money = money;
+		this.businessShall = businessShall;
+		this.totalmoney = totalmoney;
+		this.time = time;
+		this.receiptID = receiptID;
+	}
 
-		public String getTime() {
-			return time;
-		}
+	public OrganizationPO getBusinesShall() {
+		return businessShall;
+	}
 
-		public void setTime(String time) {
-			this.time = time;
-		}
+	public void setBusinesshall(OrganizationPO businesShall) {
+		this.businessShall = businesShall;
+	}
 
-		public ArrayList<ExpressPO> getExpressList() {
-			return expressList;
-		}
+	public String getTime() {
+		return time;
+	}
 
-		public void setExpressList(ArrayList<ExpressPO> expressList) {
-			this.expressList = expressList;
-		}
+	public void setTime(String time) {
+		this.time = time;
+	}
 
-		public ArrayList<Double> getMoney() {
-			return money;
-		}
+	public ArrayList<String> getExpressIDs() {
+		return expressIDs;
+	}
 
-		public void setMoney(ArrayList<Double> money) {
-			this.money = money;
-		}
+	public void setExpressIDs(ArrayList<String> expressList) {
+		this.expressIDs = expressList;
+	}
 
-		public double getTotalmoney() {
-			return totalmoney;
-		}
+	public ArrayList<Double> getMoney() {
+		return money;
+	}
 
-		public void setTotalmoney(double totalmoney) {
-			this.totalmoney = totalmoney;
-		}
-	    
-	    
+	public void setMoney(ArrayList<Double> money) {
+		this.money = money;
+	}
+
+	public double getTotalmoney() {
+		return totalmoney;
+	}
+
+	public void setTotalmoney(double totalmoney) {
+		this.totalmoney = totalmoney;
+	}
+
 }

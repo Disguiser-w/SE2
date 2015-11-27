@@ -5,70 +5,86 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import businesslogic.expressbl.ChargeCollection;
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.businessdataservice.BusinessDataService_stub;
 import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import po.ExpressPO;
 import po.GatheringReceiptPO;
-import vo.ExpressVO;
 import vo.OrganizationVO;
 
 public class Gathering {
 
-	// 返回所有该营业厅快递员的收费信息
 	public ArrayList<String> getChargeInfo() {
-		ArrayList<String> infos = new ArrayList<String>();
-		ArrayList<ExpressPO> pos = null;
+		// 获取收费信息
+		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
+		ExpressDataService expressData = BusinessMainController.expressData;
+
+		ArrayList<ExpressPO> po = null;
 		try {
-			pos = expressData.getExpressInfos();
+			po = expressData.getExpressInfos(organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
-		for (ExpressPO i : pos)
-			if (i.getOrganization().getOrganizationID().equals(organizationID))
-				infos.add(i.getID() + " " + i.getChargeCollection().get(0));
-		this.organizationID = organizationID;
-		return infos;
+		double total = 0;
+
+		ArrayList<String> chargeInfo = new ArrayList<String>();
+
+		for (ExpressPO i : po) {
+			double charge = Double.parseDouble(i.getChargeCollection().get(0));
+			chargeInfo.add(i.getID() + " " + charge);
+		}
+		return chargeInfo;
 	}
 
-	public double gathering(OrganizationVO vo) {
-		double total = 0;
-		ArrayList<String> infos = getChargeInfo(vo.getOrganizationID());
-		for (String i : infos) {
-			total += Double.parseDouble(i.split(" ")[0]);
+	public double gathering() {
+
+		BusinessMainController.updateBusinessVO();
+		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
+		ExpressDataService expressData = BusinessMainController.expressData;
+		BusinessDataService businessData = BusinessMainController.businessData;
+
+		// 获取收费信息
+		ArrayList<ExpressPO> po = null;
+		try {
+			po = expressData.getExpressInfos(organizationVO.organizationID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
+
+		double total = 0;
+		ArrayList<Double> charges = new ArrayList<Double>();
+		ArrayList<String> expressIDs = new ArrayList<String>();
+
+		for (ExpressPO i : po) {
+			double charge = Double.parseDouble(i.getChargeCollection().get(0));
+			total += charge;
+
+			charges.add(charge);
+			expressIDs.add(i.getID());
+		}
+
+		Date d = new Date();
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		String time = fm.format(d);
 
 		// public OrganizationVO businesshall;
 		// public String time;
-		// public ArrayList<ExpressVO> expressList;
+		// public ArrayList<String> expressIDs;
 		// public ArrayList<Double> money;
 		// public double totalmoney;
-		// 生成收款汇总单
-		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String time = sdf.format(d);
-		ArrayList<ExpressPO> sentExpressPOs = null;
+		String receiptID = organizationVO.organizationID + " " + time;
+
+		GatheringReceiptPO grp = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(organizationVO), time,
+				expressIDs, charges, total, receiptID);
+
 		try {
-			ArrayList<ExpressPO> expressPOs = expressData.getExpressInfos();
-			for (ExpressPO i : expressPOs)
-				if (i.getOrganization().getOrganizationID().equals(organizationID))
-					sentExpressPOs.add(i);
+			businessData.addGatheringReceipt(organizationVO.organizationID, grp);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ArrayList<Double> moneys = new ArrayList<Double>();
-		for (ExpressPO i : sentExpressPOs)
-			moneys.add(Double.parseDouble(i.getChargeCollection().get(0)));
-
-		GatheringReceiptPO po = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(vo), time, sentExpressPOs,
-				moneys, total);
-		businessData.addGatheringReceipt(po);
-
 		return total;
 	}
 

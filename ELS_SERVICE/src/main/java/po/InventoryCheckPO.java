@@ -13,6 +13,14 @@ public class InventoryCheckPO {
 		this.stockNum = new int[4];
 	}
 	
+	public InventoryCheckPO(int enterTotal, int leaveTotal, double enterFeeTotal, double leaveFeeTotal, int[] stockNum){
+		this.enterTotal = enterTotal;
+		this.leaveTotal = leaveTotal;
+		this.enterFeeTotal = enterFeeTotal;
+		this.leaveFeeTotal = leaveFeeTotal;
+		this.stockNum = stockNum;
+	}
+	
 	public void enterTotalPlus(){
 		this.enterTotal++;
 	}

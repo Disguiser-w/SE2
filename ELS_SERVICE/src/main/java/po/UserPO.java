@@ -19,6 +19,18 @@ public class UserPO implements Serializable {
 	private AuthorityType authority;
 	private int grades;
 
+	public UserPO(String userName,String userID,ProfessionType profession,String organization, 
+			SalaryPlanType salaryPlan, AuthorityType authority, int grades){
+        
+		this.userName = userName;
+		this.userID = userID;
+		this.profession = profession;
+		this.organization = organization;
+		this.salaryPlan = salaryPlan;
+		this.authority = authority;
+		this.grades = grades;
+	}
+	
 	public UserPO(String userName,String userID,String password, ProfessionType profession,String organization, 
 			SalaryPlanType salaryPlan, AuthorityType authority, int grades){
         

@@ -1,9 +1,13 @@
 package po;
 
+<<<<<<< HEAD
+=======
 import java.io.Serializable;
 
 import type.OrganizationType;
+>>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 import po.RepertoryPO;
+import type.OrganizationType;
 
 public class OrganizationPO implements Serializable {
 	
@@ -30,6 +34,13 @@ public class OrganizationPO implements Serializable {
 			this.repertory = null;
 		}
 		
+	}
+	
+	public OrganizationPO(OrganizationType category, String organizationID, String name){
+
+		this.category = category;
+		this.organizationID = organizationID;
+		this.name = name;
 	}
 	
 	public OrganizationType getCategory(){

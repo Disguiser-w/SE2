@@ -72,7 +72,7 @@ public class BusinessMainController {
 
 		VehiclePO vpo = vehicleVOToPO(vo.vehicleVO);
 		OrderAcceptReceiptPO opo = new OrderAcceptReceiptPO(OrganizationBL.organizationVOToPO(vo.local), vo.time, vpo,
-				vo.orderIDs);
+				vo.orderIDs, vo.receiptID);
 		return opo;
 
 	}
@@ -80,7 +80,7 @@ public class BusinessMainController {
 	public static OrderAcceptReceiptVO orderAcceptReceiptPOToVO(OrderAcceptReceiptPO po) {
 		VehicleVO vvo = vehiclePOToVO(po.getVehiclePO());
 		OrderAcceptReceiptVO Vpo = new OrderAcceptReceiptVO(OrganizationBL.organizationPOToVO(po.getLocal()),
-				po.getTime(), vvo, po.getOrderIDs());
+				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID());
 		return Vpo;
 	}
 

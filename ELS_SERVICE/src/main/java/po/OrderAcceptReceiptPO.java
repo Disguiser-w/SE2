@@ -6,17 +6,24 @@ public class OrderAcceptReceiptPO {
 	private OrganizationPO local;
 	private String time;
 	private VehiclePO vehiclePO;
-	private ArrayList<OrderPO> orderPOList;
+	private ArrayList<String> orderIDs;
+	private String receiptID;
 
-	public OrderAcceptReceiptPO() {
-	}
-
-	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO,
-			ArrayList<OrderPO> orderPOList) {
+	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs,
+			String receiptID) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
-		this.orderPOList = orderPOList;
+		this.orderIDs = orderIDs;
+		this.receiptID = receiptID;
+	}
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
 	}
 
 	public OrganizationPO getLocal() {
@@ -43,11 +50,12 @@ public class OrderAcceptReceiptPO {
 		this.vehiclePO = vehiclePO;
 	}
 
-	public ArrayList<OrderPO> getOrderPOList() {
-		return orderPOList;
+	public ArrayList<String> getOrderIDs() {
+		return orderIDs;
 	}
 
-	public void setOrderPOList(ArrayList<OrderPO> orderPOList) {
-		this.orderPOList = orderPOList;
+	public void setOrderIDs(ArrayList<String> orderIDs) {
+		this.orderIDs = orderIDs;
 	}
+
 }
