@@ -16,8 +16,6 @@ public interface EntruckingBLService {
 
 	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck) throws Exception;
 
-	public void entruck(ArrayList<OrderVO> al) throws Exception;
-
 	public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(
 			EntruckingReceiptVO vo);
 

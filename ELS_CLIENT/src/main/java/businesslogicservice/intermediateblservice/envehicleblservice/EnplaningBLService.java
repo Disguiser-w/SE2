@@ -16,8 +16,6 @@ public interface EnplaningBLService {
 
 	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane) throws Exception;
 
-	public void enplane(ArrayList<OrderVO> al) throws Exception;
-
 	public ArrayList<EnplaningReceiptVO> updateEnplaningReceiptList(
 			EnplaningReceiptVO vo);
 

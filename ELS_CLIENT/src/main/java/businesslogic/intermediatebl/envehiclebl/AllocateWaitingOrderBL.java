@@ -2,7 +2,7 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
-import type.TransferingState;
+import type.OrderState;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
 import businesslogicservice.intermediateblservice.envehicleblservice.AllocateWaitingOrderBLService;
@@ -18,7 +18,7 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	public ArrayList<OrderVO> updateWaitingList() {
 		// TODO 自动生成的方法存根
 		for(OrderVO order:transferingReceipt.orderList) {
-			if (order.transfer_state == TransferingState.WAITING_ENVEHICLE)
+			if (order.order_state == OrderState.TRANSFERING)
 				waitingOrderList.add(order);
 		}
 		return waitingOrderList;

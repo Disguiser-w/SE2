@@ -15,8 +15,6 @@ public interface EntrainingBLService {
 
 	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train) throws Exception;
 
-	public void entrain(ArrayList<OrderVO> al) throws Exception;
-
 	public ArrayList<EntrainingReceiptVO> updateEntrainingReceiptList(
 			EntrainingReceiptVO vo);
 

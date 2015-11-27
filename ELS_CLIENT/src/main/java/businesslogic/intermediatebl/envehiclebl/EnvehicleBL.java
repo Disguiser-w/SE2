@@ -55,18 +55,43 @@ public class EnvehicleBL implements EnvehicleBLService {
 					address_end[0]);
 			if (order.expressType == ExpressType.FAST
 					|| (order.expressType == ExpressType.STANDARD && distance > STANDARD_PLANE)
-					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE))
+					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE)) {
 				for (PlaneVO plane : planeList) {
-					if ((enplane.showEnplaningReceipt(plane).orderList.size() < 2000)
+					if ((enplane.showEnplaningReceipt(plane).orderList.size() <= 2000)
 							&& address_end[0] == plane.destination) {
-						enplane.showEnplaningReceipt(plane).orderList.add(order);
+						enplane.showEnplaningReceipt(plane).orderList
+								.add(order);
 						order.order_state = OrderState.TRANSFERING;
-						continue;
+						return OperationState.SUCCEED_OPERATION;
 					}
 				}
+			} else if ((order.expressType == ExpressType.STANDARD && distance <= STANDARD_PLANE)
+					|| (order.expressType == ExpressType.ECONOMIC
+							&& distance <= ECONOMIC_PLANE && distance > ECONOMIC_TRAIN)) {
+				for (TrainVO train : trainList) {
+					if ((entrain.showEntrainingReceiptVO(train).orderList
+							.size() <= 200000)
+							&& address_end[0] == train.destination) {
+						entrain.showEntrainingReceiptVO(train).orderList
+								.add(order);
+						order.order_state = OrderState.TRANSFERING;
+						return OperationState.SUCCEED_OPERATION;
+					}
+				}
+			} else if (order.expressType == ExpressType.ECONOMIC
+					&& distance <= ECONOMIC_TRAIN) {
+				for (TruckVO truck : truckList) {
+					if (entruck.showEntruckingReceiptVO(truck).orderList.size() <= 1000
+							&& address_end[0] == truck.destination) {
+						entruck.showEntruckingReceiptVO(truck).orderList
+								.add(order);
+						order.order_state = OrderState.TRANSFERING;
+						return OperationState.SUCCEED_OPERATION;
+					}
+				}
+			}
 		}
 
-		return OperationState.SUCCEED_OPERATION;
+		return OperationState.FAIL_OPERATION;
 	}
-
 }

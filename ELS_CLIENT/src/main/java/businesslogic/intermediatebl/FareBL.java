@@ -25,7 +25,6 @@ public class FareBL implements FareBLService {
         this.fare_sum = 0;
 	}
 
-	@Override
 	public FareVO computeFare() {
 		// TODO 自动生成的方法存根
         for(EnplaningReceiptVO enplaningReceipt:enplaningReceiptList)
@@ -37,7 +36,6 @@ public class FareBL implements FareBLService {
 		return new FareVO(null, enplaningReceiptList, entrainingReceiptList, entruckingReceiptList, fare_sum, null, null);
 	}
 
-	@Override
 	public OperationState update(FareVO fare) {
 		// TODO 自动生成的方法存根
 		return null;

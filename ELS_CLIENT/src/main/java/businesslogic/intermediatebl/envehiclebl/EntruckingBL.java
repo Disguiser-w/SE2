@@ -53,22 +53,6 @@ public class EntruckingBL implements EntruckingBLService {
 		throw new Exception("未找到该汽车！");
 	}
 
-	public void entruck(ArrayList<OrderVO> waitingOrderList) throws Exception {
-		// TODO 自动生成的方法存根
-		waitingOrderList = awobl.updateWaitingList();
-
-		for (OrderVO order : waitingOrderList) {
-			String[] address = order.recipientAddress.split(" ");
-			for (TruckVO truck : truckList) {
-				if (address[0] == truck.destination) {
-					showEntruckingReceiptVO(truck).orderList.add(order);
-					order.order_state = OrderState.WAITING_ENVEHICLE;
-					continue;
-				}
-			}
-		}
-	}
-
 	public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(
 			EntruckingReceiptVO vo) {
 		// TODO 自动生成的方法存根

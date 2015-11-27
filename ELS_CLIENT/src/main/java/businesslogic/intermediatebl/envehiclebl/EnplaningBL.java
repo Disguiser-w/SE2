@@ -89,11 +89,4 @@ public class EnplaningBL implements EnplaningBLService {
 		// TODO 自动生成的方法存根
 		return false;
 	}
-
-	@Override
-	public void enplane(ArrayList<OrderVO> al) throws Exception {
-		// TODO 自动生成的方法存根
-		
-	}
-
 }
