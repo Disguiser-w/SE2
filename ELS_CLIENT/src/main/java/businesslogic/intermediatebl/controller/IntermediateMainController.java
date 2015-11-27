@@ -28,27 +28,16 @@ import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.intermediatedataservice.IntermediateDataService;
-import dataservice.intermediatedataservice.envehicledataservice.EnplaningDataService;
-import dataservice.intermediatedataservice.envehicledataservice.EnplaningDataService_stub;
-import dataservice.intermediatedataservice.envehicledataservice.EntrainingDataService;
-import dataservice.intermediatedataservice.envehicledataservice.EntrainingDataService_stub;
-import dataservice.intermediatedataservice.envehicledataservice.EntruckingDataService;
-import dataservice.intermediatedataservice.envehicledataservice.EntruckingDataService_stub;
 
 public class IntermediateMainController {
 	private IntermediateDataService intermediateDataService;
-	private EnplaningDataService enplaningData;
-	private EntrainingDataService entrainingData;
-	private EntruckingDataService entruckingData;
 	private ExpressMainController expressMainController;
 
 	private IntermediateVO intermediate;
 
 	public IntermediateMainController(String intermediateID) {
+//		intermediateDataService
 		expressMainController = new ExpressMainController(null);
-		enplaningData = new EnplaningDataService_stub();
-		entrainingData = new EntrainingDataService_stub();
-		entruckingData = new EntruckingDataService_stub();
 		intermediate = IntermediateMainController
 				.poToVO(intermediateDataService.getIntermediateInfo(null,
 						intermediateID));

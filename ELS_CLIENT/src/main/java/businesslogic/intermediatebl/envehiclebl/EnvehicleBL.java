@@ -11,7 +11,7 @@ import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.managebl.CityDistanceBL;
-import dataservice.intermediatedataservice.envehicledataservice.EnvehicleBLService;
+import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
 
 public class EnvehicleBL implements EnvehicleBLService {
 	private AllocateWaitingOrderBL awobl;

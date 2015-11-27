@@ -5,37 +5,30 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EntrainingReceiptPO {
-	ArrayList<OrderPO> enplaningReceipt;
-	String time;
-	String ID;
-	OrganizationPO intermediateCentre;
-	PlanePO plane;
+public class EntrainingReceiptPO extends EnIntermediateReceiptPO {
+	private OrganizationPO intermediateCentre;
+	private TrainPO train;
 
-	public EntrainingReceiptPO() {
-	}
+	private ArrayList<OrderPO> orderList;
 
-	public EntrainingReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
-		this.enplaningReceipt = enplaningReceipt;
+	private final long orderNum_max = 200000;
+	private double fare;
+	private String date;
+	private String ID;
+
+	public EntrainingReceiptPO(OrganizationPO intermediateCentre,
+			TrainPO train, ArrayList<OrderPO> orderList, String ID) {
+		super(intermediateCentre, orderList, ID);
+		this.train = train;
+		this.fare = train.getFarePrice() * orderNum_max;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {
@@ -54,12 +47,28 @@ public class EntrainingReceiptPO {
 		this.intermediateCentre = intermediateCentre;
 	}
 
-	public PlanePO getPlane() {
-		return plane;
+	public TrainPO getTrain() {
+		return train;
 	}
 
-	public void setPlane(PlanePO plane) {
-		this.plane = plane;
+	public void setTrain(TrainPO train) {
+		this.train = train;
 	}
-	
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
+	}
+
 }

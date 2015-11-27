@@ -1,30 +1,32 @@
 package po;
 
 public class TrainPO {
-	 String ID;
-	    double farePrice;
-	    
-	    public TrainPO(){  	
-	    }
-	    
-	    public TrainPO(double farePrice){
-	    	this.farePrice = farePrice;
-	    }
+	private String ID;
+	private String destination;
+	private final double farePrice = 0.002;
 
-		public String getID() {
-			return ID;
-		}
+	public TrainPO(String ID, String destination) {
+		this.ID = ID;
+		this.destination = destination;
+	}
 
-		public void setID(String iD) {
-			ID = iD;
-		}
+	public String getID() {
+		return ID;
+	}
 
-		public double getFarePrice() {
-			return farePrice;
-		}
+	public void setID(String iD) {
+		ID = iD;
+	}
 
-		public void setFarePrice(double farePrice) {
-			this.farePrice = farePrice;
-		}
+	public String getDestination() {
+		return destination;
+	}
 
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public double getFarePrice() {
+		return farePrice;
+	}
 }

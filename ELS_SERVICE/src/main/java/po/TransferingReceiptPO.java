@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TransferingReceiptPO {
-	 String ID;
-	    String time;
-	    ArrayList<OrderPO> orderList;
-	    OrganizationPO interdiatehall;
+    OrganizationPO interdiateCentre;	
+	
+    ArrayList<OrderPO> orderList;
+    
+	String ID;
+	    String date;
 	    
-	    public TransferingReceiptPO(){
-	    }
-	    
-	    public TransferingReceiptPO(ArrayList<OrderPO> orderList){
+	    public TransferingReceiptPO(OrganizationPO intermediateCentre,ArrayList<OrderPO> orderList,String ID){
 	    	Date date = new Date();
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			this.time = format.format(date);
+			this.setDate(format.format(date));
 			this.orderList = orderList;
+			this.interdiateCentre = intermediateCentre;
+			this.ID = ID;
 	    }
 
 		public String getID() {
@@ -29,12 +30,12 @@ public class TransferingReceiptPO {
 			ID = iD;
 		}
 
-		public String getTime() {
-			return time;
+		public String getDate() {
+			return date;
 		}
 
-		public void setTime(String time) {
-			this.time = time;
+		public void setDate(String time) {
+			this.date = time;
 		}
 
 		public ArrayList<OrderPO> getOrderList() {
@@ -46,10 +47,10 @@ public class TransferingReceiptPO {
 		}
 
 		public OrganizationPO getInterdiatehall() {
-			return interdiatehall;
+			return interdiateCentre;
 		}
 
 		public void setInterdiatehall(OrganizationPO interdiatehall) {
-			this.interdiatehall = interdiatehall;
+			this.interdiateCentre = interdiatehall;
 		}
 }

@@ -1,41 +1,31 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class EntruckingReceiptPO {
-	ArrayList<OrderPO> enplaningReceipt;
-	String time;
-	String ID;
-	OrganizationPO intermediateCentre;
-	PlanePO plane;
+public class EntruckingReceiptPO extends EnIntermediateReceiptPO{
+	private OrganizationPO intermediateCentre;
+	private TruckPO truck;
 
-	public EntruckingReceiptPO() {
-	}
+	private ArrayList<OrderPO> orderList;
 
-	public EntruckingReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
-		this.enplaningReceipt = enplaningReceipt;
+	private final long orderNum_max = 1000;
+	private double fare;
+	private String date;
+	private String ID;
+
+	public EntruckingReceiptPO(OrganizationPO intermediateCentre,
+			TruckPO truck, ArrayList<OrderPO> orderList, double fare, String ID) {
+		super(intermediateCentre, orderList, ID);
+		this.truck = truck;
+		this.fare = truck.getFarePrice() * orderNum_max;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {
@@ -54,11 +44,27 @@ public class EntruckingReceiptPO {
 		this.intermediateCentre = intermediateCentre;
 	}
 
-	public PlanePO getPlane() {
-		return plane;
+	public TruckPO getTruck() {
+		return truck;
 	}
 
-	public void setPlane(PlanePO plane) {
-		this.plane = plane;
+	public void setTruck(TruckPO truck) {
+		this.truck = truck;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
 	}
 }

@@ -1,41 +1,47 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class EnplaningReceiptPO {
-	ArrayList<OrderPO> enplaningReceipt;
-	String time;
-	String ID;
-	OrganizationPO intermediateCentre;
-	PlanePO plane;
+public class EnplaningReceiptPO extends EnIntermediateReceiptPO{
+	private OrganizationPO intermediateCentre;
+	private PlanePO plane;
 
-	public EnplaningReceiptPO() {
-	}
+	private ArrayList<OrderPO> orderList;
 
-	public EnplaningReceiptPO(ArrayList<OrderPO> enplaningReceipt) {
-		Date date = new Date();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.time = format.format(date);
-		this.enplaningReceipt = enplaningReceipt;
+	private final long OrderNum_max = 5000;
+	private double fare;
+	private String date;
+	private String ID;
+
+	public EnplaningReceiptPO(OrganizationPO intermediateCentre, PlanePO plane,
+			ArrayList<OrderPO> orderList, String ID) {
+		super(intermediateCentre, orderList, ID);
+		this.plane = plane;
+		this.fare = plane.getFarePrice() * OrderNum_max;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {
-		return enplaningReceipt;
+		return orderList;
+	}
+
+	public ArrayList<OrderPO> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(ArrayList<OrderPO> orderList) {
+		this.orderList = orderList;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
 	}
 
 	public void setEnplaningReceipt(ArrayList<OrderPO> enplaningReceipt) {
-		this.enplaningReceipt = enplaningReceipt;
-	}
-
-	public String getTime() {
-		return time;
-	}
-
-	public void setTime(String time) {
-		this.time = time;
+		this.orderList = enplaningReceipt;
 	}
 
 	public String getID() {
@@ -61,5 +67,13 @@ public class EnplaningReceiptPO {
 	public void setPlane(PlanePO plane) {
 		this.plane = plane;
 	}
-	
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 }
