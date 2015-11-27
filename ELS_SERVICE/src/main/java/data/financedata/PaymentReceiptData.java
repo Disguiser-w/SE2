@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import File.JXCFile;
 import po.PaymentReceiptPO;
+import po.ReceiptPO.ReceiptState;
+import type.ReceiptType;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData implements PaymentReceiptDataService{
@@ -40,18 +42,41 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		return paymentReceiptPOs;
 	}
 	
+	public int getNum(){
+		file=new JXCFile("payment.ser");
+		return num;
+	}
+	
+
 	/**
-	 * 获取特定时间内的付款单——BSL要用
+	 * 修改——暂时不需要
 	 * */
-	public ArrayList<PaymentReceiptPO> getRightPaymentReceipt(String beginTime,
-			String endTime) {
+	public PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * 删除——本来不想写的，但是打不开ser文件23333
+	 * success
+	 * */
+	public int delete(String ID){
+		file=new JXCFile("payment.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("文件为空");
+			return 1;
+		}
+		for(int i=0;i<os.size();i++){
+			PaymentReceiptPO po=(PaymentReceiptPO) os.get(i);
+			if(po.getID().equals(ID)){
+				os.remove(i);
+				System.out.println("remove successfully!");
+			}
+			}
+
+		file.writeM(os);
+		return 0;
 	}
 
 	public double getSalary() {
@@ -82,7 +107,7 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		else{
 			for(Object o:os){
 				PaymentReceiptPO p=(PaymentReceiptPO) o;
-				if((p.getDate().compareTo(beginTime)>0)&&(p.getDate().compareTo(endTime)<0)){
+				if((p.getDate().compareTo(beginTime)>=0)&&(p.getDate().compareTo(endTime)<=0)){
 					pos.add(p);
 				}
 			}
@@ -90,6 +115,39 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		}
 	}
 
+	public static void main(String[] args){
+		PaymentReceiptData data=new PaymentReceiptData();
+		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
+		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151127-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151127", "boss", "本宝宝");
+		try {
+//			data.delete("FKD-20110101-00001");
+//			data.delete("FKD-20110101-00002");
+//			data.delete("FKD-20151126-00001");
+//			data.delete("FKD-20151127-00001");
+//			data.creatPaymentReceipt(po1);
+//			data.creatPaymentReceipt(po2);
+//			data.creatPaymentReceipt(po3);
+//			data.creatPaymentReceipt(po4);
+			
+			ArrayList<PaymentReceiptPO> All;
+							All = data.getAllPaymentReceipt();
+							for(PaymentReceiptPO p:All){
+								System.out.println("ID: "+p.getID());
+							}
+							System.out.println(data.getNum());
+							System.out.println();
+							ArrayList<PaymentReceiptPO> por=data.getPayment_right("20110101", "20151127");
+							for(PaymentReceiptPO p:por){
+								System.out.println("ID :"+p.getID());
+							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
+	
 
+	}
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import File.JXCFile;
 import po.CollectionReceiptPO;
+import po.ReceiptPO.ReceiptState;
+import type.ReceiptType;
 import dataservice.financedataservice.CollectionReceiptDataService;
 
 public class CollectionReceiptData implements CollectionReceiptDataService{
@@ -18,6 +20,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 
 	/**
 	 * 创建收款单，即将一个po写入序列化文件
+	 *  success
 	 * */
 	public int createCollection(CollectionReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -30,6 +33,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 
 	/**
 	 * 获取所有的收款单------也就是从文件中读取放到po中
+	 * success
 	 * */
 	public ArrayList<CollectionReceiptPO> getAllCollection()
 			throws RemoteException {
@@ -50,15 +54,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 		}
 	}
 	
-	/**
-	 * 获取特定时间的入款单——BSL要用
-	 * */
-	public ArrayList<CollectionReceiptPO> getRightCollection(String beginTime,
-			String endTime) {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
+	
 
 	/**
 	 * 按时间获取所有的营业厅收款单------从文件中放到po中
@@ -95,6 +91,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 
 	/**
 	 * 查找：暂时先不写吧
+	 * success
 	 * */
 	public CollectionReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -121,53 +118,85 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public static void main(String[] args){
-		CollectionReceiptData data=new CollectionReceiptData();
-		try {
-//		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151126-00001", "苏苏", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 2000);
-//		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151126-00002", "苏苏", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 2000);
-//			data.createCollection(po1);
-//			data.createCollection(po2);
-			ArrayList<CollectionReceiptPO> collectionReceiptPOs=data.getAllCollection();
-			for(CollectionReceiptPO po:collectionReceiptPOs){
-				System.out.println("ID:  "+po.getID());
-			}
-			CollectionReceiptPO po=data.findByID("HJSKD-20151126-00002");
-			System.out.println("ID: "+po.getID()+"  UserID: "+po.getUserID());
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
+	/**
+	 * 删除——本来不想写的，但是打不开ser文件23333
+	 * success
+	 * */
+	public int delete(String ID){
+		file=new JXCFile("collection.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("文件为空");
+			return 1;
 		}
-	}
+		for(int i=0;i<os.size();i++){
+			CollectionReceiptPO po=(CollectionReceiptPO) os.get(i);
+			if(po.getID().equals(ID)){
+				os.remove(i);
+				System.out.println("remove successfully!");
+			}
+			}
 
+		file.writeM(os);
+		return 0;
+	}
+	/**
+	 * 根据时间筛选出入款单——只提供bl层调用，不需要写入文件
+	 * */
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
 			String endTime) {
 		// TODO Auto-generated method stub
 		file=new JXCFile("collection.ser");
 		ArrayList<Object> os=file.read();
-		ArrayList<CollectionReceiptPO> pos=new ArrayList<CollectionReceiptPO>();
-		ArrayList<CollectionReceiptPO> pos_right=new ArrayList<CollectionReceiptPO>();
-		for(Object o:os){
-			CollectionReceiptPO po=(CollectionReceiptPO) o;
-			pos.add(po);
-		}
+		ArrayList<CollectionReceiptPO> pos=new ArrayList<CollectionReceiptPO>();		
 		//判断格式这个是不是应该放到bl里？？？
 		if(beginTime.compareTo(endTime)>0){
 			System.out.println("输入时间区间格式不对");
 			return null;
 		}
 		else{
-			for(CollectionReceiptPO p:pos){
-				if((p.getDate().compareTo(beginTime)>0)&&(p.getDate().compareTo(endTime)<0)){
-					pos_right.add(p);
-				}
+		for(Object o:os){
+			CollectionReceiptPO po=(CollectionReceiptPO) o;
+			if((po.getDate().compareTo(beginTime)>=0)&&(po.getDate().compareTo(endTime)<=0)){
+			pos.add(po);
 			}
-			
-			
 		}
-		return pos_right;
+		}
+		return pos;
+	}
+	
+
+	public static void main(String[] args){
+		CollectionReceiptData data=new CollectionReceiptData();
+//			data.createCollection(po1);
+		//			data.createCollection(po2);
+		//			data.createCollection(po3);
+					ArrayList<CollectionReceiptPO> All;
+					try {
+						All = data.getAllCollection();
+						for(CollectionReceiptPO p:All){
+							System.out.println("ID: "+p.getID());
+						}
+						System.out.println(data.getNum());
+						System.out.println();
+						ArrayList<CollectionReceiptPO> por=data.getCollection_right("20151101", "20151127");
+						for(CollectionReceiptPO p:por){
+							System.out.println("ID :"+p.getID());
+						}
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+//			ArrayList<CollectionReceiptPO> collectionReceiptPOs=data.getAllCollection();
+//			for(CollectionReceiptPO po:collectionReceiptPOs){
+//				System.out.println("ID:  "+po.getID());
+//			}
+//			CollectionReceiptPO po=data.findByID("HJSKD-20151126-00002");
+//			System.out.println("ID: "+po.getID()+"  UserID: "+po.getUserID());
 	}
 
+	
 	
 }

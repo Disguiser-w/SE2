@@ -12,9 +12,6 @@ public interface CollectionReceiptDataService {
 //   public ArrayList<GatheringReceiptPO> getGathering(String Time) throws RemoteException;
 //	public ArrayList<Double>  getMoney(GatheringReceiptPO po) throws RemoteException;
 //	public double getTotalMoney(ArrayList<GatheringReceiptPO> gathering) throws RemoteException;
-	
-	//获取特定时间内的入款单
-	public ArrayList<CollectionReceiptPO> getRightCollection(String beginTime,String endTime);
 	//当天存储的持久化对象个数
 	public int getNum() throws RemoteException;
 	//根据ID查找入款单
