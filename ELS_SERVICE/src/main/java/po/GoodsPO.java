@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class GoodsPO implements Serializable{
 	
 	private static final long serialVersionUID = 141250149L;
-	
 	private String Order_ID;
 	private double fee;
 	private String departurePlace, destination;

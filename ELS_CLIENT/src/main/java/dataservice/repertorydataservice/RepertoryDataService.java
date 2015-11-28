@@ -1,13 +1,13 @@
 package dataservice.repertorydataservice;
 
+import java.util.ArrayList;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import po.GoodsPO;
-import po.InventoryCheckPO;
 import po.InventoryPO;
 import po.RepertoryPO;
+import po.InventoryCheckPO;
 
 public interface RepertoryDataService extends Remote{
 	
@@ -20,5 +20,5 @@ public interface RepertoryDataService extends Remote{
 	public InventoryPO findInventorybyID(String repertoryID, String JJD_ID) throws RemoteException;  //（通过寄件单号和仓库编号（因为有多个仓库）寻找库存信息）
 	public InventoryCheckPO findInventorybyDate(String repertoryID, String beginDate, String endDate) throws RemoteException;  //（通过起始日期和仓库编号寻找库存信息）
 	public ArrayList<InventoryPO> findInventorybyTime(String repertoryID, String time) throws RemoteException;  //（通过截止时间和仓库编号寻找库存信息）
-	
+		
 }

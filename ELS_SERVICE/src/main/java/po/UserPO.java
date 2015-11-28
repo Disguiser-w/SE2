@@ -48,7 +48,7 @@ public class UserPO implements Serializable {
 		return this.userName;
 	}
 
-	public String getID() {
+	public String getUserID() {
 		return this.userID;
 	}
 

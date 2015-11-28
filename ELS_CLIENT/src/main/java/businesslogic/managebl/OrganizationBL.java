@@ -18,15 +18,8 @@ public class OrganizationBL implements OrganizationBLService{
 	
 	public int addOrganization (OrganizationVO organizationvo){
 		try{
-			String organizationID = organizationvo.getOrganizationID();
-			OrganizationPO organizationpo = odService.findOrganization(organizationID);
-			if(organizationpo.equals(null)){
-				OrganizationPO neworganizationpo = organizationVOToPO(organizationvo);
-				odService.addOrganization(neworganizationpo);
-				return 0;
-			}
-			else
-				return 1;
+			OrganizationPO neworganizationpo = organizationVOToPO(organizationvo);
+			return(odService.addOrganization(neworganizationpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -35,22 +28,20 @@ public class OrganizationBL implements OrganizationBLService{
 	
 	public int deleteOrganization(String organizationID) throws RemoteException{
 		try{
-			odService.deleteOrganization(organizationID);
-			return 0;
+			return(odService.deleteOrganization(organizationID));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int modifyOrganization(OrganizationVO organizationvo) throws RemoteException{
 		try{
 			OrganizationPO organizationpo = organizationVOToPO(organizationvo);
-			odService.modifyOrganization(organizationpo);
-			return 0;
+			return(odService.modifyOrganization(organizationpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	

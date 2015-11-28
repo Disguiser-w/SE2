@@ -14,33 +14,30 @@ public class PerWageBL implements PerWageBLService{
 	public int addPerWage(PerWageVO perWagevo){
 		try{
 			PerWagePO perWagepo = voToPO(perWagevo);
-			pwdService.addPerWage(perWagepo);
-			return 0;
+			return(pwdService.addPerWage(perWagepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int deletePerWage(PerWageVO perWagevo){
 		try{
 			PerWagePO perWagepo = voToPO(perWagevo);
-			pwdService.deletePerWage(perWagepo);
-			return 0;
+			return(pwdService.deletePerWage(perWagepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int modifyPerWage(PerWageVO perWagevo){
 		try{
 			PerWagePO perWagepo = voToPO(perWagevo);
-			pwdService.modifyPerWage(perWagepo);
-			return 0;
+			return(pwdService.modifyPerWage(perWagepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	

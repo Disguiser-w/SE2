@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CityDistancePO implements Serializable {
 	
 	private static final long serialVersionUID = 141250153L;
-	
+
 	private String cityA;
 	private String cityB;
 	private double distance;

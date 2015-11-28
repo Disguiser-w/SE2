@@ -35,8 +35,9 @@ public class UserBL implements UserBLService{
 				return 2;
 			else if(!(userpo.getPassword().equals(password)))	//用户密码错误，返回1
 				return 1;
-			else 
-				return 0;	//登录成功，返回0
+			else{ 
+				return 0;	//登录成功，返回0	
+			}						
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 3;
@@ -51,15 +52,8 @@ public class UserBL implements UserBLService{
 	 * */
 	public int addUser(UserVO uservo){
 		try{
-			String userID = uservo.getID();
-			UserPO userpo = udService.findUser(userID);
-			if(userpo.equals(null)){
-				UserPO newuserpo = voToPO(uservo);
-				udService.addUser(newuserpo);
-				return 0;
-			}
-			else 
-				return 1;
+			UserPO newuserpo = voToPO(uservo);
+			return(udService.addUser(newuserpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -68,51 +62,48 @@ public class UserBL implements UserBLService{
 	
 	/**
 	 * @param String userID
-	 * @return 0(delete succeed),1(server failed)
+	 * @return 0(delete succeed),1(delete failed),2(server failed)
 	 * @see UserPO
 	 * 
 	 * */
 	public int deleteUser(String userID){
 		try{
-			udService.deleteUser(userID);
-			return 0;
+			return(udService.deleteUser(userID));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	/**
 	 * @param UserVO uservo
-	 * @return 0(modify succeed),1(server failed)
+	 * @return 0(modify succeed),1(modify failed),2(server failed)
 	 * @see UserPO
 	 * 
 	 * */
 	public int modifyUserPassword(UserVO uservo){
 		try{
 			UserPO userpo = voToPO(uservo);
-			udService.modifyUser(userpo);
-			return 0;
+			return(udService.modifyUser(userpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	/**
 	 * @param UserVO uservo
-	 * @return 0(modify succeed),1(server failed)
+	 * @return 0(modify succeed),1(modify failed),2(server failed)
 	 * @see UserPO
 	 * 
 	 * */
 	public int modifyUserAuthority(UserVO uservo){
 		try{
 			UserPO userpo = voToPO(uservo);
-			udService.modifyUser(userpo);
-			return 0;
+			return(udService.modifyUser(userpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
