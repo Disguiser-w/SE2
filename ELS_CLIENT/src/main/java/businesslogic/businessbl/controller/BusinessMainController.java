@@ -112,11 +112,11 @@ public class BusinessMainController {
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
 		return new EnVehicleReceiptVO(OrganizationBL.organizationPOToVO(po.getPlaceOfDeparture()), po.getTime(),
-				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList());
+				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(),po.getReceiptID());
 	}
 
 	public static EnVehicleReceiptPO enVehicleReceiptVOToPO(EnVehicleReceiptVO vo) {
 		return new EnVehicleReceiptPO(OrganizationBL.organizationVOToPO(vo.placeOfDeparture), vo.time,
-				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList);
+				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList,vo.receiptID);
 	}
 }

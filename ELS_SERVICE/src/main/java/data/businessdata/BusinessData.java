@@ -22,6 +22,8 @@ import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
 
 public class BusinessData implements BusinessDataService {
+	public BusinessData() throws RemoteException {
+	}
 
 	public BusinessPO getBusinessInfo(String organizationID, String ID) throws RemoteException {
 		String path = "businessInfo/" + organizationID + "-express.dat";
@@ -244,7 +246,7 @@ public class BusinessData implements BusinessDataService {
 		return true;
 	}
 
-	public int getNumOfOrderAcceptReceipt(String organizationID) {
+	public int getNumOfOrderAcceptReceipt(String organizationID) throws RemoteException {
 		String time = getTime();
 		String path = "orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat";
 		File file = FileGetter.getFile(path);
@@ -265,7 +267,7 @@ public class BusinessData implements BusinessDataService {
 	/**
 	 * Lili在这！！日期格式 yyyy-MM-dd
 	 */
-	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) {
+	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) throws RemoteException {
 		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
 
 		File dir = FileGetter.getFile("gathering/");
@@ -292,7 +294,7 @@ public class BusinessData implements BusinessDataService {
 		return pos;
 	}
 
-	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) {
+	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException {
 		String time = getTime();
 		String path = "distribute/" + organizationID + "/" + time + "-distribute.dat";
 		File file = FileGetter.getFile(path);

@@ -47,13 +47,13 @@ public interface BusinessDataService extends Remote {
 	public boolean addGatheringReceipt(String organizationID, GatheringReceiptPO grp) throws RemoteException;
 
 	// 获得今日本营业厅OrderAcceptReceiptPO的个数
-	public int getNumOfOrderAcceptReceipt(String organizationID);
+	public int getNumOfOrderAcceptReceipt(String organizationID)throws RemoteException;
 
 	// 返回规定日期的所有GatheringReceipt,time格式 2015-11-23
-	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time);
+	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time)throws RemoteException;
 
 	// 增加一个DistributeOrder到本营业厅今日的文件中，一天也就一个
-	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po);
+	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po)throws RemoteException;
 
 	// 查照死机
 	public DriverPO getDriverInfo(String organizationID, String ID) throws RemoteException;

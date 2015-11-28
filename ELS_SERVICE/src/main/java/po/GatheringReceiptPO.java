@@ -62,6 +62,22 @@ public class GatheringReceiptPO {
 		return totalmoney;
 	}
 
+	public OrganizationPO getBusinessShall() {
+		return businessShall;
+	}
+
+	public void setBusinessShall(OrganizationPO businessShall) {
+		this.businessShall = businessShall;
+	}
+
+	public String getReceiptID() {
+		return receiptID;
+	}
+
+	public void setReceiptID(String receiptID) {
+		this.receiptID = receiptID;
+	}
+
 	public void setTotalmoney(double totalmoney) {
 		this.totalmoney = totalmoney;
 	}
