@@ -43,5 +43,4 @@ public class FareBL implements FareBLService {
 		//
 		return OperationState.SUCCEED_OPERATION;
 	}
-
 }
