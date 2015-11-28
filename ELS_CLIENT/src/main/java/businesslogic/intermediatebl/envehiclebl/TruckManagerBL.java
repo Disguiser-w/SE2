@@ -6,10 +6,10 @@ import type.OperationState;
 import vo.TruckVO;
 import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
 
-public class TruckManageBL implements TruckManageBLService {
+public class TruckManagerBL implements TruckManageBLService {
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
 
-	public TruckManageBL(ArrayList<TruckVO> truckList) {
+	public TruckManagerBL(ArrayList<TruckVO> truckList) {
 		this.truckList = truckList;
 	}
 

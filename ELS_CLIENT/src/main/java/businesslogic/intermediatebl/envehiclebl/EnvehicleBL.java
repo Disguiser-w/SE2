@@ -13,6 +13,7 @@ import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
+import businesslogic.intermediatebl.FareBL;
 import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
@@ -23,25 +24,29 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private TransferingBL transfering;
 	private PlaneManagerBL planeManager;
 	private TrainManagerBL trainManeger;
-	private TruckManageBL truckManager;
+	private TruckManagerBL truckManager;
 
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
 	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+
 	private ArrayList<EnplaningReceiptVO> enplaningReceiptList = new ArrayList<EnplaningReceiptVO>();
 	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
 	private TransferingReceiptVO transferingReceipt;
+	private FareBL fare;
 
 	private final double STANDARD_PLANE = 200;
 	private final double ECONOMIC_TRAIN = 200;
 	private final double ECONOMIC_PLANE = 500;
 
-	public EnvehicleBL(TransferingBL transfering,
-			PlaneManagerBL planeManager, TrainManagerBL trainManeger,
-			TruckManageBL truckManager) {
+	public EnvehicleBL(TransferingBL transfering, PlaneManagerBL planeManager,
+			TrainManagerBL trainManeger, TruckManagerBL truckManager,
+			ArrayList<EnplaningReceiptVO> enplaningReceiptList,
+			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
+			ArrayList<EntruckingReceiptVO> entruckingReceiptList) {
 		updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
@@ -51,6 +56,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 		this.planeList = planeManager.showPlaneList();
 		this.trainList = trainManeger.showTrainList();
 		this.truckList = truckManager.showTruckList();
+		this.enplaningReceiptList = enplaningReceiptList;
+		this.entrainingReceiptList = entrainingReceiptList;
+		this.entruckingReceiptList = entruckingReceiptList;
 	}
 
 	public OperationState envehicle() throws Exception {
@@ -101,7 +109,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 			}
 		}
 		waitingOrderList = awobl.updateWaitingList();
-		
+
 		return OperationState.FAIL_OPERATION;
 	}
 
@@ -152,7 +160,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		// TODO 自动生成的方法存根
 		return entruckingReceiptList;
 	}
-	
+
 	public OperationState updateMessage() {
 		this.transferingReceipt = transfering.showTransferingReceipt();
 		this.planeList = planeManager.showPlaneList();
@@ -161,13 +169,13 @@ public class EnvehicleBL implements EnvehicleBLService {
 
 		return OperationState.SUCCEED_OPERATION;
 	}
-	
+
 	public OperationState saveEnplaningReceiptList() {
 		// TODO 自动生成的方法存根
 		//
 		return OperationState.SUCCEED_OPERATION;
 	}
-	
+
 	public OperationState saveEntrainingReceiptList() {
 		// TODO 自动生成的方法存根
 		//

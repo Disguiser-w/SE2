@@ -27,22 +27,56 @@ import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.intermediatebl.TransferingBL;
+import businesslogic.intermediatebl.envehiclebl.EnvehicleBL;
+import businesslogic.intermediatebl.envehiclebl.PlaneManagerBL;
+import businesslogic.intermediatebl.envehiclebl.TrainManagerBL;
+import businesslogic.intermediatebl.envehiclebl.TruckManagerBL;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateMainController {
+	private EnvehicleBL envehicle;
+	private PlaneManagerBL planeManager;
+	private TrainManagerBL trainManager;
+	private TruckManagerBL truckManager;
+	private TransferingBL transfering;
 	private IntermediateDataService intermediateDataService;
 	private ExpressMainController expressMainController;
 
 	private IntermediateVO intermediate;
 	private OrganizationVO intermediateCentre;
+	private TransferingReceiptVO transferingReceipt;
+
+	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
+	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+	private ArrayList<OrderVO> orderList = new ArrayList<OrderVO>();
+
+	private ArrayList<EnplaningReceiptVO> enplaningReceiptList = new ArrayList<EnplaningReceiptVO>();
+	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
+	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
 	public IntermediateMainController(String intermediateID) {
-//		intermediateDataService
+		// intermediateDataService
 		expressMainController = new ExpressMainController(null);
+
 		intermediate = IntermediateMainController
-				.poToVO(intermediateDataService.getIntermediateInfo(null,
+				.poToVO(intermediateDataService.getIntermediateInfo("",
 						intermediateID));
 		intermediateCentre = intermediate.organization;
+		
+		planeList = intermediateCentre.planeList;
+		trainList = intermediateCentre.trainList;
+		truckList = intermediateCentre.truckList;
+		planeManager = new PlaneManagerBL(planeList);
+		trainManager = new TrainManagerBL(trainList);
+		truckManager = new TruckManagerBL(truckList);
+		
+		transferingReceipt = new TransferingReceiptVO(intermediateCentre, orderList, "", "");
+		transfering = new TransferingBL(transferingReceipt);
+		
+		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
+				truckManager, enplaningReceiptList, entrainingReceiptList, entruckingReceiptList); 
 	}
 
 	public void updateIntermediateInfo() {

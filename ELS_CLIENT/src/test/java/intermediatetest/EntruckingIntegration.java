@@ -1,13 +1,13 @@
 package intermediatetest;
 
 import businesslogic.intermediatebl.envehiclebl.AllocateWaitingOrderBL;
-import businesslogic.intermediatebl.envehiclebl.TruckManageBL;
+import businesslogic.intermediatebl.envehiclebl.TruckManagerBL;
 
 public class EntruckingIntegration {
 	public void testEntrucking(){
     	MockTransferingReceipt transferingReceipt = new MockTransferingReceipt(null, "test", null, null);
     	AllocateWaitingOrderBL awo = new AllocateWaitingOrderBL();
-    	TruckManageBL ebl = new TruckManageBL();
+    	TruckManagerBL ebl = new TruckManagerBL();
     	
     	MockEntruckingReceipt entruckingReceipt = (MockEntruckingReceipt) ebl.entruck(awo.updateWaitingList(transferingReceipt));
     	entruckingReceipt.ID = transferingReceipt.getID();
