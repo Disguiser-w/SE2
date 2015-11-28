@@ -2,6 +2,7 @@ package po;
 
 import java.io.Serializable;
 
+import type.OrganizationType;
 import po.RepertoryPO;
 import type.OrganizationType;
 
@@ -24,7 +25,7 @@ public class OrganizationPO implements Serializable {
 		
 		//如果新建机构是中转中心的话，同时新建一个对应的中转中心仓库
 		if(category.equals(OrganizationType.intermediateCenter)){
-			this.repertory = new RepertoryPO(organizationID+"-CK", "");
+			this.repertory = repertory;
 		}
 		else{
 			this.repertory = null;

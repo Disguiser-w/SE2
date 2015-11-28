@@ -14,33 +14,30 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
 			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
-			bsdService.addBasicSalary(basicSalarypo);
-			return 0;
+			return(bsdService.addBasicSalary(basicSalarypo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int deleteBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
 			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
-			bsdService.deleteBasicSalary(basicSalarypo);
-			return 0;
+			return(bsdService.deleteBasicSalary(basicSalarypo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int modifyBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
 			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
-			bsdService.modifyBasicSalary(basicSalarypo);
-			return 0;
+			return(bsdService.modifyBasicSalary(basicSalarypo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	

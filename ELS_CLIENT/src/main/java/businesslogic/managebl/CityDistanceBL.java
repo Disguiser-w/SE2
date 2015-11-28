@@ -13,33 +13,30 @@ public class CityDistanceBL implements CityDistanceBLService{
 	public int addCityDistance(CityDistanceVO cityDistancevo){
 		try{
 			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
-			cddService.addCityDistance(cityDistancepo);
-			return 0;
+			return(cddService.addCityDistance(cityDistancepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int deleteCityDistance(CityDistanceVO cityDistancevo){
 		try{
 			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
-			cddService.deleteCityDistance(cityDistancepo);
-			return 0;
+			return(cddService.deleteCityDistance(cityDistancepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int modifyCityDistance(CityDistanceVO cityDistancevo){
 		try{
 			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
-			cddService.modifyCityDistance(cityDistancepo);
-			return 0;
+			return(cddService.modifyCityDistance(cityDistancepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	

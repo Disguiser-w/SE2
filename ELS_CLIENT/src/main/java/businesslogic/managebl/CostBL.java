@@ -15,33 +15,30 @@ public class CostBL implements CostBLService{
 	public int addCost(CostVO costvo){
 		try{
 			CostPO costpo = voToPO(costvo);
-			codService.addCost(costpo);
-			return 0;
+			return(codService.addCost(costpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int deleteCost(CostVO costvo){
 		try{
 			CostPO costpo = voToPO(costvo);
-			codService.deleteCost(costpo);
-			return 0;
+			return(codService.deleteCost(costpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	public int modifyCost(CostVO costvo){
 		try{
 			CostPO costpo = voToPO(costvo);
-			codService.modifyCost(costpo);
-			return 0;
+			return(codService.modifyCost(costpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	

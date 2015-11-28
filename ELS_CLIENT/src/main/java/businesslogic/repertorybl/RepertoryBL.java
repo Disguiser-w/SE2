@@ -21,7 +21,7 @@ public class RepertoryBL implements RepertoryBLService{
 	
 	/**
 	 * @param String repertoryID, int maxRow, int maxShelf, int maxDigit, int warningRatio
-	 * @return 0(initialize succeed), 1(server failed)
+	 * @return 0(initialize succeed), 1(initialize failed), 2(server failed)
 	 * @see RepertoryPO
 	 * 
 	 * */
@@ -29,20 +29,18 @@ public class RepertoryBL implements RepertoryBLService{
 										int maxDigit, int warningRatio){
 		try{
 			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
-			repertorypo.setMaxRow(maxRow);
-			repertorypo.setMaxShelf(maxShelf);
-			repertorypo.setMaxDigit(maxDigit);
-			repertorypo.setWarningRatio(warningRatio);
-			return 0;
+			RepertoryPO modifiedRepertoryPO = new RepertoryPO(repertoryID,repertorypo.getOwnerID(), maxRow, maxShelf, 
+					 maxDigit, warningRatio, repertorypo.getStockNumArray());
+			return(rdService.modifyRepertory(modifiedRepertoryPO));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	/**
 	 * @param String repertoryID,, String JJD_ID, int blockNum, String time
-	 * @return 0(enter succeed), 1(server failed)
+	 * @return 0(enter succeed), 1(enter failed), 2(server failed)
 	 * @see RepertoryPO,GoodsPO,InventoryPO
 	 * 
 	 * */
@@ -62,26 +60,26 @@ public class RepertoryBL implements RepertoryBLService{
 				
 				GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
 				
-				//把InventoryPO加入仓库库存列表中
-				InventoryPO inventorypo = new InventoryPO(goodspo, blockNum, rowNum, shelfNum, digitNum);
-				rdService.addInventory(repertoryID, inventorypo);
-				
 				//把GoodsPO的一个未填写的enterTime补充为现在的时间，进入的仓库编号中增加该仓库编号
 				time = getTimeNow();
 				goodspo.setEnterRepertoryID(repertoryID);
 				goodspo.setEnterTime(time);
 				
+				//把InventoryPO加入仓库库存列表中
+				InventoryPO inventorypo = new InventoryPO(goodspo, blockNum, rowNum, shelfNum, digitNum);
+				return(rdService.addInventory(repertoryID, inventorypo));
 			}
-			return 0;
+			else 
+				return 1;
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
 	/**
 	 * @param String repertoryID,, String JJD_ID, int transType, String time
-	 * @return 0(leave succeed), 1(server failed)
+	 * @return 0(leave succeed), 1(leave failed), 2(server failed)
 	 * @see RepertoryPO,GoodsPO,InventoryPO
 	 * 
 	 * */
@@ -90,20 +88,20 @@ public class RepertoryBL implements RepertoryBLService{
 			InventoryPO inventorypo = rdService.findInventorybyID(repertoryID, JJD_ID);
 			InventoryVO inventoryvo = inventoryPOToVO(inventorypo);
 			if(admitLeaveRepertory(inventoryvo)){
-				//把InventoryPO从仓库库存列表中删除
-				rdService.deleteInventory(repertoryID, inventorypo);
-				
 				GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
 				//把GoodsPO的一个未填写的leaveTime补充为现在的时间，离开的仓库编号中增加该仓库编号
 				time = getTimeNow();
 				goodspo.setLeaveRepertoryID(repertoryID);
 				goodspo.setLeaveTime(time);
 				
+				//把InventoryPO从仓库库存列表中删除
+				return(rdService.deleteInventory(repertoryID, inventorypo));
 			}
-			return 0;
+			else
+				return 1;
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 1;
+			return 2;
 		}
 	}
 	
@@ -212,7 +210,7 @@ public class RepertoryBL implements RepertoryBLService{
 	public InventoryVO inventoryPOToVO(InventoryPO inventorypo){
 		GoodsPO goodpo = inventorypo.getGood();
 		GoodsVO goodvo = GoodsPOToVO(goodpo);
-		return new InventoryVO(goodvo, inventorypo.getBlcokNum(), inventorypo.getRowNum(), inventorypo.getShelfNum(), inventorypo.getDigitNum());
+		return new InventoryVO(goodvo, inventorypo.getBlockNum(), inventorypo.getRowNum(), inventorypo.getShelfNum(), inventorypo.getDigitNum());
 	}
 	
 	public InventoryCheckVO inventoryCheckPOToVO(InventoryCheckPO inventorycheckpo){

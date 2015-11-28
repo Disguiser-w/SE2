@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class RepertoryPO implements Serializable{
 
 	private static final long serialVersionUID = 141250148L;
-
+	
 	private String repertoryID, ownerID;
 	private int maxRow,  maxShelf, maxDigit, warningRadio;
 	//private int planeBlockStockNum, trainBlockStockNum, truckBlockStockNum, defaultBlockStockNum;

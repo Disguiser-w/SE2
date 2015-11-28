@@ -1,8 +1,8 @@
 package po;
 
-import java.io.Serializable;
-
 import type.ExpressType;
+
+import java.io.Serializable;
 
 public class CostPO implements Serializable {
 	

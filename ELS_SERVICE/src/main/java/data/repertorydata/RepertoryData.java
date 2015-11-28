@@ -10,8 +10,8 @@ import dataservice.repertorydataservice.RepertoryDataService;
 import po.GoodsPO;
 import po.InventoryPO;
 import po.RepertoryPO;
-import po.UserPO;
 import po.InventoryCheckPO;
+import file.JXCFile;
 
 public class RepertoryData implements RepertoryDataService{
 
@@ -29,6 +29,7 @@ public class RepertoryData implements RepertoryDataService{
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException{
 		ArrayList<Object> objectList = repertoryFile.read();
 
+		int returnNum = 1;
 		for(int i=0;i<objectList.size();i++){
 			RepertoryPO repertory = (RepertoryPO)objectList.get(i);
 			if(repertory.getRepertoryID().equals(repertorypo.getRepertoryID())){
@@ -37,10 +38,13 @@ public class RepertoryData implements RepertoryDataService{
 				repertory.setMaxShelf(repertorypo.getMaxShelf());
 				repertory.setMaxDigit(repertorypo.getMaxDigit());
 				repertory.setWarningRatio(repertorypo.getWarningRatio());
-				return 0;
+				returnNum = 0;
+				break;
 			}
 		}
-		return 1;
+		
+		repertoryFile.writeM(objectList);
+		return returnNum;
 	}
 	
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException{
@@ -56,15 +60,45 @@ public class RepertoryData implements RepertoryDataService{
 	}
 	
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		RepertoryPO repertory = findRepertory(repertoryID);
-		ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
-		inventoryList.add(inventorypo);
+		ArrayList<Object> objectList = repertoryFile.read();
+
+		int returnNum =1;
+		for(int i=0;i<objectList.size();i++){
+			RepertoryPO repertory = (RepertoryPO)objectList.get(i);
+			if(repertory.getRepertoryID().equals(repertoryID)){
+				ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
+				inventoryList.add(inventorypo);
+				returnNum = 0;
+				break;
+			}
+		}
+		
+		repertoryFile.writeM(objectList);
+		return returnNum;
 	}
 	
 	public int deleteInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		RepertoryPO repertory = findRepertory(repertoryID);
-		ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
-		inventoryList.remove(inventorypo);
+		ArrayList<Object> objectList = repertoryFile.read();
+
+		int returnNum =1;
+loop1:		for(int i=0;i<objectList.size();i++){
+			RepertoryPO repertory = (RepertoryPO)objectList.get(i);
+			if(repertory.getRepertoryID().equals(repertoryID)){
+				ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
+loop2:				for(int j=0;j<inventoryList.size();j++){
+						InventoryPO tempInventory = (InventoryPO)inventoryList.get(j);
+						if(tempInventory.getGood().getOrder_ID().equals(inventorypo.getGood().getOrder_ID())){
+							inventoryList.remove(tempInventory);
+							returnNum = 0;
+							break loop2;
+						}
+					}
+				break loop1;
+			}
+		}
+		
+		repertoryFile.writeM(objectList);
+		return returnNum;
 	}
 	
 	public int modifyInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
@@ -73,7 +107,7 @@ public class RepertoryData implements RepertoryDataService{
 		for(int i=0;i<inventoryList.size();i++){
 			InventoryPO tempInventory = (InventoryPO)inventoryList.get(i);
 			if(tempInventory.getGood().getOrder_ID().equals(inventorypo.getGood().getOrder_ID())){
-				tempInventory.setBlockNum(inventorypo.getBlcokNum());
+				tempInventory.setBlockNum(inventorypo.getBlockNum());
 				tempInventory.setRowNum(inventorypo.getRowNum());
 				tempInventory.setShelfNum(inventorypo.getShelfNum());
 				tempInventory.setDigitNum(inventorypo.getDigitNum());
@@ -171,6 +205,7 @@ public class RepertoryData implements RepertoryDataService{
 						}
 					}
 				}
+			return cr;
 			}
 		});
 	}
