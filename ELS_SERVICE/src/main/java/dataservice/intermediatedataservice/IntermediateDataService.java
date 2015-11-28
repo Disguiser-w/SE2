@@ -1,6 +1,7 @@
 package dataservice.intermediatedataservice;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.EnIntermediateReceiptPO;
@@ -23,7 +24,7 @@ public interface IntermediateDataService extends Remote {
 	public ArrayList<TruckPO> getTruckList(String organization_ID);
 
 	public OperationState savePlaneList(String organization_ID,
-			ArrayList<PlanePO> planeList);
+			ArrayList<PlanePO> planeList) throws RemoteException;
 
 	public OperationState saveTrainList(String organization_ID,
 			ArrayList<TrainPO> trainList);
@@ -32,18 +33,18 @@ public interface IntermediateDataService extends Remote {
 			ArrayList<TruckPO> trainList);
 
 	public TransferingReceiptPO getTransferingReceiptInfo(
-			String organization_ID, String date);
+			String organization_ID, String date, String ID);
 
 	public OperationState saveTransferingReceiptInfo(
-			TransferingReceiptPO transferingReceipt);
+			TransferingReceiptPO transferingReceipt, String organization_ID);
 
 	public EnIntermediateReceiptPO getEnIntermediateReceiptInfo(
-			String organization_ID, String EnIntermediateReceipt_ID);
+			String organization_ID, String EnIntermediateReceipt_ID, String date);
 
-	public OperationState saveTransferingReceiptInfo(
-			EnIntermediateReceiptPO enIntermediateReceipt);
+	public OperationState saveEnIntermediateReceiptInfo(
+			EnIntermediateReceiptPO enIntermediateReceipt,String organization_ID);
 
 	public FarePO getFareInfo(String organization_ID, String date);
 
-	public OperationState saveFareInfo(FarePO fare);
+	public OperationState saveFareInfo(String organization_ID,FarePO fare);
 }
