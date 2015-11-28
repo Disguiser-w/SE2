@@ -269,7 +269,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	
 	
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		RepertoryData repertoryData;
 		try{
 			repertoryData = new RepertoryData();
@@ -381,6 +381,6 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
-	}
+	}*/
 	
 }
