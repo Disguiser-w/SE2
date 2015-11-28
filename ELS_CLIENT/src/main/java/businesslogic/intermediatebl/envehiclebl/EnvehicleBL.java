@@ -5,47 +5,58 @@ import java.util.ArrayList;
 import type.ExpressType;
 import type.OperationState;
 import type.OrderState;
+import vo.EnplaningReceiptVO;
+import vo.EntrainingReceiptVO;
+import vo.EntruckingReceiptVO;
 import vo.OrderVO;
 import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
+import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
 
 public class EnvehicleBL implements EnvehicleBLService {
 	private AllocateWaitingOrderBL awobl;
 	private CityDistanceBL cdbl;
-	private EnplaningBL enplane;
-	private EntrainingBL entrain;
-	private EntruckingBL entruck;
-	private TransferingReceiptVO transferingReceipt;
-	
+	private TransferingBL transfering;
+	private PlaneManagerBL planeManager;
+	private TrainManagerBL trainManeger;
+	private TruckManageBL truckManager;
+
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
 	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+	private ArrayList<EnplaningReceiptVO> enplaningReceiptList = new ArrayList<EnplaningReceiptVO>();
+	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
+	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
+
+	private TransferingReceiptVO transferingReceipt;
 
 	private final double STANDARD_PLANE = 200;
 	private final double ECONOMIC_TRAIN = 200;
 	private final double ECONOMIC_PLANE = 500;
 
-	public EnvehicleBL(TransferingReceiptVO transferingReceipt,
-			ArrayList<PlaneVO> planeList, ArrayList<TrainVO> trainList,
-			ArrayList<TruckVO> truckList) {
-		this.transferingReceipt = transferingReceipt;
-		this.planeList = planeList;
-		this.trainList = trainList;
-		this.truckList = truckList;
+	public EnvehicleBL(TransferingBL transfering,
+			PlaneManagerBL planeManager, TrainManagerBL trainManeger,
+			TruckManageBL truckManager) {
+		updateMessage();
+		this.transfering = transfering;
+		this.planeManager = planeManager;
+		this.trainManeger = trainManeger;
+		this.truckManager = truckManager;
+		this.transferingReceipt = transfering.showTransferingReceipt();
+		this.planeList = planeManager.showPlaneList();
+		this.trainList = trainManeger.showTrainList();
+		this.truckList = truckManager.showTruckList();
 	}
 
 	public OperationState envehicle() throws Exception {
 		// TODO 自动生成的方法存根
 		awobl = new AllocateWaitingOrderBL(transferingReceipt);
 		cdbl = new CityDistanceBL();
-		enplane = new EnplaningBL(planeList);
-		entrain = new EntrainingBL(trainList);
-		entruck = new EntruckingBL(truckList);
 		waitingOrderList = awobl.updateWaitingList();
 
 		for (OrderVO order : waitingOrderList) {
@@ -57,10 +68,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 					|| (order.expressType == ExpressType.STANDARD && distance > STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE)) {
 				for (PlaneVO plane : planeList) {
-					if ((enplane.showEnplaningReceipt(plane).orderList.size() <= 2000)
+					if ((this.showEnplaningReceipt(plane).orderList.size() <= 2000)
 							&& address_end[0] == plane.destination) {
-						enplane.showEnplaningReceipt(plane).orderList
-								.add(order);
+						this.showEnplaningReceipt(plane).orderList.add(order);
 						order.order_state = OrderState.TRANSFERING;
 						return OperationState.SUCCEED_OPERATION;
 					}
@@ -69,10 +79,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 					|| (order.expressType == ExpressType.ECONOMIC
 							&& distance <= ECONOMIC_PLANE && distance > ECONOMIC_TRAIN)) {
 				for (TrainVO train : trainList) {
-					if ((entrain.showEntrainingReceiptVO(train).orderList
-							.size() <= 200000)
+					if ((this.showEntrainingReceiptVO(train).orderList.size() <= 200000)
 							&& address_end[0] == train.destination) {
-						entrain.showEntrainingReceiptVO(train).orderList
+						this.showEntrainingReceiptVO(train).orderList
 								.add(order);
 						order.order_state = OrderState.TRANSFERING;
 						return OperationState.SUCCEED_OPERATION;
@@ -81,9 +90,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 			} else if (order.expressType == ExpressType.ECONOMIC
 					&& distance <= ECONOMIC_TRAIN) {
 				for (TruckVO truck : truckList) {
-					if (entruck.showEntruckingReceiptVO(truck).orderList.size() <= 1000
+					if (this.showEntruckingReceiptVO(truck).orderList.size() <= 1000
 							&& address_end[0] == truck.destination) {
-						entruck.showEntruckingReceiptVO(truck).orderList
+						this.showEntruckingReceiptVO(truck).orderList
 								.add(order);
 						order.order_state = OrderState.TRANSFERING;
 						return OperationState.SUCCEED_OPERATION;
@@ -91,7 +100,83 @@ public class EnvehicleBL implements EnvehicleBLService {
 				}
 			}
 		}
-
+		waitingOrderList = awobl.updateWaitingList();
+		
 		return OperationState.FAIL_OPERATION;
+	}
+
+	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane)
+			throws Exception {
+		// TODO 自动生成的方法存根
+		for (EnplaningReceiptVO enplaningReceipt : enplaningReceiptList) {
+			if (enplaningReceipt.plane.equals(plane))
+				return enplaningReceipt;
+		}
+		throw new Exception("未找到该飞机的装车单！");
+	}
+
+	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList()
+			throws Exception {
+		// TODO 自动生成的方法存根
+		return enplaningReceiptList;
+	}
+
+	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train)
+			throws Exception {
+		// TODO 自动生成的方法存根
+		for (EntrainingReceiptVO entrainingReceipt : entrainingReceiptList) {
+			if (entrainingReceipt.train == train)
+				return entrainingReceipt;
+		}
+		throw new Exception("未找到该火车的装车单！");
+	}
+
+	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList()
+			throws Exception {
+		// TODO 自动生成的方法存根
+		return entrainingReceiptList;
+	}
+
+	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck)
+			throws Exception {
+		// TODO 自动生成的方法存根
+		for (EntruckingReceiptVO entruckingReceipt : entruckingReceiptList) {
+			if (entruckingReceipt.truck == truck)
+				return entruckingReceipt;
+		}
+		throw new Exception("未找到该汽车！");
+	}
+
+	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList()
+			throws Exception {
+		// TODO 自动生成的方法存根
+		return entruckingReceiptList;
+	}
+	
+	public OperationState updateMessage() {
+		this.transferingReceipt = transfering.showTransferingReceipt();
+		this.planeList = planeManager.showPlaneList();
+		this.trainList = trainManeger.showTrainList();
+		this.truckList = truckManager.showTruckList();
+
+		return OperationState.SUCCEED_OPERATION;
+	}
+	
+	public OperationState saveEnplaningReceiptList() {
+		// TODO 自动生成的方法存根
+		//
+		return OperationState.SUCCEED_OPERATION;
+	}
+	
+	public OperationState saveEntrainingReceiptList() {
+		// TODO 自动生成的方法存根
+		//
+		return OperationState.SUCCEED_OPERATION;
+	}
+
+	public OperationState saveEntruckingReceiptList() {
+		// TODO 自动生成的方法存根
+		//
+		return OperationState.SUCCEED_OPERATION;
 	}
 }

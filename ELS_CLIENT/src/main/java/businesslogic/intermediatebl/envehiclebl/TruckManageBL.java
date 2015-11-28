@@ -56,7 +56,7 @@ public class TruckManageBL implements TruckManageBLService {
 		throw new Exception("未找到该ID的汽车！");
 	}
 
-	public OperationState saveTruckList(ArrayList<TruckVO> truckList) {
+	public OperationState saveTruckList() {
 		// TODO 自动生成的方法存根
 		//
 		return OperationState.SUCCEED_OPERATION;

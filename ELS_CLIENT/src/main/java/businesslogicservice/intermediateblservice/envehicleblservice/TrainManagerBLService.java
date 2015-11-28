@@ -16,5 +16,5 @@ public interface TrainManagerBLService {
 
 	public TrainVO showTrain(String train_ID) throws Exception;
 
-	public OperationState saveTrainList(ArrayList<TrainVO> trainList);
+	public OperationState saveTrainList();
 }

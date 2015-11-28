@@ -16,5 +16,5 @@ public interface TruckManageBLService {
 
 	public TruckVO showTruck(String truck_ID) throws Exception;
 
-	public OperationState saveTruckList(ArrayList<TruckVO> truckList);
+	public OperationState saveTruckList();
 }

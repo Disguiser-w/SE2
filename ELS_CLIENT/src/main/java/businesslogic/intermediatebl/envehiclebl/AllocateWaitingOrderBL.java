@@ -17,17 +17,16 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 
 	public ArrayList<OrderVO> updateWaitingList() {
 		// TODO 自动生成的方法存根
-		for(OrderVO order:transferingReceipt.orderList) {
+		for (OrderVO order : transferingReceipt.orderList) {
 			if (order.order_state == OrderState.TRANSFERING)
 				waitingOrderList.add(order);
 		}
 		return waitingOrderList;
 	}
 
-	public OrderVO showOrder(String orderID)
-			throws Exception {
+	public OrderVO showOrder(String orderID) throws Exception {
 		// TODO 自动生成的方法存根
-		for(OrderVO order:transferingReceipt.orderList){
+		for (OrderVO order : transferingReceipt.orderList) {
 			if (order.ID == orderID)
 				return order;
 		}

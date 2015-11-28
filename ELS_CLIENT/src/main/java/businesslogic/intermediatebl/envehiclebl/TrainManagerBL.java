@@ -56,7 +56,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 		throw new Exception("未找到该ID的火车！");
 	}
 
-	public OperationState saveTrainList(ArrayList<TrainVO> trainList) {
+	public OperationState saveTrainList() {
 		// TODO 自动生成的方法存根
 		//
 		return OperationState.SUCCEED_OPERATION;

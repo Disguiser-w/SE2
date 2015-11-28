@@ -57,7 +57,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		throw new Exception("未找到该ID的飞机！");
 	}
 
-	public OperationState savePlaneList(ArrayList<PlaneVO> planeList){
+	public OperationState savePlaneList(){
 		// TODO 自动生成的方法存根
 		//
 		return OperationState.SUCCEED_OPERATION;
