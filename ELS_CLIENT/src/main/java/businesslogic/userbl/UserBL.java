@@ -11,6 +11,7 @@ import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.UserVO;
+import vo.LogVO;
 
 public class UserBL implements UserBLService{
 
@@ -24,23 +25,23 @@ public class UserBL implements UserBLService{
 	
 	/**
 	 * @param String userID, String password
-	 * @return 0(login succeed),1(password wrong),2(cannot find the user),3(server failed)
+	 * @return LogVO
 	 * @see UserPO
 	 * 
 	 * */
-	public int login(String userID, String password){
+	public LogVO login(String userID, String password){
 		try{
 			UserPO userpo = udService.findUser(userID);
 			if(userpo.equals(null))   //找不到该用户，返回2
-				return 2;
+				return new LogVO("The user doesn't exist", null);
 			else if(!(userpo.getPassword().equals(password)))	//用户密码错误，返回1
-				return 1;
+				return new LogVO("The userID and the password don't match", null);
 			else{ 
-				return 0;	//登录成功，返回0	
+				return new LogVO("Login succeed", poToVO(userpo));	//登录成功，返回0	
 			}						
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return 3;
+			return new LogVO("The server failed", null);
 		}
 	}
 	

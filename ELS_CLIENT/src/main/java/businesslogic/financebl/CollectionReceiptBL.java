@@ -5,10 +5,13 @@ import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
 import po.GatheringReceiptPO;
+import po.OrganizationPO;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.OrganizationVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogicservice.financeblservice.CollectionReceiptBLService;
 /**
@@ -60,8 +63,16 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * 频率：一天整理合计一次
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs= bdService.getGatheringReceipt(Time);
-		 return gposToVOs(gatheringReceiptPOs);
+		ArrayList<GatheringReceiptPO> gatheringReceiptPOs;
+		try {
+			gatheringReceiptPOs = bdService.getGatheringReceipt(Time);
+			 return gposToVOs(gatheringReceiptPOs);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	
 	
 		// TODO Auto-generated method stub
 //		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
@@ -154,9 +165,17 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 		else{
 			GatheringReceiptVO gatheringReceiptVO;
-			gatheringReceiptVO=new GatheringReceiptVO(po.getBusinesShall(), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
+			gatheringReceiptVO=new GatheringReceiptVO(poToVO(po.getBusinesShall()), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
 		return gatheringReceiptVO;
 		}
+	}
+	/**
+	 * 我感觉从controller里调还不如直接复制，，，虽然增加了代码重复性
+	 * */
+	public static OrganizationVO poToVO(OrganizationPO organization) {
+		return new OrganizationVO(organization.getCategory(),
+				organization.getOrganizationID(), organization.getName(),
+				IntermediateMainController.poToVO(organization.getRepertory()));
 	}
 	/**
 	 * ArrayList<GatheringPO> to  VO
@@ -206,8 +225,28 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 	}
 	
-	
-	
+	/**
+	 * 根据ID筛选出Collectionpo,先写在这来不及就不写了
+	 * */
+	public CollectionReceiptVO getCollection(String s) {
+		// TODO Auto-generated method stub
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
+		if(collectionReceiptPOs==null){
+			System.out.println("CollectionReceiptPO is null");
+			return null;
+		}
+		else{
+			CollectionReceiptVO vo=new CollectionReceiptVO();
+			for(CollectionReceiptPO p:collectionReceiptPOs){
+				if(p.getID()==s){
+					vo=cpoToVO(p);
+				}
+			}
+			return vo;
+		}		
+	}
+
+
 	/**
 	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
 	 * */
@@ -241,31 +280,6 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 //			return moneys;
 //		}
 //	}
-	
-	
-	
-	/**
-	 * 根据ID筛选出Collectionpo,先写在这来不及就不写了
-	 * */
-	public CollectionReceiptVO getCollection(String s) {
-		// TODO Auto-generated method stub
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		if(collectionReceiptPOs==null){
-			System.out.println("CollectionReceiptPO is null");
-			return null;
-		}
-		else{
-			CollectionReceiptVO vo=new CollectionReceiptVO();
-			for(CollectionReceiptPO p:collectionReceiptPOs){
-				if(p.getID()==s){
-					vo=cpoToVO(p);
-				}
-			}
-			return vo;
-		}		
-	}
-
-
 
 	
 

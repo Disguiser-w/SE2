@@ -1,13 +1,14 @@
 package businesslogicservice.userblservice;
 
 import vo.UserVO;
+import vo.LogVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface UserBLService {
 	
-	public int login(String userID, String password) throws RemoteException;
+	public LogVO login(String userID, String password) throws RemoteException;
 	public int addUser(UserVO uservo) throws RemoteException;
 	public int deleteUser(String userID) throws RemoteException;
 	public int modifyUserPassword(UserVO uservo) throws RemoteException;

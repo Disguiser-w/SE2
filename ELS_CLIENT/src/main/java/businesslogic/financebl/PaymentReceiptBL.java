@@ -6,13 +6,16 @@ import java.util.ArrayList;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
+import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
+import dataservice.managedataservice.PerWageDataService;
 import dataservice.userdataservice.UserDataService;
 import po.FarePO;
 import po.OrganizationPO;
 import po.PaymentReceiptPO;
 import po.UserPO;
 import type.OrganizationType;
+import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
@@ -27,6 +30,8 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	BusinessDataService bdService;
 	OrganizationDataService odService;
 	IntermediateDataService idService;
+	BasicSalaryDataService bsdService;
+	PerWageDataService pwdService;
 
 	/**
 	 * 创建付款单并发送给总经理
@@ -110,6 +115,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 
 	/**
 	 * 到时候ui层调用这个方法来计算成本，再加到vo里面
+	 * 频率：一个月计算一次
 	 * */
 	public double getSalary(String time){
 		// TODO Auto-generated method stub
@@ -117,31 +123,57 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		try {
 			ArrayList<UserPO> userpos=udService.showAllUsers();
 			for(UserPO p:userpos){
-				//这个地方要是从两个类中来好奇怪.......
 				//快递员：提成+基础工资
 				if(p.getSalaryPlan()==SalaryPlanType.courierSalaryPlan){
-					salary+=p.getGrades();
+					double perWage=pwdService.findPerWage(ProfessionType.courier).getPerWage();
+					double basicSalary=bsdService.findBasicSalary(ProfessionType.courier).getBasicSalary();
+					salary+=p.getGrades()*perWage+basicSalary;
 				}
 				//司机：计次
 				else if(p.getSalaryPlan()==SalaryPlanType.driverSalaryPlan){
-					salary+=p.getGrades();
+					double perWage=pwdService.findPerWage(ProfessionType.driver).getPerWage();
+					salary+=p.getGrades()*perWage;
 				}
+				//营业厅业务员
 				else if(p.getSalaryPlan()==SalaryPlanType.countermanSalaryPlan){
+				   double basicSalary=bsdService.findBasicSalary(ProfessionType.counterman).getBasicSalary();
+				   salary+=basicSalary;
+				}
+				//系统管理员
+				else if(p.getSalaryPlan()==SalaryPlanType.administratorSalaryPlan){
+					   double basicSalary=bsdService.findBasicSalary(ProfessionType.administrator).getBasicSalary();
+					   salary+=basicSalary;
+				}
+				//仓库管理员
+				else if(p.getSalaryPlan()==SalaryPlanType.stockmanSalaryPlan){
+					   double basicSalary=bsdService.findBasicSalary(ProfessionType.stockman).getBasicSalary();
+					   salary+=basicSalary;
+				}
+				//财务人员
+				else if(p.getSalaryPlan()==SalaryPlanType.financialStaffSalaryPlan){
+					   double basicSalary=bsdService.findBasicSalary(ProfessionType.financialStaff).getBasicSalary();
+					   salary+=basicSalary;
+				}
+				//总经理
+				else if(p.getSalaryPlan()==SalaryPlanType.managerSalaryPlan){
+					   double basicSalary=bsdService.findBasicSalary(ProfessionType.manager).getBasicSalary();
+					   salary+=basicSalary;
 				}
 			}
+			return salary;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("工资计算出现异常");
+			return 0.0;
 		}
-		
-		
-		return salary;
 	}
 
 	
 	/**
 	 * 运费：但是清0怎么处理
 	 * 参数作为Time比较好处理还是作为时间区间比较好处理
+	 * 这个等盛盛更完再写
 	 * */
 	public double getFare(String time) {
 		// TODO Auto-generated method stub
@@ -171,19 +203,28 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * */
 	public double getRent(String time) {
 		// TODO Auto-generated method stub
-		ArrayList<OrganizationPO> opos=odService.showAllOrganizations();
-		int numOfBusinessHall=0;
-		int numOfIntermedia=0;
-		for(OrganizationPO p:opos){
-			if(p.getCategory()==OrganizationType.businessHall){
-				numOfBusinessHall++;
+		ArrayList<OrganizationPO> opos;
+		try {
+			opos = odService.showAllOrganizations();
+			int numOfBusinessHall=0;
+			int numOfIntermedia=0;
+			for(OrganizationPO p:opos){
+				if(p.getCategory()==OrganizationType.businessHall){
+					numOfBusinessHall++;
+				}
+				if(p.getCategory()==OrganizationType.intermediateCenter){
+					numOfIntermedia++;
+				}
 			}
-			if(p.getCategory()==OrganizationType.intermediateCenter){
-				numOfIntermedia++;
-			}
+			double rent=5000*numOfBusinessHall+10000*numOfIntermedia;
+			return rent;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取租金信息失败");
+			return 0.0;
 		}
-		double rent=5000*numOfBusinessHall+10000*numOfIntermedia;
-		return rent;
+		
 	}
 
 

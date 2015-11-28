@@ -2,15 +2,16 @@ package businesslogicservice.userblservice;
 
 import businesslogicservice.userblservice.UserBLService;
 import vo.UserVO;
+import vo.LogVO;
 
 import java.util.ArrayList;
 
 public class UserBLService_stub implements UserBLService{
 
-	    public int login(String userID, String password) {
+	    public LogVO login(String userID, String password) {
 	        // TODO 自动生成的方法存根
 	        System.out.println("Login succeed!");
-	        return 0;
+	        return null;
 	    }
 	 	
 		public int addUser(UserVO uservo) {
