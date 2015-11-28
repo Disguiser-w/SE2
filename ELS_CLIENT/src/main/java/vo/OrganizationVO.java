@@ -1,13 +1,18 @@
 package vo;
 
+import java.util.ArrayList;
+
 import type.OrganizationType;
-import vo.RepertoryVO;
 
 public class OrganizationVO {
 	public OrganizationType category;
 	public String organizationID;
 	public String name;
 	public RepertoryVO repertory;
+	
+	public ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+	public ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
+	public ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
 
 	public OrganizationVO(OrganizationType category, String organizationID,
 			String name, RepertoryVO repertory) {
