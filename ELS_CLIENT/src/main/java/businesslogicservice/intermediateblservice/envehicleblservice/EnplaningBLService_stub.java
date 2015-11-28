@@ -8,7 +8,7 @@ import vo.OrderVO;
 import vo.PlaneVO;
 import vo.TransferingReceiptVO;
 
-public class EnplaningBLService_stub implements EnplaningBLService {
+public class EnplaningBLService_stub implements PlaneManagerBLService {
 	public ArrayList<PlaneVO> showPlaneList() {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");

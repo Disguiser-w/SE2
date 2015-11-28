@@ -8,7 +8,7 @@ import vo.OrderVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 
-public class EntrainingBLService_stub implements EntrainingBLService {
+public class EntrainingBLService_stub implements TrainManagerBLService {
 	public ArrayList<TrainVO> showTrainList() {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");

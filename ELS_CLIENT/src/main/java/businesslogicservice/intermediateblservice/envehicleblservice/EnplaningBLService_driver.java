@@ -9,7 +9,7 @@ import vo.TransferingReceiptVO;
 import vo.TransferingReceiptVO;
 
 public class EnplaningBLService_driver {
-    public void drive(EnplaningBLService ebls){
+    public void drive(PlaneManagerBLService ebls){
     	ebls.showPlaneList();
     	ebls.showPlane(new String());
     	ebls.enplane(new ArrayList<OrderVO>());

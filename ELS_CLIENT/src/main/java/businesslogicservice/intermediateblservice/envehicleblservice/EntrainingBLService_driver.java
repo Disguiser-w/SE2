@@ -8,7 +8,7 @@ import vo.OrderVO;
 import vo.TransferingReceiptVO;
 
 public class EntrainingBLService_driver {
-    public void drive(EntrainingBLService ebls){
+    public void drive(TrainManagerBLService ebls){
     	ebls.showTrainList();
     	ebls.showTrain(new String());
     	ebls.entrain(new ArrayList<OrderVO>());

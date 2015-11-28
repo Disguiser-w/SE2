@@ -19,8 +19,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private EnplaningBL enplane;
 	private EntrainingBL entrain;
 	private EntruckingBL entruck;
-
 	private TransferingReceiptVO transferingReceipt;
+	
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
 	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
@@ -43,9 +43,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 		// TODO 自动生成的方法存根
 		awobl = new AllocateWaitingOrderBL(transferingReceipt);
 		cdbl = new CityDistanceBL();
-		enplane = new EnplaningBL(planeList, transferingReceipt);
-		entrain = new EntrainingBL(trainList, transferingReceipt);
-		entruck = new EntruckingBL(truckList, transferingReceipt);
+		enplane = new EnplaningBL(planeList);
+		entrain = new EntrainingBL(trainList);
+		entruck = new EntruckingBL(truckList);
 		waitingOrderList = awobl.updateWaitingList();
 
 		for (OrderVO order : waitingOrderList) {
