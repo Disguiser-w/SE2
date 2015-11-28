@@ -57,9 +57,10 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	/**
 	 * 获取符合时间条件的gatheringPO，需要显示
 	 * 这个筛选应该在bdService中
+	 * 频率：一天整理合计一次
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs= bdService.getGatheringReceiptPO(Time);
+		ArrayList<GatheringReceiptPO> gatheringReceiptPOs= bdService.getGatheringReceipt(Time);
 		 return gposToVOs(gatheringReceiptPOs);
 	
 		// TODO Auto-generated method stub
@@ -95,14 +96,14 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo){
 		// TODO Auto-generated method stub
 		double totalMoney=0;
-		
 		if(vo==null){
 			System.out.println("获取收款单金额失败");
 			return 0;
 		}
 		else{
 			for(GatheringReceiptVO v:vo){
-				double money=v.getTotalmoney();
+				System.out.println("这里可能会出问题");
+				double money=v.totalmoney;
 				totalMoney+=money;
 			}
 			return totalMoney;
@@ -153,7 +154,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 		else{
 			GatheringReceiptVO gatheringReceiptVO;
-			gatheringReceiptVO=new GatheringReceiptVO(po.getTime(), po.getBusinesShall().getName(), po.getTotalmoney());
+			gatheringReceiptVO=new GatheringReceiptVO(po.getBusinesShall(), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
 		return gatheringReceiptVO;
 		}
 	}

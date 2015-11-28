@@ -5,10 +5,14 @@ import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
+import po.FarePO;
+import po.OrganizationPO;
 import po.PaymentReceiptPO;
 import po.UserPO;
+import type.OrganizationType;
 import type.SalaryPlanType;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
@@ -22,6 +26,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	UserDataService udService;
 	BusinessDataService bdService;
 	OrganizationDataService odService;
+	IntermediateDataService idService;
 
 	/**
 	 * 创建付款单并发送给总经理
@@ -136,22 +141,49 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	
 	/**
 	 * 运费：但是清0怎么处理
+	 * 参数作为Time比较好处理还是作为时间区间比较好处理
 	 * */
 	public double getFare(String time) {
 		// TODO Auto-generated method stub
+		ArrayList<OrganizationPO> organizationPOs=odService.showAllOrganizations();
+		ArrayList<OrganizationPO> pos_intermedia=new ArrayList<OrganizationPO>();
+		for(OrganizationPO p:organizationPOs){
+			if(p.getCategory()==OrganizationType.intermediateCenter){
+				pos_intermedia.add(p);
+			}
+		}
+		ArrayList<FarePO> farepos=bdService.getFarePO(time);
 		
-		return 0;
+		double fare=0;;
+		if(farepos==null){
+			System.out.println("获取farepos失败");
+		}
+		for(FarePO p:farepos){
+			fare+=p.getMoney();
+		}
+		return fare;
 	}
 
 	
 	/**
-	 * 租金从哪里来的
-	 * 
+	 * ：统计总的机构数：营业厅租金默认为5000；中转中心租金默认为10000；
+	 * ——一个月计算一次
 	 * */
 	public double getRent(String time) {
 		// TODO Auto-generated method stub
-		odService.getOrgnization();
-		return 0;
+		ArrayList<OrganizationPO> opos=odService.showAllOrganizations();
+		int numOfBusinessHall=0;
+		int numOfIntermedia=0;
+		for(OrganizationPO p:opos){
+			if(p.getCategory()==OrganizationType.businessHall){
+				numOfBusinessHall++;
+			}
+			if(p.getCategory()==OrganizationType.intermediateCenter){
+				numOfIntermedia++;
+			}
+		}
+		double rent=5000*numOfBusinessHall+10000*numOfIntermedia;
+		return rent;
 	}
 
 
