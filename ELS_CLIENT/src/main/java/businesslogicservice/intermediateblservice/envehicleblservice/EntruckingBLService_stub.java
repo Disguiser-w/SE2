@@ -8,7 +8,7 @@ import vo.OrderVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 
-public class EntruckingBLService_stub implements EntruckingBLService {
+public class EntruckingBLService_stub implements TruckManageBLService {
 
 	public ArrayList<TruckVO> showTruckList() {
 		// TODO 自动生成的方法存根

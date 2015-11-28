@@ -8,7 +8,7 @@ import vo.OrderVO;
 import vo.TransferingReceiptVO;
 
 public class EntruckingBLService_driver {
-    public void drive(EntruckingBLService ebls){
+    public void drive(TruckManageBLService ebls){
     	ebls.showTruckList();
     	ebls.showTruck(new String());
     	ebls.entruck(new ArrayList<OrderVO>());
