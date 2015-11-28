@@ -34,6 +34,7 @@ public class IntermediateMainController {
 	private ExpressMainController expressMainController;
 
 	private IntermediateVO intermediate;
+	private OrganizationVO intermediateCentre;
 
 	public IntermediateMainController(String intermediateID) {
 //		intermediateDataService
@@ -41,6 +42,7 @@ public class IntermediateMainController {
 		intermediate = IntermediateMainController
 				.poToVO(intermediateDataService.getIntermediateInfo(null,
 						intermediateID));
+		intermediateCentre = intermediate.organization;
 	}
 
 	public void updateIntermediateInfo() {

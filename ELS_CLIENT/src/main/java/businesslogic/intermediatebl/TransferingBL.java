@@ -12,6 +12,10 @@ import businesslogicservice.intermediateblservice.TransferingBLService;
 
 public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
+	
+	public TransferingBL(TransferingReceiptVO transferingReceipt){
+		this.transferingReceipt = transferingReceipt;
+	}
 
 	public TransferingReceiptVO showTransferingReceipt() {
 		// TODO 自动生成的方法存根
