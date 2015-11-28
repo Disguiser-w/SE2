@@ -105,12 +105,6 @@ public class PerWageData implements PerWageDataService{
 				perWageData.addPerWage(new PerWagePO(ProfessionType.courier, 0.5));
 				perWageData.addPerWage(new PerWagePO(ProfessionType.driver, 50));
 				
-				PerWagePO perWagepo = perWageData.findPerWage(ProfessionType.driver);
-				if(perWagepo != null)
-					System.out.println(perWagepo.getProfession()+" "+perWagepo.getPerWage());
-				else
-					System.out.println("Cannot find the perWage");
-				
 				System.out.println("添加后:");
 				ArrayList<PerWagePO> perWagepoList0 = perWageData.showAllPerWages();
 				if(perWagepoList0 != null){
@@ -122,8 +116,14 @@ public class PerWageData implements PerWageDataService{
 				else 
 					System.out.println("Cannot find the perWage");
 					
-				System.out.println("修改后:");
+				PerWagePO perWagepo = perWageData.findPerWage(ProfessionType.driver);
+				if(perWagepo != null)
+					System.out.println(perWagepo.getProfession()+" "+perWagepo.getPerWage());
+				else
+					System.out.println("Cannot find the perWage");
+						
 				perWageData.modifyPerWage(new PerWagePO(ProfessionType.courier, 1));
+				System.out.println("修改后:");
 				ArrayList<PerWagePO> perWagepoList3 = perWageData.showAllPerWages();
 				if(perWagepoList3 != null){
 	    			for(int i=0;i<perWagepoList3.size();i++){
@@ -145,8 +145,8 @@ public class PerWageData implements PerWageDataService{
 				else 
 					System.out.println("Cannot find the perWage");
 				
-				System.out.println("删除后:");
 				perWageData.deletePerWage(ProfessionType.courier);
+				System.out.println("删除后:");
 				ArrayList<PerWagePO> perWagepoList2 = perWageData.showAllPerWages();
 				if(perWagepoList2 != null){
 	    			for(int i=0;i<perWagepoList2.size();i++){

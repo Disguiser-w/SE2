@@ -1,7 +1,6 @@
 package businesslogicservice.repertoryblservice;
 
 import businesslogicservice.repertoryblservice.RepertoryBLService;
-import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.InventoryCheckVO;
 
@@ -21,7 +20,7 @@ public class RepertoryBLService_stub implements RepertoryBLService{
         return 0;
     }
 		
-    public int leaveRepertory(String repertoryID, String JJD_ID, int transType, String date) {
+    public int leaveRepertory(String repertoryID, String JJD_ID, String date) {
         // TODO 自动生成的方法存根
         System.out.println("Leave repertory succeed!");
         return 0;

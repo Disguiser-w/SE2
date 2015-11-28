@@ -61,9 +61,9 @@ public class RepertoryBL implements RepertoryBLService{
 				GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
 				
 				//把GoodsPO的一个未填写的enterTime补充为现在的时间，进入的仓库编号中增加该仓库编号
-				time = getTimeNow();
+				/*time = getTimeNow();
 				goodspo.setEnterRepertoryID(repertoryID);
-				goodspo.setEnterTime(time);
+				goodspo.setEnterTime(time);*/
 				
 				//把InventoryPO加入仓库库存列表中
 				InventoryPO inventorypo = new InventoryPO(goodspo, blockNum, rowNum, shelfNum, digitNum);
@@ -83,19 +83,20 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see RepertoryPO,GoodsPO,InventoryPO
 	 * 
 	 * */
-	public int leaveRepertory(String repertoryID, String JJD_ID, int transType, String time){
+	public int leaveRepertory(String repertoryID, String JJD_ID, String time){
 		try{
 			InventoryPO inventorypo = rdService.findInventorybyID(repertoryID, JJD_ID);
 			InventoryVO inventoryvo = inventoryPOToVO(inventorypo);
 			if(admitLeaveRepertory(inventoryvo)){
-				GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
+				
 				//把GoodsPO的一个未填写的leaveTime补充为现在的时间，离开的仓库编号中增加该仓库编号
+				/*GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
 				time = getTimeNow();
 				goodspo.setLeaveRepertoryID(repertoryID);
-				goodspo.setLeaveTime(time);
+				goodspo.setLeaveTime(time);*/
 				
 				//把InventoryPO从仓库库存列表中删除
-				return(rdService.deleteInventory(repertoryID, inventorypo));
+				return(rdService.deleteInventory(repertoryID, JJD_ID));
 			}
 			else
 				return 1;

@@ -1,14 +1,11 @@
 package businesslogicservice.repertoryblservice;
 
-import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.InventoryCheckVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.GoodsPO;
-import po.InventoryPO;
 
 public interface RepertoryBLService {
 	public int inventoryInitialization(String repertoryID, int maxRow, int maxShelf, int maxDigit, int warningRatio) throws RemoteException;
@@ -20,11 +17,9 @@ public interface RepertoryBLService {
 //                                   2 汽车区
 //                                   3 机动区;
 
-	public int leaveRepertory(String repertoryID, String JJD_ID, int transType, String date) throws RemoteException;
-//                               仓库编号                          寄件单号         转运方式                    出库日期
-//                                                               0 飞机转运
-//                                                               1 火车转运
-//                                                               2 汽车转运
+	public int leaveRepertory(String repertoryID, String JJD_ID, String date) throws RemoteException;
+//                               仓库编号                          寄件单号       出库日期
+
 	public String inventoryWarning(String repertoryID) throws RemoteException;
 	public InventoryCheckVO inventoryCheck(String repertoryID, String beginDate, String endDate) throws RemoteException;
 	public ArrayList<InventoryVO> inventoryStockTaking(String repertoryID) throws RemoteException;

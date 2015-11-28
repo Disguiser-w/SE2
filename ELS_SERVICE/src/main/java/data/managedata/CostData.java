@@ -123,9 +123,8 @@ public class CostData implements CostDataService{
 				else
 					System.out.println("Cannot find the cost");
 				
-				
-				System.out.println("修改后:");
 				costData.modifyCost(new CostPO(ExpressType.FAST, 28));
+				System.out.println("修改后:");
 				ArrayList<CostPO> costpoList1 = costData.showAllCosts();
 				if(costpoList1 != null){
 	    			for(int i=0;i<costpoList1.size();i++){
@@ -135,7 +134,6 @@ public class CostData implements CostDataService{
 				}
 				else 
 					System.out.println("Cannot find the cost");
-				
 				
 				System.out.println("没有删除前:");
 				ArrayList<CostPO> costpoList2 = costData.showAllCosts();
@@ -148,8 +146,8 @@ public class CostData implements CostDataService{
 				else 
 					System.out.println("Cannot find the cost");
 				
-				System.out.println("删除后:");
 				costData.deleteCost(ExpressType.STANDARD);
+				System.out.println("删除后:");
 				ArrayList<CostPO> costpoList3 = costData.showAllCosts();
 				if(costpoList3 != null){
 	    			for(int i=0;i<costpoList3.size();i++){

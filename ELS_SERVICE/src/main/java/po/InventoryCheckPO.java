@@ -22,7 +22,7 @@ public class InventoryCheckPO {
 	}
 	
 	public void enterTotalPlus(){
-		this.enterTotal++;
+		this.enterTotal += 1; ;
 	}
 	
 	public int getEnterTotal(){
@@ -30,7 +30,7 @@ public class InventoryCheckPO {
 	}
 	
 	public void leaveTotalPlus(){
-		this.leaveTotal++;
+		this.leaveTotal += 1;
 	}
 	
 	public int getLeaveTotal(){

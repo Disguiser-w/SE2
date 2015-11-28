@@ -123,8 +123,8 @@ public class BasicSalaryData implements BasicSalaryDataService{
 				else
 					System.out.println("Cannot find the basicSalary");
 				
-				System.out.println("修改后:");
 				basicSalaryData.modifyBasicSalary(new BasicSalaryPO(ProfessionType.courier, 2500));
+				System.out.println("修改后:");
 				ArrayList<BasicSalaryPO> basicSalarypoList3 = basicSalaryData.showAllBasicSalarys();
 				if(basicSalarypoList3 != null){
 	    			for(int i=0;i<basicSalarypoList3.size();i++){
@@ -146,8 +146,8 @@ public class BasicSalaryData implements BasicSalaryDataService{
 				else 
 					System.out.println("Cannot find the basicSalary");
 				
-				System.out.println("删除后:");
 				basicSalaryData.deleteBasicSalary(ProfessionType.administrator);
+				System.out.println("删除后:");
 				ArrayList<BasicSalaryPO> basicSalarypoList2 = basicSalaryData.showAllBasicSalarys();
 				if(basicSalarypoList2 != null){
 	    			for(int i=0;i<basicSalarypoList2.size();i++){

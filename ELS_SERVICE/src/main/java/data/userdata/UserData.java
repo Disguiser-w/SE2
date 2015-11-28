@@ -34,7 +34,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     public int deleteUser(String userID) throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
-		if(objectList==null)	//不存在该用户	
+		if(objectList==null)
 			return 1;  	  
 		
 		for(int i=0; i<objectList.size(); i++){
@@ -53,7 +53,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     public int modifyUser(UserPO userpo) throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
-		if(objectList==null)	//不存在该用户	
+		if(objectList==null)
 			return 1;  	  
 		
 		for(int i=0; i<objectList.size(); i++){
@@ -72,7 +72,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     public UserPO findUser(String userID) throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
-		if(objectList==null)	//不存在该用户	
+		if(objectList==null)
 			return null;  	  
 		
 		for(int i=0; i<objectList.size(); i++){
@@ -88,7 +88,7 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     public ArrayList<UserPO> showAllUsers() throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
-		if(objectList==null)	//不存在该用户	
+		if(objectList==null)
 			return null;  	  
 		
 		ArrayList<UserPO> userList = new ArrayList<UserPO>();
@@ -119,12 +119,34 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     			userData.addUser(new UserPO("张词校" ,"KD-01","123456", ProfessionType.courier, "鼓楼营业厅",
     					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
     			
+    			System.out.println("添加后:");
+				ArrayList<UserPO> userpoList0 = userData.showAllUsers();
+				if(userpoList0 != null){
+	    			for(int i=0;i<userpoList0.size();i++){
+	    				UserPO tempUserpo = userpoList0.get(i);
+	    				System.out.println(tempUserpo.getProfession()+"  "+tempUserpo.getUser());
+	    			}
+				}
+				
     			UserPO userpo = userData.findUser("KD-01");
     			if(userpo != null)
-    				System.out.println(userpo.getName()+" "+userpo.getUserID()+" "+userpo.getOrganization()+" "+userpo.getProfession());
+    				System.out.println("Find the user: "userpo.getName()+" "+userpo.getUserID()+" "+userpo.getOrganization()+" "+userpo.getProfession());
     			else
     				System.out.println("Cannot find the user");
     			
+    			userData.modifyUser(new UserPO("张Doge" ,"KD-01","123456", ProfessionType.courier, "仙林营业厅",
+    					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
+    			System.out.println("修改后:");
+    			ArrayList<UserPO> userpoList3 = userData.showAllUsers();
+    			if(userpoList3 != null){
+	    			for(int i=0;i<userpoList3.size();i++){
+	    				UserPO tempUserpo = userpoList3.get(i);
+	    				System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "+tempUserpo.getOrganization()+"  "+tempUserpo.getProfession());
+	    			}
+    			}
+    			else 
+    				System.out.println("Cannot find the user");
+    				
     			System.out.println("没有删除前:");
     			ArrayList<UserPO> userpoList1 = userData.showAllUsers();
     			if(userpoList1 != null){
@@ -136,25 +158,12 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     			else 
     				System.out.println("Cannot find the user");
     			
-    			System.out.println("删除后:");
     			userData.deleteUser("CW-01");
+    			System.out.println("删除后:");
     			ArrayList<UserPO> userpoList2 = userData.showAllUsers();
     			if(userpoList2 != null){
 	    			for(int i=0;i<userpoList2.size();i++){
 	    				UserPO tempUserpo = userpoList2.get(i);
-	    				System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "+tempUserpo.getOrganization()+"  "+tempUserpo.getProfession());
-	    			}
-    			}
-    			else 
-    				System.out.println("Cannot find the user");
-    			
-    			System.out.println("修改后:");
-    			userData.modifyUser(new UserPO("张Doge" ,"KD-01","123456", ProfessionType.courier, "仙林营业厅",
-    					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
-    			ArrayList<UserPO> userpoList3 = userData.showAllUsers();
-    			if(userpoList3 != null){
-	    			for(int i=0;i<userpoList3.size();i++){
-	    				UserPO tempUserpo = userpoList3.get(i);
 	    				System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "+tempUserpo.getOrganization()+"  "+tempUserpo.getProfession());
 	    			}
     			}

@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class GoodsPO implements Serializable{
 	
 	private static final long serialVersionUID = 141250149L;
+	
 	private String Order_ID;
 	private double fee;
 	private String departurePlace, destination;
@@ -81,8 +82,10 @@ public class GoodsPO implements Serializable{
 	
 	public void setEnterTime(String enterTime){
 		for(int i=0;i<4;i++){
-			if(this.enterTime[i] == null)
-			this.enterTime[i] = enterTime;
+			if(this.enterTime[i] == null){
+				this.enterTime[i] = enterTime;
+				break;
+			}
 		}
 	}
 	
@@ -111,8 +114,10 @@ public class GoodsPO implements Serializable{
 	
 	public void setLeaveTime(String leaveTime){
 		for(int i=0;i<4;i++){
-			if(this.leaveTime[i] == null)
-			this.leaveTime[i] = leaveTime;
+			if(this.leaveTime[i] == null){
+				this.leaveTime[i] = leaveTime;
+				break;
+			}
 		}
 	}
 	

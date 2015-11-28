@@ -1,6 +1,5 @@
 package dataservice.managedataservice;
 
-import po.UserPO;
 import po.OrganizationPO;
 
 import java.rmi.Remote;

@@ -126,8 +126,8 @@ public class CityDistanceData implements CityDistanceDataService{
 					System.out.println("Cannot find the cityDistance");
 				
 				
-				System.out.println("修改后:");
 				cityDistanceData.modifyCityDistance(new CityDistancePO("北京", "上海", 1800));
+				System.out.println("修改后:");
 				ArrayList<CityDistancePO> cityDistancepoList1 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList1 != null){
 					for(int i=0;i<cityDistancepoList1.size();i++){
@@ -150,8 +150,8 @@ public class CityDistanceData implements CityDistanceDataService{
 				else 
 					System.out.println("Cannot find the cityDistance");
 				
-				System.out.println("删除后:");
 				cityDistanceData.deleteCityDistance("上海", "南京");
+				System.out.println("删除后:");
 				ArrayList<CityDistancePO> cityDistancepoList3 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList3 != null){
 					for(int i=0;i<cityDistancepoList3.size();i++){
