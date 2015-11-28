@@ -1,11 +1,12 @@
 package dataservice.financedataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.InitInfoPO;
 
-public interface InitialStockDataService {
+public interface InitialStockDataService extends Remote{
 
 	//初始化信息
 		public int initInfo(InitInfoPO po,String time) throws RemoteException;

@@ -1,5 +1,9 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.AccountPO;
@@ -126,6 +130,25 @@ public class AccountBL implements AccountBLService{
 	}
 
 
+	public static void main(String[] args){
+		try {
+			AccountDataService accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
+//			ArrayList<AccountPO> pos=accountData.showAll();
+//			for(AccountPO p:pos){
+//				System.out.println("Name: "+p.getName());
+//			}
+			System.out.println(accountData.test());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 

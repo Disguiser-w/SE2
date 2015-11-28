@@ -1,11 +1,12 @@
 package dataservice.financedataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.PaymentReceiptPO;
 
-public interface PaymentReceiptDataService {
+public interface PaymentReceiptDataService extends Remote{
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException;
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt() throws RemoteException;
 	

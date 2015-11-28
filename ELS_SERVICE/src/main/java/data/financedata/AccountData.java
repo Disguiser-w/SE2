@@ -1,6 +1,8 @@
 package data.financedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -14,6 +16,8 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 	//本宝宝yy了一个读写文件的类
 	/**
 	 * JXCFile中包括读文件，写文件（修改后再写文件），写入单对象
@@ -24,6 +28,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		super();
 		file=new JXCFile("account.ser");
 	}
+	
 	
 	/**
 	 * 添加账户：用户名不重复时可添加
@@ -179,28 +184,69 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		return 0;
 	}
 	
+	
+	public String test(){
+		return "test";
+	}
+	
 	public static void main(String[] args){
-		AccountData data;
-		try {
-			data = new AccountData();
-		try {
-			AccountPO po1=new AccountPO("鼓楼", 100);
-			data.addAccount(po1);
-			AccountPO po2=new AccountPO("总账",10000);
-			data.addAccount(po2);
-			AccountPO po3=new AccountPO("玄武",100);
-			data.addAccount(po3);
-			data.deleteAccount(po1);
-			AccountPO po=data.findbyName("鼓楼");
-			System.out.println("Name: "+po.getName()+"Money: "+po.getMoney());
-		} catch (RemoteException e) {
+		try{
+			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
+			AccountDataService data=new AccountData();
+			LocateRegistry.createRegistry(8888);
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.26.209.182:8888/AccountDataService", data);
+			System.out.println("Service start!");
+			
+//			ArrayList<AccountPO> pos=data.showAll();
+//			for(AccountPO p:pos){
+//				System.out.println("Name: "+p.getName());
+//			}
+//			System.out.println("---------------------------------------------------");
+//			ArrayList<AccountPO> pos_key=data.findByKeyword("楼");
+//			for(AccountPO p:pos_key){
+//				System.out.println("Name:  "+p.getName());
+//			}
+		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		AccountData data;
+//		----------------------------------------------------------
+//		try {
+//			data = new AccountData();
+//        --------------------------------------------------------------
+			
+//			AccountPO po1=new AccountPO("鼓楼", 100);
+//			AccountPO po2=new AccountPO("总账",10000);
+//			AccountPO po3=new AccountPO("玄武",100);
+//			AccountPO po4=new AccountPO("钟楼",1000);
+//			data.addAccount(po1);
+//			data.addAccount(po2);
+//			data.addAccount(po3);
+//			data.deleteAccount(po1);
+//			data.addAccount(po4);
+			
+//			----------------------------------------------------------------------------
+//			ArrayList<AccountPO> pos=data.showAll();
+//			for(AccountPO p:pos){
+//				System.out.println("Name: "+p.getName());
+//			}
+//			System.out.println("---------------------------------------------------");
+//			ArrayList<AccountPO> pos_key=data.findByKeyword("楼");
+//			for(AccountPO p:pos_key){
+//				System.out.println("Name:  "+p.getName());
+//			}
+//			------------------------------------------------------------------------------
+			
+ //			AccountPO po=data.findbyName("鼓楼");
+//			System.out.println("Name: "+po.getName()+"Money: "+po.getMoney());
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 	}
 
 }

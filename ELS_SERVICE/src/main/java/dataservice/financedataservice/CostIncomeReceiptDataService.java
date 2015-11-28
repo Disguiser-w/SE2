@@ -1,5 +1,6 @@
 package dataservice.financedataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import po.CollectionReceiptPO;
 import po.CostIncomeReceiptPO;
 import po.PaymentReceiptPO;
 
-public interface CostIncomeReceiptDataService {
+public interface CostIncomeReceiptDataService extends Remote{
 	public int creatCostIncomeList(CostIncomeReceiptPO po) throws RemoteException;
 	public ArrayList<CostIncomeReceiptPO> getAllCostIncomeList() throws RemoteException;
 	public ArrayList<CollectionReceiptPO> getCollection() throws RemoteException;

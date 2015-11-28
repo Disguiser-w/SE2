@@ -1,11 +1,12 @@
 package dataservice.financedataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.AccountPO;
 
-public interface AccountDataService {
+public interface AccountDataService extends Remote{
 	//增加一条AccountPO
 	public int addAccount(AccountPO po) throws RemoteException;
 	//删除一条AccountPO
@@ -23,4 +24,5 @@ public interface AccountDataService {
 	  //金额--
 	    public int delMoney(String name,double m) throws RemoteException;
 
+	    public String test();
 }
