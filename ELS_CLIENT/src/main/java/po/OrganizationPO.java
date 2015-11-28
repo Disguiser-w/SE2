@@ -1,6 +1,7 @@
 package po;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import po.RepertoryPO;
 import type.OrganizationType;
@@ -13,6 +14,38 @@ public class OrganizationPO implements Serializable {
 	private String organizationID;
 	private String name;
 	private RepertoryPO repertory;
+	
+	public ArrayList<PlanePO> getPlaneList() {
+		return planeList;
+	}
+
+	public void setPlaneList(ArrayList<PlanePO> planeList) {
+		this.planeList = planeList;
+	}
+
+	public ArrayList<TrainPO> getTrainList() {
+		return trainList;
+	}
+
+	public void setTrainList(ArrayList<TrainPO> trainList) {
+		this.trainList = trainList;
+	}
+
+	public ArrayList<TruckPO> getTruckList() {
+		return truckList;
+	}
+
+	public void setTruckList(ArrayList<TruckPO> truckList) {
+		this.truckList = truckList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	private ArrayList<PlanePO> planeList = new ArrayList<PlanePO>();
+	private ArrayList<TrainPO> trainList = new ArrayList<TrainPO>();
+	private ArrayList<TruckPO> truckList = new ArrayList<TruckPO>();
 	
 	public OrganizationPO(OrganizationType category, String organizationID, String name, RepertoryPO repertory){
 //                                         类别                               编号                                  名称
