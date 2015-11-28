@@ -1,6 +1,7 @@
 package businesslogic.expressbl;
 
 import businesslogic.expressbl.controller.ExpressMainController;
+import dataservice.expressdataservice.ExpressDataService;
 import po.OrderPO;
 import type.OrderState;
 import vo.ExpressVO;
@@ -23,16 +24,18 @@ public class ReceiptOrder {
 
 	public boolean receiptOrder(OrderVO vo) {
 		ExpressMainController.updateExpressInfo();
+		ExpressDataService expressData = ExpressMainController.expressData;
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
 			// 此po原来在该快递员的pendingList中，现在要移动到finishedList中
 			OrderPO po = ExpressMainController.orderVOToPO(vo);
-			po.setOrder_state(OrderState.FINISHED);
+			expressData.changeState(OrderState.FINISHED, po.getID());
+			expressData.addHistory("订单已签收", null, po.getID());
 
 			//
 			ExpressVO expressVO = ExpressMainController.expressVO;
-			result = ExpressMainController.expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID,
+			result = expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID,
 					po);
 		} catch (Exception e) {
 			e.printStackTrace();

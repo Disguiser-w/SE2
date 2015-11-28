@@ -62,8 +62,7 @@ public class AcceptCargo {
 		// 将OrderPOs添加到本营业厅的当日订单文件中,第二天派件
 
 		try {
-			for (OrderPO i : orderPOs)
-				expressData.addDistributingOrder(i, organizationVO.organizationID);
+				expressData.addDistributingOrder(orderPOs, organizationVO.organizationID);
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

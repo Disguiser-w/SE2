@@ -1,6 +1,7 @@
 package po;
 
 import type.Sexuality;
+import vo.OrganizationVO;
 
 public class DriverPO {
 

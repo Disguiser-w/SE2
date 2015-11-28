@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
-import type.TransferingState;
 
 public class OrderPO {
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
@@ -49,7 +48,7 @@ public class OrderPO {
 	private String finishedData;
 	private String finishedID;
 
-	private TransferingState transfer_state;
+
 	private OrderState order_state;
 
 	private ArrayList<String> history;
@@ -63,7 +62,7 @@ public class OrderPO {
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtData, String finishedData, String finishedID,
-			String tRecipient, TransferingState transfer_state, OrderState order_state, ArrayList<String> history) {
+			String tRecipient, OrderState order_state, ArrayList<String> history) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -88,7 +87,7 @@ public class OrderPO {
 		this.tRecipient = tRecipient;
 		this.finishedData = finishedData;
 		this.finishedID = finishedID;
-		this.transfer_state = transfer_state;
+
 		this.order_state = order_state;
 		this.history = history;
 	}
@@ -285,13 +284,6 @@ public class OrderPO {
 		this.finishedID = finishedID;
 	}
 
-	public TransferingState getTransfer_state() {
-		return transfer_state;
-	}
-
-	public void setTransfer_state(TransferingState transfer_state) {
-		this.transfer_state = transfer_state;
-	}
 
 	public OrderState getOrder_state() {
 		return order_state;

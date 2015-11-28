@@ -1,10 +1,5 @@
 package po;
 
-<<<<<<< HEAD
-import type.ExpressType;
-
-public class CostPO {
-=======
 import java.io.Serializable;
 
 import type.ExpressType;
@@ -13,7 +8,6 @@ public class CostPO implements Serializable {
 	
 	private static final long serialVersionUID = 141250154L;
 	
->>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 	ExpressType expresstype;
 	double cost;
 	

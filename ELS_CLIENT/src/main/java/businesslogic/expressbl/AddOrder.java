@@ -3,16 +3,12 @@ package businesslogic.expressbl;
 import java.rmi.RemoteException;
 
 import businesslogic.expressbl.controller.ExpressMainController;
-import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CityDistanceDataService_stub;
 import dataservice.managedataservice.CostDataService;
 import dataservice.managedataservice.CostDataService_stub;
 import po.OrderPO;
 import type.OrderState;
-import type.TransferingState;
-import vo.ExpressVO;
 import vo.OrderVO;
 
 public class AddOrder {
@@ -62,7 +58,7 @@ public class AddOrder {
 
 			if (addr1[0].equals(addr2[0])) {
 				// 如果在同一城市，不需要经过中转中心转运
-				po.setTransfer_state(TransferingState.FINISHED_ENVEHICLE);
+				
 				if (addr1[1].equals(addr2[1])) {
 					// 如果同一营业厅,直接派送
 					po.setOrder_state(OrderState.WAITING_DISTRIBUTE);
@@ -77,7 +73,7 @@ public class AddOrder {
 				}
 			} else {
 				// 在不同城市,需要转运和中转
-				po.setTransfer_state(TransferingState.WAITING_ENVEHICLE);
+			
 				po.setOrder_state(OrderState.WAITING_ENVEHICLE);
 				po.getHistory().add("快件已发出");
 				po.getHistory().add("订单已到达" + ExpressMainController.expressVO.organization.name + ",正等待中转");

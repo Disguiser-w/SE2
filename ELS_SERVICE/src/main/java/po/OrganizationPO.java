@@ -1,11 +1,7 @@
 package po;
 
-<<<<<<< HEAD
-=======
 import java.io.Serializable;
 
-import type.OrganizationType;
->>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 import po.RepertoryPO;
 import type.OrganizationType;
 

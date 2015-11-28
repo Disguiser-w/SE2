@@ -3,7 +3,6 @@ package data.financedata;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import File.JXCFile;
 import po.AccountPO;
 import po.InitInfoPO;
 import po.OrganizationPO;
@@ -11,6 +10,7 @@ import po.RepertoryPO;
 import po.UserPO;
 import po.VehiclePO;
 import dataservice.financedataservice.InitialStockDataService;
+import file.JXCFile;
 
 public class InitialStockData implements InitialStockDataService{
 

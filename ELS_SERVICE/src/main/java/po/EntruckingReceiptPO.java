@@ -8,24 +8,16 @@ public class EntruckingReceiptPO extends EnIntermediateReceiptPO{
 
 	private ArrayList<OrderPO> orderList;
 
-<<<<<<< HEAD
-=======
 	private final long orderNum_max = 1000;
->>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 	private double fare;
 	private String date;
 	private String ID;
 
 	public EntruckingReceiptPO(OrganizationPO intermediateCentre,
 			TruckPO truck, ArrayList<OrderPO> orderList, double fare, String ID) {
-<<<<<<< HEAD
-		super(intermediateCentre, orderList, fare, ID);
-		this.truck = truck;
-=======
 		super(intermediateCentre, orderList, ID);
 		this.truck = truck;
 		this.fare = truck.getFarePrice() * orderNum_max;
->>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {

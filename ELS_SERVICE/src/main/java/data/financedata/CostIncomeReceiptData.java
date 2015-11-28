@@ -3,13 +3,13 @@ package data.financedata;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import File.JXCFile;
 import po.CollectionReceiptPO;
 import po.CostIncomeReceiptPO;
 import po.PaymentReceiptPO;
 import po.ReceiptPO.ReceiptState;
 import type.ReceiptType;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
+import file.JXCFile;
 
 public class CostIncomeReceiptData implements CostIncomeReceiptDataService{
 

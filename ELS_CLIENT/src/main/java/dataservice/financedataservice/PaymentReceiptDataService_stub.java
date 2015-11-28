@@ -51,10 +51,4 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 		return 0;
 	}
 
-	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
-			String endTime) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

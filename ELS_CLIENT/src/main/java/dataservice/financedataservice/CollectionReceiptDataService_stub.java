@@ -52,13 +52,6 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 	}
 
 
-	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
-			String endTime) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 //	@Override
 //	public ArrayList<GatheringReceiptPO> getGathering(String Time) {
 //		// TODO Auto-generated method stub

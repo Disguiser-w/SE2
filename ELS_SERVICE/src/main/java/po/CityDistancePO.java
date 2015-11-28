@@ -1,16 +1,11 @@
 package po;
 
-<<<<<<< HEAD
-public class CityDistancePO {
-
-=======
 import java.io.Serializable;
 
 public class CityDistancePO implements Serializable {
 	
 	private static final long serialVersionUID = 141250153L;
 	
->>>>>>> dfb0783d596c62136e5eb78018eb2b88f4604364
 	private String cityA;
 	private String cityB;
 	private double distance;

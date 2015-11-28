@@ -1,5 +1,7 @@
 package vo;
 
+import java.util.ArrayList;
+
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
@@ -45,13 +47,14 @@ public class OrderVO {
 	public String tRecipient;
 
 	public OrderState order_state;
+	public ArrayList<String> history;
 
 	public OrderVO(String ID, String senderName, String senderAddress, String senderOrganization,
 			String senderPhoneNumber, String senderMobilePhoneNumber, String recipientName, String recipientAddress,
 			String recipientOrganization, String recipientPhoneNumber, String recipientMobilePhoneNumber,
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
-			String tRecipient, OrderState order_state) {
+			String tRecipient, OrderState order_state, ArrayList<String> history) {
 		super();
 		this.ID = ID;
 		this.senderName = senderName;
@@ -72,6 +75,7 @@ public class OrderVO {
 		this.packType = packType;
 		this.builtDate = builtDate;
 		this.order_state = order_state;
+		this.history = history;
 
 		freight = 0;
 		packingExpense = 0;

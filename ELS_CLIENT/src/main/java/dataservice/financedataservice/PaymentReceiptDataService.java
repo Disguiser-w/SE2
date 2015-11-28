@@ -23,7 +23,5 @@ public interface PaymentReceiptDataService {
 		//获取租金
 		public double getRent(String time);
 		
-		//获取经营情况表需要
-		public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,String endTime);
 
 }

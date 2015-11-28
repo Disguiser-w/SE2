@@ -22,8 +22,6 @@ public interface CollectionReceiptDataService {
 	public CollectionReceiptPO findByID(String ID);
 	//修改持久化对象
 	public CollectionReceiptPO modify(CollectionReceiptPO po);
-	//获取经营情况表需要
-	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,String endTime);
 	
 	
 	

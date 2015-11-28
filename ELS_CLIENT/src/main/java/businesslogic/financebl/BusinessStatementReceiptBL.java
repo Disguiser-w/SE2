@@ -28,12 +28,12 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	public BusinessStatementReceiptVO showBSList(String beginTime,
 			String endTime) {
 		// TODO Auto-generated method stub
-		return bpoToVO(new BusinessStatementReceiptPO(beginTime, endTime, crdService.getCollection_right(beginTime, endTime), prdService.getPayment_right(beginTime, endTime)));
+		return bpoToVO(brdService.showBSL(beginTime, endTime));
 	}
 	
 	public ArrayList<BusinessStatementReceiptVO> showAllBSList() {
 		// TODO Auto-generated method stub
-       return bposToVOs(brdService.showAllBSList());
+       return null;
 		}
 	
 	/**
@@ -46,7 +46,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		/**
 		 * 筛选可以放在取数据的时候
 		 * */
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=businessstatementReceiptPOs.getCollectionPOs();
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
 		ArrayList<CollectionReceiptVO> collectionReceiptVOs;
 		if(collectionReceiptPOs==null){
 			System.out.println("CollectionReceiptPOs is null-------BusinessstatementReceiptBL");
@@ -60,7 +60,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			}
 		}		
 
-		ArrayList<PaymentReceiptPO> paymentReceiptPOs=businessstatementReceiptPOs.getPaymentPOs();
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs=prdService.getAllPaymentReceipt();
 		ArrayList<PaymentReceiptVO> paymentReceiptVOs;
 		if(paymentReceiptPOs==null){
 			System.out.println("ArrayList<PaymentReceiptPO> pos is null  ------------------BusinessstatementReceiptBL");
@@ -78,20 +78,6 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		return businessStatementReceiptVO;
 	}
 
-	public ArrayList<BusinessStatementReceiptVO> bposToVOs(ArrayList<BusinessStatementReceiptPO> pos) {
-		ArrayList<BusinessStatementReceiptVO> vos;
-		if(pos==null){
-			return null;
-		}
-		else{
-			vos=new ArrayList<BusinessStatementReceiptVO>();
-			for(BusinessStatementReceiptPO p:pos){
-				BusinessStatementReceiptVO v=bpoToVO(p);
-				vos.add(v);
-			}
-			return vos;
-		}
-	}
 	/**
 	 * 将vo转化为po存入BusinessstatementReceiptPO
 	 * */

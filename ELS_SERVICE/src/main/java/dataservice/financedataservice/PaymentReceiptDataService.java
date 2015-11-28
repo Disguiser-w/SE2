@@ -16,8 +16,8 @@ public interface PaymentReceiptDataService {
 	//修改持久化对象
 	public  PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException;
 	
-	//获取经营情况表需要
-			public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,String endTime);
+	//筛选特定时间内的付款单
+	public ArrayList<PaymentReceiptPO> getRightPaymentReceipt(String beginTime,String endTime);
 
 //	public double getSalary() ;
 //
