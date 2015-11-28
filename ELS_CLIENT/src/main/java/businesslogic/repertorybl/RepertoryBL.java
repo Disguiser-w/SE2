@@ -216,4 +216,5 @@ public class RepertoryBL implements RepertoryBLService{
 	public InventoryCheckVO inventoryCheckPOToVO(InventoryCheckPO inventorycheckpo){
 		return new InventoryCheckVO(inventorycheckpo.getEnterTotal(), inventorycheckpo.getLeaveTotal(), inventorycheckpo.getEnterFeeTotal(),inventorycheckpo.getLeaveFeeTotal(), inventorycheckpo.getStockNumArray());
 	}
+	
 }

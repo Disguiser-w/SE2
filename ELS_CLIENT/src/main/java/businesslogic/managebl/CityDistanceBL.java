@@ -22,8 +22,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 	
 	public int deleteCityDistance(CityDistanceVO cityDistancevo){
 		try{
-			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
-			return(cddService.deleteCityDistance(cityDistancepo));
+			return(cddService.deleteCityDistance(cityDistancevo.getCityA(), cityDistancevo.getCityB()));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -42,7 +41,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 	
 	public double findCityDistance(String cityA, String cityB){
 		try{
-			return cddService.findCityDistance(cityA, cityB);
+			return cddService.findCityDistance(cityA, cityB).getDistance();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return -1.0;

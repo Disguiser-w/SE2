@@ -23,8 +23,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public int deletePerWage(PerWageVO perWagevo){
 		try{
-			PerWagePO perWagepo = voToPO(perWagevo);
-			return(pwdService.deletePerWage(perWagepo));
+			return(pwdService.deletePerWage(perWagevo.getProfession()));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -43,7 +42,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public double findPerWage(ProfessionType profession){
 		try{
-			return pwdService.findPerWage(profession);
+			return pwdService.findPerWage(profession).getPerWage();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return -1.0;

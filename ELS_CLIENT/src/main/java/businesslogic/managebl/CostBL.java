@@ -24,8 +24,7 @@ public class CostBL implements CostBLService{
 	
 	public int deleteCost(CostVO costvo){
 		try{
-			CostPO costpo = voToPO(costvo);
-			return(codService.deleteCost(costpo));
+			return(codService.deleteCost(costvo.getCategory()));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -44,7 +43,7 @@ public class CostBL implements CostBLService{
 	
 	public double findCost(ExpressType category){
 		try{
-			return codService.findCost(category);
+			return codService.findCost(category).getCost();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return -1.0;

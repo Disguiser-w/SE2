@@ -23,8 +23,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public int deleteBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
-			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
-			return(bsdService.deleteBasicSalary(basicSalarypo));
+			return(bsdService.deleteBasicSalary(basicSalaryvo.getProfession()));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -43,7 +42,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public double findBasicSalary(ProfessionType profession){
 		try{
-			return bsdService.findBasicSalary(profession);
+			return bsdService.findBasicSalary(profession).getBasicSalary();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return -1.0;
