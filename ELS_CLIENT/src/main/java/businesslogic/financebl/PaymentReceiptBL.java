@@ -115,7 +115,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 
 	/**
 	 * 到时候ui层调用这个方法来计算成本，再加到vo里面
-	 * 频率：一个月计算一次
+	 * 频率：一个月计算一次(get)
 	 * */
 	public double getSalary(String time){
 		// TODO Auto-generated method stub
@@ -177,23 +177,30 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * */
 	public double getFare(String time) {
 		// TODO Auto-generated method stub
-		ArrayList<OrganizationPO> organizationPOs=odService.showAllOrganizations();
-		ArrayList<OrganizationPO> pos_intermedia=new ArrayList<OrganizationPO>();
-		for(OrganizationPO p:organizationPOs){
-			if(p.getCategory()==OrganizationType.intermediateCenter){
-				pos_intermedia.add(p);
+		ArrayList<OrganizationPO> organizationPOs;
+		try {
+			organizationPOs = odService.showAllOrganizations();
+			ArrayList<OrganizationPO> pos_intermedia=new ArrayList<OrganizationPO>();
+			for(OrganizationPO p:organizationPOs){
+				if(p.getCategory()==OrganizationType.intermediateCenter){
+					pos_intermedia.add(p);
+				}
 			}
+//			ArrayList<FarePO> farepos=bdService.getFarePO(time);
+			
+//			double fare=0;;
+//			if(farepos==null){
+//				System.out.println("获取farepos失败");
+//			}
+//			for(FarePO p:farepos){
+//				fare+=p.getMoney();
+//			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		ArrayList<FarePO> farepos=bdService.getFarePO(time);
 		
-		double fare=0;;
-		if(farepos==null){
-			System.out.println("获取farepos失败");
-		}
-		for(FarePO p:farepos){
-			fare+=p.getMoney();
-		}
-		return fare;
+		return 0;
 	}
 
 	
