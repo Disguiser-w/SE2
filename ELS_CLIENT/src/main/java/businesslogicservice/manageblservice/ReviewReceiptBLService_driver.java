@@ -3,7 +3,13 @@ package businesslogicservice.manageblservice;
 public class ReviewReceiptBLService_driver {
 	
 	public void drive(ReviewReceiptBLService rrs){
-		rrs.reviewReceipt("20151001-00001");
+		rrs.modify(null);
+		String[] str = {"20151001", "20151002","20151003"};
+		rrs.batch(str);
+		rrs.approve("20151001");
+		rrs.reply("20151001");
+		rrs.getReceiptList();
+		rrs.refresh();
 	}
 	
 	public void main(){
