@@ -2,8 +2,6 @@ package po;
 
 import java.util.ArrayList;
 
-import vo.OrganizationVO;
-
 public class OrderAcceptReceiptPO {
 	private OrganizationPO local;
 	private String time;
@@ -11,8 +9,8 @@ public class OrderAcceptReceiptPO {
 	private ArrayList<String> orderIDs;
 	private String receiptID;
 
-	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs,
-			String receiptID) {
+	public OrderAcceptReceiptPO(OrganizationPO local, String time,
+			VehiclePO vehiclePO, ArrayList<String> orderIDs, String receiptID) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;

@@ -1,9 +1,6 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class GatheringReceiptPO {
 	private OrganizationPO businessShall;
@@ -16,8 +13,9 @@ public class GatheringReceiptPO {
 	public GatheringReceiptPO() {
 	}
 
-	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<String> expressList,
-			ArrayList<Double> money, double totalmoney, String receiptID) {
+	public GatheringReceiptPO(OrganizationPO businessShall, String time,
+			ArrayList<String> expressList, ArrayList<Double> money,
+			double totalmoney, String receiptID) {
 		this.expressIDs = expressList;
 		this.money = money;
 		this.businessShall = businessShall;

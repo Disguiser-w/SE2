@@ -4,30 +4,26 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.AccountPO;
-import po.DriverPO;
 import po.InitInfoPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
 import po.UserPO;
 import po.VehiclePO;
+import vo.AccountVO;
+import vo.InitInfoVO;
+import vo.OrganizationVO;
+import vo.RepertoryVO;
+import vo.UserVO;
+import vo.VehicleVO;
+import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogicservice.financeblservice.InitialStockBLService;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.InitialStockDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
-import businesslogic.businessbl.controller.BusinessMainController;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.managebl.OrganizationBL;
-import businesslogicservice.financeblservice.InitialStockBLService;
-import type.OrganizationType;
-import vo.AccountVO;
-import vo.DriverVO;
-import vo.InitInfoVO;
-import vo.RepertoryVO;
-import vo.OrganizationVO;
-import vo.UserVO;
-import vo.VehicleVO;
 
 public class InitialStockBL implements InitialStockBLService{
 	
@@ -60,8 +56,9 @@ public class InitialStockBL implements InitialStockBLService{
 	/**
 	 * 取出各个PO中的数据并po变vo，添加到InitInfoVO中
 	 * Q：这里取PO是通过每个DataService去调吗
+	 * @throws RemoteException 
 	 * */
-	public InitInfoVO poToVO(InitInfoPO po){
+	public InitInfoVO poToVO(InitInfoPO po) throws RemoteException{
 		if(po==null)
 			return null;
 		
@@ -142,8 +139,9 @@ public class InitialStockBL implements InitialStockBLService{
 	
 	/**
 	 * pos变vos
+	 * @throws RemoteException 
 	 * */
-	public ArrayList<InitInfoVO> posToVOs(ArrayList<InitInfoPO> pos){
+	public ArrayList<InitInfoVO> posToVOs(ArrayList<InitInfoPO> pos) throws RemoteException{
 		ArrayList<InitInfoVO> initInfoVOs;
 		if(pos==null){
 			initInfoVOs=null;
@@ -270,8 +268,9 @@ public class InitialStockBL implements InitialStockBLService{
 	/**
 	 * 从持久化数据中取出所有的期初信息
 	 * 显示所有期初信息
+	 * @throws RemoteException 
 	 * */
-	public ArrayList<InitInfoVO> getAllInitInfo() {
+	public ArrayList<InitInfoVO> getAllInitInfo() throws RemoteException {
 		// TODO Auto-generated method stub
 		ArrayList<InitInfoPO> pos=initData.getAllInitInfo();
 		ArrayList<InitInfoVO> vos=posToVOs(pos);

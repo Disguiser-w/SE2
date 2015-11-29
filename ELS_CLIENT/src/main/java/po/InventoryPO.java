@@ -1,71 +1,65 @@
 package po;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-import po.GoodsPO;
+public class InventoryPO implements Serializable {
 
-public class InventoryPO implements Serializable{
-	
 	private static final long serialVersionUID = 141250150L;
-	
+
 	private GoodsPO good;
 	private int blockNum, rowNum, shelfNum, digitNum;
-	
-	public InventoryPO(GoodsPO good, int blockNum, int rowNum, int shelfNum, int digitNum){
+
+	public InventoryPO(GoodsPO good, int blockNum, int rowNum, int shelfNum,
+			int digitNum) {
 		this.good = good;
 		this.blockNum = blockNum;
 		this.rowNum = rowNum;
-		this.shelfNum  = shelfNum;
+		this.shelfNum = shelfNum;
 		this.digitNum = digitNum;
 	}
-	
-	/*public void addGoods(GoodsVO goods){
-		Goods_List.add(goods);
-	}
-	
-	public void deleteGoods(GoodsVO goods){
-		Goods_List.remove(goods);
-	}
-	
-	public ArrayList<InventoryPO> showInventory(){
-		return this.Goods_List;
-	}*/
-	
-	public GoodsPO getGood(){
+
+	/*
+	 * public void addGoods(GoodsVO goods){ Goods_List.add(goods); }
+	 * 
+	 * public void deleteGoods(GoodsVO goods){ Goods_List.remove(goods); }
+	 * 
+	 * public ArrayList<InventoryPO> showInventory(){ return this.Goods_List; }
+	 */
+
+	public GoodsPO getGood() {
 		return this.good;
 	}
-	
-	public void setBlockNum(int blockNum){
+
+	public void setBlockNum(int blockNum) {
 		this.blockNum = blockNum;
 	}
-	
-	public int getBlockNum(){
+
+	public int getBlockNum() {
 		return this.blockNum;
 	}
-	
-	public void setRowNum(int rowNum){
+
+	public void setRowNum(int rowNum) {
 		this.rowNum = rowNum;
 	}
-	
-	public int getRowNum(){
+
+	public int getRowNum() {
 		return this.rowNum;
 	}
-	
-	public void setShelfNum(int shelfNum){
-		this.shelfNum  = shelfNum;
+
+	public void setShelfNum(int shelfNum) {
+		this.shelfNum = shelfNum;
 	}
-	
-	public int getShelfNum(){
+
+	public int getShelfNum() {
 		return this.shelfNum;
 	}
-	
-	public void setDigitNum(int digitNum){
+
+	public void setDigitNum(int digitNum) {
 		this.digitNum = digitNum;
-	} 
-	
-	public int getDigitNum(){
+	}
+
+	public int getDigitNum() {
 		return this.digitNum;
 	}
-	
+
 }

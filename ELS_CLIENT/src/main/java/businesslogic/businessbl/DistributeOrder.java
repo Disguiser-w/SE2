@@ -6,22 +6,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import businesslogic.businessbl.controller.BusinessMainController;
-import dataservice.businessdataservice.BusinessDataService;
-import dataservice.businessdataservice.BusinessDataService_stub;
-import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import po.DistributeReceiptPO;
 import po.ExpressPO;
 import po.OrderPO;
 import type.OrderState;
 import vo.OrganizationVO;
+import businesslogic.businessbl.controller.BusinessMainController;
+import dataservice.expressdataservice.ExpressDataService;
 
 public class DistributeOrder {
 
 	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
 	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
-	public ArrayList<String> distributeOrder() {
+	public ArrayList<String> distributeOrder() throws RemoteException {
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
 		ExpressDataService expressData = BusinessMainController.expressData;

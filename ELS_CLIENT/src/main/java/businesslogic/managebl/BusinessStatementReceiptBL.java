@@ -25,6 +25,7 @@ public class BusinessStatementReceiptBL implements BusinessStatementReceiptBLSer
 		for(BusinessStatementReceiptPO bsrpo: bsrpoList){
 			bsrvoList.add(BSRPOToVO(bsrpo));
 		}
+		return bsrvoList;
 		
 	}
 	//导出excel表格

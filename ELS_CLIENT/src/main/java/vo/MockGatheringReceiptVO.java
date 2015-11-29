@@ -1,31 +1,32 @@
 package vo;
 
-public class MockGatheringReceiptVO extends GatheringReceiptVO{
+public class MockGatheringReceiptVO extends GatheringReceiptVO {
 	String HallID;
 	String Time;
 	double money;
 	String GatheringID;
-	public MockGatheringReceiptVO(String h,String t,double m,String g){
-		HallID=h;
-		Time=t;
-		money=m;
-		GatheringID=g;
+
+	public MockGatheringReceiptVO(String h, String t, double m, String g) {
+		HallID = h;
+		Time = t;
+		money = m;
+		GatheringID = g;
 	}
-	
-	public String getHallID(){
+
+	public String getHallID() {
 		return HallID;
 	}
-	
-	public String getTime(){
+
+	public String getTime() {
 		return Time;
 	}
 
-	public double getTotalmoney(){
+	public double getTotalmoney() {
 		return money;
 	}
-	
-	public String getGatheringID(){
+
+	public String getGatheringID() {
 		return GatheringID;
 	}
-	
+
 }

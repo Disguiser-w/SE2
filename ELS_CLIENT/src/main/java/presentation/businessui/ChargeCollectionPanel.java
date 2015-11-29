@@ -26,7 +26,8 @@ public class ChargeCollectionPanel extends JPanel {
 		collectionButton = new JButton();
 
 		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		totalMessageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		totalMessageLabel
+				.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// printLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// sendLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -45,8 +46,10 @@ public class ChargeCollectionPanel extends JPanel {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
 
-		totalMessageLabel.setBounds((int) (width * 0.9923175416133163 / 25), (int) (height * 16.785714285714285 / 20),
-				(int) (width * 16.99743918053777 / 25), (int) (height * 1.9642857142857142 / 20));
+		totalMessageLabel.setBounds((int) (width * 0.9923175416133163 / 25),
+				(int) (height * 16.785714285714285 / 20),
+				(int) (width * 16.99743918053777 / 25),
+				(int) (height * 1.9642857142857142 / 20));
 
 		// sendLabel.setBounds((int) (width * 22.37516005121639 / 25), (int)
 		// (height * 0.8482142857142857 / 20),
@@ -57,10 +60,14 @@ public class ChargeCollectionPanel extends JPanel {
 		// (int) (width * 1.5685019206145967 / 25), (int) (height * 2.1875 /
 		// 20));
 
-		collectionButton.setBounds((int) (width * 21.9910371318822 / 25), (int) (height * 17.232142857142858 / 20),
-				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.3839285714285714 / 20));
-		messageTable.setBounds((int) (width * 0.9923175416133163 / 25), (int) (height * 1.2946428571428572 / 20),
-				(int) (width * 23.01536491677337 / 25), (int) (height * 14.642857142857142 / 20));
+		collectionButton.setBounds((int) (width * 21.9910371318822 / 25),
+				(int) (height * 17.232142857142858 / 20),
+				(int) (width * 1.9846350832266326 / 25),
+				(int) (height * 1.3839285714285714 / 20));
+		messageTable.setBounds((int) (width * 0.9923175416133163 / 25),
+				(int) (height * 1.2946428571428572 / 20),
+				(int) (width * 23.01536491677337 / 25),
+				(int) (height * 14.642857142857142 / 20));
 
 	}
 

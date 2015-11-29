@@ -9,21 +9,15 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import businesslogic.expressbl.controller.AddOrderController;
-import dataservice.managedataservice.CityDistanceDataService;
-import dataservice.managedataservice.CityDistanceDataService_stub;
-import dataservice.managedataservice.CostDataService;
-import dataservice.managedataservice.CostDataService_stub;
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
-import type.TransferingState;
 import vo.OrderVO;
+import businesslogic.expressbl.controller.AddOrderController;
 
 public class AddOrderPanel extends JPanel {
 	private JLabel senderLabel;
@@ -86,6 +80,7 @@ public class AddOrderPanel extends JPanel {
 	private AddOrderController controller;
 
 	private OrderVO newOrder;
+
 	// private LocationHelper helper;
 
 	public AddOrderPanel() {
@@ -289,66 +284,110 @@ public class AddOrderPanel extends JPanel {
 		// 设之所有组件的bounds
 
 		senderLabel.setBounds(width / 50, height / 25, width / 8, height / 20);
-		senderNameLabel.setBounds(width * 1 / 25, height * 3 / 25, width / 20, height / 20);
-		senderOrganizationLabel.setBounds(width * 7 / 25, height * 3 / 25, width / 20, height / 20);
-		senderPhoneLabel.setBounds(width * 13 / 25, height * 3 / 25, width / 20, height / 20);
-		senderMobilePhoneLabel.setBounds(width * 19 / 25, height * 3 / 25, width / 20, height / 20);
+		senderNameLabel.setBounds(width * 1 / 25, height * 3 / 25, width / 20,
+				height / 20);
+		senderOrganizationLabel.setBounds(width * 7 / 25, height * 3 / 25,
+				width / 20, height / 20);
+		senderPhoneLabel.setBounds(width * 13 / 25, height * 3 / 25,
+				width / 20, height / 20);
+		senderMobilePhoneLabel.setBounds(width * 19 / 25, height * 3 / 25,
+				width / 20, height / 20);
 
-		senderAddressLabel.setBounds(width * 1 / 25, height * 5 / 25, width / 20, height / 20);
-		senderCountryList.setBounds(width * 1 / 10, height * 5 / 25, width * 7 / 50, height / 20);
-		senderCityField.setBounds(width * 6 / 25, height * 5 / 25, width * 7 / 50, height / 20);
+		senderAddressLabel.setBounds(width * 1 / 25, height * 5 / 25,
+				width / 20, height / 20);
+		senderCountryList.setBounds(width * 1 / 10, height * 5 / 25,
+				width * 7 / 50, height / 20);
+		senderCityField.setBounds(width * 6 / 25, height * 5 / 25,
+				width * 7 / 50, height / 20);
 
-		receiverLabel.setBounds(width / 50, height * 7 / 25, width / 8, height / 20);
-		receiverNameLabel.setBounds(width * 1 / 25, height * 9 / 25, width / 20, height / 20);
-		receiverOrganizationLabel.setBounds(width * 7 / 25, height * 9 / 25, width / 20, height / 20);
-		receiverPhoneLabel.setBounds(width * 13 / 25, height * 9 / 25, width / 20, height / 20);
-		receiverMobilePhoneLabel.setBounds(width * 19 / 25, height * 9 / 25, width / 20, height / 20);
+		receiverLabel.setBounds(width / 50, height * 7 / 25, width / 8,
+				height / 20);
+		receiverNameLabel.setBounds(width * 1 / 25, height * 9 / 25,
+				width / 20, height / 20);
+		receiverOrganizationLabel.setBounds(width * 7 / 25, height * 9 / 25,
+				width / 20, height / 20);
+		receiverPhoneLabel.setBounds(width * 13 / 25, height * 9 / 25,
+				width / 20, height / 20);
+		receiverMobilePhoneLabel.setBounds(width * 19 / 25, height * 9 / 25,
+				width / 20, height / 20);
 
-		receiverAddressLabel.setBounds(width * 1 / 25, height * 11 / 25, width / 20, height / 20);
-		receiverCountryList.setBounds(width * 1 / 10, height * 11 / 25, width * 7 / 50, height / 20);
-		receiverCityField.setBounds(width * 6 / 25, height * 11 / 25, width * 7 / 50, height / 20);
+		receiverAddressLabel.setBounds(width * 1 / 25, height * 11 / 25,
+				width / 20, height / 20);
+		receiverCountryList.setBounds(width * 1 / 10, height * 11 / 25,
+				width * 7 / 50, height / 20);
+		receiverCityField.setBounds(width * 6 / 25, height * 11 / 25,
+				width * 7 / 50, height / 20);
 
-		senderNameField.setBounds(width * 1 / 10, height * 3 / 25, width * 7 / 50, height / 20);
-		senderOrganizationField.setBounds(width * 17 / 50, height * 3 / 25, width * 7 / 50, height / 20);
-		senderPhoneField.setBounds(width * 29 / 50, height * 3 / 25, width * 7 / 50, height / 20);
-		senderMobilePhoneField.setBounds(width * 41 / 50, height * 3 / 25, width * 7 / 50, height / 20);
+		senderNameField.setBounds(width * 1 / 10, height * 3 / 25,
+				width * 7 / 50, height / 20);
+		senderOrganizationField.setBounds(width * 17 / 50, height * 3 / 25,
+				width * 7 / 50, height / 20);
+		senderPhoneField.setBounds(width * 29 / 50, height * 3 / 25,
+				width * 7 / 50, height / 20);
+		senderMobilePhoneField.setBounds(width * 41 / 50, height * 3 / 25,
+				width * 7 / 50, height / 20);
 
-		senderAddressField.setBounds(width * 19 / 50, height * 5 / 25, width * 21 / 50, height / 20);
+		senderAddressField.setBounds(width * 19 / 50, height * 5 / 25,
+				width * 21 / 50, height / 20);
 
-		receiverNameField.setBounds(width * 1 / 10, height * 9 / 25, width * 7 / 50, height / 20);
-		receiverOrganizationField.setBounds(width * 17 / 50, height * 9 / 25, width * 7 / 50, height / 20);
-		receiverPhoneField.setBounds(width * 29 / 50, height * 9 / 25, width * 7 / 50, height / 20);
-		receiverMobilePhoneField.setBounds(width * 41 / 50, height * 9 / 25, width * 7 / 50, height / 20);
+		receiverNameField.setBounds(width * 1 / 10, height * 9 / 25,
+				width * 7 / 50, height / 20);
+		receiverOrganizationField.setBounds(width * 17 / 50, height * 9 / 25,
+				width * 7 / 50, height / 20);
+		receiverPhoneField.setBounds(width * 29 / 50, height * 9 / 25,
+				width * 7 / 50, height / 20);
+		receiverMobilePhoneField.setBounds(width * 41 / 50, height * 9 / 25,
+				width * 7 / 50, height / 20);
 
-		receiverAddressField.setBounds(width * 19 / 50, height * 11 / 25, width * 21 / 50, height / 20);
+		receiverAddressField.setBounds(width * 19 / 50, height * 11 / 25,
+				width * 21 / 50, height / 20);
 
-		goodsLabel.setBounds(width / 50, height * 13 / 25, width / 8, height / 20);
+		goodsLabel.setBounds(width / 50, height * 13 / 25, width / 8,
+				height / 20);
 
-		numberLabel.setBounds(width * 1 / 25, height * 3 / 5, width / 15, height / 20);
-		weightLabel.setBounds(width * 6 / 25, height * 3 / 5, width * 2 / 25, height / 20);
-		volumnLabel.setBounds(width * 12 / 25, height * 3 / 5, width / 15, height / 20);
-		goodNameLabel.setBounds(width * 17 / 25, height * 3 / 5, width * 2 / 25, height / 20);
-		expressTypeLabel.setBounds(width / 50, height * 17 / 25, width / 8, height / 20);
-		packageTypeLabel.setBounds(width / 50, height * 19 / 25, width / 8, height / 20);
+		numberLabel.setBounds(width * 1 / 25, height * 3 / 5, width / 15,
+				height / 20);
+		weightLabel.setBounds(width * 6 / 25, height * 3 / 5, width * 2 / 25,
+				height / 20);
+		volumnLabel.setBounds(width * 12 / 25, height * 3 / 5, width / 15,
+				height / 20);
+		goodNameLabel.setBounds(width * 17 / 25, height * 3 / 5,
+				width * 2 / 25, height / 20);
+		expressTypeLabel.setBounds(width / 50, height * 17 / 25, width / 8,
+				height / 20);
+		packageTypeLabel.setBounds(width / 50, height * 19 / 25, width / 8,
+				height / 20);
 
 		totalSumLabel.setBounds(width, height, width, height);
 
 		// goodsField.setBounds(width, height, width, height);
-		numberField.setBounds(width * 3 / 25, height * 3 / 5, width / 15, height / 20);
-		weightField.setBounds(width * 17 / 50, height * 3 / 5, width / 15, height / 20);
-		volumnField.setBounds(width * 14 / 25, height * 3 / 5, width / 15, height / 20);
-		goodNameField.setBounds(width * 39 / 50, height * 3 / 5, width * 9 / 50, height / 20);
+		numberField.setBounds(width * 3 / 25, height * 3 / 5, width / 15,
+				height / 20);
+		weightField.setBounds(width * 17 / 50, height * 3 / 5, width / 15,
+				height / 20);
+		volumnField.setBounds(width * 14 / 25, height * 3 / 5, width / 15,
+				height / 20);
+		goodNameField.setBounds(width * 39 / 50, height * 3 / 5,
+				width * 9 / 50, height / 20);
 
-		expressTypeList.setBounds(width * 4 / 25, height * 17 / 25, width / 8, height / 20);
-		packageTypeList.setBounds(width * 4 / 25, height * 19 / 25, width / 8, height / 20);
+		expressTypeList.setBounds(width * 4 / 25, height * 17 / 25, width / 8,
+				height / 20);
+		packageTypeList.setBounds(width * 4 / 25, height * 19 / 25, width / 8,
+				height / 20);
 
-		costLabel.setBounds(width / 2, height * 17 / 25, width / 8, height / 20);
-		timeLabel.setBounds(width / 2, height * 19 / 25, width / 8, height / 20);
-		cost.setBounds(width * 16 / 25, height * 17 / 25, width / 8, height / 20);
-		time.setBounds(width * 16 / 25, height * 19 / 25, width / 8, height / 20);
+		costLabel
+				.setBounds(width / 2, height * 17 / 25, width / 8, height / 20);
+		timeLabel
+				.setBounds(width / 2, height * 19 / 25, width / 8, height / 20);
+		cost.setBounds(width * 16 / 25, height * 17 / 25, width / 8,
+				height / 20);
+		time.setBounds(width * 16 / 25, height * 19 / 25, width / 8,
+				height / 20);
 
-		calcuButton.setBounds(width * 19 / 25, height * 22 / 25, width / 12, height / 15);
-		confirmButton.setBounds(width * 22 / 25, height * 22 / 25, width / 12, height / 15);
+		calcuButton.setBounds(width * 19 / 25, height * 22 / 25, width / 12,
+				height / 15);
+		confirmButton.setBounds(width * 22 / 25, height * 22 / 25, width / 12,
+				height / 15);
 
 	}
 
@@ -411,7 +450,8 @@ public class AddOrderPanel extends JPanel {
 				String senderAddress = senderAddressField.getText();
 
 				String receiverName = receiverNameField.getText();
-				String receiverOrganization = receiverOrganizationField.getText();
+				String receiverOrganization = receiverOrganizationField
+						.getText();
 				String receiverPhone = receiverPhoneField.getText();
 				String receiverMobilePhone = receiverMobilePhoneField.getText();
 				String receiverAddress = receiverAddressField.getText();
@@ -422,24 +462,28 @@ public class AddOrderPanel extends JPanel {
 				String volumn = volumnField.getText();
 				String goodName = goodNameField.getText();
 
-				String senderCountry = (String) (senderCountryList.getSelectedItem());
+				String senderCountry = (String) (senderCountryList
+						.getSelectedItem());
 				String senderCity = senderCityField.getText();
 
-				String receiverCountry = (String) (receiverCountryList.getSelectedItem());
+				String receiverCountry = (String) (receiverCountryList
+						.getSelectedItem());
 				String receiverCity = receiverCityField.getText();
 
-				String expressType = (String) (expressTypeList.getSelectedItem());
-				String packageType = (String) (packageTypeList.getSelectedItem());
+				String expressType = (String) (expressTypeList
+						.getSelectedItem());
+				String packageType = (String) (packageTypeList
+						.getSelectedItem());
 
 				ExpressType expressT = null;
 				switch (expressType) {
 
 				case "经济":
-					expressT = ExpressType.ECONOMICAL;
+					expressT = ExpressType.ECONOMIC;
 				case "标准":
 					expressT = ExpressType.STANDARD;
 				case "特快":
-					expressT = ExpressType.VERY_FAST;
+					expressT = ExpressType.FAST;
 				}
 
 				PackType packageT = null;
@@ -467,19 +511,29 @@ public class AddOrderPanel extends JPanel {
 				SimpleDateFormat build = new SimpleDateFormat("yyyy-MM-dd");
 				String buildData = build.format(d);
 
-				String ID = "DD-" + dateNowStr + "-" + (controller.getAddOrder().getExpressData().getOrderNum() + 1);
+				String ID = "DD-"
+						+ dateNowStr
+						+ "-"
+						+ (controller.getAddOrder().getExpressData()
+								.getOrderNum() + 1);
 
-				newOrder = new OrderVO(ID, senderName, senderCountry + senderCity + senderAddress, senderOrganization,
-						senderPhone, senderMobilePhone, receiverName, receiverCountry + receiverCity + receiverAddress,
-						receiverOrganization, receiverPhone, receiverMobilePhone, Integer.parseInt(number), weight,
-						volumn, goodName, expressT, packageT, 0f, 0f, buildData, "", "", transfer_state, orderState);
+				newOrder = new OrderVO(ID, senderName, senderCountry
+						+ senderCity + senderAddress, senderOrganization,
+						senderPhone, senderMobilePhone, receiverName,
+						receiverCountry + receiverCity + receiverAddress,
+						receiverOrganization, receiverPhone,
+						receiverMobilePhone, Integer.parseInt(number), weight,
+						volumn, goodName, expressT, packageT, 0f, 0f,
+						buildData, "", "", transfer_state, orderState);
 				// 计算
 
 				controller.calculateCost(newOrder);
-				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
+				cost.setText((int) (newOrder.freight + newOrder.packingExpense)
+						+ "元");
 				try {
 					time.setText(""
-							+ controller.getAddOrder().getCityDistanceData().findCityDistance(senderCity, receiverCity)
+							+ controller.getAddOrder().getCityDistanceData()
+									.findCityDistance(senderCity, receiverCity)
 							+ "天");
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block

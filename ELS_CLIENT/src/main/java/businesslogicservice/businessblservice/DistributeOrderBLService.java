@@ -1,9 +1,7 @@
 package businesslogicservice.businessblservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-
-import vo.ExpressVO;
-import vo.OrderVO;
 
 /**
  * 营业厅业务员-派件
@@ -11,7 +9,8 @@ import vo.OrderVO;
 public interface DistributeOrderBLService {
 	/**
 	 * 系统自动分配待派送的订单给快递员，并返回更新结果
+	 * @throws RemoteException 
 	 */
-	public ArrayList<String> distributeOrder();
+	public ArrayList<String> distributeOrder() throws RemoteException;
 
 }

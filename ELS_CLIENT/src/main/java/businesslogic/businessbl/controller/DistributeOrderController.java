@@ -1,5 +1,6 @@
 package businesslogic.businessbl.controller;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import businesslogic.businessbl.DistributeOrder;
@@ -13,7 +14,7 @@ public class DistributeOrderController implements DistributeOrderBLService{
 		distributeOrder = new DistributeOrder();
 	}
 
-	public ArrayList<String> distributeOrder() {
+	public ArrayList<String> distributeOrder() throws RemoteException {
 		// TODO Auto-generated method stub
 		return distributeOrder.distributeOrder();
 	}

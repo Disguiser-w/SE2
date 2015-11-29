@@ -2,9 +2,6 @@ package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
-import vo.ExpressVO;
-import vo.GatheringReceiptVO;
-
 /**
  * 营业厅业务员-收款汇总
  */

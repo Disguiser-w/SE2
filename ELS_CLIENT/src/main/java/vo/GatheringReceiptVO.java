@@ -3,10 +3,7 @@
  * */
 package vo;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class GatheringReceiptVO {
 	public final OrganizationVO businesshall;
@@ -16,8 +13,9 @@ public class GatheringReceiptVO {
 	public final double totalmoney;
 	public final String receiptID;
 
-	public GatheringReceiptVO(OrganizationVO businesshall, String time, ArrayList<String> expressList,
-			ArrayList<Double> money, double totalmoney, String receiptID) {
+	public GatheringReceiptVO(OrganizationVO businesshall, String time,
+			ArrayList<String> expressList, ArrayList<Double> money,
+			double totalmoney, String receiptID) {
 		super();
 		this.businesshall = businesshall;
 		this.time = time;

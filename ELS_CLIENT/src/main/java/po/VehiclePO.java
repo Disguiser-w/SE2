@@ -1,7 +1,5 @@
 package po;
 
-import vo.OrganizationVO;
-
 public class VehiclePO {
 	// 车辆代号、发动机号、车辆号、底盘号、购买时间、服役时间
 	private String ID;
@@ -15,9 +13,10 @@ public class VehiclePO {
 	private OrganizationPO local;
 	private DriverPO driver;
 
-	public VehiclePO(String ID, String engineNumber, String licensePlateNumber, String lowNumberPlate, String buyTime,
-			String serviceTime, OrganizationPO destination, String destinationCity, OrganizationPO local,
-			DriverPO driver) {
+	public VehiclePO(String ID, String engineNumber, String licensePlateNumber,
+			String lowNumberPlate, String buyTime, String serviceTime,
+			OrganizationPO destination, String destinationCity,
+			OrganizationPO local, DriverPO driver) {
 		super();
 		this.ID = ID;
 		this.engineNumber = engineNumber;

@@ -93,7 +93,8 @@ public class AVLTree<Key extends Comparable, Value> {
 				return true;
 			} else
 				return add(node.rightChild, k, v);
-		} else// 相同订单不对劲
+		} else
+			// 相同订单不对劲
 
 			return false;
 

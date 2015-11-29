@@ -14,7 +14,7 @@ public interface InitialStockBLService {
 	//查询期初信息
 	public InitInfoVO getInitInfo(String time) throws RemoteException;
 	//获取所有期初信息
-	public ArrayList<InitInfoVO> getAllInitInfo();
+	public ArrayList<InitInfoVO> getAllInitInfo() throws RemoteException;
 	
 	
 	

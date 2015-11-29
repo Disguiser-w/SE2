@@ -2,8 +2,6 @@ package po;
 
 import java.util.ArrayList;
 
-import vo.OrganizationVO;
-
 public class ExpressPO {
 	private String name;
 	private String ID;
@@ -17,8 +15,9 @@ public class ExpressPO {
 	public ExpressPO() {
 	}
 
-	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
-			OrganizationPO organization, ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
+	public ExpressPO(String name, String ID, String serviceTime,
+			ArrayList<String> chargeCollection, OrganizationPO organization,
+			ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
 			ArrayList<String> submitedOrderID) {
 		super();
 		this.name = name;

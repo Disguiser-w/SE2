@@ -1,14 +1,13 @@
 package po;
 
-import vo.OrganizationVO;
-
 public class BusinessPO {
 	private String name;
 	private String ID;
 	private String serviceTime;
 	private OrganizationPO organizationPO;
 
-	public BusinessPO(String name, String ID, String serviceTime, OrganizationPO organizationPO) {
+	public BusinessPO(String name, String ID, String serviceTime,
+			OrganizationPO organizationPO) {
 		this.name = name;
 		this.ID = ID;
 		this.serviceTime = serviceTime;
