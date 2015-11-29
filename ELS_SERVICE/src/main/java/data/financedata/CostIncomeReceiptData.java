@@ -6,12 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import po.CollectionReceiptPO;
 import po.CostIncomeReceiptPO;
-import po.PaymentReceiptPO;
-import po.ReceiptPO.ReceiptState;
-import type.ReceiptType;
-import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import file.JXCFile;
 
@@ -50,7 +45,7 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 		return costIncomeReceiptPOs;
 	}
 
-	public ArrayList<CollectionReceiptPO> getCollection()
+/*	public ArrayList<CollectionReceiptPO> getCollection()
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
@@ -61,24 +56,61 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 		// TODO Auto-generated method stub
 		return null;
 	}
+	*/
 
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("costincome.ser");
-		return 0;
+		return num;
 	}
 
 	public CostIncomeReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
+		file=new JXCFile("costincome.ser");file=new JXCFile("costincome.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("读取经营情况表失败");
+			return null;
+		}
+		for(Object o:os){
+			CostIncomeReceiptPO po=(CostIncomeReceiptPO) o;
+			if(po.getID().equals(ID)){
+				return po;
+			}
+		}
 		return null;
 	}
 
+	/**
+	 * 一直怀疑这些单据到底需不需要修改=。=
+	 * */
 	public CostIncomeReceiptPO modify(CostIncomeReceiptPO po)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	/**
+	 * 总经理根据这个来查询
+	 * */
+	public CostIncomeReceiptPO getCostIncomeReceipt(String time)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		file=new JXCFile("costincome.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("读取经营情况表失败");
+			return null;
+		}
+		for(Object o:os){
+			CostIncomeReceiptPO po=(CostIncomeReceiptPO) o;
+			if(po.getDate().equals(time)){
+				return po;
+			}
+		}
+		return null;
+	}
+	
 	public static void main(String[] args){
 		try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
@@ -108,4 +140,5 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	}
 	*/
 }
+
 }

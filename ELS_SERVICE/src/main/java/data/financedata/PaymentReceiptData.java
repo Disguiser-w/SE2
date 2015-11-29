@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 import file.JXCFile;
 import po.PaymentReceiptPO;
-import dataservice.financedataservice.CollectionReceiptDataService;
-//import po.ReceiptPO.ReceiptState;
-//import type.ReceiptType;
+
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{
@@ -127,10 +125,10 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
 			PaymentReceiptDataService data=new PaymentReceiptData();
-			LocateRegistry.createRegistry(8888);
+			LocateRegistry.createRegistry(8800);
 //			//绑定RMI名称进行发布
-			Naming.rebind("rmi://172.26.209.182:8888/PaymentReceiptDataService", data);
-			System.out.println("Service start!");
+			Naming.rebind("rmi://172.26.209.182:8800/PaymentReceiptDataService", data);
+			System.out.println("Service start 8800 !");
 			
 		}catch (Exception e) {
 			// TODO Auto-generated catch block

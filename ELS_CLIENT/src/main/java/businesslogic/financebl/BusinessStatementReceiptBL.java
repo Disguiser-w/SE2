@@ -1,5 +1,8 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -123,5 +126,31 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		return 0;
 	}
 
+	public static void main(String[] args){
+		try {
+			CollectionReceiptDataService collectionData=(CollectionReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+			PaymentReceiptDataService paymentData=(PaymentReceiptDataService)Naming.lookup("rmi://172.26.209.182:8800/PaymentReceiptDataService");
+			ArrayList<CollectionReceiptPO> po1=collectionData.getCollection_right("20110101", "20151129");
+			ArrayList<PaymentReceiptPO> po2=paymentData.getPayment_right("20110101", "20151129");
+			System.out.println("CollectionReceipt: ");
+			for(CollectionReceiptPO p1:po1){
+				System.out.println("ID: "+p1.getID());
+			}
+			System.out.println("PaymentReceipt:");
+			for(PaymentReceiptPO p2:po2){
+				System.out.println("ID: "+p2.getID());
+			}
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

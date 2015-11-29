@@ -180,7 +180,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 			LocateRegistry.createRegistry(8888);
 //			//绑定RMI名称进行发布
 			Naming.rebind("rmi://172.26.209.182:8888/CollectionReceiptDataService", data);
-			System.out.println("Service start!");
+			System.out.println("Service start! 8888");
 			
 /*			ArrayList<CollectionReceiptPO> pos=data.getAllCollection();
 			for(CollectionReceiptPO p:pos){
