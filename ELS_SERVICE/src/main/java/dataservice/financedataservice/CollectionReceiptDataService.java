@@ -21,7 +21,7 @@ public interface CollectionReceiptDataService extends Remote{
 	public CollectionReceiptPO modify(CollectionReceiptPO po) throws RemoteException;
 	
 	//获取经营情况表需要
-	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,String endTime);
+	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,String endTime) throws RemoteException;
 	
 
 }

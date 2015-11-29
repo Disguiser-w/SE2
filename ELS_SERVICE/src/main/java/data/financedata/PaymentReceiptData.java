@@ -1,18 +1,26 @@
 package data.financedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import file.JXCFile;
 import po.PaymentReceiptPO;
+import dataservice.financedataservice.CollectionReceiptDataService;
 //import po.ReceiptPO.ReceiptState;
 //import type.ReceiptType;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
-public class PaymentReceiptData implements PaymentReceiptDataService{
+public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JXCFile file;
 	int num;
-	public PaymentReceiptData(){
+	public PaymentReceiptData() throws RemoteException{
 		super();
 		file=new JXCFile("payment.ser");
 	}
@@ -42,7 +50,7 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		return paymentReceiptPOs;
 	}
 	
-	public int getNum(){
+	public int getNum()  throws RemoteException{
 		file=new JXCFile("payment.ser");
 		return num;
 	}
@@ -60,7 +68,7 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 	 * 删除——本来不想写的，但是打不开ser文件23333
 	 * success
 	 * */
-	public int delete(String ID){
+	public int delete(String ID) throws RemoteException{
 		file=new JXCFile("payment.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
@@ -79,23 +87,23 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 		return 0;
 	}
 
-	public double getSalary() {
+	public double getSalary()  throws RemoteException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public double getFare() {
+	public double getFare()  throws RemoteException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public double getRent() {
+	public double getRent()  throws RemoteException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
-			String endTime) {
+			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
 		file=new JXCFile("payment.ser");
 		ArrayList<Object> os=file.read();
@@ -116,7 +124,21 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 	}
 
 	public static void main(String[] args){
-		PaymentReceiptData data=new PaymentReceiptData();
+		try{
+			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
+			PaymentReceiptDataService data=new PaymentReceiptData();
+			LocateRegistry.createRegistry(8888);
+//			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.26.209.182:8888/PaymentReceiptDataService", data);
+			System.out.println("Service start!");
+			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		
+/*		PaymentReceiptData data=new PaymentReceiptData();
 //		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
@@ -147,8 +169,9 @@ public class PaymentReceiptData implements PaymentReceiptDataService{
 							e.printStackTrace();
 						}
 
-	
+		*/
 
 	}
+
 
 }

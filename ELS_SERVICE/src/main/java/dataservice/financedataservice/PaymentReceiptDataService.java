@@ -18,7 +18,7 @@ public interface PaymentReceiptDataService extends Remote{
 	public  PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException;
 	
 	//获取经营情况表需要
-			public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,String endTime);
+			public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,String endTime) throws RemoteException;
 
 //	public double getSalary() ;
 //

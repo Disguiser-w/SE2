@@ -1,12 +1,17 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.AccountPO;
 import po.CollectionReceiptPO;
 import po.GatheringReceiptPO;
 import po.OrganizationPO;
 import dataservice.businessdataservice.BusinessDataService;
+import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
@@ -245,7 +250,40 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 			return vo;
 		}		
 	}
+	
+	/**
+	 * 获取编号
+	 * */
+	public String getCollectionListID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	
+	public static void main(String[] args){
+		try {
+			CollectionReceiptDataService collectionData=(CollectionReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+//			CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151129-00001", "本宝宝", null, null, 200, "20151129", "鼓楼 ");
+//			CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151129-00002", "本宝宝", null, null, 200, "20151129", "仙林 ");
+//			collectionData.createCollection(po1);
+//			collectionData.createCollection(po2);
+			ArrayList<CollectionReceiptPO> pos=collectionData.getAllCollection();
+			for(CollectionReceiptPO p:pos){
+				System.out.println("Name："+p.getID());
+			}
+			System.out.println("------------------------------------------------------------------------------");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	}
 
 	/**
 	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
@@ -286,13 +324,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 
 	
 
-	/**
-	 * 获取编号
-	 * */
-	public String getCollectionListID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 //	 String HallID;
 //		String Time;
 //		ArrayList<GatheringReceiptVO> AllGatheringReceiptVO;
@@ -346,4 +378,4 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		
 		
 
-}
+

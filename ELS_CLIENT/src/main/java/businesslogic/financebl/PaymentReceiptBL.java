@@ -1,21 +1,28 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
+import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
 import dataservice.userdataservice.UserDataService;
+import po.CollectionReceiptPO;
 import po.FarePO;
 import po.OrganizationPO;
 import po.PaymentReceiptPO;
+import po.ReceiptPO.ReceiptState;
 import po.UserPO;
 import type.OrganizationType;
 import type.ProfessionType;
+import type.ReceiptType;
 import type.SalaryPlanType;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
@@ -235,6 +242,35 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	}
 
 
+	public static void main(String[] args){
+		try {
+			PaymentReceiptDataService paymentData=(PaymentReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
+
+//			PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+//			PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+//			PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
+//			PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151127-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151127", "boss", "本宝宝");
+//			paymentData.creatPaymentReceipt(po1);
+//			paymentData.creatPaymentReceipt(po2);
+//			paymentData.creatPaymentReceipt(po3);
+//			paymentData.creatPaymentReceipt(po4);
+			
+			ArrayList<PaymentReceiptPO> pos=paymentData.getAllPaymentReceipt();
+			for(PaymentReceiptPO p:pos){
+				System.out.println("Name："+p.getID());
+			}
+			System.out.println("------------------------------------------------------------------------------");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 //	//根据条目和时间筛选

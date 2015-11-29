@@ -6,9 +6,24 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import businesslogicservice.financeblservice.AccountBLService;
+import vo.AccountVO;
+
 public class AccountManagementPanel_new extends JLabel {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//参数
+	public String name;
+	public String money;
+	
+	
+	AccountBLService abService;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -28,8 +43,8 @@ public class AccountManagementPanel_new extends JLabel {
 		account_name = new JLabel("账户名");
 		account_money = new JLabel("账户金额");
 
-		account_name_Input = new JTextField("CW-00001");
-		account_money_Input = new JTextField("2500");
+		account_name_Input = new JTextField("");
+		account_money_Input = new JTextField("");
 		
 		setCmpLocation();
 
@@ -68,6 +83,34 @@ public class AccountManagementPanel_new extends JLabel {
 	}
 	
 	public void okui(){
+		name=account_name_Input.getText();
+		money=account_money_Input.getText();
+		if(name.equals("")||money.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+					JOptionPane.CLOSED_OPTION);
+		}
+		else{
+			double moneyD=Double.parseDouble(money);
+			if(moneyD<0){
+				JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
+						JOptionPane.CLOSED_OPTION);
+				account_money_Input.setText("");
+			}
+			else{
+				AccountVO accountVO=new AccountVO(name, moneyD);
+				int result=abService.addAccount(accountVO);
+				System.out.println(result);
+				if(result==0){
+					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
+							JOptionPane.CLOSED_OPTION);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		}
 		
 	}
 	
@@ -86,4 +129,41 @@ public class AccountManagementPanel_new extends JLabel {
 		setCmpLocation();
 		repaint();
 	}
+	
+/*	class AddListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			name=account_name_Input.getText();
+			money=account_money_Input.getText();
+			if(name.equals("")||money.equals("")){
+				JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+						JOptionPane.CLOSED_OPTION);
+			}
+			else{
+				double moneyD=Double.parseDouble(money);
+				if(moneyD<0){
+					JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
+							JOptionPane.CLOSED_OPTION);
+					account_money_Input.setText("");
+				}
+				else{
+					AccountVO accountVO=new AccountVO(name, moneyD);
+					int result=abService.addAccount(accountVO);
+					if(result==0){
+						JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
+								JOptionPane.CLOSED_OPTION);
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
+								JOptionPane.WARNING_MESSAGE);
+					}
+					
+				}
+			}
+		}
+		
+	}
+	*/
 }

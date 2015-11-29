@@ -1,19 +1,25 @@
 package data.financedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import file.JXCFile;
 import po.CollectionReceiptPO;
-import po.ReceiptPO.ReceiptState;
-import type.ReceiptType;
+
 import dataservice.financedataservice.CollectionReceiptDataService;
 
-public class CollectionReceiptData implements CollectionReceiptDataService{
+public class CollectionReceiptData extends UnicastRemoteObject implements CollectionReceiptDataService{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JXCFile file;
 	//计次数
 	int num;
-	public CollectionReceiptData(){
+	public CollectionReceiptData() throws RemoteException{
 		super();
 		file=new JXCFile("collection.ser");
 	}
@@ -123,7 +129,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 	 * 删除——本来不想写的，但是打不开ser文件23333
 	 * success
 	 * */
-	public int delete(String ID){
+	public int delete(String ID) throws RemoteException{
 		file=new JXCFile("collection.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
@@ -145,7 +151,7 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 	 * 根据时间筛选出入款单——只提供bl层调用，不需要写入文件
 	 * */
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
-			String endTime) {
+			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
 		file=new JXCFile("collection.ser");
 		ArrayList<Object> os=file.read();
@@ -168,7 +174,26 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 	
 
 	public static void main(String[] args){
-		CollectionReceiptData data=new CollectionReceiptData();
+		try{
+			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
+			CollectionReceiptDataService data=new CollectionReceiptData();
+			LocateRegistry.createRegistry(8888);
+//			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.26.209.182:8888/CollectionReceiptDataService", data);
+			System.out.println("Service start!");
+			
+/*			ArrayList<CollectionReceiptPO> pos=data.getAllCollection();
+			for(CollectionReceiptPO p:pos){
+				System.out.println("ID:  "+p.getID());
+			}
+			System.out.println("---------------------------------------------------");
+			*/
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+/*		CollectionReceiptData data=new CollectionReceiptData();
 //			data.createCollection(po1);
 		//			data.createCollection(po2);
 		//			data.createCollection(po3);
@@ -195,6 +220,8 @@ public class CollectionReceiptData implements CollectionReceiptDataService{
 //			}
 //			CollectionReceiptPO po=data.findByID("HJSKD-20151126-00002");
 //			System.out.println("ID: "+po.getID()+"  UserID: "+po.getUserID());
+ */
+
 	}
 
 	
