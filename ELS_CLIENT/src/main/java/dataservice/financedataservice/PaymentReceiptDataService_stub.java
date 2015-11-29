@@ -1,5 +1,6 @@
 package dataservice.financedataservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.PaymentReceiptPO;
@@ -49,6 +50,13 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 	public double getRent(String time) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
+			String endTime) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

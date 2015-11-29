@@ -1,5 +1,6 @@
 package businesslogic.financebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.BusinessStatementReceiptPO;
@@ -28,25 +29,37 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 	public BusinessStatementReceiptVO showBSList(String beginTime,
 			String endTime) {
 		// TODO Auto-generated method stub
-		return bpoToVO(brdService.showBSL(beginTime, endTime));
+		try {
+			BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(beginTime, endTime, crdService.getCollection_right(beginTime, endTime), prdService.getPayment_right(beginTime, endTime));
+			BusinessStatementReceiptVO vo=bpoToVO(po);
+			return vo;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取经营情况表失败");
+			return null;
+		}
+		
 	}
 	
-	public ArrayList<BusinessStatementReceiptVO> showAllBSList() {
+	/**
+	 * 因为是即时查看，不需要保存的序列化文件，所以这个貌似不需要了
+	 * */
+/*	public ArrayList<BusinessStatementReceiptVO> showAllBSList() {
 		// TODO Auto-generated method stub
        return null;
 		}
-	
+	*/
 	/**
 	 * 从Collectionpo和PaymentPo中取出需要的数据转化为vo
-	 * 筛选不放在这里??
+	 * 这里有比较多的代码重复——可以写成controller(静态方法)
 	 * */
-	public BusinessStatementReceiptVO bpoToVO(BusinessStatementReceiptPO businessstatementReceiptPOs){
+	public BusinessStatementReceiptVO bpoToVO(BusinessStatementReceiptPO businessstatementReceiptPO){
 
 		BusinessStatementReceiptVO businessStatementReceiptVO;
-		/**
-		 * 筛选可以放在取数据的时候
-		 * */
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
+	
+//		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs=businessstatementReceiptPO.getCollectionPOs();
 		ArrayList<CollectionReceiptVO> collectionReceiptVOs;
 		if(collectionReceiptPOs==null){
 			System.out.println("CollectionReceiptPOs is null-------BusinessstatementReceiptBL");
@@ -60,7 +73,8 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			}
 		}		
 
-		ArrayList<PaymentReceiptPO> paymentReceiptPOs=prdService.getAllPaymentReceipt();
+//		ArrayList<PaymentReceiptPO> paymentReceiptPOs=prdService.getAllPaymentReceipt();
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs=businessstatementReceiptPO.getPaymentPOs();
 		ArrayList<PaymentReceiptVO> paymentReceiptVOs;
 		if(paymentReceiptPOs==null){
 			System.out.println("ArrayList<PaymentReceiptPO> pos is null  ------------------BusinessstatementReceiptBL");
@@ -74,7 +88,7 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 			}
 		}
 		
-		businessStatementReceiptVO=new BusinessStatementReceiptVO(businessstatementReceiptPOs.getBeginTime(), businessstatementReceiptPOs.getEndTime(), collectionReceiptVOs, paymentReceiptVOs);
+		businessStatementReceiptVO=new BusinessStatementReceiptVO(businessstatementReceiptPO.getBeginTime(), businessstatementReceiptPO.getEndTime(), collectionReceiptVOs, paymentReceiptVOs);
 		return businessStatementReceiptVO;
 	}
 
@@ -108,5 +122,6 @@ public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLSer
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

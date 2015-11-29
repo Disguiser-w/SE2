@@ -6,10 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * 暂时先把根据营业厅筛选的去掉了，以后有时间再说吧
+ * */
 public class CollectionReceiptPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	String hallID_str;
+	String date_str;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -22,11 +31,11 @@ public class CollectionReceiptPanel extends JPanel {
 
 	private JLabel function;
 	private JLabel date;
-	private JLabel businessHall;
+//	private JLabel businessHall;
 	private JLabel infoLine;
 
 	private JTextField date_Input;
-	private JTextField businessHall_ID_Input;
+//	private JTextField businessHall_ID_Input;
 
 	private CollectionReceiptInfoTable info;
 
@@ -40,16 +49,18 @@ public class CollectionReceiptPanel extends JPanel {
 
 		function = new JLabel("新建入款单");
 		date = new JLabel("日期");
-		businessHall = new JLabel("营业厅");
+//		businessHall = new JLabel("营业厅");
 		infoLine = new JLabel("时间：2015/11/1  合计金额：970");
 
-		date_Input = new JTextField("2015/11/6");
-		businessHall_ID_Input = new JTextField("025-000");
+		date_Input = new JTextField("");
+//		businessHall_ID_Input = new JTextField("");
 
 		info = new CollectionReceiptInfoTable(13, 4);
 
 		setCmpLocation();
-
+/**
+ * 选择日期
+ * */
 		dateChooseButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -58,6 +69,9 @@ public class CollectionReceiptPanel extends JPanel {
 			}
 		});
 
+		/**
+		 * 确认日期输入
+		 * */
 		infoOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -109,9 +123,9 @@ public class CollectionReceiptPanel extends JPanel {
 		add(function);
 		add(date);
 		add(infoLine);
-		add(businessHall);
+//		add(businessHall);
 		add(date_Input);
-		add(businessHall_ID_Input);
+//		add(businessHall_ID_Input);
 		add(info);
 	}
 
@@ -122,10 +136,10 @@ public class CollectionReceiptPanel extends JPanel {
 				PANEL_WIDTH / 18, PANEL_HEIGHT / 24);
 		date_Input.setBounds(PANEL_WIDTH * 7 / 36, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
-		businessHall.setBounds(PANEL_WIDTH * 13 / 36, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 18, PANEL_HEIGHT / 24);
-		businessHall_ID_Input.setBounds(PANEL_WIDTH * 4 / 9,
-				PANEL_HEIGHT * 3 / 16, PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
+//		businessHall.setBounds(PANEL_WIDTH * 13 / 36, PANEL_HEIGHT * 3 / 16,
+//				PANEL_WIDTH / 18, PANEL_HEIGHT / 24);
+//		businessHall_ID_Input.setBounds(PANEL_WIDTH * 4 / 9,
+//				PANEL_HEIGHT * 3 / 16, PANEL_WIDTH / 12, PANEL_HEIGHT / 24);
 		collectionOKButton.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		infoOKButton.setBounds(PANEL_WIDTH * 11 / 36, PANEL_HEIGHT * 3 / 16,
@@ -156,11 +170,44 @@ public class CollectionReceiptPanel extends JPanel {
 
 	}
 
+	/**
+	 * 输入（选择）日期的方法,这个怎么写
+	 * */
 	public void infookui() {
+//		date_str=date_Input.getText();
+//		if(date_str.equals("")){
+//			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+//					JOptionPane.CLOSED_OPTION);
+//		}
 
 	}
 
+	/**
+	 * 确定输入日期的方法
+	 * */
 	public void okui() {
+		//这里需要格式的转化"2015/11/10——20151110"
+		date_str=date_Input.getText();
+		System.out.println(date_str);
+
+		if(date_str.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+					JOptionPane.CLOSED_OPTION);
+		}
+		else if(date_str.length()!=8){
+			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
+					JOptionPane.CLOSED_OPTION);
+			date_Input.setText("");
+		}
+		else if(date_str.substring(0,4).compareTo("2015")>0||date_str.substring(4,6).compareTo("12")>0||date_str.substring(6,8).compareTo("31")>0){
+			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
+					JOptionPane.CLOSED_OPTION);
+			date_Input.setText("");
+		}
+		else{
+			
+			
+		}
 
 	}
 

@@ -13,8 +13,8 @@ public interface BusinessstatementReceiptDataService {
 	public ArrayList<PaymentReceiptPO>getPayment(String beginTime,String endTime);
 	//显示经营情况表
 	public BusinessStatementReceiptPO showBSL(String beginTime,String endTime) ;
-	//显示所有经营情况表
-	public ArrayList<BusinessStatementReceiptPO> showAllBSList();
+//	//显示所有经营情况表
+//	public ArrayList<BusinessStatementReceiptPO> showAllBSList();
 	//导出
 	public int export(BusinessStatementReceiptPO po);
 	

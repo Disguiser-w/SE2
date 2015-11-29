@@ -6,18 +6,17 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.AccountPO;
 import po.CollectionReceiptPO;
 import po.GatheringReceiptPO;
 import po.OrganizationPO;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
 import vo.OrganizationVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.receiptbl.ReceiptBL;
+import businesslogic.receiptbl.getDate;
 import businesslogicservice.financeblservice.CollectionReceiptBLService;
 /**
  * 论没有考虑账户变化的本宝宝要爆炸了！！！
@@ -42,7 +41,14 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		// TODO Auto-generated method stub
 		CollectionReceiptPO po=cvoToPO(vo);
 		update(vo);
-		return crdService.createCollection(po);
+		try {
+			return crdService.createCollection(po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("创建入款单异常");
+			return 2;
+		}
 	}
 
 	/**
@@ -131,8 +137,16 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * */
 	public ArrayList<CollectionReceiptVO> getAllCollection(){
 		// TODO Auto-generated method stub
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		return cposToVOs(collectionReceiptPOs);
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
+		try {
+			collectionReceiptPOs = crdService.getAllCollection();
+			return cposToVOs(collectionReceiptPOs);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取PO中的合计收款单失败");
+			return null;
+		}
 	}
 
 	
@@ -235,32 +249,44 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * */
 	public CollectionReceiptVO getCollection(String s) {
 		// TODO Auto-generated method stub
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		if(collectionReceiptPOs==null){
-			System.out.println("CollectionReceiptPO is null");
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
+		try {
+			collectionReceiptPOs = crdService.getAllCollection();
+			if(collectionReceiptPOs==null){
+				System.out.println("CollectionReceiptPO is null");
+				return null;
+			}
+			else{
+				CollectionReceiptVO vo=new CollectionReceiptVO();
+				for(CollectionReceiptPO p:collectionReceiptPOs){
+					if(p.getID()==s){
+						vo=cpoToVO(p);
+					}
+				}
+				return vo;
+			}		
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return null;
 		}
-		else{
-			CollectionReceiptVO vo=new CollectionReceiptVO();
-			for(CollectionReceiptPO p:collectionReceiptPOs){
-				if(p.getID()==s){
-					vo=cpoToVO(p);
-				}
-			}
-			return vo;
-		}		
+		
 	}
 	
 	/**
-	 * 获取编号
+	 * 获取编号——收款单一天只产生一张
+	 * 所以编号可以只定义为HJSKD-20151129
 	 * */
 	public String getCollectionListID() {
 		// TODO Auto-generated method stub
-		return null;
+		return "HJSKD-"+getDate.getdate();
 	}
 
 	
 	public static void main(String[] args){
+		CollectionReceiptBLService test=new CollectionReceiptBL();
+		System.out.println(test.getCollectionListID());
+		
 		try {
 			CollectionReceiptDataService collectionData=(CollectionReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
 //			CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151129-00001", "本宝宝", null, null, 200, "20151129", "鼓楼 ");
@@ -282,6 +308,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	}
 

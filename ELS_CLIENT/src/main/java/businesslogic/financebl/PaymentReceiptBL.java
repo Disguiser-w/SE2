@@ -7,26 +7,21 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
 import dataservice.userdataservice.UserDataService;
-import po.CollectionReceiptPO;
-import po.FarePO;
 import po.OrganizationPO;
 import po.PaymentReceiptPO;
-import po.ReceiptPO.ReceiptState;
 import po.UserPO;
 import type.OrganizationType;
 import type.ProfessionType;
-import type.ReceiptType;
 import type.SalaryPlanType;
-import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import businesslogic.receiptbl.ReceiptBL;
+import businesslogic.receiptbl.getDate;
 import businesslogicservice.financeblservice.PaymentReceiptBLService;
 
 
@@ -47,7 +42,14 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		// TODO Auto-generated method stub
 		PaymentReceiptPO po=pvoToPO(vo);
 		update(vo);
-		return prdService.creatPaymentReceipt(po);
+		try {
+			return prdService.creatPaymentReceipt(po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("创建付款单失败");
+			return 2;
+		}
 	}
 	
 	public PaymentReceiptPO pvoToPO(PaymentReceiptVO vo){
@@ -89,7 +91,14 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * */
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt() {
 		// TODO Auto-generated method stub
-		return pposToVOs(prdService.getAllPaymentReceipt());
+		try {
+			return pposToVOs(prdService.getAllPaymentReceipt());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取所有的付款单失败");
+			return null;
+		}
 	}
 	
 	public PaymentReceiptVO ppoToVO(PaymentReceiptPO po){
@@ -114,10 +123,12 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 
 	/**
 	 * 自动获取ID
+	 * 入款单相当于是一个月或两个星期产生一次
+	 * 所以RKD-20151129
 	 * */
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
-		return null;
+		return "RKD-"+getDate.getdate();
 	}
 
 	/**
@@ -193,15 +204,6 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 					pos_intermedia.add(p);
 				}
 			}
-//			ArrayList<FarePO> farepos=bdService.getFarePO(time);
-			
-//			double fare=0;;
-//			if(farepos==null){
-//				System.out.println("获取farepos失败");
-//			}
-//			for(FarePO p:farepos){
-//				fare+=p.getMoney();
-//			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package dataservice.financedataservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
@@ -48,6 +49,14 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 	public CollectionReceiptPO modify(CollectionReceiptPO po) {
 		// TODO Auto-generated method stub
 		System.out.println("modify  successfully!");
+		return null;
+	}
+
+
+	@Override
+	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
+			String endTime) throws RemoteException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

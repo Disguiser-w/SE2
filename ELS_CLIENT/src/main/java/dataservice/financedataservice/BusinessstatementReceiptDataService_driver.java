@@ -9,7 +9,7 @@ public class BusinessstatementReceiptDataService_driver {
 		String beginTime="20150101";
 		String endTime="20151001";
 		bds.showBSL(beginTime,endTime);
-		bds.showAllBSList();
+//		bds.showAllBSList();
 		bds.export(new BusinessStatementReceiptPO());
 	}
 	

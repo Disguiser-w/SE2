@@ -1,15 +1,19 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
 import po.CostIncomeReceiptPO;
 import po.PaymentReceiptPO;
-import po.ReceiptPO.ReceiptState;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import businesslogic.receiptbl.ReceiptBL;
+import businesslogic.receiptbl.getDate;
 import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
 import type.ReceiptType;
 import vo.CostIncomeReceiptVO;
@@ -24,6 +28,7 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	
 	public CostIncomeReceiptBL() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 	
 	/**
@@ -34,29 +39,13 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	public int creatCostIncomeList(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CostIncomeReceiptPO po=voToPO(vo);
-		return 0;
+		return cirdService.creatCostIncomeList(po);
 	}
-//	public CostIncomeReceiptVO getCostIncomeList(String s) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	public ArrayList<CostIncomeReceiptVO> getAllCostIncomeList() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	public ArrayList<CollectionReceiptVO> getCollection() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	public ArrayList<PaymentReceiptVO> getPayment() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 	public CostIncomeReceiptPO voToPO(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CostIncomeReceiptPO po=new CostIncomeReceiptPO(vo.getID(),vo.getUserID(),ReceiptType.COSTINCOMERECEPTION,vo.getState(),vo.getCost(),vo.getIncome(), vo.getProfit());
-		return null;
+		return po;
 	}
 
 	/**
@@ -65,18 +54,27 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	 * */
 	public double getIncome() {
 		// TODO Auto-generated method stub
-		ArrayList<CollectionReceiptPO> collectionReceiptPOs=crdService.getAllCollection();
-		double income=0;
-		if(collectionReceiptPOs==null){
-			System.out.println("collectionReceiptPOs is null");
-			return -1;
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
+		try {
+			collectionReceiptPOs = crdService.getAllCollection();
+			double income=0;
+			if(collectionReceiptPOs==null){
+				System.out.println("collectionReceiptPOs is null");
+				return -1;
+			}
+			else{
+			for(CollectionReceiptPO p:collectionReceiptPOs){
+				income+=p.getIncome();
+			}
+			return income;
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取所有的入款单失败");
+			return 0;
 		}
-		else{
-		for(CollectionReceiptPO p:collectionReceiptPOs){
-			income+=p.getIncome();
-		}
-		return income;
-		}
+		
 	}
 	
 	/**
@@ -84,18 +82,27 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	 * */
 	public double getCost() {
 		// TODO Auto-generated method stub
-		ArrayList<PaymentReceiptPO> paymentReceiptPOs=prdService.getAllPaymentReceipt();
-		double cost=0;
-		if(paymentReceiptPOs==null){
-			System.out.println("paymentReceiptPOs is null------CostIncomeReceiptBL");
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs;
+		try {
+			paymentReceiptPOs = prdService.getAllPaymentReceipt();
+			double cost=0;
+			if(paymentReceiptPOs==null){
+				System.out.println("paymentReceiptPOs is null------CostIncomeReceiptBL");
+				return 0;
+			}
+			else{
+				for(PaymentReceiptPO p:paymentReceiptPOs){
+					cost+=p.getCost();
+				}
+				return cost;
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取所有的付款单失败");
 			return 0;
 		}
-		else{
-			for(PaymentReceiptPO p:paymentReceiptPOs){
-				cost+=p.getCost();
-			}
-			return cost;
-		}
+	
 	}
 	
 	/**
@@ -108,15 +115,36 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	
 	/**
 	 * 自动获取ID
-	 * 这个在总的receipt里写应该就可以了
-	 * 其实这个好像根本不需要编号的呀
+	 * 成本收益表是从期初到当天日期
+	 * 所以其实每次都会覆盖前面的
+	 * CBSYB-20151129
 	 * */
 	public String getCostIncomeListID() {
 		// TODO Auto-generated method stub
-		return null;
+		return "CBSYB-"+getDate.getdate();
 	}
 	
-	
+	public static void main(String[] args){
+		try {
+			CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
+			costIncomeData.creatCostIncomeList(new CostIncomeReceiptPO("CBSYB-20151129", "lll", null, null, 2222, 3333, 1111));
+			ArrayList<CostIncomeReceiptPO> pos=costIncomeData.getAllCostIncomeList();
+			for(CostIncomeReceiptPO p:pos){
+				System.out.println("ID: "+p.getID());
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
 	
 
 }

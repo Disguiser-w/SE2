@@ -194,7 +194,12 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			Naming.rebind("rmi://172.26.209.182:8888/AccountDataService", data);
 			System.out.println("Service start!");
 			
-			ArrayList<AccountPO> pos=data.showAll();
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+	/*		ArrayList<AccountPO> pos=data.showAll();
 			for(AccountPO p:pos){
 				System.out.println("Name: "+p.getName());
 			}
@@ -203,11 +208,9 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			for(AccountPO p:pos_key){
 				System.out.println("Name:  "+p.getName());
 			}
-		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
+			*/
+	
+		
 //		AccountData data;
 //		----------------------------------------------------------
 //		try {

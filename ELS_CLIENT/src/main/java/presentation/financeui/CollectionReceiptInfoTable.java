@@ -6,6 +6,10 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
 public class CollectionReceiptInfoTable extends JTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int width;
 	private int height;
 	private TableColumn tc;
