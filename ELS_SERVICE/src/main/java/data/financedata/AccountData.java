@@ -1,5 +1,6 @@
 package data.financedata;
 
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -184,29 +185,24 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		return 0;
 	}
 	
-	
-	public String test(){
-		return "test";
-	}
-	
 	public static void main(String[] args){
 		try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
 			AccountDataService data=new AccountData();
 			LocateRegistry.createRegistry(8888);
-			//绑定RMI名称进行发布
+//			//绑定RMI名称进行发布
 			Naming.rebind("rmi://172.26.209.182:8888/AccountDataService", data);
 			System.out.println("Service start!");
 			
-//			ArrayList<AccountPO> pos=data.showAll();
-//			for(AccountPO p:pos){
-//				System.out.println("Name: "+p.getName());
-//			}
-//			System.out.println("---------------------------------------------------");
-//			ArrayList<AccountPO> pos_key=data.findByKeyword("楼");
-//			for(AccountPO p:pos_key){
-//				System.out.println("Name:  "+p.getName());
-//			}
+			ArrayList<AccountPO> pos=data.showAll();
+			for(AccountPO p:pos){
+				System.out.println("Name: "+p.getName());
+			}
+			System.out.println("---------------------------------------------------");
+			ArrayList<AccountPO> pos_key=data.findByKeyword("楼");
+			for(AccountPO p:pos_key){
+				System.out.println("Name:  "+p.getName());
+			}
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

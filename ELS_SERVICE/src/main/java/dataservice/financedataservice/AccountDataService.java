@@ -24,5 +24,4 @@ public interface AccountDataService extends Remote{
 	  //金额--
 	    public int delMoney(String name,double m) throws RemoteException;
 
-	    public String test();
 }

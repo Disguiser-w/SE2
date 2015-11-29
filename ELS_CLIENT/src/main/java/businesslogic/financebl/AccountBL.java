@@ -44,7 +44,12 @@ public class AccountBL implements AccountBLService{
 	public int addAccount(AccountVO vo) {
 		// TODO Auto-generated method stub
 		po=new AccountPO(vo.getName(), vo.getMoney());
-		accountData.addAccount(po);
+		try {
+			accountData.addAccount(po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -53,13 +58,23 @@ public class AccountBL implements AccountBLService{
 	 * */
 	public int deleteAccount(String name) {
 		// TODO Auto-generated method stub
-		po=accountData.findbyName(name);
+		try {
+			po=accountData.findbyName(name);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(po == null){
 			System.out.println("账户删除错误！");
 			return 1;
 		}
 		else{
-			accountData.deleteAccount(po);
+			try {
+				accountData.deleteAccount(po);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return 0;
 		}
 	}
@@ -69,7 +84,12 @@ public class AccountBL implements AccountBLService{
 	 * */
 	public int modifyAccount(AccountVO vo,String name) {
 		// TODO Auto-generated method stub
-		po=accountData.findbyName(vo.getName());
+		try {
+			po=accountData.findbyName(vo.getName());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(po==null){
 			System.out.println("修改账户失败！");
 			return 1;
@@ -85,7 +105,12 @@ public class AccountBL implements AccountBLService{
 	 * */
 	public AccountVO findbyName(String name) {
 		// TODO Auto-generated method stub
-		po=accountData.findbyName(name);
+		try {
+			po=accountData.findbyName(name);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(po==null){
 			System.out.println("查询账户失败！");
 			return null;
@@ -100,12 +125,21 @@ public class AccountBL implements AccountBLService{
 	 * */
 	public ArrayList<AccountVO> findByKeyword(String s) {
 		// TODO Auto-generated method stub
-		ArrayList<AccountPO> pos=accountData.findByKeyword(s);
-		if(pos==null){
-			System.out.println("关键字查找失败！");
+		ArrayList<AccountPO> pos;
+		try {
+			pos = accountData.findByKeyword(s);
+			if(pos==null){
+				System.out.println("关键字查找失败！");
+			}
+			ArrayList<AccountVO> vos=posToVOs(pos);
+			return vos;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-		ArrayList<AccountVO> vos=posToVOs(pos);
-		return vos;
+	
+	
 	}
 
 	
@@ -114,7 +148,13 @@ public class AccountBL implements AccountBLService{
 	 * */
 	public ArrayList<AccountVO> showAll() {
 		// TODO Auto-generated method stub
-		return posToVOs(accountData.showAll());
+		try {
+			return posToVOs(accountData.showAll());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public AccountDataService getAccountData(){
@@ -122,22 +162,33 @@ public class AccountBL implements AccountBLService{
 	}
 	
 	public int addMoney(String name,double money){
-		return accountData.addMoney(name, money);
+		try {
+			return accountData.addMoney(name, money);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 1;
+		}
 	}
 	
 	public int delMoney(String name,double money){
-		return accountData.delMoney(name, money);
+		try {
+			return accountData.delMoney(name, money);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 1;
+		}
 	}
 
 
 	public static void main(String[] args){
 		try {
 			AccountDataService accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
-//			ArrayList<AccountPO> pos=accountData.showAll();
-//			for(AccountPO p:pos){
-//				System.out.println("Name: "+p.getName());
-//			}
-			System.out.println(accountData.test());
+			ArrayList<AccountPO> pos=accountData.showAll();
+			for(AccountPO p:pos){
+				System.out.println("Name: "+p.getName());
+			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
