@@ -2,45 +2,58 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
+import po.PlanePO;
 import type.OperationState;
+import vo.OrganizationVO;
 import vo.PlaneVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.intermediateblservice.envehicleblservice.PlaneManagerBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class PlaneManagerBL implements PlaneManagerBLService {
-	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+	private IntermediateDataService intermediateData;
 
-	public PlaneManagerBL(ArrayList<PlaneVO> planeList) {
+	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+	private ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
+
+	private OrganizationVO intermediateCenter;
+
+	public PlaneManagerBL(ArrayList<PlaneVO> planeList,
+			OrganizationVO intermediateCentre,
+			IntermediateDataService intermediateData) {
 		// TODO 自动生成的方法存根
 		this.planeList = planeList;
+		this.intermediateCenter = intermediateCentre;
+		this.intermediateData = intermediateData;
 	}
 
 	public ArrayList<PlaneVO> showPlaneList() {
 		// TODO 自动生成的方法存根
 		return planeList;
 	}
-	
-	public OperationState addPlane(String ID,String destination){
+
+	public OperationState addPlane(String ID, String destination) {
 		// TODO 自动生成的方法存根
-		PlaneVO plane_add= new PlaneVO(ID,destination);
+		PlaneVO plane_add = new PlaneVO(ID, destination);
 		planeList.add(plane_add);
 		return OperationState.SUCCEED_OPERATION;
 	}
-	
-	public OperationState deletePlane(PlaneVO plane_delete) throws Exception{
+
+	public OperationState deletePlane(PlaneVO plane_delete) throws Exception {
 		// TODO 自动生成的方法存根
-		for(PlaneVO plane:planeList){
-			if(plane.ID.equals(plane_delete.ID)){
+		for (PlaneVO plane : planeList) {
+			if (plane.ID.equals(plane_delete.ID)) {
 				planeList.remove(plane);
 				return OperationState.SUCCEED_OPERATION;
-						}
+			}
 		}
 		throw new Exception("未找到该ID的飞机！");
 	}
-	
-	public OperationState modifyPlane(PlaneVO plane_modify) throws Exception{
+
+	public OperationState modifyPlane(PlaneVO plane_modify) throws Exception {
 		// TODO 自动生成的方法存根
-		for(PlaneVO plane:planeList){
-			if(plane.ID.equals(plane_modify.ID)){
+		for (PlaneVO plane : planeList) {
+			if (plane.ID.equals(plane_modify.ID)) {
 				planeList.set(planeList.indexOf(plane), plane_modify);
 				return OperationState.SUCCEED_OPERATION;
 			}
@@ -57,9 +70,12 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		throw new Exception("未找到该ID的飞机！");
 	}
 
-	public OperationState savePlaneList(){
+	public OperationState savePlaneList() {
 		// TODO 自动生成的方法存根
-		//
+		for (PlaneVO plane : planeList)
+			planeList_temp.add(IntermediateMainController.voToPO(plane));
+		intermediateData.savePlaneList(intermediateCenter.getOrganizationID(),
+				planeList_temp);
 		return OperationState.SUCCEED_OPERATION;
 	}
 }

@@ -1,5 +1,9 @@
 package businesslogic.intermediatebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.EnplaningReceiptPO;
@@ -40,7 +44,7 @@ public class IntermediateMainController {
 	private TrainManagerBL trainManager;
 	private TruckManagerBL truckManager;
 	private TransferingBL transfering;
-	private IntermediateDataService intermediateDataService;
+	private IntermediateDataService intermediateData;
 	private ExpressMainController expressMainController;
 
 	private IntermediateVO intermediate;
@@ -56,33 +60,38 @@ public class IntermediateMainController {
 	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
-	public IntermediateMainController(String intermediateID) {
+	public IntermediateMainController(String intermediateID)
+			throws MalformedURLException, RemoteException, NotBoundException {
 		// intermediateDataService
 		expressMainController = new ExpressMainController(null);
-
-		intermediate = IntermediateMainController
-				.poToVO(intermediateDataService.getIntermediateInfo("",
-						intermediateID));
+		intermediateData = (IntermediateDataService) Naming
+				.lookup("rmi://172.25.133.95:8888/IntermediateDataService");
+		intermediate = IntermediateMainController.poToVO(intermediateData
+				.getIntermediateInfo("", intermediateID));
 		intermediateCentre = intermediate.organization;
-		
+
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
-		planeManager = new PlaneManagerBL(planeList);
-		trainManager = new TrainManagerBL(trainList);
-		truckManager = new TruckManagerBL(truckList);
-		
-		transferingReceipt = new TransferingReceiptVO(intermediateCentre, orderList, "", "");
-		transfering = new TransferingBL(transferingReceipt);
-		
+		planeManager = new PlaneManagerBL(planeList, intermediateCentre,
+				intermediateData);
+		trainManager = new TrainManagerBL(trainList, intermediateCentre,
+				intermediateData);
+		truckManager = new TruckManagerBL(truckList, intermediateCentre,
+				intermediateData);
+
+		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
+				orderList, "", "");
+		transfering = new TransferingBL(transferingReceipt, intermediateData);
+
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
-				truckManager, enplaningReceiptList, entrainingReceiptList, entruckingReceiptList); 
+				truckManager, enplaningReceiptList, entrainingReceiptList,
+				entruckingReceiptList, intermediateData);
 	}
 
 	public void updateIntermediateInfo() {
-		intermediate = IntermediateMainController
-				.poToVO(intermediateDataService.getIntermediateInfo(
-						intermediate.organization.organizationID,
+		intermediate = IntermediateMainController.poToVO(intermediateData
+				.getIntermediateInfo(intermediate.organization.organizationID,
 						intermediate.ID));
 	}
 

@@ -2,6 +2,9 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
+import po.EnplaningReceiptPO;
+import po.EntrainingReceiptPO;
+import po.EntruckingReceiptPO;
 import type.ExpressType;
 import type.OperationState;
 import type.OrderState;
@@ -13,12 +16,14 @@ import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
-import businesslogic.intermediatebl.FareBL;
 import businesslogic.intermediatebl.TransferingBL;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class EnvehicleBL implements EnvehicleBLService {
+	private IntermediateDataService intermediateData;
 	private AllocateWaitingOrderBL awobl;
 	private CityDistanceBL cdbl;
 	private TransferingBL transfering;
@@ -36,7 +41,6 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
 	private TransferingReceiptVO transferingReceipt;
-	private FareBL fare;
 
 	private final double STANDARD_PLANE = 200;
 	private final double ECONOMIC_TRAIN = 200;
@@ -46,7 +50,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 			TrainManagerBL trainManeger, TruckManagerBL truckManager,
 			ArrayList<EnplaningReceiptVO> enplaningReceiptList,
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
-			ArrayList<EntruckingReceiptVO> entruckingReceiptList) {
+			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
+			IntermediateDataService intermediateData) {
 		updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
@@ -59,6 +64,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		this.enplaningReceiptList = enplaningReceiptList;
 		this.entrainingReceiptList = entrainingReceiptList;
 		this.entruckingReceiptList = entruckingReceiptList;
+		this.intermediateData = intermediateData;
 	}
 
 	public OperationState envehicle() throws Exception {
@@ -172,19 +178,25 @@ public class EnvehicleBL implements EnvehicleBLService {
 
 	public OperationState saveEnplaningReceiptList() {
 		// TODO 自动生成的方法存根
-		//
+		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
+				.voToPO_EnplaningReceipt(enplaningReceiptList))
+			intermediateData.saveEnIntermediateReceiptInfo(enplaningReceipt);
 		return OperationState.SUCCEED_OPERATION;
 	}
 
 	public OperationState saveEntrainingReceiptList() {
 		// TODO 自动生成的方法存根
-		//
+		for (EntrainingReceiptPO entrainingReceipt : IntermediateMainController
+				.voToPO_EntrainingReceipt(entrainingReceiptList))
+			intermediateData.saveEnIntermediateReceiptInfo(entrainingReceipt);
 		return OperationState.SUCCEED_OPERATION;
 	}
 
 	public OperationState saveEntruckingReceiptList() {
 		// TODO 自动生成的方法存根
-		//
+		for (EntruckingReceiptPO entruckingReceipt : IntermediateMainController
+				.voToPO_EntruckingReceipt(entruckingReceiptList))
+			intermediateData.saveEnIntermediateReceiptInfo(entruckingReceipt);
 		return OperationState.SUCCEED_OPERATION;
 	}
 }

@@ -40,7 +40,7 @@ public interface IntermediateDataService extends Remote {
 	public EnIntermediateReceiptPO getEnIntermediateReceiptInfo(
 			String organization_ID, String EnIntermediateReceipt_ID);
 
-	public OperationState saveTransferingReceiptInfo(
+	public OperationState saveEnIntermediateReceiptInfo(
 			EnIntermediateReceiptPO enIntermediateReceipt);
 
 	public FarePO getFareInfo(String organization_ID, String date);

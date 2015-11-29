@@ -2,15 +2,29 @@ package businesslogic.intermediatebl.envehiclebl;
 
 import java.util.ArrayList;
 
+import po.TruckPO;
 import type.OperationState;
+import vo.OrganizationVO;
+import vo.TrainVO;
 import vo.TruckVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TruckManagerBL implements TruckManageBLService {
-	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+	private IntermediateDataService intermediateData;
 
-	public TruckManagerBL(ArrayList<TruckVO> truckList) {
+	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+	private ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
+
+	private OrganizationVO intermediateCentre;
+
+	public TruckManagerBL(ArrayList<TruckVO> truckList,
+			OrganizationVO intermediateCentre,
+			IntermediateDataService intermediateData) {
 		this.truckList = truckList;
+		this.intermediateCentre = intermediateCentre;
+		this.intermediateData = intermediateData;
 	}
 
 	public ArrayList<TruckVO> showTruckList() {
@@ -58,7 +72,10 @@ public class TruckManagerBL implements TruckManageBLService {
 
 	public OperationState saveTruckList() {
 		// TODO 自动生成的方法存根
-		//
+		for (TruckVO train : truckList)
+			truckList_temp.add(IntermediateMainController.voToPO(train));
+		intermediateData.saveTruckList(intermediateCentre.getOrganizationID(),
+				truckList_temp);
 		return OperationState.SUCCEED_OPERATION;
 	}
 }

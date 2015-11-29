@@ -9,12 +9,16 @@ import vo.TransferingReceiptVO;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.intermediateblservice.TransferingBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
-	
-	public TransferingBL(TransferingReceiptVO transferingReceipt){
+	private IntermediateDataService intermediateData;
+
+	public TransferingBL(TransferingReceiptVO transferingReceipt,
+			IntermediateDataService intermediateData) {
 		this.transferingReceipt = transferingReceipt;
+		this.intermediateData = intermediateData;
 	}
 
 	public TransferingReceiptVO showTransferingReceipt() {
@@ -58,6 +62,8 @@ public class TransferingBL implements TransferingBLService {
 
 	public OperationState saveTransferingReceipt() {
 		// TODO 自动生成的方法存根
+		intermediateData.saveTransferingReceiptInfo(IntermediateMainController
+				.voToPO(transferingReceipt));
 		return OperationState.SUCCEED_OPERATION;
 	}
 }
