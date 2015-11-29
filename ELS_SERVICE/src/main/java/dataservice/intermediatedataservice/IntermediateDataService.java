@@ -42,9 +42,11 @@ public interface IntermediateDataService extends Remote {
 			String organization_ID, String EnIntermediateReceipt_ID, String date);
 
 	public OperationState saveEnIntermediateReceiptInfo(
-			EnIntermediateReceiptPO enIntermediateReceipt,String organization_ID);
+			EnIntermediateReceiptPO enIntermediateReceipt,
+			String organization_ID);
 
-	public FarePO getFareInfo(String organization_ID, String date);
+	public FarePO getFareInfo(String organization_ID, String fare_ID,
+			String date);
 
-	public OperationState saveFareInfo(String organization_ID,FarePO fare);
+	public OperationState saveFareInfo(String organization_ID, FarePO fare);
 }

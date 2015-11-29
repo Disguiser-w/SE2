@@ -2,19 +2,14 @@ package data.intermediatedata;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import common.FileGetter;
-import po.BusinessPO;
 import po.EnIntermediateReceiptPO;
 import po.FarePO;
 import po.IntermediatePO;
@@ -23,6 +18,7 @@ import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
 import type.OperationState;
+import common.FileGetter;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateData implements IntermediateDataService {
@@ -36,6 +32,7 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
+			@SuppressWarnings("unchecked")
 			ArrayList<IntermediatePO> intermediatePOList = (ArrayList<IntermediatePO>) in
 					.readObject();
 			in.close();
@@ -62,6 +59,7 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
+			@SuppressWarnings("unchecked")
 			ArrayList<PlanePO> planeList = (ArrayList<PlanePO>) in.readObject();
 			in.close();
 			return planeList;
@@ -81,6 +79,7 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
+			@SuppressWarnings("unchecked")
 			ArrayList<TrainPO> trainList = (ArrayList<TrainPO>) in.readObject();
 			in.close();
 			return trainList;
@@ -100,6 +99,7 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
+			@SuppressWarnings("unchecked")
 			ArrayList<TruckPO> truckList = (ArrayList<TruckPO>) in.readObject();
 			in.close();
 			return truckList;
@@ -186,6 +186,7 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
+			@SuppressWarnings("unchecked")
 			ArrayList<TransferingReceiptPO> transferingReceiptPOList = (ArrayList<TransferingReceiptPO>) in
 					.readObject();
 			in.close();
@@ -235,8 +236,15 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
-			ArrayList<EnIntermediateReceiptPO> enIntermediateRecepit = (ArrayList<EnIntermediateReceiptPO>) in
+			@SuppressWarnings("unchecked")
+			ArrayList<EnIntermediateReceiptPO> enIntermediateRecepitList = (ArrayList<EnIntermediateReceiptPO>) in
 					.readObject();
+			in.close();
+			for (EnIntermediateReceiptPO enIntermediateReceipt : enIntermediateRecepitList) {
+				if (enIntermediateReceipt.getID().equals(
+						EnIntermediateReceipt_ID))
+					return enIntermediateReceipt;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("读取装车单信息失败！");
@@ -266,7 +274,8 @@ public class IntermediateData implements IntermediateDataService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public FarePO getFareInfo(String organization_ID, String date) {
+	public FarePO getFareInfo(String organization_ID, String fare_ID,
+			String date) {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
 				+ "-fare.dat";
@@ -275,7 +284,13 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
-			ArrayList<FarePO> fare = (ArrayList<FarePO>) in.readObject();
+			@SuppressWarnings("unchecked")
+			ArrayList<FarePO> fareList = (ArrayList<FarePO>) in.readObject();
+			in.close();
+			for (FarePO fare : fareList) {
+				if (fare.getID().equals(fare_ID))
+					return fare;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("读取运费成本信息失败！");
@@ -283,7 +298,7 @@ public class IntermediateData implements IntermediateDataService {
 		return null;
 	}
 
-	public OperationState saveFareInfo(String organization_ID,FarePO fare) {
+	public OperationState saveFareInfo(String organization_ID, FarePO fare) {
 		// TODO 自动生成的方法存根
 		String date = getDate();
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
