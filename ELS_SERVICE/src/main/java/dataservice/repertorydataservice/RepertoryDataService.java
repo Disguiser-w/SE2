@@ -9,7 +9,7 @@ import po.InventoryPO;
 import po.RepertoryPO;
 import po.InventoryCheckPO;
 
-public interface RepertoryDataService extends Remote{
+public interface RepertoryDataService extends Remote {
 	
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException;  //对仓库信息做修改，比如库存信息初始化工作
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException;

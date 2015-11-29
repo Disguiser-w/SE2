@@ -1,6 +1,9 @@
 package data.managedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.PerWagePO;
@@ -8,12 +11,15 @@ import type.ProfessionType;
 import file.JXCFile;
 import dataservice.managedataservice.PerWageDataService;
 
-public class PerWageData implements PerWageDataService{
+public class PerWageData extends UnicastRemoteObject implements PerWageDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250150L;
+		
 	JXCFile perWageFile;
     
     public PerWageData() throws RemoteException {
-		perWageFile = new JXCFile("src/main/java/perWage.ser");
+		perWageFile = new JXCFile("src/perWage.ser");
 	}
     
     public int addPerWage(PerWagePO perWagepo) throws RemoteException{
@@ -96,6 +102,9 @@ public class PerWageData implements PerWageDataService{
     }
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
     /*public static void main(String[] args){
 		PerWageData perWageData;
@@ -164,6 +173,32 @@ public class PerWageData implements PerWageDataService{
 			exception.printStackTrace();
 		}
 	}*/
+    
+    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			PerWageDataService perWageData = new PerWageData();
+			LocateRegistry.createRegistry(6002);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6002/PerWageDataService", perWageData);
+			System.out.println("PerWage Service start!");
+			
+			ArrayList<PerWagePO> perWageList0 = perWageData.showAllPerWages();
+			for(PerWagePO perWage:perWageList0)
+				System.out.println("Profession: "+perWage.getProfession()+", PerWage: "+perWage.getPerWage());
+			
+			
+			PerWagePO perWagepo = perWageData.findPerWage(ProfessionType.driver);
+				System.out.println("Profession: "+perWagepo.getProfession()+", PerWage: "+perWagepo.getPerWage());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

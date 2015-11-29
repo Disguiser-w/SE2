@@ -2,6 +2,9 @@ package businesslogic.repertorybl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat; 
 
@@ -9,8 +12,13 @@ import po.GoodsPO;
 import po.InventoryPO;
 import po.RepertoryPO;
 import po.InventoryCheckPO;
+import po.UserPO;
 import businesslogicservice.repertoryblservice.RepertoryBLService;
 import dataservice.repertorydataservice.RepertoryDataService;
+import dataservice.userdataservice.UserDataService;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
 import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.InventoryCheckVO;
@@ -217,5 +225,44 @@ public class RepertoryBL implements RepertoryBLService{
 	public InventoryCheckVO inventoryCheckPOToVO(InventoryCheckPO inventorycheckpo){
 		return new InventoryCheckVO(inventorycheckpo.getEnterTotal(), inventorycheckpo.getLeaveTotal(), inventorycheckpo.getEnterFeeTotal(),inventorycheckpo.getLeaveFeeTotal(), inventorycheckpo.getStockNumArray());
 	}
+	
+	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
+		try {
+			RepertoryDataService repertoryData = (RepertoryDataService)Naming.lookup("rmi://172.25.132.40:6001/RepertoryDataService");
+			
+			ArrayList<RepertoryPO> repertoryList0 = repertoryData.showAllRepertorys();
+			for(RepertoryPO repertorypo:repertoryList0)
+				System.out.println("ID: "+repertorypo.getRepertoryID()+", Owner: "+repertorypo.getOwnerID()+", maxRow: "+repertorypo.getMaxRow()
+						+", maxShelf: "+repertorypo.getMaxShelf()+", maxDigit: "+repertorypo.getMaxDigit()+", warningRatio: "
+						+repertorypo.getWarningRatio()+", PlaneBlockStock: "+repertorypo.getStockNum(0)+", TrainBlockStock: "+repertorypo.getStockNum(1)
+						+", TruckBlockStock: "+repertorypo.getStockNum(2)+", DefaultBlockStock: "+repertorypo.getStockNum(3));
+
+			int a[] = {21,22,23,24}; 
+			repertoryData.modifyRepertory(new RepertoryPO("030-CK", "CK-09", 100, 150, 200, 60, a));
+			
+			ArrayList<RepertoryPO> repertoryList1 = repertoryData.showAllRepertorys();
+			for(RepertoryPO repertorypo:repertoryList1)
+				System.out.println("ID: "+repertorypo.getRepertoryID()+", Owner: "+repertorypo.getOwnerID()+", maxRow: "+repertorypo.getMaxRow()
+						+", maxShelf: "+repertorypo.getMaxShelf()+", maxDigit: "+repertorypo.getMaxDigit()+", warningRatio: "
+						+repertorypo.getWarningRatio()+", PlaneBlockStock: "+repertorypo.getStockNum(0)+", TrainBlockStock: "+repertorypo.getStockNum(1)
+						+", TruckBlockStock: "+repertorypo.getStockNum(2)+", DefaultBlockStock: "+repertorypo.getStockNum(3));
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

@@ -1,6 +1,10 @@
 package businesslogic.managebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.OrganizationPO;
 import po.RepertoryPO;
@@ -8,6 +12,7 @@ import po.UserPO;
 import businesslogicservice.manageblservice.OrganizationBLService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
+import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 
@@ -82,5 +87,37 @@ public class OrganizationBL implements OrganizationBLService{
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo){
 		return new OrganizationPO(organizationvo.getCategory(),organizationvo.getOrganizationID(),organizationvo.getName(),repertoryVOToPO(organizationvo.getRepertory()));
 	}
+	
+	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
+		try {
+			OrganizationDataService organizationData = (OrganizationDataService)Naming.lookup("rmi://172.25.132.40:6006/OrganizationDataService");
+			
+			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
+			for(OrganizationPO organization:organizationList0)
+				System.out.println(("ID: "+organization.getOrganizationID()+", Name: "+organization.getName()));
+
+			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
+			
+			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
+			for(OrganizationPO organization:organizationList1)
+				System.out.println(("ID: "+organization.getOrganizationID()+", Name: "+organization.getName()));
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

@@ -89,6 +89,30 @@ public class RepertoryPO implements Serializable{
 		this.warningRadio = warningRatio;
 	}
 	
+	public void setStockNumArray(int[] stockNum){
+		this.stockNum = stockNum;
+	}
+	
+	public int[] getStockNumArray(){
+		return this.stockNum;
+	}
+	
+	public int getStockNum(int block){
+		return this.stockNum[block];
+	}
+	
+	public void stockNumPlus(int block){
+		this.stockNum[block]++;
+	}
+	
+	public void stockNumSub(int block){
+		this.stockNum[block]--;
+	}
+	
+	public ArrayList<InventoryPO> getInventoryList(){
+		return this.inventoryList;
+	}
+	
 	/*public int getPlaneBlockStockNum(){
 		return this.planeBlockStockNum;
 	}
@@ -137,23 +161,4 @@ public class RepertoryPO implements Serializable{
 		this.defaultBlockStockNum--;
 	}*/
 	
-	public int[] getStockNumArray(){
-		return this.stockNum;
-	}
-	
-	public int getStockNum(int block){
-		return this.stockNum[block];
-	}
-	
-	public void stockNumPlus(int block){
-		this.stockNum[block]++;
-	}
-	
-	public void stockNumSub(int block){
-		this.stockNum[block]--;
-	}
-	
-	public ArrayList<InventoryPO> getInventoryList(){
-		return this.inventoryList;
-	}
 }

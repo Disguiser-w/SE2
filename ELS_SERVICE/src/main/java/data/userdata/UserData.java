@@ -1,6 +1,8 @@
 package data.userdata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -11,15 +13,15 @@ import type.SalaryPlanType;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
 
-public class UserData implements UserDataService {	//extends UnicastRemoteObject???
+public class UserData extends UnicastRemoteObject implements UserDataService {	//extends UnicastRemoteObject???
 
-	//我也不知道下面这句话有什么用？？？
-	//private static final long serialVersionUID = 1L;
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250147L;
 
     JXCFile userFile;
     
     public UserData() throws RemoteException {
-		userFile = new JXCFile("src/main/java/user.ser");
+		userFile = new JXCFile("src/user.ser");
 	}
     
     public int addUser(UserPO userpo) throws RemoteException{
@@ -102,8 +104,11 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
     }	
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
-   /* public static void main(String[] args){
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
+    
+    /*public static void main(String[] args){
     	UserData userData;
     	try{
     		userData = new UserData();
@@ -124,13 +129,13 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
 				if(userpoList0 != null){
 	    			for(int i=0;i<userpoList0.size();i++){
 	    				UserPO tempUserpo = userpoList0.get(i);
-	    				System.out.println(tempUserpo.getProfession()+"  "+tempUserpo.getUser());
+	    				System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "+tempUserpo.getOrganization()+"  "+tempUserpo.getProfession());
 	    			}
 				}
 				
     			UserPO userpo = userData.findUser("KD-01");
     			if(userpo != null)
-    				System.out.println("Find the user: "userpo.getName()+" "+userpo.getUserID()+" "+userpo.getOrganization()+" "+userpo.getProfession());
+    				System.out.println("Find the user: "+userpo.getName()+" "+userpo.getUserID()+" "+userpo.getOrganization()+" "+userpo.getProfession());
     			else
     				System.out.println("Cannot find the user");
     			
@@ -177,6 +182,32 @@ public class UserData implements UserDataService {	//extends UnicastRemoteObject
 			exception.printStackTrace();
     	}
     }*/
+    
+    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			UserDataService userData = new UserData();
+			LocateRegistry.createRegistry(6000);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6000/UserDataService", userData);
+			System.out.println("User Service start!");
+			
+			ArrayList<UserPO> userList0 = userData.showAllUsers();
+			for(UserPO user:userList0)
+				System.out.println("ID: "+user.getUserID()+", Name: "+user.getName());
+			
+			
+			UserPO userpo = userData.findUser("JL-01");
+				System.out.println("ID: "+userpo.getUserID()+", Name: "+userpo.getName());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

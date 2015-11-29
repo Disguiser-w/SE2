@@ -1,6 +1,8 @@
 package data.repertorydata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,18 +18,18 @@ import po.InventoryCheckPO;
 import po.OrganizationPO;
 import file.JXCFile;
 
-public class RepertoryData implements RepertoryDataService{
+public class RepertoryData extends UnicastRemoteObject implements RepertoryDataService{
 
-	//我也不知道下面这句话有什么用？？？
-	//private static final long serialVersionUID = 1L;
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250148L;
 	
 	JXCFile organzationFile;
 	JXCFile goodsFile;
 	GoodsData goodsData;
 	
 	public RepertoryData() throws RemoteException{
-		organzationFile = new JXCFile("src/main/java/organization.ser");
-		goodsFile = new JXCFile("src/main/java/goods.ser");
+		organzationFile = new JXCFile("src/organization.ser");
+		goodsFile = new JXCFile("src/goods.ser");
 		goodsData = new GoodsData();
 	}
 	
@@ -44,6 +46,12 @@ public class RepertoryData implements RepertoryDataService{
 				repertory.setMaxShelf(repertorypo.getMaxShelf());
 				repertory.setMaxDigit(repertorypo.getMaxDigit());
 				repertory.setWarningRatio(repertorypo.getWarningRatio());
+				/*int []a = repertorypo.getStockNumArray();
+				if(a != null)
+					System.out.println(a[0]+" "+a[1]+" "+a[2]+" "+a[3]);
+				else 
+					System.out.println("a = null!!!");*/
+				repertory.setStockNumArray(repertorypo.getStockNumArray());
 				returnNum = 0;
 				break;
 			}
@@ -268,6 +276,9 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	}
 	
 	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
 	
 	/*public static void main(String[] args){
 		RepertoryData repertoryData;
@@ -382,5 +393,31 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 			exception.printStackTrace();
 		}
 	}*/
+	
+	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+	public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			RepertoryDataService repertoryData = new RepertoryData();
+			LocateRegistry.createRegistry(6001);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6001/RepertoryDataService", repertoryData);
+			System.out.println("Repertory Service start!");
+			
+			ArrayList<RepertoryPO> repertoryList0 = repertoryData.showAllRepertorys();
+			for(RepertoryPO repertory:repertoryList0)
+				System.out.println("ID: "+repertory.getRepertoryID()+", Owner: "+repertory.getOwnerID());
+			
+			
+			RepertoryPO repertorypo = repertoryData.findRepertory("030-CK");
+				System.out.println("ID: "+repertorypo.getRepertoryID()+", Owner: "+repertorypo.getOwnerID());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

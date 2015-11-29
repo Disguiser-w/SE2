@@ -1,6 +1,9 @@
 package data.managedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.BasicSalaryPO;
@@ -8,12 +11,15 @@ import type.ProfessionType;
 import file.JXCFile;
 import dataservice.managedataservice.BasicSalaryDataService;
 
-public class BasicSalaryData implements BasicSalaryDataService{
+public class BasicSalaryData extends UnicastRemoteObject implements BasicSalaryDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250151L;
+		
 	JXCFile basicSalaryFile;
     
     public BasicSalaryData() throws RemoteException {
-		basicSalaryFile = new JXCFile("src/main/java/basicSalary.ser");
+		basicSalaryFile = new JXCFile("src/basicSalary.ser");
 	} 
     
     public int addBasicSalary(BasicSalaryPO basicSalarypo) throws RemoteException{
@@ -96,6 +102,9 @@ public class BasicSalaryData implements BasicSalaryDataService{
     }
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
      /*public static void main(String[] args){
 		BasicSalaryData basicSalaryData;
@@ -165,6 +174,32 @@ public class BasicSalaryData implements BasicSalaryDataService{
 			exception.printStackTrace();
 		}
 	}*/
+    
+    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			BasicSalaryDataService basicSalaryData = new BasicSalaryData();
+			LocateRegistry.createRegistry(6003);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6003/BasicSalaryDataService", basicSalaryData);
+			System.out.println("BasicSalary Service start!");
+			
+			ArrayList<BasicSalaryPO> basicSalaryList0 = basicSalaryData.showAllBasicSalarys();
+			for(BasicSalaryPO basicSalary:basicSalaryList0)
+				System.out.println("Profession: "+basicSalary.getProfession()+", BasicSalary: "+basicSalary.getBasicSalary());
+			
+			
+			BasicSalaryPO basicSalarypo = basicSalaryData.findBasicSalary(ProfessionType.manager);
+				System.out.println("Profession: "+basicSalarypo.getProfession()+", BasicSalary: "+basicSalarypo.getBasicSalary());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

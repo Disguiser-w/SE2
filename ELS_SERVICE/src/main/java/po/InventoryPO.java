@@ -1,7 +1,6 @@
 package po;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import po.GoodsPO;
 
@@ -19,18 +18,6 @@ public class InventoryPO implements Serializable{
 		this.shelfNum  = shelfNum;
 		this.digitNum = digitNum;
 	}
-	
-	/*public void addGoods(GoodsVO goods){
-		Goods_List.add(goods);
-	}
-	
-	public void deleteGoods(GoodsVO goods){
-		Goods_List.remove(goods);
-	}
-	
-	public ArrayList<InventoryPO> showInventory(){
-		return this.Goods_List;
-	}*/
 	
 	public GoodsPO getGood(){
 		return this.good;

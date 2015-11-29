@@ -1,18 +1,24 @@
 package data.managedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.CityDistancePO;
 import file.JXCFile;
 import dataservice.managedataservice.CityDistanceDataService;
 
-public class CityDistanceData implements CityDistanceDataService{
+public class CityDistanceData extends UnicastRemoteObject implements CityDistanceDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250152L;
+		
 	JXCFile cityDistanceFile;
     
     public CityDistanceData() throws RemoteException {
-		cityDistanceFile = new JXCFile("src/main/java/cityDistance.ser");
+		cityDistanceFile = new JXCFile("src/cityDistance.ser");
 	}
     
     public int addCityDistance(CityDistancePO cityDistancepo) throws RemoteException{
@@ -98,6 +104,9 @@ public class CityDistanceData implements CityDistanceDataService{
     }
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
     /*public static void main(String[] args){
 		CityDistanceData cityDistanceData;
@@ -169,6 +178,32 @@ public class CityDistanceData implements CityDistanceDataService{
 				exception.printStackTrace();
 			}
 		}*/
+    
+    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			CityDistanceDataService cityDistanceData = new CityDistanceData();
+			LocateRegistry.createRegistry(6005);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6005/CityDistanceDataService", cityDistanceData);
+			System.out.println("CityDistance Service start!");
+			
+			ArrayList<CityDistancePO> cityDistanceList0 = cityDistanceData.showAllCityDistances();
+			for(CityDistancePO cityDistance:cityDistanceList0)
+				System.out.println("CityA: "+cityDistance.getCityA()+", CityB: "+cityDistance.getCityB()+", CityDistance: "+cityDistance.getDistance());
+			
+			
+			CityDistancePO cityDistancepo = cityDistanceData.findCityDistance("北京", "上海");
+				System.out.println("CityA: "+cityDistancepo.getCityA()+", CityB: "+cityDistancepo.getCityB()+", CityDistance: "+cityDistancepo.getDistance());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

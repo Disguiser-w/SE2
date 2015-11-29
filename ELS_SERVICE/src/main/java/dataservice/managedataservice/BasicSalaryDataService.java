@@ -3,10 +3,11 @@ package dataservice.managedataservice;
 import po.BasicSalaryPO;
 import type.ProfessionType;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface BasicSalaryDataService {
+public interface BasicSalaryDataService extends Remote {
 
 	public int addBasicSalary(BasicSalaryPO basicsalarypo) throws RemoteException;
 	public int deleteBasicSalary(ProfessionType profession) throws RemoteException;

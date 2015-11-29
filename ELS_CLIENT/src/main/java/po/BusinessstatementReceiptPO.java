@@ -1,6 +1,8 @@
-package po;
+﻿package po;
 
 import java.util.ArrayList;
+
+/*我就不信你还是更不上去！！！！！*/
 
 public class BusinessStatementReceiptPO {
 	String beginTime;

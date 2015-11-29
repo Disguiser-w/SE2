@@ -1,14 +1,18 @@
 package data.repertorydata;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.GoodsPO;
 import file.JXCFile;
 import dataservice.repertorydataservice.GoodsDataService;
 
-public class GoodsData implements GoodsDataService{
+public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250149L;
+		
 	JXCFile goodsFile;
 	
 	public GoodsData() throws RemoteException{
@@ -95,7 +99,10 @@ public class GoodsData implements GoodsDataService{
     }
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
+	
      /*public static void main(String[] args){
 		GoodsData goodsData;
 		try{
@@ -169,4 +176,5 @@ public class GoodsData implements GoodsDataService{
 		}
 	}*/
 	
+    
 }

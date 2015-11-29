@@ -1,6 +1,9 @@
 package data.managedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import file.JXCFile;
@@ -8,12 +11,15 @@ import po.CostPO;
 import type.ExpressType;
 import dataservice.managedataservice.CostDataService;
 
-public class CostData implements CostDataService{
+public class CostData extends UnicastRemoteObject implements CostDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250153L;
+		
 	JXCFile costFile;
     
     public CostData() throws RemoteException {
-		costFile = new JXCFile("src/main/java/cost.ser");
+		costFile = new JXCFile("src/cost.ser");
 	}
     
     public int addCost(CostPO costpo) throws RemoteException{
@@ -96,6 +102,9 @@ public class CostData implements CostDataService{
     }
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
     /*public static void main(String[] args){
 		CostData costData;
@@ -165,6 +174,32 @@ public class CostData implements CostDataService{
 			exception.printStackTrace();
 		}
 	}*/
+    
+    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			CostDataService costData = new CostData();
+			LocateRegistry.createRegistry(6004);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6004/CostDataService", costData);
+			System.out.println("Cost Service start!");
+			
+			ArrayList<CostPO> costList0 = costData.showAllCosts();
+			for(CostPO cost:costList0)
+				System.out.println("ExpressType: "+cost.getExpressType()+", Cost: "+cost.getCost());
+			
+			
+			CostPO costpo = costData.findCost(ExpressType.FAST);
+				System.out.println("ExpressType: "+costpo.getExpressType()+", Cost: "+costpo.getCost());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

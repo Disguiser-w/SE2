@@ -1,20 +1,24 @@
 package data.managedata;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.OrganizationPO;
-import po.RepertoryPO;
-import type.OrganizationType;
 import file.JXCFile;
 import dataservice.managedataservice.OrganizationDataService;
 
-public class OrganizationData implements OrganizationDataService{
+public class OrganizationData extends UnicastRemoteObject implements OrganizationDataService{
 
+	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+	private static final long serialVersionUID = 131250154L;
+		
 	JXCFile organizationFile;
     
     public OrganizationData() throws RemoteException {
-		organizationFile = new JXCFile("src/main/java/organization.ser");
+		organizationFile = new JXCFile("src/organization.ser");
 	}
     
     public int addOrganization(OrganizationPO organizationpo) throws RemoteException{
@@ -97,6 +101,9 @@ public class OrganizationData implements OrganizationDataService{
     }	
     
     
+    /*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
     /*public static void main(String[] args){
 		OrganizationData organizationData;
@@ -187,6 +194,31 @@ public class OrganizationData implements OrganizationDataService{
 		}
 	}*/
     
+ /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
+    
+    public static void main(String[] args){
+     	try{
+			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+			OrganizationDataService organizationData = new OrganizationData();
+			LocateRegistry.createRegistry(6006);
+			
+			//绑定RMI名称进行发布
+			Naming.rebind("rmi://172.25.132.40:6006/OrganizationDataService", organizationData);
+			System.out.println("Organization Service start!");
+			
+			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
+			for(OrganizationPO organization:organizationList0)
+				System.out.println("ID: "+organization.getOrganizationID()+", Name: "+organization.getName());
+			
+			
+			OrganizationPO organizationpo = organizationData.findOrganization("025000");
+				System.out.println("ID: "+organizationpo.getOrganizationID()+", Name: "+organizationpo.getName());
+				
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
     
     
 }

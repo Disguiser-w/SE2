@@ -1,6 +1,10 @@
 package businesslogic.managebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.CityDistancePO;
 import vo.CityDistanceVO;
@@ -55,5 +59,37 @@ public class CityDistanceBL implements CityDistanceBLService{
 	public CityDistanceVO poToVO(CityDistancePO cityDistancepo){
 		return new CityDistanceVO(cityDistancepo.getCityA(),cityDistancepo.getCityB(), cityDistancepo.getDistance());
 	}
+	
+	
+/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
+		try {
+			CityDistanceDataService cityDistanceData = (CityDistanceDataService)Naming.lookup("rmi://172.25.132.40:6005/CityDistanceDataService");
+			
+			ArrayList<CityDistancePO> cityDistanceList0 = cityDistanceData.showAllCityDistances();
+			for(CityDistancePO cityDistance:cityDistanceList0)
+				System.out.println("CityA: "+cityDistance.getCityA()+"CityB: "+cityDistance.getCityB()+", CityDistance: "+cityDistance.getDistance());
+
+			cityDistanceData.addCityDistance(new CityDistancePO("南极", "北极", 40000));
+			
+			ArrayList<CityDistancePO> cityDistanceList1 = cityDistanceData.showAllCityDistances();
+			for(CityDistancePO cityDistance:cityDistanceList1)
+				System.out.println("CityA: "+cityDistance.getCityA()+"CityB: "+cityDistance.getCityB()+", CityDistance: "+cityDistance.getDistance());
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

@@ -1,6 +1,10 @@
 package businesslogic.managebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.BasicSalaryPO;
 import vo.BasicSalaryVO;
@@ -56,5 +60,37 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	public BasicSalaryVO poToVO(BasicSalaryPO basicSalarypo){
 		return new BasicSalaryVO(basicSalarypo.getProfession(),basicSalarypo.getBasicSalary());
 	}
+	
+	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
+		try {
+			BasicSalaryDataService basicSalaryData = (BasicSalaryDataService)Naming.lookup("rmi://172.25.132.40:6003/BasicSalaryDataService");
+			
+			ArrayList<BasicSalaryPO> basicSalaryList0 = basicSalaryData.showAllBasicSalarys();
+			for(BasicSalaryPO basicSalary:basicSalaryList0)
+				System.out.println("Profession: "+basicSalary.getProfession()+", BasicSalary: "+basicSalary.getBasicSalary());
+
+			basicSalaryData.modifyBasicSalary(new BasicSalaryPO(ProfessionType.courier,4500));
+			
+			ArrayList<BasicSalaryPO> basicSalaryList1 = basicSalaryData.showAllBasicSalarys();
+			for(BasicSalaryPO basicSalary:basicSalaryList1)
+				System.out.println("Profession: "+basicSalary.getProfession()+", BasicSalary: "+basicSalary.getBasicSalary());
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

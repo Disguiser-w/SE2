@@ -2,12 +2,13 @@ package dataservice.managedataservice;
 
 import po.PerWagePO;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import type.ProfessionType;
 
-public interface PerWageDataService {
+public interface PerWageDataService extends Remote {
 
 	public int addPerWage(PerWagePO perwagepo) throws RemoteException;
 	public int deletePerWage(ProfessionType profession ) throws RemoteException;

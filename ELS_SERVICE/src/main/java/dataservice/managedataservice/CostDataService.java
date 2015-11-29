@@ -1,12 +1,13 @@
 package dataservice.managedataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CostPO;
 import type.ExpressType;
 
-public interface CostDataService {
+public interface CostDataService extends Remote {
 
 	public int addCost(CostPO costpo) throws RemoteException;
     public int deleteCost(ExpressType expressType) throws RemoteException;

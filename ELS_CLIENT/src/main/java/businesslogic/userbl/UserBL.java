@@ -1,6 +1,8 @@
 package businesslogic.userbl;
 
+import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -167,5 +169,40 @@ public class UserBL implements UserBLService{
 				userpo.getOrganization(),userpo.getSalaryPlan(),userpo.getAuthority(),userpo.getGrades());
 		return uservo;
 	}
+	
+	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
+		try {
+			UserDataService userData = (UserDataService)Naming.lookup("rmi://172.25.132.40:6000/UserDataService");
+			
+			ArrayList<UserPO> userList0 = userData.showAllUsers();
+			for(UserPO user:userList0)
+				System.out.println("ID: "+user.getID()+", Name: "+user.getName()+", Profession: "+user.getProfession()+", Organization: "
+				+user.getOrganization()+", SalaryPlan: "+user.getSalaryPlan()+", Authority: "+user.getAuthority()+", Grades: "+user.getGrades());
+
+			userData.addUser(new UserPO("刘钦" ,"CK-01","123456", ProfessionType.stockman, "南京中转中心",
+    					SalaryPlanType.stockmanSalaryPlan, AuthorityType.lowest, 0));
+			
+			ArrayList<UserPO> userList1 = userData.showAllUsers();
+			for(UserPO user:userList1)
+				System.out.println("ID: "+user.getID()+", Name: "+user.getName()+", Profession: "+user.getProfession()+", Organization: "
+				+user.getOrganization()+", SalaryPlan: "+user.getSalaryPlan()+", Authority: "+user.getAuthority()+", Grades: "+user.getGrades());
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }
