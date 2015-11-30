@@ -35,7 +35,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	BasicSalaryDataService bsdService;
 	PerWageDataService pwdService;
 
-/*	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
+	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
 		udService=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
 		bdService=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
 		odService=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
@@ -43,7 +43,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		bsdService=(BasicSalaryDataService) Naming.lookup("rmi://172.26.209.182:8888/BasicSalaryDataService");
 		pwdService= (PerWageDataService) Naming.lookup("rmi://172.26.209.182:8888/PerWageDataService");
 	}
-	*/
+	
 	/**
 	 * 创建付款单并发送给总经理
 	 * */
