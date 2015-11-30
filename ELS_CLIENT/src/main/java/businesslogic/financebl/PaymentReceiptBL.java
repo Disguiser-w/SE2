@@ -35,6 +35,15 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	BasicSalaryDataService bsdService;
 	PerWageDataService pwdService;
 
+/*	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
+		udService=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
+		bdService=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
+		odService=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
+		idService=(IntermediateDataService) Naming.lookup("rmi://172.26.209.182:8888/IntermediateDataService");
+		bsdService=(BasicSalaryDataService) Naming.lookup("rmi://172.26.209.182:8888/BasicSalaryDataService");
+		pwdService= (PerWageDataService) Naming.lookup("rmi://172.26.209.182:8888/PerWageDataService");
+	}
+	*/
 	/**
 	 * 创建付款单并发送给总经理
 	 * */
@@ -68,8 +77,11 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * paymentItems怎么用还没想好-------这个怎么写啊23333
 	 * 本宝宝要改付款单的用例了，，，之前写的功能太复杂了23333
 	 * 初步想法：所有判断付款类型，付款金额的操作都写在paymentItem里
+	 * @throws NotBoundException 
+	 * @throws RemoteException 
+	 * @throws MalformedURLException 
 	 * */
-	public int excute(PaymentReceiptVO vo){
+	public int excute(PaymentReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
 		AccountBL account=new AccountBL();
 //		ArrayList<PaymentReceiptVO> pvos=vo.ge
 //		ArrayList<PaymentItemVO> paymentItems=vo.getPaymentItems();
@@ -243,6 +255,22 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		
 	}
 
+	/**
+	 * 获取未审批的所有付款单,审批需要
+	 * */
+	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt() {
+		// TODO Auto-generated method stub
+		try {
+			return pposToVOs(prdService.getUnapprovedPaymentReceipt());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取未审批的付款单失败");
+			return null;
+		}
+	}
+	
+	
 
 	public static void main(String[] args){
 		try {
@@ -273,8 +301,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 //	//根据条目和时间筛选
 //		String Clause;
 //		String Time;

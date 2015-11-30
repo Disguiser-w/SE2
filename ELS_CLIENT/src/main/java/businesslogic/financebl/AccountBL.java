@@ -14,8 +14,11 @@ import vo.AccountVO;
 public class AccountBL implements AccountBLService{
 
 	private AccountDataService accountData;
-	private AccountPO po;
+//	private AccountPO po;
 	
+	public AccountBL() throws MalformedURLException, RemoteException, NotBoundException {
+			 accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
+	}
 	/**
 	 * 单个po转化为单个vo
 	 * */
@@ -37,21 +40,29 @@ public class AccountBL implements AccountBLService{
 		}
 		return null;
 	}
+	/**
+	 * 单个vo转化为po
+	 * */
+	public AccountPO voToPO(AccountVO vo){
+		String name=vo.getName();
+		double money=vo.getMoney();
+		AccountPO po=new AccountPO(name, money);
+		return po;
+	}
 	
 	/** 
 	 * 添加账户
 	 * 成功添加返回0
 	 * */
 	public int addAccount(AccountVO vo) {
-		// TODO Auto-generated method stub
-		po=new AccountPO(vo.getName(), vo.getMoney());
+		AccountPO po=voToPO(vo);
 		try {
-			accountData.addAccount(po);
-			return 0;
+			return accountData.addAccount(po);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 1;
+			System.out.println("添加账户异常");
+			return 2;
 		}
 	}
 
@@ -61,24 +72,26 @@ public class AccountBL implements AccountBLService{
 	public int deleteAccount(String name) {
 		// TODO Auto-generated method stub
 		try {
-			po=accountData.findbyName(name);
+			AccountPO po=accountData.findbyName(name);
+			if(po == null){
+				System.out.println("账户删除错误！");
+				return 1;
+			}
+			else{
+				try {
+					accountData.deleteAccount(po);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 2;
 		}
-		if(po == null){
-			System.out.println("账户删除错误！");
-			return 1;
-		}
-		else{
-			try {
-				accountData.deleteAccount(po);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return 0;
-		}
+		
 	}
 
 	/**
@@ -87,19 +100,21 @@ public class AccountBL implements AccountBLService{
 	public int modifyAccount(AccountVO vo,String name) {
 		// TODO Auto-generated method stub
 		try {
-			po=accountData.findbyName(vo.getName());
+			AccountPO po=accountData.findbyName(vo.getName());
+			if(po==null){
+				System.out.println("修改账户失败！");
+				return 1;
+			}
+			else{
+				po=new AccountPO(vo.getName(), vo.getMoney());
+				return 0;
+			}		
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 2;
 		}
-		if(po==null){
-			System.out.println("修改账户失败！");
-			return 1;
-		}
-		else{
-			po=new AccountPO(vo.getName(), vo.getMoney());
-			return 0;
-		}		
+	
 	}
 
 	/**
@@ -108,18 +123,21 @@ public class AccountBL implements AccountBLService{
 	public AccountVO findbyName(String name) {
 		// TODO Auto-generated method stub
 		try {
-			po=accountData.findbyName(name);
+			AccountPO po=accountData.findbyName(name);
+			if(po==null){
+				System.out.println("查询账户失败！");
+				return null;
+			}
+			else{
+				return poToVO(po);
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		if(po==null){
-			System.out.println("查询账户失败！");
+			System.out.println("查找账户失败");
 			return null;
 		}
-		else{
-			return poToVO(po);
-		}
+	
 	}
 
 	/**
@@ -184,7 +202,7 @@ public class AccountBL implements AccountBLService{
 	}
 
 
-	public static void main(String[] args){
+/*	public static void main(String[] args){
 		try {
 			AccountDataService accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
 //			ArrayList<AccountPO> pos=accountData.showAll();
@@ -214,6 +232,7 @@ public class AccountBL implements AccountBLService{
 			e.printStackTrace();
 		}
 	}
+	*/
 	
 	
 

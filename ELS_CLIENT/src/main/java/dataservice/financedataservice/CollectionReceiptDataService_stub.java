@@ -53,9 +53,14 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 	}
 
 
-	@Override
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
 			String endTime) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() {
 		// TODO Auto-generated method stub
 		return null;
 	}

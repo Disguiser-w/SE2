@@ -47,6 +47,11 @@ public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {
 		return 0;
 	}
 
+	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

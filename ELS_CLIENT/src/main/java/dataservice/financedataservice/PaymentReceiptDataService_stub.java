@@ -52,9 +52,13 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 		return 0;
 	}
 
-	@Override
 	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
 			String endTime) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<PaymentReceiptPO> getUnapprovedPaymentReceipt() {
 		// TODO Auto-generated method stub
 		return null;
 	}

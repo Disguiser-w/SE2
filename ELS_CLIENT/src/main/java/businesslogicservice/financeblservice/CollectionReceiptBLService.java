@@ -23,7 +23,8 @@ public interface CollectionReceiptBLService {
 	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo);
 	//自动生成入款单编号
 	public String getCollectionListID();
-	
+	//获取未审批的合计收款单(审批单据需要)
+	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt();
 	
 	
 //	//获取营业厅编号

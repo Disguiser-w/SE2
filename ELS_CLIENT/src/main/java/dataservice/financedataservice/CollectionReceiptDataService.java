@@ -22,7 +22,8 @@ public interface CollectionReceiptDataService extends Remote{
 	
 	//获取经营情况表需要
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,String endTime) throws RemoteException;
-	
+	//获取未审批的合计收款单(审批单据需要)
+		public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() throws RemoteException;
 
 }
 

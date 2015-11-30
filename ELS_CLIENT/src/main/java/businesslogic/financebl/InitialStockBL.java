@@ -1,5 +1,8 @@
 package businesslogic.financebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -34,9 +37,17 @@ public class InitialStockBL implements InitialStockBLService{
 	private RepertoryDataService repertoryData;
 	private AccountDataService accontData;
 	
-	
-	public InitialStockBL(){
-		
+	//我竟然刚刚发现按ctrl可以追踪==
+	/**
+	 * 不过这么多东西怎么用RMI链接
+	 * */
+	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
+		initData=(InitialStockDataService) Naming.lookup("rmi://172.26.209.182:8888/InitialStockDataService");
+		userData=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
+		organizationData=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
+		businessData=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
+		repertoryData=(RepertoryDataService) Naming.lookup("rmi://172.26.209.182:8888/RepertoryDataService");
+		accontData=(AccountDataService) Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
 	}
 
 	/**

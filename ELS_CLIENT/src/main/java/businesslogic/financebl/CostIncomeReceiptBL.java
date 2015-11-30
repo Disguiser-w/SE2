@@ -26,9 +26,12 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	CollectionReceiptDataService crdService;
 	PaymentReceiptDataService prdService;
 	
-	public CostIncomeReceiptBL() {
+	public CostIncomeReceiptBL() throws MalformedURLException, RemoteException, NotBoundException {
 		// TODO Auto-generated constructor stub
 		super();
+		cirdService=(CostIncomeReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
+		crdService=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+		prdService=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
 	}
 	
 	/**

@@ -32,6 +32,10 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	
 	ArrayList<GatheringReceiptPO> gatheringReceiptPOs_Right;
 	
+	public CollectionReceiptBL() throws Exception{
+		super();
+		 crdService=(CollectionReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+	}
 	
 	/**
 	 * 将显示的CollectionVO转化为持久化对象PO
@@ -55,8 +59,11 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * 账户金额的增减放在excute里
 	 * 先把入款金额记到每个营业厅编号上------把帐户名记为营业厅编号
 	 * 等一下，，，这里的getTotalMoney是什么，，，
+	 * @throws NotBoundException 
+	 * @throws RemoteException 
+	 * @throws MalformedURLException 
 	 * */
-	public int excute(CollectionReceiptVO vo){
+	public int excute(CollectionReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
 		AccountBL a=new AccountBL();
 //		ArrayList<GatheringReceiptVO> grvo=vo.getGathering();
 //		for(GatheringReceiptVO v:grvo){
@@ -85,28 +92,6 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 	
 	
-		// TODO Auto-generated method stub
-//		ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
-//		try {
-////			gatheringReceiptPOs=bdService.getGatheringReceiptPOs(Time);
-//			gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if(gatheringReceiptPOs==null){
-//			System.out.println("gatheringReceiptPOs==null");
-//			return null;
-//		}
-//		else{
-//			gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
-//		for(GatheringReceiptPO p:gatheringReceiptPOs){
-//			if(p.getTime()==Time){
-//				gatheringReceiptPOs_Right.add(p);
-//			}
-//		}
-//		return gposToVOs(gatheringReceiptPOs_Right);
-//		}
 		
 		
 	}
@@ -282,8 +267,24 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		return "HJSKD-"+getDate.getdate();
 	}
 
+	/**
+	 * 获取未审批的合计收款单
+	 * */
+	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt() {
+		// TODO Auto-generated method stub
+		try {
+			return cposToVOs(crdService.getUnapprovedCollectionReceipt());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取未审批的单据失败");
+			return null;
+		}
+	}
+}
+
 	
-	public static void main(String[] args){
+/*	public static void main(String[] args){
 		CollectionReceiptBLService test=new CollectionReceiptBL();
 		System.out.println(test.getCollectionListID());
 		
@@ -311,6 +312,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		
 	}
 	}
+	*/
 
 	/**
 	 * 获取所有的gatheringPO,虽然好像并木有什么卵用=。=
@@ -400,7 +402,29 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 //			return totalmoney;
 //		}
 	
-	
+
+// TODO Auto-generated method stub
+//ArrayList<GatheringReceiptPO> gatheringReceiptPOs = null;
+//try {
+////	gatheringReceiptPOs=bdService.getGatheringReceiptPOs(Time);
+//	gatheringReceiptPOs = bdService.getGatheringReceiptPOs();
+//} catch (RemoteException e) {
+//	// TODO Auto-generated catch block
+//	e.printStackTrace();
+//}
+//if(gatheringReceiptPOs==null){
+//	System.out.println("gatheringReceiptPOs==null");
+//	return null;
+//}
+//else{
+//	gatheringReceiptPOs_Right=new ArrayList<GatheringReceiptPO>();
+//for(GatheringReceiptPO p:gatheringReceiptPOs){
+//	if(p.getTime()==Time){
+//		gatheringReceiptPOs_Right.add(p);
+//	}
+//}
+//return gposToVOs(gatheringReceiptPOs_Right);
+//}
 	
 		
 		

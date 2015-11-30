@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 import file.JXCFile;
 import po.CollectionReceiptPO;
-
+import po.ReceiptPO.ReceiptState;
 import dataservice.financedataservice.CollectionReceiptDataService;
+
 
 public class CollectionReceiptData extends UnicastRemoteObject implements CollectionReceiptDataService{
 	/**
@@ -60,35 +61,10 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		}
 	}
 	
-	
 
 	/**
-	 * 按时间获取所有的营业厅收款单------从文件中放到po中
-	 * 才看到钦gg的需求里竟然要按天按营业厅查询，我们愉快地忽略吧233333
-	 * 暂取名==
-	 * 但是我这里可以直接读营业厅的文件吗，，，并不清楚——好像不行，应该是BL层直接调用BusinessService中的方法
+	 * 获取已生成单据数量
 	 * */
-/*      public ArrayList<GatheringReceiptPO> getGathering(String Time)
-//			throws RemoteException {
-//		// TODO Auto-generated method stub
-//		file=new JXCFile("gathering.ser");
-//		ArrayList<Object> gathering=file.read();
-//		if(gathering==null){
-//			System.out.println("读取文件gathering.ser失败或文件为空");
-//			return null;
-//		}
-//		else{
-//			ArrayList<GatheringReceiptPO> buffer=new ArrayList<GatheringReceiptPO>();
-//			for(Object o:gathering){
-//				GatheringReceiptPO p=(GatheringReceiptPO) o;
-//				buffer.add(p);
-//			}
-//			return buffer;
-//		}
-//	}
-*/
-	
-	
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("collection.ser");
@@ -148,7 +124,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		return 0;
 	}
 	/**
-	 * 根据时间筛选出入款单——只提供bl层调用，不需要写入文件
+	 * 根据时间筛选出入款单——只提供bl层调用，不需要写入文件（经营情况表）
 	 * */
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
 			String endTime)  throws RemoteException{
@@ -173,21 +149,39 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	}
 	
 
+	/**
+	 * 获取所有未审批的入款单
+	 * */
+	public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() throws RemoteException{
+		// TODO Auto-generated method stub
+		file=new JXCFile("collection.ser");
+		ArrayList<Object> os=file.read();
+		ArrayList<CollectionReceiptPO> unprovedPOs=new ArrayList<CollectionReceiptPO>();
+		for(Object o:os){
+			CollectionReceiptPO po=(CollectionReceiptPO) o;
+			if(po.getState()==ReceiptState.SUBMIT){
+				unprovedPOs.add(po);
+			}
+		}
+		return unprovedPOs;
+	}
+
+	
 	public static void main(String[] args){
 		try{
-			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
+			System.setProperty("java.rmi.server.hostname", "172.26.210.111");
 			CollectionReceiptDataService data=new CollectionReceiptData();
 			LocateRegistry.createRegistry(8888);
 //			//绑定RMI名称进行发布
-			Naming.rebind("rmi://172.26.209.182:8888/CollectionReceiptDataService", data);
+			Naming.rebind("rmi://172.26.210.111:8888/CollectionReceiptDataService", data);
 			System.out.println("Service start! 8888");
 			
-/*			ArrayList<CollectionReceiptPO> pos=data.getAllCollection();
+		ArrayList<CollectionReceiptPO> pos=data.getAllCollection();
 			for(CollectionReceiptPO p:pos){
 				System.out.println("ID:  "+p.getID());
 			}
 			System.out.println("---------------------------------------------------");
-			*/
+			
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,6 +218,35 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 
 	}
 
+	
+
+
+
+	/**
+	 * 按时间获取所有的营业厅收款单------从文件中放到po中
+	 * 才看到钦gg的需求里竟然要按天按营业厅查询，我们愉快地忽略吧233333
+	 * 暂取名==
+	 * 但是我这里可以直接读营业厅的文件吗，，，并不清楚——好像不行，应该是BL层直接调用BusinessService中的方法
+	 * */
+/*      public ArrayList<GatheringReceiptPO> getGathering(String Time)
+//			throws RemoteException {
+//		// TODO Auto-generated method stub
+//		file=new JXCFile("gathering.ser");
+//		ArrayList<Object> gathering=file.read();
+//		if(gathering==null){
+//			System.out.println("读取文件gathering.ser失败或文件为空");
+//			return null;
+//		}
+//		else{
+//			ArrayList<GatheringReceiptPO> buffer=new ArrayList<GatheringReceiptPO>();
+//			for(Object o:gathering){
+//				GatheringReceiptPO p=(GatheringReceiptPO) o;
+//				buffer.add(p);
+//			}
+//			return buffer;
+//		}
+//	}
+*/
 	
 	
 }

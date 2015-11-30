@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
 import po.PaymentReceiptPO;
-import dataservice.financedataservice.BusinessstatementReceiptDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import vo.BusinessStatementReceiptVO;
@@ -21,10 +20,13 @@ import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
  * */
 public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLService{
 
-	BusinessstatementReceiptDataService brdService;
 	CollectionReceiptDataService crdService;
 	PaymentReceiptDataService prdService;
 	
+	public BusinessStatementReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
+		crdService=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+		prdService=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
+	}
 
 	/**
 	 * 筛选后的结果好像不写在这里

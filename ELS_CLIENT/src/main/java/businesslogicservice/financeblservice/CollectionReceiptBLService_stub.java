@@ -49,6 +49,11 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return null;
 	}
 
+	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 //	public String getHallID() {
 //		// TODO Auto-generated method stub

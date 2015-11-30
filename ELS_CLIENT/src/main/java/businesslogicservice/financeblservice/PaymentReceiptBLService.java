@@ -26,7 +26,8 @@ public interface PaymentReceiptBLService {
 	//获取租金
 	public double getRent(String time);
 	
-	
+	//获取未审批的入款单
+	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt();
 	
 	
 //	//获取日期
