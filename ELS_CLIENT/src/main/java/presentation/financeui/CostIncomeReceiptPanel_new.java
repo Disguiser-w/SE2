@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class CostIncomeReceiptPanel_new extends JLabel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -50,7 +54,6 @@ public class CostIncomeReceiptPanel_new extends JLabel {
 		
 		infoOKButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				okui();

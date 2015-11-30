@@ -50,7 +50,6 @@ public class AccountManagementPanel_new extends JLabel {
 
 		infoOKButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				okui();

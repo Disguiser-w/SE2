@@ -8,6 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class ReceiptPanel_new extends JLabel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -45,7 +49,6 @@ public class ReceiptPanel_new extends JLabel {
 
 		sendButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				sendui();
@@ -54,7 +57,6 @@ public class ReceiptPanel_new extends JLabel {
 
 		printButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				printui();
@@ -79,7 +81,6 @@ public class ReceiptPanel_new extends JLabel {
 
 		collectionReceiptButton_new.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				new1ui();
@@ -88,7 +89,6 @@ public class ReceiptPanel_new extends JLabel {
 
 		paymentReceiptButton_new.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				new2ui();
@@ -97,7 +97,6 @@ public class ReceiptPanel_new extends JLabel {
 
 		costIncomeReceiptButton_new.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				new3ui();

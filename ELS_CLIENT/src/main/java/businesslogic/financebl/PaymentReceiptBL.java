@@ -49,7 +49,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	 * */
 	public int creatPaymentReceipt(PaymentReceiptVO vo){
 		// TODO Auto-generated method stub
-		PaymentReceiptPO po=pvoToPO(vo);
+		PaymentReceiptPO po=FinanceMainController.pvoToPO(vo);
 		update(vo);
 		try {
 			return prdService.creatPaymentReceipt(po);
@@ -61,17 +61,17 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		}
 	}
 	
-	public PaymentReceiptPO pvoToPO(PaymentReceiptVO vo){
-		PaymentReceiptPO ppo;
-		if(vo==null){
-			System.out.println("PaymentReceiptVO vo is null-----------PaymentReceiptBL");
-			return null;
-		}
-		else{
-			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
-			return ppo;
-		}
-	}
+//	public PaymentReceiptPO pvoToPO(PaymentReceiptVO vo){
+//		PaymentReceiptPO ppo;
+//		if(vo==null){
+//			System.out.println("PaymentReceiptVO vo is null-----------PaymentReceiptBL");
+//			return null;
+//		}
+//		else{
+//			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
+//			return ppo;
+//		}
+//	}
 	/**
 	 * 试运行
 	 * paymentItems怎么用还没想好-------这个怎么写啊23333
@@ -104,7 +104,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return pposToVOs(prdService.getAllPaymentReceipt());
+			return FinanceMainController.pposToVOs(prdService.getAllPaymentReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,24 +113,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 		}
 	}
 	
-	public PaymentReceiptVO ppoToVO(PaymentReceiptPO po){
-		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(),po.getRent(), po.getFare(), po.getSalary(),po.getDate(), po.getAccount(), po.getName());
-		return vo;
-	}
-	public ArrayList<PaymentReceiptVO> pposToVOs(ArrayList<PaymentReceiptPO> pos){
-		ArrayList<PaymentReceiptVO> paymentReceiptVOs=new ArrayList<PaymentReceiptVO>();
-		if(pos==null){
-			System.out.println("ArrayList<PaymentReceiptPO> pos is null------PaymentReceiptBL");
-			return null;
-		}
-		else{
-			for(PaymentReceiptPO p:pos){
-				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getRent(),p.getFare(),p.getSalary(),p.getDate(), p.getAccount(),p.getName());
-				paymentReceiptVOs.add(vo);
-			}
-			return paymentReceiptVOs;
-		}
-	}
+//	
 	
 
 	/**
@@ -261,7 +244,7 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return pposToVOs(prdService.getUnapprovedPaymentReceipt());
+			return FinanceMainController.pposToVOs(prdService.getUnapprovedPaymentReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -370,5 +353,25 @@ public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLServi
 //			return totalMoney;
 //		}
 //		
+	
+	
+//	public PaymentReceiptVO ppoToVO(PaymentReceiptPO po){
+//		PaymentReceiptVO vo=new PaymentReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(),po.getRent(), po.getFare(), po.getSalary(),po.getDate(), po.getAccount(), po.getName());
+//		return vo;
+//	}
+//	public ArrayList<PaymentReceiptVO> pposToVOs(ArrayList<PaymentReceiptPO> pos){
+//		ArrayList<PaymentReceiptVO> paymentReceiptVOs=new ArrayList<PaymentReceiptVO>();
+//		if(pos==null){
+//			System.out.println("ArrayList<PaymentReceiptPO> pos is null------PaymentReceiptBL");
+//			return null;
+//		}
+//		else{
+//			for(PaymentReceiptPO p:pos){
+//				PaymentReceiptVO vo=new PaymentReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(), p.getRent(),p.getFare(),p.getSalary(),p.getDate(), p.getAccount(),p.getName());
+//				paymentReceiptVOs.add(vo);
+//			}
+//			return paymentReceiptVOs;
+//		}
+//	}
 
 }

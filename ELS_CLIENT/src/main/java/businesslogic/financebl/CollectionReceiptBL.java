@@ -43,7 +43,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	 * */
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
-		CollectionReceiptPO po=cvoToPO(vo);
+		CollectionReceiptPO po=FinanceMainController.cvoToPO(vo);
 		update(vo);
 		try {
 			return crdService.createCollection(po);
@@ -84,7 +84,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		ArrayList<GatheringReceiptPO> gatheringReceiptPOs;
 		try {
 			gatheringReceiptPOs = bdService.getGatheringReceipt(Time);
-			 return gposToVOs(gatheringReceiptPOs);
+			 return FinanceMainController.gposToVOs(gatheringReceiptPOs);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,7 +125,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
 		try {
 			collectionReceiptPOs = crdService.getAllCollection();
-			return cposToVOs(collectionReceiptPOs);
+			return FinanceMainController.cposToVOs(collectionReceiptPOs);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -134,100 +134,6 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 		}
 	}
 
-	
-	/**
-	 * gatheringVO to PO
-	 * */
-//	public GatheringReceiptPO gvoToPO(GatheringReceiptVO vo){
-//		return null;
-//	}
-	/**
-	 * ArrayList<GaheringVO> to PO
-	 * */
-	public ArrayList<GatheringReceiptPO> gvosToPOs(ArrayList<GatheringReceiptVO> vos){
-		return null;
-	}
-	/**
-	 * CollectionVO to PO
-	 * */
-	public CollectionReceiptPO cvoToPO(CollectionReceiptVO vo){
-		CollectionReceiptPO collectionReceiptPO=new CollectionReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getIncome(), vo.getDate(), vo.getAccount());
-		return collectionReceiptPO;
-	}
-	/**
-	 * ArrayList<CollectionVO> to PO 
-	 * */
-	public ArrayList<CollectionReceiptPO> cvosToPOs(ArrayList<CollectionReceiptVO> vos){
-		return null;
-	}
-	/**
-	 * GatheringPO to VO,显示所有的vo
-	 * */
-	public GatheringReceiptVO gpoToVO(GatheringReceiptPO po){
-		if(po==null){
-			return null;
-		}
-		else{
-			GatheringReceiptVO gatheringReceiptVO;
-			gatheringReceiptVO=new GatheringReceiptVO(poToVO(po.getBusinesShall()), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
-		return gatheringReceiptVO;
-		}
-	}
-	/**
-	 * 我感觉从controller里调还不如直接复制，，，虽然增加了代码重复性
-	 * */
-	public static OrganizationVO poToVO(OrganizationPO organization) {
-		return new OrganizationVO(organization.getCategory(),
-				organization.getOrganizationID(), organization.getName(),
-				IntermediateMainController.poToVO(organization.getRepertory()));
-	}
-	/**
-	 * ArrayList<GatheringPO> to  VO
-	 * */
-	public ArrayList<GatheringReceiptVO> gposToVOs(ArrayList<GatheringReceiptPO> pos){
-		ArrayList<GatheringReceiptVO> gatheringReceiptVOs;
-		if(pos==null){
-			return null;
-		}
-		else{
-			gatheringReceiptVOs=new ArrayList<GatheringReceiptVO>();
-			for(GatheringReceiptPO p:pos){
-				GatheringReceiptVO vo=gpoToVO(p);
-				gatheringReceiptVOs.add(vo);
-			}
-		}
-		return null;
-	}
-	/**
-	 * ColletionPO to VO
-	 * */
-	public CollectionReceiptVO cpoToVO(CollectionReceiptPO po){
-		CollectionReceiptVO collectionReceiptVO;
-		if(po==null){
-			return null;
-		}
-		else{
-			collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getIncome() , po.getDate(), po.getAccount());
-			return collectionReceiptVO;
-		}
-	}
-	/**
-	 * CollectionPO to VO
-	 * */
-	public ArrayList<CollectionReceiptVO> cposToVOs(ArrayList<CollectionReceiptPO> pos){
-		ArrayList<CollectionReceiptVO> collectionReceiptVOs;
-		if(pos==null){
-			return null;
-		}
-		else{
-			collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
-			for(CollectionReceiptPO p:pos){
-				CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(),p.getIncome() , p.getDate(), p.getAccount());
-				collectionReceiptVOs.add(vo);
-			}
-			return collectionReceiptVOs;
-		}
-	}
 	
 	/**
 	 * 根据ID筛选出Collectionpo,先写在这来不及就不写了
@@ -245,7 +151,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 				CollectionReceiptVO vo=new CollectionReceiptVO();
 				for(CollectionReceiptPO p:collectionReceiptPOs){
 					if(p.getID()==s){
-						vo=cpoToVO(p);
+						vo=FinanceMainController.cpoToVO(p);
 					}
 				}
 				return vo;
@@ -273,7 +179,7 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return cposToVOs(crdService.getUnapprovedCollectionReceipt());
+			return FinanceMainController.cposToVOs(crdService.getUnapprovedCollectionReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -427,6 +333,82 @@ public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptB
 //}
 	
 		
+
+
+///**
+// * CollectionVO to PO
+// * */
+//public CollectionReceiptPO cvoToPO(CollectionReceiptVO vo){
+//	CollectionReceiptPO collectionReceiptPO=new CollectionReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getIncome(), vo.getDate(), vo.getAccount());
+//	return collectionReceiptPO;
+//}
+///**
+// * ArrayList<CollectionVO> to PO 
+// * */
+//public ArrayList<CollectionReceiptPO> cvosToPOs(ArrayList<CollectionReceiptVO> vos){
+//	return null;
+//}
+///**
+// * GatheringPO to VO,显示所有的vo
+// * */
+//public GatheringReceiptVO gpoToVO(GatheringReceiptPO po){
+//	if(po==null){
+//		return null;
+//	}
+//	else{
+//		GatheringReceiptVO gatheringReceiptVO;
+//		gatheringReceiptVO=new GatheringReceiptVO(IntermediateMainController.poToVO(po.getBusinesShall()), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
+//	return gatheringReceiptVO;
+//	}
+//}
+//
+///**
+// * ArrayList<GatheringPO> to  VO
+// * */
+//public ArrayList<GatheringReceiptVO> gposToVOs(ArrayList<GatheringReceiptPO> pos){
+//	ArrayList<GatheringReceiptVO> gatheringReceiptVOs;
+//	if(pos==null){
+//		return null;
+//	}
+//	else{
+//		gatheringReceiptVOs=new ArrayList<GatheringReceiptVO>();
+//		for(GatheringReceiptPO p:pos){
+//			GatheringReceiptVO vo=gpoToVO(p);
+//			gatheringReceiptVOs.add(vo);
+//		}
+//	}
+//	return null;
+//}
+///**
+// * ColletionPO to VO
+// * */
+//public CollectionReceiptVO cpoToVO(CollectionReceiptPO po){
+//	CollectionReceiptVO collectionReceiptVO;
+//	if(po==null){
+//		return null;
+//	}
+//	else{
+//		collectionReceiptVO=new CollectionReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getIncome() , po.getDate(), po.getAccount());
+//		return collectionReceiptVO;
+//	}
+//}
+///**
+// * CollectionPO to VO
+// * */
+//public ArrayList<CollectionReceiptVO> cposToVOs(ArrayList<CollectionReceiptPO> pos){
+//	ArrayList<CollectionReceiptVO> collectionReceiptVOs;
+//	if(pos==null){
+//		return null;
+//	}
+//	else{
+//		collectionReceiptVOs=new ArrayList<CollectionReceiptVO>();
+//		for(CollectionReceiptPO p:pos){
+//			CollectionReceiptVO vo=new CollectionReceiptVO(p.getID(), p.getUserID(), p.getType(), p.getState(),p.getIncome() , p.getDate(), p.getAccount());
+//			collectionReceiptVOs.add(vo);
+//		}
+//		return collectionReceiptVOs;
+//	}
+//}
 		
 
 

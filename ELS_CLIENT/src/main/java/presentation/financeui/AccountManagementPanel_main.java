@@ -12,6 +12,10 @@ import javax.swing.JTextField;
 import presentation.intermediateui.TransferingPanel;
 
 public class AccountManagementPanel_main extends JLabel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -42,7 +46,6 @@ public class AccountManagementPanel_main extends JLabel {
 
 		addButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				addui();
@@ -51,7 +54,6 @@ public class AccountManagementPanel_main extends JLabel {
 
 		deleteButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				deleteui();

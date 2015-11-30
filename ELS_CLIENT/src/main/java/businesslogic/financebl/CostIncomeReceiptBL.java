@@ -41,15 +41,11 @@ public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptB
 	 * */
 	public int creatCostIncomeList(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
-		CostIncomeReceiptPO po=voToPO(vo);
+		CostIncomeReceiptPO po=FinanceMainController.voToPO(vo);
 		return cirdService.creatCostIncomeList(po);
 	}
 	
-	public CostIncomeReceiptPO voToPO(CostIncomeReceiptVO vo) {
-		// TODO Auto-generated method stub
-		CostIncomeReceiptPO po=new CostIncomeReceiptPO(vo.getID(),vo.getUserID(),ReceiptType.COSTINCOMERECEPTION,vo.getState(),vo.getCost(),vo.getIncome(), vo.getProfit());
-		return po;
-	}
+
 
 	/**
 	 * 计算income

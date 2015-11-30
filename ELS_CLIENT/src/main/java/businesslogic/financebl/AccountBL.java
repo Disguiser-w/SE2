@@ -19,43 +19,43 @@ public class AccountBL implements AccountBLService{
 	public AccountBL() throws MalformedURLException, RemoteException, NotBoundException {
 			 accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
 	}
-	/**
-	 * 单个po转化为单个vo
-	 * */
-	public AccountVO poToVO(AccountPO po){
-		String name=po.getName();
-		double money=po.getMoney();
-		AccountVO vo=new AccountVO(name, money);
-		return vo;
-	}
-	
-	/**
-	 * po集合转化为vo集合
-	 * */
-	public ArrayList<AccountVO> posToVOs(ArrayList<AccountPO> pos){
-		ArrayList<AccountVO> vos=new ArrayList<AccountVO>();
-		for(AccountPO po: pos){
-			AccountVO vo=poToVO(po);
-			vos.add(vo);
-		}
-		return null;
-	}
-	/**
-	 * 单个vo转化为po
-	 * */
-	public AccountPO voToPO(AccountVO vo){
-		String name=vo.getName();
-		double money=vo.getMoney();
-		AccountPO po=new AccountPO(name, money);
-		return po;
-	}
-	
+//	/**
+//	 * 单个po转化为单个vo
+//	 * */
+//	public AccountVO poToVO(AccountPO po){
+//		String name=po.getName();
+//		double money=po.getMoney();
+//		AccountVO vo=new AccountVO(name, money);
+//		return vo;
+//	}
+//	
+//	/**
+//	 * po集合转化为vo集合
+//	 * */
+//	public ArrayList<AccountVO> posToVOs(ArrayList<AccountPO> pos){
+//		ArrayList<AccountVO> vos=new ArrayList<AccountVO>();
+//		for(AccountPO po: pos){
+//			AccountVO vo=poToVO(po);
+//			vos.add(vo);
+//		}
+//		return null;
+//	}
+//	/**
+//	 * 单个vo转化为po
+//	 * */
+//	public AccountPO voToPO(AccountVO vo){
+//		String name=vo.getName();
+//		double money=vo.getMoney();
+//		AccountPO po=new AccountPO(name, money);
+//		return po;
+//	}
+//	
 	/** 
 	 * 添加账户
 	 * 成功添加返回0
 	 * */
 	public int addAccount(AccountVO vo) {
-		AccountPO po=voToPO(vo);
+		AccountPO po=FinanceMainController.avoToPO(vo);
 		try {
 			return accountData.addAccount(po);
 		} catch (RemoteException e) {
@@ -129,7 +129,7 @@ public class AccountBL implements AccountBLService{
 				return null;
 			}
 			else{
-				return poToVO(po);
+				return FinanceMainController.apoToVO(po);
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -151,7 +151,7 @@ public class AccountBL implements AccountBLService{
 			if(pos==null){
 				System.out.println("关键字查找失败！");
 			}
-			ArrayList<AccountVO> vos=posToVOs(pos);
+			ArrayList<AccountVO> vos=FinanceMainController.aposToVOs(pos);
 			return vos;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -169,7 +169,7 @@ public class AccountBL implements AccountBLService{
 	public ArrayList<AccountVO> showAll() {
 		// TODO Auto-generated method stub
 		try {
-			return posToVOs(accountData.showAll());
+			return FinanceMainController.aposToVOs(accountData.showAll());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
