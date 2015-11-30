@@ -5,52 +5,74 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import type.CheckState;
+
 public class TransferingReceiptPO {
-    OrganizationPO interdiateCentre;	
-	
-    ArrayList<OrderPO> orderList;
-    
-	String ID;
-	    String date;
-	    
-	    public TransferingReceiptPO(OrganizationPO intermediateCentre,ArrayList<OrderPO> orderList,String ID){
-	    	Date date = new Date();
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			this.setDate(format.format(date));
-			this.orderList = orderList;
-			this.interdiateCentre = intermediateCentre;
-			this.ID = ID;
-	    }
+	private OrganizationPO interdiateCentre;
 
-		public String getID() {
-			return ID;
-		}
+	private ArrayList<OrderPO> orderList;
 
-		public void setID(String iD) {
-			ID = iD;
-		}
+	private String ID;
+	private String date;
 
-		public String getDate() {
-			return date;
-		}
+	private CheckState checkState;
 
-		public void setDate(String time) {
-			this.date = time;
-		}
+	public TransferingReceiptPO(OrganizationPO intermediateCentre,
+			ArrayList<OrderPO> orderList, String ID) {
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.setDate(format.format(date));
+		this.orderList = orderList;
+		this.interdiateCentre = intermediateCentre;
+		this.ID = ID;
+		this.checkState = CheckState.UNCHECKED;
+	}
 
-		public ArrayList<OrderPO> getOrderList() {
-			return orderList;
-		}
+	public OrganizationPO getInterdiateCentre() {
+		return interdiateCentre;
+	}
 
-		public void setOrderList(ArrayList<OrderPO> orderList) {
-			this.orderList = orderList;
-		}
+	public void setInterdiateCentre(OrganizationPO interdiateCentre) {
+		this.interdiateCentre = interdiateCentre;
+	}
 
-		public OrganizationPO getInterdiatehall() {
-			return interdiateCentre;
-		}
+	public CheckState getCheckState() {
+		return checkState;
+	}
 
-		public void setInterdiatehall(OrganizationPO interdiatehall) {
-			this.interdiateCentre = interdiatehall;
-		}
+	public void setCheckState(CheckState checkState) {
+		this.checkState = checkState;
+	}
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String time) {
+		this.date = time;
+	}
+
+	public ArrayList<OrderPO> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(ArrayList<OrderPO> orderList) {
+		this.orderList = orderList;
+	}
+
+	public OrganizationPO getInterdiatehall() {
+		return interdiateCentre;
+	}
+
+	public void setInterdiatehall(OrganizationPO interdiatehall) {
+		this.interdiateCentre = interdiatehall;
+	}
 }

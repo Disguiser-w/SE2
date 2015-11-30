@@ -2,19 +2,24 @@ package vo;
 
 import java.util.ArrayList;
 
-public class EnplaningReceiptVO extends EnIntermediateReceiptVO{
-	public  OrganizationVO intermediateCentre;
-	public  PlaneVO plane;
+import type.CheckState;
 
-	public  ArrayList<OrderVO> orderList;
+public class EnplaningReceiptVO extends EnIntermediateReceiptVO {
+	public OrganizationVO intermediateCentre;
+	public PlaneVO plane;
 
-	public  double fare;
-	public  String ID;
-	public  String date;
+	public ArrayList<OrderVO> orderList;
+
+	public double fare;
+	public String ID;
+	public String date;
+
+	public CheckState checkState;
 
 	public EnplaningReceiptVO(OrganizationVO intermediateCentre, PlaneVO plane,
-			ArrayList<OrderVO> orderList, double fare, String ID, String date) {
-		super(intermediateCentre, orderList, fare, ID, date);
+			ArrayList<OrderVO> orderList, double fare, String ID, String date,
+			CheckState checkState) {
+		super(intermediateCentre, orderList, fare, ID, date, checkState);
 		this.plane = plane;
 	}
 }

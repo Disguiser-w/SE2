@@ -2,6 +2,8 @@ package po;
 
 import java.util.ArrayList;
 
+import type.CheckState;
+
 public class EntrainingReceiptPO extends EnIntermediateReceiptPO {
 	private OrganizationPO intermediateCentre;
 	private TrainPO train;
@@ -13,11 +15,34 @@ public class EntrainingReceiptPO extends EnIntermediateReceiptPO {
 	private String date;
 	private String ID;
 
+	private CheckState checkState;
+
 	public EntrainingReceiptPO(OrganizationPO intermediateCentre,
 			TrainPO train, ArrayList<OrderPO> orderList, String ID) {
 		super(intermediateCentre, orderList, ID);
 		this.train = train;
 		this.fare = train.getFarePrice() * orderNum_max;
+		this.checkState = CheckState.UNCHECKED;
+	}
+
+	public ArrayList<OrderPO> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(ArrayList<OrderPO> orderList) {
+		this.orderList = orderList;
+	}
+
+	public CheckState getCheckState() {
+		return checkState;
+	}
+
+	public void setCheckState(CheckState checkState) {
+		this.checkState = checkState;
+	}
+
+	public long getOrderNum_max() {
+		return orderNum_max;
 	}
 
 	public ArrayList<OrderPO> getEnplaningReceipt() {

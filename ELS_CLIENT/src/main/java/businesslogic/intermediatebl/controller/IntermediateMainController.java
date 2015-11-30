@@ -18,6 +18,7 @@ import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
+import type.CheckState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
@@ -81,7 +82,7 @@ public class IntermediateMainController {
 				intermediateData);
 
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
-				orderList, "", "");
+				orderList, "", "", CheckState.UNCHECKED);
 		transfering = new TransferingBL(transferingReceipt, intermediateData);
 
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
@@ -130,6 +131,18 @@ public class IntermediateMainController {
 
 	public static TruckPO voToPO(TruckVO truck) {
 		return new TruckPO(truck.ID, truck.destination);
+	}
+
+	public static PlaneVO poToVO(PlanePO plane) {
+		return new PlaneVO(plane.getID(), plane.getDestination());
+	}
+
+	public static TrainVO poToVO(TrainPO train) {
+		return new TrainVO(train.getID(), train.getDestination());
+	}
+
+	public static TruckVO poToVO(TruckPO truck) {
+		return new TruckVO(truck.getID(), truck.getDestination());
 	}
 
 	public static OrganizationPO voToPO(OrganizationVO intermediate) {
@@ -209,6 +222,15 @@ public class IntermediateMainController {
 		return ExpressMainController.orderPOToVO(order);
 	}
 
+	public static ArrayList<OrderVO> poToVO_OrderList(
+			ArrayList<OrderPO> orderList) {
+		ArrayList<OrderVO> orderList_VO = new ArrayList<OrderVO>();
+		for (OrderPO order : orderList)
+			orderList_VO.add(IntermediateMainController.poToVO(order));
+
+		return orderList_VO;
+	}
+
 	public static TransferingReceiptPO voToPO(
 			TransferingReceiptVO transferingReceipt) {
 		ArrayList<OrderPO> orderList = new ArrayList<OrderPO>();
@@ -219,6 +241,29 @@ public class IntermediateMainController {
 				IntermediateMainController
 						.voToPO(transferingReceipt.interdiateCentre),
 				orderList, transferingReceipt.ID);
+	}
+
+	public static TransferingReceiptVO poToVO(
+			TransferingReceiptPO transferingReceipt) {
+		ArrayList<OrderVO> orderList = new ArrayList<OrderVO>();
+		for (OrderPO order : transferingReceipt.getOrderList())
+			orderList.add(IntermediateMainController.poToVO(order));
+
+		return new TransferingReceiptVO(
+				IntermediateMainController.poToVO(transferingReceipt
+						.getInterdiateCentre()), orderList,
+				transferingReceipt.getID(), transferingReceipt.getDate(),
+				transferingReceipt.getCheckState());
+	}
+
+	public static ArrayList<TransferingReceiptVO> poToVO_TransferingReceiptList(
+			ArrayList<TransferingReceiptPO> transferingReceiptList) {
+		ArrayList<TransferingReceiptVO> transferingReceiptList_VO = new ArrayList<TransferingReceiptVO>();
+		for (TransferingReceiptPO transferingReceipt : transferingReceiptList)
+			transferingReceiptList_VO.add(IntermediateMainController
+					.poToVO(transferingReceipt));
+
+		return transferingReceiptList_VO;
 	}
 
 	public static RepertoryVO poToVO(RepertoryPO repertory) {
@@ -236,5 +281,70 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO(intermediate
 						.getOrganization()), intermediate.getName(),
 				intermediate.getID());
+	}
+
+	public static EnplaningReceiptVO poToVO(EnplaningReceiptPO enplaningReceipt) {
+		return new EnplaningReceiptVO(
+				IntermediateMainController.poToVO(enplaningReceipt
+						.getIntermediateCentre()),
+				IntermediateMainController.poToVO(enplaningReceipt.getPlane()),
+				IntermediateMainController.poToVO_OrderList(enplaningReceipt
+						.getOrderList()), enplaningReceipt.getFare(),
+				enplaningReceipt.getID(), enplaningReceipt.getDate(),
+				enplaningReceipt.getCheckState());
+	}
+
+	public static EntrainingReceiptVO poToVO(
+			EntrainingReceiptPO entrainingReceipt) {
+		return new EntrainingReceiptVO(
+				IntermediateMainController.poToVO(entrainingReceipt
+						.getIntermediateCentre()),
+				IntermediateMainController.poToVO(entrainingReceipt.getTrain()),
+				IntermediateMainController.poToVO_OrderList(entrainingReceipt
+						.getOrderList()), entrainingReceipt.getFare(),
+				entrainingReceipt.getID(), entrainingReceipt.getDate(),
+				entrainingReceipt.getCheckState());
+	}
+
+	public static EntruckingReceiptVO poToVO(
+			EntruckingReceiptPO entruckingReceipt) {
+		return new EntruckingReceiptVO(
+				IntermediateMainController.poToVO(entruckingReceipt
+						.getIntermediateCentre()),
+				IntermediateMainController.poToVO(entruckingReceipt.getTruck()),
+				IntermediateMainController.poToVO_OrderList(entruckingReceipt
+						.getOrderList()), entruckingReceipt.getFare(),
+				entruckingReceipt.getID(), entruckingReceipt.getDate(),
+				entruckingReceipt.getCheckState());
+	}
+
+	public static ArrayList<EnplaningReceiptVO> poToVO_EnplaningReceipt(
+			ArrayList<EnplaningReceiptPO> list) {
+		ArrayList<EnplaningReceiptVO> enplaningReceiptList = new ArrayList<EnplaningReceiptVO>();
+		for (EnplaningReceiptPO receipt : list)
+			enplaningReceiptList
+					.add(IntermediateMainController.poToVO(receipt));
+
+		return enplaningReceiptList;
+	}
+
+	public static ArrayList<EntrainingReceiptVO> poToVO_EntrainingReceipt(
+			ArrayList<EntrainingReceiptPO> list) {
+		ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
+		for (EntrainingReceiptPO receipt : list)
+			entrainingReceiptList.add(IntermediateMainController
+					.poToVO(receipt));
+
+		return entrainingReceiptList;
+	}
+
+	public static ArrayList<EntruckingReceiptVO> poToVO_EntruckingReceipt(
+			ArrayList<EntruckingReceiptPO> list) {
+		ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
+		for (EntruckingReceiptPO receipt : list)
+			entruckingReceiptList.add(IntermediateMainController
+					.poToVO(receipt));
+
+		return entruckingReceiptList;
 	}
 }
