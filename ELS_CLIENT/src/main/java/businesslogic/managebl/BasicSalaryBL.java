@@ -17,7 +17,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
-			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
+			BasicSalaryPO basicSalarypo = basicSalaryVOToPO(basicSalaryvo);
 			return(bsdService.addBasicSalary(basicSalarypo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -36,7 +36,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public int modifyBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
-			BasicSalaryPO basicSalarypo = voToPO(basicSalaryvo);
+			BasicSalaryPO basicSalarypo = basicSalaryVOToPO(basicSalaryvo);
 			return(bsdService.modifyBasicSalary(basicSalarypo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -53,11 +53,25 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 		}
 	}
 	
-	public BasicSalaryPO voToPO(BasicSalaryVO basicSalaryvo){
+	public ArrayList<BasicSalaryVO> showAllBasicSalarys(){
+		try{
+			ArrayList<BasicSalaryPO> basicSalaryPOList =  bsdService.showAllBasicSalarys();
+			ArrayList<BasicSalaryVO> basicSalaryVOList =  new ArrayList<BasicSalaryVO>();
+			for(BasicSalaryPO basicSalary: basicSalaryPOList)
+				basicSalaryVOList.add(basicSalaryPOToVO(basicSalary));
+			return basicSalaryVOList;
+		}
+		catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static BasicSalaryPO basicSalaryVOToPO(BasicSalaryVO basicSalaryvo){
 		return new BasicSalaryPO(basicSalaryvo.getProfession(),basicSalaryvo.getBasicSalary());
 	}
 	
-	public BasicSalaryVO poToVO(BasicSalaryPO basicSalarypo){
+	public static BasicSalaryVO basicSalaryPOToVO(BasicSalaryPO basicSalarypo){
 		return new BasicSalaryVO(basicSalarypo.getProfession(),basicSalarypo.getBasicSalary());
 	}
 	

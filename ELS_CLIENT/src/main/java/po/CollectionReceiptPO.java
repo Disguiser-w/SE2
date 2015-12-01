@@ -4,6 +4,7 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import type.ReceiptState;
 import type.ReceiptType;
 
 //vo不能被序列化，po中存在set

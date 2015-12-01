@@ -2,6 +2,7 @@ package po;
 
 import java.io.Serializable;
 
+import type.ReceiptState;
 import type.ReceiptType;
 
 public class ReceiptPO implements Serializable{
@@ -20,10 +21,7 @@ public class ReceiptPO implements Serializable{
 //		COLLECTIONRECEIPT,PAYMENTRECEIPT,COSTINCOMERECEPTION;
 //	}
 	
-	public enum ReceiptState implements Serializable{
-		//草稿，提交，审批后
-		DRAFT,SUBMIT,APPROVE;
-	}
+
 	
 	//单据的编号
 	String ID;

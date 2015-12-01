@@ -1,11 +1,10 @@
 package businesslogicservice.financeblservice;
 
-import vo.CostIncomeReceiptVO;
 
 public class CostIncomeReceiptBLService_driver {
 	public void drive(CostIncomeReceiptBLService cbs){
-		String s="CBSYB-20151024-00001";
-		cbs.creatCostIncomeList(new CostIncomeReceiptVO(s, s, null, null, 0, 0, 0));
+//		String s="CBSYB-20151024-00001";
+		cbs.creatCostIncomeList(null);
 //		cbs.getCostIncomeList(s);
 //		cbs.getAllCostIncomeList();
 //		cbs.getCollection();

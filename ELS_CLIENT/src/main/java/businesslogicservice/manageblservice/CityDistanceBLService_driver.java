@@ -10,6 +10,7 @@ public class CityDistanceBLService_driver {
         cityDistanceBLService.deleteCityDistance(new CityDistanceVO("南京", "上海", 266));
         cityDistanceBLService.modifyCityDistance(new CityDistanceVO("南京", "上海", 266));
         cityDistanceBLService.findCityDistance("南京", "上海");
+        cityDistanceBLService.showAllCityDistances();
 	}
 	
 	public static void main(String[] args){

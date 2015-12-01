@@ -20,12 +20,12 @@ import type.OrganizationType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.PaymentReceiptVO;
+import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
-import businesslogicservice.financeblservice.PaymentReceiptBLService;
 
 
-public class PaymentReceiptBL extends ReceiptBL implements PaymentReceiptBLService{
+public class PaymentReceiptBL extends ReceiptBL {
 	
 	PaymentReceiptDataService prdService;
 	UserDataService udService;

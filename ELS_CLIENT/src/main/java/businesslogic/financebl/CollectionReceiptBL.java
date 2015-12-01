@@ -8,16 +8,13 @@ import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
 import po.GatheringReceiptPO;
-import po.OrganizationPO;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
-import vo.OrganizationVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
-import businesslogicservice.financeblservice.CollectionReceiptBLService;
 /**
  * 论没有考虑账户变化的本宝宝要爆炸了！！！
  * 入款单：建立一个boss账户，所有钱累加到这个账户上
@@ -25,7 +22,7 @@ import businesslogicservice.financeblservice.CollectionReceiptBLService;
  * 
  * 还少一个最关键的方法：怎样把gathering中得到的ID，money存进collectionVO
  * */
-public class CollectionReceiptBL extends ReceiptBL implements CollectionReceiptBLService{
+public class CollectionReceiptBL extends ReceiptBL {
 
 	CollectionReceiptDataService crdService;
 	BusinessDataService bdService;

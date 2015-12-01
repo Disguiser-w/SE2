@@ -1,5 +1,7 @@
 package businesslogicservice.manageblservice;
 
+import java.util.ArrayList;
+
 import type.ExpressType;
 import vo.CostVO;
 
@@ -26,6 +28,12 @@ public class CostBLService_stub implements CostBLService{
     public double findCost(ExpressType category) {
         System.out.println("Find cost succeed!");
         return 0;
+    }
+    
+    public ArrayList<CostVO> showAllCosts(){
+    	// TODO 自动生成的方法存根
+        System.out.println("Show all cost succeed!");
+        return null;
     }
     
 }

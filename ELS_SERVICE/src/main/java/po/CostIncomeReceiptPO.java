@@ -3,6 +3,7 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import type.ReceiptState;
 import type.ReceiptType;
 
 public class CostIncomeReceiptPO extends ReceiptPO implements Serializable{

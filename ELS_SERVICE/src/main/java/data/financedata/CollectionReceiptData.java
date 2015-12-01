@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import file.JXCFile;
 import po.CollectionReceiptPO;
-import po.ReceiptPO.ReceiptState;
+import type.ReceiptState;
 import dataservice.financedataservice.CollectionReceiptDataService;
 
 

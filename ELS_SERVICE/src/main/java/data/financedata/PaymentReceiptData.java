@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import file.JXCFile;
 import po.PaymentReceiptPO;
-import po.ReceiptPO.ReceiptState;
+import type.ReceiptState;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{

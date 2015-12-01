@@ -6,36 +6,19 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.AccountPO;
 import po.InitInfoPO;
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
-import po.VehiclePO;
-import vo.AccountVO;
 import vo.InitInfoVO;
-import vo.OrganizationVO;
-import vo.RepertoryVO;
-import vo.UserVO;
-import vo.VehicleVO;
-import businesslogic.businessbl.controller.BusinessMainController;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogicservice.financeblservice.InitialStockBLService;
-import dataservice.businessdataservice.BusinessDataService;
-import dataservice.financedataservice.AccountDataService;
+import businesslogic.financebl.controller.FinanceMainController;
 import dataservice.financedataservice.InitialStockDataService;
-import dataservice.managedataservice.OrganizationDataService;
-import dataservice.repertorydataservice.RepertoryDataService;
-import dataservice.userdataservice.UserDataService;
 
-public class InitialStockBL implements InitialStockBLService{
+public class InitialStockBL{
 	
 	private InitialStockDataService initData;
-	private UserDataService userData;
-	private OrganizationDataService organizationData;
-	private BusinessDataService businessData;
-	private RepertoryDataService repertoryData;
-	private AccountDataService accontData;
+//	private UserDataService userData;
+//	private OrganizationDataService organizationData;
+//	private BusinessDataService businessData;
+//	private RepertoryDataService repertoryData;
+//	private AccountDataService accontData;
 	
 	//我竟然刚刚发现按ctrl可以追踪==
 	/**
@@ -43,11 +26,11 @@ public class InitialStockBL implements InitialStockBLService{
 	 * */
 	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
 		initData=(InitialStockDataService) Naming.lookup("rmi://172.26.209.182:8888/InitialStockDataService");
-		userData=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
-		organizationData=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
-		businessData=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
-		repertoryData=(RepertoryDataService) Naming.lookup("rmi://172.26.209.182:8888/RepertoryDataService");
-		accontData=(AccountDataService) Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
+//		userData=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
+//		organizationData=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
+//		businessData=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
+//		repertoryData=(RepertoryDataService) Naming.lookup("rmi://172.26.209.182:8888/RepertoryDataService");
+//		accontData=(AccountDataService) Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
 	}
 
 	/**

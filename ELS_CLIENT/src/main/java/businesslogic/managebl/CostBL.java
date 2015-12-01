@@ -18,7 +18,7 @@ public class CostBL implements CostBLService{
 	
 	public int addCost(CostVO costvo){
 		try{
-			CostPO costpo = voToPO(costvo);
+			CostPO costpo = costVOToPO(costvo);
 			return(codService.addCost(costpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -37,7 +37,7 @@ public class CostBL implements CostBLService{
 	
 	public int modifyCost(CostVO costvo){
 		try{
-			CostPO costpo = voToPO(costvo);
+			CostPO costpo = costVOToPO(costvo);
 			return(codService.modifyCost(costpo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -54,11 +54,25 @@ public class CostBL implements CostBLService{
 		}
 	}
 	
-	public CostPO voToPO(CostVO costvo){
+	public ArrayList<CostVO> showAllCosts(){
+		try{
+			ArrayList<CostPO> costPOList =  codService.showAllCosts();
+			ArrayList<CostVO> costVOList =  new ArrayList<CostVO>();
+			for(CostPO cost: costPOList)
+				costVOList.add(costPOToVO(cost));
+			return costVOList;
+		}
+		catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static CostPO costVOToPO(CostVO costvo){
 		return new CostPO(costvo.getCategory(), costvo.getCost());
 	}
 	
-	public CostVO poToVO(CostPO costpo){
+	public static CostVO costPOToVO(CostPO costpo){
 		return new CostVO(costpo.getExpressType(), costpo.getCost());
 	}
 	

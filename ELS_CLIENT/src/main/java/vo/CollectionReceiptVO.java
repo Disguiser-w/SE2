@@ -2,7 +2,7 @@ package vo;
 
 import java.util.ArrayList;
 
-import po.ReceiptPO.ReceiptState;
+import type.ReceiptState;
 import type.ReceiptType;
 
 public class CollectionReceiptVO extends ReceiptVO {
