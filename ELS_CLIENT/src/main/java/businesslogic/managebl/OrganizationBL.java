@@ -31,7 +31,7 @@ public class OrganizationBL implements OrganizationBLService{
 		}
 	}
 	
-	public int deleteOrganization(String organizationID) throws RemoteException{
+	public int deleteOrganization(String organizationID){
 		try{
 			return(odService.deleteOrganization(organizationID));
 		}catch(RemoteException exception){
@@ -40,7 +40,7 @@ public class OrganizationBL implements OrganizationBLService{
 		}
 	}
 	
-	public int modifyOrganization(OrganizationVO organizationvo) throws RemoteException{
+	public int modifyOrganization(OrganizationVO organizationvo){
 		try{
 			OrganizationPO organizationpo = organizationVOToPO(organizationvo);
 			return(odService.modifyOrganization(organizationpo));
@@ -70,6 +70,20 @@ public class OrganizationBL implements OrganizationBLService{
 			return 1;
 		}
 		
+	}
+	
+	public ArrayList<OrganizationVO> showAllOrganizations(){
+		try{
+			ArrayList<OrganizationPO> organizationPOList =  odService.showAllOrganizations();
+			ArrayList<OrganizationVO> organizationVOList =  new ArrayList<OrganizationVO>();
+			for(OrganizationPO organization: organizationPOList)
+				organizationVOList.add(organizationPOToVO(organization));
+			return organizationVOList;
+		}
+		catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){

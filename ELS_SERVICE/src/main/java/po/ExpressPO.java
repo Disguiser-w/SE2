@@ -1,8 +1,9 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ExpressPO {
+public class ExpressPO  implements Serializable{
 	private String name;
 	private String ID;
 	private String serviceTime;

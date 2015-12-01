@@ -1,5 +1,7 @@
 package businesslogic.businessbl.controller;
 
+import java.rmi.Naming;
+
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.businessdataservice.BusinessDataService_stub;
@@ -31,10 +33,10 @@ public class BusinessMainController {
 
 	public BusinessMainController(String businessID) {
 		// RMI
-		businessData = new BusinessDataService_stub();
-		expressData = new ExpressDataService_stub();
+//		businessData = new BusinessDataService_stub();
 
 		try {
+			businessData = (BusinessDataService) Naming.lookup("//localhost:8888/BusinessDataService");
 			businessVO = businessPOToVO(businessData.getBusinessInfo(null, businessID));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -80,7 +82,7 @@ public class BusinessMainController {
 	public static OrderAcceptReceiptVO orderAcceptReceiptPOToVO(OrderAcceptReceiptPO po) {
 		VehicleVO vvo = vehiclePOToVO(po.getVehiclePO());
 		OrderAcceptReceiptVO Vpo = new OrderAcceptReceiptVO(OrganizationBL.organizationPOToVO(po.getLocal()),
-				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID());
+				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID(),po.getCheckState());
 		return Vpo;
 	}
 
@@ -112,7 +114,7 @@ public class BusinessMainController {
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
 		return new EnVehicleReceiptVO(OrganizationBL.organizationPOToVO(po.getPlaceOfDeparture()), po.getTime(),
-				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(),po.getReceiptID());
+				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(),po.getReceiptID(),po.getCheckState());
 	}
 
 	public static EnVehicleReceiptPO enVehicleReceiptVOToPO(EnVehicleReceiptVO vo) {

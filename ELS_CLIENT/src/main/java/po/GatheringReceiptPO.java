@@ -1,14 +1,18 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GatheringReceiptPO {
+import type.CheckState;
+
+public class GatheringReceiptPO implements Serializable{
 	private OrganizationPO businessShall;
 	private String time;
 	private ArrayList<String> expressIDs;
 	private ArrayList<Double> money;
 	private double totalmoney;
 	private String receiptID;
+	private CheckState checkState;
 
 	public GatheringReceiptPO() {
 	}
@@ -22,6 +26,15 @@ public class GatheringReceiptPO {
 		this.totalmoney = totalmoney;
 		this.time = time;
 		this.receiptID = receiptID;
+		this.checkState = CheckState.UNCHECKED;
+	}
+
+	public CheckState getCheckState() {
+		return checkState;
+	}
+
+	public void setCheckState(CheckState checkState) {
+		this.checkState = checkState;
 	}
 
 	public OrganizationPO getBusinesShall() {

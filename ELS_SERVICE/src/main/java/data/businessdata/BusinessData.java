@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +21,7 @@ import po.VehiclePO;
 import common.FileGetter;
 import dataservice.businessdataservice.BusinessDataService;
 
-public class BusinessData implements BusinessDataService {
+public class BusinessData extends UnicastRemoteObject implements BusinessDataService {
 	public BusinessData() throws RemoteException {
 	}
 

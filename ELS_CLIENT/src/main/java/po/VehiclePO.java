@@ -1,6 +1,8 @@
 package po;
 
-public class VehiclePO {
+import java.io.Serializable;
+
+public class VehiclePO implements Serializable{
 	// 车辆代号、发动机号、车辆号、底盘号、购买时间、服役时间
 	private String ID;
 	private String engineNumber;

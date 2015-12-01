@@ -1,29 +1,40 @@
 package po;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class GatheringReceiptPO {
+import type.CheckState;
+
+public class GatheringReceiptPO implements Serializable{
 	private OrganizationPO businessShall;
 	private String time;
 	private ArrayList<String> expressIDs;
 	private ArrayList<Double> money;
 	private double totalmoney;
 	private String receiptID;
+	private CheckState checkState;
 
 	public GatheringReceiptPO() {
 	}
 
-	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<String> expressList,
-			ArrayList<Double> money, double totalmoney, String receiptID) {
+	public GatheringReceiptPO(OrganizationPO businessShall, String time,
+			ArrayList<String> expressList, ArrayList<Double> money,
+			double totalmoney, String receiptID) {
 		this.expressIDs = expressList;
 		this.money = money;
 		this.businessShall = businessShall;
 		this.totalmoney = totalmoney;
 		this.time = time;
 		this.receiptID = receiptID;
+		this.checkState = CheckState.UNCHECKED;
+	}
+
+	public CheckState getCheckState() {
+		return checkState;
+	}
+
+	public void setCheckState(CheckState checkState) {
+		this.checkState = checkState;
 	}
 
 	public OrganizationPO getBusinesShall() {

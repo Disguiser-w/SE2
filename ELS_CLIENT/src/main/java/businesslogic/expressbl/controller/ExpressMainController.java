@@ -1,11 +1,10 @@
 package businesslogic.expressbl.controller;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import businesslogic.managebl.OrganizationBL;
 import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import po.ExpressPO;
 import po.OrderPO;
 import vo.ExpressVO;
@@ -24,10 +23,12 @@ public class ExpressMainController {
 	// ExpressData的初始化，ExpressVO的初始化在此进行
 	public ExpressMainController(String expressID) {
 		// RMI
-		expressData = new ExpressDataService_stub();
+
 		try {
-			expressVO = expressPOToVO(expressData.getExpressInfo(null, expressID));
-		} catch (RemoteException e) {
+
+			expressData = (ExpressDataService) Naming.lookup("//localhost:8888/ExpressDataService");
+			expressVO = expressPOToVO((ExpressPO)(expressData.getExpressInfo(null, expressID)));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -54,7 +55,7 @@ public class ExpressMainController {
 				vo.senderMobilePhoneNumber, vo.recipientName, vo.recipientAddress, vo.recipientOrganization,
 				vo.recipientPhoneNumber, vo.recipientMobilePhoneNumber, vo.numOfGoods, vo.weight, vo.volume,
 				vo.goodsName, vo.expressType, vo.packType, vo.freight, vo.packingExpense, vo.builtDate, vo.tRecipient,
-				vo.finishedDate, vo.finishedID, vo.order_state,vo.history);
+				vo.finishedDate, vo.finishedID, vo.order_state, vo.history);
 		return po;
 
 	}
@@ -66,7 +67,8 @@ public class ExpressMainController {
 				po.getRecipientAddress(), po.getRecipientOrganization(), po.getRecipientPhoneNumber(),
 				po.getRecipientMobilePhoneNumber(), po.getNumOfGoods(), po.getWeight(), po.getVolume(),
 				po.getGoodsName(), po.getExpressType(), po.getPackType(), po.getFreight(), po.getPackingExpense(),
-				po.getBuiltData(), po.gettRecipient(), po.getFinishedData(), po.getFinishedID(), po.getOrder_state(),po.getHistory());
+				po.getBuiltData(), po.gettRecipient(), po.getFinishedData(), po.getFinishedID(), po.getOrder_state(),
+				po.getHistory());
 		return vo;
 	}
 

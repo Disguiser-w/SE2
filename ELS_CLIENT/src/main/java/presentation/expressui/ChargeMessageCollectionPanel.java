@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import businesslogic.expressbl.controller.ChargeCollectionController;
+import businesslogic.expressbl.controller.ExpressMainController;
 
 public class ChargeMessageCollectionPanel extends JPanel {
 
@@ -34,7 +35,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 
 		// helper = new LocationHelper(this);
 		setLayout(null);
-		controller = new ChargeCollectionController();
+		controller = ExpressMainController.chargeCollectionController;
 		setBaseInfo();
 		addListener();
 	}
@@ -53,7 +54,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	}
 
 	private void setBaseInfo() {
-
+		ArrayList<String>
 	}
 
 	private void addListener() {

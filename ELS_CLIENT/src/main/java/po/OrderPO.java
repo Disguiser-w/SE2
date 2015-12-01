@@ -1,12 +1,13 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import type.ExpressType;
 import type.OrderState;
 import type.PackType;
 
-public class OrderPO {
+public class OrderPO implements Serializable{
 	// 寄件人姓名、住址、单位、电话、手机；收件人姓名、
 	// 住址、单位、电话、手机；托运货物信息（原件数、实际重量、
 	// 体积、内件品名）；经济快递，标准快递，特快专递；包装费

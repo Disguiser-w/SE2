@@ -1,9 +1,10 @@
 package po;
 
-import type.Sexuality;
-import vo.OrganizationVO;
+import java.io.Serializable;
 
-public class DriverPO {
+import type.Sexuality;
+
+public class DriverPO  implements Serializable{
 
 	// 司机编号、姓名、出生日期、身份证号、手机、车辆单位、性别、行驶证期限
 	private String ID;
