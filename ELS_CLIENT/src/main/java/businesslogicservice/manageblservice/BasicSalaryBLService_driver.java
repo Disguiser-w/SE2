@@ -10,6 +10,7 @@ public class BasicSalaryBLService_driver {
 		basicSalaryBLService.deleteBasicSalary(new BasicSalaryVO(ProfessionType.courier, 2000));
 		basicSalaryBLService.modifyBasicSalary(new BasicSalaryVO(ProfessionType.courier, 2000));
 		basicSalaryBLService.findBasicSalary(ProfessionType.courier);
+		basicSalaryBLService.showAllBasicSalarys();
 	}
 	
 	public static void main(String[] args){

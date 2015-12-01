@@ -16,7 +16,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 	
 	public int addCityDistance(CityDistanceVO cityDistancevo){
 		try{
-			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
+			CityDistancePO cityDistancepo = cityDistanceVOToPO(cityDistancevo);
 			return(cddService.addCityDistance(cityDistancepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -35,7 +35,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 	
 	public int modifyCityDistance(CityDistanceVO cityDistancevo){
 		try{
-			CityDistancePO cityDistancepo = voToPO(cityDistancevo);
+			CityDistancePO cityDistancepo = cityDistanceVOToPO(cityDistancevo);
 			return(cddService.modifyCityDistance(cityDistancepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -52,11 +52,25 @@ public class CityDistanceBL implements CityDistanceBLService{
 		}
 	}
 	
-	public CityDistancePO voToPO(CityDistanceVO cityDistancevo){
+	public ArrayList<CityDistanceVO> showAllCityDistances(){
+		try{
+			ArrayList<CityDistancePO> cityDistancePOList =  cddService.showAllCityDistances();
+			ArrayList<CityDistanceVO> cityDistanceVOList =  new ArrayList<CityDistanceVO>();
+			for(CityDistancePO cityDistance: cityDistancePOList)
+				cityDistanceVOList.add(cityDistancePOToVO(cityDistance));
+			return cityDistanceVOList;
+		}
+		catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static CityDistancePO cityDistanceVOToPO(CityDistanceVO cityDistancevo){
 		return new CityDistancePO(cityDistancevo.getCityA(),cityDistancevo.getCityB(), cityDistancevo.getDistance());
 	}
 	
-	public CityDistanceVO poToVO(CityDistancePO cityDistancepo){
+	public static CityDistanceVO cityDistancePOToVO(CityDistancePO cityDistancepo){
 		return new CityDistanceVO(cityDistancepo.getCityA(),cityDistancepo.getCityB(), cityDistancepo.getDistance());
 	}
 	

@@ -17,7 +17,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public int addPerWage(PerWageVO perWagevo){
 		try{
-			PerWagePO perWagepo = voToPO(perWagevo);
+			PerWagePO perWagepo = perWageVOToPO(perWagevo);
 			return(pwdService.addPerWage(perWagepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -36,7 +36,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public int modifyPerWage(PerWageVO perWagevo){
 		try{
-			PerWagePO perWagepo = voToPO(perWagevo);
+			PerWagePO perWagepo = perWageVOToPO(perWagevo);
 			return(pwdService.modifyPerWage(perWagepo));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
@@ -53,11 +53,25 @@ public class PerWageBL implements PerWageBLService{
 		}
 	}
 	
-	public PerWagePO voToPO(PerWageVO perWagevo){
+	public ArrayList<PerWageVO> showAllPerWages(){
+		try{
+			ArrayList<PerWagePO> perWagePOList =  pwdService.showAllPerWages();
+			ArrayList<PerWageVO> perWageVOList =  new ArrayList<PerWageVO>();
+			for(PerWagePO perWage: perWagePOList)
+				perWageVOList.add(perWagePOToVO(perWage));
+			return perWageVOList;
+		}
+		catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static PerWagePO perWageVOToPO(PerWageVO perWagevo){
 		return new PerWagePO(perWagevo.getProfession(),perWagevo.getPerWage());
 	}
 	
-	public PerWageVO poToVO(PerWagePO perWagepo){
+	public static PerWageVO perWagePOToVO(PerWagePO perWagepo){
 		return new PerWageVO(perWagepo.getProfession(),perWagepo.getPerWage());
 	}
 	
