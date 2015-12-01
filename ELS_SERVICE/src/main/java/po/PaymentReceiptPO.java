@@ -2,6 +2,7 @@ package po;
 
 import java.io.Serializable;
 
+import type.ReceiptState;
 import type.ReceiptType;
 
 public class PaymentReceiptPO extends ReceiptPO implements Serializable{
