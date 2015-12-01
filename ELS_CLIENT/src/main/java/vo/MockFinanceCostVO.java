@@ -24,7 +24,7 @@ public class MockFinanceCostVO extends FinanceCostVO{
 	public MockFinanceCostVO(String cla,FareVO vo,String t ){
 		clause=cla;
 		mfvo=vo;
-		cost=vo.getMoney();
+//		cost=vo.getMoney();
 		time=t;
 		
 	}

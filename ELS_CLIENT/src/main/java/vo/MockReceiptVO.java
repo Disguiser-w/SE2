@@ -1,7 +1,8 @@
 package vo;
 
-import po.ReceiptPO.ReceiptState;
+import type.ReceiptState;
 import type.ReceiptType;
+
 
 public class MockReceiptVO {
 		String receiptID;
