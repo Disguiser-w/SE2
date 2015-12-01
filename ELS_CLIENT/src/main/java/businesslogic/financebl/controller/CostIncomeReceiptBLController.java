@@ -33,4 +33,9 @@ public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService
 		return costIncomeReceiptBL.getCostIncomeListID();
 	}
 
+	public CostIncomeReceiptVO getCostIncomeReceipt(String time) {
+		// TODO Auto-generated method stub
+		return costIncomeReceiptBL.getCostIncomeReceipt(time);
+	}
+
 }

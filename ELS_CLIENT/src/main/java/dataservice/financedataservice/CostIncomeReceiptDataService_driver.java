@@ -1,14 +1,26 @@
 package dataservice.financedataservice;
 
+import java.rmi.RemoteException;
+
 import po.CostIncomeReceiptPO;
 
 public class CostIncomeReceiptDataService_driver {
 	public void driver(CostIncomeReceiptDataService cds){
-		cds.creatCostIncomeList(new CostIncomeReceiptPO());
-		cds.getAllCostIncomeList();
+		try {
+			cds.creatCostIncomeList(new CostIncomeReceiptPO());
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			cds.getAllCostIncomeList();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		cds.findByID(null);
-		cds.getCollection();
-		cds.getPayment();
+//		cds.getCollection();
+//		cds.getPayment();
 //		cds.getCost(null);
 //		cds.getIncome(null);
 //		cds.getNum();

@@ -23,6 +23,8 @@ public interface CostIncomeReceiptBLService {
 	public double getProfit(double income,double cost);
 	//自动生成ID
 	public String getCostIncomeListID();
+	//总经理查询成本收益表
+	public CostIncomeReceiptVO getCostIncomeReceipt(String time);
 	
 	
 //	//获取时间
