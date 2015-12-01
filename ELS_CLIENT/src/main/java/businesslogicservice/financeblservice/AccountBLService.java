@@ -10,7 +10,7 @@ public interface AccountBLService {
 	//增加账户
 	public int addAccount(AccountVO vo);
 	//删除账户
-	public int deleteAccount(String time);
+	public int deleteAccount(String name);
 	//修改账户
 	public int modifyAccount(AccountVO vo,String name);
 	//通过账户名查找

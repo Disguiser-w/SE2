@@ -1,15 +1,27 @@
-package businesslogic.financebl;
+package businesslogic.financebl.controller;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
+import dataservice.financedataservice.AccountDataService_driver;
+import dataservice.financedataservice.AccountDataService_stub;
+import dataservice.financedataservice.CollectionReceiptDataService;
+import dataservice.financedataservice.CollectionReceiptDataService_stub;
+import dataservice.financedataservice.CostIncomeReceiptDataService;
+import dataservice.financedataservice.CostIncomeReceiptDataService_stub;
+import dataservice.financedataservice.InitialStockDataService;
+import dataservice.financedataservice.InitialStockDataService_stub;
+import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.financedataservice.PaymentReceiptDataService_stub;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogicservice.financeblservice.CostIncomeReceiptBLService_stub;
+import businesslogicservice.financeblservice.InitialStockBLService_stub;
 import po.AccountPO;
 import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
@@ -40,6 +52,43 @@ public class FinanceMainController {
 	public static BusinessDataService businessData;
 	public static  RepertoryDataService repertoryData;
 	public static AccountDataService accountData;
+	
+	public static CollectionReceiptDataService collectionData;
+	public static PaymentReceiptDataService paymentData;
+	public static CostIncomeReceiptDataService costincomeData;
+	public static InitialStockDataService initData;
+	
+	public static ArrayList<CollectionReceiptVO> collectionReceiptVOs;
+	public static ArrayList<PaymentReceiptVO> paymentReceiptVOs;
+	public static ArrayList<CostIncomeReceiptVO> costIncomeReceiptVOs;
+	public static ArrayList<InitInfoVO> initVOs;
+	public static ArrayList<AccountVO> accountVOs;
+	
+	/**
+	 * 财务部分的初始化在这里进行
+	 * */
+	public FinanceMainController(){
+		collectionData=new CollectionReceiptDataService_stub();
+		paymentData=new PaymentReceiptDataService_stub();
+		costincomeData=new CostIncomeReceiptDataService_stub();
+		initData=new InitialStockDataService_stub();
+		accountData=new AccountDataService_stub();
+		
+		try {
+			collectionReceiptVOs=cposToVOs(collectionData.getAllCollection());
+			paymentReceiptVOs=pposToVOs(paymentData.getAllPaymentReceipt());
+			costIncomeReceiptVOs=civosToPOs(costincomeData.getAllCostIncomeList());
+			initVOs=iposToVOs(initData.getAllInitInfo());
+			accountVOs=aposToVOs(accountData.showAll());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//初始化四个controller：把操作拿出来做controller吗
+		
+	}
+	
 	/**
 	 * Account单个po转化为单个vo
 	 * */
@@ -328,7 +377,7 @@ public class FinanceMainController {
 	/**
 	 * 将已获取的vo变po，存入持久化变量
 	 * */
-	 static InitInfoPO ivoToPO(InitInfoVO vo) {
+	 public static InitInfoPO ivoToPO(InitInfoVO vo) {
 		// TODO Auto-generated method stub
 		if(vo==null)
 			return null;
@@ -454,4 +503,17 @@ public class FinanceMainController {
 			return paymentReceiptVOs;
 		}
 	}
-}
+	
+	public static CostIncomeReceiptVO civoToPO(CostIncomeReceiptPO po){
+		return new CostIncomeReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getCost(), po.getIncome(), po.getProfit());
+	}
+	
+	public static ArrayList<CostIncomeReceiptVO> civosToPOs(ArrayList<CostIncomeReceiptPO> pos){
+		ArrayList<CostIncomeReceiptVO> vos=new ArrayList<CostIncomeReceiptVO>();
+		for(CostIncomeReceiptPO p:pos){
+			CostIncomeReceiptVO vo=civoToPO(p);
+			vos.add(vo);
+		}
+		return vos;
+	}
+	}

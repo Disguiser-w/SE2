@@ -12,13 +12,12 @@ import po.PaymentReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
-import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
-import type.ReceiptType;
 import vo.CostIncomeReceiptVO;
 
-public class CostIncomeReceiptBL extends ReceiptBL implements CostIncomeReceiptBLService{
+public class CostIncomeReceiptBL extends ReceiptBL{
 	double cost;
 	double income;
 	double profit;

@@ -12,11 +12,11 @@ import po.PaymentReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import vo.BusinessStatementReceiptVO;
-import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
+import businesslogic.financebl.controller.FinanceMainController;
 /**
  * 查看经营情况表：查看特定时间范围内的入款单和付款单
  * */
-public class BusinessStatementReceiptBL implements BusinessstatementReceiptBLService{
+public class BusinessStatementReceiptBL {
 
 	CollectionReceiptDataService crdService;
 	PaymentReceiptDataService prdService;
