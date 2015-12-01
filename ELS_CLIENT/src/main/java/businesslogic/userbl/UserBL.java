@@ -153,8 +153,8 @@ public class UserBL implements UserBLService{
 	 * @return UserPO
 	 * 
 	 * */
-	public UserPO voToPO(UserVO uservo){
-		UserPO userpo=new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
+	public static UserPO voToPO(UserVO uservo){
+		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
 					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
 		return userpo;
 	}
@@ -164,8 +164,8 @@ public class UserBL implements UserBLService{
 	 * @return UserVO
 	 * 
 	 * */
-	public UserVO poToVO(UserPO userpo){
-		UserVO uservo=new UserVO(userpo.getName(),userpo.getID(),userpo.getPassword(),userpo.getProfession(),
+	public static UserVO poToVO(UserPO userpo){
+		UserVO uservo = new UserVO(userpo.getName(),userpo.getID(),userpo.getPassword(),userpo.getProfession(),
 				userpo.getOrganization(),userpo.getSalaryPlan(),userpo.getAuthority(),userpo.getGrades());
 		return uservo;
 	}

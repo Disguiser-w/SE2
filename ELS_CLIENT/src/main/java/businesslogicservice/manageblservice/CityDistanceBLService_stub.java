@@ -1,5 +1,7 @@
 package businesslogicservice.manageblservice;
 
+import java.util.ArrayList;
+
 import vo.CityDistanceVO;
 
 public class CityDistanceBLService_stub implements CityDistanceBLService{
@@ -28,4 +30,10 @@ public class CityDistanceBLService_stub implements CityDistanceBLService{
         return 0;
     }
 
+    public ArrayList<CityDistanceVO> showAllCityDistances(){
+    	// TODO 自动生成的方法存根
+        System.out.println("Show all city distance succeed!");
+        return null;
+    }
+    
 }

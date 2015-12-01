@@ -1,5 +1,7 @@
 package businesslogicservice.manageblservice;
 
+import java.util.ArrayList;
+
 import vo.OrganizationVO;
 
 public class OrganizationBLService_stub implements OrganizationBLService{
@@ -33,5 +35,11 @@ public class OrganizationBLService_stub implements OrganizationBLService{
         System.out.println("Choose department succeed!");
         return 0;
     }
+    
+    public ArrayList<OrganizationVO> showAllOrganizations(){
+    	// TODO 自动生成的方法存根
+        System.out.println("Show all organization succeed!");
+        return null;
+    } 
     
 }

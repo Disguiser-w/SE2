@@ -10,6 +10,7 @@ public class CostBLService_driver {
         costBLService.deleteCost(new CostVO(ExpressType.STANDARD, 23));
         costBLService.modifyCost(new CostVO(ExpressType.STANDARD, 23));
         costBLService.findCost(ExpressType.STANDARD);
+        costBLService.showAllCosts();
 	}
 	
 	public static void main(String[] args){

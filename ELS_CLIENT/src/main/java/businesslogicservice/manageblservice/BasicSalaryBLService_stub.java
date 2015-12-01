@@ -1,5 +1,7 @@
 package businesslogicservice.manageblservice;
 
+import java.util.ArrayList;
+
 import type.ProfessionType;
 import vo.BasicSalaryVO;
 
@@ -29,4 +31,10 @@ public class BasicSalaryBLService_stub implements BasicSalaryBLService {
         return 0;
     }
 	
+    public ArrayList<BasicSalaryVO> showAllBasicSalarys(){
+    	// TODO 自动生成的方法存根
+        System.out.println("Show all basic salary succeed!");
+        return null;
+    }
+    
 }
