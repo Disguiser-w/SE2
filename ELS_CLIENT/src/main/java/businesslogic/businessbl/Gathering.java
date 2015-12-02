@@ -49,6 +49,7 @@ public class Gathering {
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
+			expressData.deleteChargeInfos(organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

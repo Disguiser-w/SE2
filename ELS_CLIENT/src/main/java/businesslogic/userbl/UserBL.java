@@ -35,11 +35,11 @@ public class UserBL implements UserBLService{
 		try{
 			UserPO userpo = udService.findUser(userID);
 			if(userpo.equals(null))   //找不到该用户，返回2
-				return new LogVO("The user doesn't exist", null);
+				return new LogVO("nouser", null);
 			else if(!(userpo.getPassword().equals(password)))	//用户密码错误，返回1
-				return new LogVO("The userID and the password don't match", null);
+				return new LogVO("falsepassword", null);
 			else{ 
-				return new LogVO("Login succeed", poToVO(userpo));	//登录成功，返回0	
+				return new LogVO("success", poToVO(userpo));	//登录成功，返回0	
 			}						
 		}catch(RemoteException exception){
 			exception.printStackTrace();

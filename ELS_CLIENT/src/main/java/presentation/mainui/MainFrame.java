@@ -2,6 +2,7 @@ package presentation.mainui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import businesslogic.userbl.UserBL;
+import po.UserPO;
 import presentation.commonui.LocationHelper;
+import vo.LogVO;
 
 /**
  * 打开客户端的第一个界面
@@ -24,11 +28,13 @@ public class MainFrame extends JFrame {
 	private JPanel mainPanel;
 	private JPanel queryPanel;
 	private JPanel signInPanel;
+	private UserBL userbl;
 
 	public MainFrame() {
 
 		mainPanel = new MainPanel();
 		add(mainPanel);
+		userbl = new UserBL();
 
 		setTitle("                       ELS");
 		setSize(MAIN_WIDTH, MAIN_HEIGHT);
@@ -36,6 +42,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+
 	}
 
 	public void toQueryPanel() {
@@ -61,7 +68,7 @@ public class MainFrame extends JFrame {
 		private JButton queryButton;
 		// 登录按钮
 		private JButton signInButton;
-//		private LocationHelper helper;
+		// private LocationHelper helper;
 
 		public MainPanel() {
 			queryButton = new JButton("物流查询");
@@ -74,23 +81,23 @@ public class MainFrame extends JFrame {
 					(int) (height * 2.533333333333333 / 20));
 			signInButton.setBounds((int) (width * 5.0625 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
 					(int) (height * 2.533333333333333 / 20));
-			// queryButton.addActionListener(new ActionListener() {
-			// public void actionPerformed(ActionEvent e) {
-			// toQueryPanel();
-			// }
-			// });
-			//
-			// signInButton.addActionListener(new ActionListener() {
-			// public void actionPerformed(ActionEvent e) {
-			// toSignInPanel();
-			// }
-			// });
+			queryButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					toQueryPanel();
+				}
+			});
+
+			signInButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					toSignInPanel();
+				}
+			});
 
 			setLayout(null);
 			add(queryButton);
 			add(signInButton);
 
-//			helper = new LocationHelper(this);
+			// helper = new LocationHelper(this);
 
 		}
 	}
@@ -104,15 +111,21 @@ public class MainFrame extends JFrame {
 		private JButton cancelButton;
 
 		public QueryPanel() {
-			inputLabel = new JLabel("           请输入订单号:");
+			inputLabel = new JLabel("   请输入订单号:");
 			orderNumField = new JTextField();
 			queryButton = new JButton("查询");
 			cancelButton = new JButton("取消");
+			int width = MAIN_WIDTH;
+			int height = MAIN_HEIGHT;
 
-			inputLabel.setBounds(0, MAIN_HEIGHT / 6, MAIN_WIDTH * 3 / 8, MAIN_HEIGHT / 6);
-			orderNumField.setBounds(MAIN_WIDTH * 3 / 8, MAIN_HEIGHT * 2 / 9, MAIN_WIDTH / 2, MAIN_HEIGHT / 9);
-			queryButton.setBounds(MAIN_WIDTH / 8, MAIN_HEIGHT * 7 / 12, MAIN_WIDTH / 4, MAIN_HEIGHT / 6);
-			cancelButton.setBounds(MAIN_WIDTH * 5 / 8, MAIN_HEIGHT * 7 / 12, MAIN_WIDTH / 4, MAIN_HEIGHT / 6);
+			inputLabel.setBounds((int) (width * 9.0 / 25), (int) (height * 4.0 / 20), (int) (width * 6.375 / 25),
+					(int) (height * 1.8666666666666667 / 20));
+			orderNumField.setBounds((int) (width * 4.6875 / 25), (int) (height * 7.933333333333334 / 20),
+					(int) (width * 15.6875 / 25), (int) (height * 1.8666666666666667 / 20));
+			queryButton.setBounds((int) (width * 6.375 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+					(int) (height * 1.9333333333333333 / 20));
+			cancelButton.setBounds((int) (width * 14.25 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+					(int) (height * 1.9333333333333333 / 20));
 
 			queryButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -131,6 +144,9 @@ public class MainFrame extends JFrame {
 			add(orderNumField);
 			add(queryButton);
 			add(cancelButton);
+
+			// helper = new LocationHelper(this);
+
 		}
 
 		public void cancel() {
@@ -149,13 +165,18 @@ public class MainFrame extends JFrame {
 
 	// 登录界面
 	class SignInPanel extends JPanel {
-
+		// private UserNameController nameController;
 		private JLabel userNameLabel;
 		private JTextField userNameField;
 		private JLabel passwordLabel;
 		private JPasswordField passwordField;
 		private JButton signInButton;
 		private JButton cancelButton;
+		private JLabel imageLabel;
+		private JLabel names;
+		// private JComboBox names;
+
+		private LocationHelper helper;
 
 		public SignInPanel() {
 			userNameLabel = new JLabel("      用户名:");
@@ -164,6 +185,16 @@ public class MainFrame extends JFrame {
 			passwordField = new JPasswordField();
 			signInButton = new JButton("登录");
 			cancelButton = new JButton("取消");
+
+			imageLabel = new JLabel();
+			names = new JLabel();
+			// names.addItem("123");
+			// names.addItem("234");
+			// names.addItem("345");
+
+			// names.setBackground(Color.white);
+			//
+			// nameController = new UserNameController();
 
 			signInButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -178,20 +209,42 @@ public class MainFrame extends JFrame {
 			});
 
 			// MAIN_WIDTH MAIN_HEIGHT
-			userNameLabel.setBounds(MAIN_WIDTH / 6, MAIN_HEIGHT / 7, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
-			userNameField.setBounds(MAIN_WIDTH * 3 / 8, MAIN_HEIGHT / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
-			passwordLabel.setBounds(MAIN_WIDTH / 6, MAIN_HEIGHT * 3 / 7, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
-			passwordField.setBounds(MAIN_WIDTH * 3 / 8, MAIN_HEIGHT * 3 / 7, MAIN_WIDTH * 5 / 12, MAIN_HEIGHT * 2 / 15);
-			signInButton.setBounds(MAIN_WIDTH / 8, MAIN_HEIGHT * 11 / 15, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
-			cancelButton.setBounds(MAIN_WIDTH * 5 / 8, MAIN_HEIGHT * 11 / 15, MAIN_WIDTH / 4, MAIN_HEIGHT * 2 / 15);
+			int width = MAIN_WIDTH;
+			int height = MAIN_HEIGHT;
 
 			setLayout(null);
+
 			add(userNameLabel);
 			add(userNameField);
 			add(passwordLabel);
 			add(passwordField);
 			add(signInButton);
 			add(cancelButton);
+			add(imageLabel);
+			add(names);
+
+			// names.configureEditor(names.getEditor(), "");
+
+			helper = new LocationHelper(this);
+			setFocusable(false);
+
+			userNameLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 9.266666666666667 / 20),
+					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
+			userNameField.setBounds((int) (width * 8.875 / 25), (int) (height * 9.266666666666667 / 20),
+					(int) (width * 11.4375 / 25), (int) (height * 1.8 / 20));
+			passwordLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 11.933333333333334 / 20),
+					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
+			passwordField.setBounds((int) (width * 8.9375 / 25), (int) (height * 11.933333333333334 / 20),
+					(int) (width * 11.5 / 25), (int) (height * 1.8 / 20));
+			signInButton.setBounds((int) (width * 6.625 / 25), (int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
+			cancelButton.setBounds((int) (width * 14.1875 / 25), (int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
+			imageLabel.setBounds((int) (width * 9.125 / 25), (int) (height * 2.2666666666666666 / 20),
+					(int) (width * 6.6875 / 25), (int) (height * 5.6 / 20));
+			names.setBounds((int) (width * 8.875 / 25), (int) (height * 11.0 / 20), (int) (width * 11.375 / 25),
+					(int) (height * 0.06666666666666667 / 20));
+
 		}
 
 		public void cancel() {
@@ -203,7 +256,29 @@ public class MainFrame extends JFrame {
 
 		// 调用bl层的方法登录
 		public void signIn(String userID, String password) {
+			// try{
+			// UserPO userpo = udService.findUser(userID);
+			// if(userpo.equals(null)) //找不到该用户，返回2
+			// return new LogVO("nouser", null);
+			// else if(!(userpo.getPassword().equals(password))) //用户密码错误，返回1
+			// return new LogVO("falsepassword", null);
+			// else{
+			// return new LogVO("success", poToVO(userpo)); //登录成功，返回0
+			// }
+			// }catch(RemoteException exception){
+			// exception.printStackTrace();
+			// return new LogVO("The server failed", null);
+			// }
 
+			LogVO logvo = userbl.login(userID, password);
+
+			if (logvo.logReply.equals("nouser")) {
+				//
+			} else if (logvo.logReply.equals("falsepassword")) {
+				//
+			} else {
+				//成功登录，生成界面
+			}
 		}
 	}
 }

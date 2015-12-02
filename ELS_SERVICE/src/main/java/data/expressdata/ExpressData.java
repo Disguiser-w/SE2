@@ -26,6 +26,30 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		super();
 	}
 
+	// 清空当日收费信息
+	public boolean deleteChargeInfos(String organizationID) throws RemoteException {
+		String path = "expressInfo/" + organizationID + "-express.dat";
+		File file = FileGetter.getFile(path);
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			in.close();
+
+			for (ExpressPO i : expressPOs) {
+				i.setChargeCollection(new ArrayList<String>());
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(expressPOs);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("快递员信息读写失败");
+		}
+		return false;
+	}
+
 	// 根据OrganizationID添加订单到今日订单文件中,时间自动生成，在total.dat(使用AVL树，（存放键值对，OrderID为键,路径为值）)中添加一个副本，来根据ID快速查找Organization和time
 	public boolean addOrder(OrderPO po, String organizationID) throws RemoteException {
 
