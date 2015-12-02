@@ -53,4 +53,10 @@ public class CostIncomeReceiptBLService_stub implements CostIncomeReceiptBLServi
 		return null;
 	}
 
+
+	public CostIncomeReceiptVO getCostIncomeReceipt(String time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

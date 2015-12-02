@@ -20,7 +20,6 @@ public class InitialStockBL{
 //	private RepertoryDataService repertoryData;
 //	private AccountDataService accontData;
 	
-	//我竟然刚刚发现按ctrl可以追踪==
 	/**
 	 * 不过这么多东西怎么用RMI链接
 	 * */

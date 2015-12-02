@@ -41,7 +41,14 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	public int creatCostIncomeList(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CostIncomeReceiptPO po=FinanceMainController.voToPO(vo);
-		return cirdService.creatCostIncomeList(po);
+		try {
+			return cirdService.creatCostIncomeList(po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("创建成本收益表失败");
+			return 0;
+		}
 	}
 	
 
@@ -120,6 +127,20 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	public String getCostIncomeListID() {
 		// TODO Auto-generated method stub
 		return "CBSYB-"+getDate.getdate();
+	}
+	
+	/**
+	 * 总经理查询经营情况表
+	 * */
+	public CostIncomeReceiptVO getCostIncomeReceipt(String time){
+		try {
+			return FinanceMainController.cipoToVO(cirdService.getCostIncomeReceipt(time));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取成本收益表失败");
+			return null;
+		}
 	}
 	
 	public static void main(String[] args){

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
-import dataservice.financedataservice.AccountDataService_driver;
 import dataservice.financedataservice.AccountDataService_stub;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CollectionReceiptDataService_stub;
@@ -20,8 +19,6 @@ import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogicservice.financeblservice.CostIncomeReceiptBLService_stub;
-import businesslogicservice.financeblservice.InitialStockBLService_stub;
 import po.AccountPO;
 import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
@@ -64,6 +61,13 @@ public class FinanceMainController {
 	public static ArrayList<InitInfoVO> initVOs;
 	public static ArrayList<AccountVO> accountVOs;
 	
+	public static AccountBLController accountBLController;
+	public static CollectionReceiptBLController collectionReceiptBLController;
+	public static PaymentReceiptBLController paymentReceiptBLController;
+	public static CostIncomeReceiptBLController costIncomeReceiptBLController;
+	public static BusinessStatementReceiptBLController businessStatementReceiptBLController;
+	public static InitialStockBLController initialStockBLController;
+	
 	/**
 	 * 财务部分的初始化在这里进行
 	 * */
@@ -86,6 +90,13 @@ public class FinanceMainController {
 		}
 		
 		//初始化四个controller：把操作拿出来做controller吗
+		accountBLController=new AccountBLController();
+		collectionReceiptBLController=new CollectionReceiptBLController();
+		paymentReceiptBLController=new PaymentReceiptBLController();
+		costIncomeReceiptBLController=new CostIncomeReceiptBLController();
+		businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
+		initialStockBLController=new InitialStockBLController();
+		
 		
 	}
 	
@@ -504,14 +515,14 @@ public class FinanceMainController {
 		}
 	}
 	
-	public static CostIncomeReceiptVO civoToPO(CostIncomeReceiptPO po){
+	public static CostIncomeReceiptVO cipoToVO(CostIncomeReceiptPO po){
 		return new CostIncomeReceiptVO(po.getID(), po.getUserID(), po.getType(), po.getState(), po.getCost(), po.getIncome(), po.getProfit());
 	}
 	
 	public static ArrayList<CostIncomeReceiptVO> civosToPOs(ArrayList<CostIncomeReceiptPO> pos){
 		ArrayList<CostIncomeReceiptVO> vos=new ArrayList<CostIncomeReceiptVO>();
 		for(CostIncomeReceiptPO p:pos){
-			CostIncomeReceiptVO vo=civoToPO(p);
+			CostIncomeReceiptVO vo=cipoToVO(p);
 			vos.add(vo);
 		}
 		return vos;

@@ -1,5 +1,6 @@
 package dataservice.financedataservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
@@ -65,6 +66,12 @@ public class CostIncomeReceiptDataService_stub implements CostIncomeReceiptDataS
 	public CostIncomeReceiptPO modify(CostIncomeReceiptPO po) {
 		// TODO Auto-generated method stub
 		System.out.println("modify successfully!");
+		return null;
+	}
+
+	public CostIncomeReceiptPO getCostIncomeReceipt(String time)
+			throws RemoteException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
