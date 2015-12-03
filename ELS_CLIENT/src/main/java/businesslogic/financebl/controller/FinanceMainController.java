@@ -217,7 +217,7 @@ public class FinanceMainController {
 		}
 		else{
 			GatheringReceiptVO gatheringReceiptVO;
-			gatheringReceiptVO=new GatheringReceiptVO(IntermediateMainController.poToVO(po.getBusinesShall()), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID());
+			gatheringReceiptVO=new GatheringReceiptVO(IntermediateMainController.poToVO(po.getBusinesShall()), po.getTime(), po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID(), po.getReceiptState());
 		return gatheringReceiptVO;
 		}
 	}

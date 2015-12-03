@@ -40,7 +40,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
 		userData=DataFactory.getUserData();
 		businessData=DataFactory.getBusinessData();
-		organizationData=DataFactory.getOrgnanizationData();
+		organizationData=DataFactory.getOrganizationData();
 		intermediateData=DataFactory.getIntermediateData();
 		basicSalaryData=DataFactory.getBasicSalaryData();
 		perWageData= DataFactory.getPerWageData();
