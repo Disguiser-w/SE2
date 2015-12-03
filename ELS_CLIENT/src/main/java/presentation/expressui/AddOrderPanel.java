@@ -13,8 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
+import dataservice.managedataservice.CityDistanceDataService;
 import type.ExpressType;
 import type.PackType;
 import vo.OrderVO;
@@ -142,7 +144,7 @@ public class AddOrderPanel extends JPanel {
 		timeLabel = new JLabel("预计时间");
 		cost = new JLabel("");
 		time = new JLabel("");
-		
+
 		// senderLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// senderNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// senderOrganizationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -348,10 +350,14 @@ public class AddOrderPanel extends JPanel {
 
 	private void setBaseInfo() {
 		// 获取城市信息，
-		// ArrayList<String> citys =
-		// cityDistanceData.getCitys();
+		CityDistanceDataService cityDistanceData = null;
+		try {
+			cityDistanceData = DataFactory.getCityDistanceData();
+		} catch (Exception e) {
 
-		ArrayList<String> citys = new ArrayList<String>();
+		}
+		ArrayList<String> citys = cityDistanceData.getCitys();
+
 		citys.add("北京");
 		citys.add("上海");
 		citys.add("南京");
@@ -473,10 +479,9 @@ public class AddOrderPanel extends JPanel {
 				controller.calculateCost(newOrder);
 				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
 				try {
-					time.setText(""
-							+ controller.getAddOrder().getCityDistanceData().findCityDistance(senderCity, receiverCity)
-							+ "天");
-				} catch (RemoteException e1) {
+
+					time.setText("" + cityDistanceData.findCityDistance(senderCity, receiverCity) + "天");
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
