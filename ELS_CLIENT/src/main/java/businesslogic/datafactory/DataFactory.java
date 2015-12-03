@@ -27,7 +27,8 @@ public class DataFactory {
 
 	public static IntermediateDataService getIntermediateDate()
 			throws MalformedURLException, RemoteException, NotBoundException {
-        IntermediateDataService intermediateData = (IntermediateDataService) Naming.lookup("//localhost:8888/IntermediateDataService")
-	    return intermediateData;
+		IntermediateDataService intermediateData = (IntermediateDataService) Naming
+				.lookup("//localhost:8888/IntermediateDataService");
+		return intermediateData;
 	}
 }
