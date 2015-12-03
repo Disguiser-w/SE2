@@ -13,8 +13,8 @@ public interface PaymentReceiptDataService extends Remote{
 	
 //	//当天存储的持久化对象个数
 //	public int getNum() throws RemoteException;
-//	//根据ID查找持久化对象
-//	public PaymentReceiptPO findByID(String ID) throws RemoteException;
+	//根据ID查找持久化对象
+	public PaymentReceiptPO findByID(String ID) throws RemoteException;
 	//修改持久化对象
 	public  PaymentReceiptPO modify(PaymentReceiptPO po) throws RemoteException;
 	

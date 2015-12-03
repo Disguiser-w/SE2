@@ -1,18 +1,24 @@
 package data.financedata;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import po.AccountPO;
 import po.InitInfoPO;
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
-import po.VehiclePO;
 import dataservice.financedataservice.InitialStockDataService;
 import file.JXCFile;
 
-public class InitialStockData implements InitialStockDataService{
+public class InitialStockData extends UnicastRemoteObject implements InitialStockDataService{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected InitialStockData() throws RemoteException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 将InitInfoPO中的信息写入InitInfo.ser
@@ -22,11 +28,11 @@ public class InitialStockData implements InitialStockDataService{
 	public int initInfo(InitInfoPO po, String time) throws RemoteException {
 		// TODO Auto-generated method stub
 		JXCFile.init(time);
-		ArrayList<UserPO> userPOs=po.getUserPOs();
-		ArrayList<OrganizationPO> organizationPOs=po.getOrganizationPOs();
-		ArrayList<VehiclePO> vehiclePOs=po.getVehiclePOs();
-		ArrayList<RepertoryPO> repertoryPOs=po.getRepertoryPOs();
-		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
+//		ArrayList<UserPO> userPOs=po.getUserPOs();
+//		ArrayList<OrganizationPO> organizationPOs=po.getOrganizationPOs();
+//		ArrayList<VehiclePO> vehiclePOs=po.getVehiclePOs();
+//		ArrayList<RepertoryPO> repertoryPOs=po.getRepertoryPOs();
+//		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
 		
 		add(po);
 		
