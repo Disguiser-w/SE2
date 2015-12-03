@@ -70,7 +70,7 @@ public class DistributeOrder {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 		String nowTime = df.format(new Date());
 
-		DistributeReceiptPO po = new DistributeReceiptPO(organizationVO.organizationID + "-" + nowTime, result,
+		DistributeReceiptPO po = new DistributeReceiptPO("PJD-"+organizationVO.organizationID + "-" + nowTime, result,
 				nowTime);
 		//增加派件单，一天一天
 		BusinessMainController.businessData.addDistributeReceipt(organizationVO.organizationID,po);
