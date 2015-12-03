@@ -3,25 +3,25 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
 /**
  * 营业厅装车单
  */
-public class EnVehicleReceiptPO implements Serializable{
+public class EnVehicleReceiptPO implements Serializable {
 	private OrganizationPO placeOfDeparture;
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> OrderPOList;
 	private String receiptID;
-	private CheckState checkState;
+	private ReceiptState receiptState;
 
-	public CheckState getCheckState() {
-		return checkState;
+	public ReceiptState getReceiptState() {
+		return receiptState;
 	}
 
-	public void setCheckState(CheckState checkState) {
-		this.checkState = checkState;
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 
 	public EnVehicleReceiptPO() {
@@ -34,6 +34,7 @@ public class EnVehicleReceiptPO implements Serializable{
 		this.vehiclePO = vehiclePO;
 		this.OrderPOList = OrderPOList;
 		this.receiptID = receiptID;
+		this.receiptState = ReceiptState.SUBMIT;
 	}
 
 	public String getReceiptID() {

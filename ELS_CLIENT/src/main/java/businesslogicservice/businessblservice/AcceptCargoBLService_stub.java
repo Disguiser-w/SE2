@@ -1,12 +1,16 @@
 package businesslogicservice.businessblservice;
 
+import java.util.ArrayList;
+
 import vo.OrderAcceptReceiptVO;
 
 public class AcceptCargoBLService_stub implements  AcceptCargoBLService {
 
-	public boolean acceptCargo(OrderAcceptReceiptVO vo) {
+
+
+	@Override
+	public boolean acceptCargo(String organizationID, String vehicleID, ArrayList<String> orderIDs) {
 		// TODO Auto-generated method stub
-		System.out.println("AcceptCargo successfully!");
 		return false;
 	}
 

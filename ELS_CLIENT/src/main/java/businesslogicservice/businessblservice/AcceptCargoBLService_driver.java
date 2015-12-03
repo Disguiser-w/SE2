@@ -4,7 +4,7 @@ import vo.OrderAcceptReceiptVO;
 
 public class AcceptCargoBLService_driver {
 	public void drive(AcceptCargoBLService acceptCargoBLService) {
-		acceptCargoBLService.acceptCargo(new OrderAcceptReceiptVO(null, null, null, null));
+//		acceptCargoBLService.acceptCargo(new OrderAcceptReceiptVO(null, null, null, null));
 	}
 
 	public void main(String[] args) {

@@ -4,9 +4,7 @@ import java.rmi.Naming;
 
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.businessdataservice.BusinessDataService_stub;
 import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import po.BusinessPO;
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
@@ -33,7 +31,7 @@ public class BusinessMainController {
 
 	public BusinessMainController(String businessID) {
 		// RMI
-//		businessData = new BusinessDataService_stub();
+		// businessData = new BusinessDataService_stub();
 
 		try {
 			businessData = (BusinessDataService) Naming.lookup("//localhost:8888/BusinessDataService");
@@ -82,7 +80,7 @@ public class BusinessMainController {
 	public static OrderAcceptReceiptVO orderAcceptReceiptPOToVO(OrderAcceptReceiptPO po) {
 		VehicleVO vvo = vehiclePOToVO(po.getVehiclePO());
 		OrderAcceptReceiptVO Vpo = new OrderAcceptReceiptVO(OrganizationBL.organizationPOToVO(po.getLocal()),
-				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID(),po.getCheckState());
+				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID());
 		return Vpo;
 	}
 
@@ -114,11 +112,11 @@ public class BusinessMainController {
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
 		return new EnVehicleReceiptVO(OrganizationBL.organizationPOToVO(po.getPlaceOfDeparture()), po.getTime(),
-				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(),po.getReceiptID(),po.getCheckState());
+				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList());
 	}
 
 	public static EnVehicleReceiptPO enVehicleReceiptVOToPO(EnVehicleReceiptVO vo) {
 		return new EnVehicleReceiptPO(OrganizationBL.organizationVOToPO(vo.placeOfDeparture), vo.time,
-				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList,vo.receiptID);
+				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList, vo.receiptID);
 	}
 }

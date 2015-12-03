@@ -495,4 +495,24 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		return f.format(date);
 	}
 
+	public ArrayList<GatheringReceiptPO> getSubmittedGatheringReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<DistributeReceiptPO> getSubmittedDistributeReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<EnVehicleReceiptPO> getSubmittedEnVehicleReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

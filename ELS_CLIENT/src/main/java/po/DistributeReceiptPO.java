@@ -3,27 +3,27 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
-public class DistributeReceiptPO implements Serializable{
+public class DistributeReceiptPO implements Serializable {
 	private String ID;
 	private ArrayList<String> distributeInfo;
 	private String time;
-	private CheckState checkState;
+	private ReceiptState receiptState;
 
 	public DistributeReceiptPO(String ID, ArrayList<String> distributeInfo, String time) {
 		this.ID = ID;
 		this.distributeInfo = distributeInfo;
 		this.time = time;
-		this.checkState = CheckState.UNCHECKED;
+		this.receiptState = receiptState.SUBMIT;
 	}
 
-	public CheckState getCheckState() {
-		return checkState;
+	public ReceiptState getReceiptState() {
+		return receiptState;
 	}
 
-	public void setCheckState(CheckState checkState) {
-		this.checkState = checkState;
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 
 	public String getID() {

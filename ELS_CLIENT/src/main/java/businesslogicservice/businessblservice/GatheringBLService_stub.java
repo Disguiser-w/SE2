@@ -7,16 +7,18 @@ import vo.GatheringReceiptVO;
 
 public class GatheringBLService_stub implements GatheringBLService{
 
-	public ArrayList<ExpressVO> getChargeInfo() {
+	@Override
+	public ArrayList<String> getChargeInfo() {
 		// TODO Auto-generated method stub
-		System.out.println("Show ExpressVOs");
 		return null;
 	}
 
-	public double gathering(GatheringReceiptVO vo) {
+	@Override
+	public double gathering() {
 		// TODO Auto-generated method stub
-		System.out.println("Gathering successfully!");
 		return 0;
 	}
+
+	
 
 }

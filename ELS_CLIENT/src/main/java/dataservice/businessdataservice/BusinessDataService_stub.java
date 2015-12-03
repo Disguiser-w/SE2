@@ -1,7 +1,10 @@
 package dataservice.businessdataservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.BusinessPO;
+import po.DistributeReceiptPO;
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
 import po.GatheringReceiptPO;
@@ -11,84 +14,131 @@ import po.VehiclePO;
 
 public class BusinessDataService_stub implements BusinessDataService {
 
-	public ArrayList<VehiclePO> getVehicleInfos() {
-		// TODO Auto-generated method stub
-		System.out.println("Show VehiclePOList!");
-		return null;
-	}
-
-	public boolean addVehicle(VehiclePO po) {
-		// TODO Auto-generated method stub
-		System.out.println("AddVehicle successfully!");
-		return false;
-	}
-
-	public boolean deleteVehicle(VehiclePO po) {
-		// TODO Auto-generated method stub
-		System.out.println("DeleteVehicle successfully!");
-		return false;
-	}
-
-	public boolean modifyVehicle(VehiclePO po) {
-		// TODO Auto-generated method stub
-		System.out.println("ModifyVehicle successfully!");
-		return false;
-	}
-
-	public DriverPO getDriverInfos(String ID) {
-		// TODO Auto-generated method stub
-		System.out.println("Show DriverPO!");
-		return null;
-	}
-
-	public boolean addDriver(DriverPO po) {
-		// TODO Auto-generated method stub
-		System.out.println("AddDriver successfully!");
-		return false;
-	}
-
-	public boolean deleteDriver(DriverPO po) {
-		// TODO Auto-generated method stub
-		System.out.println("DeleteDriver successfully!");
-		return false;
-	}
-
-	public boolean modifyDriver(DriverPO po) {
-		// TODO Auto-generated method stub
-		System.out.println("ModifyDriver successfully!");
-		return false;
-	}
-
-	public ArrayList<OrderPO> getTransferOrders() {
-		// TODO Auto-generated method stub
-		System.out.println("Show OrderVOList!");
-		return null;
-	}
-
-	public ArrayList<VehiclePO> getFreeVehicles() {
-		// TODO Auto-generated method stub
-		System.out.println("Show VehiclePOList!");
-		return null;
-	}
-
-	public boolean addEnVehicleReceiptPO(EnVehicleReceiptPO po) {
-		// TODO Auto-generated method stub
-		System.out.println("AddEnVehicleReceiptPO successfully!");
-		return false;
-	}
-
 	@Override
-	public ArrayList<GatheringReceiptPO> getGatheringReceiptPOs() {
+	public BusinessPO getBusinessInfo(String organizationID, String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		
 		return null;
 	}
 
 	@Override
-	public boolean addReceipt(OrderAcceptReceiptPO po) {
+	public VehiclePO getVehicleInfo(String organizationID, String vehicleID) throws RemoteException {
 		// TODO Auto-generated method stub
-		
+		return null;
+	}
+
+	@Override
+	public boolean addReceipt(String organizationID, OrderAcceptReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ArrayList<VehiclePO> getVehicleInfos(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addEnVehicleReceipt(String organizationID, ArrayList<EnVehicleReceiptPO> pos)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addVehicle(String organizationID, VehiclePO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteVehicle(String organizationID, VehiclePO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean modifyVehicle(String organizationID, VehiclePO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<DriverPO> getDriverInfos(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addGatheringReceipt(String organizationID, GatheringReceiptPO grp) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getNumOfOrderAcceptReceipt(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public DriverPO getDriverInfo(String organizationID, String ID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addDriver(String organizationID, DriverPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteDriver(String organizationID, DriverPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean modifyDriver(String organizationID, DriverPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<GatheringReceiptPO> getSubmittedGatheringReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<DistributeReceiptPO> getSubmittedDistributeReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<EnVehicleReceiptPO> getSubmittedEnVehicleReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

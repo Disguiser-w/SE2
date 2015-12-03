@@ -2,11 +2,11 @@ package businesslogicservice.businessblservice;
 
 public class DistributeOrderBLService_driver {
 	public void drive(DistributeOrderBLService distributeOrdeBLService) {
-		distributeOrdeBLService.distributeOrder();
+//		distributeOrdeBLService.distributeOrder();
 
-		distributeOrdeBLService.getExpressInfos();
-
-		distributeOrdeBLService.getSendOrder();
+//		distributeOrdeBLService.getExpressInfos();
+//
+//		distributeOrdeBLService.getSendOrder();
 	}
 
 	public void main(String[] args) {

@@ -15,8 +15,7 @@ public class BusinessStatementReceiptPO {
 		this(null, null, null, null);
 	}
 
-	public BusinessStatementReceiptPO(String beginTime, String endTime,
-			ArrayList<CollectionReceiptPO> cpos,
+	public BusinessStatementReceiptPO(String beginTime, String endTime, ArrayList<CollectionReceiptPO> cpos,
 			ArrayList<PaymentReceiptPO> ppos) {
 		this.beginTime = beginTime;
 		this.endTime = endTime;

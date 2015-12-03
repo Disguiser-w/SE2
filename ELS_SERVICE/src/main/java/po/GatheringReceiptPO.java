@@ -3,7 +3,7 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
 public class GatheringReceiptPO implements Serializable{
 	private OrganizationPO businessShall;
@@ -12,7 +12,7 @@ public class GatheringReceiptPO implements Serializable{
 	private ArrayList<Double> money;
 	private double totalmoney;
 	private String receiptID;
-	private CheckState checkState;
+	private ReceiptState receiptState;
 
 	public GatheringReceiptPO() {
 	}
@@ -26,15 +26,15 @@ public class GatheringReceiptPO implements Serializable{
 		this.totalmoney = totalmoney;
 		this.time = time;
 		this.receiptID = receiptID;
-		this.checkState = CheckState.UNCHECKED;
+		this.receiptState = ReceiptState.SUBMIT;
 	}
 
-	public CheckState getCheckState() {
-		return checkState;
+	public ReceiptState getReceiptState() {
+		return receiptState;
 	}
 
-	public void setCheckState(CheckState checkState) {
-		this.checkState = checkState;
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 
 	public OrganizationPO getBusinesShall() {

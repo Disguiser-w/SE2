@@ -4,8 +4,8 @@ import vo.ExpressVO;
 
 public class ChargeCollectionBLService_driver {
 	public void drive(ChargeCollectionBLService chargeCollecitonBLService) {
-		chargeCollecitonBLService.getChargeInfo();
-		chargeCollecitonBLService.chargeCollection(null);
+//		chargeCollecitonBLService.getChargeInfo();
+//		chargeCollecitonBLService.chargeCollection(null);
 	}
 
 	public void main(String[] args) {

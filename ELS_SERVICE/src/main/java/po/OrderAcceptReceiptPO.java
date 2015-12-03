@@ -3,32 +3,32 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
-public class OrderAcceptReceiptPO implements Serializable{
+public class OrderAcceptReceiptPO implements Serializable {
 	private OrganizationPO local;
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> orderIDs;
 	private String receiptID;
-	private CheckState checkState;
+	private ReceiptState receiptState;
 
-	public OrderAcceptReceiptPO(OrganizationPO local, String time,
-			VehiclePO vehiclePO, ArrayList<String> orderIDs, String receiptID) {
+	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs,
+			String receiptID) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.orderIDs = orderIDs;
 		this.receiptID = receiptID;
-		this.checkState = CheckState.UNCHECKED;
+		this.receiptState = ReceiptState.SUBMIT;
 	}
 
-	public CheckState getCheckState() {
-		return checkState;
+	public ReceiptState getReceiptState() {
+		return receiptState;
 	}
 
-	public void setCheckState(CheckState checkState) {
-		this.checkState = checkState;
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 
 	public String getReceiptID() {

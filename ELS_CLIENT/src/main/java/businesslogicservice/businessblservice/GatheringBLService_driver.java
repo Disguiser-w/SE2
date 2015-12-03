@@ -6,7 +6,7 @@ public class GatheringBLService_driver {
 	public void drive(GatheringBLService gathingBLService) {
 		gathingBLService.getChargeInfo();
 
-		gathingBLService.gathering(null);
+//		gathingBLService.gathering(null);
 	}
 
 	public void main(String[] args) {

@@ -7,22 +7,12 @@ import vo.VehicleVO;
 
 public class EnvehicleBLService_stub implements EnVehicleBLService{
 
-	public String autoTruckLoading() {
+	@Override
+	public ArrayList<String> autoTruckLoading(String OrganizationID) {
 		// TODO Auto-generated method stub
-		System.out.println("AutoTruckLoading successfully!");
 		return null;
 	}
 
-	public ArrayList<VehicleVO> getFreeVehicles() {
-		// TODO Auto-generated method stub
-		System.out.println("Show VehicleVOs!");
-		return null;
-	}
-
-	public ArrayList<OrderVO> getTransferOrders() {
-		// TODO Auto-generated method stub
-		System.out.println("Show OrderVOs!");
-		return null;
-	}
+	
 
 }

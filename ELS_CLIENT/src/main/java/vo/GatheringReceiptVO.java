@@ -5,7 +5,7 @@ package vo;
 
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
 public class GatheringReceiptVO {
 	public final OrganizationVO businesshall;
@@ -14,18 +14,18 @@ public class GatheringReceiptVO {
 	public final ArrayList<Double> money;
 	public final double totalmoney;
 	public final String receiptID;
-	public final CheckState checkState;
+	public final ReceiptState receiptState;
 
 	public GatheringReceiptVO(OrganizationVO businesshall, String time,
 			ArrayList<String> expressList, ArrayList<Double> money,
-			double totalmoney, String receiptID,CheckState checkState) {
+			double totalmoney, String receiptID,ReceiptState receiptState) {
 		super();
 		this.businesshall = businesshall;
 		this.time = time;
 		this.expressList = expressList;
 		this.money = money;
 		this.totalmoney = totalmoney;
-		this.checkState = checkState;
+		this.receiptState = receiptState;
 		this.receiptID = receiptID;
 	}
 
