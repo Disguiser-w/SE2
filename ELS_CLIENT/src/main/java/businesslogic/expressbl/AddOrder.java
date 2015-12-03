@@ -77,12 +77,12 @@ public class AddOrder {
 		String city2 = vo.recipientAddress.split(" ")[0];
 
 		double distance = 0;
-		// try {
-		// distance = cityDistanceData.findCityDistance(city1, city2);
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		try {
+			distance = DataFactory.getCityDistanceData().findCityDistance(city1, city2).getDistance();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		double weight = Double.parseDouble(vo.weight);
 		double volumn = Double.parseDouble(vo.volume);

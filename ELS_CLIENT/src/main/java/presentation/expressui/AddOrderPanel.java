@@ -351,17 +351,13 @@ public class AddOrderPanel extends JPanel {
 	private void setBaseInfo() {
 		// 获取城市信息，
 		CityDistanceDataService cityDistanceData = null;
+		ArrayList<String> citys = null;
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
+			citys = cityDistanceData.getAllCitys();
 		} catch (Exception e) {
 
 		}
-		ArrayList<String> citys = cityDistanceData.getCitys();
-
-		citys.add("北京");
-		citys.add("上海");
-		citys.add("南京");
-		citys.add("广州");
 
 		for (String i : citys) {
 			senderCountryList.addItem(i);
