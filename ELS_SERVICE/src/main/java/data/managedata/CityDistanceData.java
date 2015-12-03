@@ -1,4 +1,4 @@
-package data.managedata;
+﻿package data.managedata;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -103,7 +103,11 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		return cityDistanceList;
     }
     
-    
+    public String[] getAllCitys(){
+	String[] str;
+	
+	return null;
+    }
     /*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
