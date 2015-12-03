@@ -140,6 +140,27 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		}
 		return unprovedPOs;
 	}
+	
+	public PaymentReceiptPO findByID(String ID) throws RemoteException {
+		// TODO Auto-generated method stub
+		file=new JXCFile("payment.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("读取付款单失败或付款单为空");
+			return null;
+		}
+		else{
+			for(Object o:os){
+				PaymentReceiptPO po=(PaymentReceiptPO) o;
+				if(po.getID().equals(ID)){
+					return po;
+				}
+			}
+		}
+		return null;
+	}
+
+	
 
 	
 	public static void main(String[] args){
@@ -201,6 +222,6 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 
 	}
 
-	
+
 
 }
