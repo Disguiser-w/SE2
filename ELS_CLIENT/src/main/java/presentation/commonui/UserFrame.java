@@ -215,7 +215,7 @@ public class UserFrame extends JFrame {
 				int height = getHeight();
 				int width = getWidth();
 				operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
-				System.out.println( width - height * 7 / 25+ " " + height * 7 / 10);
+	
 				add(operationPanel);
 				repaint();
 

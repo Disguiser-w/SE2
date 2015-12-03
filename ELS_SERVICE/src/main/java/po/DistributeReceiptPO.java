@@ -11,11 +11,11 @@ public class DistributeReceiptPO implements Serializable {
 	private String time;
 	private ReceiptState receiptState;
 
-	public DistributeReceiptPO(String ID, ArrayList<String> distributeInfo, String time) {
+	public DistributeReceiptPO(String ID, ArrayList<String> distributeInfo, String time,ReceiptState receiptState) {
 		this.ID = ID;
 		this.distributeInfo = distributeInfo;
 		this.time = time;
-		this.receiptState = receiptState.SUBMIT;
+		this.receiptState = receiptState;
 	}
 
 	public ReceiptState getReceiptState() {

@@ -14,6 +14,7 @@ import po.EnVehicleReceiptPO;
 import po.OrderPO;
 import po.VehiclePO;
 import type.OrderState;
+import type.ReceiptState;
 import vo.OrganizationVO;
 
 public class EnVehicle {
@@ -76,6 +77,7 @@ public class EnVehicle {
 			// 对每一辆车,生成一个装车单，放在装车单的ArrayList中
 			EnVehicleReceiptPO enVehicle = new EnVehicleReceiptPO();
 
+			enVehicle.setReceiptState(ReceiptState.SUBMIT);
 			enVehicle.setPlaceOfDeparture(OrganizationBL.organizationVOToPO(organizationVO));
 			enVehicle.setTime(nowTime);
 			enVehicle.setVehiclePO(i);
@@ -91,7 +93,7 @@ public class EnVehicle {
 
 			String newTime = (new SimpleDateFormat("yyyMMdd")).format(new Date());
 
-			enVehicle.setReceiptID("YYTZCD-"+organizationVO.organizationID + "-" + newTime + "-" + j);
+			enVehicle.setReceiptID("YYTZCD-" + organizationVO.organizationID + "-" + newTime + "-" + j);
 			j += 1;
 
 			enVehicleReceiptPOs.add(enVehicle);

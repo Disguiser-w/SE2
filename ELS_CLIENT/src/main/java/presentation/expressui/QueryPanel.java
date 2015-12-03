@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.LocationHelper;
 
 public class QueryPanel extends JPanel {
@@ -21,9 +22,12 @@ public class QueryPanel extends JPanel {
 	private JLabel previousPageLabel;
 	private JTable messageTable;
 	private ArrayList<JLabel> queryLabel;
-	private LocationHelper help;
+	// private LocationHelper help;
 
-	public QueryPanel() {
+	private LogisticQueryController controller;
+
+	public QueryPanel(LogisticQueryController controller) {
+		this.controller = controller;
 		timeInputLabel = new JLabel("请输入时间");
 		timeField = new JTextField();
 		timeSetLabel = new JLabel();
@@ -55,7 +59,7 @@ public class QueryPanel extends JPanel {
 			// add(i);
 		}
 
-		help = new LocationHelper(this);
+//		help = new LocationHelper(this);
 
 		setLayout(null);
 	}

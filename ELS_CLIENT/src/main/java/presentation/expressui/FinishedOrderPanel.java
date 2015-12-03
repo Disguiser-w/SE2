@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
+import businesslogic.expressbl.controller.ReceiptOrderController;
 
 public class FinishedOrderPanel extends JPanel {
 	private JTextField orderIDField;
@@ -26,9 +26,11 @@ public class FinishedOrderPanel extends JPanel {
 
 	private JButton confirmButton;
 
-//	private LocationHelper helper;
+	// private LocationHelper helper;
+	private ReceiptOrderController controller;
 
-	public FinishedOrderPanel() {
+	public FinishedOrderPanel(ReceiptOrderController controller) {
+		this.controller = controller;
 		orderIDField = new JTextField();
 		queryButton = new JButton();
 		messageArea = new JTextArea();
@@ -62,7 +64,7 @@ public class FinishedOrderPanel extends JPanel {
 
 		add(confirmButton);
 
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
 	}
 

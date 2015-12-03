@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import businesslogic.businessbl.AcceptCargo;
 import businesslogicservice.businessblservice.AcceptCargoBLService;
-import vo.OrderAcceptReceiptVO;
 
 public class AcceptCargoController implements AcceptCargoBLService{
 	private AcceptCargo acceptCargo;

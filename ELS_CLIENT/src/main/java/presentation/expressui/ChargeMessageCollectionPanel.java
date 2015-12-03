@@ -1,13 +1,11 @@
 package presentation.expressui;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -18,15 +16,17 @@ import javax.swing.table.TableColumn;
 import presentation.commonui.LocationHelper;
 
 public class ChargeMessageCollectionPanel extends JPanel {
-	private ArrayList<String> chargeInfos;
-	private ArrayList<String> infos;
-	private int num;
 
 	private JTable messageTable;
 	private JLabel totalMessageLabel;
-	private JButton collectionButton;
+	// private JButton collectionButton;
+	private JLabel previousPageLabel;
+	private JLabel nextPageLabel;
 
 	private LocationHelper helper;
+	private ArrayList<String> chargeInfos;
+	private ArrayList<String> infos;
+	private int num;
 
 	public ChargeMessageCollectionPanel() {
 		// chargeInfo从ExpressMainController.expressVO获得
@@ -46,7 +46,9 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		MessgeTableModel model = new MessgeTableModel();
 		messageTable = new JTable(model);
 		totalMessageLabel = new JLabel();
-		collectionButton = new JButton("确认");
+		// collectionButton = new JButton("确认");
+		previousPageLabel = new JLabel();
+		nextPageLabel = new JLabel();
 
 		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		totalMessageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -56,9 +58,11 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		add(messageTable);
 
 		add(totalMessageLabel);
-		add(collectionButton);
+//		add(collectionButton);
+		add(previousPageLabel);
+		add(nextPageLabel);
 
-		// helper = new LocationHelper(this);
+		 helper = new LocationHelper(this);
 		// chargeCollections = ExpressMainController.expressVO.chargeCollection;
 		setLayout(null);
 
@@ -78,8 +82,8 @@ public class ChargeMessageCollectionPanel extends JPanel {
 				(int) (width * 22.464698331193837 / 25), (int) (height * 13.097345132743364 / 20));
 		totalMessageLabel.setBounds((int) (width * 1.123234916559692 / 25), (int) (height * 16.991150442477878 / 20),
 				(int) (width * 16.944801026957638 / 25), (int) (height * 1.9469026548672566 / 20));
-		collectionButton.setBounds((int) (width * 21.630295250320923 / 25), (int) (height * 17.123893805309734 / 20),
-				(int) (width * 1.957637997432606 / 25), (int) (height * 1.5486725663716814 / 20));
+//		collectionButton.setBounds((int) (width * 21.630295250320923 / 25), (int) (height * 17.123893805309734 / 20),
+//				(int) (width * 1.957637997432606 / 25), (int) (height * 1.5486725663716814 / 20));
 
 		setBaseInfo();
 
@@ -95,7 +99,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	private void setBaseInfo() {
 
 		// 设置成不可编辑不可改变位置，大小
-//		 messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		messageTable.getTableHeader().setReorderingAllowed(false);
 		messageTable.getTableHeader().setResizingAllowed(false);
 

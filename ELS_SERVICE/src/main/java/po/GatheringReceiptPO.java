@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
-public class GatheringReceiptPO implements Serializable{
+public class GatheringReceiptPO implements Serializable {
 	private OrganizationPO businessShall;
 	private String time;
 	private ArrayList<String> expressIDs;
@@ -17,16 +17,15 @@ public class GatheringReceiptPO implements Serializable{
 	public GatheringReceiptPO() {
 	}
 
-	public GatheringReceiptPO(OrganizationPO businessShall, String time,
-			ArrayList<String> expressList, ArrayList<Double> money,
-			double totalmoney, String receiptID) {
+	public GatheringReceiptPO(OrganizationPO businessShall, String time, ArrayList<String> expressList,
+			ArrayList<Double> money, double totalmoney, String receiptID, ReceiptState receiptState) {
 		this.expressIDs = expressList;
 		this.money = money;
 		this.businessShall = businessShall;
 		this.totalmoney = totalmoney;
 		this.time = time;
 		this.receiptID = receiptID;
-		this.receiptState = ReceiptState.SUBMIT;
+		this.receiptState = receiptState;
 	}
 
 	public ReceiptState getReceiptState() {

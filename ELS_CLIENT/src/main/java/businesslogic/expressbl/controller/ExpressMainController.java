@@ -1,12 +1,17 @@
 package businesslogic.expressbl.controller;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 
+import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.OrderPO;
+import presentation.businessui.ChargeCollectionPanel;
+import presentation.expressui.AddOrderPanel;
+import presentation.expressui.ExpressFrame;
+import presentation.expressui.FinishedOrderPanel;
+import presentation.expressui.QueryPanel;
 import vo.ExpressVO;
 import vo.OrderVO;
 
@@ -15,19 +20,20 @@ public class ExpressMainController {
 	public static ExpressDataService expressData;
 	public static ExpressVO expressVO;
 
-	public static AddOrderController addOrderController;
-	public static ChargeCollectionController chargeCollectionController;
-	public static LogisticQueryController logisticQuery;
-	public static ReceiptOrderController receiptOrderController;
+	private AddOrderController addOrderController;
+	private ChargeCollectionController chargeCollectionController;
+	private LogisticQueryController logisticQuery;
+	private ReceiptOrderController receiptOrderController;
+
+	private ExpressFrame expressFrame;
 
 	// ExpressData的初始化，ExpressVO的初始化在此进行
 	public ExpressMainController(String expressID) {
 		// RMI
 
 		try {
-
-			expressData = (ExpressDataService) Naming.lookup("//localhost:8888/ExpressDataService");
-			expressVO = expressPOToVO((ExpressPO)(expressData.getExpressInfo(null, expressID)));
+			expressData = DataFactory.getExpressData();
+			expressVO = expressPOToVO((ExpressPO) (expressData.getExpressInfo(null, expressID)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,6 +43,15 @@ public class ExpressMainController {
 		chargeCollectionController = new ChargeCollectionController();
 		logisticQuery = new LogisticQueryController();
 		receiptOrderController = new ReceiptOrderController();
+
+		expressFrame = new ExpressFrame(expressVO);
+		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
+		expressFrame.addFuncLabel(new ChargeCollectionPanel(chargeCollectionController));
+		expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
+		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController));
+
+		expressFrame.showFrame();
+
 	}
 
 	// 最后此方法在此聚合
@@ -87,4 +102,8 @@ public class ExpressMainController {
 				po.getSubmitedOrderID());
 	}
 
+	// test
+	public static void main(String[] args) {
+		new ExpressMainController("KDY-00001");
+	}
 }

@@ -6,13 +6,17 @@ import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
 import po.BusinessPO;
+import po.DistributeReceiptPO;
 import po.DriverPO;
 import po.EnVehicleReceiptPO;
+import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
 import vo.BusinessVO;
+import vo.DistributeReceiptVO;
 import vo.DriverVO;
 import vo.EnVehicleReceiptVO;
+import vo.GatheringReceiptVO;
 import vo.OrderAcceptReceiptVO;
 import vo.VehicleVO;
 
@@ -72,7 +76,7 @@ public class BusinessMainController {
 
 		VehiclePO vpo = vehicleVOToPO(vo.vehicleVO);
 		OrderAcceptReceiptPO opo = new OrderAcceptReceiptPO(OrganizationBL.organizationVOToPO(vo.local), vo.time, vpo,
-				vo.orderIDs, vo.receiptID);
+				vo.orderIDs, vo.receiptID, vo.receiptState);
 		return opo;
 
 	}
@@ -80,7 +84,7 @@ public class BusinessMainController {
 	public static OrderAcceptReceiptVO orderAcceptReceiptPOToVO(OrderAcceptReceiptPO po) {
 		VehicleVO vvo = vehiclePOToVO(po.getVehiclePO());
 		OrderAcceptReceiptVO Vpo = new OrderAcceptReceiptVO(OrganizationBL.organizationPOToVO(po.getLocal()),
-				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID());
+				po.getTime(), vvo, po.getOrderIDs(), po.getReceiptID(), po.getReceiptState());
 		return Vpo;
 	}
 
@@ -111,12 +115,33 @@ public class BusinessMainController {
 	}
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
+
+
 		return new EnVehicleReceiptVO(OrganizationBL.organizationPOToVO(po.getPlaceOfDeparture()), po.getTime(),
-				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList());
+				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(), po.getReceiptID(), po.getReceiptState());
 	}
 
 	public static EnVehicleReceiptPO enVehicleReceiptVOToPO(EnVehicleReceiptVO vo) {
 		return new EnVehicleReceiptPO(OrganizationBL.organizationVOToPO(vo.placeOfDeparture), vo.time,
-				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList, vo.receiptID);
+				vehicleVOToPO(vo.vehicleVO), vo.OrderVOList, vo.receiptID, vo.receiptState);
+	}
+
+	public static DistributeReceiptVO distributePOToVO(DistributeReceiptPO po) {
+		return new DistributeReceiptVO(po.getID(), po.getDistributeInfo(), po.getTime(), po.getReceiptState());
+	}
+
+	public static DistributeReceiptPO distributeVOToPO(DistributeReceiptVO vo) {
+
+		return new DistributeReceiptPO(vo.ID, vo.distributeInfo, vo.time, vo.receiptState);
+	}
+
+	public static GatheringReceiptVO gatheringPOToVO(GatheringReceiptPO po) {
+		return new GatheringReceiptVO(OrganizationBL.organizationPOToVO(po.getBusinesShall()), po.getTime(),
+				po.getExpressIDs(), po.getMoney(), po.getTotalmoney(), po.getReceiptID(), po.getReceiptState());
+	}
+
+	public static GatheringReceiptPO gatheringVOToPO(GatheringReceiptVO vo) {
+		return new GatheringReceiptPO(OrganizationBL.organizationVOToPO(vo.businesshall), vo.time, vo.expressList,
+				vo.money, vo.totalmoney, vo.receiptID, vo.receiptState);
 	}
 }

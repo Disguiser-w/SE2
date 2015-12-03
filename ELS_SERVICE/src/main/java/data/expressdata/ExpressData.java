@@ -461,7 +461,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		return t.find(id);
 	}
 
-	// test
+/*****************************************************************test***************************************************/
 	public static void main(String[] args) {
 		try {
 
@@ -486,7 +486,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 				file2.createNewFile();
 			}
 			ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
-			ExpressPO epo = new ExpressPO("狗剩", "kdy-00001", "2.5", new ArrayList<String>(), po,
+			ExpressPO epo = new ExpressPO("狗剩", "KDY-00001", "2.5", new ArrayList<String>(), po,
 					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
 
 			ArrayList<ExpressPO> epos = new ArrayList<ExpressPO>();

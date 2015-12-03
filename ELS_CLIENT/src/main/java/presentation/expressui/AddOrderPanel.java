@@ -78,12 +78,13 @@ public class AddOrderPanel extends JPanel {
 	private JButton confirmButton;
 
 	private AddOrderController controller;
-
 	private OrderVO newOrder;
 
 	// private LocationHelper helper;
 
-	public AddOrderPanel() {
+	public AddOrderPanel(AddOrderController controller) {
+		this.controller = controller;
+
 		senderLabel = new JLabel("寄件人信息");
 		senderNameLabel = new JLabel("姓名");
 		senderOrganizationLabel = new JLabel("单位");
@@ -141,7 +142,7 @@ public class AddOrderPanel extends JPanel {
 		timeLabel = new JLabel("预计时间");
 		cost = new JLabel("");
 		time = new JLabel("");
-
+		
 		// senderLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// senderNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		// senderOrganizationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -274,7 +275,6 @@ public class AddOrderPanel extends JPanel {
 		setBaseInfo();
 		addListener();
 		setLayout(null);
-		controller = ExpressMainController.addOrderController;
 
 	}
 

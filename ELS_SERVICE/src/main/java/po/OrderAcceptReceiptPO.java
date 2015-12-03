@@ -14,13 +14,13 @@ public class OrderAcceptReceiptPO implements Serializable {
 	private ReceiptState receiptState;
 
 	public OrderAcceptReceiptPO(OrganizationPO local, String time, VehiclePO vehiclePO, ArrayList<String> orderIDs,
-			String receiptID) {
+			String receiptID, ReceiptState receiptState) {
 		this.local = local;
 		this.time = time;
 		this.vehiclePO = vehiclePO;
 		this.orderIDs = orderIDs;
 		this.receiptID = receiptID;
-		this.receiptState = ReceiptState.SUBMIT;
+		this.receiptState = receiptState;
 	}
 
 	public ReceiptState getReceiptState() {

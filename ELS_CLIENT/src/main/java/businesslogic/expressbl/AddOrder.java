@@ -1,8 +1,12 @@
 package businesslogic.expressbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
+import dataservice.expressdataservice.ExpressDataService;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
 import po.OrderPO;
@@ -13,6 +17,7 @@ public class AddOrder {
 
 	private CostDataService costData;
 	private CityDistanceDataService cityDistanceData;
+	private ExpressDataService expressData;
 
 	public AddOrder() {
 		// vo存着本营业厅的信息，此处一个BL实例对应一个营业厅
@@ -39,8 +44,14 @@ public class AddOrder {
 		// 营业厅，营业厅加时间，营业厅加时间段，所有
 
 		// 此处将就
-//		costData = new CostDataService_stub();
-//		cityDistanceData = new CityDistanceDataService_stub();
+		// costData = new CostDataService_stub();
+		// cityDistanceData = new CityDistanceDataService_stub();
+		try {
+			expressData = DataFactory.getExpressData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public boolean addOrder(OrderVO vo) {
@@ -56,7 +67,7 @@ public class AddOrder {
 
 			if (addr1[0].equals(addr2[0])) {
 				// 如果在同一城市，不需要经过中转中心转运
-				
+
 				if (addr1[1].equals(addr2[1])) {
 					// 如果同一营业厅,直接派送
 					po.setOrder_state(OrderState.WAITING_DISTRIBUTE);
@@ -71,7 +82,7 @@ public class AddOrder {
 				}
 			} else {
 				// 在不同城市,需要转运和中转
-			
+
 				po.setOrder_state(OrderState.WAITING_ENVEHICLE);
 				po.getHistory().add("快件已发出");
 				po.getHistory().add("订单已到达" + ExpressMainController.expressVO.organization.name + ",正等待中转");
@@ -97,12 +108,12 @@ public class AddOrder {
 		String city2 = vo.recipientAddress.split(" ")[0];
 
 		double distance = 0;
-//		try {
-//			distance = cityDistanceData.findCityDistance(city1, city2);
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// distance = cityDistanceData.findCityDistance(city1, city2);
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		double weight = Double.parseDouble(vo.weight);
 		double volumn = Double.parseDouble(vo.volume);

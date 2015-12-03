@@ -1,10 +1,13 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import po.OrganizationPO;
+import po.VehiclePO;
 import type.ReceiptState;
 
-public class OrderAcceptReceiptVO {
+public class OrderAcceptReceiptVO implements Serializable {
 	public final OrganizationVO local;
 	public final String time;
 	public final VehicleVO vehicleVO;

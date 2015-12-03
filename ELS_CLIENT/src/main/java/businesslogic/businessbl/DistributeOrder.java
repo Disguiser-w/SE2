@@ -10,6 +10,7 @@ import po.DistributeReceiptPO;
 import po.ExpressPO;
 import po.OrderPO;
 import type.OrderState;
+import type.ReceiptState;
 import vo.OrganizationVO;
 import businesslogic.businessbl.controller.BusinessMainController;
 import dataservice.expressdataservice.ExpressDataService;
@@ -70,11 +71,10 @@ public class DistributeOrder {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 		String nowTime = df.format(new Date());
 
-		DistributeReceiptPO po = new DistributeReceiptPO("PJD-"+organizationVO.organizationID + "-" + nowTime, result,
-				nowTime);
-		//增加派件单，一天一天
-		BusinessMainController.businessData.addDistributeReceipt(organizationVO.organizationID,po);
-		
+		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime, result,
+				nowTime, ReceiptState.SUBMIT);
+		// 增加派件单，一天一天
+		BusinessMainController.businessData.addDistributeReceipt(organizationVO.organizationID, po);
 
 		return result;
 	}

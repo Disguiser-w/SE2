@@ -16,6 +16,16 @@ public class EnVehicleReceiptPO implements Serializable {
 	private String receiptID;
 	private ReceiptState receiptState;
 
+	public EnVehicleReceiptPO(OrganizationPO organizationPO, String time, VehiclePO vehiclePO,
+			ArrayList<String> OrderPOList, String receiptID, ReceiptState receiptState) {
+		this.placeOfDeparture = organizationPO;
+		this.time = time;
+		this.vehiclePO = vehiclePO;
+		this.OrderPOList = OrderPOList;
+		this.receiptID = receiptID;
+		this.receiptState = receiptState;
+	}
+
 	public ReceiptState getReceiptState() {
 		return receiptState;
 	}
@@ -25,16 +35,6 @@ public class EnVehicleReceiptPO implements Serializable {
 	}
 
 	public EnVehicleReceiptPO() {
-	}
-
-	public EnVehicleReceiptPO(OrganizationPO organizationPO, String time, VehiclePO vehiclePO,
-			ArrayList<String> OrderPOList, String receiptID) {
-		this.placeOfDeparture = organizationPO;
-		this.time = time;
-		this.vehiclePO = vehiclePO;
-		this.OrderPOList = OrderPOList;
-		this.receiptID = receiptID;
-		this.receiptState = ReceiptState.SUBMIT;
 	}
 
 	public String getReceiptID() {

@@ -1,7 +1,5 @@
 package businesslogic.businessbl;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import po.OrderAcceptReceiptPO;
 import po.OrderPO;
 import po.OrganizationPO;
 import type.OrderState;
+import type.ReceiptState;
 import vo.OrganizationVO;
 
 public class AcceptCargo {
@@ -22,10 +21,10 @@ public class AcceptCargo {
 	private BusinessDataService businessData;
 	private ExpressDataService expressData;
 
-	public AcceptCargo() {		// 使用RMI初始化businessDataService
+	public AcceptCargo() { // 使用RMI初始化businessDataService
 		try {
 			businessData = DataFactory.getBusinessData();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,7 +91,7 @@ public class AcceptCargo {
 			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
 			String receiptID = "YYTDDD-" + organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
-					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID);
+					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID, ReceiptState.SUBMIT);
 
 			result = businessData.addReceipt(organizationVO.organizationID, newPO);
 		} catch (Exception e) {

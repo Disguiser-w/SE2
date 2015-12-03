@@ -59,7 +59,8 @@ public class FunctionPanel extends JPanel {
 			addMouseListener(new MouseAdapter() {
 
 				public void mouseClicked(MouseEvent e) {
-
+					if (numOfFunc <= 4)
+						return;
 					int height = getHeight();
 					int width = getWidth();
 
@@ -202,7 +203,7 @@ public class FunctionPanel extends JPanel {
 		int width = getWidth();
 		int height = getHeight();
 
-		if (numOfFunc * width > height - width * 2 / 5) {
+		if (numOfFunc * width > height - width * 2 / 5 && numOfFunc >= 5) {
 			tooMuchFunc = true;
 		}
 

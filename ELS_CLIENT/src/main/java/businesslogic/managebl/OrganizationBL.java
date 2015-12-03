@@ -6,120 +6,133 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
 import businesslogicservice.manageblservice.OrganizationBLService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
+import po.OrganizationPO;
+import po.RepertoryPO;
+import po.UserPO;
 import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 
-public class OrganizationBL implements OrganizationBLService{
-	
+public class OrganizationBL implements OrganizationBLService {
+
 	public OrganizationDataService odService;
 	public UserDataService udService;
-	
-	public int addOrganization (OrganizationVO organizationvo){
-		try{
+
+	public int addOrganization(OrganizationVO organizationvo) {
+		try {
 			OrganizationPO neworganizationpo = organizationVOToPO(organizationvo);
-			return(odService.addOrganization(neworganizationpo));
-		}catch(RemoteException exception){
+			return (odService.addOrganization(neworganizationpo));
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-	
-	public int deleteOrganization(String organizationID){
-		try{
-			return(odService.deleteOrganization(organizationID));
-		}catch(RemoteException exception){
+
+	public int deleteOrganization(String organizationID) {
+		try {
+			return (odService.deleteOrganization(organizationID));
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-	
-	public int modifyOrganization(OrganizationVO organizationvo){
-		try{
+
+	public int modifyOrganization(OrganizationVO organizationvo) {
+		try {
 			OrganizationPO organizationpo = organizationVOToPO(organizationvo);
-			return(odService.modifyOrganization(organizationpo));
-		}catch(RemoteException exception){
+			return (odService.modifyOrganization(organizationpo));
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-	
-	public OrganizationVO findOrganization(String organizationID){
-		try{
+
+	public OrganizationVO findOrganization(String organizationID) {
+		try {
 			OrganizationPO organizationpo = odService.findOrganization(organizationID);
 			return organizationPOToVO(organizationpo);
-		}catch(RemoteException exception){
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return null;
 		}
 	}
-	
-	public int chooseDepartment(String userID, String organizationID){
-		try{
+
+	public int chooseDepartment(String userID, String organizationID) {
+		try {
 			UserPO userpo = udService.findUser(userID);
 			userpo.setOrganization(organizationID);
 			return 0;
-		}catch(RemoteException exception){
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return 1;
 		}
-		
+
 	}
-	
-	public ArrayList<OrganizationVO> showAllOrganizations(){
-		try{
-			ArrayList<OrganizationPO> organizationPOList =  odService.showAllOrganizations();
-			ArrayList<OrganizationVO> organizationVOList =  new ArrayList<OrganizationVO>();
-			for(OrganizationPO organization: organizationPOList)
+
+	public ArrayList<OrganizationVO> showAllOrganizations() {
+		try {
+			ArrayList<OrganizationPO> organizationPOList = odService.showAllOrganizations();
+			ArrayList<OrganizationVO> organizationVOList = new ArrayList<OrganizationVO>();
+			for (OrganizationPO organization : organizationPOList)
 				organizationVOList.add(organizationPOToVO(organization));
 			return organizationVOList;
-		}
-		catch(RemoteException exception){
+		} catch (RemoteException exception) {
 			exception.printStackTrace();
 			return null;
 		}
 	}
-	
-	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
-		return new RepertoryVO(repertorypo.getRepertoryID(),repertorypo.getOwnerID(),repertorypo.getMaxRow(),repertorypo.getMaxShelf(), repertorypo.getMaxDigit(),repertorypo.getWarningRatio(), repertorypo.getStockNumArray());
+
+	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo) {
+		return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), repertorypo.getMaxRow(),
+				repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), repertorypo.getWarningRatio(),
+				repertorypo.getStockNumArray());
 	}
-	
-	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo){
-		return new RepertoryPO(repertoryvo.getRepertoryID(),repertoryvo.getOwnerID(),repertoryvo.getMaxRow(),repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(),repertoryvo.getWarningRatio(),repertoryvo.getStockNumArray());
+
+	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo) {
+		return new RepertoryPO(repertoryvo.getRepertoryID(), repertoryvo.getOwnerID(), repertoryvo.getMaxRow(),
+				repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(), repertoryvo.getWarningRatio(),
+				repertoryvo.getStockNumArray());
 	}
-	
-	public static OrganizationVO organizationPOToVO(OrganizationPO organizationpo){
-		return new OrganizationVO(organizationpo.getCategory(),organizationpo.getOrganizationID(),organizationpo.getName(),repertoryPOToVO(organizationpo.getRepertory()));
+
+	public static OrganizationVO organizationPOToVO(OrganizationPO organizationpo) {
+		if (organizationpo.getRepertory() != null)
+			return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
+					organizationpo.getName(), repertoryPOToVO(organizationpo.getRepertory()));
+		else
+			return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
+					organizationpo.getName(), null);
 	}
-	
-	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo){
-		return new OrganizationPO(organizationvo.getCategory(),organizationvo.getOrganizationID(),organizationvo.getName(),repertoryVOToPO(organizationvo.getRepertory()));
+
+	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo) {
+		if (organizationvo.repertory != null)
+			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
+					organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
+		else
+			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
+					organizationvo.getName(), null);
 	}
-	
-	
-	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
-    
-    /*------------------------------------- Test server whether can normally work ----------------------------------*/
-	
-	public static void main(String[] args){
+
+	/*--------------------------------------------------Test Part---------------------------------------------------*/
+
+	/*------------------------------------- Test server whether can normally work ----------------------------------*/
+
+	public static void main(String[] args) {
 		try {
-			OrganizationDataService organizationData = (OrganizationDataService)Naming.lookup("rmi://172.25.132.40:6006/OrganizationDataService");
-			
+			OrganizationDataService organizationData = (OrganizationDataService) Naming
+					.lookup("rmi://172.25.132.40:6006/OrganizationDataService");
+
 			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
-			for(OrganizationPO organization:organizationList0)
-				System.out.println(("ID: "+organization.getOrganizationID()+", Name: "+organization.getName()));
+			for (OrganizationPO organization : organizationList0)
+				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
 
 			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
-			
+
 			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
-			for(OrganizationPO organization:organizationList1)
-				System.out.println(("ID: "+organization.getOrganizationID()+", Name: "+organization.getName()));
+			for (OrganizationPO organization : organizationList1)
+				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -132,6 +145,5 @@ public class OrganizationBL implements OrganizationBLService{
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }

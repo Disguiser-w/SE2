@@ -11,6 +11,7 @@ import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.GatheringReceiptPO;
+import type.ReceiptState;
 import vo.OrganizationVO;
 
 public class Gathering {
@@ -75,10 +76,10 @@ public class Gathering {
 		// public ArrayList<String> expressIDs;
 		// public ArrayList<Double> money;
 		// public double totalmoney;
-		String receiptID ="SKD-"+organizationVO.organizationID + "-" + time;
+		String receiptID = "SKD-" + organizationVO.organizationID + "-" + time;
 
 		GatheringReceiptPO grp = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(organizationVO), time,
-				expressIDs, charges, total, receiptID);
+				expressIDs, charges, total, receiptID, ReceiptState.SUBMIT);
 
 		try {
 			businessData.addGatheringReceipt(organizationVO.organizationID, grp);
