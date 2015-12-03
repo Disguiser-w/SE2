@@ -23,6 +23,9 @@ public interface PaymentReceiptDataService extends Remote{
 
 	//获取未审批的入款单
 	    public ArrayList<PaymentReceiptPO> getUnapprovedPaymentReceipt() throws RemoteException;
+	    //存储审批后的单据信息（总经理调用）
+	    public int saveSubmittedPaymentReceiptInfo(PaymentReceiptPO po) throws RemoteException;
+	    
 //	public double getSalary() ;
 //
 //	public double getFare();

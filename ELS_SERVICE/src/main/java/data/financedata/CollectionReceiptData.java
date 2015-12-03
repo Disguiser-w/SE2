@@ -1,14 +1,13 @@
 package data.financedata;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import file.JXCFile;
 import po.CollectionReceiptPO;
 import type.ReceiptState;
+import type.ReceiptType;
 import dataservice.financedataservice.CollectionReceiptDataService;
 
 
@@ -32,6 +31,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public int createCollection(CollectionReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("collection.ser");
+		po.setState(ReceiptState.SUBMIT);
 		file.write(po);
 		//每创建一个对象num+1
 		num++;
@@ -165,10 +165,66 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		}
 		return unprovedPOs;
 	}
+	
+	/**
+	 * 总经理审批的信息通知：供saveSubmittedCollectionReceiptInfo调用
+	 * */
+	public String getFeedback(CollectionReceiptPO po){
+		
+		return null;
+	}
+	
+	/**
+	 * 存储审批后结果
+	 * */
+	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptPO  po) throws RemoteException{
+		 file=new JXCFile("collection.ser");
+		 ArrayList<Object> os=file.read();
+		 for(int i=0;i<os.size();i++){
+			 //文件中的
+			 CollectionReceiptPO po_infile=(CollectionReceiptPO) os.get(i);
+			 //总经理传过来的
+				 if(po_infile.getID().equals(po.getID())){
+					po_infile.setState(po.getState());
+				 }
+		 }
+		 file.writeM(os);
+		return -1;
+		
+	}
 
 	
-	public static void main(String[] args){
-		try{
+	public static void main(String[] args) throws RemoteException{
+		
+		CollectionReceiptData collectionData=new CollectionReceiptData();
+//		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "20151201", "鼓楼");
+//		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "20151203", "仙林");
+//		collectionData.createCollection(po1);
+//		collectionData.createCollection(po2);
+		ArrayList<CollectionReceiptPO> pos=collectionData.getAllCollection();
+		for(CollectionReceiptPO p:pos){
+			System.out.println("ID: "+p.getID()+" "+p.getState().toString());
+		}
+		System.out.println("-------------------------------------------------------------------------------------");
+		ArrayList<CollectionReceiptPO> po_unproved=collectionData.getUnapprovedCollectionReceipt();
+		for(CollectionReceiptPO pp:po_unproved){
+			System.out.println("ID: "+pp.getID()+" "+pp.getIncome());
+		}
+		System.out.println("---------------------------------------------------------------------------------------");
+		ArrayList<CollectionReceiptPO> po_fromManager=new ArrayList<CollectionReceiptPO>();
+		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 200, "20151201", "鼓楼");
+		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 300, "20151203", "仙林");
+		po_fromManager.add(po1);
+		po_fromManager.add(po2);
+		
+//		collectionData.saveSubmittedCollectionReceiptInfo(po_fromManager);
+		
+		ArrayList<CollectionReceiptPO> result=collectionData.getAllCollection();
+		for(CollectionReceiptPO ppp:result){
+			System.out.println("ID :"+ppp.getID()+" "+ppp.getState().toString());
+		}
+		
+/*		try{
 			System.setProperty("java.rmi.server.hostname", "172.26.210.111");
 			CollectionReceiptDataService data=new CollectionReceiptData();
 			LocateRegistry.createRegistry(8888);
@@ -187,6 +243,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 			e.printStackTrace();
 			
 		}
+		*/
 /*		CollectionReceiptData data=new CollectionReceiptData();
 //			data.createCollection(po1);
 		//			data.createCollection(po2);

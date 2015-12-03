@@ -1,8 +1,6 @@
 package data.financedata;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -141,6 +139,26 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		return unprovedPOs;
 	}
 	
+	/**
+	 * 存储审批后的信息（总经理审批单据用）
+	 * */
+	 public int saveSubmittedPaymentReceiptInfo(PaymentReceiptPO po) throws RemoteException{
+		 file=new JXCFile("payment.ser");
+		 ArrayList<Object> os=file.read();
+		 for(int i=0;i<os.size();i++){
+			 //文件中的
+			 PaymentReceiptPO po_infile=(PaymentReceiptPO) os.get(i);
+			 //总经理传过来的
+				 if(po_infile.getID().equals(po.getID())){
+					po_infile.setState(po.getState());
+				 }
+		 }
+		 file.writeM(os);
+		return -1;
+		 
+	 }
+	    
+	
 	public PaymentReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("payment.ser");
@@ -164,15 +182,15 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 
 	
 	public static void main(String[] args){
-		try{
-		System.setProperty("java.rmi.server.hostname", "172.26.210.111");
+/*		try{
+			/*System.setProperty("java.rmi.server.hostname", "172.26.210.111");
 			PaymentReceiptDataService data=new PaymentReceiptData();
 			LocateRegistry.createRegistry(8800);
 //			//绑定RMI名称进行发布
 			Naming.rebind("rmi://172.26.210.111:8800/PaymentReceiptDataService", data);
 			System.out.println("Service start 8800 !");
 		
-		/*	PaymentReceiptDataService data=new PaymentReceiptData();
+			PaymentReceiptDataService data=new PaymentReceiptData();
 			
 //			PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.SUBMIT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //			data.creatPaymentReceipt(po1);
@@ -180,14 +198,15 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 			for(PaymentReceiptPO p:test){
 				System.out.println("ID: "+p.getID());
 			}
-			*/
+			
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
+	
 		
-/*		PaymentReceiptData data=new PaymentReceiptData();
+		PaymentReceiptData data=new PaymentReceiptData();
 		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
@@ -217,11 +236,9 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-
-		*/
+}
+	
+*/
 
 	}
-
-
-
 }

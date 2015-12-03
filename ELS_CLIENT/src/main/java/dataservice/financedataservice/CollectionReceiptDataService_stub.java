@@ -66,6 +66,14 @@ public  class CollectionReceiptDataService_stub implements CollectionReceiptData
 	}
 
 
+	@Override
+	public int saveSubmittedCollectionReceiptInfo(
+			CollectionReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return -1;
+	}
+
+
 //	@Override
 //	public ArrayList<GatheringReceiptPO> getGathering(String Time) {
 //		// TODO Auto-generated method stub

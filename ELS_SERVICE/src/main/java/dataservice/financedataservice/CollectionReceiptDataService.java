@@ -26,5 +26,7 @@ public interface CollectionReceiptDataService extends Remote{
 	//获取未审批的合计收款单(审批单据需要)
 		public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() throws RemoteException;
 		
+		//供总经理调用来存储已经审批结束的单据
+		public int saveSubmittedCollectionReceiptInfo(CollectionReceiptPO po) throws RemoteException;
 
 }
