@@ -6,12 +6,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogicservice.manageblservice.OrganizationBLService;
-import dataservice.managedataservice.OrganizationDataService;
-import dataservice.userdataservice.UserDataService;
 import po.OrganizationPO;
 import po.RepertoryPO;
 import po.UserPO;
+import businesslogicservice.manageblservice.OrganizationBLService;
+import dataservice.managedataservice.OrganizationDataService;
+import dataservice.userdataservice.UserDataService;
 import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
@@ -107,12 +107,8 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo) {
-		if (organizationvo.repertory != null)
-			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
-					organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
-		else
-			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
-					organizationvo.getName(), null);
+		return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
+				organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
