@@ -12,18 +12,21 @@ import po.PaymentReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import vo.BusinessStatementReceiptVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 /**
  * 查看经营情况表：查看特定时间范围内的入款单和付款单
  * */
 public class BusinessStatementReceiptBL {
 
-	CollectionReceiptDataService crdService;
-	PaymentReceiptDataService prdService;
+	CollectionReceiptDataService collectionData;
+	PaymentReceiptDataService paymentData;
 	
 	public BusinessStatementReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
-		crdService=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
-		prdService=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
+//		collectionData=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+//		paymentData=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
+		collectionData=DataFactory.getCollectionReceiptData();
+		paymentData=DataFactory.getPaymentReceiptData();
 	}
 
 	/**
@@ -33,7 +36,7 @@ public class BusinessStatementReceiptBL {
 			String endTime) {
 		// TODO Auto-generated method stub
 		try {
-			BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(beginTime, endTime, crdService.getCollection_right(beginTime, endTime), prdService.getPayment_right(beginTime, endTime));
+			BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(beginTime, endTime, collectionData.getCollection_right(beginTime, endTime), paymentData.getPayment_right(beginTime, endTime));
 			BusinessStatementReceiptVO vo=FinanceMainController.bpoToVO(po);
 			return vo;
 		} catch (RemoteException e) {

@@ -199,6 +199,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			e.printStackTrace();
 			
 		}
+	
 	/*		ArrayList<AccountPO> pos=data.showAll();
 			for(AccountPO p:pos){
 				System.out.println("Name: "+p.getName());

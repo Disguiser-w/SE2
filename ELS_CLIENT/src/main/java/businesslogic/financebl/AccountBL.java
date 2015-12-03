@@ -1,23 +1,24 @@
 package businesslogic.financebl;
 
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.AccountPO;
 import dataservice.financedataservice.AccountDataService;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import vo.AccountVO;
 
 public class AccountBL {
 
+	
 	private AccountDataService accountData;
 //	private AccountPO po;
 	
 	public AccountBL() throws MalformedURLException, RemoteException, NotBoundException {
-			 accountData=(AccountDataService)Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
+			accountData=DataFactory.getAccountData();
 	}
 
 	/** 

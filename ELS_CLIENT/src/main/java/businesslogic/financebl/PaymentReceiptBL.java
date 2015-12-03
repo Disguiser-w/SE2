@@ -20,6 +20,7 @@ import type.OrganizationType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.PaymentReceiptVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
@@ -27,21 +28,23 @@ import businesslogic.receiptbl.getDate;
 
 public class PaymentReceiptBL extends ReceiptBL {
 	
-	PaymentReceiptDataService prdService;
-	UserDataService udService;
-	BusinessDataService bdService;
-	OrganizationDataService odService;
-	IntermediateDataService idService;
-	BasicSalaryDataService bsdService;
-	PerWageDataService pwdService;
+	PaymentReceiptDataService paymentData;
+	UserDataService userData;
+	BusinessDataService businessData;
+	OrganizationDataService organizationData;
+	IntermediateDataService intermediateData;
+	BasicSalaryDataService basicSalaryData;
+	PerWageDataService perWageData;
+	
 
 	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
-		udService=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
-		bdService=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
-		odService=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
-		idService=(IntermediateDataService) Naming.lookup("rmi://172.26.209.182:8888/IntermediateDataService");
-		bsdService=(BasicSalaryDataService) Naming.lookup("rmi://172.26.209.182:8888/BasicSalaryDataService");
-		pwdService= (PerWageDataService) Naming.lookup("rmi://172.26.209.182:8888/PerWageDataService");
+		userData=DataFactory.getUserData();
+		businessData=DataFactory.getBusinessData();
+		organizationData=DataFactory.getOrgnanizationData();
+		intermediateData=DataFactory.getIntermediateData();
+		basicSalaryData=DataFactory.getBasicSalaryData();
+		perWageData= DataFactory.getPerWageData();
+		paymentData=DataFactory.getPaymentReceiptData();
 	}
 	
 	/**
@@ -52,7 +55,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 		PaymentReceiptPO po=FinanceMainController.pvoToPO(vo);
 		update(vo);
 		try {
-			return prdService.creatPaymentReceipt(po);
+			return paymentData.creatPaymentReceipt(po);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,7 +107,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return FinanceMainController.pposToVOs(prdService.getAllPaymentReceipt());
+			return FinanceMainController.pposToVOs(paymentData.getAllPaymentReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -134,42 +137,42 @@ public class PaymentReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		double salary=0;
 		try {
-			ArrayList<UserPO> userpos=udService.showAllUsers();
+			ArrayList<UserPO> userpos=userData.showAllUsers();
 			for(UserPO p:userpos){
 				//快递员：提成+基础工资
 				if(p.getSalaryPlan()==SalaryPlanType.courierSalaryPlan){
-					double perWage=pwdService.findPerWage(ProfessionType.courier).getPerWage();
-					double basicSalary=bsdService.findBasicSalary(ProfessionType.courier).getBasicSalary();
+					double perWage=perWageData.findPerWage(ProfessionType.courier).getPerWage();
+					double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.courier).getBasicSalary();
 					salary+=p.getGrades()*perWage+basicSalary;
 				}
 				//司机：计次
 				else if(p.getSalaryPlan()==SalaryPlanType.driverSalaryPlan){
-					double perWage=pwdService.findPerWage(ProfessionType.driver).getPerWage();
+					double perWage=perWageData.findPerWage(ProfessionType.driver).getPerWage();
 					salary+=p.getGrades()*perWage;
 				}
 				//营业厅业务员
 				else if(p.getSalaryPlan()==SalaryPlanType.countermanSalaryPlan){
-				   double basicSalary=bsdService.findBasicSalary(ProfessionType.counterman).getBasicSalary();
+				   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.counterman).getBasicSalary();
 				   salary+=basicSalary;
 				}
 				//系统管理员
 				else if(p.getSalaryPlan()==SalaryPlanType.administratorSalaryPlan){
-					   double basicSalary=bsdService.findBasicSalary(ProfessionType.administrator).getBasicSalary();
+					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.administrator).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//仓库管理员
 				else if(p.getSalaryPlan()==SalaryPlanType.stockmanSalaryPlan){
-					   double basicSalary=bsdService.findBasicSalary(ProfessionType.stockman).getBasicSalary();
+					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.stockman).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//财务人员
 				else if(p.getSalaryPlan()==SalaryPlanType.financialStaffSalaryPlan){
-					   double basicSalary=bsdService.findBasicSalary(ProfessionType.financialStaff).getBasicSalary();
+					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.financialStaff).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//总经理
 				else if(p.getSalaryPlan()==SalaryPlanType.managerSalaryPlan){
-					   double basicSalary=bsdService.findBasicSalary(ProfessionType.manager).getBasicSalary();
+					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.manager).getBasicSalary();
 					   salary+=basicSalary;
 				}
 			}
@@ -192,7 +195,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		ArrayList<OrganizationPO> organizationPOs;
 		try {
-			organizationPOs = odService.showAllOrganizations();
+			organizationPOs = organizationData.showAllOrganizations();
 			ArrayList<OrganizationPO> pos_intermedia=new ArrayList<OrganizationPO>();
 			for(OrganizationPO p:organizationPOs){
 				if(p.getCategory()==OrganizationType.intermediateCenter){
@@ -216,7 +219,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		ArrayList<OrganizationPO> opos;
 		try {
-			opos = odService.showAllOrganizations();
+			opos = organizationData.showAllOrganizations();
 			int numOfBusinessHall=0;
 			int numOfIntermedia=0;
 			for(OrganizationPO p:opos){
@@ -244,7 +247,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return FinanceMainController.pposToVOs(prdService.getUnapprovedPaymentReceipt());
+			return FinanceMainController.pposToVOs(paymentData.getUnapprovedPaymentReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

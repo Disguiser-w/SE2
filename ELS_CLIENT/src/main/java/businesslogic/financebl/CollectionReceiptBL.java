@@ -1,7 +1,6 @@
 package businesslogic.financebl;
 
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
@@ -24,14 +24,14 @@ import businesslogic.receiptbl.getDate;
  * */
 public class CollectionReceiptBL extends ReceiptBL {
 
-	CollectionReceiptDataService crdService;
-	BusinessDataService bdService;
+	CollectionReceiptDataService collectionData;
+	BusinessDataService businessData;
 	
-	ArrayList<GatheringReceiptPO> gatheringReceiptPOs_Right;
 	
 	public CollectionReceiptBL() throws Exception{
 		super();
-		 crdService=(CollectionReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
+		collectionData=DataFactory.getCollectionReceiptData();
+		businessData=DataFactory.getBusinessData();
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 		CollectionReceiptPO po=FinanceMainController.cvoToPO(vo);
 		update(vo);
 		try {
-			return crdService.createCollection(po);
+			return collectionData.createCollection(po);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
 		ArrayList<GatheringReceiptPO> gatheringReceiptPOs;
 		try {
-			gatheringReceiptPOs = bdService.getGatheringReceipt(Time);
+			gatheringReceiptPOs = businessData.getGatheringReceipt(Time);
 			 return FinanceMainController.gposToVOs(gatheringReceiptPOs);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -121,7 +121,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
 		try {
-			collectionReceiptPOs = crdService.getAllCollection();
+			collectionReceiptPOs = collectionData.getAllCollection();
 			return FinanceMainController.cposToVOs(collectionReceiptPOs);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -139,7 +139,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
 		try {
-			collectionReceiptPOs = crdService.getAllCollection();
+			collectionReceiptPOs = collectionData.getAllCollection();
 			if(collectionReceiptPOs==null){
 				System.out.println("CollectionReceiptPO is null");
 				return null;
@@ -176,7 +176,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt() {
 		// TODO Auto-generated method stub
 		try {
-			return FinanceMainController.cposToVOs(crdService.getUnapprovedCollectionReceipt());
+			return FinanceMainController.cposToVOs(collectionData.getUnapprovedCollectionReceipt());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

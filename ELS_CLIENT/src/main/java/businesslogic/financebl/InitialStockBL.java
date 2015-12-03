@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import po.InitInfoPO;
 import vo.InitInfoVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import dataservice.financedataservice.InitialStockDataService;
 
@@ -24,7 +25,7 @@ public class InitialStockBL{
 	 * 不过这么多东西怎么用RMI链接
 	 * */
 	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
-		initData=(InitialStockDataService) Naming.lookup("rmi://172.26.209.182:8888/InitialStockDataService");
+		initData=DataFactory.getInitialStockData();
 //		userData=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
 //		organizationData=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
 //		businessData=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");

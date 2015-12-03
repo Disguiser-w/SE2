@@ -26,4 +26,30 @@ public class DataFactory {
 		BusinessDataService businessData = (BusinessDataService) Naming.lookup("//localhost:8888/BusinessDataService");
 		return businessData;
 	}
+	
+	//财务人员相关数据
+	public static AccountDataService getAccountData() throws MalformedURLException, RemoteException, NotBoundException{
+		AccountDataService accountData=(AccountDataService)Naming.lookup("//localhost:8888/AccountDataService");
+		return accountData;
+	}
+	
+	public static CollectionReceiptDataService getCollectionReceiptData() throws MalformedURLException, RemoteException, NotBoundException{
+		CollectionReceiptDataService collectionData=(CollectionReceiptDataService)Naming.lookup("//localhost:8888/CollectionReceiptDataService");
+		return collectionData;
+	}
+	
+	public static PaymentReceiptDataService getPaymentReceiptData() throws MalformedURLException, RemoteException, NotBoundException{
+		PaymentReceiptDataService paymentData=(PaymentReceiptDataService)Naming.lookup("//localhost:8888/PaymentReceiptDataService");
+		return paymentData;
+	}
+	
+	public static CostIncomeReceiptDataService getCostIncomeData() throws MalformedURLException, RemoteException, NotBoundException{
+		CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("//localhost:8888/CostIncomeReceiptDataService");
+		return costIncomeData;
+	}
+	
+	public static InitialStockDataService getInitialStockData() throws MalformedURLException, RemoteException, NotBoundException{
+		InitialStockDataService initData=(InitialStockDataService)Naming.lookup("//localhost:8800/InitialStockDataService");
+		return initData;
+	}
 }

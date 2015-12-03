@@ -12,6 +12,7 @@ import po.PaymentReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
 import businesslogic.receiptbl.getDate;
@@ -21,16 +22,16 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	double cost;
 	double income;
 	double profit;
-	CostIncomeReceiptDataService cirdService;
-	CollectionReceiptDataService crdService;
-	PaymentReceiptDataService prdService;
+	CostIncomeReceiptDataService costIncomeData;
+	CollectionReceiptDataService collectionData;
+	PaymentReceiptDataService paymentData;
 	
 	public CostIncomeReceiptBL() throws MalformedURLException, RemoteException, NotBoundException {
 		// TODO Auto-generated constructor stub
 		super();
-		cirdService=(CostIncomeReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
-		crdService=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
-		prdService=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
+		costIncomeData=DataFactory.getCostIncomeData();
+		collectionData=DataFactory.getCollectionReceiptData();
+		paymentData=DataFactory.getPaymentReceiptData();
 	}
 	
 	/**
@@ -42,7 +43,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 		// TODO Auto-generated method stub
 		CostIncomeReceiptPO po=FinanceMainController.voToPO(vo);
 		try {
-			return cirdService.creatCostIncomeList(po);
+			return costIncomeData.creatCostIncomeList(po);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +62,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
 		try {
-			collectionReceiptPOs = crdService.getAllCollection();
+			collectionReceiptPOs = collectionData.getAllCollection();
 			double income=0;
 			if(collectionReceiptPOs==null){
 				System.out.println("collectionReceiptPOs is null");
@@ -89,7 +90,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 		// TODO Auto-generated method stub
 		ArrayList<PaymentReceiptPO> paymentReceiptPOs;
 		try {
-			paymentReceiptPOs = prdService.getAllPaymentReceipt();
+			paymentReceiptPOs = paymentData.getAllPaymentReceipt();
 			double cost=0;
 			if(paymentReceiptPOs==null){
 				System.out.println("paymentReceiptPOs is null------CostIncomeReceiptBL");
@@ -134,7 +135,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	 * */
 	public CostIncomeReceiptVO getCostIncomeReceipt(String time){
 		try {
-			return FinanceMainController.cipoToVO(cirdService.getCostIncomeReceipt(time));
+			return FinanceMainController.cipoToVO(costIncomeData.getCostIncomeReceipt(time));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
