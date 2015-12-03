@@ -2,9 +2,10 @@ package presentation.mainui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
+import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +13,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import businesslogic.userbl.UserBL;
-import po.UserPO;
 import presentation.commonui.LocationHelper;
 import vo.LogVO;
 
@@ -167,30 +167,30 @@ public class MainFrame extends JFrame {
 	class SignInPanel extends JPanel {
 		// private UserNameController nameController;
 		private JLabel userNameLabel;
-		private JTextField userNameField;
+		// private JTextField userNameField;
 		private JLabel passwordLabel;
 		private JPasswordField passwordField;
 		private JButton signInButton;
 		private JButton cancelButton;
 		private JLabel imageLabel;
-		private JLabel names;
+		private JComboBox names;
 		// private JComboBox names;
 
 		private LocationHelper helper;
 
 		public SignInPanel() {
 			userNameLabel = new JLabel("      用户名:");
-			userNameField = new JTextField();
+			// userNameField = new JTextField();
 			passwordLabel = new JLabel("         密码:");
 			passwordField = new JPasswordField();
 			signInButton = new JButton("登录");
 			cancelButton = new JButton("取消");
 
 			imageLabel = new JLabel();
-			names = new JLabel();
-			// names.addItem("123");
-			// names.addItem("234");
-			// names.addItem("345");
+			names = new JComboBox();
+			names.addItem("123");
+			names.addItem("234");
+			names.addItem("345");
 
 			// names.setBackground(Color.white);
 			//
@@ -198,7 +198,8 @@ public class MainFrame extends JFrame {
 
 			signInButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					signIn(userNameField.getText(), new String(passwordField.getPassword()));
+					// signIn(userNameField.getText(), new
+					// String(passwordField.getPassword()));
 				}
 			});
 
@@ -215,7 +216,7 @@ public class MainFrame extends JFrame {
 			setLayout(null);
 
 			add(userNameLabel);
-			add(userNameField);
+			// add(userNameField);
 			add(passwordLabel);
 			add(passwordField);
 			add(signInButton);
@@ -223,14 +224,17 @@ public class MainFrame extends JFrame {
 			add(imageLabel);
 			add(names);
 
-			// names.configureEditor(names.getEditor(), "");
+			names.setEditable(true);// 将JComboBox设成是可编辑的.
+			ComboBoxEditor editor = names.getEditor();
+
+			names.configureEditor(editor, "");
 
 			helper = new LocationHelper(this);
 			setFocusable(false);
 
 			userNameLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 9.266666666666667 / 20),
 					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			userNameField.setBounds((int) (width * 8.875 / 25), (int) (height * 9.266666666666667 / 20),
+			names.setBounds((int) (width * 8.875 / 25), (int) (height * 9.266666666666667 / 20),
 					(int) (width * 11.4375 / 25), (int) (height * 1.8 / 20));
 			passwordLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 11.933333333333334 / 20),
 					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
@@ -242,8 +246,6 @@ public class MainFrame extends JFrame {
 					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
 			imageLabel.setBounds((int) (width * 9.125 / 25), (int) (height * 2.2666666666666666 / 20),
 					(int) (width * 6.6875 / 25), (int) (height * 5.6 / 20));
-			names.setBounds((int) (width * 8.875 / 25), (int) (height * 11.0 / 20), (int) (width * 11.375 / 25),
-					(int) (height * 0.06666666666666667 / 20));
 
 		}
 
@@ -277,7 +279,7 @@ public class MainFrame extends JFrame {
 			} else if (logvo.logReply.equals("falsepassword")) {
 				//
 			} else {
-				//成功登录，生成界面
+				// 成功登录，生成界面
 			}
 		}
 	}
