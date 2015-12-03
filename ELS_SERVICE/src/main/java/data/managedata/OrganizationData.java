@@ -1,8 +1,5 @@
 package data.managedata;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -12,8 +9,6 @@ import java.util.ArrayList;
 import dataservice.managedataservice.OrganizationDataService;
 import file.JXCFile;
 import po.OrganizationPO;
-import po.RepertoryPO;
-import type.OrganizationType;
 
 public class OrganizationData extends UnicastRemoteObject implements OrganizationDataService {
 

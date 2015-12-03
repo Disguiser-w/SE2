@@ -48,6 +48,7 @@ public class AddOrder {
 		// cityDistanceData = new CityDistanceDataService_stub();
 		try {
 			expressData = DataFactory.getExpressData();
+			costData = DataFactory.getCostIncomeData()
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
