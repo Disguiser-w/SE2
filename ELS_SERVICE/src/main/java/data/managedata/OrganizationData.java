@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import dataservice.managedataservice.OrganizationDataService;
 import file.JXCFile;
 import po.OrganizationPO;
+import type.OrganizationType;
 
 public class OrganizationData extends UnicastRemoteObject implements OrganizationDataService {
 
@@ -98,6 +99,28 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 
 		return organizationList;
 	}
+	
+	public ArrayList<String> getBelongingPlaces (String city) throws RemoteException {
+		ArrayList<Object> objectList = organizationFile.read();
+		ArrayList<String> belongingPlaces = new ArrayList<String>();
+		
+		if (objectList == null)
+			return null;
+
+		for (int i = 0; i < objectList.size(); i++) {
+			OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
+			if(tempOrganizationPO.getName().startsWith(city) && 
+				tempOrganizationPO.getCategory().equals(OrganizationType.businessHall)){
+				String[] transition1 = tempOrganizationPO.getName().split("市");
+				String[] transition2 = transition1[1].split("营业厅");
+				belongingPlaces.add(transition2[0]);
+			}
+		}
+		
+		return belongingPlaces;
+	}
+	
+	
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
 
