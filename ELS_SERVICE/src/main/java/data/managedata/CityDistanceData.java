@@ -104,13 +104,45 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		}
 
 		return cityDistanceList;
-<<<<<<< HEAD
     }
     
-    public String[] getAllCitys(){
-	String[] str;
+    public ArrayList<String> getAllCitys(){
+    	ArrayList<String> str = new ArrayList<String>();
+		ArrayList<Object> objectList = cityDistanceFile.read();
 	
-	return null;
+		if (objectList == null)
+			return null;
+	
+		for (int i = 0; i < objectList.size(); i++) {
+			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
+			String cityA = tempCityDistancePO.getCityA();
+			String cityB = tempCityDistancePO.getCityB();
+			
+			boolean hasSame = false;
+			for(int j=0;j<str.size();j++){
+				hasSame = false;
+				if(cityA.equals(str.get(j))){
+					hasSame = true;
+					break;
+				}
+			}
+			if(!hasSame){
+				str.add(cityA);
+			}
+			
+			for(int j=0;j<str.size();j++){
+				hasSame = false;
+				if(cityB.equals(str.get(j))){
+					hasSame = true;
+					break;
+				}
+			}
+			if(!hasSame){
+				str.add(cityB);
+			}
+			
+		}
+		return str;
     }
     /*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
@@ -187,12 +219,6 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 			}
 		}*/
     
-    /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
-    
-    public static void main(String[] args){
-     	try{
-=======
-	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
 
@@ -257,7 +283,6 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 
 	public static void main(String[] args) {
 		try {
->>>>>>> origin/master
 			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
 			CityDistanceDataService cityDistanceData = new CityDistanceData();
 			LocateRegistry.createRegistry(6005);
@@ -279,21 +304,6 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * doge的方法
-	 */
-	public ArrayList<String> getAllCitys() throws RemoteException {
-		//
-		ArrayList<String> citys = new ArrayList<String>();
-
-		citys.add("北京");
-		citys.add("上海");
-		citys.add("南京");
-		citys.add("广州");
-		
-		return citys;
 	}
 
 }
