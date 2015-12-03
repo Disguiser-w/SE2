@@ -18,7 +18,7 @@ import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
-import type.CheckState;
+import type.ReceiptState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
@@ -82,7 +82,7 @@ public class IntermediateMainController {
 				intermediateData);
 
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
-				orderList, "", "", CheckState.UNCHECKED);
+				orderList, "", "", ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData);
 
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
@@ -253,7 +253,7 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO(transferingReceipt
 						.getInterdiateCentre()), orderList,
 				transferingReceipt.getID(), transferingReceipt.getDate(),
-				transferingReceipt.getCheckState());
+				transferingReceipt.getReceiptState());
 	}
 
 	public static ArrayList<TransferingReceiptVO> poToVO_TransferingReceiptList(
@@ -291,7 +291,7 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO_OrderList(enplaningReceipt
 						.getOrderList()), enplaningReceipt.getFare(),
 				enplaningReceipt.getID(), enplaningReceipt.getDate(),
-				enplaningReceipt.getCheckState());
+				enplaningReceipt.getReceiptState());
 	}
 
 	public static EntrainingReceiptVO poToVO(
@@ -303,7 +303,7 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO_OrderList(entrainingReceipt
 						.getOrderList()), entrainingReceipt.getFare(),
 				entrainingReceipt.getID(), entrainingReceipt.getDate(),
-				entrainingReceipt.getCheckState());
+				entrainingReceipt.getReceiptState());
 	}
 
 	public static EntruckingReceiptVO poToVO(
@@ -315,7 +315,7 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO_OrderList(entruckingReceipt
 						.getOrderList()), entruckingReceipt.getFare(),
 				entruckingReceipt.getID(), entruckingReceipt.getDate(),
-				entruckingReceipt.getCheckState());
+				entruckingReceipt.getReceiptState());
 	}
 
 	public static ArrayList<EnplaningReceiptVO> poToVO_EnplaningReceipt(

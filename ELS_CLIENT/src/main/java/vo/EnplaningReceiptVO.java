@@ -2,7 +2,7 @@ package vo;
 
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
 public class EnplaningReceiptVO extends EnIntermediateReceiptVO {
 	public OrganizationVO intermediateCentre;
@@ -14,12 +14,12 @@ public class EnplaningReceiptVO extends EnIntermediateReceiptVO {
 	public String ID;
 	public String date;
 
-	public CheckState checkState;
+	public ReceiptState receiptState;
 
 	public EnplaningReceiptVO(OrganizationVO intermediateCentre, PlaneVO plane,
 			ArrayList<OrderVO> orderList, double fare, String ID, String date,
-			CheckState checkState) {
-		super(intermediateCentre, orderList, fare, ID, date, checkState);
+			ReceiptState receiptState) {
+		super(intermediateCentre, orderList, fare, ID, date, receiptState);
 		this.plane = plane;
 	}
 }

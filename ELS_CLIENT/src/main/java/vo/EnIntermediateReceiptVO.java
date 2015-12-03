@@ -2,7 +2,7 @@ package vo;
 
 import java.util.ArrayList;
 
-import type.CheckState;
+import type.ReceiptState;
 
 public class EnIntermediateReceiptVO {
 	public final OrganizationVO intermediateCentre;
@@ -13,16 +13,16 @@ public class EnIntermediateReceiptVO {
 	public final String ID;
 	public final String date;
 
-	public CheckState checkState;
+	public ReceiptState receiptState;
 
 	public EnIntermediateReceiptVO(OrganizationVO intermediateCentre,
 			ArrayList<OrderVO> orderList, double fare, String ID, String date,
-			CheckState checkState) {
+			ReceiptState receiptState) {
 		this.orderList = orderList;
 		this.ID = ID;
 		this.intermediateCentre = intermediateCentre;
 		this.fare = fare;
 		this.date = date;
-		this.checkState = checkState;
+		this.receiptState = receiptState;
 	}
 }
