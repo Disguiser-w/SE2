@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,9 +16,40 @@ import common.FileGetter;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.OrderPO;
+import po.OrganizationPO;
+import po.RepertoryPO;
 import type.OrderState;
+import type.OrganizationType;
 
-public class ExpressData implements ExpressDataService {
+public class ExpressData extends UnicastRemoteObject implements ExpressDataService {
+	public ExpressData() throws RemoteException {
+		super();
+	}
+
+	// 清空当日收费信息
+	public boolean deleteChargeInfos(String organizationID) throws RemoteException {
+		String path = "expressInfo/" + organizationID + "-express.dat";
+		File file = FileGetter.getFile(path);
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			in.close();
+
+			for (ExpressPO i : expressPOs) {
+				i.setChargeCollection(new ArrayList<String>());
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(expressPOs);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("快递员信息读写失败");
+		}
+		return false;
+	}
+
 	// 根据OrganizationID添加订单到今日订单文件中,时间自动生成，在total.dat(使用AVL树，（存放键值对，OrderID为键,路径为值）)中添加一个副本，来根据ID快速查找Organization和time
 	public boolean addOrder(OrderPO po, String organizationID) throws RemoteException {
 
@@ -105,8 +137,9 @@ public class ExpressData implements ExpressDataService {
 				System.out.println("快递员信息读取失败");
 			}
 		} else {
+
 			// 查找所有营业厅文件
-			File dir = FileGetter.getFile("expressInfo/");
+			File dir = FileGetter.getFile("expressInfo");
 			File[] files = dir.listFiles();
 			for (File i : files) {
 				try {
@@ -380,6 +413,30 @@ public class ExpressData implements ExpressDataService {
 		return true;
 	}
 
+	// 获得当日订单数
+	public int getOrderNum(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		String time = getTime();
+		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
+		File file = FileGetter.getFile(orderPath);
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
+
+			in.close();
+			if (orderPOs == null)
+				return 0;
+			else
+				return orderPOs.size();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("订单数据文件读写失败");
+		}
+
+		return -1;
+	}
+
 	// 获得当前日期
 	private String getTime() {
 		Date date = new Date();
@@ -402,6 +459,46 @@ public class ExpressData implements ExpressDataService {
 			return null;
 		}
 		return t.find(id);
+	}
+
+	// test
+	public static void main(String[] args) {
+		try {
+
+			File file = FileGetter.getFile("businessInfo/025001-business.dat");
+			if (!file.exists()) {
+
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
+					new RepertoryPO("pig", "wo"));
+			ArrayList<OrganizationPO> pos = new ArrayList<OrganizationPO>();
+			pos.add(po);
+
+			out.writeObject(pos);
+			out.close();
+
+			File file2 = FileGetter.getFile("expressInfo/025001-express.dat");
+			if (!file2.exists()) {
+				file2.getParentFile().mkdirs();
+				file2.createNewFile();
+			}
+			ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
+			ExpressPO epo = new ExpressPO("狗剩", "kdy-00001", "2.5", new ArrayList<String>(), po,
+					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
+
+			ArrayList<ExpressPO> epos = new ArrayList<ExpressPO>();
+			epos.add(epo);
+			out2.writeObject(epos);
+			out2.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

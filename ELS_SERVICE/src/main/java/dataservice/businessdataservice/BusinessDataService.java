@@ -66,6 +66,11 @@ public interface BusinessDataService extends Remote {
 
 	// 修改本营业厅该司机信息
 	public boolean modifyDriver(String organizationID, DriverPO po) throws RemoteException;
+	
+	/**
+	 * 
+	 * */
+	
 	//
 	// /**
 	// * 返回待转运的订单的列表

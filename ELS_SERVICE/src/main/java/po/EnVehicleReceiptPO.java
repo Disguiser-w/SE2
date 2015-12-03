@@ -1,16 +1,28 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import type.CheckState;
 
 /**
  * 营业厅装车单
  */
-public class EnVehicleReceiptPO {
+public class EnVehicleReceiptPO implements Serializable{
 	private OrganizationPO placeOfDeparture;
 	private String time;
 	private VehiclePO vehiclePO;
 	private ArrayList<String> OrderPOList;
 	private String receiptID;
+	private CheckState checkState;
+
+	public CheckState getCheckState() {
+		return checkState;
+	}
+
+	public void setCheckState(CheckState checkState) {
+		this.checkState = checkState;
+	}
 
 	public EnVehicleReceiptPO() {
 	}

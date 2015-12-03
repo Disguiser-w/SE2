@@ -91,7 +91,7 @@ public class EnVehicle {
 
 			String newTime = (new SimpleDateFormat("yyyMMdd")).format(new Date());
 
-			enVehicle.setReceiptID(organizationVO.organizationID + "-" + newTime + "-" + j);
+			enVehicle.setReceiptID("YYTZCD-"+organizationVO.organizationID + "-" + newTime + "-" + j);
 			j += 1;
 
 			enVehicleReceiptPOs.add(enVehicle);

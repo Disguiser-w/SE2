@@ -2,8 +2,8 @@ package vo;
 
 public class LogVO {
 
-	private String logReply;
-	private UserVO uservo;
+	public final String logReply;
+	public final UserVO uservo;
 
 	public LogVO(String logReply, UserVO uservo) {
 		this.logReply = logReply;

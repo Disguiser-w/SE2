@@ -86,7 +86,7 @@ public class AcceptCargo {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
 			String time2 = sdf2.format(d);
 			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
-			String receiptID = organizationVO.organizationID + "-" + time2 + "-" + num;
+			String receiptID = "YYTDDD-"+organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
 					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID);
 

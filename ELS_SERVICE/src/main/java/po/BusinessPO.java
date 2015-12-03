@@ -1,6 +1,8 @@
 package po;
 
-public class BusinessPO {
+import java.io.Serializable;
+
+public class BusinessPO implements Serializable{
 	private String name;
 	private String ID;
 	private String serviceTime;

@@ -1,6 +1,6 @@
 package presentation.commonui;
 
-import presentation.expressui.AddOrderPanel;
+import presentation.expressui.ChargeMessageCollectionPanel;
 
 public class UserFrameTest extends UserFrame {
 
@@ -22,7 +22,7 @@ public class UserFrameTest extends UserFrame {
 
 		// addFuncLabel(new InitializeInformationPanel());
 		// addFuncLabel(new EXwarehousePanel());
-		 addFuncLabel(new AddOrderPanel());
+		 addFuncLabel(new ChargeMessageCollectionPanel());
 
 		showFrame();
 

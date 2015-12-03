@@ -49,6 +49,7 @@ public class Gathering {
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
+			expressData.deleteChargeInfos(organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -74,7 +75,7 @@ public class Gathering {
 		// public ArrayList<String> expressIDs;
 		// public ArrayList<Double> money;
 		// public double totalmoney;
-		String receiptID = organizationVO.organizationID + " " + time;
+		String receiptID ="SKD-"+organizationVO.organizationID + "-" + time;
 
 		GatheringReceiptPO grp = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(organizationVO), time,
 				expressIDs, charges, total, receiptID);

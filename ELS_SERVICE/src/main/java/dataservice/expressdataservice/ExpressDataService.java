@@ -52,6 +52,11 @@ public interface ExpressDataService extends Remote {
 	// 如果organizationID为null说明不知道属于哪个营业厅，于是调用find
 	public boolean addHistory(String process, String organizationID, String orderID) throws RemoteException;
 
+	// 获得本营业厅当日的订单数
+	public int getOrderNum(String organizationID) throws RemoteException;
+	
+	//清空当日收费信息
+	public boolean deleteChargeInfos(String organizationID) throws RemoteException;
 	// /**
 	// * 返回订单费用的基本信息CostBasePO
 	// */

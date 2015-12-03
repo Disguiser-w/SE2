@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import type.CheckState;
+import type.ReceiptState;
 
 public class EnIntermediateReceiptPO {
 	private OrganizationPO intermediateCentre;
@@ -15,7 +15,7 @@ public class EnIntermediateReceiptPO {
 	private String ID;
 	private String date;
 
-	private CheckState checkState;
+	private ReceiptState receiptState;
 
 	public EnIntermediateReceiptPO(OrganizationPO intermediateCentre,
 			ArrayList<OrderPO> orderList, String ID) {
@@ -25,15 +25,7 @@ public class EnIntermediateReceiptPO {
 		this.ID = ID;
 		this.intermediateCentre = intermediateCentre;
 		this.orderList = orderList;
-		this.checkState = CheckState.UNCHECKED;
-	}
-
-	public CheckState getCheckState() {
-		return checkState;
-	}
-
-	public void setCheckState(CheckState checkState) {
-		this.checkState = checkState;
+		this.setReceiptState(ReceiptState.SUBMIT);
 	}
 
 	public OrganizationPO getIntermediateCentre() {
@@ -66,5 +58,13 @@ public class EnIntermediateReceiptPO {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public ReceiptState getReceiptState() {
+		return receiptState;
+	}
+
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 }

@@ -4,9 +4,7 @@ import java.rmi.RemoteException;
 
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.managedataservice.CityDistanceDataService;
-import dataservice.managedataservice.CityDistanceDataService_stub;
 import dataservice.managedataservice.CostDataService;
-import dataservice.managedataservice.CostDataService_stub;
 import po.OrderPO;
 import type.OrderState;
 import vo.OrderVO;
@@ -41,8 +39,8 @@ public class AddOrder {
 		// 营业厅，营业厅加时间，营业厅加时间段，所有
 
 		// 此处将就
-		costData = new CostDataService_stub();
-		cityDistanceData = new CityDistanceDataService_stub();
+//		costData = new CostDataService_stub();
+//		cityDistanceData = new CityDistanceDataService_stub();
 	}
 
 	public boolean addOrder(OrderVO vo) {
@@ -99,12 +97,12 @@ public class AddOrder {
 		String city2 = vo.recipientAddress.split(" ")[0];
 
 		double distance = 0;
-		try {
-			distance = cityDistanceData.findCityDistance(city1, city2);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			distance = cityDistanceData.findCityDistance(city1, city2);
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		double weight = Double.parseDouble(vo.weight);
 		double volumn = Double.parseDouble(vo.volume);
