@@ -4,10 +4,10 @@ public class ReviewReceiptBLService_driver {
 	
 	public void drive(ReviewReceiptBLService rrs){
 		String[] str = {"20151001", "20151002","20151003"};
-		rrs.batch(str);
-		rrs.approve("20151001");
-		rrs.reply("20151001");
-		rrs.getReceiptList();
+		rrs.batch(str, null);
+		rrs.approve("20151001", null);
+		//rrs.reply("20151001");
+		rrs.getAllReceiptList();
 		rrs.refresh();
 	}
 	

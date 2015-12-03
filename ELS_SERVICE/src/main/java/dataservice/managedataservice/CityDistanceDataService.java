@@ -13,5 +13,5 @@ public interface CityDistanceDataService extends Remote {
     public int modifyCityDistance(CityDistancePO cityDistancepo) throws RemoteException;
     public CityDistancePO findCityDistance(String cityA, String cityB) throws RemoteException;
     public ArrayList<CityDistancePO> showAllCityDistances() throws RemoteException;
-    
+    public String[] getAllCitys() throws RemoteException;
 }
