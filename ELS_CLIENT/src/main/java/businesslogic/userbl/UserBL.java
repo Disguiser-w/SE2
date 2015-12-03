@@ -15,194 +15,182 @@ import type.SalaryPlanType;
 import vo.UserVO;
 import vo.LogVO;
 
-public class UserBL implements UserBLService {
+public class UserBL implements UserBLService{
 
 	public UserDataService udService;
-
-	/*
-	 * public User() throws Exception{ String host=getServer.getServer(); String
-	 * url="rmi://"+host+"/userService";
-	 * udService=(UserDataService)Naming.lookup(url); }
-	 */
-
+	
+	/*public User() throws Exception{
+		String host=getServer.getServer();
+		String url="rmi://"+host+"/userService";
+		udService=(UserDataService)Naming.lookup(url);
+	}*/
+	
 	/**
-	 * @param String
-	 *            userID, String password
+	 * @param String userID, String password
 	 * @return LogVO
 	 * @see UserPO
 	 * 
-	 */
-	public LogVO login(String userID, String password) {
-		//test
-		return new LogVO("success", null);
-		// try{
-		// UserPO userpo = udService.findUser(userID);
-		// if(userpo.equals(null)) //找不到该用户，返回2
-		// return new LogVO("nouser", null);
-		// else if(!(userpo.getPassword().equals(password))) //用户密码错误，返回1
-		// return new LogVO("falsepassword", null);
-		// else{
-		// return new LogVO("success", poToVO(userpo)); //登录成功，返回0
-		// }
-		// }catch(RemoteException exception){
-		// exception.printStackTrace();
-		// return new LogVO("The server failed", null);
-		// }
+	 * */
+	public LogVO login(String userID, String password){
+		try{
+			UserPO userpo = udService.findUser(userID);
+			if(userpo.equals(null))   //找不到该用户，返回2
+				return new LogVO("The user doesn't exist", null);
+			else if(!(userpo.getPassword().equals(password)))	//用户密码错误，返回1
+				return new LogVO("The userID and the password don't match", null);
+			else{ 
+				return new LogVO("Login succeed", poToVO(userpo));	//登录成功，返回0	
+			}						
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return new LogVO("The server failed", null);
+		}
 	}
-
+	
 	/**
-	 * @param UserVO
-	 *            uservo
-	 * @return 0(add succeed), 1(user with the ID has already existed),2(server
-	 *         failed)
+	 * @param UserVO uservo
+	 * @return 0(add succeed), 1(user with the ID has already existed),2(server failed)
 	 * @see UserPO
 	 * 
-	 */
-	public int addUser(UserVO uservo) {
-		try {
+	 * */
+	public int addUser(UserVO uservo){
+		try{
 			UserPO newuserpo = voToPO(uservo);
-			return (udService.addUser(newuserpo));
-		} catch (RemoteException exception) {
+			return(udService.addUser(newuserpo));
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-
+	
 	/**
-	 * @param String
-	 *            userID
+	 * @param String userID
 	 * @return 0(delete succeed),1(delete failed),2(server failed)
 	 * @see UserPO
 	 * 
-	 */
-	public int deleteUser(String userID) {
-		try {
-			return (udService.deleteUser(userID));
-		} catch (RemoteException exception) {
+	 * */
+	public int deleteUser(String userID){
+		try{
+			return(udService.deleteUser(userID));
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-
+	
 	/**
-	 * @param UserVO
-	 *            uservo
+	 * @param UserVO uservo
 	 * @return 0(modify succeed),1(modify failed),2(server failed)
 	 * @see UserPO
 	 * 
-	 */
-	public int modifyUserPassword(UserVO uservo) {
-		try {
+	 * */
+	public int modifyUserPassword(UserVO uservo){
+		try{
 			UserPO userpo = voToPO(uservo);
-			return (udService.modifyUser(userpo));
-		} catch (RemoteException exception) {
+			return(udService.modifyUser(userpo));
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-
+	
 	/**
-	 * @param UserVO
-	 *            uservo
+	 * @param UserVO uservo
 	 * @return 0(modify succeed),1(modify failed),2(server failed)
 	 * @see UserPO
 	 * 
-	 */
-	public int modifyUserAuthority(UserVO uservo) {
-		try {
+	 * */
+	public int modifyUserAuthority(UserVO uservo){
+		try{
 			UserPO userpo = voToPO(uservo);
-			return (udService.modifyUser(userpo));
-		} catch (RemoteException exception) {
+			return(udService.modifyUser(userpo));
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
 		}
 	}
-
+	
 	/**
-	 * @param String
-	 *            userID
+	 * @param String userID
 	 * @return uservo
 	 * @see UserPO
 	 * 
-	 */
-	public UserVO findUser(String userID) {
-		try {
+	 * */
+	public UserVO findUser(String userID){
+		try{
 			UserPO userpo = udService.findUser(userID);
-			if (userpo != null)
+			if(userpo != null)
 				return poToVO(userpo);
 			else
 				return null;
-		} catch (RemoteException exception) {
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return null;
 		}
 	}
-
+	
 	/**
 	 * @return ArrayList<UserVO>
 	 * @see UserPO
 	 * 
-	 */
-	public ArrayList<UserVO> showAllUsers() {
-		try {
+	 * */
+	public ArrayList<UserVO> showAllUsers(){
+		try{
 			ArrayList<UserPO> userpoList = udService.showAllUsers();
-			ArrayList<UserVO> uservoList = new ArrayList<UserVO>();
-			for (UserPO userpo : userpoList) {
+			ArrayList<UserVO> uservoList= new ArrayList<UserVO>();
+			for(UserPO userpo:userpoList){
 				uservoList.add(poToVO(userpo));
 			}
 			return uservoList;
-		} catch (RemoteException exception) {
+		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return null;
 		}
 	}
-
+	
 	/**
 	 * @param UserVO
 	 * @return UserPO
 	 * 
-	 */
-	public static UserPO voToPO(UserVO uservo) {
-		UserPO userpo = new UserPO(uservo.getName(), uservo.getID(), uservo.getPassword(), uservo.getProfession(),
-				uservo.getOrganization(), uservo.getSalaryPlan(), uservo.getAuthority(), uservo.getGrades());
+	 * */
+	public static UserPO voToPO(UserVO uservo){
+		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
+					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
 		return userpo;
 	}
-
+	
 	/**
 	 * @param UserPO
 	 * @return UserVO
 	 * 
-	 */
-	public static UserVO poToVO(UserPO userpo) {
-		UserVO uservo = new UserVO(userpo.getName(), userpo.getID(), userpo.getPassword(), userpo.getProfession(),
-				userpo.getOrganization(), userpo.getSalaryPlan(), userpo.getAuthority(), userpo.getGrades());
+	 * */
+	public static UserVO poToVO(UserPO userpo){
+		UserVO uservo = new UserVO(userpo.getName(),userpo.getID(),userpo.getPassword(),userpo.getProfession(),
+				userpo.getOrganization(),userpo.getSalaryPlan(),userpo.getAuthority(),userpo.getGrades());
 		return uservo;
 	}
-
-	/*--------------------------------------------------Test Part---------------------------------------------------*/
-
-	/*------------------------------------- Test server whether can normally work ----------------------------------*/
-
-	public static void main(String[] args) {
+	
+	
+	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
+    
+    /*------------------------------------- Test server whether can normally work ----------------------------------*/
+	
+	public static void main(String[] args){
 		try {
-			UserDataService userData = (UserDataService) Naming.lookup("rmi://172.25.132.40:6000/UserDataService");
-
+			UserDataService userData = (UserDataService)Naming.lookup("rmi://172.25.132.40:6000/UserDataService");
+			
 			ArrayList<UserPO> userList0 = userData.showAllUsers();
-			for (UserPO user : userList0)
-				System.out.println(
-						"ID: " + user.getID() + ", Name: " + user.getName() + ", Profession: " + user.getProfession()
-								+ ", Organization: " + user.getOrganization() + ", SalaryPlan: " + user.getSalaryPlan()
-								+ ", Authority: " + user.getAuthority() + ", Grades: " + user.getGrades());
+			for(UserPO user:userList0)
+				System.out.println("ID: "+user.getID()+", Name: "+user.getName()+", Profession: "+user.getProfession()+", Organization: "
+				+user.getOrganization()+", SalaryPlan: "+user.getSalaryPlan()+", Authority: "+user.getAuthority()+", Grades: "+user.getGrades());
 
-			userData.addUser(new UserPO("刘钦", "CK-01", "123456", ProfessionType.stockman, "南京中转中心",
-					SalaryPlanType.stockmanSalaryPlan, AuthorityType.lowest, 0));
-
+			userData.addUser(new UserPO("刘钦" ,"CK-01","123456", ProfessionType.stockman, "南京中转中心",
+    					SalaryPlanType.stockmanSalaryPlan, AuthorityType.lowest, 0));
+			
 			ArrayList<UserPO> userList1 = userData.showAllUsers();
-			for (UserPO user : userList1)
-				System.out.println(
-						"ID: " + user.getID() + ", Name: " + user.getName() + ", Profession: " + user.getProfession()
-								+ ", Organization: " + user.getOrganization() + ", SalaryPlan: " + user.getSalaryPlan()
-								+ ", Authority: " + user.getAuthority() + ", Grades: " + user.getGrades());
+			for(UserPO user:userList1)
+				System.out.println("ID: "+user.getID()+", Name: "+user.getName()+", Profession: "+user.getProfession()+", Organization: "
+				+user.getOrganization()+", SalaryPlan: "+user.getSalaryPlan()+", Authority: "+user.getAuthority()+", Grades: "+user.getGrades());
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -215,5 +203,6 @@ public class UserBL implements UserBLService {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 }
