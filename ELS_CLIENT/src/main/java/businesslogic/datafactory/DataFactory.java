@@ -19,6 +19,10 @@ import dataservice.intermediatedataservice.IntermediateDataService;
 import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
+import dataservice.managedataservice.OrganizationDataService;
+import dataservice.managedataservice.PerWageDataService;
+import dataservice.repertorydataservice.GoodsDataService;
+import dataservice.repertorydataservice.RepertoryDataService;
 
 //暂时使用 localhost:8888
 public class DataFactory {
@@ -107,18 +111,39 @@ public class DataFactory {
 	public static CostDataService getCostData()
 			throws MalformedURLException, RemoteException, NotBoundException {
 		CostDataService costDataData = (CostDataService) Naming
-				.lookup("//" + address + "/CityDistanceDataService");
+				.lookup("//" + address + "/CostDataService");
 		return costDataData;
 	}
 	
-	public static CostDataService getCostData()
+	public static OrganizationDataService getOrganizationData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		CostDataService costDataData = (CostDataService) Naming
-				.lookup("//" + address + "/CityDistanceDataService");
-		return costDataData;
+		OrganizationDataService organizationData = (OrganizationDataService) Naming
+				.lookup("//" + address + "/OrganizationDataService");
+		return organizationData;
 	}
 	
-	public 
+	public static PerWageDataService getPerWageData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		PerWageDataService perWageData = (PerWageDataService) Naming
+				.lookup("//" + address + "/PerWageDataService");
+		return perWageData;
+	}
+	
+	//仓库管理员
+	public static  GoodsDataService getGoodsData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		GoodsDataService goodsData = (GoodsDataService) Naming
+				.lookup("//" + address + "/GoodsDataService");
+		return goodsData;
+	}
+	
+	public static RepertoryDataService getRepertoryData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		RepertoryDataService repertoryData = (RepertoryDataService) Naming
+				.lookup("//" + address + "/RepertoryDataService");
+		return repertoryData;
+	}
+	
 
 
 }
