@@ -1,8 +1,13 @@
 package presentation.mainui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import businesslogic.userbl.UserBL;
+import init.UserNameController;
 import presentation.commonui.LocationHelper;
 import vo.LogVO;
 
@@ -176,30 +182,28 @@ public class MainFrame extends JFrame {
 		private JComboBox names;
 		// private JComboBox names;
 
-		private LocationHelper helper;
+		private UserNameController nameController;
+		// private LocationHelper helper;
 
 		public SignInPanel() {
-			userNameLabel = new JLabel("      用户名:");
+			userNameLabel = new JLabel("用户名:");
 			// userNameField = new JTextField();
-			passwordLabel = new JLabel("         密码:");
+			passwordLabel = new JLabel("   密码:");
 			passwordField = new JPasswordField();
 			signInButton = new JButton("登录");
 			cancelButton = new JButton("取消");
 
 			imageLabel = new JLabel();
 			names = new JComboBox();
-			names.addItem("123");
-			names.addItem("234");
-			names.addItem("345");
 
-			// names.setBackground(Color.white);
-			//
-			// nameController = new UserNameController();
+			imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+			nameController = new UserNameController();
 
 			signInButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// signIn(userNameField.getText(), new
-					// String(passwordField.getPassword()));
+
+					signIn((String) names.getSelectedItem(), new String(passwordField.getPassword()));
 				}
 			});
 
@@ -214,7 +218,7 @@ public class MainFrame extends JFrame {
 			int height = MAIN_HEIGHT;
 
 			setLayout(null);
-
+			add(names);
 			add(userNameLabel);
 			// add(userNameField);
 			add(passwordLabel);
@@ -222,19 +226,16 @@ public class MainFrame extends JFrame {
 			add(signInButton);
 			add(cancelButton);
 			add(imageLabel);
-			add(names);
 
-			names.setEditable(true);// 将JComboBox设成是可编辑的.
-			ComboBoxEditor editor = names.getEditor();
+			// add(names);
+			setInfos();
+			updateNames();
 
-			names.configureEditor(editor, "");
-
-			helper = new LocationHelper(this);
-			setFocusable(false);
+			// helper = new LocationHelper(this);
 
 			userNameLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 9.266666666666667 / 20),
 					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			names.setBounds((int) (width * 8.875 / 25), (int) (height * 9.266666666666667 / 20),
+			names.setBounds((int) (width * 8.9375 / 25), (int) (height * 9.266666666666667 / 20),
 					(int) (width * 11.4375 / 25), (int) (height * 1.8 / 20));
 			passwordLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 11.933333333333334 / 20),
 					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
@@ -254,6 +255,42 @@ public class MainFrame extends JFrame {
 			frame.add(mainPanel);
 			frame.repaint();
 
+		}
+
+		private void setInfos() {
+
+			passwordField.setEchoChar('*');
+
+			names.setEditable(true);// 将JComboBox设成是可编辑的.
+			ComboBoxEditor editor = names.getEditor();
+			names.configureEditor(editor, "");
+			names.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					if (names.getItemCount() == 0)
+						return;
+					if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+						nameController.deleteName((String) names.getSelectedItem());
+						updateNames();
+						repaint();
+					}
+				}
+			});
+
+		}
+
+		private void updateNames() {
+
+			ArrayList<String> name = nameController.getUserName();
+
+			if (name != null) {
+				names.removeAllItems();
+				for (String i : name) {
+					names.addItem(i);
+
+				}
+			}
+
+			names.configureEditor(names.getEditor(), "");
 		}
 
 		// 调用bl层的方法登录
@@ -280,6 +317,8 @@ public class MainFrame extends JFrame {
 				//
 			} else {
 				// 成功登录，生成界面
+				nameController.addNewName(userID);
+				updateNames();
 			}
 		}
 	}

@@ -21,4 +21,6 @@ public class DataFactory {
 		BusinessDataService businessData = (BusinessDataService) Naming.lookup("//localhost:8888/BusinessDataService");
 		return businessData;
 	}
+	
+	
 }

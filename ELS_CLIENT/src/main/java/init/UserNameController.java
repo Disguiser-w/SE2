@@ -8,10 +8,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import common.FileGetter;
+
 public class UserNameController {
 	public ArrayList<String> getUserName() {
+
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("users.dat")));
+			File file = FileGetter.getFile("users.dat");
+
+			if (!file.exists())
+				return null;
+
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<String> userName = (ArrayList<String>) in.readObject();
 			in.close();
 
@@ -24,11 +32,63 @@ public class UserNameController {
 		return null;
 	}
 
-	public boolean addNewName(String userName) {
+	public boolean deleteName(String userName) {
+
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("users.dat")));
+			File file = FileGetter.getFile("users.dat");
+
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<String> userNames = (ArrayList<String>) in.readObject();
 			in.close();
+
+			int i;
+			for (i = 0; i < userNames.size(); i++)
+				if (userNames.get(i).equals(userName)) {
+					break;
+				}
+
+			userNames.remove(i);
+			if (userNames.isEmpty()) {
+				file.delete();
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(userNames);
+			out.close();
+
+			return true;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean addNewName(String userName) {
+		if (userName.equals(""))
+			return false;
+		try {
+			File file = FileGetter.getFile("users.dat");
+
+			if (!file.exists()) {
+				file.createNewFile();
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File("users.dat")));
+				ArrayList<String> userNames = new ArrayList<String>();
+				userNames.add(userName);
+
+				out.writeObject(userNames);
+				out.close();
+				return true;
+			}
+
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<String> userNames = (ArrayList<String>) in.readObject();
+			in.close();
+
+			for (String i : userNames)
+				if (i.equals(userName))
+					return false;
 
 			userNames.add(userName);
 
@@ -56,4 +116,5 @@ public class UserNameController {
 			return null;
 		}
 	}
+
 }

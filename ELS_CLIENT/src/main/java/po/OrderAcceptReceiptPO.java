@@ -3,8 +3,6 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import type.CheckState;
-
 public class OrderAcceptReceiptPO implements Serializable{
 	private OrganizationPO local;
 	private String time;

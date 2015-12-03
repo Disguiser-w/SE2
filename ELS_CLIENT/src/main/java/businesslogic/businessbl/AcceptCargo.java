@@ -1,16 +1,16 @@
 package businesslogic.businessbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import businesslogic.businessbl.controller.BusinessMainController;
-import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.datafactory.DataFactory;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.businessdataservice.BusinessDataService_stub;
 import dataservice.expressdataservice.ExpressDataService;
-import dataservice.expressdataservice.ExpressDataService_stub;
 import po.OrderAcceptReceiptPO;
 import po.OrderPO;
 import po.OrganizationPO;
@@ -22,10 +22,14 @@ public class AcceptCargo {
 	private BusinessDataService businessData;
 	private ExpressDataService expressData;
 
-	public AcceptCargo() {
-		// 使用RMI初始化businessDataService
-		businessData = new BusinessDataService_stub();
-		expressData = new ExpressDataService_stub();
+	public AcceptCargo() {		// 使用RMI初始化businessDataService
+		try {
+			businessData = DataFactory.getBusinessData();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public boolean acceptCargo(String organizationID, String vehicleID, ArrayList<String> orderIDs) {
@@ -62,7 +66,7 @@ public class AcceptCargo {
 		// 将OrderPOs添加到本营业厅的当日订单文件中,第二天派件
 
 		try {
-				expressData.addDistributingOrder(orderPOs, organizationVO.organizationID);
+			expressData.addDistributingOrder(orderPOs, organizationVO.organizationID);
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -86,7 +90,7 @@ public class AcceptCargo {
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");
 			String time2 = sdf2.format(d);
 			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
-			String receiptID = "YYTDDD-"+organizationVO.organizationID + "-" + time2 + "-" + num;
+			String receiptID = "YYTDDD-" + organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
 					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID);
 

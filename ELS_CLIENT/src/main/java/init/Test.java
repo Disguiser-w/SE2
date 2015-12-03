@@ -46,23 +46,25 @@ public class Test {
 	}
 
 	public static void main(String args[]) {
-		// new Test();
-		try {
-			ExpressDataService expressData = (ExpressDataService) Naming.lookup("//localhost:8888/ExpressDataService");
-			BusinessDataService businessData = (BusinessDataService) Naming
-					.lookup("//localhost:8888/BusinessDataService");
-
-			System.out.println(expressData.getExpressInfo(null, "kdy-00001").getName());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new Test();
+		// try {
+		// ExpressDataService expressData = (ExpressDataService)
+		// Naming.lookup("//localhost:8888/ExpressDataService");
+		// BusinessDataService businessData = (BusinessDataService) Naming
+		// .lookup("//localhost:8888/BusinessDataService");
+		//
+		// System.out.println(expressData.getExpressInfo(null,
+		// "kdy-00001").getName());
+		// } catch (MalformedURLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (NotBoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 	}
 }
