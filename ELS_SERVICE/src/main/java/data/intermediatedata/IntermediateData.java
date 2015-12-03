@@ -2,10 +2,13 @@ package data.intermediatedata;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.Operation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +21,7 @@ import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
 import type.OperationState;
+import type.ReceiptState;
 import common.FileGetter;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
@@ -223,6 +227,19 @@ public class IntermediateData implements IntermediateDataService {
 			System.out.println("保存中转中心到达单信息失败！");
 		}
 
+		path = "transferingReceiptInfo.dat";
+		file = FileGetter.getFile(path);
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file, true));
+			out.writeObject(transferingReceipt);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("保存中转中心到达单信息失败！");
+		}
+
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -264,6 +281,19 @@ public class IntermediateData implements IntermediateDataService {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
+			out.writeObject(enIntermediateReceipt);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("保存装车单信息失败！");
+		}
+
+		path = "enIntermediateReceiptInfo.dat";
+		file = FileGetter.getFile(path);
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file, true));
 			out.writeObject(enIntermediateReceipt);
 			out.close();
 		} catch (Exception e) {
@@ -316,6 +346,108 @@ public class IntermediateData implements IntermediateDataService {
 		}
 
 		return OperationState.SUCCEED_OPERATION;
+	}
+
+	public ArrayList<TransferingReceiptPO> getSubmittedTransferingReceiptInfo() {
+		String path = "transferingReceiptInfo.dat";
+		File file = FileGetter.getFile(path);
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					file));
+			@SuppressWarnings("unchecked")
+			ArrayList<TransferingReceiptPO> transferingReceiptList = (ArrayList<TransferingReceiptPO>) in
+					.readObject();
+			in.close();
+
+			for (TransferingReceiptPO transferingReceipt : transferingReceiptList) {
+				if (transferingReceipt.getReceiptState() != ReceiptState.SUBMIT)
+					transferingReceiptList.remove(transferingReceipt);
+			}
+
+			return transferingReceiptList;
+
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+			System.out.println("读取中转中心到达单信息失败");
+		}
+
+		return null;
+	}
+
+	public OperationState saveSubmittedTransferingReceiptInfo(
+			ArrayList<TransferingReceiptPO> transferingReceiptList) {
+		String path = "transferingReceiptInfo.dat";
+		File file = FileGetter.getFile(path);
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+
+			for (TransferingReceiptPO transferingReceipt : transferingReceiptList)
+				out.writeObject(transferingReceipt);
+			out.close();
+
+			return OperationState.SUCCEED_OPERATION;
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+			System.out.println("保存中转中心到达单信息失败");
+		}
+
+		return OperationState.FAIL_OPERATION;
+	}
+
+	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo() {
+		String path = "enIntermediateReceiptInfo.dat";
+		File file = FileGetter.getFile(path);
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					file));
+			@SuppressWarnings("unchecked")
+			ArrayList<EnIntermediateReceiptPO> enIntermediateReceiptList = (ArrayList<EnIntermediateReceiptPO>) in
+					.readObject();
+			in.close();
+
+			for (EnIntermediateReceiptPO enIntermediateReceipt : enIntermediateReceiptList) {
+				if (enIntermediateReceipt.getReceiptState() != ReceiptState.SUBMIT)
+					enIntermediateReceiptList.remove(enIntermediateReceipt);
+			}
+
+			return enIntermediateReceiptList;
+
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+			System.out.println("读取装车单信息失败");
+		}
+
+		return null;
+	}
+
+	public OperationState saveSubmittedEnIntermediateReceiptInfo(
+			ArrayList<EnIntermediateReceiptPO> enIntermeidiateReceiptList) {
+		String path = "enIntermediateReceiptInfo.dat";
+		File file = FileGetter.getFile(path);
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+
+			for (EnIntermediateReceiptPO enIntermediateReceipt : enIntermeidiateReceiptList)
+				out.writeObject(enIntermediateReceipt);
+			out.close();
+
+			return OperationState.SUCCEED_OPERATION;
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+			System.out.println("保存装车单信息失败");
+		}
+
+		return OperationState.FAIL_OPERATION;
 	}
 
 	private String getDate() {
