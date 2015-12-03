@@ -1,9 +1,15 @@
 package po;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class InitInfoPO {
+public class InitInfoPO extends UnicastRemoteObject{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 机构信息
 	// 人员信息
 	// 车辆信息
@@ -16,10 +22,9 @@ public class InitInfoPO {
 	private ArrayList<VehiclePO> vehiclePOs;
 	private ArrayList<RepertoryPO> repertoryPOs;
 	private ArrayList<UserPO> userPOs;
-	public InitInfoPO(){
-	}
 	
-	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs){
+	
+	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs) throws RemoteException{
 		super();
 		this.date=date;
 		this.userPOs=userPOs;

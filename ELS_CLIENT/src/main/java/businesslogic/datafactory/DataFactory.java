@@ -7,6 +7,11 @@ import java.rmi.RemoteException;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
+import dataservice.financedataservice.AccountDataService;
+import dataservice.financedataservice.CollectionReceiptDataService;
+import dataservice.financedataservice.CostIncomeReceiptDataService;
+import dataservice.financedataservice.InitialStockDataService;
+import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 //暂时使用 localhost:8888
@@ -31,4 +36,31 @@ public class DataFactory {
 				.lookup("//localhost:8888/IntermediateDataService");
 		return intermediateData;
 	}
+	
+	//财务人员相关数据
+	public static AccountDataService getAccountData() throws MalformedURLException, RemoteException, NotBoundException{
+		AccountDataService accountData=(AccountDataService)Naming.lookup("//localhost:8888/AccountDataService");
+		return accountData;
+	}
+	
+	public static CollectionReceiptDataService getCollectionReceiptData() throws MalformedURLException, RemoteException, NotBoundException{
+		CollectionReceiptDataService collectionData=(CollectionReceiptDataService)Naming.lookup("//localhost:8888/CollectionReceiptDataService");
+		return collectionData;
+	}
+	
+	public static CostIncomeReceiptDataService getCostIncomeReceiptData() throws MalformedURLException, RemoteException, NotBoundException{
+		CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("//localhost:8888/CostIncomeReceiptDataService");
+		return costIncomeData;
+	}
+	
+	public static InitialStockDataService getInitialStockData() throws MalformedURLException, RemoteException, NotBoundException{
+		InitialStockDataService initData=(InitialStockDataService)Naming.lookup("//localhost:8888/InitialStockDataService");
+		return initData;
+	}
+	
+	public static PaymentReceiptDataService getPaymentReceiptData() throws MalformedURLException, RemoteException, NotBoundException{
+		PaymentReceiptDataService paymentData=(PaymentReceiptDataService)Naming.lookup("//localhost:8888/PaymentReceiptDataService");
+		return paymentData;
+	}
+	
 }

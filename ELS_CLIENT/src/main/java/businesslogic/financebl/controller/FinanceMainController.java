@@ -460,8 +460,16 @@ public class FinanceMainController {
 			}
 		}
 		
-		InitInfoPO initPO=new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
-		return initPO;
+		InitInfoPO initPO;
+		try {
+			initPO = new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+			return initPO;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	
 	}
 	
 	/**
