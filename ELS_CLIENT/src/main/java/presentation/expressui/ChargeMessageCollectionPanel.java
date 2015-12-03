@@ -95,7 +95,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	private void setBaseInfo() {
 
 		// 设置成不可编辑不可改变位置，大小
-		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		 messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		messageTable.getTableHeader().setReorderingAllowed(false);
 		messageTable.getTableHeader().setResizingAllowed(false);
 

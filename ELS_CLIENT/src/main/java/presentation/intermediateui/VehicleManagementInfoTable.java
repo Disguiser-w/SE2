@@ -14,6 +14,10 @@ public class VehicleManagementInfoTable extends JTable {
 		super(row, column);
 		width = 720;
 		height = 480;
+		
+//		this.getTableHeader().setReorderingAllowed(false);
+//		this.getTableHeader().setResizingAllowed(false);
+//		
 		setInfo();
 	}
 

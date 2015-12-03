@@ -49,4 +49,14 @@ public interface IntermediateDataService extends Remote {
 			String date);
 
 	public OperationState saveFareInfo(String organization_ID, FarePO fare);
+
+	public ArrayList<TransferingReceiptPO> getSubmittedTransferingReceiptInfo();
+
+	public OperationState saveSubmittedTransferingReceiptInfo(
+			ArrayList<TransferingReceiptPO> transferingReceiptList);
+
+	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo();
+
+	public OperationState saveSubmittedEnIntermediateReceiptInfo(
+			ArrayList<EnIntermediateReceiptPO> enIntermeidiateReceiptList);
 }
