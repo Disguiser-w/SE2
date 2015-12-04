@@ -1,7 +1,10 @@
 package presentation.expressui;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -70,9 +74,9 @@ public class AddOrderPanel extends JPanel {
 	private JTextField goodNameField;
 
 	private JComboBox<String> senderCountryList;
-	private JTextField senderCityField;
+	private JComboBox<String> senderCityField;
 	private JComboBox<String> receiverCountryList;
-	private JTextField receiverCityField;
+	private JComboBox<String> receiverCityField;
 	private JComboBox<String> expressTypeList;
 	private JComboBox<String> packageTypeList;
 
@@ -130,10 +134,10 @@ public class AddOrderPanel extends JPanel {
 		goodNameField = new JTextField();
 
 		senderCountryList = new JComboBox<String>();
-		senderCityField = new JTextField();
+		senderCityField = new JComboBox<String>();
 
 		receiverCountryList = new JComboBox<String>();
-		receiverCityField = new JTextField();
+		receiverCityField = new JComboBox<String>();
 		expressTypeList = new JComboBox<String>();
 		packageTypeList = new JComboBox<String>();
 
@@ -271,7 +275,6 @@ public class AddOrderPanel extends JPanel {
 		add(timeLabel);
 		add(cost);
 		add(time);
-
 		// helper = new LocationHelper(this);
 
 		setBaseInfo();
@@ -352,17 +355,30 @@ public class AddOrderPanel extends JPanel {
 		// 获取城市信息，
 		CityDistanceDataService cityDistanceData = null;
 		ArrayList<String> citys = null;
+		ArrayList<String> places = null;
+
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
 			citys = cityDistanceData.getAllCitys();
-		} catch (Exception e) {
+			// places = cityDistanceData.getPlaces();
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		for (String i : citys) {
 			senderCountryList.addItem(i);
 			receiverCountryList.addItem(i);
 		}
+		senderCountryList.addItem("");
+
+		senderCityField.addItem("区１");
+
+		receiverCityField.addItem("区1");
+
+		senderCityField.addItem("区2");
+
+		receiverCityField.addItem("区2");
 
 		// PackType.CARTONS
 		packageTypeList.addItem("纸箱");
@@ -385,9 +401,10 @@ public class AddOrderPanel extends JPanel {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (controller.addOrder(newOrder)) {
-
+					warnning(new String[] { "订单提交成功" });
+					clear();
 				} else {
-
+					
 				}
 			}
 		});
@@ -396,34 +413,109 @@ public class AddOrderPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				String senderName = senderNameField.getText();
+
 				if (senderName.trim().equals("")) {
 					warnning(new String[] { "寄件人姓名不可为空！" });
 					return;
 				}
 
 				String senderOrganization = senderOrganizationField.getText();
+				if (senderOrganization.equals(""))
+					senderOrganizationField.setText("-");
 
 				String senderPhone = senderPhoneField.getText();
+				if (senderPhone.equals(""))
+					senderPhoneField.setText("-");
+
 				String senderMobilePhone = senderMobilePhoneField.getText();
+
+				if (senderMobilePhone.equals("")) {
+					warnning(new String[] { "寄件人手机号码不可为空！" });
+					return;
+
+				}
+				boolean result = true;
+
+				if (senderMobilePhone.length() != 11)
+					result = false;
+				else
+					for (int i = 0; i < 11; i++) {
+						if ('0' > senderMobilePhone.charAt(i) || senderMobilePhone.charAt(i) > '9')
+							result = false;
+					}
+				if (!result) {
+					warnning(new String[] { "寄件人手机号码格式有误！" });
+					return;
+				}
+
 				String senderAddress = senderAddressField.getText();
+				if (senderAddress.equals("")) {
+					senderAddressField.setText("-");
+				}
 
 				String receiverName = receiverNameField.getText();
-				String receiverOrganization = receiverOrganizationField.getText();
-				String receiverPhone = receiverPhoneField.getText();
-				String receiverMobilePhone = receiverMobilePhoneField.getText();
-				String receiverAddress = receiverAddressField.getText();
+				if (receiverName.equals("")) {
+					warnning(new String[] { "收件人姓名不可为空！" });
+					return;
+				}
 
-				String goods = goodsField.getText();
+				String receiverOrganization = receiverOrganizationField.getText();
+				if (receiverOrganization.equals(""))
+					receiverOrganizationField.setText("-");
+
+				String receiverPhone = receiverPhoneField.getText();
+				if (receiverPhone.equals(""))
+					receiverPhoneField.setText("-");
+
+				String receiverMobilePhone = receiverMobilePhoneField.getText();
+				if (receiverMobilePhone.equals("")) {
+					warnning(new String[] { "收件人手机号码不可为空！" });
+					return;
+				}
+
+				if (receiverMobilePhone.length() != 11)
+					result = false;
+				else
+					for (int i = 0; i < 11; i++) {
+						if ('0' > receiverMobilePhone.charAt(i) || receiverMobilePhone.charAt(i) > '9')
+							result = false;
+					}
+				if (!result) {
+					warnning(new String[] { "寄件人手机号码格式有误！" });
+					return;
+				}
+
+				String receiverAddress = receiverAddressField.getText();
+				if (receiverAddress.equals("")) {
+					warnning(new String[] { "收件人地址不可为空！" });
+					return;
+				}
+
 				String number = numberField.getText();
+
 				String weight = weightField.getText();
+
 				String volumn = volumnField.getText();
+
 				String goodName = goodNameField.getText();
+				if (goodName.equals(""))
+					goodNameField.setText("-");
+
+				if (number.equals("") || weight.equals("") || volumn.equals("")) {
+					warnning(new String[] { "货物信息不完整！" });
+					return;
+				}
+
+				if (!(isInteger(number) && isInteger(weight) && isInteger(volumn))) {
+					warnning(new String[] { "货物信息格式不正确！" });
+					return;
+				}
 
 				String senderCountry = (String) (senderCountryList.getSelectedItem());
-				String senderCity = senderCityField.getText();
+				String senderCity = (String) senderCityField.getSelectedItem();
 
 				String receiverCountry = (String) (receiverCountryList.getSelectedItem());
-				String receiverCity = receiverCityField.getText();
+				String receiverCity = (String) receiverCityField.getSelectedItem();
 
 				String expressType = (String) (expressTypeList.getSelectedItem());
 				String packageType = (String) (packageTypeList.getSelectedItem());
@@ -473,10 +565,16 @@ public class AddOrderPanel extends JPanel {
 				// 计算
 
 				controller.calculateCost(newOrder);
-				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
-				try {
 
-					time.setText("" + cityDistanceData.findCityDistance(senderCity, receiverCity) + "天");
+				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
+				if (senderCountry.equals(receiverCountry))
+					time.setText("一天");
+				else
+					time.setText("两天");
+
+				repaint();
+				try {
+					CityDistanceDataService cityDistanceData = DataFactory.getCityDistanceData();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -486,19 +584,133 @@ public class AddOrderPanel extends JPanel {
 
 			}
 		});
+
+		senderCountryList.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int count = senderCountryList.getSelectedIndex();
+				// 测试
+				ArrayList<String> places = new ArrayList<String>();
+				switch (count) {
+				case 0:
+					places.add("区1");
+					places.add("区2");
+					break;
+				case 1:
+					places.add("区3");
+					places.add("区4");
+					break;
+				case 2:
+					places.add("区5");
+					places.add("区6");
+					break;
+				case 3:
+					places.add("区7");
+					places.add("区8");
+					break;
+				default:
+				}
+
+				senderCityField.removeAllItems();
+
+				for (String i : places) {
+					senderCityField.addItem(i);
+
+				}
+			}
+
+		});
+
+		receiverCountryList.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int count = receiverCountryList.getSelectedIndex();
+				// 测试
+				ArrayList<String> places = new ArrayList<String>();
+				switch (count) {
+				case 0:
+					places.add("区1");
+					places.add("区2");
+					break;
+				case 1:
+					places.add("区3");
+					places.add("区4");
+					break;
+				case 2:
+					places.add("区5");
+					places.add("区6");
+					break;
+				case 3:
+					places.add("区7");
+					places.add("区8");
+					break;
+				}
+
+				receiverCityField.removeAllItems();
+				for (String i : places) {
+					receiverCityField.addItem(i);
+
+				}
+			}
+
+		});
 	}
 
 	private void clear() {
 
+		senderNameField.setText("");
+
+		senderOrganizationField.setText("");
+
+		senderPhoneField.setText("");
+
+		senderMobilePhoneField.setText("");
+
+		senderAddressField.setText("");
+
+		receiverNameField.setText("");
+
+		receiverOrganizationField.setText("");
+
+		receiverPhoneField.setText("");
+
+		receiverMobilePhoneField.setText("");
+
+		receiverAddressField.setText("");
+
+		numberField.setText("");
+
+		weightField.setText("");
+
+		volumnField.setText("");
+
+		goodNameField.setText("");
+
+		senderCountryList.setSelectedIndex(0);
+
+		senderCityField.setSelectedIndex(0);
+
+		receiverCountryList.setSelectedIndex(0);
+
+		receiverCityField.setSelectedIndex(0);
+
+		expressTypeList.setSelectedIndex(0);
+
+		packageTypeList.setSelectedIndex(0);
+
+		// cost = new JLabel("");
+		cost.setText("");
+		// time = new JLabel("");
+		time.setText("");
 	}
 
-	// 父类showMessage
 	public void showMessage(String msg) {
 		// 先显示在控制台
 
 	}
 
-	// 父类检测信息为空
 	public boolean isMsgEmpty(String message) {
 		if (message.trim().equals(""))
 			return true;
@@ -506,8 +718,24 @@ public class AddOrderPanel extends JPanel {
 
 	}
 
-	// 父类warnning
 	public void warnning(String[] message) {
-
+		//之后全部放到底部
+		String msg = "";
+		for (int i = 0; i < message.length; i++) {
+			msg += message[i] + "\n";
+		}
+		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.ERROR_MESSAGE);
 	}
+
+	public boolean isInteger(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) != '.' && (str.charAt(i) < '0' || str.charAt(i) > '9'))
+				return false;
+		}
+		return true;
+	}
+
+	public void paintComponent(Graphics g) {
+	}
+
 }

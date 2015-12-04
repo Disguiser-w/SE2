@@ -7,8 +7,8 @@ import businesslogic.managebl.OrganizationBL;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.OrderPO;
-import presentation.businessui.ChargeCollectionPanel;
 import presentation.expressui.AddOrderPanel;
+import presentation.expressui.ChargeMessageCollectionPanel;
 import presentation.expressui.ExpressFrame;
 import presentation.expressui.FinishedOrderPanel;
 import presentation.expressui.QueryPanel;
@@ -34,6 +34,7 @@ public class ExpressMainController {
 		try {
 			expressData = DataFactory.getExpressData();
 			expressVO = expressPOToVO((ExpressPO) (expressData.getExpressInfo(null, expressID)));
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,7 +47,7 @@ public class ExpressMainController {
 
 		expressFrame = new ExpressFrame(expressVO);
 		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
-		expressFrame.addFuncLabel(new ChargeCollectionPanel(chargeCollectionController));
+		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController));
 		expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
 		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController));
 

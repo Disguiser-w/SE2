@@ -1,10 +1,12 @@
 package common;
 
-public class AVLTree<Key extends Comparable, Value> {
+import java.io.Serializable;
+
+public class AVLTree<Key extends Comparable, Value> implements Serializable {
 	private Node root;
 	private int size;
 
-	class Node {
+	class Node implements Serializable{
 		// 键值，订单ID,String
 		Key key;
 		// 订单路径，String

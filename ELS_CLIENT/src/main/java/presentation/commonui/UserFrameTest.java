@@ -1,6 +1,14 @@
 package presentation.commonui;
 
-import presentation.expressui.ChargeMessageCollectionPanel;
+import presentation.managerui.BasicDataManagerPanel;
+import presentation.managerui.CheckIncomePanel;
+import presentation.managerui.CheckOperatingPanel;
+import presentation.managerui.CheckReceiptPanel;
+import presentation.managerui.OrganizationManagerPanel;
+import presentation.managerui.StaffManagerPanel;
+import presentation.repertoryui.EXwarehousePanel;
+import presentation.repertoryui.InitializeInformationPanel;
+import presentation.repertoryui.WarehousingPanel;
 
 public class UserFrameTest extends UserFrame {
 
@@ -17,13 +25,12 @@ public class UserFrameTest extends UserFrame {
 		// addFuncLabel(new BasicDataManagerPanel());
 		// addFuncLabel(new CheckIncomePanel());
 		// addFuncLabel(new CheckOperatingPanel());
-//		 addFuncLabel(new StaffManagerPanel());
-		// addFuncLabel(new CheckReceiptPanel());
+		addFuncLabel(new StaffManagerPanel());
+		addFuncLabel(new CheckReceiptPanel());
 
-		// addFuncLabel(new InitializeInformationPanel());
-		// addFuncLabel(new EXwarehousePanel());
-		 addFuncLabel(new ChargeMessageCollectionPanel());
-
+		 addFuncLabel(new InitializeInformationPanel());
+		 addFuncLabel(new EXwarehousePanel());
+		 addFuncLabel(new WarehousingPanel());
 		showFrame();
 
 		// setFocusable(false);

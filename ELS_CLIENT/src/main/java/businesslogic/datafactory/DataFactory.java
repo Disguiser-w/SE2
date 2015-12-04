@@ -30,7 +30,8 @@ public class DataFactory {
 
 	static {
 		try {
-			Scanner in = new Scanner(FileGetter.getFile("address.dat"));
+
+			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
 			address = in.next();
 			in.close();
 

@@ -3,6 +3,7 @@ package data.expressdata;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -64,14 +65,24 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 				t = (AVLTree<String, String>) in.readObject();
 				in.close();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("订单路径文件读取失败");
 				return false;
 			}
 		else// 首次生成
+		{
 			t = new AVLTree<String, String>();
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
+		}
 		// 获取今日时间
 		String time = getTime();
 		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
@@ -95,17 +106,24 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 		// 开始增加订单到营业厅目录下
 		File orderFile = FileGetter.getFile(orderPath);
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(orderFile));
-			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
-			in.close();
-			if (!orderPOs.add(po)) {
-				System.out.println("无法将订单文件添加到列表中");
-				return false;
 
+		try {
+			ArrayList<OrderPO> orderPOs = null;
+			if (!orderFile.exists()) {
+				orderFile.getParentFile().mkdirs();
+				orderFile.createNewFile();
+				orderPOs = new ArrayList<OrderPO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(orderFile));
+				orderPOs = (ArrayList<OrderPO>) in.readObject();
+				in.close();
+				if (!orderPOs.add(po)) {
+					System.out.println("无法将订单文件添加到列表中");
+					return false;
+				}
 			}
 
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(orderFile));
 			out.writeObject(orderPOs);
 			out.close();
 
@@ -419,6 +437,11 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		String time = getTime();
 		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
 		File file = FileGetter.getFile(orderPath);
+
+		if (!file.exists()) {
+			return 0;
+		}
+
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
@@ -461,7 +484,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		return t.find(id);
 	}
 
-/*****************************************************************test***************************************************/
+	/***************************************************************** test ***************************************************/
 	public static void main(String[] args) {
 		try {
 

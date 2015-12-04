@@ -78,7 +78,10 @@ public class AddOrder {
 
 		double distance = 0;
 		try {
-			distance = DataFactory.getCityDistanceData().findCityDistance(city1, city2).getDistance();
+			// fix distance =
+			// DataFactory.getCityDistanceData().findCityDistance(city1,
+			// city2).getDistance();
+			distance = 1000;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,9 +111,9 @@ public class AddOrder {
 
 		float packExpense = 0;
 		if (city1.equals(city2))
-			packExpense = (float) (30 * tWeight * 23);
+			packExpense = (float) (30 * tWeight * 23 / 1000);
 		else
-			packExpense = (float) (distance * tWeight * 23);
+			packExpense = (float) (distance * tWeight * 23 / 1000);
 
 		vo.freight = freight;
 		vo.packingExpense = packExpense;

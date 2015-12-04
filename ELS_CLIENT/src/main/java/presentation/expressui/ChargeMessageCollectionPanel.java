@@ -13,6 +13,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import businesslogic.expressbl.controller.ChargeCollectionController;
 import presentation.commonui.LocationHelper;
 
 public class ChargeMessageCollectionPanel extends JPanel {
@@ -28,7 +29,10 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	private ArrayList<String> infos;
 	private int num;
 
-	public ChargeMessageCollectionPanel() {
+	private ChargeCollectionController controller;
+
+	public ChargeMessageCollectionPanel(ChargeCollectionController controller) {
+		this.controller = controller;
 		// chargeInfo从ExpressMainController.expressVO获得
 		infos = new ArrayList<String>();
 		infos.add("712");
@@ -58,11 +62,11 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		add(messageTable);
 
 		add(totalMessageLabel);
-//		add(collectionButton);
+		// add(collectionButton);
 		add(previousPageLabel);
 		add(nextPageLabel);
 
-		 helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
 		// chargeCollections = ExpressMainController.expressVO.chargeCollection;
 		setLayout(null);
 
@@ -82,8 +86,10 @@ public class ChargeMessageCollectionPanel extends JPanel {
 				(int) (width * 22.464698331193837 / 25), (int) (height * 13.097345132743364 / 20));
 		totalMessageLabel.setBounds((int) (width * 1.123234916559692 / 25), (int) (height * 16.991150442477878 / 20),
 				(int) (width * 16.944801026957638 / 25), (int) (height * 1.9469026548672566 / 20));
-//		collectionButton.setBounds((int) (width * 21.630295250320923 / 25), (int) (height * 17.123893805309734 / 20),
-//				(int) (width * 1.957637997432606 / 25), (int) (height * 1.5486725663716814 / 20));
+		// collectionButton.setBounds((int) (width * 21.630295250320923 / 25),
+		// (int) (height * 17.123893805309734 / 20),
+		// (int) (width * 1.957637997432606 / 25), (int) (height *
+		// 1.5486725663716814 / 20));
 
 		setBaseInfo();
 
