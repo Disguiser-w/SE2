@@ -167,11 +167,26 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	}
 	
 	/**
-	 * 总经理审批的信息通知：供saveSubmittedCollectionReceiptInfo调用
+	 * 总经理审批的信息通知
 	 * */
 	public String getFeedback(CollectionReceiptPO po){
-		
-		return null;
+		 file=new JXCFile("collection.ser");
+		 String feedback=po.getID();
+		 ArrayList<Object> os=file.read();
+		 for(int i=0;i<os.size();i++){
+			 //文件中的
+			 CollectionReceiptPO po_infile=(CollectionReceiptPO) os.get(i);
+			 //总经理传过来的
+				 if(po_infile.getID().equals(po.getID())){
+					 if(po.getState()==ReceiptState.APPROVE){
+						 feedback+="单据审批通过！";
+					 }
+					 else if(po.getState()==ReceiptState.DISAPPROVE){
+						 feedback+="单据审批未通过！";
+					 }
+				 }
+		 }
+		return feedback;
 	}
 	
 	/**
@@ -199,8 +214,12 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		CollectionReceiptData collectionData=new CollectionReceiptData();
 //		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "20151201", "鼓楼");
 //		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "20151203", "仙林");
+//		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151202", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "20151202", "鼓楼");
+		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151204", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "20151204", "鼓楼");
+//		collectionData.createCollection(po3);
 //		collectionData.createCollection(po1);
 //		collectionData.createCollection(po2);
+		collectionData.createCollection(po4);
 		ArrayList<CollectionReceiptPO> pos=collectionData.getAllCollection();
 		for(CollectionReceiptPO p:pos){
 			System.out.println("ID: "+p.getID()+" "+p.getState().toString());
@@ -211,14 +230,17 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 			System.out.println("ID: "+pp.getID()+" "+pp.getIncome());
 		}
 		System.out.println("---------------------------------------------------------------------------------------");
-		ArrayList<CollectionReceiptPO> po_fromManager=new ArrayList<CollectionReceiptPO>();
-		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 200, "20151201", "鼓楼");
-		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 300, "20151203", "仙林");
-		po_fromManager.add(po1);
-		po_fromManager.add(po2);
+//		ArrayList<CollectionReceiptPO> po_fromManager=new ArrayList<CollectionReceiptPO>();
+//		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 200, "20151201", "鼓楼");
+//		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.APPROVE, 300, "20151203", "仙林");
+//		po_fromManager.add(po1);
+//		po_fromManager.add(po2);
 		
 //		collectionData.saveSubmittedCollectionReceiptInfo(po_fromManager);
-		
+		CollectionReceiptPO po_fromManager=new CollectionReceiptPO("HJSKD-20151204", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DISAPPROVE, 1000, "20151204", "鼓楼");
+		String feedback=collectionData.getFeedback(po_fromManager);
+		System.out.println("反馈："+feedback);
+		collectionData.saveSubmittedCollectionReceiptInfo(po_fromManager);
 		ArrayList<CollectionReceiptPO> result=collectionData.getAllCollection();
 		for(CollectionReceiptPO ppp:result){
 			System.out.println("ID :"+ppp.getID()+" "+ppp.getState().toString());

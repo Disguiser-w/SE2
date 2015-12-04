@@ -32,4 +32,9 @@ public class CityDistanceDataService_stub implements CityDistanceDataService {
 		return null;
 	}
     
+    public ArrayList<String> getAllCitys() throws RemoteException{
+    	System.out.println("Get all city succeed!");
+		return null;
+    }
+    
 }

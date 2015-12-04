@@ -23,6 +23,7 @@ import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
 import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
+import dataservice.userdataservice.UserDataService;
 
 //暂时使用 localhost:8888
 public class DataFactory {
@@ -128,6 +129,13 @@ public class DataFactory {
 		PerWageDataService perWageData = (PerWageDataService) Naming
 				.lookup("//" + address + "/PerWageDataService");
 		return perWageData;
+	}
+	
+	public static UserDataService getUserData()
+		throws MalformedURLException, RemoteException, NotBoundException {
+		UserDataService userData= (UserDataService) Naming
+				.lookup("//" + address + "/UserDataService");
+			return userData;		
 	}
 	
 	//仓库管理员

@@ -32,4 +32,8 @@ public class OrganizationDataService_stub implements OrganizationDataService{
 		return null;
 	}
     
+    public ArrayList<String> getBelongingPlaces (String city) throws RemoteException{
+    	System.out.println("Get all belonging places succeed!");
+		return null;
+    }
 }
