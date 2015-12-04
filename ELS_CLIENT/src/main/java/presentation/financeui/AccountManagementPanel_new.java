@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import presentation.commonui.LocationHelper;
 import businesslogicservice.financeblservice.AccountBLService;
 import vo.AccountVO;
 
@@ -18,15 +19,7 @@ public class AccountManagementPanel_new extends JLabel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//参数
-	public String name;
-	public String money;
 	
-	
-	AccountBLService abService;
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
-
 	private JButton infoOKButton;
 
 	private JLabel function;
@@ -35,6 +28,16 @@ public class AccountManagementPanel_new extends JLabel {
 
 	private JTextField account_name_Input;
 	private JTextField account_money_Input;
+
+	private LocationHelper helper;
+
+	public String name;
+	public String money;
+	
+	
+	AccountBLService abService;
+	private int PANEL_WIDTH = 720;
+	private int PANEL_HEIGHT = 480;
 
 	public AccountManagementPanel_new() {
 		infoOKButton = new JButton("ok");
@@ -60,10 +63,12 @@ public class AccountManagementPanel_new extends JLabel {
 
 		add(infoOKButton);
 		add(function);
-		add(account_money);
-		add(account_money_Input);
 		add(account_name);
+		add(account_money);
 		add(account_name_Input);
+		add(account_money_Input);
+//		helper = new LocationHelper(this);
+
 	}
 
 	public void setCmpLocation() {

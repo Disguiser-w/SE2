@@ -1,27 +1,32 @@
 package presentation.financeui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 
+import presentation.commonui.LocationHelper;
+import presentation.financeui.PaymentReceiptPanel.PaymentModel;
 import presentation.intermediateui.TransferingPanel;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
 
 public class BusinessStateReceiptPanel extends JPanel {
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+	
 
-	private ArrayList<CollectionReceiptVO> collectionReceiptList;
-	private ArrayList<PaymentReceiptVO> paymentReceiptList;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton startDateButton;
 	private JButton endDateButton;
 	private JButton dateOKButton;
@@ -35,8 +40,18 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 	private JTextField startDate_Input;
 	private JTextField endDate_Input;
+	
+	private JTable table;
 
-	private BusinessStateReceiptInfoTable info;
+//	private BusinessStateReceiptInfoTable info;
+	private LocationHelper helper;
+	private int PANEL_WIDTH = 720;
+	private int PANEL_HEIGHT = 480;
+
+	private BusinessStatementModel bm;
+	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
+
+
 
 	public BusinessStateReceiptPanel() {
 		startDateButton = new JButton("start");
@@ -53,9 +68,20 @@ public class BusinessStateReceiptPanel extends JPanel {
 		startDate_Input = new JTextField("2015/10/30", 11);
 		endDate_Input = new JTextField("2015/11/05", 11);
 
-		info = new BusinessStateReceiptInfoTable(13, 4);
+//		info = new BusinessStateReceiptInfoTable(13, 4);
+		
+		//model
+		bm=new BusinessStatementModel(c);
+		//新建table
+		table=new JTable(bm);
+		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		setCmpLocation();
+		add(table.getTableHeader());
+		add(table);
+
+
+//		setCmpLocation();
 
 		startDateButton.addActionListener(new ActionListener() {
 
@@ -124,12 +150,17 @@ public class BusinessStateReceiptPanel extends JPanel {
 		add(previous);
 		add(function);
 		add(dateRange);
-		add(endDate_Input);
 		add(startDate_Input);
-		add(info);
+		add(endDate_Input);
+		
+		add(table);
+//		add(info);
+		
+//		helper = new LocationHelper(this);
+
 	}
 
-	public void setCmpLocation() {
+/*	public void setCmpLocation() {
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 5 / 18, PANEL_HEIGHT / 12);
 		printButton.setBounds(PANEL_WIDTH * 7 / 9, PANEL_HEIGHT / 24,
@@ -151,25 +182,41 @@ public class BusinessStateReceiptPanel extends JPanel {
 		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+//		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+//				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
 	}
+	*/
 
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-		PANEL_WIDTH = width;
-		PANEL_HEIGHT = height;
-		setCmpLocation();
-		repaint();
+//		PANEL_WIDTH = width;
+//		PANEL_HEIGHT = height;
+//		setCmpLocation();
+//		repaint();
+//	serialVersionUID.setBounds((int)(width * 1.530612244897959/25),(int)(height * 4.7908745247148286/20),(int)(width *  20.854591836734695 /25),(int)(height *  1.1406844106463878/20));
+		startDateButton.setBounds((int)(width * 9.02423469387755/25),(int)(height * 3.307984790874525/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1787072243346008/20));
+		endDateButton.setBounds((int)(width * 14.41326530612245/25),(int)(height * 3.307984790874525/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2547528517110267/20));
+		dateOKButton.setBounds((int)(width * 19.419642857142858/25),(int)(height * 3.307984790874525/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1406844106463878/20));
+		printButton.setBounds((int)(width * 19.419642857142858/25),(int)(height * 0.7984790874524715/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.55893536121673/20));
+		sendButton.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.7984790874524715/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.55893536121673/20));
+		next.setBounds((int)(width * 21.1734693877551/25),(int)(height * 18.745247148288975/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.7984790874524715/20));
+		previous.setBounds((int)(width * 22.544642857142858/25),(int)(height * 18.745247148288975/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.7984790874524715/20));
+		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.7984790874524715/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6349809885931559/20));
+		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 3.2699619771863118/20),(int)(width *  3.0931122448979593 /25),(int)(height *  1.3307984790874525/20));
+		startDate_Input.setBounds((int)(width * 5.261479591836735/25),(int)(height * 3.3840304182509504/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1787072243346008/20));
+		endDate_Input.setBounds((int)(width * 10.778061224489797/25),(int)(height * 3.2699619771863118/20),(int)(width *  3.2206632653061225 /25),(int)(height *  1.2927756653992395/20));
+		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 4.828897338403042/20),(int)(width *  20.886479591836736 /25),(int)(height *  12.357414448669202/20));
+
+
+
+		
 	}
 
 	public void setList(ArrayList<CollectionReceiptVO> collectionReceiptList,
 			ArrayList<PaymentReceiptVO> paymentReceiptList) {
-		this.collectionReceiptList = collectionReceiptList;
-		this.paymentReceiptList = paymentReceiptList;
 		
-		info.setList(collectionReceiptList, paymentReceiptList);
+//		info.setList(collectionReceiptList, paymentReceiptList);
 	}
 
 	public void startui() {
@@ -198,6 +245,49 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 	public void previousui() {
 
+	}
+	
+class BusinessStatementModel extends AbstractTableModel{
+
+		
+		private static final long serialVersionUID = 1L;
+		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
+		//操作人还要吗
+		String head[]={"入款单编号","收入","付款单编号","支出"};
+		
+	 public BusinessStatementModel(ArrayList<ArrayList<String>> content) {
+			c=content;
+		}
+		//行数
+		public int getRowCount() {
+			// TODO Auto-generated method stub
+
+			return c.size();
+		}
+
+		public int getColumnCount() {
+			// TODO Auto-generated method stub
+//			System.out.println(head.length);
+			return head.length;
+		}
+		
+		public String getValueAt(int row, int col) {
+			return c.get(row).get(col);
+		}
+
+		public String getColumnName(int col) {
+			return head[col];
+		}
+
+		public void addRow(ArrayList<String> v) {
+
+			c.add(v);
+		}
+
+		public void removeRow(int row) {
+			c.remove(row);
+		}
+		
 	}
 
 	public static void main(String[] args) {

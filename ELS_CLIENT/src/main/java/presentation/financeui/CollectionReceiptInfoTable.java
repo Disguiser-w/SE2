@@ -14,7 +14,7 @@ public class CollectionReceiptInfoTable extends JTable {
 	private int height;
 	private TableColumn tc;
 	
-	final String head[]={ "编号", "状态", "日期", "客户", "操作员", "总额汇总" };
+//	final String head[]={ "编号", "状态", "日期", "客户", "操作员", "总额汇总" };
 
 	public CollectionReceiptInfoTable(int row, int column) {
 		super(row, column);
