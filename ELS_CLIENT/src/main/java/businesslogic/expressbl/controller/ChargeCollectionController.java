@@ -13,7 +13,8 @@ public class ChargeCollectionController implements ChargeCollectionBLService {
 
 	public boolean chargeCollection(String chargeInfo) {
 		// TODO Auto-generated method stub
-		return chargeCollection.chargeCollection(chargeInfo);
+		// return chargeCollection.chargeCollection(chargeInfo);
+		return false;
 	}
 
 }

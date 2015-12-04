@@ -85,6 +85,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		}
 		// 获取今日时间
 		String time = getTime();
+
 		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
 
 		if (!t.add(po.getID(), orderPath)) {
@@ -117,10 +118,12 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(orderFile));
 				orderPOs = (ArrayList<OrderPO>) in.readObject();
 				in.close();
-				if (!orderPOs.add(po)) {
-					System.out.println("无法将订单文件添加到列表中");
-					return false;
-				}
+
+			}
+
+			if (!orderPOs.add(po)) {
+				System.out.println("无法将订单文件添加到列表中");
+				return false;
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(orderFile));
@@ -439,7 +442,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		File file = FileGetter.getFile(orderPath);
 
 		if (!file.exists()) {
+			System.out.println("当日订单数为0");
 			return 0;
+
 		}
 
 		try {
@@ -447,10 +452,8 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
 
 			in.close();
-			if (orderPOs == null)
-				return 0;
-			else
-				return orderPOs.size();
+
+			return orderPOs.size();
 
 		} catch (Exception e) {
 			e.printStackTrace();

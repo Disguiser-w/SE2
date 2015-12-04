@@ -3,8 +3,6 @@ package presentation.expressui;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +25,10 @@ import type.PackType;
 import vo.OrderVO;
 
 public class AddOrderPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 201512041844L;
 	private JLabel senderLabel;
 	private JLabel senderNameLabel;
 	private JLabel senderOrganizationLabel;
@@ -151,83 +153,6 @@ public class AddOrderPanel extends JPanel {
 		timeLabel = new JLabel("预计时间");
 		cost = new JLabel("");
 		time = new JLabel("");
-
-		// senderLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// senderNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// senderOrganizationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// senderPhoneLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// senderMobilePhoneLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// senderAddressLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//
-		// receiverLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// receiverNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// receiverOrganizationLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// receiverPhoneLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// receiverMobilePhoneLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// receiverAddressLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//
-		// goodsLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// numberLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// weightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// volumnLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// goodNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		//
-		// expressTypeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// packageTypeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// totalSum.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-		// senderLabel.setHorizontalAlignment(JLabel.CENTER);
-		// senderNameLabel.setHorizontalAlignment(JLabel.CENTER);
-		// senderOrganizationLabel.setHorizontalAlignment(JLabel.CENTER);
-		// senderPhoneLabel.setHorizontalAlignment(JLabel.CENTER);
-		// senderMobilePhoneLabel.setHorizontalAlignment(JLabel.CENTER);
-		// senderAddressLabel.setHorizontalAlignment(JLabel.CENTER);
-		//
-		// receiverLabel.setHorizontalAlignment(JLabel.CENTER);
-		// receiverNameLabel.setHorizontalAlignment(JLabel.CENTER);
-		// receiverOrganizationLabel.setHorizontalAlignment(JLabel.CENTER);
-		// receiverPhoneLabel.setHorizontalAlignment(JLabel.CENTER);
-		// receiverMobilePhoneLabel.setHorizontalAlignment(JLabel.CENTER);
-		// receiverAddressLabel.setHorizontalAlignment(JLabel.CENTER);
-		//
-		// goodsLabel.setHorizontalAlignment(JLabel.CENTER);
-		// numberLabel.setHorizontalAlignment(JLabel.CENTER);
-		// weightLabel.setHorizontalAlignment(JLabel.CENTER);
-		// volumnLabel.setHorizontalAlignment(JLabel.CENTER);
-		// goodNameLabel.setHorizontalAlignment(JLabel.CENTER);
-		//
-		// expressTypeLabel.setHorizontalAlignment(JLabel.CENTER);
-		// packageTypeLabel.setHorizontalAlignment(JLabel.CENTER);
-		// totalSum.setHorizontalAlignment(JLabel.CENTER);
-
-		//
-		// senderNameField;
-		// senderOrganizationField;
-		// senderPhoneField;
-		// senderMobilePhoneField;
-		// senderAddressField;
-		//
-		// receiverNameField;
-		// receiverOrganizationField;
-		// receiverPhoneField;
-		// receiverMobilePhoneField;
-		// receiverAddressField;
-		//
-		// goodsField;
-		// numberField;
-		// weightField;
-		// volumnField;
-		// goodNameField;
-		//
-		// senderCountryList;
-		// senderCityList;
-		// receiverCountryList;
-		// receiverCityList;
-		// expressTypeList;
-		// packageTypeList;
-		//
-		// calcuButton;
-		// confirmButton;
 
 		add(senderLabel);
 		add(senderNameLabel);
@@ -358,14 +283,20 @@ public class AddOrderPanel extends JPanel {
 		// 获取城市信息，
 		CityDistanceDataService cityDistanceData = null;
 		ArrayList<String> citys = null;
-		ArrayList<ArrayList<String>> places = new ArrayList<ArrayList<String>>();
+		places = new ArrayList<ArrayList<String>>();
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
 			citys = cityDistanceData.getAllCitys();
 			OrganizationDataService organizationData = DataFactory.getOrganizationData();
-			for (String i : citys)
-				places.add(organizationData.getBelongingPlaces(i));
+			for (String i : citys) {
+				// places.add(organizationData.getBelongingPlaces(i));
+				ArrayList<String> str = new ArrayList<String>();
+				str.add("1");
+				str.add("2");
+				places.add(str);
+			}
+
 			places.add(new ArrayList<String>());
 			// places = cityDistanceData.getPlaces();
 
@@ -377,6 +308,12 @@ public class AddOrderPanel extends JPanel {
 			senderCountryList.addItem(i);
 			receiverCountryList.addItem(i);
 		}
+
+		for (String i : places.get(0)) {
+			senderCityField.addItem(i);
+			receiverCityField.addItem(i);
+		}
+
 		senderCountryList.addItem("");
 
 		// PackType.CARTONS
@@ -400,7 +337,7 @@ public class AddOrderPanel extends JPanel {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (controller.addOrder(newOrder)) {
-					warnning("订单提交成功");
+					addSuccessful("订单提交成功");
 					clear();
 				} else {
 
@@ -551,8 +488,9 @@ public class AddOrderPanel extends JPanel {
 				try {
 					ID = "DD-" + dateNowStr + "-" + (ExpressMainController.expressData
 							.getOrderNum(ExpressMainController.expressVO.organization.organizationID) + 1);
+					System.out.println(ID);
 				} catch (RemoteException e2) {
-					// TODO Auto-generated catch block
+
 					e2.printStackTrace();
 				}
 
@@ -572,12 +510,6 @@ public class AddOrderPanel extends JPanel {
 					time.setText("两天");
 
 				repaint();
-				try {
-					CityDistanceDataService cityDistanceData = DataFactory.getCityDistanceData();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 
 				// 显示价格
 
@@ -587,7 +519,6 @@ public class AddOrderPanel extends JPanel {
 		senderCountryList.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 				senderCityField.removeAllItems();
 
@@ -602,7 +533,6 @@ public class AddOrderPanel extends JPanel {
 		receiverCountryList.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 				receiverCityField.removeAllItems();
 
@@ -659,8 +589,11 @@ public class AddOrderPanel extends JPanel {
 
 		// cost = new JLabel("");
 		cost.setText("");
+		cost.repaint();
 		// time = new JLabel("");
 		time.setText("");
+		time.repaint();
+
 	}
 
 	public void showMessage(String msg) {
@@ -676,8 +609,7 @@ public class AddOrderPanel extends JPanel {
 	}
 
 	public void warnning(String message) {
-		// 之后全部放到底部
-
+		// fix 放到底部信息栏
 		JOptionPane.showMessageDialog(null, message, "订单信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 

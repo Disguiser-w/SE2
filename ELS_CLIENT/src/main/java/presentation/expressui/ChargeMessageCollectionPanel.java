@@ -1,8 +1,11 @@
 package presentation.expressui;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -14,64 +17,47 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import businesslogic.expressbl.controller.ChargeCollectionController;
-import presentation.commonui.LocationHelper;
+import businesslogic.expressbl.controller.ExpressMainController;
 
 public class ChargeMessageCollectionPanel extends JPanel {
 
 	private JTable messageTable;
 	private JLabel totalMessageLabel;
-	// private JButton collectionButton;
 	private JLabel previousPageLabel;
 	private JLabel nextPageLabel;
 
-	private LocationHelper helper;
-	private ArrayList<String> chargeInfos;
-	private ArrayList<String> infos;
+	// private LocationHelper helper;
+	// private ArrayList<String>
+	// ExpressMainController.expressVO.chargeCollection;
 	private int num;
-
 	private ChargeCollectionController controller;
 
 	public ChargeMessageCollectionPanel(ChargeCollectionController controller) {
 		this.controller = controller;
-		// chargeInfo从ExpressMainController.expressVO获得
-		infos = new ArrayList<String>();
-		infos.add("712");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
-		infos.add("1234567 89");
 
 		num = 0;
 
 		MessgeTableModel model = new MessgeTableModel();
 		messageTable = new JTable(model);
 		totalMessageLabel = new JLabel();
-		// collectionButton = new JButton("确认");
 		previousPageLabel = new JLabel();
 		nextPageLabel = new JLabel();
 
-		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		nextPageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		totalMessageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		messageTable.setBackground(getBackground());
 
 		add(messageTable.getTableHeader());
 		add(messageTable);
-
 		add(totalMessageLabel);
-		// add(collectionButton);
 		add(previousPageLabel);
 		add(nextPageLabel);
 
-//		helper = new LocationHelper(this);
-		// chargeCollections = ExpressMainController.expressVO.chargeCollection;
+		// helper = new LocationHelper(this);
+
 		setLayout(null);
-
 		setInfos();
-
 		addListener();
 	}
 
@@ -79,25 +65,48 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
 
-		messageTable.getTableHeader().setBounds((int) (width * 1.123234916559692 / 25),
-				(int) (height * 1.415929203539823 / 20), (int) (width * 22.464698331193837 / 25),
-				(int) (height * 1.1946902654867257 / 20));
-		messageTable.setBounds((int) (width * 1.123234916559692 / 25), (int) (height * 2.566371681415929 / 20),
-				(int) (width * 22.464698331193837 / 25), (int) (height * 13.097345132743364 / 20));
-		totalMessageLabel.setBounds((int) (width * 1.123234916559692 / 25), (int) (height * 16.991150442477878 / 20),
-				(int) (width * 16.944801026957638 / 25), (int) (height * 1.9469026548672566 / 20));
-		// collectionButton.setBounds((int) (width * 21.630295250320923 / 25),
-		// (int) (height * 17.123893805309734 / 20),
-		// (int) (width * 1.957637997432606 / 25), (int) (height *
-		// 1.5486725663716814 / 20));
+		messageTable.getTableHeader().setBounds((int) (width * 1.09375 / 25), (int) (height * 1.5217391304347827 / 20),
+				(int) (width * 22.71875 / 25), (int) (height * 1.178260869565217 / 20));
+		messageTable.setBounds((int) (width * 1.09375 / 25),
+				(int) (height * 1.5217391304347827 / 20 + (int) (height * 1.178260869565217 / 20)),
+				(int) (width * 22.71875 / 25), (int) (height * 13.378260869565217 / 20));
+		totalMessageLabel.setBounds((int) (width * 1.09375 / 25), (int) (height * 16.956521739130434 / 20),
+				(int) (width * 16.9375 / 25), (int) (height * 1.9130434782608696 / 20));
+
+		previousPageLabel.setBounds((int) (width * 20.78125 / 25), (int) (height * 17.217391304347824 / 20),
+				(int) (width * 1.03125 / 25), (int) (height * 1.434782608695652 / 20));
+		nextPageLabel.setBounds((int) (width * 22.78125 / 25), (int) (height * 17.217391304347824 / 20),
+				(int) (width * 1.03125 / 25), (int) (height * 1.434782608695652 / 20));
 
 		setBaseInfo();
 
 	}
 
 	private void addListener() {
-		// jbutton
-		// ExpressMainController.chargeCollection
+		previousPageLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (num == 0)
+					return;
+				else {
+					num--;
+					messageTable.setModel(new MessgeTableModel());
+					setBaseInfo();
+				}
+			}
+		});
+
+		nextPageLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+
+				if (num >= (ExpressMainController.expressVO.chargeCollection.size() - 2) / 8)
+					return;
+				else {
+					num++;
+					messageTable.setModel(new MessgeTableModel());
+					setBaseInfo();
+				}
+			}
+		});
 
 	}
 
@@ -105,27 +114,37 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	private void setBaseInfo() {
 
 		// 设置成不可编辑不可改变位置，大小
-		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		messageTable.getTableHeader().setReorderingAllowed(false);
 		messageTable.getTableHeader().setResizingAllowed(false);
 
-		// 第一列中对齐,第二列右对齐
 		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
-		DefaultTableCellRenderer render1 = new DefaultTableCellRenderer();
-		render1.setHorizontalAlignment(JLabel.CENTER);
-		column1.setCellRenderer(render1);
-
-		DefaultTableCellRenderer render2 = new DefaultTableCellRenderer();
 		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
-		// render1.setHorizontalAlignment(JLabel.RIGHT);
-		column2.setCellRenderer(render1);
 
 		// 设置宽度
 		column1.setPreferredWidth(messageTable.getWidth() * 9 / 10);
 		column2.setPreferredWidth(messageTable.getWidth() / 10);
-		column2.setResizable(false);
 
-		messageTable.setRowHeight((messageTable.getHeight()) / 8);
+		messageTable.setRowHeight((messageTable.getHeight() - messageTable.getTableHeader().getHeight()) / 8);
+		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
+		// messageTable.getTableHeader().getHeight() + 4);
+
+		//
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+
+		tcr.setHorizontalAlignment(JLabel.CENTER);
+		column1.setCellRenderer(tcr);
+		column2.setCellRenderer(tcr);
 
 	}
 
@@ -137,18 +156,13 @@ public class ChargeMessageCollectionPanel extends JPanel {
 		String time = f.format(date);
 
 		// expressID从expressVO处获
-		totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + "kdy-00001" + "  金额总和 : " + infos.get(0));
+		if (ExpressMainController.expressVO.chargeCollection.size() != 0)
+			totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.ID + "  金额总和 : "
+					+ ExpressMainController.expressVO.chargeCollection.get(0));
+		else
+			totalMessageLabel
+					.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.ID + "  金额总和 : " + "0");
 		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
-
-		// table
-		chargeInfos = new ArrayList<String>();
-		for (int i = 0; i < 8; i++) {
-			int next = 8 * num + i;
-			if (next + 1 <= infos.size())
-				chargeInfos.add(infos.get(next + 1));
-			else
-				chargeInfos.add(null);
-		}
 
 	}
 
@@ -167,7 +181,11 @@ public class ChargeMessageCollectionPanel extends JPanel {
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			String infos = chargeInfos.get(rowIndex);
+			int index = num * 8 + rowIndex + 1;
+
+			if (index > ExpressMainController.expressVO.chargeCollection.size() - 1)
+				return null;
+			String infos = ExpressMainController.expressVO.chargeCollection.get(index);
 
 			if (infos != null) {
 				String[] info = infos.split(" ");
@@ -185,16 +203,8 @@ public class ChargeMessageCollectionPanel extends JPanel {
 
 	}
 
-	// private class MessageLabel extends JLabel {
-	// private String data;
-	// public MessageLabel(){
-	// Date date = new Date();
-	// SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
-	// data = f.format(date);
-	// }
-	//
-	// public void paintComponent(Graphics g){
-	//
-	// }
+	public void paintComponent(Graphics g) {
+		setInfos();
+	}
 	// }
 }

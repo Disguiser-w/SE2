@@ -1,6 +1,7 @@
 package businesslogic.expressbl;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
@@ -68,6 +69,10 @@ public class AddOrder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		double fare = vo.freight + vo.packingExpense;
+		chargeCollection(vo.ID + " " + fare);
+
+
 		return result;
 	}
 
@@ -118,6 +123,33 @@ public class AddOrder {
 		vo.freight = freight;
 		vo.packingExpense = packExpense;
 
+	}
+
+	public boolean chargeCollection(String chargeInfo) {
+		// 更新expressVO
+		ExpressMainController.updateExpressInfo();
+
+		ArrayList<String> chargeCollection = ExpressMainController.expressVO.chargeCollection;
+
+		if (chargeCollection.isEmpty())
+			chargeCollection.add("0");
+
+
+		double total = Double.parseDouble(chargeCollection.get(0));
+		double charge = Double.parseDouble(chargeInfo.split(" ")[1]);
+		chargeCollection.set(0, (total + charge) + "");
+		chargeCollection.add(chargeInfo);
+
+		boolean result = false;
+		try {
+			result = expressData.updateChargeCollection(ExpressMainController.expressVO.organization.organizationID,
+					ExpressMainController.expressVO.ID, chargeCollection);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 }

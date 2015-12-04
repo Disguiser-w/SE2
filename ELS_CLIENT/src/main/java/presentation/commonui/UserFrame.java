@@ -2,24 +2,30 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
+
+import common.FileGetter;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
@@ -57,12 +63,12 @@ public class UserFrame extends JFrame {
 		imageLabel.setOpaque(true);
 		imageLabel.setBackground(Color.BLUE);
 
-		imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		messagePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		functionPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		operationPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		imageLabel.setBorder(BorderFactory.createBevelBorder(1));
+		messagePanel.setBorder(BorderFactory.createBevelBorder(1));
+		functionPanel.setBorder(BorderFactory.createBevelBorder(1));
+		operationPanel.setBorder(BorderFactory.createBevelBorder(1));
 		setCmpLocation();
-
+		initGlobalFontSetting();
 		setLayout(null);
 
 		add(imageLabel);
@@ -88,9 +94,50 @@ public class UserFrame extends JFrame {
 		setMinimumSize(new Dimension(700, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-//		setResizable(false);
+		// setResizable(false);
 		setFocusable(false);
 
+	}
+
+	public void initGlobalFontSetting() {
+		// 设置字体
+
+//		GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//		String[] fontName = e.getAvailableFontFamilyNames();
+
+
+		File file = FileGetter.getFile("src/main/font/font.ttf");
+		Font fnt = null;
+
+		try {
+			// System.out.println(file.exists());
+			Font font = Font.createFont(Font.TRUETYPE_FONT, file);
+			fnt = new Font("WenQuanYi Micro Hei", Font.PLAIN, 15);
+
+			// GraphicsEnvironment ge =
+			// GraphicsEnvironment.getLocalGraphicsEnvironment();
+			// ge.registerFont(font);
+			// initGlobalFontSetting(fnt);
+
+			// initGlobalFontSetting(new Font("WenQuanYi Micro Hei
+			// Mono",Font.PLAIN,15));
+
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		FontUIResource fontRes = new FontUIResource(fnt);
+		for (Enumeration keys = UIManager.getDefaults().keys(); keys.hasMoreElements();) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value instanceof FontUIResource)
+				if (value instanceof FontUIResource)
+					UIManager.put(key, fontRes);
+		}
 	}
 
 	public void showFrame() {
@@ -108,8 +155,7 @@ public class UserFrame extends JFrame {
 		functionPanel.setBounds(height / 25, height * 6 / 25, height * 4 / 25, height * 7 / 10);
 		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
 		headerPanel.setBounds(0, 0, width, 25);
-		
-		
+
 	}
 
 	public void setProperties() {
@@ -189,6 +235,7 @@ public class UserFrame extends JFrame {
 		int height = getHeight();
 		int width = getWidth();
 
+		newPanel.setBorder(BorderFactory.createBevelBorder(1));
 		newPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
 		operationPanels.add(newPanel);
 
@@ -208,17 +255,18 @@ public class UserFrame extends JFrame {
 			add(operationPanel);
 			repaint();
 		}
+
+		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
+		
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				remove(operationPanel);
 				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
 				int height = getHeight();
 				int width = getWidth();
-				operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
-	
+				
 				add(operationPanel);
 				repaint();
-
 			}
 		});
 	}

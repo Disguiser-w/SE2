@@ -79,7 +79,7 @@ class MessagePanel extends JPanel {
 		g.setColor(Color.YELLOW);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("", Font.BOLD, 15));
+		g.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
 		FontMetrics fm = g.getFontMetrics();
 
 		int strHeight = fm.getAscent();

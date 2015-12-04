@@ -515,4 +515,24 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		return null;
 	}
 
+	public void saveDistributeReceiptInfo(DistributeReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveOrderAcceptReceiptInfo(OrderAcceptReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
