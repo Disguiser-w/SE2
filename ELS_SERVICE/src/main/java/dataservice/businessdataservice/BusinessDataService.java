@@ -87,6 +87,13 @@ public interface BusinessDataService extends Remote {
 	 */
 	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException;
 
+	public void saveDistributeReceiptInfo(DistributeReceiptPO po) throws RemoteException;
+
+	public void saveOrderAcceptReceiptInfo(OrderAcceptReceiptPO po) throws RemoteException;
+
+	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException;
+
+	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException;
 	//
 	// /**
 	// * 返回待转运的订单的列表

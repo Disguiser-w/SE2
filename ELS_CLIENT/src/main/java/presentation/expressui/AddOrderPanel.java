@@ -3,8 +3,8 @@ package presentation.expressui;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.managedataservice.CityDistanceDataService;
+import dataservice.managedataservice.OrganizationDataService;
 import type.ExpressType;
 import type.PackType;
 import vo.OrderVO;
@@ -85,6 +86,8 @@ public class AddOrderPanel extends JPanel {
 
 	private AddOrderController controller;
 	private OrderVO newOrder;
+
+	private ArrayList<ArrayList<String>> places;
 
 	// private LocationHelper helper;
 
@@ -355,11 +358,15 @@ public class AddOrderPanel extends JPanel {
 		// 获取城市信息，
 		CityDistanceDataService cityDistanceData = null;
 		ArrayList<String> citys = null;
-		ArrayList<String> places = null;
+		ArrayList<ArrayList<String>> places = new ArrayList<ArrayList<String>>();
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
 			citys = cityDistanceData.getAllCitys();
+			OrganizationDataService organizationData = DataFactory.getOrganizationData();
+			for (String i : citys)
+				places.add(organizationData.getBelongingPlaces(i));
+			places.add(new ArrayList<String>());
 			// places = cityDistanceData.getPlaces();
 
 		} catch (Exception e) {
@@ -371,14 +378,6 @@ public class AddOrderPanel extends JPanel {
 			receiverCountryList.addItem(i);
 		}
 		senderCountryList.addItem("");
-
-		senderCityField.addItem("区１");
-
-		receiverCityField.addItem("区1");
-
-		senderCityField.addItem("区2");
-
-		receiverCityField.addItem("区2");
 
 		// PackType.CARTONS
 		packageTypeList.addItem("纸箱");
@@ -401,10 +400,10 @@ public class AddOrderPanel extends JPanel {
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (controller.addOrder(newOrder)) {
-					warnning(new String[] { "订单提交成功" });
+					warnning("订单提交成功");
 					clear();
 				} else {
-					
+
 				}
 			}
 		});
@@ -415,7 +414,7 @@ public class AddOrderPanel extends JPanel {
 				String senderName = senderNameField.getText();
 
 				if (senderName.trim().equals("")) {
-					warnning(new String[] { "寄件人姓名不可为空！" });
+					warnning("寄件人姓名不可为空！");
 					return;
 				}
 
@@ -430,7 +429,7 @@ public class AddOrderPanel extends JPanel {
 				String senderMobilePhone = senderMobilePhoneField.getText();
 
 				if (senderMobilePhone.equals("")) {
-					warnning(new String[] { "寄件人手机号码不可为空！" });
+					warnning("寄件人手机号码不可为空！");
 					return;
 
 				}
@@ -444,7 +443,7 @@ public class AddOrderPanel extends JPanel {
 							result = false;
 					}
 				if (!result) {
-					warnning(new String[] { "寄件人手机号码格式有误！" });
+					warnning("寄件人手机号码格式有误！");
 					return;
 				}
 
@@ -455,7 +454,7 @@ public class AddOrderPanel extends JPanel {
 
 				String receiverName = receiverNameField.getText();
 				if (receiverName.equals("")) {
-					warnning(new String[] { "收件人姓名不可为空！" });
+					warnning("收件人姓名不可为空！");
 					return;
 				}
 
@@ -469,7 +468,7 @@ public class AddOrderPanel extends JPanel {
 
 				String receiverMobilePhone = receiverMobilePhoneField.getText();
 				if (receiverMobilePhone.equals("")) {
-					warnning(new String[] { "收件人手机号码不可为空！" });
+					warnning("收件人手机号码不可为空！");
 					return;
 				}
 
@@ -481,13 +480,13 @@ public class AddOrderPanel extends JPanel {
 							result = false;
 					}
 				if (!result) {
-					warnning(new String[] { "寄件人手机号码格式有误！" });
+					warnning("寄件人手机号码格式有误！");
 					return;
 				}
 
 				String receiverAddress = receiverAddressField.getText();
 				if (receiverAddress.equals("")) {
-					warnning(new String[] { "收件人地址不可为空！" });
+					warnning("收件人地址不可为空！");
 					return;
 				}
 
@@ -502,12 +501,12 @@ public class AddOrderPanel extends JPanel {
 					goodNameField.setText("-");
 
 				if (number.equals("") || weight.equals("") || volumn.equals("")) {
-					warnning(new String[] { "货物信息不完整！" });
+					warnning("货物信息不完整！");
 					return;
 				}
 
 				if (!(isInteger(number) && isInteger(weight) && isInteger(volumn))) {
-					warnning(new String[] { "货物信息格式不正确！" });
+					warnning("货物信息格式不正确！");
 					return;
 				}
 
@@ -589,32 +588,10 @@ public class AddOrderPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int count = senderCountryList.getSelectedIndex();
-				// 测试
-				ArrayList<String> places = new ArrayList<String>();
-				switch (count) {
-				case 0:
-					places.add("区1");
-					places.add("区2");
-					break;
-				case 1:
-					places.add("区3");
-					places.add("区4");
-					break;
-				case 2:
-					places.add("区5");
-					places.add("区6");
-					break;
-				case 3:
-					places.add("区7");
-					places.add("区8");
-					break;
-				default:
-				}
 
 				senderCityField.removeAllItems();
 
-				for (String i : places) {
+				for (String i : places.get(senderCountryList.getSelectedIndex())) {
 					senderCityField.addItem(i);
 
 				}
@@ -626,30 +603,10 @@ public class AddOrderPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int count = receiverCountryList.getSelectedIndex();
-				// 测试
-				ArrayList<String> places = new ArrayList<String>();
-				switch (count) {
-				case 0:
-					places.add("区1");
-					places.add("区2");
-					break;
-				case 1:
-					places.add("区3");
-					places.add("区4");
-					break;
-				case 2:
-					places.add("区5");
-					places.add("区6");
-					break;
-				case 3:
-					places.add("区7");
-					places.add("区8");
-					break;
-				}
 
 				receiverCityField.removeAllItems();
-				for (String i : places) {
+
+				for (String i : places.get(receiverCountryList.getSelectedIndex())) {
 					receiverCityField.addItem(i);
 
 				}
@@ -718,13 +675,14 @@ public class AddOrderPanel extends JPanel {
 
 	}
 
-	public void warnning(String[] message) {
-		//之后全部放到底部
-		String msg = "";
-		for (int i = 0; i < message.length; i++) {
-			msg += message[i] + "\n";
-		}
-		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.ERROR_MESSAGE);
+	public void warnning(String message) {
+		// 之后全部放到底部
+
+		JOptionPane.showMessageDialog(null, message, "订单信息错误", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void addSuccessful(String message) {
+		JOptionPane.showMessageDialog(null, message, "订单提交成功", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public boolean isInteger(String str) {

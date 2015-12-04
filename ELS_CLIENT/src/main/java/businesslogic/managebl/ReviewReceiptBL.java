@@ -147,9 +147,14 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个收款单
 	public boolean approveGatheringReceipt(GatheringReceiptVO grVO){
-		GatheringReceiptPO grPO = BusinessMainController.gatheringReceiptVOToPO(grVO);
-		grPO.setState(ReceiptState.APPROVE);
-		bdService.saveGatheringReceiptInfo(grPO);
+		GatheringReceiptPO grPO = BusinessMainController.gatheringVOToPO(grVO);
+		grPO.setReceiptState(ReceiptState.APPROVE);
+		try {
+			bdService.saveGatheringReceiptInfo(grPO);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}	
 	
@@ -197,7 +202,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	//审批一个中转中心装车单
 	public boolean approveEnplaningReceipt(EnplaningReceiptVO erVO){
 		EnplaningReceiptPO erPO = IntermediateMainController.voToPO(erVO);
-		erPO.setState(ReceiptState.APPROVE);
+		erPO.setReceiptState(ReceiptState.APPROVE);
 		itmdService.saveEnIntermediateReceiptInfo(erPO);
 		return true;
 	}
@@ -210,7 +215,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	//审批一个中转中心到达单
 	public boolean approveTransferingReceipt(TransferingReceiptVO trVO){
 		TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
-		trPO.setState(ReceiptState.APPROVE);
+		trPO.setReceiptState(ReceiptState.APPROVE);
 		itmdService.saveTransferingReceiptInfo(trPO);
 		return true;
 	}
@@ -228,8 +233,12 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	//审批一个营业厅装车单
 	public boolean approveEnVehicleReceipt(EnVehicleReceiptVO evrVO){
 		EnVehicleReceiptPO evrPO = BusinessMainController.enVehicleReceiptVOToPO(evrVO);
-		evrPO.setState(ReceiptState.APPROVE);
-		bdService.saveEnVehicleReceiptInfo(evrPO);
+		evrPO.setReceiptState(ReceiptState.APPROVE);
+		try {
+			bdService.saveEnVehicleReceiptInfo(evrPO);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -246,8 +255,13 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	//审批一个营业厅到达单
 	public boolean approveOrderAcceptReceipt(OrderAcceptReceiptVO oarVO){
 		OrderAcceptReceiptPO oarPO = BusinessMainController.orderAcceptReceiptVOToPO(oarVO);
-		oarPO.setState(ReceiptState.APPROVE);
-		bdService.saveOrderAcceptReceiptInfo(oarPO);
+		oarPO.setReceiptState(ReceiptState.APPROVE);
+		try {
+			bdService.saveOrderAcceptReceiptInfo(oarPO);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
@@ -263,9 +277,14 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个派件单
 	public boolean approveDistributeReceipt(DistributeReceiptVO drVO){
-		DistributeReceiptPO drPO = BusinessMainController.distributeReceiptVOToPO(drVO);
-		drPO.setState(ReceiptState.APPROVE);
-		bdService.saveDistributeReceiptInfo(drPO);
+		DistributeReceiptPO drPO = BusinessMainController.distributeVOToPO(drVO);
+		drPO.setReceiptState(ReceiptState.APPROVE);
+		try {
+			bdService.saveDistributeReceiptInfo(drPO);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	

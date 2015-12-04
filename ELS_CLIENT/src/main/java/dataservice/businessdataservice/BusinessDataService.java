@@ -71,21 +71,29 @@ public interface BusinessDataService extends Remote {
 	 * Lizi 收款单
 	 */
 	public ArrayList<GatheringReceiptPO> getSubmittedGatheringReceiptInfo() throws RemoteException;
+
 	/**
 	 * Lizi 派件单
-	 * */
+	 */
 	public ArrayList<DistributeReceiptPO> getSubmittedDistributeReceiptInfo() throws RemoteException;
-	
+
 	/**
 	 * Lizi 装车
-	 * */
+	 */
 	public ArrayList<EnVehicleReceiptPO> getSubmittedEnVehicleReceiptInfo() throws RemoteException;
-	
+
 	/**
 	 * Lizi 到达单
-	 * */
+	 */
 	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException;
 
+	public void saveDistributeReceiptInfo(DistributeReceiptPO po) throws RemoteException;
+
+	public void saveOrderAcceptReceiptInfo(OrderAcceptReceiptPO po) throws RemoteException;
+
+	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException;
+
+	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException;
 	//
 	// /**
 	// * 返回待转运的订单的列表
