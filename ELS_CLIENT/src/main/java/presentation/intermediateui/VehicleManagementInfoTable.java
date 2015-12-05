@@ -3,6 +3,7 @@ package presentation.intermediateui;
 import java.awt.Graphics;
 
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
 public class VehicleManagementInfoTable extends JTable {
@@ -10,14 +11,12 @@ public class VehicleManagementInfoTable extends JTable {
 	private int height;
 	private TableColumn tc;
 
-	public VehicleManagementInfoTable(int row, int column) {
-		super(row, column);
+	public VehicleManagementInfoTable(AbstractTableModel model) {
+		super(model);
+//		 this.getTableHeader().setReorderingAllowed(false);
+//		 this.getTableHeader().setResizingAllowed(false);
 		width = 720;
 		height = 480;
-		
-//		this.getTableHeader().setReorderingAllowed(false);
-//		this.getTableHeader().setResizingAllowed(false);
-//		
 		setInfo();
 	}
 
@@ -58,5 +57,27 @@ public class VehicleManagementInfoTable extends JTable {
 	public void paint(Graphics g) {
 		setInfo();
 		super.paint(g);
+	}
+
+	private class VehicleManagementTableModel extends AbstractTableModel {
+
+		@Override
+		public int getRowCount() {
+			// TODO 自动生成的方法存根
+			return 13;
+		}
+
+		@Override
+		public int getColumnCount() {
+			// TODO 自动生成的方法存根
+			return 5;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			// TODO 自动生成的方法存根
+			return null;
+		}
+
 	}
 }

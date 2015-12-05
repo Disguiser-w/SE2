@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 
 import presentation.userui.userInfoTable_main;
 import presentation.userui.userPanel_main;
@@ -25,6 +26,7 @@ public class PlaneManagementPanel extends JLabel {
 	private JTextField searchTextField;
 	
 	private VehicleManagementInfoTable info;
+	private VehicleManagementTableModel model;
 	
 	public PlaneManagementPanel() {
         addButton = new JButton("add");
@@ -36,7 +38,8 @@ public class PlaneManagementPanel extends JLabel {
         
         searchTextField = new JTextField("KD-00001");
         
-        info = new VehicleManagementInfoTable(13,5);
+        model = new VehicleManagementTableModel();
+        info = new VehicleManagementInfoTable(model);
         
         setCmpLocation();
         
@@ -85,6 +88,7 @@ public class PlaneManagementPanel extends JLabel {
         add(function);
         add(searchTextField);
         add(info);
+        add(info.getTableHeader());
 	}
 	
 	public void setCmpLocation(){
@@ -127,6 +131,41 @@ public class PlaneManagementPanel extends JLabel {
 
 	public void previousui() {
 
+	}
+	
+	private class VehicleManagementTableModel extends AbstractTableModel {
+		@Override
+		public int getRowCount() {
+			// TODO 自动生成的方法存根
+			return 13;
+		}
+
+		@Override
+		public int getColumnCount() {
+			// TODO 自动生成的方法存根
+			return 5;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			// TODO 自动生成的方法存根
+			return null;
+		}
+		
+		public String getColumnName(int c){
+			if(c==0)
+				return "飞机编号";
+			if(c==1)
+				return "出发时间";
+			if(c==2)
+				return "到达地"; 
+			if(c==3)
+				return "到达时间";
+			if(c==4)
+				return "状态";
+			
+			return null;
+		}
 	}
 	
 	public static void main(String[] args) {
