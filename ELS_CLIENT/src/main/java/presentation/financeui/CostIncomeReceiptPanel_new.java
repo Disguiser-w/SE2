@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+
 public class CostIncomeReceiptPanel_new extends JPanel {
 	/**
 	 * 
@@ -33,8 +35,12 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	private JTextField totalIncome_Input;
 	private JTextField totalCost_Input;
 	private JTextField totalProfit_Input;
+	
+	public CostIncomeReceiptBLController controller;
 
-	public CostIncomeReceiptPanel_new() {
+	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller) {
+		this.controller=controller;
+		
 		infoOKButton = new JButton("ok");
 		function = new JLabel("新建成本收益表");
 		costIncomeReceipt_ID = new JLabel("成本收益表编号");
@@ -123,10 +129,10 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new CostIncomeReceiptPanel_new());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new CostIncomeReceiptPanel_new());
+//		frame.setVisible(true);
+//	}
 }

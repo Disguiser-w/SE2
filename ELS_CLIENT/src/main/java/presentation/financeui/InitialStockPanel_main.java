@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import businesslogic.financebl.controller.InitialStockBLController;
 import vo.InitInfoVO;
 
 public class InitialStockPanel_main extends JPanel {
@@ -43,12 +44,13 @@ public class InitialStockPanel_main extends JPanel {
 //	private ArrayList<InitInfoVO> initInfoList;
 	InitialStockModel im;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
-	
+	public InitialStockBLController controller;
 	
 //	private LocationHelper helper;
 
 	
-	public InitialStockPanel_main(){
+	public InitialStockPanel_main(InitialStockBLController controller){
+		this.controller=controller;
 		newButton = new JButton("new");
 		startDateButton = new JButton("start");
 		endDateButton = new JButton("end");
@@ -262,10 +264,10 @@ public class InitialStockPanel_main extends JPanel {
 		
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new InitialStockPanel_main());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new InitialStockPanel_main());
+//		frame.setVisible(true);
+//	}
 }

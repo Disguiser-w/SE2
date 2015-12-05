@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import presentation.commonui.LocationHelper;
+import businesslogic.financebl.controller.AccountBLController;
 import businesslogicservice.financeblservice.AccountBLService;
 import vo.AccountVO;
 
@@ -35,12 +36,13 @@ public class AccountManagementPanel_new extends JPanel {
 	public String name;
 	public String money;
 	
-	
-	AccountBLService abService;
+	  AccountBLController controller;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	public AccountManagementPanel_new() {
+	public AccountManagementPanel_new(AccountBLController controller) {
+		this.controller=controller;
+		
 		infoOKButton = new JButton("ok");
 
 		function = new JLabel("新增账户");
@@ -52,15 +54,8 @@ public class AccountManagementPanel_new extends JPanel {
 		
 		setCmpLocation();
 
-		infoOKButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				okui();
-			}
-		});
-
-		setLayout(null);
+		
+	
 
 		add(infoOKButton);
 		add(function);
@@ -69,6 +64,16 @@ public class AccountManagementPanel_new extends JPanel {
 		add(account_name_Input);
 		add(account_money_Input);
 //		helper = new LocationHelper(this);
+		
+		setLayout(null);
+		infoOKButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO 自动生成的方法存根
+				okui();
+			}
+		});
+
 
 	}
 
@@ -104,7 +109,7 @@ public class AccountManagementPanel_new extends JPanel {
 			else{
 				AccountVO accountVO=new AccountVO(name, moneyD);
 				System.out.println(name+"  "+moneyD);
-				int result=abService.addAccount(accountVO);
+				int result=controller.addAccount(accountVO);
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
@@ -119,12 +124,12 @@ public class AccountManagementPanel_new extends JPanel {
 		
 	}
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new AccountManagementPanel_new());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new AccountManagementPanel_new());
+//		frame.setVisible(true);
+//	}
 
 	public void setBounds(int x, int y, int width, int height) {
 

@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import presentation.commonui.LocationHelper;
 import presentation.financeui.PaymentReceiptPanel.PaymentModel;
 import presentation.intermediateui.TransferingPanel;
@@ -44,16 +45,19 @@ public class BusinessStateReceiptPanel extends JPanel {
 	private JTable table;
 
 //	private BusinessStateReceiptInfoTable info;
-	private LocationHelper helper;
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+//	private LocationHelper helper;
+//	private int PANEL_WIDTH = 720;
+//	private int PANEL_HEIGHT = 480;
 
 	private BusinessStatementModel bm;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 
+	public BusinessStatementReceiptBLController controller;
 
 
-	public BusinessStateReceiptPanel() {
+	public BusinessStateReceiptPanel(BusinessStatementReceiptBLController controller) {
+		this.controller=controller;
+		
 		startDateButton = new JButton("start");
 		endDateButton = new JButton("end");
 		dateOKButton = new JButton("ok");
@@ -290,10 +294,10 @@ class BusinessStatementModel extends AbstractTableModel{
 		
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new BusinessStateReceiptPanel());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new BusinessStateReceiptPanel());
+//		frame.setVisible(true);
+//	}
 }

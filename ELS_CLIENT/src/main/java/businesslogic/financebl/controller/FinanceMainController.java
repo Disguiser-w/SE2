@@ -1,23 +1,21 @@
 package businesslogic.financebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
-import dataservice.financedataservice.AccountDataService_stub;
 import dataservice.financedataservice.CollectionReceiptDataService;
-import dataservice.financedataservice.CollectionReceiptDataService_stub;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
-import dataservice.financedataservice.CostIncomeReceiptDataService_stub;
 import dataservice.financedataservice.InitialStockDataService;
-import dataservice.financedataservice.InitialStockDataService_stub;
 import dataservice.financedataservice.PaymentReceiptDataService;
-import dataservice.financedataservice.PaymentReceiptDataService_stub;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import po.AccountPO;
 import po.BusinessStatementReceiptPO;
@@ -30,6 +28,13 @@ import po.PaymentReceiptPO;
 import po.RepertoryPO;
 import po.UserPO;
 import po.VehiclePO;
+import presentation.financeui.AccountManagementPanel_main;
+import presentation.financeui.BusinessStateReceiptPanel;
+import presentation.financeui.CollectionReceiptPanel;
+import presentation.financeui.CostIncomeReceiptPanel_new;
+import presentation.financeui.FinanceFrame;
+import presentation.financeui.InitialStockPanel_main;
+import presentation.financeui.PaymentReceiptPanel;
 import type.ReceiptType;
 import vo.AccountVO;
 import vo.BusinessStatementReceiptVO;
@@ -61,41 +66,68 @@ public class FinanceMainController {
 	public static ArrayList<InitInfoVO> initVOs;
 	public static ArrayList<AccountVO> accountVOs;
 	
-	public static AccountBLController accountBLController;
-	public static CollectionReceiptBLController collectionReceiptBLController;
-	public static PaymentReceiptBLController paymentReceiptBLController;
-	public static CostIncomeReceiptBLController costIncomeReceiptBLController;
-	public static BusinessStatementReceiptBLController businessStatementReceiptBLController;
-	public static InitialStockBLController initialStockBLController;
+	private  AccountBLController accountBLController;
+	private  CollectionReceiptBLController collectionReceiptBLController;
+	private  PaymentReceiptBLController paymentReceiptBLController;
+	private  CostIncomeReceiptBLController costIncomeReceiptBLController;
+	private  BusinessStatementReceiptBLController businessStatementReceiptBLController;
+	private  InitialStockBLController initialStockBLController;
 	
+	private  FinanceFrame financeFrame;
 	/**
 	 * 财务部分的初始化在这里进行
 	 * */
-	public FinanceMainController(){
-		collectionData=new CollectionReceiptDataService_stub();
-		paymentData=new PaymentReceiptDataService_stub();
-		costincomeData=new CostIncomeReceiptDataService_stub();
-		initData=new InitialStockDataService_stub();
-		accountData=new AccountDataService_stub();
-		
+	public FinanceMainController(String financeID){
 		try {
-			collectionReceiptVOs=cposToVOs(collectionData.getAllCollection());
-			paymentReceiptVOs=pposToVOs(paymentData.getAllPaymentReceipt());
-			costIncomeReceiptVOs=civosToPOs(costincomeData.getAllCostIncomeList());
-			initVOs=iposToVOs(initData.getAllInitInfo());
-			accountVOs=aposToVOs(accountData.showAll());
-		} catch (RemoteException e) {
+			collectionData=DataFactory.getCollectionReceiptData();
+			paymentData=DataFactory.getPaymentReceiptData();
+			costincomeData=DataFactory.getCostIncomeData();
+			initData=DataFactory.getInitialStockData();
+			accountData=DataFactory.getAccountData();
+		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NotBoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		
 		//初始化四个controller：把操作拿出来做controller吗
-		accountBLController=new AccountBLController();
-		collectionReceiptBLController=new CollectionReceiptBLController();
-		paymentReceiptBLController=new PaymentReceiptBLController();
-		costIncomeReceiptBLController=new CostIncomeReceiptBLController();
-		businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
-		initialStockBLController=new InitialStockBLController();
+				accountBLController=new AccountBLController();
+				collectionReceiptBLController=new CollectionReceiptBLController();
+				paymentReceiptBLController=new PaymentReceiptBLController();
+				costIncomeReceiptBLController=new CostIncomeReceiptBLController();
+				businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
+				initialStockBLController=new InitialStockBLController();
+		
+				//初始化界面
+				financeFrame =new FinanceFrame();
+//				System.out.println("get here?");
+				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController));
+//				System.out.println("get here?");
+				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController));
+//				System.out.println("get here?");
+				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
+				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController));
+				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
+				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController));
+				financeFrame.showFrame();
+				
+		
+//		try {
+//			collectionReceiptVOs=cposToVOs(collectionData.getAllCollection());
+//			paymentReceiptVOs=pposToVOs(paymentData.getAllPaymentReceipt());
+//			costIncomeReceiptVOs=civosToPOs(costincomeData.getAllCostIncomeList());
+//			initVOs=iposToVOs(initData.getAllInitInfo());
+//			accountVOs=aposToVOs(accountData.showAll());
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
 		
 		
 	}
@@ -534,5 +566,10 @@ public class FinanceMainController {
 			vos.add(vo);
 		}
 		return vos;
+	}
+	
+	
+	public static void main(String[] args){
+		new FinanceMainController("CW-00001");
 	}
 	}

@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import businesslogic.financebl.controller.InitialStockBLController;
+
 public class InitialStockPanel_new extends JPanel {
 	/**
 	 * 
@@ -32,8 +34,11 @@ public class InitialStockPanel_new extends JPanel {
 	private JLabel accountInfo;
 
 	private InitialStockInfoTable_new info;
+	
+	public InitialStockBLController controller;
 
-	public InitialStockPanel_new() {
+	public InitialStockPanel_new(InitialStockBLController controller) {
+		this.controller=controller;
 		InfoOKButton = new JButton("ok");
 		next = new JButton("next");
 		previous = new JButton("pre");
@@ -137,10 +142,10 @@ public class InitialStockPanel_new extends JPanel {
 
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new InitialStockPanel_new());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new InitialStockPanel_new());
+//		frame.setVisible(true);
+//	}
 }

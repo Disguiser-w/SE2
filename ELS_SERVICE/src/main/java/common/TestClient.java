@@ -19,12 +19,12 @@ public class TestClient {
 			String[] list = Naming.list("rmi://localhost:8888");
 			
 			ExpressDataService expressData = (ExpressDataService) Naming
-					.lookup(list[1]);
+					.lookup(list[0]);
 			ExpressPO vo = (ExpressPO)expressData.getExpressInfo(null,"kdy-00001");
 			System.out.println(vo.getName());
-//			BusinessDataService businessData = (BusinessDataService) Naming
-//					.lookup(list[0]);
+
 			
+//			AccountDataService accountData =(AccountDataService) Naming.lookup(list[2]);
 			System.out.println("successful");
 
 		} catch (Exception e) {

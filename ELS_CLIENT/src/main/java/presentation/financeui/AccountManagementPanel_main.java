@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import businesslogic.financebl.controller.AccountBLController;
+
 public class AccountManagementPanel_main extends JPanel {
 	/**
 	 * 
@@ -37,8 +39,10 @@ public class AccountManagementPanel_main extends JPanel {
 //	private AccountManagementInfoTable_main info;
 	AccountModel am;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
+	AccountBLController controller;
 
-	public AccountManagementPanel_main() {
+	public AccountManagementPanel_main(AccountBLController controller) {
+		this.controller=controller;
 		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
 		modifyButton=new JButton("modify");
@@ -154,7 +158,7 @@ public class AccountManagementPanel_main extends JPanel {
 	public void addui() {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new AccountManagementPanel_new());
+		frame.add(new AccountManagementPanel_new(controller));
 		frame.setVisible(true);
 //		System.out.println("为啥显示不出来");
 
@@ -216,10 +220,10 @@ class AccountModel extends AbstractTableModel{
 	}
 	
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new AccountManagementPanel_main());
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new AccountManagementPanel_main());
+//		frame.setVisible(true);
+//	}
 }

@@ -15,7 +15,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected InitialStockData() throws RemoteException {
+	public InitialStockData() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
