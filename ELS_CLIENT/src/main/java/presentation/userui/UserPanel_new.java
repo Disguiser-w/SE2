@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JPanel;
 
 import businesslogic.userbl.UserBL;
 import vo.UserVO;
@@ -19,14 +20,15 @@ import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 
-public class UserPanel_new extends JLabel{
+public class UserPanel_new extends JPanel{
 	UserBL userBL;
 	
     private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
-    private String[] user_profession_type = {"快递员", "司机", "业务员", "财务人员", "仓库管理员",  "总经理", "管理员"};
-    private String[] user_salaryPlan_type = {"快递员薪水策略（基础月薪+提成）","司机薪水策略（计次提成）", "业务员薪水策略（基础月薪）","财务人员薪水策略（基础月薪）","仓库管理员薪水策略（基础月薪）","总经理薪水策略（基础月薪）","管理员薪水策略（基础月薪）"};
-    private String[] user_authority_type = {"最低权限（普通人员权限）", "管理员权限", "普通财务人员权限", "最高权限（最高财务人员和总经理）"};
+    
+    private String[] user_profession_type = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员","财务人员","总经理"};
+    private String[] user_salaryPlan_type = {"基础月薪+提成","计次提成","基础月薪"};
+    private String[] user_authority_type = {"最低权限（普通人员权限）", "管理员权限","普通财务人员权限","最高权限（最高财务人员和总经理）"};
     
     private JLabel function;
     private JLabel user_profession;
@@ -82,27 +84,35 @@ public class UserPanel_new extends JLabel{
     	user_profession_choose.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent event){
     			professionInt = user_profession_choose.getSelectedIndex();
-    			salaryPlanInt = professionInt;
-    			user_salaryPlan_choose.setSelectedIndex(salaryPlanInt);
-    			if(professionInt==0 || professionInt==1 || professionInt==2 || professionInt==4){
-    				authorityInt = 0;
+    			
+    			salaryPlanInt = 2;
+    			authorityInt = 0;//大部分人的工资策略为基础月薪，权限为最低权限
+    			
+    			if(professionInt==0){	//快递员
+    				salaryPlanInt = 0;
     			}
-    			else if(professionInt==3){
-    				authorityInt = 2;
+    			else if(professionInt==1){	//司机
+    				salaryPlanInt = 1;
     			}
-    			else if(professionInt==6){
+		    	else if(professionInt==5){	//管理员
     				authorityInt = 1;
     			}
-    			else if(professionInt==5){
+    			else if(professionInt==6){	//财务人员
+    				authorityInt = 2;
+    			}
+    			else if(professionInt==7){	//总经理
     				authorityInt = 3;
     			}
+    			
+    			user_salaryPlan_choose.setSelectedIndex(salaryPlanInt);
     			user_authority_choose.setSelectedIndex(authorityInt);
     			
-    			String[] IDPreList = {"KD", "SJ", "YWY",  "CW",  "CK", "JL", "GLY"};
+    			String[] IDPreList = {"KD","SJ","CK","YYT","ZZZX","GLY","CW","JL"};
     			String IDPre = IDPreList[professionInt];
     			ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
-						ProfessionType.counterman, ProfessionType.financialStaff, 
-						ProfessionType.stockman, ProfessionType.manager, ProfessionType.administrator};
+						ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
+    					ProfessionType.financialStaff, ProfessionType.administrator,ProfessionType.manager};
+    			
     			ProfessionType profession = professionList[professionInt];
     			String IDPost = userBL.getUserIDPost(profession);
     			
@@ -110,31 +120,34 @@ public class UserPanel_new extends JLabel{
     		}
     	});
     	
-    	user_name_Input.addFocusListener(new FocusAdapter(){
+    	/*user_name_Input.addFocusListener(new FocusAdapter(){
     		public void focusLost(FocusEvent event){
     			userName = user_name_Input.getText();
 				if(userName.equals("")){
 					warnning("新用户姓名不能为空");
 				}
     		}
-    	});
+    	});*/
     	
     	infoOKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				userName = user_name_Input.getText();
+				if(userName.equals("")){
+					warnning("新用户姓名不能为空");
+				}
 				
 				password = user_password_Input.getText();
 				organization = "";
 				
 				professionInt = user_profession_choose.getSelectedIndex();
 				ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
-												ProfessionType.counterman, ProfessionType.financialStaff, 
-												ProfessionType.stockman, ProfessionType.manager, ProfessionType.administrator};
+										ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
+				    					ProfessionType.financialStaff, ProfessionType.administrator,ProfessionType.manager};
 				ProfessionType profession = professionList[professionInt];
 				
 				salaryPlanInt = user_salaryPlan_choose.getSelectedIndex();
-				SalaryPlanType[] salaryPlanList = {SalaryPlanType.courierSalaryPlan, SalaryPlanType.driverSalaryPlan,
-						SalaryPlanType.courierSalaryPlan, SalaryPlanType.financialStaffSalaryPlan,
-						SalaryPlanType.stockmanSalaryPlan, SalaryPlanType.managerSalaryPlan, SalaryPlanType.administratorSalaryPlan};
+				SalaryPlanType[] salaryPlanList = {SalaryPlanType.courierSalaryPlan,SalaryPlanType.driverSalaryPlan,SalaryPlanType.basicStaffSalaryPlan};
 				SalaryPlanType salaryPlan = salaryPlanList[salaryPlanInt];
 				
 				authorityInt = user_authority_choose.getSelectedIndex();
@@ -144,8 +157,15 @@ public class UserPanel_new extends JLabel{
 			
 				UserVO uservo = new UserVO(userName, userID, password, profession, organization, salaryPlan,authority, 0);
 				int returnNum = userBL.addUser(uservo);
-				System.out.println(returnNum);
-				
+				if(returnNum==0){
+					warnning("增加成功");
+				}
+				else if(returnNum==1){
+					warnning("已存在同一姓名的用户，增加失败");
+				}
+				else{
+					warnning("服务器链接错误，增加失败");
+				}
 				//okui();
 			}
 		});

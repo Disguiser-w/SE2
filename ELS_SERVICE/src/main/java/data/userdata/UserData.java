@@ -7,7 +7,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.UserPO;
+import type.AuthorityType;
 import type.ProfessionType;
+import type.SalaryPlanType;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
 
@@ -23,12 +25,29 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 	}
     
     public int addUser(UserPO userpo) throws RemoteException{
-    	if(findUser(userpo.getUserID())==null){
-    		userFile.write(userpo);
-    		return 0;
-    	}
-    	else 
-    		return 1;
+    	ArrayList<Object> objectList = userFile.read();
+    	
+		if(objectList==null){
+			System.out.println("null qingkuang");
+			objectList = new ArrayList<Object>();
+			objectList.add(userpo);
+			userFile.writeM(objectList);
+			return 0;
+		}
+		
+		else{
+			for(int i=0; i<objectList.size(); i++){
+				UserPO tempUserPO = (UserPO)(objectList.get(i));
+				if(tempUserPO.getName().equals(userpo.getName())){
+					System.out.println("chongmingle!!!");
+					return 1;
+				}
+			}
+			objectList.add(userpo);
+			userFile.writeM(objectList);
+			return 0;
+		}
+		
     }
     
     public int deleteUser(String userID) throws RemoteException{
@@ -139,13 +158,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
     		userData = new UserData();
     		try{
     			userData.addUser(new UserPO("魏彦淑" ,"JL-01", "123456", ProfessionType.manager, "总部",
-    					SalaryPlanType.managerSalaryPlan, AuthorityType.highest, 0));
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
     			userData.addUser(new UserPO("王丽莉" ,"CW-01", "123456", ProfessionType.financialStaff, "总部",
-    					SalaryPlanType.financialStaffSalaryPlan, AuthorityType.highest, 0));
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
     			userData.addUser(new UserPO("丁二玉" ,"GLY-01","123456", ProfessionType.administrator, "总部",
-    					SalaryPlanType.managerSalaryPlan, AuthorityType.administrator, 0));
-    			userData.addUser(new UserPO("张家盛" ,"YYT-01","123456", ProfessionType.counterman, "鼓楼营业厅",
-    					SalaryPlanType.countermanSalaryPlan, AuthorityType.lowest, 0));
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
+    			userData.addUser(new UserPO("张家盛" ,"YYT-01","123456", ProfessionType.businessHallCounterman, "鼓楼营业厅",
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
     			userData.addUser(new UserPO("张词校" ,"KD-01","123456", ProfessionType.courier, "鼓楼营业厅",
     					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
     			

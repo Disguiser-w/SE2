@@ -17,7 +17,7 @@ import vo.LogVO;
 
 public class UserBL implements UserBLService{
 
-	public UserDataService udService;
+	public static UserDataService udService;
 	
 	
 	public UserBL(){

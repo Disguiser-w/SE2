@@ -3,9 +3,13 @@ package presentation.userui;
 import java.awt.Graphics;
 
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
+import businesslogic.expressbl.controller.ExpressMainController;
+
 public class userInfoTable_main extends JTable {
+	
 	private int width;
 	private int height;
 	private TableColumn tc;
@@ -62,5 +66,42 @@ public class userInfoTable_main extends JTable {
 	public void paint(Graphics g) {
 		setInfo();
 		super.paint(g);
+	}
+	
+	private class MessgeTableModel extends AbstractTableModel {
+
+		@Override
+		public int getRowCount() {
+			// TODO Auto-generated method stub
+			return 8;
+		}
+
+		@Override
+		public int getColumnCount() {
+			return 2;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			int index = num * 8 + rowIndex + 1;
+
+			if (index > ExpressMainController.expressVO.chargeCollection.size() - 1)
+				return null;
+			String infos = ExpressMainController.expressVO.chargeCollection.get(index);
+
+			if (infos != null) {
+				String[] info = infos.split(" ");
+				return info[columnIndex];
+			} else
+				return null;
+		}
+
+		public String getColumnName(int c) {
+			if (c == 0)
+				return "订单号";
+			else
+				return "收费";
+		}
+
 	}
 }
