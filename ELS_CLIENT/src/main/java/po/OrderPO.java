@@ -48,6 +48,7 @@ public class OrderPO implements Serializable{
 	private String tRecipient;
 	private String finishedData;
 	private String finishedID;
+	private String tPhoneNumber;
 
 
 	private OrderState order_state;
@@ -91,6 +92,15 @@ public class OrderPO implements Serializable{
 
 		this.order_state = order_state;
 		this.history = history;
+	}
+	
+
+	public String gettPhoneNumber() {
+		return tPhoneNumber;
+	}
+
+	public void settPhoneNumber(String tPhoneNumber) {
+		this.tPhoneNumber = tPhoneNumber;
 	}
 
 	public ArrayList<String> getHistory() {

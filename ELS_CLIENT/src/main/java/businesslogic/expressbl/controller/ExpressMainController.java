@@ -72,6 +72,7 @@ public class ExpressMainController {
 				vo.recipientPhoneNumber, vo.recipientMobilePhoneNumber, vo.numOfGoods, vo.weight, vo.volume,
 				vo.goodsName, vo.expressType, vo.packType, vo.freight, vo.packingExpense, vo.builtDate, vo.tRecipient,
 				vo.finishedDate, vo.finishedID, vo.order_state, vo.history);
+		po.settPhoneNumber(vo.tPhoneNumber);
 		return po;
 
 	}
@@ -85,6 +86,8 @@ public class ExpressMainController {
 				po.getGoodsName(), po.getExpressType(), po.getPackType(), po.getFreight(), po.getPackingExpense(),
 				po.getBuiltData(), po.gettRecipient(), po.getFinishedData(), po.getFinishedID(), po.getOrder_state(),
 				po.getHistory());
+
+		vo.tPhoneNumber = po.gettPhoneNumber();
 		return vo;
 	}
 

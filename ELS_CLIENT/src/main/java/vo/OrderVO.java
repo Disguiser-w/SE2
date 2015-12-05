@@ -45,6 +45,7 @@ public class OrderVO {
 	public String finishedDate;
 	public String finishedID;
 	public String tRecipient;
+	public String tPhoneNumber;
 
 	public OrderState order_state;
 	public ArrayList<String> history;
@@ -55,7 +56,8 @@ public class OrderVO {
 			int numOfGoods, String weight, String volume, String goodsName, ExpressType expressType, PackType packType,
 			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
 			String tRecipient, OrderState order_state, ArrayList<String> history) {
-		super();
+
+
 		this.ID = ID;
 		this.senderName = senderName;
 		this.senderAddress = senderAddress;
@@ -77,11 +79,6 @@ public class OrderVO {
 		this.order_state = order_state;
 		this.history = history;
 
-		freight = 0;
-		packingExpense = 0;
-		finishedDate = "";
-		finishedID = "";
-		tRecipient = "";
 	}
 
 	public float getFreight() {

@@ -28,7 +28,6 @@ public class AddOrderPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 201512041844L;
 	private JLabel senderLabel;
 	private JLabel senderNameLabel;
 	private JLabel senderOrganizationLabel;
@@ -55,8 +54,8 @@ public class AddOrderPanel extends JPanel {
 
 	private JLabel costLabel;
 	private JLabel timeLabel;
-	private JLabel cost;
-	private JLabel time;
+	private JTextField cost;
+	private JTextField time;
 
 	private JTextField senderNameField;
 	private JTextField senderOrganizationField;
@@ -151,8 +150,11 @@ public class AddOrderPanel extends JPanel {
 
 		costLabel = new JLabel("总费用");
 		timeLabel = new JLabel("预计时间");
-		cost = new JLabel("");
-		time = new JLabel("");
+		cost = new JTextField("-");
+		time = new JTextField("-");
+
+		cost.setEditable(false);
+		time.setEditable(false);
 
 		add(senderLabel);
 		add(senderNameLabel);
@@ -292,8 +294,8 @@ public class AddOrderPanel extends JPanel {
 			for (String i : citys) {
 				// places.add(organizationData.getBelongingPlaces(i));
 				ArrayList<String> str = new ArrayList<String>();
-				str.add("1");
-				str.add("2");
+				str.add("这里");
+				str.add("那里");
 				places.add(str);
 			}
 
@@ -336,12 +338,17 @@ public class AddOrderPanel extends JPanel {
 
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (controller.addOrder(newOrder)) {
-					addSuccessful("订单提交成功");
-					clear();
-				} else {
-
+				if (cost.getText().equals("-")) {
+					warnning("订单价格尚未计算");
+					return;
 				}
+
+				if (controller.addOrder(newOrder)) {
+					addSuccessful("订单提交成功！");
+					clear();
+				} else
+					warnning("订单提交失败，请重新提交");
+
 			}
 		});
 		// 费用计算
@@ -488,22 +495,27 @@ public class AddOrderPanel extends JPanel {
 				try {
 					ID = "DD-" + dateNowStr + "-" + (ExpressMainController.expressData
 							.getOrderNum(ExpressMainController.expressVO.organization.organizationID) + 1);
-					System.out.println(ID);
+
 				} catch (RemoteException e2) {
 
 					e2.printStackTrace();
 				}
 
-				newOrder = new OrderVO(ID, senderName, senderCountry + senderCity + senderAddress, senderOrganization,
-						senderPhone, senderMobilePhone, receiverName, receiverCountry + receiverCity + receiverAddress,
-						receiverOrganization, receiverPhone, receiverMobilePhone, Integer.parseInt(number), weight,
-						volumn, goodName, expressT, packageT, 0f, 0f, buildData, "", "", null, null,
-						new ArrayList<String>());
+				newOrder = new OrderVO(ID, senderName,
+						senderCountry + " " + senderCity + " " + senderAddressField.getText(),
+						senderOrganizationField.getText(), senderPhoneField.getText(), senderMobilePhone, receiverName,
+						receiverCountry + " " + receiverCity + " " + receiverAddressField.getText(),
+						receiverOrganizationField.getText(), receiverPhoneField.getText(), receiverMobilePhone,
+						Integer.parseInt(number), weight, volumn, goodNameField.getText(), expressT, packageT, 0f, 0f,
+						buildData, "", "", null, null, new ArrayList<String>());
 				// 计算
 
 				controller.calculateCost(newOrder);
-
-				cost.setText((int) (newOrder.freight + newOrder.packingExpense) + "元");
+				System.out.println(newOrder.packingExpense);
+				
+				String costStr = ((int) ((newOrder.freight + newOrder.packingExpense) * 10)) / 10 + "";
+				cost.setText(newOrder.freight + newOrder.packingExpense + "元");
+				
 				if (senderCountry.equals(receiverCountry))
 					time.setText("一天");
 				else
@@ -587,12 +599,10 @@ public class AddOrderPanel extends JPanel {
 
 		packageTypeList.setSelectedIndex(0);
 
-		// cost = new JLabel("");
-		cost.setText("");
-		cost.repaint();
-		// time = new JLabel("");
-		time.setText("");
-		time.repaint();
+		cost.setOpaque(true);
+		cost.setText("-");
+
+		time.setText("-");
 
 	}
 

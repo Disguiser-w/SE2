@@ -58,8 +58,11 @@ public class AddOrder {
 				po.getHistory().add("订单已到达" + expressVO.organization.name + ",正等待中转");
 			}
 
+			po.setPackingExpense(vo.packingExpense);
+			po.setFreight(vo.freight);
 			// 增加订单到本营业厅当日订单列表中
 			String organizationID = expressVO.organization.organizationID;
+
 
 			result = expressData.addOrder(po, organizationID);
 			// 增加此订单ID到此快递员的SubmitOrderID中
@@ -69,9 +72,8 @@ public class AddOrder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		double fare = vo.freight + vo.packingExpense;
+		double fare = ((int) ((vo.freight + vo.packingExpense) * 10)) / 10;
 		chargeCollection(vo.ID + " " + fare);
-
 
 		return result;
 	}
@@ -83,10 +85,9 @@ public class AddOrder {
 
 		double distance = 0;
 		try {
-			// fix distance =
-			// DataFactory.getCityDistanceData().findCityDistance(city1,
-			// city2).getDistance();
+//			distance = DataFactory.getCityDistanceData().findCityDistance(city1, city2).getDistance();
 			distance = 1000;
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -101,27 +102,27 @@ public class AddOrder {
 		else
 			tWeight = volumn;
 
-		float freight = 0f;
+		float packExpense = 0f;
 		switch (vo.packType) {
 		case CARTONS:
-			freight = 5f;
+			packExpense = 5f;
 			break;
 		case WOODCASE:
-			freight = 10f;
+			packExpense = 10f;
 			break;
 		case COURIERBAGS:
-			freight = 1f;
+			packExpense = 1f;
 			break;
 		}
 
-		float packExpense = 0;
+		float freight = 0;
 		if (city1.equals(city2))
-			packExpense = (float) (30 * tWeight * 23 / 1000);
+			freight = (float) (tWeight * 23);
 		else
-			packExpense = (float) (distance * tWeight * 23 / 1000);
+			freight = (float) (distance * tWeight * 23);
 
-		vo.freight = freight;
-		vo.packingExpense = packExpense;
+		vo.freight = ((int) (freight * 10)) / 10;
+		vo.packingExpense = ((int) (packExpense * 10)) / 10;
 
 	}
 
@@ -133,7 +134,6 @@ public class AddOrder {
 
 		if (chargeCollection.isEmpty())
 			chargeCollection.add("0");
-
 
 		double total = Double.parseDouble(chargeCollection.get(0));
 		double charge = Double.parseDouble(chargeInfo.split(" ")[1]);

@@ -1,5 +1,10 @@
 package businesslogic.expressbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
+import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.expressdataservice.ExpressDataService;
 import po.OrderPO;
@@ -9,13 +14,25 @@ import vo.OrderVO;
 
 public class ReceiptOrder {
 
-	//
+	private ExpressDataService expressData;
+
+	public ReceiptOrder() {
+		try {
+			expressData = DataFactory.getExpressData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public OrderVO getOrderInfo(String orderID) {
 		ExpressMainController.updateExpressInfo();
 		// TODO Auto-generated method stub
 		OrderVO vo = null;
 		try {
-			vo = ExpressMainController.orderPOToVO(ExpressMainController.expressData.find(orderID));
+			OrderPO po = expressData.find(orderID);
+			if (po != null)
+				vo = ExpressMainController.orderPOToVO(po);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,8 +52,7 @@ public class ReceiptOrder {
 
 			//
 			ExpressVO expressVO = ExpressMainController.expressVO;
-			result = expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID,
-					po);
+			result = expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID, po);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

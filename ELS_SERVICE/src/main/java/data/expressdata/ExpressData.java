@@ -78,7 +78,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
@@ -128,6 +128,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(orderFile));
 			out.writeObject(orderPOs);
+
 			out.close();
 
 		} catch (Exception e) {
@@ -224,8 +225,13 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 	public OrderPO find(String ID) throws RemoteException {
 		String orderPath = getPath(ID);
+
+		if (orderPath == null)
+			return null;
+
+		File file = FileGetter.getFile(orderPath);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(orderPath));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
 			in.close();
 
@@ -265,9 +271,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
 			File orderFile = FileGetter.getFile(orderPath);
 
-			ObjectInputStream orderIn = new ObjectInputStream(new FileInputStream(orderPath));
+			ObjectInputStream orderIn = new ObjectInputStream(new FileInputStream(orderFile));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) orderIn.readObject();
-			in.close();
+			orderIn.close();
 			for (OrderPO i : orderPOs)
 				if (i.getID().equals(po.getID())) {
 					i.setFinishedData(po.getFinishedData());
@@ -275,9 +281,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 					i.settRecipient(po.gettRecipient());
 				}
 
-			ObjectOutputStream orderOut = new ObjectOutputStream(new FileOutputStream(orderPath));
-			out.writeObject(orderPOs);
-			out.close();
+			ObjectOutputStream orderOut = new ObjectOutputStream(new FileOutputStream(orderFile));
+			orderOut.writeObject(orderPOs);
+			orderOut.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -436,7 +442,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 	// 获得当日订单数
 	public int getOrderNum(String organizationID) throws RemoteException {
-		// TODO Auto-generated method stub
+
 		String time = getTime();
 		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
 		File file = FileGetter.getFile(orderPath);
@@ -521,7 +527,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			out2.close();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
