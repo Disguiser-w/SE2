@@ -19,11 +19,14 @@ public class UserBL implements UserBLService{
 
 	public UserDataService udService;
 	
-	/*public User() throws Exception{
-		String host=getServer.getServer();
-		String url="rmi://"+host+"/userService";
-		udService=(UserDataService)Naming.lookup(url);
-	}*/
+	
+	public UserBL(){
+		try{
+			udService = (UserDataService)Naming.lookup("rmi://localhost:8888/UserDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	
 	/**
 	 * @param String userID, String password
@@ -145,6 +148,16 @@ public class UserBL implements UserBLService{
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return null;
+		}
+	}
+	
+	public String getUserIDPost(ProfessionType profession){
+		try{
+			String IDPost = udService.getUserIDPost(profession); 
+			return IDPost;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return "";
 		}
 	}
 	

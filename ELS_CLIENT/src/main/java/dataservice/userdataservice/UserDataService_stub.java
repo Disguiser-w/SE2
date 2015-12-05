@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.UserPO;
+import type.ProfessionType;
 
 public class UserDataService_stub implements UserDataService{
 	
@@ -31,5 +32,10 @@ public class UserDataService_stub implements UserDataService{
 		System.out.println("Show all users succeed!");
 		return null;
 	}
+    
+    public String getUserIDPost(ProfessionType profession) throws RemoteException{
+    	System.out.println("Get user ID post succeed!");
+    	return "";
+    }
     
 }

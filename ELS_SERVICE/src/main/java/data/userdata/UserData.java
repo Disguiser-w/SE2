@@ -7,9 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import po.UserPO;
-import type.AuthorityType;
 import type.ProfessionType;
-import type.SalaryPlanType;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
 
@@ -102,6 +100,33 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 		
 		return userList;
     }	
+    
+    public String getUserIDPost(ProfessionType profession) throws RemoteException{
+    	ArrayList<Object> objectList = userFile.read();
+    	
+		if(objectList==null)
+			return "00001";  	  
+		
+		int professionCount = 0; //用来计数，看该职业的用户已经有了多少个
+		for(int i=0; i<objectList.size(); i++){
+			UserPO tempUserPO = (UserPO)(objectList.get(i));
+			if(tempUserPO.getProfession().equals(profession)){
+				professionCount += 1;
+			}
+		}
+		
+		professionCount += 1;//得到新用户的编号是这种职业已有人数，再加上1
+		//以5位数字形式返回
+		if(professionCount<=9){
+			return "0000"+professionCount;
+		}
+		else if(professionCount>=10 && professionCount<=100){
+			return "000"+professionCount;
+		}
+		else{
+			return "00"+professionCount;
+		}
+    }
     
     
     /*--------------------------------------------------Test Part---------------------------------------------------*/ 

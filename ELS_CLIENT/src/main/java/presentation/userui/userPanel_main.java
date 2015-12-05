@@ -41,7 +41,6 @@ public class userPanel_main extends JLabel {
         
         addButton.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				addui();
@@ -50,7 +49,6 @@ public class userPanel_main extends JLabel {
         
         deleteButton.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				deleteui();
@@ -59,7 +57,6 @@ public class userPanel_main extends JLabel {
         
         next.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				nextui();
@@ -68,7 +65,6 @@ public class userPanel_main extends JLabel {
         
         previous.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				previousui();
