@@ -50,6 +50,8 @@ public class FinishedOrderPanel extends JPanel {
 		receiverPhoneNumField = new JTextField();
 
 		confirmButton = new JButton();
+		
+		orderIDField.setToolTipText("例如:DD-20151204-2");
 		// timeSetLabel = new JLabel();
 
 		receiveTimeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -126,7 +128,7 @@ public class FinishedOrderPanel extends JPanel {
 				}
 
 				vo = controller.getOrderInfo(orderID);
-				
+
 				if (vo == null) {
 					warnning("订单号不存在");
 					return;
@@ -172,14 +174,16 @@ public class FinishedOrderPanel extends JPanel {
 				String num = receiverPhoneNumField.getText();
 
 				boolean isFommatRight = true;
-				if (num.length() != 11)
-					isFommatRight = false;
+				if (num.length() != 11) {
+					warnning("实际收件人号码格式错误");
+					return;
+				}
 				for (int i = 0; i < 11; i++)
 					if (num.charAt(i) < '0' || num.charAt(i) > '9')
 						isFommatRight = false;
 				if (!isFommatRight) {
 					warnning("实际收件人号码格式错误");
-					return;
+
 				}
 
 				vo.finishedID = ExpressMainController.expressVO.ID + "-" + timeField.getText();

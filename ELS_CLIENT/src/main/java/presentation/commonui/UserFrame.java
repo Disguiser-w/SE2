@@ -236,7 +236,7 @@ public class UserFrame extends JFrame {
 		int width = getWidth();
 
 		newPanel.setBorder(BorderFactory.createBevelBorder(1));
-		newPanel.setBounds(height * 6 / 25, height / 5, width - height * 7 / 25, height * 19 / 25);
+		newPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
 		operationPanels.add(newPanel);
 
 		FuncLabel funcLabel = new FuncLabel();

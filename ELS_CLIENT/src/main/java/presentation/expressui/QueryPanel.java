@@ -5,11 +5,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,9 +22,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableColumnModelEvent;
+import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.DateChooser;
@@ -35,7 +46,7 @@ public class QueryPanel extends JPanel {
 	private JLabel previousPageLabel;
 	private JTable messageTable;
 	private JLabel messageHeader;
-	private ArrayList<JLabel> queryLabel;
+
 	private ArrayList<OrderVO> submitOrders;
 	private ArrayList<String> queryOrders;
 	// private LocationHelper help;
@@ -54,7 +65,7 @@ public class QueryPanel extends JPanel {
 		previousPageLabel = new JLabel("<");
 
 		messageTable = new JTable();
-		queryLabel = new ArrayList<JLabel>();
+
 		queryOrders = new ArrayList<String>();
 
 		timeField.setToolTipText("例:2001-12-12");
@@ -67,8 +78,6 @@ public class QueryPanel extends JPanel {
 		// messageTable.setBorder(BorderFactory.createLineBorder(Color.black));
 		messageTable.setBackground(this.getBackground());
 
-		for (JLabel i : queryLabel)
-			i.setBorder(BorderFactory.createLineBorder(Color.black));
 		timeInputLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		add(timeInputLabel);
@@ -79,12 +88,8 @@ public class QueryPanel extends JPanel {
 		add(previousPageLabel);
 		add(messageTable);
 		add(messageTable.getTableHeader());
-
 		timeSetLabel.setLayout(new BorderLayout());
 		timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
-		for (JLabel i : queryLabel) {
-			// add(i);
-		}
 
 		// help = new LocationHelper(this);
 		setLayout(null);
@@ -112,12 +117,8 @@ public class QueryPanel extends JPanel {
 		messageTable.getTableHeader().setBounds((int) (width * 1.3764404609475032 / 25),
 				(int) (height * 4.642857142857143 / 20), (int) (width * 22.151088348271447 / 25),
 				(int) (height * 1.4285714285714286 / 20));
-		for (JLabel i : queryLabel) {
-			i.setBounds(width, height, width, height);
 
-		}
 		setInfos();
-		setTableInfos();
 
 	}
 
@@ -135,11 +136,12 @@ public class QueryPanel extends JPanel {
 
 		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
 		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
+		TableColumn column3 = messageTable.getColumnModel().getColumn(2);
 
 		// 设置宽度
-		column1.setPreferredWidth(messageTable.getWidth() * 4 / 5);
-		column2.setPreferredWidth(messageTable.getWidth() / 5);
-
+		column1.setPreferredWidth(messageTable.getWidth() * 3 / 4);
+		column2.setPreferredWidth(messageTable.getWidth() / 20);
+		column3.setPreferredWidth(messageTable.getWidth() / 5);
 		messageTable.setRowHeight(messageTable.getHeight() / 8);
 		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
 		// messageTable.getTableHeader().getHeight() + 4);
@@ -160,6 +162,8 @@ public class QueryPanel extends JPanel {
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		column1.setCellRenderer(tcr);
 		column2.setCellRenderer(tcr);
+		column3.setCellRenderer(tcr);
+
 	}
 
 	private void addListener() {
@@ -224,6 +228,12 @@ public class QueryPanel extends JPanel {
 			}
 		});
 
+		// messageTable.addMouseListener(new MouseAdapter() {
+		// public void mouseClicked(MouseEvent e) {
+		// System.out.println(e.getX() + " " + e.getY());
+		// }
+		// });
+
 	}
 
 	private class MessgeTableModel extends AbstractTableModel {
@@ -235,7 +245,7 @@ public class QueryPanel extends JPanel {
 
 		@Override
 		public int getColumnCount() {
-			return 2;
+			return 3;
 		}
 
 		@Override
@@ -248,7 +258,12 @@ public class QueryPanel extends JPanel {
 
 			if (infos != null) {
 				String[] info = infos.split(" ");
-				return info[columnIndex];
+				if (columnIndex == 0)
+					return info[0];
+				else if (columnIndex == 2)
+					return info[1];
+				else
+					return null;
 			} else
 				return null;
 
@@ -257,8 +272,10 @@ public class QueryPanel extends JPanel {
 		public String getColumnName(int c) {
 			if (c == 0)
 				return "订单号";
-			else
+			else if (c == 1)
 				return "货运状态";
+			else
+				return "";
 		}
 
 	}

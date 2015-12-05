@@ -57,7 +57,6 @@ public class OrderVO {
 			float freight, float packingExpense, String builtDate, String finishedDate, String finishedID,
 			String tRecipient, OrderState order_state, ArrayList<String> history) {
 
-
 		this.ID = ID;
 		this.senderName = senderName;
 		this.senderAddress = senderAddress;
@@ -78,6 +77,11 @@ public class OrderVO {
 		this.builtDate = builtDate;
 		this.order_state = order_state;
 		this.history = history;
+		this.freight = freight;
+		this.packingExpense = packingExpense;
+		this.finishedDate = finishedDate;
+		this.finishedID = finishedID;
+		this.tRecipient = tRecipient;
 
 	}
 
