@@ -7,13 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import presentation.commonui.LocationHelper;
 import businesslogicservice.financeblservice.AccountBLService;
 import vo.AccountVO;
 
-public class AccountManagementPanel_new extends JLabel {
+public class AccountManagementPanel_new extends JPanel {
 	
 	/**
 	 * 
@@ -102,8 +103,8 @@ public class AccountManagementPanel_new extends JLabel {
 			}
 			else{
 				AccountVO accountVO=new AccountVO(name, moneyD);
+				System.out.println(name+"  "+moneyD);
 				int result=abService.addAccount(accountVO);
-				System.out.println(result);
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);

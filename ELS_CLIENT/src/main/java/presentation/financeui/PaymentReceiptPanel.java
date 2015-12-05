@@ -10,11 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
-public class PaymentReceiptPanel extends JLabel {
+public class PaymentReceiptPanel extends JPanel {
 	/**
 	 * 
 	 */

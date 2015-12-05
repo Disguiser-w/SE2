@@ -9,11 +9,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
-public class AccountManagementPanel_main extends JLabel {
+public class AccountManagementPanel_main extends JPanel {
 	/**
 	 * 
 	 */
@@ -151,6 +152,11 @@ public class AccountManagementPanel_main extends JLabel {
 	}
 
 	public void addui() {
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new AccountManagementPanel_new());
+		frame.setVisible(true);
+//		System.out.println("为啥显示不出来");
 
 	}
 

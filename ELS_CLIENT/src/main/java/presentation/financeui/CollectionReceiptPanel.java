@@ -54,7 +54,7 @@ public class CollectionReceiptPanel extends JPanel {
 	String date_str;
 	CollectionReceiptBLService service;
 	CollectionModel cm;
-	ArrayList<ArrayList<String>> c1=new ArrayList<ArrayList<String>>();
+	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	public CollectionReceiptPanel() {
 		dateChooseButton = new JButton("date");
 		infoOKButton = new JButton("infook");
@@ -71,22 +71,26 @@ public class CollectionReceiptPanel extends JPanel {
 		date_Input = new JTextField("");
 		businessHall_ID_Input = new JTextField("");
 
-		cm=new CollectionModel(c1);
+		
+//		if(c!=null){
+//			System.out.println(c);
+//		}
+//		else{
+//			System.out.println("空的hhhhh");
+//		}
 		//新建table
-		table=new JTable(cm);
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-		add(table.getTableHeader());
-		add(table);
+		
 
 		
-		System.out.println("has got here");
+//		System.out.println("has got here");
 //		setCmpLocation();
 	
-/**
- * 选择日期
- * */
+		/**
+		 * 监听
+		 * */
+                  /**
+                    * 选择日期
+                   * */
 		dateChooseButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -155,11 +159,20 @@ public class CollectionReceiptPanel extends JPanel {
 
 		add(date_Input);
 		add(businessHall_ID_Input);
-		add(table);
+//		add(table);
 //		add(info);
-		
 //		helper = new LocationHelper(this);
-		setInfos();
+		//table
+		cm=new CollectionModel(c);
+		System.out.println(c);
+		table=new JTable(cm);
+		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+		add(table.getTableHeader());
+		add(table);
+//		setInfos();
+		
 	}
 
 /*	public void setCmpLocation() {
@@ -250,13 +263,13 @@ public class CollectionReceiptPanel extends JPanel {
 		 * 设置表格中载入的动态内容(动态内容还是现实不进去。。。)
 		 * */
 		
-		public void setInfos(){
-			c1=new ArrayList<ArrayList<String>>();
-			
-			
-			
-			
-		}
+//		public void setInfos(){
+//			c=new ArrayList<ArrayList<String>>();
+//			
+//			
+//			
+//			
+//		}
 
 
 		
@@ -303,7 +316,7 @@ public class CollectionReceiptPanel extends JPanel {
 		}
 		else{
 			CollectionReceiptPanel crpanel=new CollectionReceiptPanel();
-			crpanel.refreshGatheringTable(date_str);
+	        crpanel.refreshGatheringTable(date_str);
 		}
 
 	}
@@ -334,7 +347,6 @@ public class CollectionReceiptPanel extends JPanel {
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-
 			return c.size();
 		}
 
@@ -363,21 +375,26 @@ public class CollectionReceiptPanel extends JPanel {
 		
 	}
 	
+	public ArrayList<ArrayList<String>> getInfo(){
+		return c;
+	}
 	
 	public void refreshGatheringTable(String time){
-		GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
-//		GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
 //		ArrayList<GatheringReceiptVO> gatherings=service.getGathering(time);
+		GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
+		GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
 		ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
 		gatherings.add(vo1);
-		System.out.println("hhhh");
+		gatherings.add(vo2);
 		for(GatheringReceiptVO gvo:gatherings){
 			ArrayList<String> lineInfo=new ArrayList<String>();
 			lineInfo.add(gvo.receiptID);
 			lineInfo.add(gvo.time);
 //			lineInfo.add(gvo.businesshall.organizationID);
 			lineInfo.add(gvo.totalmoney+"");
-			c1.add(lineInfo);
+			c.add(lineInfo);
+			System.out.println(c.get(0).toString());
+//			System.out.println(c.get(1).toString());
 		}
 		
 	}

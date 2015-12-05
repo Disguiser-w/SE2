@@ -8,8 +8,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class InitialStockPanel_new extends JLabel {
+public class InitialStockPanel_new extends JPanel {
 	/**
 	 * 
 	 */
