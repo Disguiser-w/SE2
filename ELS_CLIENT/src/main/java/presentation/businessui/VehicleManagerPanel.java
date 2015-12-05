@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
+import businesslogic.businessbl.controller.VehicleManagerController;
 
 public class VehicleManagerPanel extends JPanel {
 	private JLabel addLabel;
@@ -24,9 +24,11 @@ public class VehicleManagerPanel extends JPanel {
 	private ArrayList<JCheckBox> selectDriver;
 	private ArrayList<JLabel> totalInfo;
 
+	private VehicleManagerController controller;
 	// private LocationHelper helper;
 
-	public VehicleManagerPanel() {
+	public VehicleManagerPanel(VehicleManagerController controller) {
+		this.controller = controller;
 		addLabel = new JLabel();
 		delLabel = new JLabel();
 		searchLabel = new JLabel();

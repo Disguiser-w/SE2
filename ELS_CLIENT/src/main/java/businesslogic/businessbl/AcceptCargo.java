@@ -1,5 +1,7 @@
 package businesslogic.businessbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class AcceptCargo {
 
 	public AcceptCargo() { // 使用RMI初始化businessDataService
 		try {
+			expressData = DataFactory.getExpressData();
 			businessData = DataFactory.getBusinessData();
 
 		} catch (Exception e) {
@@ -35,8 +38,7 @@ public class AcceptCargo {
 
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ExpressDataService expressData = BusinessMainController.expressData;
-		BusinessDataService businessData = BusinessMainController.businessData;
+
 		// 根据以下两项可以到对应的营业厅文件夹中查找OrderPO
 		// 将此状态更新到原营业厅文件中
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import type.Sexuality;
 
-public class DriverPO  implements Serializable{
+public class DriverPO implements Serializable{
 
 	// 司机编号、姓名、出生日期、身份证号、手机、车辆单位、性别、行驶证期限
 	private String ID;
@@ -15,13 +15,15 @@ public class DriverPO  implements Serializable{
 	private OrganizationPO vehicleOrganization;
 	private Sexuality sexuality;
 	private String registrationDeadline;
-
+	private int time;
 
 	public DriverPO() {
 	}
 
-	public DriverPO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
-			OrganizationPO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
+	public DriverPO(String ID, String name, String dateOfBirth,
+			String IdCardNumber, String phoneNumber,
+			OrganizationPO vehicleOrganization, Sexuality sexuality,
+			String registrationDeadline,int time) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -31,6 +33,15 @@ public class DriverPO  implements Serializable{
 		this.vehicleOrganization = vehicleOrganization;
 		this.sexuality = sexuality;
 		this.registrationDeadline = registrationDeadline;
+		this.time = time;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
 	}
 
 	public String getID() {

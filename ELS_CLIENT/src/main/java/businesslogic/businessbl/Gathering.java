@@ -1,11 +1,14 @@
 package businesslogic.businessbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
@@ -15,12 +18,29 @@ import type.ReceiptState;
 import vo.OrganizationVO;
 
 public class Gathering {
+	private ExpressDataService expressData;
+	private BusinessDataService businessData;
+	
+	public Gathering(){
+		try {
+			expressData = DataFactory.getExpressData();
+			businessData =DataFactory.getBusinessData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public ArrayList<String> getChargeInfo() {
 		// 获取收费信息
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ExpressDataService expressData = BusinessMainController.expressData;
-
+	
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
@@ -43,8 +63,7 @@ public class Gathering {
 
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ExpressDataService expressData = BusinessMainController.expressData;
-		BusinessDataService businessData = BusinessMainController.businessData;
+		
 
 		// 获取收费信息
 		ArrayList<ExpressPO> po = null;

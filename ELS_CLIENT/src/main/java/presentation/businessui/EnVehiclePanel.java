@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import businesslogic.businessbl.controller.EnVehicleController;
 import presentation.commonui.LocationHelper;
 
 public class EnVehiclePanel extends JPanel {
@@ -14,8 +15,10 @@ public class EnVehiclePanel extends JPanel {
 	private JButton confirmButton;
 	private JButton distributeButton;
 	private LocationHelper helper;
+	private EnVehicleController controller;
 
-	public EnVehiclePanel() {
+	public EnVehiclePanel(EnVehicleController controller) {
+		this.controller = controller;
 		messageTable = new JTable();
 		nextPageLabel = new JLabel();
 		previousPageLabel = new JLabel();

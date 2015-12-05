@@ -1,32 +1,56 @@
 package businesslogic.businessbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.datafactory.DataFactory;
+import dataservice.businessdataservice.BusinessDataService;
+import dataservice.expressdataservice.ExpressDataService;
 import po.DistributeReceiptPO;
 import po.ExpressPO;
 import po.OrderPO;
 import type.OrderState;
 import type.ReceiptState;
 import vo.OrganizationVO;
-import businesslogic.businessbl.controller.BusinessMainController;
-import dataservice.expressdataservice.ExpressDataService;
 
 public class DistributeOrder {
+
+	private ExpressDataService expressData;
+	private BusinessDataService businessData;
+
+	public DistributeOrder() {
+
+		try {
+			expressData = DataFactory.getExpressData();
+			businessData = DataFactory.getBusinessData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
 	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
 	public ArrayList<String> distributeOrder() throws RemoteException {
 		BusinessMainController.updateBusinessVO();
+
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ExpressDataService expressData = BusinessMainController.expressData;
 		ArrayList<ExpressPO> expressPOs = null;
 		try {
 			expressPOs = expressData.getExpressInfos(organizationVO.organizationID);
-		} catch (RemoteException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -74,7 +98,7 @@ public class DistributeOrder {
 		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime, result,
 				nowTime, ReceiptState.SUBMIT);
 		// 增加派件单，一天一天
-		BusinessMainController.businessData.addDistributeReceipt(organizationVO.organizationID, po);
+		businessData.addDistributeReceipt(organizationVO.organizationID, po);
 
 		return result;
 	}

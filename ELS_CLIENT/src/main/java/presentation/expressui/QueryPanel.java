@@ -10,10 +10,7 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,16 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableColumnModelEvent;
-import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.DateChooser;
@@ -95,6 +85,40 @@ public class QueryPanel extends JPanel {
 		setLayout(null);
 		addListener();
 
+		messageTable.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {// 仅当鼠标单击时响应
+
+				// 得到选中的行列的索引值
+
+				int r = messageTable.getSelectedRow();
+				int c = messageTable.getSelectedColumn();
+				if (c == 1) {
+					queryOrder(r);
+				}
+
+			}
+		});
+
+	}
+
+	private void queryOrder(int row) {
+
+		if (messageTable.getValueAt(row, 0) != null) {
+			for (OrderVO i : submitOrders)
+				if (i.ID.equals(messageTable.getValueAt(row, 0))) {
+					showHistory(i.history);
+
+				}
+		}
+
+	}
+
+	private void showHistory(ArrayList<String> history) {
+
+		for (String i : history) {
+			System.out.println(i);
+		}
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -170,6 +194,7 @@ public class QueryPanel extends JPanel {
 
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				num = 0;
 				submitOrders = controller.query();
 				String date = timeField.getText().trim();
 
@@ -273,9 +298,9 @@ public class QueryPanel extends JPanel {
 			if (c == 0)
 				return "订单号";
 			else if (c == 1)
-				return "货运状态";
-			else
 				return "";
+			else
+				return "货运状态";
 		}
 
 	}

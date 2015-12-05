@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import businesslogic.businessbl.controller.AcceptCargoController;
 import presentation.commonui.LocationHelper;
 
 public class OrderReceiveManagerPanel extends JPanel {
@@ -25,9 +26,10 @@ public class OrderReceiveManagerPanel extends JPanel {
 
 	// 定为
 	private LocationHelper helper;
-
-	public OrderReceiveManagerPanel() {
-
+	private AcceptCargoController acceptCargoController;
+	
+	public OrderReceiveManagerPanel(AcceptCargoController acceptCargoController) {
+		this.acceptCargoController = acceptCargoController;
 		inputLabel = new JLabel("输入订单号");
 		sendLabel = new JLabel();
 		printLabel = new JLabel();
@@ -61,8 +63,11 @@ public class OrderReceiveManagerPanel extends JPanel {
 
 		helper = new LocationHelper(this);
 
+	
 		setLayout(null);
 	}
+
+	
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);

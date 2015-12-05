@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import businesslogic.businessbl.controller.DistributeOrderController;
 import presentation.commonui.LocationHelper;
 
 public class OrderDistributePanel extends JPanel {
@@ -18,8 +19,11 @@ public class OrderDistributePanel extends JPanel {
 	private LocationHelper helper;
 	private JLabel sendLabel;
 	private JLabel printLabel;
+	
+	private DistributeOrderController controller;
 
-	public OrderDistributePanel() {
+	public OrderDistributePanel(DistributeOrderController controller) {
+		this.controller = controller;
 		messageTable = new JTable();
 		nextPageLabel = new JLabel();
 		previousPageLabel = new JLabel();

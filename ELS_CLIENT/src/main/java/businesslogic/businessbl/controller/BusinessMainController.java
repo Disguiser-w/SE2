@@ -1,10 +1,8 @@
 package businesslogic.businessbl.controller;
 
-import java.rmi.Naming;
-
+import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.expressdataservice.ExpressDataService;
 import po.BusinessPO;
 import po.DistributeReceiptPO;
 import po.DriverPO;
@@ -12,6 +10,13 @@ import po.EnVehicleReceiptPO;
 import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
+import presentation.businessui.BusinessFrame;
+import presentation.businessui.ChargeCollectionPanel;
+import presentation.businessui.DriverManagerPanel;
+import presentation.businessui.EnVehiclePanel;
+import presentation.businessui.OrderDistributePanel;
+import presentation.businessui.OrderReceiveManagerPanel;
+import presentation.businessui.VehicleManagerPanel;
 import vo.BusinessVO;
 import vo.DistributeReceiptVO;
 import vo.DriverVO;
@@ -22,7 +27,6 @@ import vo.VehicleVO;
 
 public class BusinessMainController {
 	public static BusinessDataService businessData;
-	public static ExpressDataService expressData;
 	public static BusinessVO businessVO;
 
 	// controller
@@ -32,13 +36,15 @@ public class BusinessMainController {
 	public static DistributeOrderController distributeorderController;
 	public static DriverManagerController driverManagerController;
 	public static VehicleManagerController vehicleManagerController;
+	
+	private BusinessFrame businessFrame;
 
 	public BusinessMainController(String businessID) {
 		// RMI
 		// businessData = new BusinessDataService_stub();
 
 		try {
-			businessData = (BusinessDataService) Naming.lookup("//localhost:8888/BusinessDataService");
+			businessData = DataFactory.getBusinessData();
 			businessVO = businessPOToVO(businessData.getBusinessInfo(null, businessID));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -50,6 +56,24 @@ public class BusinessMainController {
 		distributeorderController = new DistributeOrderController();
 		driverManagerController = new DriverManagerController();
 		vehicleManagerController = new VehicleManagerController();
+		
+//		expressFrame = new ExpressFrame(expressVO);
+//		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
+//		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController));
+//		expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
+//		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController));
+//
+//		expressFrame.showFrame();
+		businessFrame = new BusinessFrame(businessVO);
+//		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController));
+//		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController));
+//		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController));
+//		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController));
+		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController));
+//		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController));
+		businessFrame.showFrame();
+		
+		
 
 	}
 
@@ -116,7 +140,6 @@ public class BusinessMainController {
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
 
-
 		return new EnVehicleReceiptVO(OrganizationBL.organizationPOToVO(po.getPlaceOfDeparture()), po.getTime(),
 				vehiclePOToVO(po.getVehiclePO()), po.getOrderPOList(), po.getReceiptID(), po.getReceiptState());
 	}
@@ -143,5 +166,9 @@ public class BusinessMainController {
 	public static GatheringReceiptPO gatheringVOToPO(GatheringReceiptVO vo) {
 		return new GatheringReceiptPO(OrganizationBL.organizationVOToPO(vo.businesshall), vo.time, vo.expressList,
 				vo.money, vo.totalmoney, vo.receiptID, vo.receiptState);
+	}
+	
+	public static void main(String[] args){
+		new BusinessMainController("YYT-00001");
 	}
 }

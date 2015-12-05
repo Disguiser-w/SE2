@@ -497,7 +497,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	public static void main(String[] args) {
 		try {
 
-			File file = FileGetter.getFile("businessInfo/025001-business.dat");
+			File file = FileGetter.getFile("organizationInfo/organization.dat");
 			if (!file.exists()) {
 
 				file.getParentFile().mkdirs();

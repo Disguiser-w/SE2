@@ -15,6 +15,7 @@ public class DriverPO implements Serializable{
 	private OrganizationPO vehicleOrganization;
 	private Sexuality sexuality;
 	private String registrationDeadline;
+	private int time;
 
 	public DriverPO() {
 	}
@@ -22,7 +23,7 @@ public class DriverPO implements Serializable{
 	public DriverPO(String ID, String name, String dateOfBirth,
 			String IdCardNumber, String phoneNumber,
 			OrganizationPO vehicleOrganization, Sexuality sexuality,
-			String registrationDeadline) {
+			String registrationDeadline,int time) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -32,6 +33,15 @@ public class DriverPO implements Serializable{
 		this.vehicleOrganization = vehicleOrganization;
 		this.sexuality = sexuality;
 		this.registrationDeadline = registrationDeadline;
+		this.time = time;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
 	}
 
 	public String getID() {

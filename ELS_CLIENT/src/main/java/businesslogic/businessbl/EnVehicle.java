@@ -1,5 +1,7 @@
 package businesslogic.businessbl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
@@ -18,13 +21,31 @@ import type.ReceiptState;
 import vo.OrganizationVO;
 
 public class EnVehicle {
+	private ExpressDataService expressData;
+	private BusinessDataService businessData;
+	
+	public EnVehicle(){
+		
+		try {
+			expressData = DataFactory.getExpressData();
+			businessData = DataFactory.getBusinessData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	// 从前一天的订单列表中找出待转运的订单，按目的地分配给车辆
 	public ArrayList<String> autoTruckLoading(String OrganizationID) {
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ExpressDataService expressData = BusinessMainController.expressData;
-		BusinessDataService businessData = BusinessMainController.businessData;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -1); // 得到前一天

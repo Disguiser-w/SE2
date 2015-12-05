@@ -13,9 +13,10 @@ public class DriverVO {
 	public final OrganizationVO vehicleOrganization;
 	public final Sexuality sexuality;
 	public final String registrationDeadline;
+	public final int time;
 
 	public DriverVO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
-			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline) {
+			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline,int time) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -25,5 +26,6 @@ public class DriverVO {
 		this.vehicleOrganization = vehicleOrganization;
 		this.sexuality = sexuality;
 		this.registrationDeadline = registrationDeadline;
+		this.time = time;
 	}
 }

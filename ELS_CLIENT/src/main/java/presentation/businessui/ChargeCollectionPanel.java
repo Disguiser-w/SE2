@@ -8,8 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import businesslogic.expressbl.controller.ChargeCollectionController;
-import presentation.commonui.LocationHelper;
+import businesslogic.businessbl.controller.GatheringController;
 
 public class ChargeCollectionPanel extends JPanel {
 	// private JLabel printLabel;
@@ -19,9 +18,9 @@ public class ChargeCollectionPanel extends JPanel {
 	private JButton collectionButton;
 	// private LocationHelper helper;
 
-	private ChargeCollectionController controller;
+	private GatheringController controller;
 
-	public ChargeCollectionPanel(ChargeCollectionController controller) {
+	public ChargeCollectionPanel(GatheringController controller) {
 		// printLabel = new JLabel();
 		// sendLabel = new JLabel();
 		this.controller = controller;
