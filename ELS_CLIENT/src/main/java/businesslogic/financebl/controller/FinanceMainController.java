@@ -95,20 +95,29 @@ public class FinanceMainController {
 			e1.printStackTrace();
 		}
 		//初始化四个controller：把操作拿出来做controller吗
-				accountBLController=new AccountBLController();
-				collectionReceiptBLController=new CollectionReceiptBLController();
-				paymentReceiptBLController=new PaymentReceiptBLController();
-				costIncomeReceiptBLController=new CostIncomeReceiptBLController();
-				businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
-				initialStockBLController=new InitialStockBLController();
+				try {
+					accountBLController=new AccountBLController();
+					collectionReceiptBLController=new CollectionReceiptBLController();
+					paymentReceiptBLController=new PaymentReceiptBLController();
+					costIncomeReceiptBLController=new CostIncomeReceiptBLController();
+					businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
+					initialStockBLController=new InitialStockBLController();
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 		
 				//初始化界面
 				financeFrame =new FinanceFrame();
-//				System.out.println("get here?");
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController));
-//				System.out.println("get here?");
 				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController));
-//				System.out.println("get here?");
 				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));

@@ -17,8 +17,14 @@ public class AccountBL {
 	private AccountDataService accountData;
 //	private AccountPO po;
 	
-	public AccountBL() throws MalformedURLException, RemoteException, NotBoundException {
-			accountData=DataFactory.getAccountData();
+	public AccountBL()  {
+			try {
+				accountData=DataFactory.getAccountData();
+			} catch (MalformedURLException | RemoteException
+					| NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	/** 
@@ -171,6 +177,7 @@ public class AccountBL {
 			return 1;
 		}
 	}
+	
 
 
 /*	public static void main(String[] args){

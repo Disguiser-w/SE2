@@ -107,9 +107,11 @@ public class AccountManagementPanel_new extends JPanel {
 				account_money_Input.setText("");
 			}
 			else{
+				System.out.println("name :"+name);
 				AccountVO accountVO=new AccountVO(name, moneyD);
-				System.out.println(name+"  "+moneyD);
 				int result=controller.addAccount(accountVO);
+				System.out.println("name:"+accountVO.getName());
+
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);

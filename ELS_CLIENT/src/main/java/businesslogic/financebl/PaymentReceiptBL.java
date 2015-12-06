@@ -151,27 +151,27 @@ public class PaymentReceiptBL extends ReceiptBL {
 					salary+=p.getGrades()*perWage;
 				}
 				//营业厅业务员
-				else if(p.getSalaryPlan()==SalaryPlanType.countermanSalaryPlan){
-				   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.counterman).getBasicSalary();
+				else if(p.getSalaryPlan()==SalaryPlanType.basicStaffSalaryPlan){
+				   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.businessHallCounterman).getBasicSalary();
 				   salary+=basicSalary;
 				}
 				//系统管理员
-				else if(p.getSalaryPlan()==SalaryPlanType.administratorSalaryPlan){
+				else if(p.getSalaryPlan()==SalaryPlanType.basicStaffSalaryPlan){
 					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.administrator).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//仓库管理员
-				else if(p.getSalaryPlan()==SalaryPlanType.stockmanSalaryPlan){
+				else if(p.getSalaryPlan()==SalaryPlanType.basicStaffSalaryPlan){
 					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.stockman).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//财务人员
-				else if(p.getSalaryPlan()==SalaryPlanType.financialStaffSalaryPlan){
+				else if(p.getSalaryPlan()==SalaryPlanType.basicStaffSalaryPlan){
 					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.financialStaff).getBasicSalary();
 					   salary+=basicSalary;
 				}
 				//总经理
-				else if(p.getSalaryPlan()==SalaryPlanType.managerSalaryPlan){
+				else if(p.getSalaryPlan()==SalaryPlanType.basicStaffSalaryPlan){
 					   double basicSalary=basicSalaryData.findBasicSalary(ProfessionType.manager).getBasicSalary();
 					   salary+=basicSalary;
 				}

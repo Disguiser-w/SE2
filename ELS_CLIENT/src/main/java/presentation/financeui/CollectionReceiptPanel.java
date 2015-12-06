@@ -55,7 +55,6 @@ public class CollectionReceiptPanel extends JPanel {
 
 	String hallID_str;
 	String date_str;
-	CollectionReceiptBLService service;
 	CollectionModel cm;
 	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	public CollectionReceiptPanel(CollectionReceiptBLController controller) {
@@ -99,7 +98,7 @@ public class CollectionReceiptPanel extends JPanel {
 		
 		
 		//刷新表格还是有问题
-		refreshGatheringTable(date_str);
+//		refreshGatheringTable(date_str);
 //		c=getInfo(date_str);
 		cm=new CollectionModel(c);
 //		System.out.println(c);
@@ -270,7 +269,6 @@ public class CollectionReceiptPanel extends JPanel {
 	public void okui() {
 		//这里需要格式的转化"2015/11/10——20151110"
 		date_str=date_Input.getText();
-		c=getInfo(date_str);
 
 		if(date_str.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
@@ -287,9 +285,15 @@ public class CollectionReceiptPanel extends JPanel {
 			date_Input.setText("");
 		}
 		else{
-//			CollectionReceiptPanel panel=new CollectionReceiptPanel();
-//	       panel.refreshGatheringTable(date_str);
-	        System.out.println(c);
+			//我可以把获取数据的过程放在这里啊2333
+//			ArrayList<GatheringReceiptVO> gatherings=controller.getGathering(date_str);
+			GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
+			GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
+			ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
+			gatherings.add(vo1);
+			gatherings.add(vo2);
+	      refreshGatheringTable(gatherings);
+	      System.out.println("我可以把获取数据的过程放在这里啊2333");
 		}
 
 	}
@@ -359,56 +363,25 @@ public class CollectionReceiptPanel extends JPanel {
 		
 	}
 	
-	/**
-	 * 获取c：因为c要在panel之前声明
-	 * */
-	public ArrayList<ArrayList<String>> getInfo(String time){
-//		ArrayList<GatheringReceiptVO> gatherings=service.getGathering(time);
 
-		if(time==null){
-			return null;
-		}
-		GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
-		GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
-		ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
-		gatherings.add(vo1);
-		gatherings.add(vo2);
+	public void refreshGatheringTable(ArrayList<GatheringReceiptVO> gatherings){
 		for(GatheringReceiptVO gvo:gatherings){
 			ArrayList<String> lineInfo=new ArrayList<String>();
 			lineInfo.add(gvo.receiptID);
 			lineInfo.add(gvo.time);
-//			lineInfo.add(gvo.businesshall.organizationID);
 			lineInfo.add(gvo.totalmoney+"");
 			c.add(lineInfo);
-		}
-		return c;
-	}
-	
-	public void refreshGatheringTable(String time){
-//		ArrayList<GatheringReceiptVO> gatherings=service.getGathering(time);
-		GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
-		GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
-		ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
-		gatherings.add(vo1);
-		gatherings.add(vo2);
-		for(GatheringReceiptVO gvo:gatherings){
-			ArrayList<String> lineInfo=new ArrayList<String>();
-			lineInfo.add(gvo.receiptID);
-			lineInfo.add(gvo.time);
-//			lineInfo.add(gvo.businesshall.organizationID);
-			lineInfo.add(gvo.totalmoney+"");
-			c.add(lineInfo);
-//			System.out.println(c.get(1).toString());
 		}
 		
 	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new CollectionReceiptPanel());
-//		frame.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		CollectionReceiptBLController controller=new CollectionReceiptBLController();
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new CollectionReceiptPanel(controller));
+		frame.setVisible(true);
+	}
 }
 
 
@@ -439,5 +412,30 @@ infoLine.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 45 / 48,
 
 //info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
 //		PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+}
+*/
+
+
+/**
+ * 获取c：因为c要在panel之前声明
+ * */
+/*public ArrayList<ArrayList<String>> getInfo(ArrayList<GatheringReceiptVO> gatherings){
+//	ArrayList<GatheringReceiptVO> gatherings=service.getGathering(time);
+
+
+//	GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
+//	GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
+//	ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
+//	gatherings.add(vo1);
+//	gatherings.add(vo2);
+	for(GatheringReceiptVO gvo:gatherings){
+		ArrayList<String> lineInfo=new ArrayList<String>();
+		lineInfo.add(gvo.receiptID);
+		lineInfo.add(gvo.time);
+//		lineInfo.add(gvo.businesshall.organizationID);
+		lineInfo.add(gvo.totalmoney+"");
+		c.add(lineInfo);
+	}
+	return c;
 }
 */

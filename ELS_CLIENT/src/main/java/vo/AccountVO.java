@@ -3,13 +3,11 @@ package vo;
 public class AccountVO {
 	String name;
 	double money;
-	
-	public AccountVO(){
-		this(null,0);
-	}
 
 	public AccountVO(String name, double money) {
 		// TODO Auto-generated constructor stub
+		this.name=name;
+		this.money=money;
 	}
 	
 	public String getName(){
@@ -18,5 +16,13 @@ public class AccountVO {
 	
 	public double getMoney(){
 		return money;
+	}
+	
+	public void setName(String name){
+		this.name=name;
+	}
+	
+	public void setMoney(double money){
+		this.money=money;
 	}
 }

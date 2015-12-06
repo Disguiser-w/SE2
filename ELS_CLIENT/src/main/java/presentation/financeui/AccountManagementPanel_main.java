@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -40,6 +40,8 @@ public class AccountManagementPanel_main extends JPanel {
 	AccountModel am;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	AccountBLController controller;
+	
+	FinanceFrame financeFrame;
 
 	public AccountManagementPanel_main(AccountBLController controller) {
 		this.controller=controller;
@@ -156,15 +158,24 @@ public class AccountManagementPanel_main extends JPanel {
 	}
 
 	public void addui() {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new AccountManagementPanel_new(controller));
-		frame.setVisible(true);
+		System.out.println("add监听已添加");
+		financeFrame=new FinanceFrame();
+		financeFrame.addFuncLabel(new AccountManagementPanel_new(controller));
+		financeFrame.showFrame();
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new AccountManagementPanel_new(controller));
+//		frame.setVisible(true);
 //		System.out.println("为啥显示不出来");
 
 	}
 
 	public void deleteui() {
+		int row=table.getSelectedColumn();
+		if(row==-1){
+			JOptionPane.showMessageDialog(null, "请选择需要删除的行！", "提示",
+					JOptionPane.CLOSED_OPTION);
+		}
 
 	}
 

@@ -105,8 +105,12 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		}
 		for(Object o:os){
 			AccountPO po=(AccountPO) o;
+			System.out.println(name);
 			if(po.getName().equals(name)){
 				return po;
+			}
+			else{
+				return null;
 			}
 		}
 		//不存在该用户：返回null
@@ -185,8 +189,14 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		return 0;
 	}
 	
-	public static void main(String[] args){
-		try{
+	public static void main(String[] args) throws RemoteException{
+		AccountData data=new AccountData();
+		ArrayList<AccountPO> po=data.showAll();
+		for(AccountPO p:po){
+			System.out.println("Money :"+p.getMoney());
+		}
+		
+		/*try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
 			AccountDataService data=new AccountData();
 			LocateRegistry.createRegistry(8888);
@@ -199,6 +209,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			e.printStackTrace();
 			
 		}
+		*/
 	
 	/*		ArrayList<AccountPO> pos=data.showAll();
 			for(AccountPO p:pos){
