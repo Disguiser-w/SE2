@@ -33,10 +33,12 @@ public class PlaneManagementPanel extends JLabel {
 	private VehicleManagementTableModel model;
 
 	private int pageNum;
+	private int pageNum_max;
 
-	public PlaneManagementPanel( IntermediateMainController controller) {
+	public PlaneManagementPanel(IntermediateMainController controller) {
 		this.controller = controller;
 
+		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
 		next = new JButton("next");
 		previous = new JButton("previous");
@@ -49,9 +51,10 @@ public class PlaneManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-
+//		pageNum_max = (controller.getPlaneList().size() - 2) / 13;
+		 pageNum_max = 3;
 		setCmpLocation();
-
+		
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -70,14 +73,15 @@ public class PlaneManagementPanel extends JLabel {
 			}
 		});
 
-		next.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				if (pageNum >= (controller.getPlaneList().size() - 2) / 8)
+		next.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (pageNum >= pageNum_max)
 					return;
 				else {
 					pageNum++;
 					info.setModel(new VehicleManagementTableModel());
-					info.setuiInfo();;
+					info.setuiInfo();
+					;
 				}
 			}
 		});
@@ -91,7 +95,7 @@ public class PlaneManagementPanel extends JLabel {
 					info.setModel(new VehicleManagementTableModel());
 					info.setuiInfo();
 				}
-			}  			
+			}
 		});
 
 		setLayout(null);
@@ -137,10 +141,6 @@ public class PlaneManagementPanel extends JLabel {
 	}
 
 	public void deleteui() {
-
-	}
-
-	public void nextui() {
 
 	}
 
@@ -198,10 +198,10 @@ public class PlaneManagementPanel extends JLabel {
 		}
 	}
 
-	 public static void main(String[] args) {
-	 JFrame frame = new JFrame();
-	 frame.setSize(800, 550);
-	 frame.add(new PlaneManagementPanel(null));
-	 frame.setVisible(true);
-	 }
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new PlaneManagementPanel(null));
+		frame.setVisible(true);
+	}
 }

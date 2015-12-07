@@ -199,4 +199,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 			intermediateData.saveEnIntermediateReceiptInfo(entruckingReceipt);
 		return OperationState.SUCCEED_OPERATION;
 	}
+
+	public AllocateWaitingOrderBL getAllocateWwaitingOrderBL() {
+		return awobl;
+	}
 }

@@ -370,4 +370,16 @@ public class IntermediateMainController {
 	public OrganizationVO getIntermediateCentre() {
 		return intermediateCentre;
 	}
+
+	public EnvehicleBL getEnvehicleBL() {
+		return envehicle;
+	}
+
+	public TransferingReceiptVO getTransferingReceipt() {
+		return transferingReceipt;
+	}
+
+	public TransferingBL getTransferingBL() {
+		return transfering;
+	}
 }

@@ -2,12 +2,20 @@ package presentation.intermediateui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.table.AbstractTableModel;
+
+import vo.OrderVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class EnvehiclePanel extends JLabel {
+	private IntermediateMainController controller;
+
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
@@ -18,15 +26,25 @@ public class EnvehiclePanel extends JLabel {
 	private JLabel function;
 
 	private EnvehicleInfoTable info;
+	private EnvehicleTableModel model;
 
-	public EnvehiclePanel() {
+	private int pageNum;
+	private int pageNum_max;
+
+	public EnvehiclePanel(IntermediateMainController controller) {
+		this.controller = controller;
+
 		envehicle = new JButton("do");
 		next = new JButton("next");
 		previous = new JButton("previous");
 
 		function = new JLabel("装车分配");
 
-		info = new EnvehicleInfoTable(13, 5);
+		model = new EnvehicleTableModel();
+		info = new EnvehicleInfoTable(model);
+
+		pageNum = 0;
+		pageNum_max = (controller.getPlaneList().size() - 2) / 13;
 
 		setCmpLocation();
 
@@ -39,21 +57,28 @@ public class EnvehiclePanel extends JLabel {
 			}
 		});
 
-		next.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				nextui();
+		next.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (pageNum >= pageNum_max)
+					return;
+				else {
+					pageNum++;
+					info.setModel(new EnvehicleTableModel());
+					info.setuiInfo();
+					;
+				}
 			}
 		});
 
-		previous.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				previous();
+		previous.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (pageNum == 0)
+					return;
+				else {
+					pageNum--;
+					info.setModel(new EnvehicleTableModel());
+					info.setuiInfo();
+				}
 			}
 		});
 
@@ -64,6 +89,7 @@ public class EnvehiclePanel extends JLabel {
 		add(previous);
 		add(function);
 		add(info);
+		add(info.getTableHeader());
 	}
 
 	public void setCmpLocation() {
@@ -87,23 +113,93 @@ public class EnvehiclePanel extends JLabel {
 		setCmpLocation();
 		repaint();
 	}
-	
-	public void envehicleui(){
-		
+
+	public void envehicleui() {
+
 	}
-	
-	public void nextui(){
-		
+
+	private class EnvehicleTableModel extends AbstractTableModel {
+		@Override
+		public int getRowCount() {
+			// TODO 自动生成的方法存根
+			return 13;
+		}
+
+		@Override
+		public int getColumnCount() {
+			// TODO 自动生成的方法存根
+			return 5;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			// TODO 自动生成的方法存根
+			int index = pageNum * 13 + rowIndex + 1;
+			if (index > controller.getEnvehicleBL()
+					.getAllocateWwaitingOrderBL().updateWaitingList().size() - 1)
+				return null;
+			OrderVO order = controller.getEnvehicleBL()
+					.getAllocateWwaitingOrderBL().updateWaitingList()
+					.get(index);
+			if (order != null) {
+				switch (columnIndex) {
+				case 0:
+					return order.ID;
+				case 1:
+					String[] senderAddress = order.senderAddress.split(" ");
+					return senderAddress[0];
+				case 2:
+					String[] recipientAddress = order.recipientAddress
+							.split(" ");
+					return recipientAddress[0];
+				case 3:
+					switch (order.order_state) {
+					case DISTRIBUEING:
+						return "派件中";
+					case FINISHED:
+						return "已完成";
+					case TRANSFERING:
+						return "中转中";
+					case WAITING_DISTRIBUTE:
+						return "等待中转";
+					case WAITING_ENVEHICLE:
+						return "等待装车";
+					}
+				case 4:
+					switch (order.expressType) {
+					case ECONOMIC:
+						return "经济型";
+					case FAST:
+						return "特快型";
+					case STANDARD:
+						return "标准型";
+					}
+				}
+			} else
+				return null;
+			return null;
+		}
+
+		public String getColumnName(int c) {
+			if (c == 0)
+				return "订单号";
+			if (c == 1)
+				return "出发地";
+			if (c == 2)
+				return "到达地";
+			if (c == 3)
+				return "状态";
+			if (c == 4)
+				return "订单种类";
+
+			return null;
+		}
 	}
-	
-	public void previous(){
-		
-	}
-	
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new EnvehiclePanel());
+		frame.add(new EnvehiclePanel(null));
 		frame.setVisible(true);
 	}
 }
