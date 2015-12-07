@@ -1,5 +1,8 @@
 package businesslogic.financebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.CollectionReceiptVO;
@@ -10,6 +13,10 @@ import businesslogicservice.financeblservice.CollectionReceiptBLService;
 public class CollectionReceiptBLController implements CollectionReceiptBLService{
 
 	private CollectionReceiptBL collectionReceiptBL;
+	
+	public CollectionReceiptBLController() throws Exception{
+		collectionReceiptBL=new CollectionReceiptBL();
+	}
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return collectionReceiptBL.creatCollection(vo);
@@ -45,4 +52,14 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		return collectionReceiptBL.getUnapprovedCollectionReceipt();
 	}
 
+	
+	public static void main(String[] args) throws Exception{
+		CollectionReceiptBLController controller=new CollectionReceiptBLController();
+//		CollectionReceiptVO vo=new CollectionReceiptVO("HJSKD-20151216", "CW-00001", null, null, 2000, "20151206", "CW");
+//		controller.creatCollection(vo);
+		ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
+		for(CollectionReceiptVO v:vos){
+			System.out.println(v.getID()+" "+v.getUserID()+" "+v.getDate()+" "+v.getIncome());
+		}
+	}
 }

@@ -1,3 +1,6 @@
+
+
+
 package data.financedata;
 
 import java.rmi.RemoteException;
@@ -7,6 +10,7 @@ import java.util.ArrayList;
 import file.JXCFile;
 import po.PaymentReceiptPO;
 import type.ReceiptState;
+import type.ReceiptType;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{
@@ -24,6 +28,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("payment.ser");
+		po.setState(ReceiptState.SUBMIT);
 		file.write(po);
 		num++;
 		return 0;
@@ -33,17 +38,20 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("payment.ser");
-		ArrayList<PaymentReceiptPO> paymentReceiptPOs=new ArrayList<PaymentReceiptPO>();
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件payment.ser失败");
+//		ArrayList<Object> payment=file.read();
+		ArrayList<Object> payment=file.read();
+		if(payment==null){
+			System.out.println("读文件collection.ser失败或者文件为空");
 			return null;
 		}
-		for(Object o:os){
-			PaymentReceiptPO paymentReceiptPO=(PaymentReceiptPO) o;
-			paymentReceiptPOs.add(paymentReceiptPO);
+		else{
+			ArrayList<PaymentReceiptPO> buffer=new ArrayList<PaymentReceiptPO>();
+			for(Object o:payment){
+				PaymentReceiptPO p=(PaymentReceiptPO) o;
+				buffer.add(p);
+			}
+			return buffer;
 		}
-		return paymentReceiptPOs;
 	}
 	
 	public int getNum()  throws RemoteException{
@@ -181,7 +189,55 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	
 
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws RemoteException{
+		
+		PaymentReceiptData data=new PaymentReceiptData();
+//		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+//		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+//		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
+//		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151127-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151127", "boss", "本宝宝");
+		try {
+//			data.delete("FKD-20110101-00001");
+//			data.delete("FKD-20110101-00002");
+//			data.delete("FKD-20151126-00001");
+//			data.delete("FKD-20151127-00001");
+//			data.creatPaymentReceipt(po1);
+//			data.creatPaymentReceipt(po2);
+//			data.creatPaymentReceipt(po3);
+//			data.creatPaymentReceipt(po4);
+			
+			ArrayList<PaymentReceiptPO> All;
+							All = data.getAllPaymentReceipt();
+							for(PaymentReceiptPO p:All){
+								System.out.println("ID: "+p.getID());
+							}
+//							System.out.println(data.getNum());
+//							System.out.println();
+//							ArrayList<PaymentReceiptPO> por=data.getPayment_right("20110101", "20151127");
+//							for(PaymentReceiptPO p:por){
+//								System.out.println("ID :"+p.getID());
+//							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		
+//		PaymentReceiptData paymentdata=new PaymentReceiptData();
+//			PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151010", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+//			PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151111", "呵呵", null, null, 200, 300, 1000, "20151111", "呵呵", "CW");
+//			
+//			paymentdata.creatPaymentReceipt(po1);
+//			paymentdata.creatPaymentReceipt(po2);
+//			ArrayList<PaymentReceiptPO> pos=paymentdata.getAllPaymentReceipt();
+//
+//			for(PaymentReceiptPO p:pos){
+//				System.out.println(p.getID());
+//			}
+//			System.out.println("---------------------------------------------------------------------------------------");
+//			ArrayList<PaymentReceiptPO> pos2=paymentdata.getPayment_right("20121210", "20151206");
+//			for(PaymentReceiptPO p:pos2){
+//				System.out.println(p.getID());
+//			}
 /*		try{
 			/*System.setProperty("java.rmi.server.hostname", "172.26.210.111");
 			PaymentReceiptDataService data=new PaymentReceiptData();

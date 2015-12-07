@@ -21,7 +21,6 @@ import javax.swing.table.TableColumn;
 import type.ReceiptState;
 import vo.GatheringReceiptVO;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
-import businesslogicservice.financeblservice.CollectionReceiptBLService;
 /**
  * 暂时先把根据营业厅筛选的去掉了，以后有时间再说吧
  * */
@@ -91,17 +90,10 @@ public class CollectionReceiptPanel extends JPanel {
 
 		add(date_Input);
 		add(businessHall_ID_Input);
-//		add(table);
-//		add(info);
-//		helper = new LocationHelper(this);
-		//table
-		
-		
-		//刷新表格还是有问题
-//		refreshGatheringTable(date_str);
-//		c=getInfo(date_str);
+
+		addListener();
+//		refreshGatheringTable(controller.getGathering(""));
 		cm=new CollectionModel(c);
-//		System.out.println(c);
 		table=new JTable(cm);
 		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -110,7 +102,7 @@ public class CollectionReceiptPanel extends JPanel {
 		add(table);
 //		setInfos();
 		
-		addListener();
+//		addListener();
 		
 	}
 
@@ -293,13 +285,15 @@ public class CollectionReceiptPanel extends JPanel {
 			gatherings.add(vo1);
 			gatherings.add(vo2);
 	      refreshGatheringTable(gatherings);
+	      cm=new CollectionModel(c);
+	      table.repaint();
 	      System.out.println("我可以把获取数据的过程放在这里啊2333");
 		}
 
 	}
 
 	public void totalui() {
-
+		double money=controller.getTotalMoney(controller.getGathering(date_str));
 	}
 
 	public void nextui() {
@@ -375,13 +369,13 @@ public class CollectionReceiptPanel extends JPanel {
 		
 	}
 
-	public static void main(String[] args) {
-		CollectionReceiptBLController controller=new CollectionReceiptBLController();
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new CollectionReceiptPanel(controller));
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		CollectionReceiptBLController controller=new CollectionReceiptBLController();
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new CollectionReceiptPanel(controller));
+//		frame.setVisible(true);
+//	}
 }
 
 

@@ -1,8 +1,12 @@
 package presentation.financeui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -12,8 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
+import businesslogic.financebl.controller.CollectionReceiptBLController;
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.financebl.controller.PaymentReceiptBLController;
 import presentation.commonui.LocationHelper;
+import vo.CollectionReceiptVO;
 
 public class ReceiptPanel_new extends JPanel {
 	/**
@@ -40,17 +50,26 @@ public class ReceiptPanel_new extends JPanel {
 
 //	private ReceiptInfoTable_new info;
 	
-	private LocationHelper helper;
-
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+//	private LocationHelper helper;
+//
+//	private int PANEL_WIDTH = 720;
+//	private int PANEL_HEIGHT = 480;
 	
 	ReceiptModel rm;
 	//其实这个类应该需要三个ArrayList的
-	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
+//	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
+	
+	private ArrayList<String> collections;
+	 public CollectionReceiptBLController collectionController;
+	 public PaymentReceiptBLController paymentReceiptBLController;
+	 public CostIncomeReceiptBLController costIncomeController;
 
-
-	public ReceiptPanel_new() {
+	public ReceiptPanel_new(CollectionReceiptBLController collectionController, PaymentReceiptBLController paymentReceiptBLController, CostIncomeReceiptBLController costIncomeController) {
+		this.collectionController=collectionController;
+		this.paymentReceiptBLController=paymentReceiptBLController;
+		this.costIncomeController=costIncomeController;
+		
+		
 		sendButton = new JButton("send");
 		printButton = new JButton("print");
 		collectionReceiptButton_new = new JButton("new1");
@@ -63,15 +82,14 @@ public class ReceiptPanel_new extends JPanel {
 		paymentReceiptInfo = new JLabel("付款单");
 		costIncomeReceiptInfo = new JLabel("成本收益表");
 
-//		info = new ReceiptInfoTable_new(13, 5);
-		rm=new ReceiptModel(c);
-		table=new JTable(rm);
+		table=new JTable();
+		collections=new ArrayList<String>();
+
 		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 //		setCmpLocation();
 
-	
 		
 		setLayout(null);
 
@@ -88,6 +106,7 @@ public class ReceiptPanel_new extends JPanel {
 		add(collectionReceiptInfo);
 		add(paymentReceiptInfo);
 		add(costIncomeReceiptInfo);
+		add(table.getTableHeader());
 		add(table);
 //		add(info);
 		
@@ -117,13 +136,84 @@ public class ReceiptPanel_new extends JPanel {
 		collectionReceiptInfo.setBounds((int)(width * 1.371173469387755/25),(int)(height * 4.031311154598826/20),(int)(width *  3.858418367346939 /25),(int)(height *  1.2524461839530332/20));
 		paymentReceiptInfo.setBounds((int)(width * 5.165816326530612/25),(int)(height * 4.031311154598826/20),(int)(width *  3.985969387755102 /25),(int)(height *  1.2524461839530332/20));
 		costIncomeReceiptInfo.setBounds((int)(width * 9.119897959183673/25),(int)(height * 4.031311154598826/20),(int)(width *  3.443877551020408 /25),(int)(height *  1.2915851272015655/20));
-		table.setBounds((int)(width * 1.371173469387755/25),(int)(height * 5.283757338551859/20),(int)(width *  21.651785714285715 /25),(int)(height *  11.819960861056751/20));
+		table.getTableHeader().setBounds((int)(width * 1.371173469387755/25),(int)(height * 5.283757338551859/20),(int)(width *  21.651785714285715 /25),(int)(height *  1.1819960861056751/20));
+		table.setBounds((int)(width * 1.371173469387755/25),(int)(height * 5.283757338551859/20)+(int)(height *  1.1819960861056751/20),(int)(width *  21.651785714285715 /25),(int)(height *  11.819960861056751/20));
 
+		setInfos();
 
 	}
 	
+	private void setInfos() {
+
+		table.setModel(new ReceiptModel());
+		setBaseInfo();
+	}
+	
+	// 设置table的基本内容，图片，什么的
+		private void setBaseInfo() {
+
+			// 设置成不可编辑不可改变位置，大小
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			table.getTableHeader().setReorderingAllowed(false);
+			table.getTableHeader().setResizingAllowed(false);
+
+			TableColumn column1 = table.getColumnModel().getColumn(0);
+			TableColumn column2 = table.getColumnModel().getColumn(1);
+			TableColumn column3 = table.getColumnModel().getColumn(2);
+			TableColumn column4 = table.getColumnModel().getColumn(3);
+			
+
+			// 设置宽度
+			column1.setPreferredWidth(table.getWidth() * 4 / 10);
+			column2.setPreferredWidth(table.getWidth() * 2 / 10);
+			column3.setPreferredWidth(table.getWidth() * 2 / 10);
+			column4.setPreferredWidth(table.getWidth() * 2 / 10);
+
+
+//			table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
+			// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
+			// messageTable.getTableHeader().getHeight() + 4);
+
+			//
+			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+						boolean hasFocus, int row, int column) {
+					if (row % 2 == 0)
+						setBackground(Color.cyan);
+					else
+						setBackground(Color.white);
+
+					return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				}
+			};
+
+			tcr.setHorizontalAlignment(JLabel.CENTER);
+			column1.setCellRenderer(tcr);
+			column2.setCellRenderer(tcr);
+			column3.setCellRenderer(tcr);
+			column4.setCellRenderer(tcr);
+			
+
+		}
+	
 	
 	public void addListener(){
+		collectionReceiptInfo.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				ArrayList<CollectionReceiptVO> vos=collectionController.getAllCollection();
+				for(CollectionReceiptVO v:vos){
+					System.out.println(v.getID());
+				}
+				collections=new ArrayList<String>();
+				for(CollectionReceiptVO v:vos){
+				collections.add(v.getID()+" "+v.getDate()+" "+v.getAccount()+" "+v.getUserID());
+				}
+				
+				setInfos();
+			}
+		});
 		sendButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -209,65 +299,76 @@ public class ReceiptPanel_new extends JPanel {
 
 	}
 	
+
+	
 	class ReceiptModel extends AbstractTableModel{
 
 		
 		private static final long serialVersionUID = 1L;
 //		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
-		String head[]={"编号","日期","提交人","交易金额"};
+//		String head[]={"编号","日期","交易金额","提交人"};
 		
-		public ReceiptModel(ArrayList<ArrayList<String>> content){
-			c=content;
-		}
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			if(c==null){
-				return 0;
-			}
-			else{
-			return c.size();
-			}
+			return 10;
 		}
 
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-//			System.out.println(head.length);
-			return head.length;
+			return 4;
 		}
 		
 		public String getValueAt(int row, int col) {
-			if(c==null){
-				System.out.println("null");
-				return null;
+//			if(index>collections.size()-1)
+//				return null;
+		
+			String infos=collections.get(row);
+			if(infos!=null){
+				String[] info = infos.split(" ");
+				if (col == 0)
+					return info[0];
+				else if (col == 1)
+					return info[1];
+				else if (col==2)
+					return info[2];
+				else if(col==3)
+					return info[3];
+				else
+					return null;
 			}
 			else{
-			return c.get(row).get(col);
+				return null;
 			}
+			
 		}
-
-		public String getColumnName(int col) {
-			return head[col];
-		}
-
-		public void addRow(ArrayList<String> v) {
-
-			c.add(v);
-		}
-
-		public void removeRow(int row) {
-			c.remove(row);
+			public String getColumnName(int c) {
+				if (c == 0)
+					return "编号";
+				else if (c == 1)
+					return "日期";
+				else if(c==2)
+					return "金额";
+				else 
+					return "收款人";
+				}
+			
 		}
 		
-	}
+	
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
+		
+		 CollectionReceiptBLController collectionController = null ;
+		 PaymentReceiptBLController paymentReceiptBLController = null ;
+		 CostIncomeReceiptBLController costIncomeController = null ;
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new ReceiptPanel_new());
+		frame.add(new ReceiptPanel_new(collectionController,paymentReceiptBLController,costIncomeController));
 		frame.setVisible(true);
 	}
+	*/
 }
 
 

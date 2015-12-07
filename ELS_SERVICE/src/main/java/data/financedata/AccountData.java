@@ -1,9 +1,7 @@
 package data.financedata;
 
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -109,9 +107,6 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			if(po.getName().equals(name)){
 				return po;
 			}
-			else{
-				return null;
-			}
 		}
 		//不存在该用户：返回null
 		return null;
@@ -190,12 +185,21 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	}
 	
 	public static void main(String[] args) throws RemoteException{
-		AccountData data=new AccountData();
-		ArrayList<AccountPO> po=data.showAll();
-		for(AccountPO p:po){
-			System.out.println("Money :"+p.getMoney());
-		}
-		
+//		AccountData data=new AccountData();
+////		AccountPO po=data.findbyName("刘钦");
+////		System.out.println("Data中的"+po.getMoney());
+//		ArrayList<AccountPO> pos=data.showAll();
+//		for(AccountPO p:pos){
+//			System.out.println("Name: "+p.getName());
+//		}
+//		
+//		AccountPO po=data.findbyName("刘钦");
+//		data.deleteAccount(po);
+//		System.out.println("----------------------------------------");
+//		ArrayList<AccountPO> pos1=data.showAll();
+//		for(AccountPO p:pos1){
+//			System.out.println("Name: "+p.getName());
+//		}
 		/*try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
 			AccountDataService data=new AccountData();

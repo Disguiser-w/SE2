@@ -35,6 +35,7 @@ import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
 import presentation.financeui.InitialStockPanel_main;
 import presentation.financeui.PaymentReceiptPanel;
+import presentation.financeui.ReceiptPanel_new;
 import type.ReceiptType;
 import vo.AccountVO;
 import vo.BusinessStatementReceiptVO;
@@ -76,8 +77,9 @@ public class FinanceMainController {
 	private  FinanceFrame financeFrame;
 	/**
 	 * 财务部分的初始化在这里进行
+	 * @throws Exception 
 	 * */
-	public FinanceMainController(String financeID){
+	public FinanceMainController(String financeID) throws Exception{
 		try {
 			collectionData=DataFactory.getCollectionReceiptData();
 			paymentData=DataFactory.getPaymentReceiptData();
@@ -117,6 +119,7 @@ public class FinanceMainController {
 				//初始化界面
 				financeFrame =new FinanceFrame();
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController));
+//				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, costIncomeReceiptBLController));
 				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController));
 				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController));
@@ -160,7 +163,7 @@ public class FinanceMainController {
 			AccountVO vo=apoToVO(po);
 			vos.add(vo);
 		}
-		return null;
+		return vos;
 	}
 	/**
 	 * Account单个vo转化为po
@@ -578,7 +581,7 @@ public class FinanceMainController {
 	}
 	
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 		new FinanceMainController("CW-00001");
 	}
 	}

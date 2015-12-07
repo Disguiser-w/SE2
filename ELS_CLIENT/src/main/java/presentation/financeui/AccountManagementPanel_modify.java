@@ -2,6 +2,9 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,13 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
-import businesslogic.financebl.controller.AccountBLController;
-import businesslogicservice.financeblservice.AccountBLService;
 import vo.AccountVO;
+import businesslogic.financebl.controller.AccountBLController;
 
-public class AccountManagementPanel_new extends JPanel {
-	
+public class AccountManagementPanel_modify extends JPanel{
+
 	/**
 	 * 
 	 */
@@ -31,7 +32,7 @@ public class AccountManagementPanel_new extends JPanel {
 	private JTextField account_name_Input;
 	private JTextField account_money_Input;
 
-	private LocationHelper helper;
+//	private LocationHelper helper;
 
 	public String name;
 	public String money;
@@ -40,12 +41,13 @@ public class AccountManagementPanel_new extends JPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	public AccountManagementPanel_new(AccountBLController controller) {
+ public AccountManagementPanel_modify(AccountBLController controller) {
+		// TODO Auto-generated constructor stub
 		this.controller=controller;
 		
 		infoOKButton = new JButton("ok");
 
-		function = new JLabel("新增账户");
+		function = new JLabel("修改账户");
 		account_name = new JLabel("账户名");
 		account_money = new JLabel("账户金额");
 
@@ -107,14 +109,17 @@ public class AccountManagementPanel_new extends JPanel {
 				account_money_Input.setText("");
 			}
 			else{
-				System.out.println("name :"+name);
+//				System.out.println("name :"+name);
 				AccountVO accountVO=new AccountVO(name, moneyD);
 				int result=controller.addAccount(accountVO);
-				System.out.println("name:"+accountVO.getName());
+//				System.out.println("name:"+accountVO.getName());
 
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
+					account_name_Input.setText("");
+					account_money_Input.setText("");
+					
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
@@ -126,12 +131,7 @@ public class AccountManagementPanel_new extends JPanel {
 		
 	}
 	
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new AccountManagementPanel_new());
-//		frame.setVisible(true);
-//	}
+
 
 	public void setBounds(int x, int y, int width, int height) {
 
@@ -142,40 +142,12 @@ public class AccountManagementPanel_new extends JPanel {
 		repaint();
 	}
 	
-/*	class AddListener implements ActionListener{
+	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+		AccountBLController controller=new AccountBLController();
+	JFrame frame = new JFrame();
+	frame.setSize(800, 550);
+	frame.add(new AccountManagement_new(controller));
+	frame.setVisible(true);
+}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			name=account_name_Input.getText();
-			money=account_money_Input.getText();
-			if(name.equals("")||money.equals("")){
-				JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
-						JOptionPane.CLOSED_OPTION);
-			}
-			else{
-				double moneyD=Double.parseDouble(money);
-				if(moneyD<0){
-					JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
-							JOptionPane.CLOSED_OPTION);
-					account_money_Input.setText("");
-				}
-				else{
-					AccountVO accountVO=new AccountVO(name, moneyD);
-					int result=abService.addAccount(accountVO);
-					if(result==0){
-						JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
-								JOptionPane.CLOSED_OPTION);
-					}
-					else{
-						JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
-								JOptionPane.WARNING_MESSAGE);
-					}
-					
-				}
-			}
-		}
-		
-	}
-	*/
 }

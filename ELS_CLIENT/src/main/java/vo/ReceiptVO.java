@@ -14,15 +14,15 @@ public class ReceiptVO {
 	// 状态
 	ReceiptState state;
 
-	public ReceiptVO() {
-
+	public ReceiptVO(){
+		
 	}
-
-	public ReceiptVO(String ID, String userID, ReceiptType type,
-			ReceiptState state) {
-		this.ID = ID;
+	
+	public ReceiptVO(String ID, String userID, ReceiptType type,ReceiptState state) {
+		this.ID=ID;
 		this.userID = userID;
 		this.type = type;
 		this.state = state;
+	
 	}
 }
