@@ -145,23 +145,32 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	}
 	
 	public static void main(String[] args){
+		CostIncomeReceiptBL bl;
 		try {
-			CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
-			costIncomeData.creatCostIncomeList(new CostIncomeReceiptPO("CBSYB-20151129", "lll", null, null, 2222, 3333, 1111));
-			ArrayList<CostIncomeReceiptPO> pos=costIncomeData.getAllCostIncomeList();
-			for(CostIncomeReceiptPO p:pos){
-				System.out.println("ID: "+p.getID());
-			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
+			bl = new CostIncomeReceiptBL();
+			System.out.println("ID"+bl.getCostIncomeListID());
+
+		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		try {
+//			CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
+//			costIncomeData.creatCostIncomeList(new CostIncomeReceiptPO("CBSYB-20151129", "lll", null, null, 2222, 3333, 1111));
+//			ArrayList<CostIncomeReceiptPO> pos=costIncomeData.getAllCostIncomeList();
+//			for(CostIncomeReceiptPO p:pos){
+//				System.out.println("ID: "+p.getID());
+//			}
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NotBoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		
 	}

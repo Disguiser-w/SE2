@@ -105,10 +105,8 @@ public class AccountManagement_new extends JPanel {
 				account_money_Input.setText("");
 			}
 			else{
-//				System.out.println("name :"+name);
 				AccountVO accountVO=new AccountVO(name, moneyD);
 				int result=controller.addAccount(accountVO);
-//				System.out.println("name:"+accountVO.getName());
 
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
@@ -117,7 +115,7 @@ public class AccountManagement_new extends JPanel {
 					account_money_Input.setText("");
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
+					JOptionPane.showMessageDialog(null, "该账户名已存在！", "提示",
 							JOptionPane.WARNING_MESSAGE);
 				}
 				

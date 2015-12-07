@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.receiptbl.getDate;
 
 public class CostIncomeReceiptPanel_new extends JPanel {
 	/**
@@ -36,11 +37,17 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	private JTextField totalCost_Input;
 	private JTextField totalProfit_Input;
 	
+	private String beginTime; 
+	private String endTime;
+	private String ID;
 	public CostIncomeReceiptBLController controller;
 
 	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller) {
 		this.controller=controller;
 		
+		beginTime="2010-01-01";
+		endTime=getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
+		ID=controller.getCostIncomeListID();
 		infoOKButton = new JButton("ok");
 		function = new JLabel("新建成本收益表");
 		costIncomeReceipt_ID = new JLabel("成本收益表编号");
@@ -50,12 +57,15 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		totalIncome = new JLabel("总支出");
 		totalProfit = new JLabel("总利润");
 
-		costIncomeReceipt_ID_Input = new JTextField("CBSYB-20150820-00000");
-		startDate_Input = new JTextField("2015/11/19");
-		endDate_Input = new JTextField("2015/11/20");
-		totalCost_Input = new JTextField("50000");
-		totalIncome_Input = new JTextField("60000");
-		totalProfit_Input = new JTextField("10000");
+		costIncomeReceipt_ID_Input = new JTextField(ID);
+		costIncomeReceipt_ID_Input.setEditable(false);
+		startDate_Input = new JTextField(beginTime);
+		startDate_Input.setEditable(false);
+		endDate_Input = new JTextField(endTime);
+		endDate_Input.setEditable(false);
+		totalCost_Input = new JTextField("");
+		totalIncome_Input = new JTextField("");
+		totalProfit_Input = new JTextField("");
 
 		setCmpLocation();
 		

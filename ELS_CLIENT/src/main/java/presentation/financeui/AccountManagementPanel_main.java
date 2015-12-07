@@ -68,7 +68,7 @@ public class AccountManagementPanel_main extends JPanel {
 
 //		info = new AccountManagementInfoTable_main(13, 2);
 		
-//		refreshTable(controller.showAll());
+		refreshTable(controller.showAll());
 		am=new AccountModel(c);
 		System.out.println("Name :"+c.size());
 		//新建table
@@ -209,8 +209,12 @@ public class AccountManagementPanel_main extends JPanel {
 		frame.setBounds(100, 100, 800, 550);
 		frame.add(new AccountManagement_new(controller));
 		frame.setVisible(true);
+		int temp=c.size();
 		refreshTable(controller.showAll());
 		am=new AccountModel(c);
+		for(int i=0;i<temp;i++){
+			am.removeRow(0);
+		}
 		table.repaint();
 		
 	
@@ -223,14 +227,13 @@ public class AccountManagementPanel_main extends JPanel {
 					JOptionPane.CLOSED_OPTION);
 		}
 		else{
-			System.out.println(row);
-			am.removeRow(row);
 			String name=am.getValueAt(row, 0);
-			System.out.println("Name: "+name);
+			am.removeRow(row);
 			controller.deleteAccount(name);
+			table.repaint();
 			JOptionPane.showMessageDialog(null, "删除成功！", "提示",
 					JOptionPane.CLOSED_OPTION);
-			table.repaint();
+		
 		}
 	}
 	
@@ -252,13 +255,13 @@ public class AccountManagementPanel_main extends JPanel {
 			JOptionPane.showMessageDialog(null, "请输入查找名称", "提示",
 					JOptionPane.WARNING_MESSAGE);
 		}
-//		AccountManagementPanel_main panel=new AccountManagementPanel_main(controller);
 		ArrayList<AccountVO> vos=controller.findByKeyword(name);
-		for(AccountVO v:vos){
-			System.out.println(v.getName());
-		}
+		int temp=c.size();
 	   refreshTable(vos);
 	   am=new AccountModel(c);
+	   for(int i=0;i<temp;i++){
+		   am.removeRow(0);
+	   }
 		table.repaint();
 	}
 

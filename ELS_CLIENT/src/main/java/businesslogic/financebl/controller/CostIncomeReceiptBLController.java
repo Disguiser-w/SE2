@@ -1,5 +1,9 @@
 package businesslogic.financebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import vo.CostIncomeReceiptVO;
 import businesslogic.financebl.CostIncomeReceiptBL;
 import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
@@ -7,6 +11,11 @@ import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
 public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService{
 	
 	private CostIncomeReceiptBL costIncomeReceiptBL;
+	
+	public CostIncomeReceiptBLController() throws MalformedURLException, RemoteException, NotBoundException{
+		costIncomeReceiptBL=new CostIncomeReceiptBL();
+	}
+	
 
 	public int creatCostIncomeList(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
@@ -38,4 +47,11 @@ public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService
 		return costIncomeReceiptBL.getCostIncomeReceipt(time);
 	}
 
+	
+	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
+		CostIncomeReceiptBLController controller=new CostIncomeReceiptBLController();
+		
+		System.out.println("ID"+controller.getCostIncomeListID());
+		
+	}
 }

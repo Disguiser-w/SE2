@@ -278,10 +278,13 @@ public class BusinessStateReceiptPanel extends JPanel {
 		BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
 		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
+		int temp=c.size();
 		refreshTable(cvos, pvos);
 		bm=new BusinessStatementModel(c);
+		for(int i=0;i<temp;i++){
+			bm.removeRow(0);
+		}
 		table.repaint();		
-
 	}
 
 	public void printui() {
