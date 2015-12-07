@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
+import po.ExpressPO;
 import po.FarePO;
 import po.IntermediatePO;
 import po.OrderPO;
@@ -31,6 +32,7 @@ import vo.RepertoryVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.intermediatebl.envehiclebl.EnvehicleBL;
@@ -45,10 +47,10 @@ public class IntermediateMainController {
 	private TrainManagerBL trainManager;
 	private TruckManagerBL truckManager;
 	private TransferingBL transfering;
-	private IntermediateDataService intermediateData;
+	private static IntermediateDataService intermediateData;
 	private ExpressMainController expressMainController;
 
-	private IntermediateVO intermediate;
+	private static IntermediateVO intermediate;
 	private OrganizationVO intermediateCentre;
 	private TransferingReceiptVO transferingReceipt;
 
@@ -61,14 +63,20 @@ public class IntermediateMainController {
 	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
-	public IntermediateMainController(String intermediateID)
+	public IntermediateMainController(String intermediate_ID)
 			throws MalformedURLException, RemoteException, NotBoundException {
 		// intermediateDataService
 		expressMainController = new ExpressMainController(null);
-		intermediateData = (IntermediateDataService) Naming
-				.lookup("rmi://172.25.133.95:8888/IntermediateDataService");
-		intermediate = IntermediateMainController.poToVO(intermediateData
-				.getIntermediateInfo("", intermediateID));
+		try {
+			intermediateData = DataFactory.getIntermediateData();
+			intermediate = poToVO((IntermediatePO) (intermediateData
+					.getIntermediateInfo(intermediate_ID)));
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		intermediateCentre = intermediate.organization;
 
 		planeList = intermediateCentre.planeList;
@@ -92,8 +100,7 @@ public class IntermediateMainController {
 
 	public void updateIntermediateInfo() {
 		intermediate = IntermediateMainController.poToVO(intermediateData
-				.getIntermediateInfo(intermediate.organization.organizationID,
-						intermediate.ID));
+				.getIntermediateInfo(intermediate.ID));
 	}
 
 	public static OrderPO voToPO(OrderVO order) {
@@ -346,5 +353,21 @@ public class IntermediateMainController {
 					.poToVO(receipt));
 
 		return entruckingReceiptList;
+	}
+
+	public ArrayList<PlaneVO> getPlaneList() {
+		return planeList;
+	}
+
+	public ArrayList<TrainVO> getTrainList() {
+		return trainList;
+	}
+
+	public ArrayList<TruckVO> getTruckList() {
+		return truckList;
+	}
+
+	public OrganizationVO getIntermediateCentre() {
+		return intermediateCentre;
 	}
 }

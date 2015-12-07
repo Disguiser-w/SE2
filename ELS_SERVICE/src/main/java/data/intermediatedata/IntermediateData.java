@@ -2,13 +2,10 @@ package data.intermediatedata;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.rmi.server.Operation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,16 +19,16 @@ import po.TransferingReceiptPO;
 import po.TruckPO;
 import type.OperationState;
 import type.ReceiptState;
+
 import common.FileGetter;
+
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateData implements IntermediateDataService {
 
-	public IntermediatePO getIntermediateInfo(String organization_ID,
-			String intermediate_ID) {
+	public IntermediatePO getIntermediateInfo(String intermediate_ID) {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo-" + organization_ID
-				+ "/intermediate.dat";
+		String path = "intermediateInfo";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(

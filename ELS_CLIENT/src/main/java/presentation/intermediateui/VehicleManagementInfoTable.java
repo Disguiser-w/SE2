@@ -1,51 +1,74 @@
 package presentation.intermediateui;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class VehicleManagementInfoTable extends JTable {
 	private int width;
 	private int height;
-	private TableColumn tc;
 
 	public VehicleManagementInfoTable(AbstractTableModel model) {
 		super(model);
-//		 this.getTableHeader().setReorderingAllowed(false);
-//		 this.getTableHeader().setResizingAllowed(false);
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		this.getTableHeader().setReorderingAllowed(false);
+		this.getTableHeader().setResizingAllowed(false);
 		width = 720;
 		height = 480;
-		setInfo();
+		setuiInfo();
 	}
 
-	public void setInfo() {
+	public void setuiInfo() {
 		height = height / 13 * 13;
 		setSize(width, height);
 
 		this.setRowHeight(height / 13);
 		this.setRowSelectionAllowed(false);
 
-		tc = this.columnModel.getColumn(0);
-		tc.setPreferredWidth(width * 80 / 720);
-		tc.setResizable(false);
+		TableColumn tc0 = this.columnModel.getColumn(0);
+		tc0.setPreferredWidth(width * 80 / 720);
+		// tc.setResizable(false);
 
-		tc = this.columnModel.getColumn(1);
-		tc.setPreferredWidth(width * 200 / 720);
-		tc.setResizable(false);
+		TableColumn tc1 = this.columnModel.getColumn(1);
+		tc1.setPreferredWidth(width * 200 / 720);
+		// tc.setResizable(false);
 
-		tc = this.columnModel.getColumn(2);
-		tc.setPreferredWidth(width * 6 / 72);
-		tc.setResizable(false);
+		TableColumn tc2 = this.columnModel.getColumn(2);
+		tc2.setPreferredWidth(width * 6 / 72);
+		// tc.setResizable(false);
 
-		tc = this.columnModel.getColumn(3);
-		tc.setPreferredWidth(width * 20 / 72);
-		tc.setResizable(false);
+		TableColumn tc3 = this.columnModel.getColumn(3);
+		tc3.setPreferredWidth(width * 20 / 72);
+		// tc.setResizable(false);
 
-		tc = this.columnModel.getColumn(4);
-		tc.setPreferredWidth(width * 6 / 72);
-		tc.setResizable(false);
+		TableColumn tc4 = this.columnModel.getColumn(4);
+		tc4.setPreferredWidth(width * 6 / 72);
+		// tc.setResizable(false);
+		
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+
+		tcr.setHorizontalAlignment(JLabel.CENTER);
+		tc0.setCellRenderer(tcr);
+		tc1.setCellRenderer(tcr);
+		tc2.setCellRenderer(tcr);
+		tc3.setCellRenderer(tcr);
+		tc4.setCellRenderer(tcr);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -55,29 +78,7 @@ public class VehicleManagementInfoTable extends JTable {
 	}
 
 	public void paint(Graphics g) {
-		setInfo();
+		setuiInfo();
 		super.paint(g);
-	}
-
-	private class VehicleManagementTableModel extends AbstractTableModel {
-
-		@Override
-		public int getRowCount() {
-			// TODO 自动生成的方法存根
-			return 13;
-		}
-
-		@Override
-		public int getColumnCount() {
-			// TODO 自动生成的方法存根
-			return 5;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO 自动生成的方法存根
-			return null;
-		}
-
 	}
 }

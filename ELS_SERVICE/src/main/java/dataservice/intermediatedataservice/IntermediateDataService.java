@@ -14,8 +14,7 @@ import po.TruckPO;
 import type.OperationState;
 
 public interface IntermediateDataService extends Remote {
-	public IntermediatePO getIntermediateInfo(String organization_ID,
-			String intermediate_ID);
+	public IntermediatePO getIntermediateInfo(String intermediate_ID);
 
 	public ArrayList<PlanePO> getPlaneList(String organization_ID);
 
