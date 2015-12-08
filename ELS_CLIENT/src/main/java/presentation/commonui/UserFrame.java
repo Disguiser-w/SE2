@@ -199,18 +199,18 @@ public class UserFrame extends JFrame {
 //	}
 
 	public void exitSystem() {
-		settings.put("left", "" + getX());
-		settings.put("top", "" + getY());
-		settings.put("width", "" + getWidth());
-		settings.put("height", "" + getHeight());
+//		settings.put("left", "" + getX());
+//		settings.put("top", "" + getY());
+//		settings.put("width", "" + getWidth());
+//		settings.put("height", "" + getHeight());
 
-		try {
-			FileOutputStream out = new FileOutputStream(propertiesFile);
-			settings.store(out, "Program Properties");
-			out.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+//		try {
+//			FileOutputStream out = new FileOutputStream(propertiesFile);
+//			settings.store(out, "Program Properties");
+//			out.close();
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//		}
 		System.exit(0);
 	}
 
@@ -251,7 +251,7 @@ public class UserFrame extends JFrame {
 		}
 
 		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
-
+		System.out.print(width - height * 7 / 25+" "+ height * 7 / 10);
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				remove(operationPanel);
