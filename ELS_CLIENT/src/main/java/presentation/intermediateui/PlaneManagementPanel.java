@@ -4,22 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import vo.PlaneVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class PlaneManagementPanel extends JLabel {
+public class PlaneManagementPanel extends JPanel {
 	private IntermediateMainController controller;
+
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -33,14 +32,18 @@ public class PlaneManagementPanel extends JLabel {
 
 	private JTextField searchTextField;
 
+	private JCheckBox[] isDelete;
+
 	private VehicleManagementInfoTable info;
 	private VehicleManagementTableModel model;
 
 	private int pageNum;
 	private int pageNum_max;
 
-	public PlaneManagementPanel(IntermediateMainController controller) {
+	public PlaneManagementPanel(IntermediateMainController controller,
+			IntermediateFrame frame) {
 		this.controller = controller;
+		this.frame = frame;
 
 		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
@@ -55,8 +58,7 @@ public class PlaneManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-		// pageNum_max = (controller.getPlaneList().size() - 2) / 12;
-		pageNum_max = 3;
+		pageNum_max = (controller.getPlaneList().size()) / 12;
 		setCmpLocation();
 
 		addButton.addActionListener(new ActionListener() {
@@ -146,10 +148,28 @@ public class PlaneManagementPanel extends JLabel {
 	}
 
 	public void addui() {
-
+		frame.changePanel(new PlaneManagement_newPanel(controller, frame));
 	}
 
 	public void deleteui() {
+		System.out.println("max: " + pageNum_max);
+		System.out.println("num: " + pageNum);
+
+		if (pageNum != pageNum_max)
+			isDelete = new JCheckBox[12];
+		else
+			isDelete = new JCheckBox[controller.getPlaneList().size() - 12
+					* pageNum];
+
+		int i = 0;
+		for (JCheckBox box : isDelete) {
+			box = new JCheckBox();
+			box.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i++ + 1) / 20 + PANEL_HEIGHT / 240,
+					PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(box);
+			// box.setVisible(true);
+		}
 
 	}
 
@@ -210,13 +230,13 @@ public class PlaneManagementPanel extends JLabel {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) throws MalformedURLException,
-			RemoteException, NotBoundException {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new PlaneManagementPanel(new IntermediateMainController(
-				"141250185")));
-		frame.setVisible(true);
-	}
+	//
+	// public static void main(String[] args) throws MalformedURLException,
+	// RemoteException, NotBoundException {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new PlaneManagementPanel(new IntermediateMainController(
+	// "141250185")));
+	// frame.setVisible(true);
+	// }
 }

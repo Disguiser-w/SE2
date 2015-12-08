@@ -20,6 +20,7 @@ import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class TransferingPanel extends JPanel {
 	private IntermediateMainController controller;
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -46,8 +47,10 @@ public class TransferingPanel extends JPanel {
 
 	private JDialog addDialog;
 
-	public TransferingPanel(IntermediateMainController controller) {
+	public TransferingPanel(IntermediateMainController controller,
+			IntermediateFrame frame) {
 		this.controller = controller;
+		this.frame = frame;
 
 		addButton = new JButton("new");
 		deleteButton = new JButton("dele");
@@ -270,11 +273,11 @@ public class TransferingPanel extends JPanel {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TransferingPanel(null));
-		frame.setVisible(true);
-	}
+//
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setSize(800, 550);
+//		frame.add(new TransferingPanel(null));
+//		frame.setVisible(true);
+//	}
 }

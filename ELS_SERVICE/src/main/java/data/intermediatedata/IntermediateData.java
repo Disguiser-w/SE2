@@ -39,7 +39,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public IntermediatePO getIntermediateInfo(String intermediate_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-//		System.out.println("hhaa");
+		// System.out.println("hhaa");
 		String path = "intermediateInfo";
 		File file = FileGetter.getFile(path);
 		try {
@@ -51,7 +51,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			in.close();
 			for (IntermediatePO intermediate : intermediatePOList) {
 				if (intermediate.getID().equals(intermediate_ID)) {
-//					System.out.println(intermediate.getName());
+					// System.out.println(intermediate.getName());
 					return intermediate;
 				}
 			}
@@ -481,43 +481,50 @@ public class IntermediateData extends UnicastRemoteObject implements
 	/**************************** test **********************************************************/
 	public static void main(String[] args) {
 		File file = FileGetter.getFile("intermediateInfo");
-		if (!file.exists()) {
-
-			file.getParentFile().mkdirs();
-			try {
+		try {
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
 				file.createNewFile();
-
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(file));
-				OrganizationPO organization = new OrganizationPO(
-						OrganizationType.intermediateCenter, "141250", "软攻打作业");
-				IntermediatePO intermediate = new IntermediatePO(organization,
-						"痛苦的业务员", "141250185");
-//				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbb");
-
-				RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
-				PlanePO plane0 = new PlanePO("001", "2-404");
-				PlanePO plane1 = new PlanePO("002", "2-404");
-				PlanePO plane2 = new PlanePO("003", "2-404");
-
-				organization.setRepertory(repertory);
-				organization.getPlaneList().add(plane0);
-				organization.getPlaneList().add(plane1);
-				organization.getPlaneList().add(plane2);
-//System.out.println(organization.getPlaneList().get(2).getID());
-//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbb");
-
-
-				ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
-				list.add(intermediate);
-
-				out.writeObject(list);
-				out.close();
-			} catch (Exception e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
 			}
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			OrganizationPO organization = new OrganizationPO(
+					OrganizationType.intermediateCenter, "141250", "软攻打作业");
+			IntermediatePO intermediate = new IntermediatePO(organization,
+					"痛苦的业务员", "141250185");
 
+			RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
+			PlanePO plane0 = new PlanePO("001", "2-404");
+			PlanePO plane1 = new PlanePO("002", "2-404");
+			PlanePO plane2 = new PlanePO("003", "2-404");
+			TrainPO train0 = new TrainPO("001", "3-404");
+			TrainPO train1 = new TrainPO("002", "3-404");
+			TrainPO train2 = new TrainPO("003", "3-404");
+			TruckPO truck0 = new TruckPO("001", "4-404");
+			TruckPO truck1 = new TruckPO("002", "4-404");
+			TruckPO truck2 = new TruckPO("003", "4-404");
+
+			organization.setRepertory(repertory);
+			organization.getPlaneList().add(plane0);
+			organization.getPlaneList().add(plane1);
+			organization.getPlaneList().add(plane2);
+			organization.getTrainList().add(train0);
+			organization.getTrainList().add(train1);
+			organization.getTrainList().add(train2);
+			organization.getTruckList().add(truck0);
+			organization.getTruckList().add(truck1);
+			organization.getTruckList().add(truck2);
+
+			ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
+			list.add(intermediate);
+
+			out.writeObject(list);
+			out.close();
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
 		}
+
 	}
+
 }

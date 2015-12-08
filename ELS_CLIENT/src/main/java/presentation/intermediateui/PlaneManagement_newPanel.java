@@ -2,22 +2,21 @@ package presentation.intermediateui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
-import dataservice.managedataservice.CityDistanceDataService;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import dataservice.managedataservice.CityDistanceDataService;
 
 public class PlaneManagement_newPanel extends JPanel {
+	private IntermediateFrame frame;
+
 	private JButton OKButton;
 
 	private JLabel function;
@@ -27,7 +26,7 @@ public class PlaneManagement_newPanel extends JPanel {
 	private JLabel plane_farePrice;
 
 	private JTextField plane_ID_input;
-	private JLabel plane_destination_input;
+	private JComboBox plane_destination_input;
 	private JTextField plane_farePrice_input;
 
 	private IntermediateMainController controller;
@@ -40,11 +39,11 @@ public class PlaneManagement_newPanel extends JPanel {
 	private int planeNum;
 	private String intermediateCenterID;
 	private String planeID;
-	
-	private LocationHelper helper;
 
-	public PlaneManagement_newPanel(IntermediateMainController controller) {
-		this.controller = controller;
+	public PlaneManagement_newPanel(IntermediateMainController c,
+			IntermediateFrame f) {
+		this.controller = c;
+		this.frame = f;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
@@ -54,8 +53,8 @@ public class PlaneManagement_newPanel extends JPanel {
 			e.printStackTrace();
 		}
 
-//		planeNum = controller.getPlaneList().size() + 1;
-//		intermediateCenterID = controller.getIntermediateCentre().organizationID;
+		planeNum = controller.getPlaneList().size() + 1;
+		intermediateCenterID = controller.getIntermediateCentre().organizationID;
 
 		if (planeNum < 10)
 			planeID = intermediateCenterID + "00" + planeNum;
@@ -74,22 +73,23 @@ public class PlaneManagement_newPanel extends JPanel {
 
 		plane_ID_input = new JTextField(planeID);
 
-		plane_destination_input = new JLabel("city");
-//		for (String city : citys)
-//			plane_destination_input.addItem(city);
+		plane_destination_input = new JComboBox();
+		for (String city : citys)
+			plane_destination_input.addItem(city);
 
 		plane_farePrice_input = new JTextField("0.2");
-		
-		setCmpLocation();
-		
+
 		OKButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e){
-				
+			public void mouseClicked(MouseEvent e) {
+				controller.getPlaneManagerBL().addPlane(
+						plane_ID_input.getText(),
+						plane_destination_input.getSelectedItem().toString());
+				frame.toMainPanel();
 			}
 		});
-		
+
 		setLayout(null);
-		
+
 		add(OKButton);
 		add(function);
 		add(plane_ID);
@@ -98,19 +98,41 @@ public class PlaneManagement_newPanel extends JPanel {
 		add(plane_ID_input);
 		add(plane_destination_input);
 		add(plane_farePrice_input);
-		
-		helper = new LocationHelper(this);
+
+		setCmpLocation();
 	}
 
 	private void setCmpLocation() {
 		// TODO 自动生成的方法存根
-		
-	}
-	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		frame.setSize(720, 480);
-		frame.add(new PlaneManagement_newPanel(null));
-		frame.setVisible(true);
+		OKButton.setBounds((int) (PANEL_WIDTH * 21.37784090909091 / 25),
+				(int) (PANEL_HEIGHT * 1.8140589569160999 / 20),
+				(int) (PANEL_WIDTH * 1.7400568181818181 / 25),
+				(int) (PANEL_HEIGHT * 1.4965986394557824 / 20));
+		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
+				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+		plane_ID.setBounds((int) (PANEL_WIDTH * 3.90625 / 25),
+				(int) (PANEL_HEIGHT * 5.26077097505669 / 20),
+				(int) (PANEL_WIDTH * 4.261363636363637 / 25),
+				(int) (PANEL_HEIGHT * 1.9047619047619047 / 20));
+		plane_destination.setBounds((int) (PANEL_WIDTH * 3.90625 / 25),
+				(int) (PANEL_HEIGHT * 8.299319727891156 / 20),
+				(int) (PANEL_WIDTH * 4.261363636363637 / 25),
+				(int) (PANEL_HEIGHT * 1.9047619047619047 / 20));
+		plane_farePrice.setBounds((int) (PANEL_WIDTH * 3.90625 / 25),
+				(int) (PANEL_HEIGHT * 11.29251700680272 / 20),
+				(int) (PANEL_WIDTH * 4.261363636363637 / 25),
+				(int) (PANEL_HEIGHT * 1.9047619047619047 / 20));
+		plane_ID_input.setBounds((int) (PANEL_WIDTH * 10.15625 / 25),
+				(int) (PANEL_HEIGHT * 5.215419501133787 / 20),
+				(int) (PANEL_WIDTH * 9.907670454545455 / 25),
+				(int) (PANEL_HEIGHT * 1.8594104308390023 / 20));
+		plane_destination_input.setBounds((int) (PANEL_WIDTH * 10.15625 / 25),
+				(int) (PANEL_HEIGHT * 8.299319727891156 / 20),
+				(int) (PANEL_WIDTH * 9.907670454545455 / 25),
+				(int) (PANEL_HEIGHT * 1.8594104308390023 / 20));
+		plane_farePrice_input.setBounds((int) (PANEL_WIDTH * 10.15625 / 25),
+				(int) (PANEL_HEIGHT * 11.29251700680272 / 20),
+				(int) (PANEL_WIDTH * 9.907670454545455 / 25),
+				(int) (PANEL_HEIGHT * 1.8594104308390023 / 20));
 	}
 }

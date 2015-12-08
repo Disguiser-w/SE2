@@ -8,14 +8,16 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import vo.TrainVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class TrainManagementPanel extends JLabel {
+public class TrainManagementPanel extends JPanel {
 	private IntermediateMainController controller;
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -35,8 +37,10 @@ public class TrainManagementPanel extends JLabel {
 	private int pageNum;
 	private int pageNum_max;
 
-	public TrainManagementPanel(IntermediateMainController controller) {
+	public TrainManagementPanel(IntermediateMainController controller,
+			IntermediateFrame frame) {
 		this.controller = controller;
+		this.frame = frame;
 
 		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
@@ -51,7 +55,7 @@ public class TrainManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getTrainList().size() - 2) / 13;
+		pageNum_max = (controller.getTrainList().size()) / 12 + 1;
 
 		setCmpLocation();
 
@@ -124,8 +128,10 @@ public class TrainManagementPanel extends JLabel {
 		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -148,7 +154,7 @@ public class TrainManagementPanel extends JLabel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -160,7 +166,7 @@ public class TrainManagementPanel extends JLabel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
+			int index = pageNum * 12 + rowIndex;
 			if (index > controller.getTrainList().size() - 1)
 				return null;
 			TrainVO train = controller.getTrainList().get(index);
@@ -197,11 +203,11 @@ public class TrainManagementPanel extends JLabel {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TrainManagementPanel(null));
-		frame.setVisible(true);
-	}
+	//
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new TrainManagementPanel(null));
+	// frame.setVisible(true);
+	// }
 }
