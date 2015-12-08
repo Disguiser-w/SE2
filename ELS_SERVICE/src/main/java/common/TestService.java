@@ -46,6 +46,7 @@ public class TestService {
 			IntermediateDataService intermediateData = new IntermediateData();
 
 			LocateRegistry.createRegistry(8888);
+			
 			Naming.rebind("rmi://localhost:8888/ExpressDataService",
 					expressData);
 			Naming.rebind("rmi://localhost:8888/BusinessDataService",

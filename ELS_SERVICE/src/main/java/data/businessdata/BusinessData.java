@@ -55,7 +55,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
 					ArrayList<BusinessPO> businessPOs = (ArrayList<BusinessPO>) in.readObject();
 					in.close();
-					
+
 					for (BusinessPO po : businessPOs)
 						if (po.getID().equals(businessID))
 							return po;
@@ -98,17 +98,28 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		String path = "orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPOs = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
+			ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPOs = null;
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				orderAcceptReceiptPOs = new ArrayList<OrderAcceptReceiptPO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				orderAcceptReceiptPOs = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
+
+				in.close();
+			}
 			orderAcceptReceiptPOs.add(po);
-			in.close();
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(orderAcceptReceiptPOs);
 			out.close();
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e)
+
+		{
 			e.printStackTrace();
 			System.out.println("读写收货单信息失败");
 			return false;
@@ -121,6 +132,11 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	public ArrayList<VehiclePO> getVehicleInfos(String organizationID) throws RemoteException {
 		String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
 		File file = FileGetter.getFile(path);
+
+		if (!file.exists()) {
+			return new ArrayList<VehiclePO>();
+		}
+
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			@SuppressWarnings("unchecked")
@@ -143,12 +159,19 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		String path = "enVehicleInfo/" + organizationID + "/" + time + "-enVehicle.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = (ArrayList<EnVehicleReceiptPO>) in.readObject();
+
+			ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = null;
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				enVehicleReceiptPOs = new ArrayList<EnVehicleReceiptPO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				enVehicleReceiptPOs = (ArrayList<EnVehicleReceiptPO>) in.readObject();
+				in.close();
+			}
 			for (EnVehicleReceiptPO i : pos)
 				enVehicleReceiptPOs.add(i);
-			in.close();
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(enVehicleReceiptPOs);
@@ -166,11 +189,18 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	public boolean addVehicle(String organizationID, VehiclePO po) throws RemoteException {
 		String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
 		File file = FileGetter.getFile(path);
+
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
-			in.close();
+			ArrayList<VehiclePO> vehiclePOs = null;
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				vehiclePOs = new ArrayList<VehiclePO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
+				in.close();
+			}
 			vehiclePOs.add(po);
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -245,9 +275,13 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	public ArrayList<DriverPO> getDriverInfos(String organizationID) throws RemoteException {
 		String path = "driverInfo/" + organizationID + "-vehicle.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<DriverPO>();
+		}
+
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
+
 			ArrayList<DriverPO> driverPOs = (ArrayList<DriverPO>) in.readObject();
 			in.close();
 
@@ -267,6 +301,10 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		File file = FileGetter.getFile(path);
 		try {
 
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(grp);
 			out.close();
@@ -335,11 +373,18 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		String path = "distribute/" + organizationID + "/" + time + "-distribute.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<DistributeReceiptPO> distributeReceiptPOs = (ArrayList<DistributeReceiptPO>) in.readObject();
+			ArrayList<DistributeReceiptPO> distributeReceiptPOs = null;
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				distributeReceiptPOs = new ArrayList<DistributeReceiptPO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+				distributeReceiptPOs = (ArrayList<DistributeReceiptPO>) in.readObject();
+				in.close();
+			}
 			distributeReceiptPOs.add(po);
-			in.close();
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(distributeReceiptPOs);
@@ -355,11 +400,11 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public DriverPO getDriverInfo(String organizationID, String ID) throws RemoteException {
-		String path = "driver/" + organizationID + "-driver.dat";
+		String path = "driverInfo/" + organizationID + "-driver.dat";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
+
 			ArrayList<DriverPO> driverPOs = (ArrayList<DriverPO>) in.readObject();
 			in.close();
 			for (DriverPO i : driverPOs) {
@@ -379,10 +424,18 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		String path = "driverInfo/" + organizationID + "-driver.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<DriverPO> driverPOs = (ArrayList<DriverPO>) in.readObject();
-			in.close();
+			ArrayList<DriverPO> driverPOs = null;
+
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+				driverPOs = new ArrayList<DriverPO>();
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				driverPOs = (ArrayList<DriverPO>) in.readObject();
+				in.close();
+			}
+
 			driverPOs.add(po);
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));

@@ -273,7 +273,7 @@ public class UserFrame extends JFrame {
 	}
 
 	public void changePanel(JPanel newPanel) {
-
+		newPanel.setBorder(BorderFactory.createBevelBorder(1));
 		remove(operationPanel);
 		operationPanel = newPanel;
 		int width = getWidth();

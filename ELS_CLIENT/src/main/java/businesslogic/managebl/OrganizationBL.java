@@ -107,8 +107,12 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo) {
+		if(organizationvo.repertory!=null)
 		return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
 				organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
+		else
+			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
+					organizationvo.getName(), null);
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
