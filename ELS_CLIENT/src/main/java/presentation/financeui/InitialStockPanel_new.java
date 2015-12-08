@@ -36,9 +36,11 @@ public class InitialStockPanel_new extends JPanel {
 	private InitialStockInfoTable_new info;
 	
 	public InitialStockBLController controller;
+	public FinanceFrame financeFrame;
 
-	public InitialStockPanel_new(InitialStockBLController controller) {
+	public InitialStockPanel_new(InitialStockBLController controller,FinanceFrame parent) {
 		this.controller=controller;
+		this.financeFrame=parent;
 		InfoOKButton = new JButton("ok");
 		next = new JButton("next");
 		previous = new JButton("pre");

@@ -1,5 +1,8 @@
 package businesslogic.financebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.PaymentReceiptVO;
@@ -9,6 +12,10 @@ import businesslogicservice.financeblservice.PaymentReceiptBLService;
 public class PaymentReceiptBLController implements PaymentReceiptBLService{
 	
 	private PaymentReceiptBL paymentReceiptBL;
+	
+	public PaymentReceiptBLController() throws MalformedURLException, RemoteException, NotBoundException{
+		paymentReceiptBL=new PaymentReceiptBL();
+	}
 
 	public int creatPaymentReceipt(PaymentReceiptVO vo) {
 		// TODO Auto-generated method stub

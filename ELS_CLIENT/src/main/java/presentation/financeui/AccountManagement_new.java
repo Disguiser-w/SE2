@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.financeui.AccountManagementPanel_main.AccountModel;
 import businesslogic.financebl.controller.AccountBLController;
 import vo.AccountVO;
 
@@ -42,10 +43,12 @@ public class AccountManagement_new extends JPanel {
 	  AccountBLController controller;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	
+	FinanceFrame financeFrame;
 
-	public AccountManagement_new(AccountBLController controller) {
+	public AccountManagement_new(AccountBLController controller,FinanceFrame parent) {
 		this.controller=controller;
-		
+		this.financeFrame=parent;
 		infoOKButton = new JButton("确认");
 		cancelButton =new JButton("返回");
 
@@ -143,22 +146,18 @@ public class AccountManagement_new extends JPanel {
 	}
 	
 	public void cancelui(){
-		this.remove(this);
-		JPanel p=new AccountManagementPanel_main(controller);
-		p.setSize(800, 550);
-		p.setVisible(true);
-		this.add(p);
-		this.setVisible(true);
-//		this.show();
+		financeFrame.toMainPanel();
 	}
 	
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		AccountBLController controller=new AccountBLController();
+		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new AccountManagement_new(controller));
+		frame.add(new AccountManagement_new(controller,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
 
 	public void setBounds(int x, int y, int width, int height) {
 
@@ -168,6 +167,7 @@ public class AccountManagement_new extends JPanel {
 		setCmpLocation();
 		repaint();
 	}
+	
 	
 /*	class AddListener implements ActionListener{
 

@@ -3,6 +3,9 @@ package presentation.financeui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -45,12 +48,14 @@ public class InitialStockPanel_main extends JPanel {
 	InitialStockModel im;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	public InitialStockBLController controller;
+	public FinanceFrame financeFrame;
 	
 //	private LocationHelper helper;
 
 	
-	public InitialStockPanel_main(InitialStockBLController controller){
+	public InitialStockPanel_main(InitialStockBLController controller,FinanceFrame parent){
 		this.controller=controller;
+		this.financeFrame=parent;
 		newButton = new JButton("new");
 		startDateButton = new JButton("start");
 		endDateButton = new JButton("end");
@@ -185,7 +190,8 @@ public class InitialStockPanel_main extends JPanel {
 		dateRange.setBounds((int)(width * 1.594387755102041/25),(int)(height * 3.24853228962818/20),(int)(width *  3.4119897959183674 /25),(int)(height *  1.761252446183953/20));
 		startDate_Input.setBounds((int)(width * 5.48469387755102/25),(int)(height * 3.6007827788649704/20),(int)(width *  3.3482142857142856 /25),(int)(height *  1.2915851272015655/20));
 		endDate_Input.setBounds((int)(width * 11.543367346938776/25),(int)(height * 3.5616438356164384/20),(int)(width *  3.6033163265306123 /25),(int)(height *  1.3307240704500978/20));
-		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20),(int)(width *  21.07780612244898 /25),(int)(height *  11.232876712328768/20));
+		table.getTableHeader().setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20),(int)(width *  21.07780612244898 /25),(int)(height *  1.1232876712328768/20));
+		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20)+(int)(height *  1.1232876712328768/20),(int)(width *  21.07780612244898 /25),(int)(height *  11.232876712328768/20));
 
 
 	}
@@ -210,6 +216,7 @@ public class InitialStockPanel_main extends JPanel {
 	}
 
 	public void newInitInfoui() {
+		financeFrame.changePanel(new InitialStockPanel_new(controller,financeFrame));
 
 	}
 
@@ -264,10 +271,12 @@ public class InitialStockPanel_main extends JPanel {
 		
 	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new InitialStockPanel_main());
-//		frame.setVisible(true);
-//	}
+	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+		InitialStockBLController controller=new InitialStockBLController();
+		FinanceFrame financeFrame=new FinanceFrame();
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new InitialStockPanel_main(controller,financeFrame));
+		frame.setVisible(true);
+	}
 }

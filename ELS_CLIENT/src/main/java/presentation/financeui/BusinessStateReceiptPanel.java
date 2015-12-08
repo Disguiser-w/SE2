@@ -1,5 +1,6 @@
 package presentation.financeui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import javax.swing.table.TableColumn;
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
+import presentation.commonui.DateChooser;
 import presentation.commonui.LocationHelper;
 import presentation.financeui.PaymentReceiptPanel.PaymentModel;
 import presentation.intermediateui.TransferingPanel;
@@ -61,9 +63,6 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 
 	public BusinessStateReceiptPanel(BusinessStatementReceiptBLController controller) {
-
-//		this.collectionController=collectionReceiptBLController;
-//		this.paymentController=paymentReceiptBLController;
 		this.controller=controller;
 		
 		startDateButton = new JButton("start");
@@ -80,6 +79,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 		startDate_Input = new JTextField("", 11);
 		endDate_Input = new JTextField("", 11);
 
+		startDate_Input.setToolTipText("例:2015-12-08");
 //		info = new BusinessStateReceiptInfoTable(13, 4);
 		
 		//model
@@ -265,7 +265,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 	}
 
 	public void startui() {
-
+		startDateButton.setLayout(new BorderLayout());
+		startDateButton.add(new DateChooser(startDate_Input), BorderLayout.CENTER);
 	}
 
 	public void endui() {

@@ -1,13 +1,10 @@
 package presentation.financeui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -15,7 +12,6 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,9 +22,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.omg.CORBA.FREE_MEM;
-
-import presentation.commonui.LocationHelper;
 import vo.AccountVO;
 import businesslogic.financebl.controller.AccountBLController;
 
@@ -51,9 +44,8 @@ public class AccountManagementPanel_main extends JPanel {
 	private JTextField searchTextField;
 	private JLabel function;
 	private JTable table;
-	private LocationHelper helper;
+//	private LocationHelper helper;
 
-//	private AccountManagementInfoTable_main info;
 	AccountModel am;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	AccountBLController controller;
@@ -61,9 +53,9 @@ public class AccountManagementPanel_main extends JPanel {
 	FinanceFrame financeFrame;
 	int count;
 
-	public AccountManagementPanel_main(AccountBLController controller) {
+	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
 		this.controller=controller;
-//		this.financeFrame=parent;
+		this.financeFrame=parent;
 		addButton = new JButton("添加");
 		deleteButton = new JButton("删除");
 		modifyButton=new JButton("修改");
@@ -80,7 +72,6 @@ public class AccountManagementPanel_main extends JPanel {
 		
 		refreshTable(controller.showAll());
 		am=new AccountModel(c);
-		System.out.println("Name :"+c.size());
 		//新建table
 		table=new JTable(am);
 		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -223,18 +214,17 @@ public class AccountManagementPanel_main extends JPanel {
 
 	public void addui() {
 
-		JFrame frame = new JFrame();
-		frame.setBounds(300, 200, 800, 550);
-		frame.add(new AccountManagement_new(controller));
-		frame.setVisible(true);
-		
-		int temp=c.size();
-		refreshTable(controller.showAll());
-		am=new AccountModel(c);
-		for(int i=0;i<temp;i++){
-			am.removeRow(0);
-		}
-		table.repaint();
+		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame));
+//		int temp=c.size();
+//		refreshTable(controller.showAll());
+//		am=new AccountModel(c);
+//		for(int i=0;i<temp;i++){
+//			am.removeRow(0);
+//		}
+//		table.repaint();
+//		
+//		updateUI();
+//		
 	
 	}
 
@@ -246,12 +236,11 @@ public class AccountManagementPanel_main extends JPanel {
 		}
 		else{
 			String name=am.getValueAt(row, 0);
+			JOptionPane.showMessageDialog(null, "删除成功！", "提示",
+					JOptionPane.CLOSED_OPTION);
 			am.removeRow(row);
 			controller.deleteAccount(name);
 			table.repaint();
-			JOptionPane.showMessageDialog(null, "删除成功！", "提示",
-					JOptionPane.CLOSED_OPTION);
-		
 		}
 	}
 	
@@ -264,20 +253,8 @@ public class AccountManagementPanel_main extends JPanel {
 		else{
 			String nameInit=am.getValueAt(row, 0);
 			String money=am.getValueAt(row, 1);
-			JFrame frame = new JFrame();
-			frame.setBounds(300, 200, 800, 550);
-			frame.add(new AccountManagementPanel_modify(controller, money, nameInit));
-			frame.setVisible(true);
-			
-			int temp=c.size();
-			refreshTable(controller.showAll());
-			am=new AccountModel(c);
-			for(int i=0;i<temp;i++){
-				am.removeRow(0);
-			}
-			table.repaint();
+			financeFrame.changePanel(new AccountManagementPanel_modify(controller, money, nameInit,financeFrame));			
 		}
-		
 	}
 	
 	public void searchui(){
@@ -299,6 +276,7 @@ public class AccountManagementPanel_main extends JPanel {
 	public void refreshui(){
 		int temp=c.size();
 		refreshTable(controller.showAll());
+		System.out.println(controller.showAll().size());
 		am=new AccountModel(c);
 		for(int i=0;i<temp;i++){
 			am.removeRow(0);
@@ -312,6 +290,12 @@ public class AccountManagementPanel_main extends JPanel {
 
 	public void previousui() {
 
+	}
+	
+	//不能刷新的解决
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		refreshui();
 	}
 	
 class AccountModel extends AbstractTableModel{
@@ -381,9 +365,10 @@ class AccountModel extends AbstractTableModel{
 	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		AccountBLController controller=new AccountBLController();
+		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new AccountManagementPanel_main(controller));
+		frame.add(new AccountManagementPanel_main(controller,financeFrame));
 		frame.setVisible(true);
 	}
 }

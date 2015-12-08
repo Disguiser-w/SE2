@@ -30,11 +30,9 @@ import po.UserPO;
 import po.VehiclePO;
 import presentation.financeui.AccountManagementPanel_main;
 import presentation.financeui.BusinessStateReceiptPanel;
-import presentation.financeui.CollectionReceiptPanel;
 import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
 import presentation.financeui.InitialStockPanel_main;
-import presentation.financeui.PaymentReceiptPanel;
 import presentation.financeui.ReceiptPanel_new;
 import type.ReceiptType;
 import vo.AccountVO;
@@ -118,13 +116,14 @@ public class FinanceMainController {
 		
 				//初始化界面
 				financeFrame =new FinanceFrame();
-				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController));
+				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController,financeFrame));
 //				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, costIncomeReceiptBLController));
-				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController));
-				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
-				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController));
+				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));
+//				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController,financeFrame));
+//				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
+				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
-				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController));
+				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,financeFrame));
 				financeFrame.showFrame();
 				
 		

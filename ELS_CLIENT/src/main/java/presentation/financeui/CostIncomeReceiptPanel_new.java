@@ -2,8 +2,12 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -40,9 +44,11 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	private String endTime;
 	private String ID;
 	public CostIncomeReceiptBLController controller;
+	FinanceFrame financeFrame;
 
-	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller) {
+	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller,FinanceFrame parent) {
 		this.controller=controller;
+		this.financeFrame=parent;
 		
 		beginTime="2010-01-01";
 		endTime=getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
@@ -143,10 +149,12 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 
 	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new CostIncomeReceiptPanel_new());
-//		frame.setVisible(true);
-//	}
+	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+		CostIncomeReceiptBLController controller=new CostIncomeReceiptBLController();
+		FinanceFrame financeFrame=new FinanceFrame();
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new CostIncomeReceiptPanel_new(controller,financeFrame));
+		frame.setVisible(true);
+	}
 }

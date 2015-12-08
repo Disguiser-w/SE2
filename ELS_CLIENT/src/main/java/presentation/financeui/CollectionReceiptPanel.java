@@ -21,6 +21,7 @@ import javax.swing.table.TableColumn;
 import type.ReceiptState;
 import vo.GatheringReceiptVO;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
+import businesslogic.receiptbl.getDate;
 /**
  * 暂时先把根据营业厅筛选的去掉了，以后有时间再说吧
  * */
@@ -37,6 +38,7 @@ public class CollectionReceiptPanel extends JPanel {
 	private JButton next;
 	private JButton previous;
 	private JButton totalButton;
+	private JButton cancelButton;
 
 	private JLabel function;
 	private JLabel date;
@@ -50,25 +52,29 @@ public class CollectionReceiptPanel extends JPanel {
 //	private LocationHelper helper;
 
 	public CollectionReceiptBLController controller;
+	public FinanceFrame financeFrame;
 
 
 	String hallID_str;
 	String date_str;
 	CollectionModel cm;
 	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
-	public CollectionReceiptPanel(CollectionReceiptBLController controller) {
+	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent) {
 		this.controller=controller;
-		dateChooseButton = new JButton("date");
-		infoOKButton = new JButton("infook");
-		collectionOKButton = new JButton("ok");
+		this.financeFrame=parent;
+		dateChooseButton = new JButton("日期");
+		infoOKButton = new JButton("营业厅");
+		collectionOKButton = new JButton("确认");
 		next = new JButton("next");
 		previous = new JButton("previous");
-		totalButton = new JButton("total");
+		totalButton = new JButton("合计");
+		cancelButton = new JButton("返回");
 
 		function = new JLabel("新建入款单");
 		date = new JLabel("日期");
 		businessHall = new JLabel("营业厅");
-		infoLine = new JLabel("时间：2015/11/1  合计金额：970");
+		infoLine = new JLabel("时间："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
+				.substring(6)+ " 合计金额：970");
 
 		date_Input = new JTextField("");
 		businessHall_ID_Input = new JTextField("");
@@ -81,6 +87,7 @@ public class CollectionReceiptPanel extends JPanel {
 		add(next);
 		add(previous);
 		add(totalButton);
+		add(cancelButton);
 	
 		
 		add(function);
@@ -119,6 +126,7 @@ public class CollectionReceiptPanel extends JPanel {
 		next.setBounds((int)(width * 21.1734693877551/25),(int)(height * 18.747553816046967/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.821917808219178/20));
 		previous.setBounds((int)(width * 22.544642857142858/25),(int)(height * 18.747553816046967/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.821917808219178/20));
 		totalButton.setBounds((int)(width * 18.239795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
+		cancelButton.setBounds((int)(width * 18.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
 		date.setBounds((int)(width * 2.391581632653061/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.594387755102041 /25),(int)(height *  0.9001956947162426/20));
 		businessHall.setBounds((int)(width * 9.056122448979592/25),(int)(height * 3.6007827788649704/20),(int)(width *  1.6581632653061225 /25),(int)(height *  0.8610567514677103/20));
@@ -222,6 +230,14 @@ public class CollectionReceiptPanel extends JPanel {
 					totalui();
 				}
 			});
+			
+			cancelButton.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					cancelui();
+				}
+			});
 
 			next.addActionListener(new ActionListener() {
 
@@ -256,7 +272,7 @@ public class CollectionReceiptPanel extends JPanel {
 	}
 
 	/**
-	 * 确定输入日期的方法
+	 * 确定
 	 * */
 	public void okui() {
 		//这里需要格式的转化"2015/11/10——20151110"
@@ -291,9 +307,19 @@ public class CollectionReceiptPanel extends JPanel {
 		}
 
 	}
+	
+	/**
+	 * 取消
+	 * */
+	public void cancelui(){
+		financeFrame.toMainPanel();
+	}
+	
 
 	public void totalui() {
-		double money=controller.getTotalMoney(controller.getGathering(date_str));
+//		double money=controller.getTotalMoney(controller.getGathering(date_str));
+		infoLine.setText("日期："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
+				.substring(6)+"    金额总和：");
 	}
 
 	public void nextui() {
