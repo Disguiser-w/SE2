@@ -64,7 +64,7 @@ public class BusinessMainController {
 //		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController));
 //		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController));
 //		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController));
-		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController));
+		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController,businessFrame));
 //		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController));
 		businessFrame.showFrame();
 		

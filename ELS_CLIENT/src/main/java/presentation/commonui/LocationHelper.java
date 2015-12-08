@@ -1,6 +1,7 @@
 package presentation.commonui;
 
 import java.awt.Color;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -17,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class LocationHelper {
+	private int remainWidth;
+	private int remainHeight;
 
 	class ComponentStates {
 		private JComponent component;
@@ -63,10 +66,20 @@ public class LocationHelper {
 				}
 
 				public void mouseClicked(MouseEvent e) {
-					if (isPalMoving)
-						isPalMoving = false;
-					else
-						isPalMoving = true;
+					if (e.getClickCount() == 2) {
+						if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != 0) {
+							remainWidth = ((JComponent) e.getSource()).getWidth();
+							remainHeight = ((JComponent) e.getSource()).getHeight();
+						}
+						if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
+							((JComponent) e.getSource()).setSize(remainWidth,remainHeight);
+						}
+					} else {
+						if (isPalMoving)
+							isPalMoving = false;
+						else
+							isPalMoving = true;
+					}
 				}
 			});
 
@@ -115,7 +128,7 @@ public class LocationHelper {
 	private ArrayList<String> names;
 
 	public LocationHelper(JComponent container) {
-		
+
 		this.container = container;
 		components = new ArrayList<ComponentStates>();
 		num = -1;
@@ -170,7 +183,7 @@ public class LocationHelper {
 		if (c instanceof JLabel || c instanceof JTable || c instanceof JList || c instanceof JTextArea)
 			c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		if (c instanceof JLabel) {
-			((JLabel) c).setHorizontalAlignment(JLabel.RIGHT);
+			((JLabel) c).setHorizontalAlignment(JLabel.LEFT);
 		}
 
 		components.add(new ComponentStates(c));
