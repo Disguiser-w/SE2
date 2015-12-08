@@ -36,8 +36,6 @@ public class PlaneManagementPanel extends JLabel {
 	private VehicleManagementInfoTable info;
 	private VehicleManagementTableModel model;
 
-	private JDialog addDialog;
-
 	private int pageNum;
 	private int pageNum_max;
 
@@ -55,8 +53,6 @@ public class PlaneManagementPanel extends JLabel {
 
 		model = new VehicleManagementTableModel();
 		info = new VehicleManagementInfoTable(model);
-
-		addDialog = new JDialog(addDialog, "新增飞机");
 
 		pageNum = 0;
 		// pageNum_max = (controller.getPlaneList().size() - 2) / 12;
