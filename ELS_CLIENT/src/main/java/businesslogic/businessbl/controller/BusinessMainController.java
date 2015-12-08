@@ -67,6 +67,7 @@ public class BusinessMainController {
 		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController,businessFrame));
 //		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController));
 		businessFrame.showFrame();
+		businessFrame.setVisible(true);
 		
 		
 

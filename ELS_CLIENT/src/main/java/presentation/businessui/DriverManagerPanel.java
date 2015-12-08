@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -28,8 +30,6 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
-import businesslogic.expressbl.controller.ExpressMainController;
-import presentation.commonui.LocationHelper;
 import presentation.commonui.UserFrame;
 import type.Sexuality;
 import vo.DriverVO;
@@ -51,15 +51,14 @@ public class DriverManagerPanel extends JPanel {
 	private ArrayList<JCheckBox> selectDriver;
 
 	private DriverManagerController controller;
-	private LocationHelper helper;
 
 	private UserFrame mainFrame;
 	private ArrayList<DriverVO> drivers;
 
-	private boolean isAdd;
-	private boolean isDel;
 	private boolean isModify;
+	private boolean isDel;
 
+	private int numOfChoose;
 	private int num;
 
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
@@ -98,6 +97,8 @@ public class DriverManagerPanel extends JPanel {
 		messageTable.setBackground(getBackground());
 
 		num = 0;
+		numOfChoose = 0;
+		isModify = false;
 
 		drivers = controller.getDriverInfo();
 
@@ -153,8 +154,8 @@ public class DriverManagerPanel extends JPanel {
 					return;
 				else {
 					num--;
-					messageTable.setModel(new MessgeTableModel());
-					setBaseInfo();
+					setInfos();
+
 				}
 			}
 		});
@@ -162,12 +163,11 @@ public class DriverManagerPanel extends JPanel {
 		nextPageLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
-				if (num >= (ExpressMainController.expressVO.chargeCollection.size() - 2) / 8)
+				if (num >= (drivers.size() - 1) / 8)
 					return;
 				else {
 					num++;
-					messageTable.setModel(new MessgeTableModel());
-					setBaseInfo();
+					setInfos();
 				}
 			}
 		});
@@ -178,7 +178,72 @@ public class DriverManagerPanel extends JPanel {
 				mainFrame.changePanel(addPanel);
 			}
 		});
+		ItemListener listener = new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				JCheckBox button = ((JCheckBox) (e.getSource()));
+				if (button.isSelected()) {
+					numOfChoose++;
+				} else {
+					numOfChoose--;
+				}
 
+				if (numOfChoose == 1) {
+					isModify = true;
+				} else
+					isModify = false;
+
+				if (numOfChoose >= 1)
+					isDel = true;
+
+			}
+
+		};
+
+		for (JCheckBox i : selectDriver) {
+			i.addItemListener(listener);
+		}
+
+		modifyLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (isModify) {
+					int n = 0;
+
+					for (JCheckBox i : selectDriver) {
+
+						if (i.isSelected()) {
+							break;
+						}
+						n++;
+
+					}
+					DriverVO vo = drivers.get(num * 8 + n);
+					ModifyPanel panel = new ModifyPanel(vo);
+					mainFrame.changePanel(panel);
+				}
+			}
+		});
+
+		delLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (isDel) {
+					if (JOptionPane.showConfirmDialog(null, "确认要删除该司机信息吗", "",
+							JOptionPane.DEFAULT_OPTION) == JOptionPane.NO_OPTION) {
+						return;
+					}
+					int n = 0;
+					for (JCheckBox i : selectDriver) {
+						if (i.isSelected()) {
+							i.setSelected(false);
+							DriverVO vo = drivers.get(num * 8 + n);
+							controller.deleteDriver(vo);
+						}
+						n++;
+						isDel = false;
+					}
+					repaint();
+				}
+			}
+		});
 	}
 
 	// 设置table的基本内容，图片，什么的
@@ -232,17 +297,19 @@ public class DriverManagerPanel extends JPanel {
 
 	// 设置载入动态的内容
 	private void setInfos() {
+		for (JCheckBox i : selectDriver) {
+			remove(i);
+		}
+
 		drivers = controller.getDriverInfo();
 		messageTable.setModel(new MessgeTableModel());
 		setBaseInfo();
-
 	}
 
 	private class MessgeTableModel extends AbstractTableModel {
 
 		@Override
 		public int getRowCount() {
-			// TODO Auto-generated method stub
 			return 8;
 		}
 
@@ -259,10 +326,10 @@ public class DriverManagerPanel extends JPanel {
 				return null;
 
 			DriverVO vo = drivers.get(index);
-			add(selectDriver.get(rowIndex));
 
 			switch (columnIndex) {
 			case 0:
+				add(selectDriver.get(rowIndex));
 				return vo.ID;
 			case 1:
 				return vo.name;
@@ -304,12 +371,10 @@ public class DriverManagerPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		for(JCheckBox i:selectDriver){
-			remove(i);
-		}
-		
-		super.paintComponent(g);
+
 		setInfos();
+		super.paintComponent(g);
+
 	}
 
 	class ModifyPanel extends JPanel {
@@ -352,8 +417,7 @@ public class DriverManagerPanel extends JPanel {
 		private JRadioButton male;
 		private JRadioButton female;
 
-		// 是否改变
-		private boolean hasChange;
+
 		private DriverVO oldVO;
 
 		public ModifyPanel(DriverVO vo) {
@@ -521,6 +585,7 @@ public class DriverManagerPanel extends JPanel {
 			int nowMonth = (int) month.getSelectedItem();
 
 			int d = getDayOfMonth(nowYear, nowMonth);
+
 			for (int i = 1; i <= d; i++) {
 				day.addItem(i);
 			}
@@ -553,23 +618,6 @@ public class DriverManagerPanel extends JPanel {
 
 		private void addListener() {
 
-			Calendar c = new GregorianCalendar();// 新建日期对象
-			int y = c.get(Calendar.YEAR);
-
-			for (int i = 1960; i <= y; i++) {
-				year.addItem(i);
-			}
-
-			for (int i = 1; i <= 12; i++) {
-				month.addItem(i);
-			}
-			int nowYear = (int) year.getSelectedItem();
-			int nowMonth = (int) month.getSelectedItem();
-
-			int d = getDayOfMonth(nowYear, nowMonth);
-			for (int i = 1; i <= d; i++) {
-				day.addItem(i);
-			}
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String id = idField.getText();
@@ -649,7 +697,14 @@ public class DriverManagerPanel extends JPanel {
 					DriverVO modifierVO = new DriverVO(id, newName, date, idNum, mobilePhone, oldVO.vehicleOrganization,
 							s, ye + "", times);
 
-					controller.modifyDriver(modifierVO);
+					if (controller.modifyDriver(modifierVO)) {
+						successing("成功修改司机信息");
+						setInfos();
+
+					} else {
+						warnning("操作失败，请检查网络连接");
+						return;
+					}
 				}
 			});
 
@@ -719,9 +774,6 @@ public class DriverManagerPanel extends JPanel {
 		// private JComboBox sexBox;
 		private JRadioButton male;
 		private JRadioButton female;
-
-		// 是否改变
-		private boolean hasChange;
 
 		public AddPanel() {
 
@@ -874,20 +926,15 @@ public class DriverManagerPanel extends JPanel {
 			// private JRadioButton female;
 			//
 
-			int num = drivers.size();
-			int numOfZero = 5 - (num + "").length();
-			String ID = num + "";
-			for (int i = 0; i < numOfZero; i++) {
-				ID = 0 + ID;
-			}
+			String ID = getNextID();
 
-			idField.setText("JS-" + ID);
+			idField.setText(ID);
 			idField.setEditable(false);
 
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y; i++) {
+			for (int i = 1960; i <= y - 1; i++) {
 				year.addItem(i);
 			}
 
@@ -911,23 +958,6 @@ public class DriverManagerPanel extends JPanel {
 
 		private void addListener() {
 
-			Calendar c = new GregorianCalendar();// 新建日期对象
-			int y = c.get(Calendar.YEAR);
-
-			for (int i = 1960; i <= y; i++) {
-				year.addItem(i);
-			}
-
-			for (int i = 1; i <= 12; i++) {
-				month.addItem(i);
-			}
-			int nowYear = (int) year.getSelectedItem();
-			int nowMonth = (int) month.getSelectedItem();
-
-			int d = getDayOfMonth(nowYear, nowMonth);
-			for (int i = 1; i <= d; i++) {
-				day.addItem(i);
-			}
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String ID = idField.getText();
@@ -1007,7 +1037,13 @@ public class DriverManagerPanel extends JPanel {
 					DriverVO vo = new DriverVO(ID, newName, date, idNum, mobilePhone,
 							BusinessMainController.businessVO.organizationVO, s, ye + "", times);
 
-					controller.addDriver(vo);
+					if (controller.addDriver(vo)) {
+						successing("成功添加司机");
+						setInfos();
+						clear();
+					} else {
+						warnning("提交失败，请检查网络连接");
+					}
 				}
 			});
 
@@ -1035,11 +1071,37 @@ public class DriverManagerPanel extends JPanel {
 			month.addActionListener(listener);
 
 		}
+
+		private void clear() {
+			idField.setText(getNextID());
+			nameField.setText("");
+			year.setSelectedIndex(0);
+			month.setSelectedIndex(0);
+			day.setSelectedIndex(0);
+			idCardNumField.setText("");
+			phoneNumberField.setText("");
+			registrationDeadlineField.setText("");
+			male.setSelected(true);
+		}
+
+		private String getNextID() {
+			int num = drivers.size();
+			int numOfZero = 5 - (num + "").length();
+			String ID = num + "";
+			for (int i = 0; i < numOfZero; i++) {
+				ID = 0 + ID;
+			}
+			return "JS-" + ID;
+		}
 	}
 
 	public void warnning(String message) {
 		// fix 放到底部信息栏
-		JOptionPane.showMessageDialog(null, message, "订单信息错误", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, "司机信息错误", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void successing(String message) {
+		JOptionPane.showMessageDialog(null, message, "提交成功", JOptionPane.DEFAULT_OPTION);
 	}
 
 	private int getDayOfMonth(int year, int month) {
