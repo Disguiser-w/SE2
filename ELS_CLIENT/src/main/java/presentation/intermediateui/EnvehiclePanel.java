@@ -44,7 +44,8 @@ public class EnvehiclePanel extends JLabel {
 		info = new EnvehicleInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getPlaneList().size() - 2) / 13;
+		pageNum_max = (controller.getEnvehicleBL().getAllocateWwaitingOrderBL()
+				.updateWaitingList().size() - 2) / 13;
 
 		setCmpLocation();
 

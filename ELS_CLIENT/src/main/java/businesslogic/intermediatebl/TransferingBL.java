@@ -60,7 +60,7 @@ public class TransferingBL implements TransferingBLService {
 		throw new Exception("修改失败!");
 	}
 
-	public OperationState saveTransferingReceipt() {
+	public OperationState saveTransferingReceipt() throws RemoteException {
 		// TODO 自动生成的方法存根
 		intermediateData.saveTransferingReceiptInfo(IntermediateMainController
 				.voToPO(transferingReceipt));

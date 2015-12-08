@@ -1,7 +1,6 @@
 package businesslogic.intermediatebl.controller;
 
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
-import po.ExpressPO;
 import po.FarePO;
 import po.IntermediatePO;
 import po.OrderPO;
@@ -19,6 +17,7 @@ import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
+import type.OrganizationType;
 import type.ReceiptState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
@@ -66,19 +65,23 @@ public class IntermediateMainController {
 	public IntermediateMainController(String intermediate_ID)
 			throws MalformedURLException, RemoteException, NotBoundException {
 		// intermediateDataService
-		expressMainController = new ExpressMainController(null);
+		// expressMainController = new ExpressMainController(null);
 		try {
+			// System.out.println("haha");
 			intermediateData = DataFactory.getIntermediateData();
-			intermediate = poToVO((IntermediatePO) (intermediateData
-					.getIntermediateInfo(intermediate_ID)));
-
+			// System.out.println("haha");
+			IntermediatePO po = intermediateData
+					.getIntermediateInfo(intermediate_ID);
+			// System.out.println(po.getOrganization().getRepertory());
+			intermediate = poToVO((IntermediatePO) (po));
+			System.out.println(intermediate.organization.planeList.get(0).ID);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		// System.out.println(intermediate.ID);
 		intermediateCentre = intermediate.organization;
-
+		// System.out.println(intermediateCentre.planeList.get(2));
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
@@ -92,13 +95,12 @@ public class IntermediateMainController {
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "", "", ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData);
-
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
 				truckManager, enplaningReceiptList, entrainingReceiptList,
 				entruckingReceiptList, intermediateData);
 	}
 
-	public void updateIntermediateInfo() {
+	public void updateIntermediateInfo() throws RemoteException {
 		intermediate = IntermediateMainController.poToVO(intermediateData
 				.getIntermediateInfo(intermediate.ID));
 	}
@@ -274,16 +276,33 @@ public class IntermediateMainController {
 	}
 
 	public static RepertoryVO poToVO(RepertoryPO repertory) {
-		return new RepertoryVO(repertory.getOwnerID(), repertory.getOwnerID());
+		return new RepertoryVO(repertory.getRepertoryID(),
+				repertory.getOwnerID());
 	}
 
 	public static OrganizationVO poToVO(OrganizationPO organization) {
-		return new OrganizationVO(organization.getCategory(),
-				organization.getOrganizationID(), organization.getName(),
-				IntermediateMainController.poToVO(organization.getRepertory()));
+		OrganizationVO intermediateCenter = new OrganizationVO(
+				organization.getCategory(), organization.getOrganizationID(),
+				organization.getName());
+		ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
+		ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
+		ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
+		for (PlanePO plane : organization.getPlaneList())
+			planeList.add(IntermediateMainController.poToVO(plane));
+		for (TrainPO train : organization.getTrainList())
+			trainList.add(IntermediateMainController.poToVO(train));
+		for (TruckPO truck : organization.getTruckList())
+			truckList.add(IntermediateMainController.poToVO(truck));
+
+		intermediateCenter.planeList = planeList;
+		intermediateCenter.trainList = trainList;
+		intermediateCenter.truckList = truckList;
+
+		return intermediateCenter;
 	}
 
 	public static IntermediateVO poToVO(IntermediatePO intermediate) {
+		// System.out.println(intermediate.getName());
 		return new IntermediateVO(
 				IntermediateMainController.poToVO(intermediate
 						.getOrganization()), intermediate.getName(),

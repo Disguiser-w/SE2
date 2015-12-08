@@ -1,5 +1,6 @@
 package businesslogic.intermediatebl.envehiclebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.intermediatedataservice.IntermediateDataService;
@@ -69,7 +70,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 		throw new Exception("未找到该ID的火车！");
 	}
 
-	public OperationState saveTrainList() {
+	public OperationState saveTrainList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (TrainVO train : trainList)
 			trainList_temp.add(IntermediateMainController.voToPO(train));

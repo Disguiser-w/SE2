@@ -4,8 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -32,6 +36,8 @@ public class PlaneManagementPanel extends JLabel {
 	private VehicleManagementInfoTable info;
 	private VehicleManagementTableModel model;
 
+	private JDialog addDialog;
+
 	private int pageNum;
 	private int pageNum_max;
 
@@ -50,11 +56,13 @@ public class PlaneManagementPanel extends JLabel {
 		model = new VehicleManagementTableModel();
 		info = new VehicleManagementInfoTable(model);
 
+		addDialog = new JDialog(addDialog, "新增飞机");
+
 		pageNum = 0;
-//		pageNum_max = (controller.getPlaneList().size() - 2) / 13;
-		 pageNum_max = 3;
+		// pageNum_max = (controller.getPlaneList().size() - 2) / 12;
+		pageNum_max = 3;
 		setCmpLocation();
-		
+
 		addButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -75,6 +83,7 @@ public class PlaneManagementPanel extends JLabel {
 
 		next.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(pageNum);
 				if (pageNum >= pageNum_max)
 					return;
 				else {
@@ -88,6 +97,7 @@ public class PlaneManagementPanel extends JLabel {
 
 		previous.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(pageNum);
 				if (pageNum == 0)
 					return;
 				else {
@@ -97,7 +107,7 @@ public class PlaneManagementPanel extends JLabel {
 				}
 			}
 		});
-
+		info.setBackground(getBackground());
 		setLayout(null);
 
 		add(addButton);
@@ -119,13 +129,16 @@ public class PlaneManagementPanel extends JLabel {
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		searchTextField.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 24);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
+		previous.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
+		next.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
+		// System.out.println(controller.getIntermediateCentre().name);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -148,7 +161,7 @@ public class PlaneManagementPanel extends JLabel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -160,10 +173,14 @@ public class PlaneManagementPanel extends JLabel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
-			if (index > controller.getPlaneList().size() - 1)
+			// System.out.println(controller.getPlaneList().size());
+			int index = pageNum * 12 + rowIndex;
+			if (index > controller.getPlaneList().size() - 1) {
+				// System.out.println("gaga");
 				return null;
+			}
 			PlaneVO plane = controller.getPlaneList().get(index);
+			// System.out.println(plane.ID);
 			if (plane != null) {
 				switch (columnIndex) {
 				case 0:
@@ -198,10 +215,12 @@ public class PlaneManagementPanel extends JLabel {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MalformedURLException,
+			RemoteException, NotBoundException {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new PlaneManagementPanel(null));
+		frame.add(new PlaneManagementPanel(new IntermediateMainController(
+				"141250185")));
 		frame.setVisible(true);
 	}
 }

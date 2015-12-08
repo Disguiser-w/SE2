@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Date;
 
 import type.ReceiptState;
 
-public class EnIntermediateReceiptPO {
+public class EnIntermediateReceiptPO implements Serializable{
 	private OrganizationPO intermediateCentre;
 
 	private ArrayList<OrderPO> orderList;

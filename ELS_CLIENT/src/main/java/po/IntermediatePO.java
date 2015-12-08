@@ -1,6 +1,8 @@
 package po;
 
-public class IntermediatePO {
+import java.io.Serializable;
+
+public class IntermediatePO implements Serializable {
 	private OrganizationPO organization;
 
 	private String name;

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
-import vo.PlaneVO;
+import vo.TrainVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class TrainManagementPanel extends JLabel {
@@ -51,7 +51,7 @@ public class TrainManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getPlaneList().size() - 2) / 13;
+		pageNum_max = (controller.getTrainList().size() - 2) / 13;
 
 		setCmpLocation();
 
@@ -161,19 +161,19 @@ public class TrainManagementPanel extends JLabel {
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 13 + rowIndex + 1;
-			if (index > controller.getPlaneList().size() - 1)
+			if (index > controller.getTrainList().size() - 1)
 				return null;
-			PlaneVO plane = controller.getPlaneList().get(index);
-			if (plane != null) {
+			TrainVO train = controller.getTrainList().get(index);
+			if (train != null) {
 				switch (columnIndex) {
 				case 0:
-					return plane.ID;
+					return train.ID;
 				case 1:
 					return controller.getIntermediateCentre().name;
 				case 2:
-					return plane.destination;
+					return train.destination;
 				case 3:
-					return plane.farePrice;
+					return train.farePrice;
 				case 4:
 					return "工作中";
 				}

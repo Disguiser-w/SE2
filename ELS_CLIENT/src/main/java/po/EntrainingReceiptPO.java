@@ -1,10 +1,11 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import type.ReceiptState;
 
-public class EntrainingReceiptPO extends EnIntermediateReceiptPO {
+public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements Serializable{
 	private OrganizationPO intermediateCentre;
 	private TrainPO train;
 

@@ -1,5 +1,6 @@
 package businesslogic.intermediatebl.envehiclebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.PlanePO;
@@ -70,7 +71,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		throw new Exception("未找到该ID的飞机！");
 	}
 
-	public OperationState savePlaneList() {
+	public OperationState savePlaneList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (PlaneVO plane : planeList)
 			planeList_temp.add(IntermediateMainController.voToPO(plane));

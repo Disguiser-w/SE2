@@ -1,11 +1,12 @@
 package po;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FarePO {
+public class FarePO implements Serializable{
 	private OrganizationPO organication;
 
 	private ArrayList<EnplaningReceiptPO> enplaningReceiptPOList;

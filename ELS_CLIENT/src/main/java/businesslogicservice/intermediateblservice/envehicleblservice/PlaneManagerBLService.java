@@ -1,5 +1,6 @@
 package businesslogicservice.intermediateblservice.envehicleblservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import type.OperationState;
@@ -16,5 +17,5 @@ public interface PlaneManagerBLService {
 
 	public PlaneVO showPlane(String plane_ID) throws Exception;
 
-	public OperationState savePlaneList();
+	public OperationState savePlaneList() throws RemoteException;
 }

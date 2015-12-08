@@ -1,5 +1,6 @@
 package businesslogic.intermediatebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.intermediatedataservice.IntermediateDataService;
@@ -42,7 +43,7 @@ public class FareBL implements FareBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState saveFare() {
+	public OperationState saveFare() throws RemoteException {
 		// TODO 自动生成的方法存根
 		intermediateData.saveFareInfo(IntermediateMainController
 				.voToPO(new FareVO(

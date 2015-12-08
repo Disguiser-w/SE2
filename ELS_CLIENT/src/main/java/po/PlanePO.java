@@ -1,9 +1,11 @@
 package po;
 
-public class PlanePO {
+import java.io.Serializable;
+
+public class PlanePO implements Serializable{
 	private String ID;
 	private String destination;
-	private final double farePrice = 0.2;
+	private double farePrice = 0.2;
 
 	public PlanePO(String ID, String destination) {
 		this.ID = ID;

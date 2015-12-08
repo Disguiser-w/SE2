@@ -2,7 +2,6 @@ package presentation.intermediateui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -20,15 +19,15 @@ public class VehicleManagementInfoTable extends JTable {
 		this.getTableHeader().setReorderingAllowed(false);
 		this.getTableHeader().setResizingAllowed(false);
 		width = 720;
-		height = 480;
+		height = 24*12;
 		setuiInfo();
 	}
 
 	public void setuiInfo() {
-		height = height / 13 * 13;
+		height = height / 12 * 12;
 		setSize(width, height);
 
-		this.setRowHeight(height / 13);
+		this.setRowHeight(height / 12);
 		this.setRowSelectionAllowed(false);
 
 		TableColumn tc0 = this.columnModel.getColumn(0);
@@ -77,8 +76,8 @@ public class VehicleManagementInfoTable extends JTable {
 		this.height = height;
 	}
 
-	public void paint(Graphics g) {
-		setuiInfo();
-		super.paint(g);
-	}
+//	public void paint(Graphics g) {
+//		setuiInfo();
+//		super.paint(g);
+//	}
 }

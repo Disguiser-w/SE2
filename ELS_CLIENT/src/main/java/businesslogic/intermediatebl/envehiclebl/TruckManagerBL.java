@@ -1,5 +1,6 @@
 package businesslogic.intermediatebl.envehiclebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.TruckPO;
@@ -70,7 +71,7 @@ public class TruckManagerBL implements TruckManageBLService {
 		throw new Exception("未找到该ID的汽车！");
 	}
 
-	public OperationState saveTruckList() {
+	public OperationState saveTruckList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (TruckVO train : truckList)
 			truckList_temp.add(IntermediateMainController.voToPO(train));

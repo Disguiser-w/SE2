@@ -1,5 +1,6 @@
 package businesslogic.intermediatebl.envehiclebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.EnplaningReceiptPO;
@@ -52,7 +53,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
 			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
 			IntermediateDataService intermediateData) {
-		updateMessage();
+//		updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
 		this.trainManeger = trainManeger;
@@ -176,7 +177,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState saveEnplaningReceiptList() {
+	public OperationState saveEnplaningReceiptList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
 				.voToPO_EnplaningReceipt(enplaningReceiptList))
@@ -184,7 +185,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState saveEntrainingReceiptList() {
+	public OperationState saveEntrainingReceiptList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (EntrainingReceiptPO entrainingReceipt : IntermediateMainController
 				.voToPO_EntrainingReceipt(entrainingReceiptList))
@@ -192,7 +193,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState saveEntruckingReceiptList() {
+	public OperationState saveEntruckingReceiptList() throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (EntruckingReceiptPO entruckingReceipt : IntermediateMainController
 				.voToPO_EntruckingReceipt(entruckingReceiptList))

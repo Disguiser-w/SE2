@@ -1,5 +1,6 @@
 package businesslogicservice.intermediateblservice.envehicleblservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import type.OperationState;
@@ -16,5 +17,5 @@ public interface TruckManageBLService {
 
 	public TruckVO showTruck(String truck_ID) throws Exception;
 
-	public OperationState saveTruckList();
+	public OperationState saveTruckList() throws RemoteException;
 }

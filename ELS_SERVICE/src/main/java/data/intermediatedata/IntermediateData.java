@@ -2,10 +2,13 @@ package data.intermediatedata;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,21 +16,30 @@ import java.util.Date;
 import po.EnIntermediateReceiptPO;
 import po.FarePO;
 import po.IntermediatePO;
+import po.OrganizationPO;
 import po.PlanePO;
+import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
 import type.OperationState;
+import type.OrganizationType;
 import type.ReceiptState;
-
 import common.FileGetter;
-
 import dataservice.intermediatedataservice.IntermediateDataService;
 
-public class IntermediateData implements IntermediateDataService {
+public class IntermediateData extends UnicastRemoteObject implements
+		IntermediateDataService {
 
-	public IntermediatePO getIntermediateInfo(String intermediate_ID) {
+	public IntermediateData() throws RemoteException {
+		super();
+		// TODO 自动生成的构造函数存根
+	}
+
+	public IntermediatePO getIntermediateInfo(String intermediate_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
+//		System.out.println("hhaa");
 		String path = "intermediateInfo";
 		File file = FileGetter.getFile(path);
 		try {
@@ -38,8 +50,10 @@ public class IntermediateData implements IntermediateDataService {
 					.readObject();
 			in.close();
 			for (IntermediatePO intermediate : intermediatePOList) {
-				if (intermediate.getID().equals(intermediate_ID))
+				if (intermediate.getID().equals(intermediate_ID)) {
+//					System.out.println(intermediate.getName());
 					return intermediate;
+				}
 			}
 
 			throw new Exception("找不到该ID的中转中心业务员！");
@@ -52,7 +66,8 @@ public class IntermediateData implements IntermediateDataService {
 		return null;
 	}
 
-	public ArrayList<PlanePO> getPlaneList(String organization_ID) {
+	public ArrayList<PlanePO> getPlaneList(String organization_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/plane.dat";
@@ -72,7 +87,8 @@ public class IntermediateData implements IntermediateDataService {
 		return null;
 	}
 
-	public ArrayList<TrainPO> getTrainList(String organization_ID) {
+	public ArrayList<TrainPO> getTrainList(String organization_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/train.dat";
@@ -92,7 +108,8 @@ public class IntermediateData implements IntermediateDataService {
 		return null;
 	}
 
-	public ArrayList<TruckPO> getTruckList(String organization_ID) {
+	public ArrayList<TruckPO> getTruckList(String organization_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/truck.dat";
@@ -135,7 +152,7 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public OperationState saveTrainList(String organization_ID,
-			ArrayList<TrainPO> trainList) {
+			ArrayList<TrainPO> trainList) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/train.dat";
@@ -157,7 +174,7 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public OperationState saveTruckList(String organization_ID,
-			ArrayList<TruckPO> truckList) {
+			ArrayList<TruckPO> truckList) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/truck.dat";
@@ -179,7 +196,8 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public TransferingReceiptPO getTransferingReceiptInfo(
-			String organization_ID, String date, String ID) {
+			String organization_ID, String date, String ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
 				+ "-transferingReceipt.dat";
@@ -207,7 +225,8 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public OperationState saveTransferingReceiptInfo(
-			TransferingReceiptPO transferingReceipt, String organization_ID) {
+			TransferingReceiptPO transferingReceipt, String organization_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
@@ -241,7 +260,8 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public EnIntermediateReceiptPO getEnIntermediateReceiptInfo(
-			String organization_ID, String EnIntermediateReceipt_ID, String date) {
+			String organization_ID, String EnIntermediateReceipt_ID, String date)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
 				+ "-enIntermediateReceipt.dat";
@@ -268,7 +288,7 @@ public class IntermediateData implements IntermediateDataService {
 
 	public OperationState saveEnIntermediateReceiptInfo(
 			EnIntermediateReceiptPO enIntermediateReceipt,
-			String organization_ID) {
+			String organization_ID) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
@@ -302,7 +322,7 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public FarePO getFareInfo(String organization_ID, String fare_ID,
-			String date) {
+			String date) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
 				+ "-fare.dat";
@@ -325,7 +345,8 @@ public class IntermediateData implements IntermediateDataService {
 		return null;
 	}
 
-	public OperationState saveFareInfo(String organization_ID, FarePO fare) {
+	public OperationState saveFareInfo(String organization_ID, FarePO fare)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
 		String path = "intermediateCentreInfo-" + organization_ID + "/" + date
@@ -345,7 +366,8 @@ public class IntermediateData implements IntermediateDataService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public ArrayList<TransferingReceiptPO> getSubmittedTransferingReceiptInfo() {
+	public ArrayList<TransferingReceiptPO> getSubmittedTransferingReceiptInfo()
+			throws RemoteException {
 		String path = "transferingReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 
@@ -374,7 +396,8 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public OperationState saveSubmittedTransferingReceiptInfo(
-			ArrayList<TransferingReceiptPO> transferingReceiptList) {
+			ArrayList<TransferingReceiptPO> transferingReceiptList)
+			throws RemoteException {
 		String path = "transferingReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 
@@ -396,7 +419,8 @@ public class IntermediateData implements IntermediateDataService {
 		return OperationState.FAIL_OPERATION;
 	}
 
-	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo() {
+	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo()
+			throws RemoteException {
 		String path = "enIntermediateReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 
@@ -425,7 +449,8 @@ public class IntermediateData implements IntermediateDataService {
 	}
 
 	public OperationState saveSubmittedEnIntermediateReceiptInfo(
-			ArrayList<EnIntermediateReceiptPO> enIntermeidiateReceiptList) {
+			ArrayList<EnIntermediateReceiptPO> enIntermeidiateReceiptList)
+			throws RemoteException {
 		String path = "enIntermediateReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 
@@ -451,5 +476,48 @@ public class IntermediateData implements IntermediateDataService {
 		Date date = new Date();
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		return f.format(date);
+	}
+
+	/**************************** test **********************************************************/
+	public static void main(String[] args) {
+		File file = FileGetter.getFile("intermediateInfo");
+		if (!file.exists()) {
+
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+
+				ObjectOutputStream out = new ObjectOutputStream(
+						new FileOutputStream(file));
+				OrganizationPO organization = new OrganizationPO(
+						OrganizationType.intermediateCenter, "141250", "软攻打作业");
+				IntermediatePO intermediate = new IntermediatePO(organization,
+						"痛苦的业务员", "141250185");
+//				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbb");
+
+				RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
+				PlanePO plane0 = new PlanePO("001", "2-404");
+				PlanePO plane1 = new PlanePO("002", "2-404");
+				PlanePO plane2 = new PlanePO("003", "2-404");
+
+				organization.setRepertory(repertory);
+				organization.getPlaneList().add(plane0);
+				organization.getPlaneList().add(plane1);
+				organization.getPlaneList().add(plane2);
+//System.out.println(organization.getPlaneList().get(2).getID());
+//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbb");
+
+
+				ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
+				list.add(intermediate);
+
+				out.writeObject(list);
+				out.close();
+			} catch (Exception e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+
+		}
 	}
 }

@@ -23,9 +23,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import businesslogic.expressbl.controller.LogisticQueryController;
-import presentation.commonui.DateChooser;
 import vo.OrderVO;
+import businesslogic.expressbl.controller.LogisticQueryController;
 
 public class QueryPanel extends JPanel {
 	private JLabel timeInputLabel;
@@ -79,7 +78,7 @@ public class QueryPanel extends JPanel {
 		add(messageTable);
 		add(messageTable.getTableHeader());
 		timeSetLabel.setLayout(new BorderLayout());
-		timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
+//		timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
 
 		// help = new LocationHelper(this);
 		setLayout(null);

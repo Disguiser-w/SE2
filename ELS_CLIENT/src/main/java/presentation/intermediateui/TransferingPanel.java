@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -86,7 +87,12 @@ public class TransferingPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-				sendui();
+				try {
+					sendui();
+				} catch (RemoteException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -185,7 +191,7 @@ public class TransferingPanel extends JPanel {
 
 	}
 
-	public void sendui() {
+	public void sendui() throws RemoteException {
 		controller.getTransferingBL().saveTransferingReceipt();
 	}
 

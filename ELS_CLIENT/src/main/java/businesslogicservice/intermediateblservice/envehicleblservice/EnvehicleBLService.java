@@ -1,5 +1,6 @@
 package businesslogicservice.intermediateblservice.envehicleblservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import type.OperationState;
@@ -16,7 +17,7 @@ public interface EnvehicleBLService {
 	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane)
 			throws Exception;
 
-	public OperationState saveEnplaningReceiptList();
+	public OperationState saveEnplaningReceiptList() throws RemoteException;
 
 	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList()
 			throws Exception;
@@ -24,7 +25,7 @@ public interface EnvehicleBLService {
 	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train)
 			throws Exception;
 
-	public OperationState saveEntrainingReceiptList();
+	public OperationState saveEntrainingReceiptList() throws RemoteException;
 
 	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList()
 			throws Exception;
@@ -32,7 +33,7 @@ public interface EnvehicleBLService {
 	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck)
 			throws Exception;
 
-	public OperationState saveEntruckingReceiptList();
+	public OperationState saveEntruckingReceiptList() throws RemoteException;
 
 	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList()
 			throws Exception;

@@ -15,5 +15,5 @@ public interface TransferingBLService {
     
     public OperationState modifyOrder(OrderVO order) throws Exception;
     
-    public OperationState saveTransferingReceipt();
+    public OperationState saveTransferingReceipt() throws RemoteException;
 }

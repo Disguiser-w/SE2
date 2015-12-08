@@ -1,6 +1,8 @@
 package po;
 
-public class TruckPO {
+import java.io.Serializable;
+
+public class TruckPO implements Serializable{
 	private String ID;
 	private String destination;
     private final double farePrice = 0.02;
