@@ -11,12 +11,7 @@ import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
 import presentation.businessui.BusinessFrame;
-import presentation.businessui.ChargeCollectionPanel;
 import presentation.businessui.DriverManagerPanel;
-import presentation.businessui.EnVehiclePanel;
-import presentation.businessui.OrderDistributePanel;
-import presentation.businessui.OrderReceiveManagerPanel;
-import presentation.businessui.VehicleManagerPanel;
 import vo.BusinessVO;
 import vo.DistributeReceiptVO;
 import vo.DriverVO;
@@ -130,12 +125,12 @@ public class BusinessMainController {
 
 		return new DriverVO(po.getID(), po.getName(), po.getDateOfBirth(), po.getIdCardNumber(), po.getPhoneNumber(),
 				OrganizationBL.organizationPOToVO(po.getVehicleOrganization()), po.getSexuality(),
-				po.getRegistrationDeadline());
+				po.getRegistrationDeadline(),po.getTime());
 	}
 
 	public static DriverPO driverVOToPO(DriverVO vo) {
 		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber,
-				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline);
+				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline,vo.time);
 	}
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {

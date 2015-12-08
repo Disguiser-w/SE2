@@ -115,6 +115,7 @@ public class LocationHelper {
 	private ArrayList<String> names;
 
 	public LocationHelper(JComponent container) {
+		
 		this.container = container;
 		components = new ArrayList<ComponentStates>();
 		num = -1;
