@@ -29,6 +29,7 @@ public class ModifyUserPanel extends JPanel{
     private JLabel name;
     private JTextField nameField;
     private JLabel ID;
+    private String userIDStr;
     private JTextField IDField;
     private JLabel profession;
     private JTextField professionField;
@@ -54,6 +55,7 @@ public class ModifyUserPanel extends JPanel{
 		nameField.setEditable(false);
 		
 		ID = new JLabel("用户编号");
+		userIDStr = userID;
 		IDField = new JTextField(userID);
 		IDField.setEditable(false);
 		
@@ -88,7 +90,7 @@ public class ModifyUserPanel extends JPanel{
 						AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
 			
-				int returnNum = userBL.modifyUserAuthority(userID, authority);
+				int returnNum = userBL.modifyUserAuthority(userIDStr, authority);
 				
 				if(returnNum==0){
 					successModify();
