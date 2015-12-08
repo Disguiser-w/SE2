@@ -74,6 +74,19 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 		return null;
 	}
 	
+	public RepertoryPO findRepertoryByOwnerID(String ownerID) throws RemoteException{
+		ArrayList<Object> organizationList = organzationFile.read();
+
+		for(int i=0;i<organizationList.size();i++){
+			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			RepertoryPO repertory = organization.getRepertory();
+			if(repertory!=null && repertory.getOwnerID().equals(ownerID)){
+				return repertory;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<RepertoryPO> showAllRepertorys() throws RemoteException{
 		ArrayList<Object> organizationList = organzationFile.read();
 

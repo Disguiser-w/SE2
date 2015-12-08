@@ -1,14 +1,15 @@
 package presentation.userui;
 
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.awt.event.FocusAdapter;
+//import java.awt.event.FocusListener;
+//import java.awt.event.FocusAdapter;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
+//import java.awt.event.FocusEvent;
+
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -19,8 +20,14 @@ import vo.UserVO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
+import presentation.userui.UserMainPanel;
 
-public class UserPanel_new extends JPanel{
+public class AddUserPanel extends JPanel{
+	
+	private static final long serialVersionUID = 1L;
+
+	AdminFrame fatherFrame;
+	
 	UserBL userBL;
 	
     private int PANEL_WIDTH = 720;
@@ -38,15 +45,16 @@ public class UserPanel_new extends JPanel{
     private JLabel user_ID;
     private JLabel user_password;
     
-    private JComboBox user_profession_choose;
-    private JComboBox user_salaryPlan_choose;
-    private JComboBox user_authority_choose;
+    private JComboBox<String> user_profession_choose;
+    private JComboBox<String> user_salaryPlan_choose;
+    private JComboBox<String> user_authority_choose;
     
     private JTextField user_name_Input;
     private JTextField user_ID_Input;
     private JTextField user_password_Input;
     
     private JButton infoOKButton;
+    private JButton returnButton;
     
     int proInt = 0;
 	int professionInt = 0;
@@ -54,26 +62,29 @@ public class UserPanel_new extends JPanel{
 	int authorityInt = 0;
     String userName = "";
 	String userID = "";
-	boolean validPre = false;
-	boolean validPost = true;
+	boolean validName = true;
 	String password = "";
 	String organization = "";
 	
-    public UserPanel_new(){
+    public AddUserPanel(AdminFrame frame){
+    	this.fatherFrame = frame;
+    	
     	this.userBL = new UserBL();
+    	
+    	function = new JLabel("用户管理——新增用户");
     	
     	user_profession = new JLabel("用户职位");
     	user_salaryPlan = new JLabel("薪水策略");
     	user_authority = new JLabel("权限");
-    	function = new JLabel("新增用户");
     	user_name = new JLabel("姓名");
     	user_ID = new JLabel("用户编号");
     	user_password = new JLabel("初始密码");
     	infoOKButton = new JButton("ok");
+    	returnButton = new JButton("返回");
     	
-    	user_profession_choose = new JComboBox(user_profession_type);
-    	user_salaryPlan_choose = new JComboBox(user_salaryPlan_type);
-    	user_authority_choose = new JComboBox(user_authority_type);
+    	user_profession_choose = new JComboBox<String>(user_profession_type);
+    	user_salaryPlan_choose = new JComboBox<String>(user_salaryPlan_type);
+    	user_authority_choose = new JComboBox<String>(user_authority_type);
 
     	user_name_Input = new JTextField("");
     	user_ID_Input = new JTextField("");
@@ -135,8 +146,10 @@ public class UserPanel_new extends JPanel{
 				userName = user_name_Input.getText();
 				if(userName.equals("")){
 					warnning("新用户姓名不能为空");
+					validName = false;
 				}
 				
+				userID = user_ID_Input.getText();
 				password = user_password_Input.getText();
 				organization = "";
 				
@@ -155,20 +168,22 @@ public class UserPanel_new extends JPanel{
 						AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
 			
-				UserVO uservo = new UserVO(userName, userID, password, profession, organization, salaryPlan,authority, 0);
-				int returnNum = userBL.addUser(uservo);
-				if(returnNum==0){
-					warnning("增加成功");
+				if(validName){
+					UserVO uservo = new UserVO(userName, userID, password, profession, organization, salaryPlan,authority, 0);
+					int returnNum = userBL.addUser(uservo);
+					if(returnNum==0)
+						successAdd();
+					else
+						failedAdd();
 				}
-				else if(returnNum==1){
-					warnning("已存在同一姓名的用户，增加失败");
-				}
-				else{
-					warnning("服务器链接错误，增加失败");
-				}
-				//okui();
 			}
 		});
+    	
+    	returnButton.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent ae){
+    			returnui();
+    		}
+    	});
     	
     	setLayout(null);
     	
@@ -186,60 +201,47 @@ public class UserPanel_new extends JPanel{
     	add(user_password);
     	add(user_password_Input);
     	add(infoOKButton);
+    	add(returnButton);
+    	
     }
     
     public void setCmpLocation(){
     	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
     	
-    	user_profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
+    	user_profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 8 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
+		user_salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 13 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24,
+		user_authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 18 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		
-		user_name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16,
+		user_name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
-		user_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3,
+		user_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 28 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		user_password.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48,
+		user_password.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 33 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		/*user_profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16,
+		user_profession_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 8 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		user_salaryPlan_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 13/ 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		user_authority_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		user_name_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		user_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		user_password_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		
+		infoOKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3,
+		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48,
-				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);*/
-		
-		user_profession_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT /4,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_salaryPlan_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 17 / 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_authority_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 24,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		
-		user_name_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_password_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		
-		/*user_profession_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_salaryPlan_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		user_authority_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);*/
-		
-		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 8, PANEL_HEIGHT / 24);
     }
     
     public void setBounds(int x, int y, int width, int height) {
-
 		super.setBounds(x, y, width, height);
 		PANEL_WIDTH = width;
 		PANEL_HEIGHT = height;
@@ -247,8 +249,13 @@ public class UserPanel_new extends JPanel{
 		repaint();
 	}
 
-	public void okui() {
-
+	public void returnui() {
+		UserVO vo = fatherFrame.vo;
+		//fatherFrame.setVisible(false);
+		
+		AdminFrame newAdminFrame = new AdminFrame(vo);
+		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
+		newAdminFrame.showFrame();
 	}
 
 	public boolean isNumber(char ch){
@@ -258,18 +265,27 @@ public class UserPanel_new extends JPanel{
 			return false;
 	}
 	
-	public void warnning(String message) {
+	public void successAdd(){
+		returnui();
+		JOptionPane.showMessageDialog(null, "添加成功(●'◡'●)", "新增用户成功", JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+	
+	public void failedAdd(){
+		returnui();
+		JOptionPane.showMessageDialog(null, "添加失败(T_T)", "新增用户失败", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void warnning(String message){
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 	
-	
-	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setSize(800, 550);
-		frame.add(new UserPanel_new());
+		frame.add(new AddUserPanel(frame));
 		frame.setVisible(true);
-	}
+	}*/
     
     
 }

@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 
 import presentation.commonui.LocationHelper;
 
-public class OrganizationManagerPanel extends JPanel {
+public class OrganizationManagePanel extends JPanel {
 	// 确认按钮
 	private JButton confirmButton;
 
@@ -39,7 +39,7 @@ public class OrganizationManagerPanel extends JPanel {
 	// 位置设置
 //	private LocationHelper helper;
 
-	public OrganizationManagerPanel() {
+	public OrganizationManagePanel() {
 		confirmButton = new JButton();
 		messageTable = new JTable();
 

@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.UserPO;
+import type.AuthorityType;
 import type.ProfessionType;
 
 public class UserDataService_stub implements UserDataService{
@@ -18,8 +19,18 @@ public class UserDataService_stub implements UserDataService{
 		return 0;
 	}
     
-    public int modifyUser(UserPO userpo) throws RemoteException{
-		System.out.println("Modify user succeed!");
+    public int modifyUserPassword(String userID, String newPassword) throws RemoteException{
+		System.out.println("Modify user password succeed!");
+		return 0;
+	}
+    
+    public int modifyUserAuthority(String userID, AuthorityType authority) throws RemoteException{
+		System.out.println("Modify user authority succeed!");
+		return 0;
+	}
+    
+    public int modifyUserOrganization(String userID, String newOrganization) throws RemoteException{
+		System.out.println("Modify user organization succeed!");
 		return 0;
 	}
     

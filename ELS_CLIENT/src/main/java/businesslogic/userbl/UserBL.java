@@ -87,10 +87,9 @@ public class UserBL implements UserBLService{
 	 * @see UserPO
 	 * 
 	 * */
-	public int modifyUserPassword(UserVO uservo){
+	public int modifyUserPassword(String userID, String newPassword){
 		try{
-			UserPO userpo = voToPO(uservo);
-			return(udService.modifyUser(userpo));
+			return(udService.modifyUserPassword(userID, newPassword));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -103,10 +102,24 @@ public class UserBL implements UserBLService{
 	 * @see UserPO
 	 * 
 	 * */
-	public int modifyUserAuthority(UserVO uservo){
+	public int modifyUserAuthority(String userID, AuthorityType authority){
 		try{
-			UserPO userpo = voToPO(uservo);
-			return(udService.modifyUser(userpo));
+			return(udService.modifyUserAuthority(userID, authority));
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 2;
+		}
+	}
+	
+	/**
+	 * @param String 
+	 * @return 0(modify succeed),1(modify failed),2(server failed)
+	 * @see UserPO
+	 * 
+	 * */
+	public int modifyUserOrganization(String userID, String newOrganization){
+		try{
+			return(udService.modifyUserOrganization(userID, newOrganization));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -115,7 +128,7 @@ public class UserBL implements UserBLService{
 	
 	/**
 	 * @param String userID
-	 * @return uservo
+	 * @return UserVO
 	 * @see UserPO
 	 * 
 	 * */
@@ -198,7 +211,7 @@ public class UserBL implements UserBLService{
 				+user.getOrganization()+", SalaryPlan: "+user.getSalaryPlan()+", Authority: "+user.getAuthority()+", Grades: "+user.getGrades());
 
 			userData.addUser(new UserPO("刘钦" ,"CK-01","123456", ProfessionType.stockman, "南京中转中心",
-    					SalaryPlanType.stockmanSalaryPlan, AuthorityType.lowest, 0));
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
 			
 			ArrayList<UserPO> userList1 = userData.showAllUsers();
 			for(UserPO user:userList1)

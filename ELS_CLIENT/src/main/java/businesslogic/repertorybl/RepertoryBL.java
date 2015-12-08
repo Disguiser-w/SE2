@@ -21,6 +21,16 @@ import vo.InventoryCheckVO;
 public class RepertoryBL implements RepertoryBLService{
 
 	public RepertoryDataService rdService;
+	private String repertoryID;
+	
+	public RepertoryBL(String stockManID){
+		try{
+			this.repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			repertoryID = "";
+		}
+	}
 	
 	/**
 	 * @param String repertoryID, int maxRow, int maxShelf, int maxDigit, int warningRatio
@@ -28,7 +38,7 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see RepertoryPO
 	 * 
 	 * */
-	public int inventoryInitialization(String repertoryID, int maxRow, int maxShelf, 
+	public int inventoryInitialization(int maxRow, int maxShelf, 
 										int maxDigit, int warningRatio){
 		try{
 			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
@@ -47,13 +57,13 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see RepertoryPO,GoodsPO,InventoryPO
 	 * 
 	 * */
-	public int enterRepertory(String repertoryID, String JJD_ID, int blockNum, String time){
+	public int enterRepertory(String JJD_ID, int blockNum, String time){
 		try{
-			String warningStr = inventoryWarning(repertoryID);
+			String warningStr = inventoryWarning();
 			if((warningStr.contains("0")) || (warningStr.contains("1")) || (warningStr.contains("2")))
 				blockNum = 3;
 			
-			String vacantLocation = searchVacantLocation(repertoryID, blockNum);
+			String vacantLocation = searchVacantLocation(blockNum);
 			if(admitEnterRepertory(vacantLocation)){
 				
 				String locationParts[] = warningStr.split(" ");
@@ -86,7 +96,7 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see RepertoryPO,GoodsPO,InventoryPO
 	 * 
 	 * */
-	public int leaveRepertory(String repertoryID, String JJD_ID, String time){
+	public int leaveRepertory(String JJD_ID, String time){
 		try{
 			InventoryPO inventorypo = rdService.findInventorybyID(repertoryID, JJD_ID);
 			InventoryVO inventoryvo = inventoryPOToVO(inventorypo);
@@ -115,7 +125,7 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see RepertoryPO
 	 * 
 	 * */
-	public String inventoryWarning(String repertoryID){
+	public String inventoryWarning(){
 		try{
 			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
 			int blockMaxStockNum = repertorypo.getMaxRow() * repertorypo.getMaxShelf() * repertorypo.getMaxDigit();
@@ -141,7 +151,7 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @return InventoryCheckPO	(该时间段内的出/入库数量、金额，库存数量合计)
 	 * 
 	 * */
-	public InventoryCheckVO inventoryCheck(String repertoryID, String beginDate, String endDate){
+	public InventoryCheckVO inventoryCheck(String beginDate, String endDate){
 		// 系统根据输入的时间段，显示该时间段内的出/入库数量、金额，库存数量合计
 		try{
 			InventoryCheckPO inventoryCheckPO = rdService.findInventorybyDate(repertoryID, beginDate, endDate);
@@ -158,7 +168,7 @@ public class RepertoryBL implements RepertoryBLService{
 	 * @see InventoryPO
 	 * 
 	 * */
-	public ArrayList<InventoryVO> inventoryStockTaking(String repertoryID){
+	public ArrayList<InventoryVO> inventoryStockTaking(){
 		try{
 			String time = getTimeNow(); 
 			ArrayList<InventoryPO> inventoryPOList= rdService.findInventorybyTime(repertoryID, time);
@@ -173,7 +183,7 @@ public class RepertoryBL implements RepertoryBLService{
 		}
 	}
 	
-	public String searchVacantLocation(String repertoryID, int blockNum){
+	public String searchVacantLocation(int blockNum){
 		try{
 			RepertoryPO repertorypo = rdService.findRepertory(repertoryID);
 			int rowNum = repertorypo.getStockNum(blockNum) / (repertorypo.getMaxShelf() * repertorypo.getMaxDigit());

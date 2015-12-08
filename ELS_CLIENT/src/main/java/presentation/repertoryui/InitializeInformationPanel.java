@@ -5,48 +5,55 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 import presentation.commonui.LocationHelper;
-import presentation.commonui.UserFrameTest;
+import presentation.commonui.LiziFrameTest;
+import businesslogic.repertorybl.RepertoryBL;
+
 
 public class InitializeInformationPanel extends JPanel {
-	// 最大排数
+	
+	private static final long serialVersionUID = -147L;
+
+	private LiziFrameTest fatherFrame;
+	
+	private RepertoryBL repertoryBL;
+	
 	private JLabel maxRowLabel;
 	private JTextField maxRowField;
 
-	// 最大排数
 	private JLabel maxShelfLabel;
 	private JTextField maxShelfField;
 
-	// 最大位数
 	private JLabel maxBitLabel;
 	private JTextField maxBitField;
-	// 最大警戒比例
+
 	private JLabel maxRatioLabel;
 	private JTextField maxRatioField;
 	private JLabel maxRatioTip;
 
-	// 确认
 	private JButton confirmButton;
 
 	private LocationHelper helper;
 
-	public InitializeInformationPanel() {
+	public InitializeInformationPanel(LiziFrameTest frame) {
+		repertoryBL = new RepertoryBL();
+		
 		maxRowLabel = new JLabel("请输入最大排数");
 		maxRowField = new JTextField();
 
-		// 最大排数
 		maxShelfLabel = new JLabel("请输入最大架数");
 		maxShelfField = new JTextField();
 
-		// 最大位数
 		maxBitLabel = new JLabel("请输入最大位数");
 		maxBitField = new JTextField();
-		// 最大警戒比例
+		
 		maxRatioLabel = new JLabel("请输入警戒比例");
 		maxRatioField = new JTextField();
 		maxRatioTip = new JLabel("100以内的正整数");
 
-		// 确认
 		confirmButton = new JButton();
 
 		add(maxRowLabel);
@@ -63,6 +70,16 @@ public class InitializeInformationPanel extends JPanel {
 		helper = new LocationHelper(this);
 
 		setLayout(null);
+		
+		confirmButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				int maxRow = Integer.parseInt(maxRowField.getText());
+				int maxShelf = Integer.parseInt(maxShelfField.getText());
+				int maxDigit = Integer.parseInt(maxBitField.getText());
+				int warningRatio = Integer.parseInt(maxRatioField.getText());
+				repertoryBL.inventoryInitialization(repertoryID, maxRow, maxShelf, maxDigit, warningRatio)
+			}
+		});
 	}
 
 	public void setBounds(int x, int y, int width, int height) {

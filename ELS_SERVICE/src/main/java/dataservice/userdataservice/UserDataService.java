@@ -2,6 +2,7 @@ package dataservice.userdataservice;
 
 import po.UserPO;
 import type.ProfessionType;
+import type.AuthorityType;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -11,7 +12,9 @@ public interface UserDataService extends Remote {
 	
 	public int addUser(UserPO userpo) throws RemoteException;
     public int deleteUser(String userID) throws RemoteException;
-    public int modifyUser(UserPO userpo) throws RemoteException;
+    public int modifyUserPassword(String userID, String newPassword) throws RemoteException;
+    public int modifyUserAuthority(String userID, AuthorityType authority) throws RemoteException;
+    public int modifyUserOrganization(String userID, String newOrganization) throws RemoteException;
     public UserPO findUser(String userID) throws RemoteException;
     public ArrayList<UserPO> showAllUsers() throws RemoteException;	
     public String getUserIDPost(ProfessionType profession) throws RemoteException;

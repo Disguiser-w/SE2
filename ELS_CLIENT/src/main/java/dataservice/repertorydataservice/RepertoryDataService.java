@@ -13,6 +13,7 @@ public interface RepertoryDataService extends Remote {
 	
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException;  //对仓库信息做修改，比如库存信息初始化工作
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException;
+	public RepertoryPO findRepertoryByOwnerID(String ownerID) throws RemoteException;
 	public ArrayList<RepertoryPO> showAllRepertorys() throws RemoteException;
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException;//增加库存（某商品入库）
 	public int deleteInventory(String repertoryID, String JJD_ID) throws RemoteException;//删除库存（某商品出库）

@@ -9,15 +9,15 @@ import dataservice.userdataservice.UserDataService_stub;
 
 public class RepertoryMainController {
 
-	public static UserDataService stockManData;
+	public static UserDataService userData;
 	public static UserVO stockManVO;
 	
 	// UserData的初始化，UserVO的初始化在此进行
 	public RepertoryMainController(String stockManID){
 	//RMI
-		stockManData = new UserDataService_stub();
+		userData = new UserDataService_stub();
 		try{
-			stockManVO = userPOToVO(stockManData.findUser(stockManID));
+			stockManVO = userPOToVO(userData.findUser(stockManID));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}

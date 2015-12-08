@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import po.UserPO;
 import type.AuthorityType;
 import type.ProfessionType;
-import type.SalaryPlanType;
+//import type.SalaryPlanType;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
 
@@ -28,7 +28,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
     	ArrayList<Object> objectList = userFile.read();
     	
 		if(objectList==null){
-			System.out.println("null qingkuang");
 			objectList = new ArrayList<Object>();
 			objectList.add(userpo);
 			userFile.writeM(objectList);
@@ -39,7 +38,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 			for(int i=0; i<objectList.size(); i++){
 				UserPO tempUserPO = (UserPO)(objectList.get(i));
 				if(tempUserPO.getName().equals(userpo.getName())){
-					System.out.println("chongmingle!!!");
 					return 1;
 				}
 			}
@@ -69,7 +67,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 		return 0;
     }
     
-    public int modifyUser(UserPO userpo) throws RemoteException{
+    public int modifyUserPassword(String userID, String newPassword) throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
 		if(objectList==null)
@@ -77,7 +75,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 		
 		for(int i=0; i<objectList.size(); i++){
 			UserPO tempUserPO = (UserPO)(objectList.get(i));
-			if(tempUserPO.getUserID().equals(userpo.getUserID())){
+			if(tempUserPO.getUserID().equals(userID)){
+				UserPO userpo = new UserPO(tempUserPO.getName(), userID, newPassword, tempUserPO.getProfession(),
+						tempUserPO.getOrganization(), tempUserPO.getSalaryPlan(), tempUserPO.getAuthority(), tempUserPO.getGrades());
 				objectList.add(userpo);
 				objectList.remove(i);
 				break;
@@ -88,19 +88,84 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 		return 0;
     }
     
+    public int modifyUserAuthority(String userID, AuthorityType authority) throws RemoteException{
+    	ArrayList<Object> objectList = userFile.read();
+    	
+		if(objectList==null)
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			UserPO tempUserPO = (UserPO)(objectList.get(i));
+			if(tempUserPO.getUserID().equals(userID)){
+				UserPO userpo = new UserPO(tempUserPO.getName(), userID, tempUserPO.getPassword(), tempUserPO.getProfession(),
+						tempUserPO.getOrganization(), tempUserPO.getSalaryPlan(), authority, tempUserPO.getGrades());
+				objectList.add(userpo);
+				objectList.remove(i);
+				break;
+			}
+		}
+		
+		userFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyUserOrganization(String userID, String newOrganization) throws RemoteException{
+    	ArrayList<Object> objectList = userFile.read();
+    	
+		if(objectList==null)
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			UserPO tempUserPO = (UserPO)(objectList.get(i));
+			if(tempUserPO.getUserID().equals(userID)){
+				UserPO userpo = new UserPO(tempUserPO.getName(), userID, tempUserPO.getPassword(), tempUserPO.getProfession(),
+						newOrganization, tempUserPO.getSalaryPlan(), tempUserPO.getAuthority(), tempUserPO.getGrades());
+				objectList.add(userpo);
+				objectList.remove(i);
+				break;
+			}
+		}
+		
+		userFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyUserGrades(String userID, int newGrades) throws RemoteException{
+    	ArrayList<Object> objectList = userFile.read();
+    	
+		if(objectList==null)
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			UserPO tempUserPO = (UserPO)(objectList.get(i));
+			if(tempUserPO.getUserID().equals(userID)){
+				UserPO userpo = new UserPO(tempUserPO.getName(), userID, tempUserPO.getPassword(), tempUserPO.getProfession(),
+						tempUserPO.getOrganization(), tempUserPO.getSalaryPlan(), tempUserPO.getAuthority(), newGrades);
+				objectList.add(userpo);
+				objectList.remove(i);
+				break;
+			}
+		}
+		
+		userFile.writeM(objectList);
+		return 0;
+    }
+    
+    
     public UserPO findUser(String userID) throws RemoteException{
     	ArrayList<Object> objectList = userFile.read();
     	
 		if(objectList==null)
 			return null;  	  
 		
-		for(int i=0; i<objectList.size(); i++){
-			UserPO tempUserPO = (UserPO)(objectList.get(i));
-			if(tempUserPO.getUserID().equals(userID)){
-				return tempUserPO;
+		else{
+			for(int i=0; i<objectList.size(); i++){
+				UserPO tempUserPO = (UserPO)(objectList.get(i));
+				if(tempUserPO.getUserID().equals(userID)){
+					return tempUserPO;
+				}
 			}
 		}
-		
 		return null;
     }
     
@@ -157,16 +222,20 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
     	try{
     		userData = new UserData();
     		try{
-    			userData.addUser(new UserPO("魏彦淑" ,"JL-01", "123456", ProfessionType.manager, "总部",
+    			userData.addUser(new UserPO("魏彦淑" ,"JL-00001", "123456", ProfessionType.manager, "总部",
     					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
-    			userData.addUser(new UserPO("王丽莉" ,"CW-01", "123456", ProfessionType.financialStaff, "总部",
+    			userData.addUser(new UserPO("王丽莉" ,"CW-00001", "123456", ProfessionType.financialStaff, "总部",
     					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
-    			userData.addUser(new UserPO("丁二玉" ,"GLY-01","123456", ProfessionType.administrator, "总部",
+    			userData.addUser(new UserPO("丁二玉" ,"GLY-00001","123456", ProfessionType.administrator, "总部",
     					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
-    			userData.addUser(new UserPO("张家盛" ,"YYT-01","123456", ProfessionType.businessHallCounterman, "鼓楼营业厅",
+    			userData.addUser(new UserPO("张家盛" ,"YYT-00001","123456", ProfessionType.businessHallCounterman, "南京中转中心",
     					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
-    			userData.addUser(new UserPO("张词校" ,"KD-01","123456", ProfessionType.courier, "鼓楼营业厅",
+    			userData.addUser(new UserPO("张词校" ,"KD-00001","123456", ProfessionType.courier, "鼓楼营业厅",
     					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
+    			userData.addUser(new UserPO("王卉" ,"CK-00001","123456", ProfessionType.stockman, "南京中转中心",
+    					SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
+    			userData.addUser(new UserPO("吴秦月" ,"SJ-00001","123456", ProfessionType.driver, "仙林营业厅",
+    					SalaryPlanType.driverSalaryPlan, AuthorityType.lowest, 0));
     			
     			System.out.println("添加后:");
 				ArrayList<UserPO> userpoList0 = userData.showAllUsers();
@@ -177,14 +246,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 	    			}
 				}
 				
-    			UserPO userpo = userData.findUser("KD-01");
+    			UserPO userpo = userData.findUser("KD-00001");
     			if(userpo != null)
     				System.out.println("Find the user: "+userpo.getName()+" "+userpo.getUserID()+" "+userpo.getOrganization()+" "+userpo.getProfession());
     			else
     				System.out.println("Cannot find the user");
     			
-    			userData.modifyUser(new UserPO("张Doge" ,"KD-01","123456", ProfessionType.courier, "仙林营业厅",
-    					SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
+    			userData.modifyUserOrganization("张Doge","仙林营业厅");
     			System.out.println("修改后:");
     			ArrayList<UserPO> userpoList3 = userData.showAllUsers();
     			if(userpoList3 != null){
@@ -207,7 +275,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
     			else 
     				System.out.println("Cannot find the user");
     			
-    			userData.deleteUser("CW-01");
+    			//userData.deleteUser("CW-00001");
     			System.out.println("删除后:");
     			ArrayList<UserPO> userpoList2 = userData.showAllUsers();
     			if(userpoList2 != null){
@@ -244,8 +312,8 @@ public class UserData extends UnicastRemoteObject implements UserDataService {	/
 				System.out.println("ID: "+user.getUserID()+", Name: "+user.getName());
 			
 			
-			UserPO userpo = userData.findUser("JL-01");
-				System.out.println("ID: "+userpo.getUserID()+", Name: "+userpo.getName());
+			UserPO user = userData.findUser("JL-01");
+				System.out.println("ID: "+user.getUserID()+", Name: "+user.getName());
 				
 		}catch (Exception e) {
 			// TODO Auto-generated catch block

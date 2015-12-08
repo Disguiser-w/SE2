@@ -1,6 +1,7 @@
 package businesslogicservice.userblservice;
 
 import businesslogicservice.userblservice.UserBLService;
+import type.AuthorityType;
 import vo.UserVO;
 import vo.LogVO;
 
@@ -26,15 +27,21 @@ public class UserBLService_stub implements UserBLService{
 	        return 0;
 	    }
 			
-	    public int modifyUserPassword(UserVO uservo) {
+	    public int modifyUserPassword(String userID, String newPassword) {
 	        // TODO 自动生成的方法存根
 	        System.out.println("Modify user password succeed!");
 	        return 0;
 	    }
 	    
-	    public int modifyUserAuthority(UserVO uservo) {
+	    public int modifyUserAuthority(String userID, AuthorityType authority) {
 	        // TODO 自动生成的方法存根
 	        System.out.println("Modify user authority succeed!");
+	        return 0;
+	    }
+	    
+	    public int modifyUserOrganization(String userID, String newOrganization) {
+	        // TODO 自动生成的方法存根
+	        System.out.println("Modify user organization succeed!");
 	        return 0;
 	    }
 	 
