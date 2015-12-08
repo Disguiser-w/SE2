@@ -83,7 +83,7 @@ public class AccountBL {
 				return 1;
 			}
 			else{
-				po=new AccountPO(vo.getName(), vo.getMoney());
+				accountData.modifyAccount(po, name);
 				return 0;
 			}		
 		} catch (RemoteException e) {

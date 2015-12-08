@@ -73,7 +73,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	public int modifyAccount(AccountPO po, String name) throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("account.ser");
-		if(findbyName(name)==null){
+		if(findbyName(po.getName())==null){
 			System.out.println("需要修改的账户不存在");
 			return 1;
 		}
@@ -84,7 +84,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		}
 		for(int i=0;i<os.size();i++){
 			AccountPO accountpo=(AccountPO) os.get(i);
-			if(accountpo.getName()==po.getName()){
+			if(accountpo.getName().equals(po.getName())){
 				accountpo.setName(name);
 				break;
 			}
@@ -185,13 +185,16 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	}
 	
 	public static void main(String[] args) throws RemoteException{
-//		AccountData data=new AccountData();
+		AccountData data=new AccountData();
+		
 ////		AccountPO po=data.findbyName("刘钦");
 ////		System.out.println("Data中的"+po.getMoney());
-//		ArrayList<AccountPO> pos=data.showAll();
-//		for(AccountPO p:pos){
-//			System.out.println("Name: "+p.getName());
-//		}
+		AccountPO po=new AccountPO("本宝宝", 200);
+		data.modifyAccount(po, "其他宝宝");
+		ArrayList<AccountPO> pos=data.showAll();
+		for(AccountPO p:pos){
+			System.out.println("Name: "+p.getName()+" "+p.getMoney());
+		}
 //		
 //		AccountPO po=data.findbyName("刘钦");
 //		data.deleteAccount(po);

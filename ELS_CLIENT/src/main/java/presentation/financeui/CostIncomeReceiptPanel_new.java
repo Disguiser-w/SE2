@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -63,10 +62,15 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		startDate_Input.setEditable(false);
 		endDate_Input = new JTextField(endTime);
 		endDate_Input.setEditable(false);
-		totalCost_Input = new JTextField("");
-		totalIncome_Input = new JTextField("");
-		totalProfit_Input = new JTextField("");
-
+		double income=controller.getIncome();
+		totalCost_Input = new JTextField(income+"");
+		totalCost_Input.setEditable(false);
+		double cost=controller.getCost();
+		totalIncome_Input = new JTextField(cost+"");
+		totalIncome_Input.setEditable(false);
+		double profit=controller.getProfit(income, cost);
+		totalProfit_Input = new JTextField(profit+"");
+		totalProfit_Input.setEditable(false);
 		setCmpLocation();
 		
 		infoOKButton.addActionListener(new ActionListener() {
@@ -99,9 +103,9 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
+				PANEL_WIDTH / 24, PANEL_HEIGHT / 16);
 		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
-				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
+				PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
 		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24,

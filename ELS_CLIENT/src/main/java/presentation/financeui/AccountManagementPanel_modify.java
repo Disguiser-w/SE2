@@ -36,14 +36,17 @@ public class AccountManagementPanel_modify extends JPanel{
 
 	public String name;
 	public String money;
+	public String nameInit;
 	
 	  AccountBLController controller;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
- public AccountManagementPanel_modify(AccountBLController controller) {
+ public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit) {
 		// TODO Auto-generated constructor stub
 		this.controller=controller;
+		this.money=money;
+		this.nameInit=nameInit;
 		
 		infoOKButton = new JButton("ok");
 
@@ -52,7 +55,8 @@ public class AccountManagementPanel_modify extends JPanel{
 		account_money = new JLabel("账户金额");
 
 		account_name_Input = new JTextField("");
-		account_money_Input = new JTextField("");
+		account_money_Input = new JTextField(money);
+		account_money_Input.setEditable(false);
 		
 		setCmpLocation();
 
@@ -96,40 +100,29 @@ public class AccountManagementPanel_modify extends JPanel{
 	
 	public void okui(){
 		name=account_name_Input.getText();
-		money=account_money_Input.getText();
-		if(name.equals("")||money.equals("")){
+		if(name.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
 					JOptionPane.CLOSED_OPTION);
 		}
-		else{
-			double moneyD=Double.parseDouble(money);
-			if(moneyD<0){
-				JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
-						JOptionPane.CLOSED_OPTION);
-				account_money_Input.setText("");
-			}
 			else{
-//				System.out.println("name :"+name);
-				AccountVO accountVO=new AccountVO(name, moneyD);
-				int result=controller.addAccount(accountVO);
-//				System.out.println("name:"+accountVO.getName());
-
+				AccountVO accountVO=new AccountVO(nameInit, Double.parseDouble(money));
+				int result=controller.modifyAccount(accountVO, name);
+//				System.out.println(accountVO.getName()+" "+name);
 				if(result==0){
-					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
+					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
 					account_name_Input.setText("");
 					account_money_Input.setText("");
-					
 				}
 				else{
-					JOptionPane.showMessageDialog(null, "添加账户失败！", "提示",
+					JOptionPane.showMessageDialog(null, "修改账户失败！", "提示",
 							JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
 		}
 		
-	}
+	
 	
 
 
@@ -145,8 +138,9 @@ public class AccountManagementPanel_modify extends JPanel{
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		AccountBLController controller=new AccountBLController();
 	JFrame frame = new JFrame();
-	frame.setSize(800, 550);
-	frame.add(new AccountManagement_new(controller));
+//	frame.setSize(600, 400);
+	frame.setBounds(300, 200, 600, 400);
+	frame.add(new AccountManagementPanel_modify(controller,null,null));
 	frame.setVisible(true);
 }
 

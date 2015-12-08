@@ -52,6 +52,9 @@ public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService
 		CostIncomeReceiptBLController controller=new CostIncomeReceiptBLController();
 		
 		System.out.println("ID"+controller.getCostIncomeListID());
+		System.out.println("Income: "+controller.getIncome());
+		System.out.println("Cost: "+controller.getCost());
+		System.out.println("Profit: "+controller.getProfit(controller.getIncome(), controller.getCost()));
 		
 	}
 }

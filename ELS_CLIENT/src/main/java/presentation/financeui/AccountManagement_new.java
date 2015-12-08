@@ -2,9 +2,13 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +25,7 @@ public class AccountManagement_new extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JButton infoOKButton;
+	private JButton cancelButton;
 
 	private JLabel function;
 	private JLabel account_name;
@@ -41,7 +46,8 @@ public class AccountManagement_new extends JPanel {
 	public AccountManagement_new(AccountBLController controller) {
 		this.controller=controller;
 		
-		infoOKButton = new JButton("ok");
+		infoOKButton = new JButton("确认");
+		cancelButton =new JButton("返回");
 
 		function = new JLabel("新增账户");
 		account_name = new JLabel("账户名");
@@ -56,6 +62,7 @@ public class AccountManagement_new extends JPanel {
 	
 
 		add(infoOKButton);
+		add(cancelButton);
 		add(function);
 		add(account_name);
 		add(account_money);
@@ -71,6 +78,15 @@ public class AccountManagement_new extends JPanel {
 				okui();
 			}
 		});
+		
+		cancelButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				cancelui();
+			}
+		});
 
 
 	}
@@ -79,7 +95,9 @@ public class AccountManagement_new extends JPanel {
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 25 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
+				PANEL_WIDTH / 18, PANEL_HEIGHT / 18);
+		cancelButton.setBounds(PANEL_WIDTH *55/ 72,  PANEL_HEIGHT * 25 / 48, 
+				PANEL_WIDTH / 18, PANEL_HEIGHT / 18);
 		account_name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
 				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
 		account_money.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
@@ -124,12 +142,23 @@ public class AccountManagement_new extends JPanel {
 		
 	}
 	
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new AccountManagementPanel_new());
-//		frame.setVisible(true);
-//	}
+	public void cancelui(){
+		this.remove(this);
+		JPanel p=new AccountManagementPanel_main(controller);
+		p.setSize(800, 550);
+		p.setVisible(true);
+		this.add(p);
+		this.setVisible(true);
+//		this.show();
+	}
+	
+	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+		AccountBLController controller=new AccountBLController();
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new AccountManagement_new(controller));
+		frame.setVisible(true);
+	}
 
 	public void setBounds(int x, int y, int width, int height) {
 
