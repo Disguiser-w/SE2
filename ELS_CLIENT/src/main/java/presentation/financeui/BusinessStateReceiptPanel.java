@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -22,9 +22,6 @@ import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import presentation.commonui.DateChooser;
-import presentation.commonui.LocationHelper;
-import presentation.financeui.PaymentReceiptPanel.PaymentModel;
-import presentation.intermediateui.TransferingPanel;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
@@ -37,6 +34,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton startDateButton;
+//	private JLabel startDateLabel;
 	private JButton endDateButton;
 	private JButton dateOKButton;
 	private JButton printButton;
@@ -66,6 +64,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 		this.controller=controller;
 		
 		startDateButton = new JButton("start");
+//		startDateLabel = new JLabel("开始");
 		endDateButton = new JButton("end");
 		dateOKButton = new JButton("ok");
 		printButton = new JButton("print");
@@ -177,21 +176,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-//		startDateButton.setBounds((int)(width * 9.02423469387755/25),(int)(height * 3.307984790874525/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1787072243346008/20));
-//		endDateButton.setBounds((int)(width * 14.41326530612245/25),(int)(height * 3.307984790874525/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2547528517110267/20));
-//		dateOKButton.setBounds((int)(width * 19.419642857142858/25),(int)(height * 3.307984790874525/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1406844106463878/20));
-//		printButton.setBounds((int)(width * 19.419642857142858/25),(int)(height * 0.7984790874524715/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.55893536121673/20));
-//		sendButton.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.7984790874524715/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.55893536121673/20));
-//		next.setBounds((int)(width * 21.1734693877551/25),(int)(height * 18.745247148288975/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.7984790874524715/20));
-//		previous.setBounds((int)(width * 22.544642857142858/25),(int)(height * 18.745247148288975/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.7984790874524715/20));
-//		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.7984790874524715/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6349809885931559/20));
-//		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 3.2699619771863118/20),(int)(width *  3.0931122448979593 /25),(int)(height *  1.3307984790874525/20));
-//		startDate_Input.setBounds((int)(width * 5.261479591836735/25),(int)(height * 3.3840304182509504/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1787072243346008/20));
-//		endDate_Input.setBounds((int)(width * 10.778061224489797/25),(int)(height * 3.2699619771863118/20),(int)(width *  3.2206632653061225 /25),(int)(height *  1.2927756653992395/20));
-//		table.getTableHeader().setBounds((int)(width * 1.530612244897959/25),(int)(height * 4.828897338403042/20),(int)(width *  20.886479591836736 /25),(int)(height *  1.2357414448669202/20));
-//		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 4.828897338403042/20)+(int)(height *  1.2357414448669202/20),(int)(width *  20.886479591836736 /25),(int)(height *  12.357414448669202/20));
-//		
-//		serialVersionUID.setBounds((int)(width * 0.0/25),(int)(height * 0.0/20),(int)(width *  0.6377551020408163 /25),(int)(height *  0.7827788649706457/20));
+
 		startDateButton.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
 		endDateButton.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
 		dateOKButton.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
@@ -276,6 +261,21 @@ public class BusinessStateReceiptPanel extends JPanel {
 	public void dateOK() {
 		String beginTime=startDate_Input.getText();
 		String endTime=endDate_Input.getText();
+		if(beginTime.equals("")||endTime.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+					JOptionPane.CLOSED_OPTION);
+		}
+		else if(beginTime.length()!=8){
+			JOptionPane.showMessageDialog(null, "请输入正确的日期格式！", "提示",
+					JOptionPane.CLOSED_OPTION);
+			startDate_Input.setText("");
+		}
+		else if(endTime.length()!=8){
+			JOptionPane.showMessageDialog(null, "请输入正确的日期格式！", "提示",
+					JOptionPane.CLOSED_OPTION);
+			endDate_Input.setText("");
+		}
+		else{
 		BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
 		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
@@ -286,6 +286,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 			bm.removeRow(0);
 		}
 		table.repaint();		
+		}
 	}
 
 	public void printui() {

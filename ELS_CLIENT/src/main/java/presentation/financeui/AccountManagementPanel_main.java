@@ -215,16 +215,6 @@ public class AccountManagementPanel_main extends JPanel {
 	public void addui() {
 
 		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame));
-//		int temp=c.size();
-//		refreshTable(controller.showAll());
-//		am=new AccountModel(c);
-//		for(int i=0;i<temp;i++){
-//			am.removeRow(0);
-//		}
-//		table.repaint();
-//		
-//		updateUI();
-//		
 	
 	}
 
