@@ -3,15 +3,12 @@ package presentation.commonui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,20 +29,21 @@ import common.FileGetter;
  */
 public class UserFrame extends JFrame {
 	// private JLabel panel;
-	private static final int DEFAULT_WIDTH = 960;
-	private static final int DEFAULT_HEIGHT = 640;
+	public static final int DEFAULT_WIDTH = 960;
+	public static final int DEFAULT_HEIGHT = 640;
 	private JLabel imageLabel;
 	private MessagePanel messagePanel;
 	private FunctionPanel functionPanel;
 	private JPanel operationPanel;
 	private HeaderPanel headerPanel;
 	private ArrayList<JPanel> operationPanels;
+	private int num;
 
 	private File propertiesFile;
 	private Properties settings;
 
 	public UserFrame() {
-
+		num = 0;
 		// panel = new JLabel();
 		operationPanels = new ArrayList<JPanel>();
 		// panel.setBackground(Color.gray);
@@ -89,7 +87,7 @@ public class UserFrame extends JFrame {
 		});
 
 		setTitle("ELS");
-		setProperties();
+//		setProperties();
 
 		setMinimumSize(new Dimension(700, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,9 +100,9 @@ public class UserFrame extends JFrame {
 	public void initGlobalFontSetting() {
 		// 设置字体
 
-//		GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//		String[] fontName = e.getAvailableFontFamilyNames();
-
+		// GraphicsEnvironment e =
+		// GraphicsEnvironment.getLocalGraphicsEnvironment();
+		// String[] fontName = e.getAvailableFontFamilyNames();
 
 		File file = FileGetter.getFile("src/main/font/font.ttf");
 		Font fnt = null;
@@ -122,11 +120,7 @@ public class UserFrame extends JFrame {
 			// initGlobalFontSetting(new Font("WenQuanYi Micro Hei
 			// Mono",Font.PLAIN,15));
 
-		} catch (FontFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
@@ -158,51 +152,51 @@ public class UserFrame extends JFrame {
 
 	}
 
-	public void setProperties() {
-		String userDir = System.getProperty("user.home");
-
-		File propertiesDir = new File(userDir, ".pro");
-		if (!propertiesDir.exists())
-			propertiesDir.mkdir();
-		propertiesFile = new File(propertiesDir, "program.properties");
-
-		Properties defaultSettings = new Properties();
-		defaultSettings.put("left", "0");
-		defaultSettings.put("top", "0");
-		defaultSettings.put("width", "" + DEFAULT_WIDTH);
-		defaultSettings.put("height", "" + DEFAULT_HEIGHT);
-
-		settings = new Properties(defaultSettings);
-
-		if (propertiesFile.exists())
-			try {
-				FileInputStream in = new FileInputStream(propertiesFile);
-				settings.load(in);
-				in.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		// else
-		// try {
-		// propertiesFile.createNewFile();
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-		int left = Integer.parseInt(settings.getProperty("left"));
-		int top = Integer.parseInt(settings.getProperty("top"));
-		int width = Integer.parseInt(settings.getProperty("width"));
-		int height = Integer.parseInt(settings.getProperty("height"));
-
-		setSize(width, height);
-
-		if (left == 0 && top == 0)
-			setLocationRelativeTo(null);
-		else
-			setLocation(left, top);
-
-	}
+//	public void setProperties() {
+//		String userDir = System.getProperty("user.home");
+//
+//		File propertiesDir = new File(userDir, ".pro");
+//		if (!propertiesDir.exists())
+//			propertiesDir.mkdir();
+//		propertiesFile = new File(propertiesDir, "program.properties");
+//
+//		Properties defaultSettings = new Properties();
+//		defaultSettings.put("left", "0");
+//		defaultSettings.put("top", "0");
+//		defaultSettings.put("width", "" + DEFAULT_WIDTH);
+//		defaultSettings.put("height", "" + DEFAULT_HEIGHT);
+//
+//		settings = new Properties(defaultSettings);
+//
+//		if (propertiesFile.exists())
+//			try {
+//				FileInputStream in = new FileInputStream(propertiesFile);
+//				settings.load(in);
+//				in.close();
+//			} catch (IOException ex) {
+//				ex.printStackTrace();
+//			}
+//		// else
+//		// try {
+//		// propertiesFile.createNewFile();
+//		// } catch (IOException e) {
+//		// 
+//		// e.printStackTrace();
+//		// }
+//
+//		int left = Integer.parseInt(settings.getProperty("left"));
+//		int top = Integer.parseInt(settings.getProperty("top"));
+//		int width = Integer.parseInt(settings.getProperty("width"));
+//		int height = Integer.parseInt(settings.getProperty("height"));
+//
+//		setSize(width, height);
+//
+//		if (left == 0 && top == 0)
+//			setLocationRelativeTo(null);
+//		else
+//			setLocation(left, top);
+//
+//	}
 
 	public void exitSystem() {
 		settings.put("left", "" + getX());
@@ -257,17 +251,34 @@ public class UserFrame extends JFrame {
 		}
 
 		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
-		
+
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				remove(operationPanel);
 				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
-				int height = getHeight();
-				int width = getWidth();
-				
+				num = operationPanels.indexOf(operationPanel);
 				add(operationPanel);
 				repaint();
 			}
 		});
+	}
+
+	public void changePanel(JPanel newPanel) {
+
+		remove(operationPanel);
+		operationPanel = newPanel;
+		int width = getWidth();
+		int height = getHeight();
+		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
+		add(operationPanel);
+		repaint();
+
+	}
+
+	public void toMainPanel() {
+		remove(operationPanel);
+		operationPanel = operationPanels.get(num);
+		add(operationPanel);
+		repaint();
 	}
 }

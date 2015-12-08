@@ -170,7 +170,7 @@ public class LocationHelper {
 		if (c instanceof JLabel || c instanceof JTable || c instanceof JList || c instanceof JTextArea)
 			c.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		if (c instanceof JLabel) {
-			((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
+			((JLabel) c).setHorizontalAlignment(JLabel.RIGHT);
 		}
 
 		components.add(new ComponentStates(c));

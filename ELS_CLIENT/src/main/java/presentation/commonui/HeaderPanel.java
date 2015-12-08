@@ -10,8 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.sun.glass.ui.Cursor;
-
 class HeaderPanel extends JPanel {
 	private JLabel minimizeLabel;
 	private JLabel maximizeLabel;
@@ -24,6 +22,7 @@ class HeaderPanel extends JPanel {
 	public HeaderPanel(JFrame frame) {
 		isMaximum = false;
 		this.containFrame = frame;
+		containFrame.setSize(UserFrame.DEFAULT_WIDTH, UserFrame.DEFAULT_HEIGHT);
 		minimizeLabel = new JLabel();
 		maximizeLabel = new JLabel();
 		exitLabel = new JLabel();
