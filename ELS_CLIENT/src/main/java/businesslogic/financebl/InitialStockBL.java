@@ -32,11 +32,12 @@ public class InitialStockBL{
 	 * 不过这么多东西怎么用RMI链接
 	 * */
 	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
-		initData=DataFactory.getInitialStockData();
+		/*initData=DataFactory.getInitialStockData();
 		userData=DataFactory.getUserData();
 		organizationData=DataFactory.getOrganizationData();
 		businessData=DataFactory.getBusinessData();
 		repertoryData=DataFactory.getRepertoryData();
+		*/
 		accontData=DataFactory.getAccountData();
 	}
 

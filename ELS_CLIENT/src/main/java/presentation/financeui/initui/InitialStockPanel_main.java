@@ -1,6 +1,7 @@
 package presentation.financeui.initui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
@@ -16,9 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import presentation.financeui.FinanceFrame;
+import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
 import vo.InitInfoVO;
 
 public class InitialStockPanel_main extends JPanel {
@@ -42,14 +50,14 @@ public class InitialStockPanel_main extends JPanel {
 	private JTextField endDate_Input;
 	private JTable table;
 	
-//	private InitialStockInfoTable_main info;
-//	private int PANEL_WIDTH = 720;
-//	private int PANEL_HEIGHT = 480;
-//	
-//	private ArrayList<InitInfoVO> initInfoList;
 	InitialStockModel im;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	public InitialStockBLController controller;
+	public UserBL userController;
+	public OrganizationController organizationController;
+	public VehicleManagerController vehicleController;
+	public RepertoryBL repertoryController;
+	public AccountBLController accountController;
 	public FinanceFrame financeFrame;
 	
 //	private LocationHelper helper;
@@ -80,10 +88,7 @@ public class InitialStockPanel_main extends JPanel {
 		add(table.getTableHeader());
 		add(table);
 		
-//		info = new InitialStockInfoTable_main(13,2);
-		
-//		setCmpLocation();
-		
+
 		newButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -174,6 +179,49 @@ public class InitialStockPanel_main extends JPanel {
 		table.getTableHeader().setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20),(int)(width *  21.07780612244898 /25),(int)(height *  1.1232876712328768/20));
 		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20)+(int)(height *  1.1232876712328768/20),(int)(width *  21.07780612244898 /25),(int)(height *  11.232876712328768/21));
 
+		setBaseInfo();
+	}
+	
+
+	private void setBaseInfo() {
+
+		// 设置成不可编辑不可改变位置，大小
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getTableHeader().setReorderingAllowed(false);
+		table.getTableHeader().setResizingAllowed(false);
+
+		TableColumn column1 = table.getColumnModel().getColumn(0);
+		TableColumn column2 = table.getColumnModel().getColumn(1);
+		// 设置宽度
+		column1.setPreferredWidth(table.getWidth() * 4 / 10);
+		column2.setPreferredWidth(table.getWidth() * 6/ 10);
+
+
+		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
+		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
+		// messageTable.getTableHeader().getHeight() + 4);
+
+		//
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+
+		tcr.setHorizontalAlignment(JLabel.CENTER);
+		column1.setCellRenderer(tcr);
+		column2.setCellRenderer(tcr);
 
 	}
 	
@@ -194,7 +242,8 @@ public class InitialStockPanel_main extends JPanel {
 	}
 
 	public void newInitInfoui() {
-		financeFrame.changePanel(new InitialStockPanel_new(controller,financeFrame));
+		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
+				vehicleController,repertoryController,accountController, financeFrame));
 	}
 	
 	public void detailui(){
