@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import businesslogic.financebl.controller.AccountBLController;
 import presentation.commonui.UserFrame;
+import vo.UserVO;
 
 public class FinanceFrame extends UserFrame{
 
@@ -14,10 +15,10 @@ public class FinanceFrame extends UserFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public FinanceFrame(){
+	public FinanceFrame(UserVO vo){
 		super();
 		
-		setMessage("本宝宝", "CW-00001");
+		setMessage(vo.getName(), vo.getID());
 //		addFuncLabel(new AccountManagementPanel_main());
 //		addFuncLabel(new CollectionReceiptPanel());
 //		addFuncLabel(new PaymentReceiptPanel());

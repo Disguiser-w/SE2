@@ -1,12 +1,12 @@
 package presentation.financeui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,7 +17,10 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import presentation.commonui.DateChooser;
 import type.ReceiptState;
+import type.ReceiptType;
+import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.receiptbl.getDate;
@@ -31,7 +34,8 @@ public class CollectionReceiptPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 
-	private JButton dateChooseButton;
+//	private JButton dateChooseButton;
+	private JLabel dateChooseLabel;
 	private JButton infoOKButton;
 	private JButton collectionOKButton;
 	private JButton next;
@@ -61,7 +65,8 @@ public class CollectionReceiptPanel extends JPanel {
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		dateChooseButton = new JButton("日期");
+//		dateChooseButton = new JButton("日期");
+		dateChooseLabel =new JLabel("日期");
 		infoOKButton = new JButton("营业厅");
 		collectionOKButton = new JButton("确认");
 		next = new JButton("next");
@@ -80,7 +85,8 @@ public class CollectionReceiptPanel extends JPanel {
 
 		setLayout(null);
 
-		add(dateChooseButton);
+//		add(dateChooseButton);
+		add(dateChooseLabel);
 		add(infoOKButton);
 		add(collectionOKButton);
 		add(next);
@@ -101,14 +107,16 @@ public class CollectionReceiptPanel extends JPanel {
 //		refreshGatheringTable(controller.getGathering(""));
 		cm=new CollectionModel(c);
 		table=new JTable(cm);
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		add(table.getTableHeader());
 		add(table);
 //		setInfos();
 		
 //		addListener();
+		dateChooseLabel.setLayout(new BorderLayout());
+		dateChooseLabel.add(new DateChooser(date_Input),BorderLayout.CENTER);
 		
 	}
 
@@ -119,7 +127,8 @@ public class CollectionReceiptPanel extends JPanel {
 		// 所有组件setBounds
 
 //		serialVersionUID.setBounds((int)(width * 2.5510204081632653/25),(int)(height * 5.205479452054795/20),(int)(width *  17.92091836734694 /25),(int)(height *  1.0176125244618395/20));
-		dateChooseButton.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
+//		dateChooseButton.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
+		dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
 		infoOKButton.setBounds((int)(width * 14.09438775510204/25),(int)(height * 3.5616438356164384/20),(int)(width *  0.9885204081632653 /25),(int)(height *  0.9784735812133072/20));
 		collectionOKButton.setBounds((int)(width * 20.535714285714285/25),(int)(height * 3.522504892367906/20),(int)(width *  1.6262755102040816 /25),(int)(height *  0.9393346379647749/20));
 		next.setBounds((int)(width * 21.1734693877551/25),(int)(height * 18.747553816046967/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.821917808219178/20));
@@ -150,7 +159,6 @@ public class CollectionReceiptPanel extends JPanel {
 			TableColumn column1 = table.getColumnModel().getColumn(0);
 			TableColumn column2 = table.getColumnModel().getColumn(1);
 			TableColumn column3 = table.getColumnModel().getColumn(2);
-//			TableColumn column4 = table.getColumnModel().getColumn(3);
 			// 设置宽度
 			column1.setPreferredWidth(table.getWidth() * 4 / 10);
 			column2.setPreferredWidth(table.getWidth() * 2/ 10);
@@ -183,7 +191,6 @@ public class CollectionReceiptPanel extends JPanel {
 			column1.setCellRenderer(tcr);
 			column2.setCellRenderer(tcr);
 			column3.setCellRenderer(tcr);
-//			column4.setCellRenderer(tcr);
 
 		}
 
@@ -195,13 +202,7 @@ public class CollectionReceiptPanel extends JPanel {
 	                  /**
 	                    * 选择日期
 	                   * */
-			dateChooseButton.addActionListener(new ActionListener() {
-
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO 自动生成的方法存根
-					dateChooseui();
-				}
-			});
+			
 
 			/**
 			 * 确认日期输入
@@ -276,6 +277,7 @@ public class CollectionReceiptPanel extends JPanel {
 	public void okui() {
 		//这里需要格式的转化"2015/11/10——20151110"
 		date_str=date_Input.getText();
+		date_str=date_str.substring(0, 4)+date_str.substring(5, 7)+date_str.substring(8);
 
 		if(date_str.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
@@ -293,6 +295,7 @@ public class CollectionReceiptPanel extends JPanel {
 		}
 		else{
 			//我可以把获取数据的过程放在这里啊2333
+			int temp=c.size();
 //			ArrayList<GatheringReceiptVO> gatherings=controller.getGathering(date_str);
 			GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
 			GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
@@ -301,8 +304,10 @@ public class CollectionReceiptPanel extends JPanel {
 			gatherings.add(vo2);
 	      refreshGatheringTable(gatherings);
 	      cm=new CollectionModel(c);
+	      for(int i=0;i<temp;i++){
+	    	  cm.removeRow(0);
+	      }
 	      table.repaint();
-	      System.out.println("我可以把获取数据的过程放在这里啊2333");
 		}
 
 	}
@@ -317,8 +322,11 @@ public class CollectionReceiptPanel extends JPanel {
 
 	public void totalui() {
 //		double money=controller.getTotalMoney(controller.getGathering(date_str));
+		double money=0;
 		infoLine.setText("日期："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
-				.substring(6)+"    金额总和：");
+				.substring(6)+"    金额总和："+money);
+		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");
+		controller.creatCollection(vo);
 	}
 
 	public void nextui() {

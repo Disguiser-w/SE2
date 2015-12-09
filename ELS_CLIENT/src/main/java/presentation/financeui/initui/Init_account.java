@@ -1,26 +1,25 @@
-package presentation.financeui;
+package presentation.financeui.initui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
+import presentation.financeui.FinanceFrame;
 import businesslogic.financebl.controller.InitialStockBLController;
 
-public class InitialStockPanel_new extends JPanel {
+public class Init_account extends JPanel{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
-
 	private JButton InfoOKButton;
+	private JButton cancelButton;
 	private JButton next;
 	private JButton previous;
 
@@ -32,16 +31,20 @@ public class InitialStockPanel_new extends JPanel {
 	private JLabel vehicleInfo;
 	private JLabel stockInfo;
 	private JLabel accountInfo;
-
-	private InitialStockInfoTable_new info;
 	
+	private JTable accountTable;
+	
+
+	private int PANEL_WIDTH = 720;
+	private int PANEL_HEIGHT = 480;
 	public InitialStockBLController controller;
 	public FinanceFrame financeFrame;
 
-	public InitialStockPanel_new(InitialStockBLController controller,FinanceFrame parent) {
+	 public Init_account(InitialStockBLController controller,FinanceFrame parent) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		InfoOKButton = new JButton("ok");
+		InfoOKButton = new JButton("确认添加");
+		cancelButton = new JButton("返回");
 		next = new JButton("next");
 		previous = new JButton("pre");
 
@@ -54,37 +57,14 @@ public class InitialStockPanel_new extends JPanel {
 		stockInfo = new JLabel("库存信息");
 		accountInfo = new JLabel("银行账户");
 
-		info = new InitialStockInfoTable_new(13, 3);
 		
 		setCmpLocation();
-
-		InfoOKButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				okui();
-			}
-		});
-
-		next.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				nextui();
-			}
-		});
-
-		previous.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				previousui();
-			}
-		});
+		
 
 		setLayout(null);
 
 		add(InfoOKButton);
+		add(cancelButton);
 		add(all);
 		add(function);
 		add(organizationInfo);
@@ -94,8 +74,44 @@ public class InitialStockPanel_new extends JPanel {
 		add(accountInfo);
 		add(next);
 		add(previous);
-		add(info);
+		
+		addListener();
 	}
+	 
+	 public void addListener(){
+		 //确认添加
+		 InfoOKButton.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO 自动生成的方法存根
+				}
+			});
+			
+		 //返回
+			cancelButton.addActionListener(new ActionListener() {
+				
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+				}
+			});
+
+			//下一页
+			next.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO 自动生成的方法存根
+				}
+			});
+
+			//上一页
+			previous.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO 自动生成的方法存根
+				}
+			});
+		 
+	 }
 
 	public void setCmpLocation() {
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
@@ -119,8 +135,6 @@ public class InitialStockPanel_new extends JPanel {
 		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -143,11 +157,7 @@ public class InitialStockPanel_new extends JPanel {
 	public void nextui() {
 
 	}
+	
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new InitialStockPanel_new());
-//		frame.setVisible(true);
-//	}
+
 }

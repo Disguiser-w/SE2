@@ -53,8 +53,8 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		beginTime="2010-01-01";
 		endTime=getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
 		ID=controller.getCostIncomeListID();
-		infoOKButton = new JButton("ok");
-		function = new JLabel("新建成本收益表");
+		infoOKButton = new JButton("确认");
+		function = new JLabel("成本收益表");
 		costIncomeReceipt_ID = new JLabel("成本收益表编号");
 		startDate = new JLabel("开始时间");
 		endDate = new JLabel("结束时间");
@@ -108,8 +108,8 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	public void setCmpLocation() {
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 16);
+		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 44 / 48,
+				PANEL_WIDTH / 15, PANEL_HEIGHT / 15);
 		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
 				PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
 		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
@@ -149,7 +149,7 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 
 	}
 
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		CostIncomeReceiptBLController controller=new CostIncomeReceiptBLController();
 		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
@@ -157,4 +157,5 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		frame.add(new CostIncomeReceiptPanel_new(controller,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
 }

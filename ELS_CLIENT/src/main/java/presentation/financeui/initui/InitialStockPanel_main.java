@@ -1,4 +1,4 @@
-package presentation.financeui;
+package presentation.financeui.initui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import presentation.financeui.FinanceFrame;
 import businesslogic.financebl.controller.InitialStockBLController;
 import vo.InitInfoVO;
 
@@ -27,6 +28,7 @@ public class InitialStockPanel_main extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton newButton;
+	private JButton detailButton;
 	private JButton startDateButton;
 	private JButton endDateButton;
 	private JButton dateOKButton;
@@ -56,18 +58,19 @@ public class InitialStockPanel_main extends JPanel {
 	public InitialStockPanel_main(InitialStockBLController controller,FinanceFrame parent){
 		this.controller=controller;
 		this.financeFrame=parent;
-		newButton = new JButton("new");
-		startDateButton = new JButton("start");
-		endDateButton = new JButton("end");
-		dateOKButton = new JButton("ok");
-		next = new JButton("next");
-		previous = new JButton("previous");
+		newButton = new JButton("新建");
+		detailButton =new JButton("详情");
+		startDateButton = new JButton("开始时间");
+		endDateButton = new JButton("结束时间");
+		dateOKButton = new JButton("确认");
+		next = new JButton("下");
+		previous = new JButton("上");
 		
 		function = new JLabel("期初建账");
 		dateRange = new JLabel("日期范围");
 
-		startDate_Input = new JTextField("2015/10/30", 11);
-		endDate_Input = new JTextField("2015/11/05", 11);
+		startDate_Input = new JTextField("", 11);
+		endDate_Input = new JTextField("", 11);
 		
 		im=new InitialStockModel(c);
 		table=new JTable(im);
@@ -82,10 +85,16 @@ public class InitialStockPanel_main extends JPanel {
 //		setCmpLocation();
 		
 		newButton.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				newInitInfoui();
+			}
+		});
+		
+		detailButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				detailui();
 			}
 		});
 		
@@ -132,6 +141,7 @@ public class InitialStockPanel_main extends JPanel {
 		setLayout(null);
 		
 		add(newButton);
+		add(detailButton);
 		add(startDateButton);
 		add(endDateButton);
 		add(dateOKButton);
@@ -143,44 +153,15 @@ public class InitialStockPanel_main extends JPanel {
 		add(endDate_Input);
 		add(table);
 //		helper = new LocationHelper(this);
-
-//		add(info);
 	}
-	
-/*	public void setCmpLocation(){
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		newButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
-				PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
-		dateRange.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		startDateButton.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		startDate_Input.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		endDateButton.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		endDate_Input.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-//		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-//				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
-	}
-*/
 	
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-//		PANEL_WIDTH = width;
-//		PANEL_HEIGHT = height;
-//		setCmpLocation();
-//		repaint();
-//		serialVersionUID.setBounds((int)(width * 2.1683673469387754/25),(int)(height * 5.518590998043053/20),(int)(width *  0.6377551020408163 /25),(int)(height *  0.7827788649706457/20));
-		newButton.setBounds((int)(width * 21.269132653061224/25),(int)(height * 0.7436399217221135/20),(int)(width *  2.391581632653061 /25),(int)(height *  1.643835616438356/20));
+
+		detailButton.setBounds((int)(width * 21.269132653061224/25),(int)(height * 0.7436399217221135/20),(int)(width *  2.391581632653061 /25),(int)(height *  1.643835616438356/20));
+		newButton.setBounds((int)(width * 21.269132653061224/30),(int)(height * 0.7436399217221135/20),(int)(width *  2.391581632653061 /25),(int)(height *  1.643835616438356/20));
 		startDateButton.setBounds((int)(width * 9.279336734693878/25),(int)(height * 3.679060665362035/20),(int)(width *  0.9885204081632653 /25),(int)(height *  1.1350293542074363/20));
 		endDateButton.setBounds((int)(width * 15.561224489795919/25),(int)(height * 3.639921722113503/20),(int)(width *  0.9566326530612245 /25),(int)(height *  1.213307240704501/20));
 		dateOKButton.setBounds((int)(width * 20.727040816326532/25),(int)(height * 3.522504892367906/20),(int)(width *  1.753826530612245 /25),(int)(height *  1.3307240704500978/20));
@@ -191,15 +172,12 @@ public class InitialStockPanel_main extends JPanel {
 		startDate_Input.setBounds((int)(width * 5.48469387755102/25),(int)(height * 3.6007827788649704/20),(int)(width *  3.3482142857142856 /25),(int)(height *  1.2915851272015655/20));
 		endDate_Input.setBounds((int)(width * 11.543367346938776/25),(int)(height * 3.5616438356164384/20),(int)(width *  3.6033163265306123 /25),(int)(height *  1.3307240704500978/20));
 		table.getTableHeader().setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20),(int)(width *  21.07780612244898 /25),(int)(height *  1.1232876712328768/20));
-		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20)+(int)(height *  1.1232876712328768/20),(int)(width *  21.07780612244898 /25),(int)(height *  11.232876712328768/20));
+		table.setBounds((int)(width * 1.530612244897959/25),(int)(height * 5.244618395303327/20)+(int)(height *  1.1232876712328768/20),(int)(width *  21.07780612244898 /25),(int)(height *  11.232876712328768/21));
 
 
 	}
 	
 	public void setList(ArrayList<InitInfoVO> initInfoList){
-//		this.initInfoList = initInfoList;
-		
-//		info.setList(initInfoList);
 	}
 	
 
@@ -217,7 +195,10 @@ public class InitialStockPanel_main extends JPanel {
 
 	public void newInitInfoui() {
 		financeFrame.changePanel(new InitialStockPanel_new(controller,financeFrame));
-
+	}
+	
+	public void detailui(){
+		
 	}
 
 	public void nextui() {
@@ -271,7 +252,7 @@ public class InitialStockPanel_main extends JPanel {
 		
 	}
 
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		InitialStockBLController controller=new InitialStockBLController();
 		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
@@ -279,4 +260,32 @@ public class InitialStockPanel_main extends JPanel {
 		frame.add(new InitialStockPanel_main(controller,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
+	
 }
+
+
+/*	public void setCmpLocation(){
+	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
+			PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+	newButton.setBounds(PANEL_WIDTH * 8 / 9, PANEL_HEIGHT / 24,
+			PANEL_WIDTH / 18, PANEL_HEIGHT / 12);
+	dateRange.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 3 / 16,
+			PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+	startDateButton.setBounds(PANEL_WIDTH * 19 / 36, PANEL_HEIGHT * 3 / 16,
+			PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+	startDate_Input.setBounds(PANEL_WIDTH * 7 / 18, PANEL_HEIGHT * 3 / 16,
+			PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+	endDateButton.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
+			PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+	endDate_Input.setBounds(PANEL_WIDTH * 7 / 12, PANEL_HEIGHT * 3 / 16,
+			PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+	next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
+			PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
+	previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
+			PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
+
+//	info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+//			PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+}
+*/

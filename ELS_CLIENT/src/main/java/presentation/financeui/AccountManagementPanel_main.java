@@ -353,7 +353,7 @@ class AccountModel extends AbstractTableModel{
      
  
 	
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		AccountBLController controller=new AccountBLController();
 		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
@@ -361,6 +361,7 @@ class AccountModel extends AbstractTableModel{
 		frame.add(new AccountManagementPanel_main(controller,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
 }
 
 

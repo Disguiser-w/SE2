@@ -78,13 +78,13 @@ public class ReceiptPanel_new extends JPanel {
 		cm=new CollectionModel(collection);
 		table1=new JTable(cm);
 
-		table1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		table1.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		pm=new PaymentModel(payment);
 		table2=new JTable(pm);
 
-		table2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		table2.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				
 		setLayout(null);
@@ -410,43 +410,6 @@ public class ReceiptPanel_new extends JPanel {
 		}
 		}
 	
-	/**
-	 * 成本收益表表格——只一张吧
-	 * */
-	/*
-	class CostIncomeModel extends AbstractTableModel{
-		private static final long serialVersionUID = 1L;
-		//操作人还要吗
-		String head[]={"编号","日期","交易金额","提交人"};
-		
-		//行数
-		public int getRowCount() {
-			// TODO Auto-generated method stub
-			return costincome.size();
-		}
-
-		public int getColumnCount() {
-			// TODO Auto-generated method stub
-			return head.length;
-		}
-		
-		public String getValueAt(int row, int col) {
-			return costincome.get(row).get(col);
-		}
-		
-		public String getColumnName(int col) {
-			return head[col];
-		}
-
-		public void addRow(ArrayList<String> v) {
-			costincome.add(v);
-		}
-
-		public void removeRow(int row) {
-			costincome.remove(row);
-		}
-		}
-	*/
 	
 	public void refreshCollection(ArrayList<CollectionReceiptVO> cvos){
 		for(CollectionReceiptVO v:cvos){
@@ -480,7 +443,7 @@ public class ReceiptPanel_new extends JPanel {
 		
 	
 
-	public static void main(String[] args) throws Exception {
+/*	public static void main(String[] args) throws Exception {
 		 CollectionReceiptBLController collectionController = new CollectionReceiptBLController() ;
 		 PaymentReceiptBLController paymentReceiptBLController = new PaymentReceiptBLController() ;
 		 FinanceFrame financeFrame = new FinanceFrame();
@@ -489,6 +452,7 @@ public class ReceiptPanel_new extends JPanel {
 		frame.add(new ReceiptPanel_new(collectionController,paymentReceiptBLController,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
 	
 }
 
