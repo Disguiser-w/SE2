@@ -11,11 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import vo.PlaneVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
-public class PlaneManagement_newPanel extends JPanel {
+public class PlaneManagement_modifyPanel extends JPanel {
 	private IntermediateFrame frame;
 
 	private JButton OKButton;
@@ -34,17 +35,16 @@ public class PlaneManagement_newPanel extends JPanel {
 	private CityDistanceDataService cityDistanceData;
 	private ArrayList<String> citys = new ArrayList<String>();
 
+	private PlaneVO plane;
+
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	private int planeNum;
-	private String intermediateCenterID;
-	private String planeID;
-
-	public PlaneManagement_newPanel(IntermediateMainController c,
-			IntermediateFrame f) {
+	public PlaneManagement_modifyPanel(IntermediateMainController c,
+			IntermediateFrame f, PlaneVO p) {
 		this.controller = c;
 		this.frame = f;
+		this.plane = p;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
@@ -53,45 +53,33 @@ public class PlaneManagement_newPanel extends JPanel {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
-		planeNum = Integer.parseInt(controller.getPlaneList().get(
-				controller.getPlaneList().size() - 1).ID.substring(
-				controller.getPlaneList().get(
-						controller.getPlaneList().size() - 1).ID.length() - 3,
-				controller.getPlaneList().get(
-						controller.getPlaneList().size() - 1).ID.length())) + 1;
-		intermediateCenterID = controller.getIntermediateCentre().organizationID;
-
-		if (planeNum < 10)
-			planeID = intermediateCenterID + "00" + planeNum;
-		else if (planeNum < 100 && planeNum >= 10)
-			planeID = intermediateCenterID + "0" + planeNum;
-		else
-			planeID = intermediateCenterID + planeNum;
 
 		OKButton = new JButton("ok");
 
-		function = new JLabel("新增飞机");
+		function = new JLabel("修改飞机");
 
 		plane_ID = new JLabel("飞机编号");
 		plane_destination = new JLabel("飞机目的地");
 		plane_farePrice = new JLabel("飞机租金（/个）");
 
-		plane_ID_input = new JTextField(planeID);
+		plane_ID_input = new JTextField(plane.ID);
+		plane_ID_input.setEditable(false);
 
 		plane_destination_input = new JComboBox();
 		for (String city : citys)
 			plane_destination_input.addItem(city);
+		plane_destination_input.setSelectedItem(plane.destination);
 
 		plane_farePrice_input = new JTextField("0.2");
 
 		OKButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					controller.getPlaneManagerBL().addPlane(
-							plane_ID_input.getText(),
-							plane_destination_input.getSelectedItem()
-									.toString());
-				} catch (RemoteException e1) {
+					controller.getPlaneManagerBL().modifyPlane(
+							new PlaneVO(plane_ID_input.getText(),
+									(String) plane_destination_input
+											.getSelectedItem()));
+				} catch (Exception e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
 				}

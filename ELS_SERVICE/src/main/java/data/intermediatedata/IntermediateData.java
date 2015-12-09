@@ -72,6 +72,16 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/plane.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+				return new ArrayList<PlanePO>();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -93,6 +103,16 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/train.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+				return new ArrayList<TrainPO>();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -114,6 +134,16 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/truck.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+				return new ArrayList<TruckPO>();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -132,10 +162,18 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public OperationState savePlaneList(String organization_ID,
 			ArrayList<PlanePO> planeList) throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo-" + organization_ID
-				+ "/plane.dat";
+		String path = "intermediateCentreInfo/" + organization_ID
+				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		for (PlanePO plane : planeList) {
 			try {
 				ObjectOutputStream out = new ObjectOutputStream(
@@ -157,6 +195,15 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/train.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 
 		for (TrainPO train : trainList) {
 			try {
@@ -179,7 +226,15 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo-" + organization_ID
 				+ "/truck.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		for (TruckPO truck : truckList) {
 			try {
 				ObjectOutputStream out = new ObjectOutputStream(

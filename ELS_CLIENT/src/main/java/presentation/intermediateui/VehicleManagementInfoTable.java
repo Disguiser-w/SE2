@@ -18,17 +18,19 @@ public class VehicleManagementInfoTable extends JTable {
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.getTableHeader().setReorderingAllowed(false);
 		this.getTableHeader().setResizingAllowed(false);
-		width = 720;
-		height = 24*12;
 		setuiInfo();
 	}
 
 	public void setuiInfo() {
-		height = height / 12 * 12;
+		width = 720;
+		height = 22 * 12;
+
 		setSize(width, height);
 
 		this.setRowHeight(height / 12);
 		this.setRowSelectionAllowed(false);
+//		System.out.println(width);
+//		System.out.println(height / 12);
 
 		TableColumn tc0 = this.columnModel.getColumn(0);
 		tc0.setPreferredWidth(width * 80 / 720);
@@ -49,16 +51,18 @@ public class VehicleManagementInfoTable extends JTable {
 		TableColumn tc4 = this.columnModel.getColumn(4);
 		tc4.setPreferredWidth(width * 6 / 72);
 		// tc.setResizable(false);
-		
+
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
+			public Component getTableCellRendererComponent(JTable table,
+					Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
 				if (row % 2 == 0)
 					setBackground(Color.cyan);
 				else
 					setBackground(Color.white);
 
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				return super.getTableCellRendererComponent(table, value,
+						isSelected, hasFocus, row, column);
 			}
 		};
 
@@ -76,8 +80,8 @@ public class VehicleManagementInfoTable extends JTable {
 		this.height = height;
 	}
 
-//	public void paint(Graphics g) {
-//		setuiInfo();
-//		super.paint(g);
-//	}
+	// public void paint(Graphics g) {
+	// setuiInfo();
+	// super.paint(g);
+	// }
 }

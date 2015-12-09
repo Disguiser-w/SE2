@@ -9,7 +9,7 @@ import vo.PlaneVO;
 public interface PlaneManagerBLService {
 	public ArrayList<PlaneVO> showPlaneList();
 
-	public OperationState addPlane(String ID, String destination);
+	public OperationState addPlane(String ID, String destination) throws RemoteException;
 
 	public OperationState deletePlane(PlaneVO plane_delete) throws Exception;
 
