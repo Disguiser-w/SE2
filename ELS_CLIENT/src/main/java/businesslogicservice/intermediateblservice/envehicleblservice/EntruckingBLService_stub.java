@@ -1,7 +1,9 @@
 package businesslogicservice.intermediateblservice.envehicleblservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import type.OperationState;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
 import vo.OrderVO;
@@ -33,27 +35,32 @@ public class EntruckingBLService_stub implements TruckManageBLService {
 		System.out.println("entruck successfully!");
 		return null;
 	}
+
 	public ArrayList<EntruckingReceiptVO> updateEntruckingReceiptList(
 			EntruckingReceiptVO vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return null;
 	}
+
 	public FareVO computeFare(ArrayList<EntruckingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("compute successfully!");
 		return null;
 	}
+
 	public boolean updateFare(FareVO fareVO) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
 		return false;
 	}
+
 	public boolean showEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("show successfully!");
 		return false;
 	}
+
 	public boolean updateEntruckingReceipt(ArrayList<EntruckingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		System.out.println("update successfully!");
@@ -68,5 +75,29 @@ public class EntruckingBLService_stub implements TruckManageBLService {
 	public boolean showEntruckingReceiptList(ArrayList<EntruckingReceiptVO> vo) {
 		// TODO 自动生成的方法存根
 		return false;
+	}
+
+	@Override
+	public OperationState addTruck(String ID, String destination) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public OperationState deleteTruck(TruckVO truck_delete) throws Exception {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public OperationState modifyTruck(TruckVO truck_modify) throws Exception {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public OperationState saveTruckList() throws RemoteException {
+		// TODO 自动生成的方法存根
+		return null;
 	}
 }

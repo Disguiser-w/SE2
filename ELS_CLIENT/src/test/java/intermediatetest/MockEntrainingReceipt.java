@@ -11,7 +11,8 @@ public class MockEntrainingReceipt extends EntrainingReceiptVO {
 
 	public MockEntrainingReceipt(ArrayList<OrderVO> enplaningReceipt,
 			String time, String ID, String intermediateCentre, TrainVO train) {
-		super(enplaningReceipt, time, ID, intermediateCentre, train);
+		super(null, train, enplaningReceipt, 0, intermediateCentre,
+				intermediateCentre, null);
 		// TODO 自动生成的构造函数存根
 	}
 

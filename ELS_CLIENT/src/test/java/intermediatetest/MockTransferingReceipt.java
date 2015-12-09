@@ -11,7 +11,7 @@ public class MockTransferingReceipt extends TransferingReceiptVO {
 
 	public MockTransferingReceipt(ArrayList<OrderVO> orderList, String ID,
 			String time, OrganizationVO intermediateCentre) {
-		super(orderList, ID, time, intermediateCentre);
+		super(intermediateCentre, orderList, time, time, null);
 		// TODO 自动生成的构造函数存根
 	}
 

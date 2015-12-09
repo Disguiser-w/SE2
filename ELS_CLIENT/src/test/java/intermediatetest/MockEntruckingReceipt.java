@@ -13,7 +13,7 @@ public class MockEntruckingReceipt extends EntruckingReceiptVO {
 	public MockEntruckingReceipt(ArrayList<OrderVO> enplaningReceipt,
 			String time, String ID, OrganizationVO intermediateCentre,
 			TruckVO truck) {
-		super(enplaningReceipt, time, ID, intermediateCentre, truck);
+		super(intermediateCentre, truck, enplaningReceipt, 0, ID, ID, null);
 		// TODO 自动生成的构造函数存根
 	}
 

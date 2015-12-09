@@ -2,7 +2,6 @@ package data.intermediatedata;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +27,7 @@ import type.ReceiptState;
 import common.FileGetter;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
+@SuppressWarnings("serial")
 public class IntermediateData extends UnicastRemoteObject implements
 		IntermediateDataService {
 
