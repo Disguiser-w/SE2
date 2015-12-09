@@ -14,6 +14,7 @@ public class DriverVO {
 	public final Sexuality sexuality;
 	public final String registrationDeadline;
 	public final int time;
+	public boolean isUsing;
 
 	public DriverVO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
 			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline,int time) {
@@ -27,5 +28,21 @@ public class DriverVO {
 		this.sexuality = sexuality;
 		this.registrationDeadline = registrationDeadline;
 		this.time = time;
+		this.isUsing = false;
+	}
+	
+	public DriverVO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
+			OrganizationVO vehicleOrganization, Sexuality sexuality, String registrationDeadline,int time,boolean isUsing) {
+		super();
+		this.ID = ID;
+		this.name = name;
+		this.DateOfBirth = dateOfBirth;
+		this.IdCardNumber = IdCardNumber;
+		this.phoneNumber = phoneNumber;
+		this.vehicleOrganization = vehicleOrganization;
+		this.sexuality = sexuality;
+		this.registrationDeadline = registrationDeadline;
+		this.time = time;
+		this.isUsing = isUsing;
 	}
 }

@@ -12,6 +12,8 @@ import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
 import presentation.businessui.BusinessFrame;
 import presentation.businessui.DriverManagerPanel;
+import presentation.businessui.EnVehiclePanel;
+import presentation.businessui.VehicleManagerPanel;
 import vo.BusinessVO;
 import vo.DistributeReceiptVO;
 import vo.DriverVO;
@@ -31,7 +33,7 @@ public class BusinessMainController {
 	public static DistributeOrderController distributeorderController;
 	public static DriverManagerController driverManagerController;
 	public static VehicleManagerController vehicleManagerController;
-	
+
 	private BusinessFrame businessFrame;
 
 	public BusinessMainController(String businessID) {
@@ -51,25 +53,28 @@ public class BusinessMainController {
 		distributeorderController = new DistributeOrderController();
 		driverManagerController = new DriverManagerController();
 		vehicleManagerController = new VehicleManagerController();
-		
-//		expressFrame = new ExpressFrame(expressVO);
-//		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
-//		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController));
-//		expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
-//		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController));
-//
-//		expressFrame.showFrame();
+
+		// expressFrame = new ExpressFrame(expressVO);
+		// expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
+		// expressFrame.addFuncLabel(new
+		// ChargeMessageCollectionPanel(chargeCollectionController));
+		// expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
+		// expressFrame.addFuncLabel(new
+		// FinishedOrderPanel(receiptOrderController));
+		//
+		// expressFrame.showFrame();
 		businessFrame = new BusinessFrame(businessVO);
-//		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController));
-//		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController));
-//		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController));
-//		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController));
-		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController,businessFrame));
-//		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController));
+		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController));
+		// businessFrame.addFuncLabel(new
+		// OrderReceiveManagerPanel(acceptCargoController));
+		// businessFrame.addFuncLabel(new
+		// OrderDistributePanel(distributeorderController));
+		// businessFrame.addFuncLabel(new
+		// ChargeCollectionPanel(gatheringController));
+//		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame));
+//		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame));
 		businessFrame.showFrame();
 		businessFrame.setVisible(true);
-		
-		
 
 	}
 
@@ -126,12 +131,13 @@ public class BusinessMainController {
 
 		return new DriverVO(po.getID(), po.getName(), po.getDateOfBirth(), po.getIdCardNumber(), po.getPhoneNumber(),
 				OrganizationBL.organizationPOToVO(po.getVehicleOrganization()), po.getSexuality(),
-				po.getRegistrationDeadline(),po.getTime());
+				po.getRegistrationDeadline(), po.getTime(), po.isUsing());
 	}
 
 	public static DriverPO driverVOToPO(DriverVO vo) {
 		return new DriverPO(vo.ID, vo.name, vo.DateOfBirth, vo.IdCardNumber, vo.phoneNumber,
-				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline,vo.time);
+				OrganizationBL.organizationVOToPO(vo.vehicleOrganization), vo.sexuality, vo.registrationDeadline,
+				vo.time, vo.isUsing);
 	}
 
 	public static EnVehicleReceiptVO enVehicleReceiptPOToVO(EnVehicleReceiptPO po) {
@@ -163,8 +169,8 @@ public class BusinessMainController {
 		return new GatheringReceiptPO(OrganizationBL.organizationVOToPO(vo.businesshall), vo.time, vo.expressList,
 				vo.money, vo.totalmoney, vo.receiptID, vo.receiptState);
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		new BusinessMainController("YYT-00001");
 	}
 }

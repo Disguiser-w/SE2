@@ -203,6 +203,10 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			}
 			vehiclePOs.add(po);
 
+			DriverPO dpo = po.getDriver();
+
+			modifyDriver(organizationID, dpo);
+
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(vehiclePOs);
 			out.close();
@@ -226,9 +230,17 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
 			in.close();
 			int len = vehiclePOs.size();
-			for (VehiclePO i : vehiclePOs)
-				if (i.getID().equals(po.getID()))
+			for (int i = 0; i < vehiclePOs.size(); i++)
+				if (vehiclePOs.get(i).getID().equals(po.getID())) {
+
+					DriverPO dpo = vehiclePOs.get(i).getDriver();
+
+					dpo.setUsing(false);
+					modifyDriver(organizationID, dpo);
+
 					vehiclePOs.remove(i);
+					break;
+				}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(vehiclePOs);
@@ -250,16 +262,34 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
+
 			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
 			in.close();
-			int len = vehiclePOs.size();
+
 			for (VehiclePO i : vehiclePOs)
 				if (i.getID().equals(po.getID())) {
-					vehiclePOs.remove(i);
-					vehiclePOs.add(po);
-				}
+					// 修改司机isUsing属性
 
+					DriverPO dpo = i.getDriver();
+					dpo.setUsing(false);
+					modifyDriver(organizationID, dpo);
+
+					DriverPO vpo = po.getDriver();
+					vpo.setUsing(true);
+					modifyDriver(organizationID, vpo);
+
+					i.setEngineNumber(po.getEngineNumber());
+					i.setLicensePlateNumber(po.getLicensePlateNumber());
+					i.setLowNumberPlate(po.getLowNumberPlate());
+					i.setBuyTime(po.getBuyTime());
+					i.setServiceTime(po.getServiceTime());
+					i.setDestination(po.getDestination());
+					i.setDestinationCity(po.getDestinationCity());
+					i.setLocal(po.getLocal());
+					i.setDriver(po.getDriver());
+
+				}
+			System.out.println(vehiclePOs.size());
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(vehiclePOs);
 			out.close();
@@ -414,7 +444,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("读写车辆信息失败");
+			System.out.println("读写司机信息失败");
 		}
 
 		return null;
@@ -445,7 +475,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("读写车辆信息失败");
+			System.out.println("读写司机信息失败");
 			return false;
 		}
 
@@ -473,7 +503,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("读写车辆信息失败");
+			System.out.println("读写司机信息失败");
 			return false;
 		}
 
@@ -500,6 +530,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					i.setRegistrationDeadline(po.getRegistrationDeadline());
 					i.setTime(po.getTime());
 					i.setSexuality(po.getSexuality());
+					i.setUsing(po.isUsing());
 
 					break;
 				}
@@ -562,6 +593,83 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	}
 
+	public boolean addDriverTime(String organizationID, String driverID) throws RemoteException {
+		String path = "driverInfo/" + organizationID + "-driver.dat";
+		File file = FileGetter.getFile(path);
+		try {
+			ArrayList<DriverPO> driverPOs = null;
+
+			if (!file.exists()) {
+				return false;
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				driverPOs = (ArrayList<DriverPO>) in.readObject();
+				in.close();
+			}
+
+			for (DriverPO i : driverPOs)
+				if (i.getID().equals(driverID))
+					i.setTime(i.getTime() + 1);
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(driverPOs);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("读写车辆司机失败");
+			return false;
+		}
+
+		return true;
+	}
+
+	public int getNumOfVehicles(String organizationID) throws RemoteException {
+		String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
+		File file = FileGetter.getFile(path);
+
+		if (!file.exists())
+			return 0;
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
+			in.close();
+
+			return vehiclePOs.size();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("车辆信息读写失败");
+		}
+
+		return 0;
+	}
+
+	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
+		String path = "organizationInfo/organization.dat";
+		File file = FileGetter.getFile(path);
+
+		if (!file.exists())
+			return new ArrayList<OrganizationPO>();
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+			ArrayList<OrganizationPO> organizationPOs = (ArrayList<OrganizationPO>) in.readObject();
+			in.close();
+
+			return organizationPOs;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("读写司机信息失败");
+		}
+
+		return null;
+	}
+
 	public static void main(String[] args) {
 		try {
 			File file = FileGetter.getFile("businessInfo/025001-business.dat");
@@ -583,4 +691,5 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 		}
 	}
+
 }

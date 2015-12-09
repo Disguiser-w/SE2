@@ -14,7 +14,7 @@ public class DistributeOrderController implements DistributeOrderBLService{
 		distributeOrder = new DistributeOrder();
 	}
 
-	public ArrayList<String> distributeOrder() throws RemoteException {
+	public ArrayList<String> distributeOrder(){
 		// TODO Auto-generated method stub
 		return distributeOrder.distributeOrder();
 	}

@@ -9,8 +9,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -49,6 +51,7 @@ public class DriverManagerPanel extends JPanel {
 	private JLabel nextPageLabel;
 	// private ArrayList<JCheckBox> selectDriver;
 	private ArrayList<JCheckBox> selectDriver;
+	private JLabel numOfPage;
 
 	private DriverManagerController controller;
 
@@ -60,6 +63,8 @@ public class DriverManagerPanel extends JPanel {
 
 	private int numOfChoose;
 	private int num;
+
+	private JCheckBox b;
 
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -80,8 +85,10 @@ public class DriverManagerPanel extends JPanel {
 		nextPageLabel = new JLabel(" > ");
 		selectDriver = new ArrayList<JCheckBox>();
 		for (int i = 0; i < 8; i++) {
-			selectDriver.add(new JCheckBox());
+			JCheckBox box = new JCheckBox();
+			selectDriver.add(box);
 		}
+		numOfPage = new JLabel();
 
 		add(addLabel);
 		add(delLabel);
@@ -93,6 +100,7 @@ public class DriverManagerPanel extends JPanel {
 		add(previousPageLabel);
 		add(nextPageLabel);
 		add(messageTable.getTableHeader());
+		add(numOfPage);
 
 		messageTable.setBackground(getBackground());
 
@@ -110,6 +118,8 @@ public class DriverManagerPanel extends JPanel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
+		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 		selectDriver.get(0).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 5.625 / 20),
 				(int) (width * 0.6722151088348272 / 25), (int) (height * 0.8035714285714286 / 20));
 		selectDriver.get(1).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 6.830357142857143 / 20),
@@ -140,6 +150,9 @@ public class DriverManagerPanel extends JPanel {
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
 		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
+		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),
+				(int) (height * 5.401785714285714 / 20) - (int) (height * 1.435714285714286 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 1.435714285714286 / 20));
 		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
@@ -231,14 +244,20 @@ public class DriverManagerPanel extends JPanel {
 						return;
 					}
 					int n = 0;
+					int m = 0;
 					for (JCheckBox i : selectDriver) {
 						if (i.isSelected()) {
 							i.setSelected(false);
 							DriverVO vo = drivers.get(num * 8 + n);
 							controller.deleteDriver(vo);
+							m++;
 						}
 						n++;
 						isDel = false;
+					}
+
+					if ((drivers.size() - m - 1) / 8 + 1 < num + 1) {
+						num--;
 					}
 					repaint();
 				}
@@ -300,8 +319,9 @@ public class DriverManagerPanel extends JPanel {
 		for (JCheckBox i : selectDriver) {
 			remove(i);
 		}
-
 		drivers = controller.getDriverInfo();
+		numOfPage.setText(num + 1 + "/" + ((drivers.size() - 1) / 8 + 1));
+
 		messageTable.setModel(new MessgeTableModel());
 		setBaseInfo();
 	}
@@ -330,6 +350,7 @@ public class DriverManagerPanel extends JPanel {
 			switch (columnIndex) {
 			case 0:
 				add(selectDriver.get(rowIndex));
+
 				return vo.ID;
 			case 1:
 				return vo.name;
@@ -417,7 +438,6 @@ public class DriverManagerPanel extends JPanel {
 		private JRadioButton male;
 		private JRadioButton female;
 
-
 		private DriverVO oldVO;
 
 		public ModifyPanel(DriverVO vo) {
@@ -490,7 +510,7 @@ public class DriverManagerPanel extends JPanel {
 			setLayout(null);
 
 			setInfo();
-			addListener();
+			addListener1();
 
 			// helper = new LocationHelper(this);
 
@@ -616,7 +636,7 @@ public class DriverManagerPanel extends JPanel {
 				female.setSelected(true);
 		}
 
-		private void addListener() {
+		private void addListener1() {
 
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -845,7 +865,7 @@ public class DriverManagerPanel extends JPanel {
 			setLayout(null);
 
 			setInfo();
-			addListener();
+			addListener2();
 
 			// helper = new LocationHelper(this);
 
@@ -934,7 +954,7 @@ public class DriverManagerPanel extends JPanel {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y - 1; i++) {
+			for (int i = 1960; i <= y; i++) {
 				year.addItem(i);
 			}
 
@@ -956,7 +976,7 @@ public class DriverManagerPanel extends JPanel {
 
 		}
 
-		private void addListener() {
+		private void addListener2() {
 
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -1075,9 +1095,11 @@ public class DriverManagerPanel extends JPanel {
 		private void clear() {
 			idField.setText(getNextID());
 			nameField.setText("");
+
 			year.setSelectedIndex(0);
 			month.setSelectedIndex(0);
 			day.setSelectedIndex(0);
+
 			idCardNumField.setText("");
 			phoneNumberField.setText("");
 			registrationDeadlineField.setText("");
@@ -1102,6 +1124,20 @@ public class DriverManagerPanel extends JPanel {
 
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "提交成功", JOptionPane.DEFAULT_OPTION);
+	}
+
+	private int[] getDate() {
+		Date d = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		String date = f.format(d);
+
+		int[] dateInt = new int[3];
+		String[] dateStr = date.split("-");
+
+		for (int i = 0; i < 3; i++) {
+			dateInt[i] = Integer.parseInt(dateStr[i]);
+		}
+		return dateInt;
 	}
 
 	private int getDayOfMonth(int year, int month) {

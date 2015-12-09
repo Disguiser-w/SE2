@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import type.Sexuality;
 
-public class DriverPO implements Serializable{
+public class DriverPO implements Serializable {
 
 	// 司机编号、姓名、出生日期、身份证号、手机、车辆单位、性别、行驶证期限
 	private String ID;
@@ -16,14 +16,10 @@ public class DriverPO implements Serializable{
 	private Sexuality sexuality;
 	private String registrationDeadline;
 	private int time;
+	private boolean isUsing;
 
-	public DriverPO() {
-	}
-
-	public DriverPO(String ID, String name, String dateOfBirth,
-			String IdCardNumber, String phoneNumber,
-			OrganizationPO vehicleOrganization, Sexuality sexuality,
-			String registrationDeadline,int time) {
+	public DriverPO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
+			OrganizationPO vehicleOrganization, Sexuality sexuality, String registrationDeadline, int time) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -34,6 +30,23 @@ public class DriverPO implements Serializable{
 		this.sexuality = sexuality;
 		this.registrationDeadline = registrationDeadline;
 		this.time = time;
+		this.isUsing = false;
+	}
+
+	public DriverPO(String ID, String name, String dateOfBirth, String IdCardNumber, String phoneNumber,
+			OrganizationPO vehicleOrganization, Sexuality sexuality, String registrationDeadline, int time,
+			boolean isUsing) {
+		super();
+		this.ID = ID;
+		this.name = name;
+		this.DateOfBirth = dateOfBirth;
+		this.IdCardNumber = IdCardNumber;
+		this.phoneNumber = phoneNumber;
+		this.vehicleOrganization = vehicleOrganization;
+		this.sexuality = sexuality;
+		this.registrationDeadline = registrationDeadline;
+		this.time = time;
+		this.isUsing = isUsing;
 	}
 
 	public int getTime() {
@@ -106,6 +119,14 @@ public class DriverPO implements Serializable{
 
 	public void setRegistrationDeadline(String registrationDeadline) {
 		this.registrationDeadline = registrationDeadline;
+	}
+
+	public boolean isUsing() {
+		return isUsing;
+	}
+
+	public void setUsing(boolean isUsing) {
+		this.isUsing = isUsing;
 	}
 
 }

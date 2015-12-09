@@ -23,9 +23,9 @@ import vo.OrganizationVO;
 public class EnVehicle {
 	private ExpressDataService expressData;
 	private BusinessDataService businessData;
-	
-	public EnVehicle(){
-		
+
+	public EnVehicle() {
+
 		try {
 			expressData = DataFactory.getExpressData();
 			businessData = DataFactory.getBusinessData();
@@ -41,9 +41,8 @@ public class EnVehicle {
 		}
 	}
 
-
 	// 从前一天的订单列表中找出待转运的订单，按目的地分配给车辆
-	public ArrayList<String> autoTruckLoading(String OrganizationID) {
+	public ArrayList<String> autoTruckLoading() {
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
 
@@ -104,12 +103,24 @@ public class EnVehicle {
 			enVehicle.setVehiclePO(i);
 			ArrayList<String> orderIDs = new ArrayList<String>();
 
+			boolean hasOrder = false;
 			for (OrderPO o : distributingPo)
 				if (o.getRecipientAddress().split(" ")[1].equals(i.getDestinationCity())) {
 					orderIDs.add(o.getID());
-					result.add(o.getID() + " " + o.getSenderAddress().split(" ")[1] + " " + i.getDestinationCity() + " "
-							+ i.getID());
+					result.add(i.getID() + " " + o.getSenderAddress().split(" ")[1] + " " + i.getDestinationCity() + " "
+							+ o.getID());
+					hasOrder = true;
 				}
+
+			if (hasOrder) {
+				try {
+					businessData.addDriverTime(organizationVO.organizationID, i.getDriver().getID());
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
 			enVehicle.setOrderPOList(orderIDs);
 
 			String newTime = (new SimpleDateFormat("yyyMMdd")).format(new Date());

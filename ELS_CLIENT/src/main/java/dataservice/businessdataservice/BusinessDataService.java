@@ -10,6 +10,7 @@ import po.DriverPO;
 import po.EnVehicleReceiptPO;
 import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
+import po.OrganizationPO;
 import po.VehiclePO;
 
 /**
@@ -94,6 +95,14 @@ public interface BusinessDataService extends Remote {
 	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException;
 
 	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException;
+	
+	
+	//
+	public boolean addDriverTime(String organizationID, String driverID) throws RemoteException;
+	
+	public ArrayList<OrganizationPO> getOrganizationInfos()throws RemoteException;
+	
+	public int getNumOfVehicles(String organizationID) throws RemoteException;
 	//
 	// /**
 	// * 返回待转运的订单的列表

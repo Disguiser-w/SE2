@@ -9,8 +9,11 @@ import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
-import dataservice.businessdataservice.BusinessDataService_stub;
+import po.DriverPO;
+import po.OrganizationPO;
 import po.VehiclePO;
+import vo.DriverVO;
+import vo.OrganizationVO;
 import vo.VehicleVO;
 
 public class VehicleManager {
@@ -79,13 +82,50 @@ public class VehicleManager {
 		// TODO Auto-generated method stub
 		boolean result = false;
 		try {
-			result = businessData.deleteVehicle(BusinessMainController.businessVO.organizationVO.organizationID,
+			result = businessData.modifyVehicle(BusinessMainController.businessVO.organizationVO.organizationID,
 					BusinessMainController.vehicleVOToPO(vo));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public ArrayList<OrganizationVO> getOrganizationInfos() {
+		ArrayList<OrganizationVO> vos = new ArrayList<OrganizationVO>();
+		try {
+			ArrayList<OrganizationPO> pos = businessData.getOrganizationInfos();
+			if (pos != null)
+				for (OrganizationPO i : pos)
+					vos.add(OrganizationBL.organizationPOToVO(i));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vos;
+	}
+
+	public ArrayList<DriverVO> getDriverInfos() {
+		ArrayList<DriverVO> vos = new ArrayList<DriverVO>();
+		try {
+			ArrayList<DriverPO> pos = businessData
+					.getDriverInfos(BusinessMainController.businessVO.organizationVO.organizationID);
+			if (pos != null)
+				for (DriverPO i : pos)
+					vos.add(BusinessMainController.driverPOToVO(i));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vos;
+	}
+
+	public int getNumOfVehicle() {
+		try {
+			int num = businessData.getNumOfVehicles(BusinessMainController.businessVO.organizationVO.organizationID);
+			return num;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }

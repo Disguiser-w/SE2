@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface EnVehicleBLService {
 
-	public ArrayList<String> autoTruckLoading(String OrganizationID);
+	public ArrayList<String> autoTruckLoading();
 
 }

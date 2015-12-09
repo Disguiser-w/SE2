@@ -10,6 +10,7 @@ import po.EnVehicleReceiptPO;
 import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.OrderPO;
+import po.OrganizationPO;
 import po.VehiclePO;
 
 public class BusinessDataService_stub implements BusinessDataService {
@@ -139,6 +140,48 @@ public class BusinessDataService_stub implements BusinessDataService {
 	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void saveDistributeReceiptInfo(DistributeReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveOrderAcceptReceiptInfo(OrderAcceptReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addDriverTime(String organizationID, String driverID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getNumOfVehicles(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

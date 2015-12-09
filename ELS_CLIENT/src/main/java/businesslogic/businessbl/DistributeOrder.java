@@ -43,7 +43,7 @@ public class DistributeOrder {
 
 	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
 	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
-	public ArrayList<String> distributeOrder() throws RemoteException {
+	public ArrayList<String> distributeOrder(){
 		BusinessMainController.updateBusinessVO();
 
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
@@ -98,7 +98,12 @@ public class DistributeOrder {
 		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime, result,
 				nowTime, ReceiptState.SUBMIT);
 		// 增加派件单，一天一天
-		businessData.addDistributeReceipt(organizationVO.organizationID, po);
+		try {
+			businessData.addDistributeReceipt(organizationVO.organizationID, po);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return result;
 	}
