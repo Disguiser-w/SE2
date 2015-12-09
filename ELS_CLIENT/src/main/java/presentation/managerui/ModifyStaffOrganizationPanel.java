@@ -1,24 +1,21 @@
-package presentation.userui;
+package presentation.managerui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import type.AuthorityType;
-import vo.UserVO;
 import businesslogic.userbl.UserBL;
 
-public class ModifyUserPanel extends JPanel{
+public class ModifyStaffOrganizationPanel extends JPanel{
+	
+	private static final long serialVersionUID = 16L;
 
-	private static final long serialVersionUID = 15L;
-
-	AdminFrame fatherFrame;
+	private ManageFrame manageFrame;
 	
 	UserBL userBL;
 	
@@ -38,17 +35,21 @@ public class ModifyUserPanel extends JPanel{
     private JLabel salaryPlan;
     private JTextField salaryPlanField;
     private JLabel authority;
-    private JComboBox<String> userAuthority;
+    private JTextField authorityField;
+    private JLabel grade;
+    private JTextField gradeField;
 	
     private JButton OKButton;
     private JButton returnButton;
 	
-    public ModifyUserPanel(AdminFrame frame, String userName, String userID, String userProfession, String userOrganization, String userSalaryPlan){
-    	this.fatherFrame = frame;
+    public ModifyStaffOrganizationPanel(ManageFrame frame, String userName, String userID, String userProfession,
+    									String userOldOrganization, String userSalaryPlan, String userAuthority, String userGrade){
+    	
+    	this.manageFrame =frame;
     	
     	this.userBL = new UserBL();
     	
-    	function = new JLabel("用户管理——修改用户权限");
+    	function = new JLabel("用户管理——修改用户机构");
     	
     	name = new JLabel("用户姓名");
 		nameField = new JTextField(userName);
@@ -64,20 +65,21 @@ public class ModifyUserPanel extends JPanel{
 		professionField.setEditable(false);
 		
 		organization = new JLabel("机构");
-		organizationField = new JTextField(userOrganization);
-		organizationField.setEditable(false);
+		organizationField = new JTextField(userOldOrganization);
+		organizationField.setEditable(true);
 		
 		salaryPlan = new JLabel("薪水策略");
 		salaryPlanField = new JTextField(userSalaryPlan);
 		salaryPlanField.setEditable(false);
 		
 		authority = new JLabel("权限");
-		userAuthority = new JComboBox<String>();
-		userAuthority.addItem("最低权限（普通人员权限）");
-		userAuthority.addItem("管理员权限");
-		userAuthority.addItem("普通财务人员权限");
-		userAuthority.addItem("最高权限");
+		authorityField = new JTextField(userAuthority);
+		authorityField.setEditable(false);
 
+		grade = new JLabel("绩点");
+		gradeField = new JTextField(userGrade);
+		gradeField.setEditable(false);
+		
 		OKButton = new JButton("确认");
 		returnButton = new JButton("返回");
 		
@@ -85,12 +87,9 @@ public class ModifyUserPanel extends JPanel{
 		
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int authorityInt = userAuthority.getSelectedIndex();
-				AuthorityType[] authorityList = {AuthorityType.lowest, AuthorityType.administrator, 
-						AuthorityType.commonFianacialStaff, AuthorityType.highest};
-				AuthorityType authority = authorityList[authorityInt];
-			
-				int returnNum = userBL.modifyUserAuthority(userIDStr, authority);
+				String newOrganization = organizationField.getText();
+				
+				int returnNum = userBL.modifyUserOrganization(userIDStr, newOrganization);
 				
 				if(returnNum==0){
 					successModify();
@@ -120,7 +119,9 @@ public class ModifyUserPanel extends JPanel{
 		add(salaryPlan);
 		add(salaryPlanField);
 		add(authority);
-		add(userAuthority);
+		add(authorityField);
+		add(grade);
+		add(gradeField);
 		add(OKButton);
 		add(returnButton);
 		
@@ -144,6 +145,8 @@ public class ModifyUserPanel extends JPanel{
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 33 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+		grade.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 38 / 48,
+				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
 		
 		nameField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 8 / 48,
@@ -156,12 +159,14 @@ public class ModifyUserPanel extends JPanel{
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		salaryPlanField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		userAuthority.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
+		authorityField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		gradeField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 38 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		
-		OKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
+		OKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 44 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 44 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
     }
     
@@ -173,15 +178,10 @@ public class ModifyUserPanel extends JPanel{
 		repaint();
 	}
 
-	public void returnui() {
-		UserVO vo = fatherFrame.vo;
-		//fatherFrame.setVisible(false);
-		
-		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
-		newAdminFrame.showFrame();
-	}
-
+    public void returnui(){
+    	manageFrame.changePanel(new StaffManagePanel(manageFrame));
+    }
+    
 	public void successModify(){
 		returnui();
 		JOptionPane.showMessageDialog(null, "修改成功(●'◡'●)", "修改用户权限成功", JOptionPane.INFORMATION_MESSAGE);

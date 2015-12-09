@@ -13,7 +13,16 @@ import businesslogicservice.manageblservice.BasicSalaryBLService;
 import dataservice.managedataservice.BasicSalaryDataService;
 
 public class BasicSalaryBL implements BasicSalaryBLService{
+	
 	BasicSalaryDataService bsdService;
+	
+	public BasicSalaryBL(){
+		try{
+			bsdService = (BasicSalaryDataService)Naming.lookup("rmi://localhost:8888/BasicSalaryDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	
 	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{

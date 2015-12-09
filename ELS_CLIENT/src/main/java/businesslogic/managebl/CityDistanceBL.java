@@ -12,7 +12,16 @@ import businesslogicservice.manageblservice.CityDistanceBLService;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class CityDistanceBL implements CityDistanceBLService{
+	
 	CityDistanceDataService cddService;
+	
+	public CityDistanceBL(){
+		try{
+			cddService = (CityDistanceDataService)Naming.lookup("rmi://localhost:8888/CityDistanceDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	
 	public int addCityDistance(CityDistanceVO cityDistancevo){
 		try{
@@ -43,12 +52,30 @@ public class CityDistanceBL implements CityDistanceBLService{
 		}
 	}
 	
-	public double findCityDistance(String cityA, String cityB){
+	public ArrayList<CityDistanceVO> findCityDistanceBySingle(String city){
 		try{
-			return cddService.findCityDistance(cityA, cityB).getDistance();
+			ArrayList<CityDistancePO> cityDistancePOList =  cddService.findCityDistanceBySingle(city);
+			ArrayList<CityDistanceVO> cityDistanceVOList =  new ArrayList<CityDistanceVO>();
+			
+			if(cityDistancePOList != null){
+				for(CityDistancePO cityDistance: cityDistancePOList)
+					cityDistanceVOList.add(cityDistancePOToVO(cityDistance));
+				return cityDistanceVOList;
+			}
+			else
+				return null;
 		}catch(RemoteException exception){
 			exception.printStackTrace();
-			return -1.0;
+			return null;
+		}
+	}
+	
+	public CityDistanceVO findCityDistanceByBoth(String cityA, String cityB){
+		try{
+			return cityDistancePOToVO(cddService.findCityDistanceByBoth(cityA, cityB));
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return null;
 		}
 	}
 	
@@ -56,9 +83,14 @@ public class CityDistanceBL implements CityDistanceBLService{
 		try{
 			ArrayList<CityDistancePO> cityDistancePOList =  cddService.showAllCityDistances();
 			ArrayList<CityDistanceVO> cityDistanceVOList =  new ArrayList<CityDistanceVO>();
-			for(CityDistancePO cityDistance: cityDistancePOList)
-				cityDistanceVOList.add(cityDistancePOToVO(cityDistance));
-			return cityDistanceVOList;
+			
+			if(cityDistancePOList != null){
+				for(CityDistancePO cityDistance: cityDistancePOList)
+					cityDistanceVOList.add(cityDistancePOToVO(cityDistance));
+				return cityDistanceVOList;
+			}
+			else
+				return null;
 		}
 		catch(RemoteException exception){
 			exception.printStackTrace();

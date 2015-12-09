@@ -40,7 +40,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	
 	private UserBL userBL;
 	
-	private int num;
+	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
+	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -52,12 +53,14 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	private JButton modifyButton;
 	private JButton searchButton;
 	private JTextField searchTextField;
+	private JButton refreshButton;
 	
 	private AllMessageTableModel allModel;
 	private FindMessageTableModel findModel;
 	private JTable allInfoTable;
 	private JTable findInfoTable;
 	private JLabel messageLabel;
+	
 	private JButton previousPage;
 	private JButton nextPage;
 
@@ -68,7 +71,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		
 		this.userBL = new UserBL();
 		
-		num = 0;
+		pageNum = 0;
+		isFindPattern = false;
 		
         function = new JLabel("用户管理 ");
         
@@ -77,6 +81,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
         modifyButton = new JButton("修改用户信息");
         searchTextField = new JTextField("用户编号");
         searchButton = new JButton("查找");
+        refreshButton = new JButton("刷新");
         
         previousPage = new JButton("上一页");
         nextPage = new JButton("下一页");
@@ -87,16 +92,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		findInfoTable = new JTable(findModel);
 		messageLabel = new JLabel();
         
-		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.setBackground(getBackground());
-		allInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.setBackground(getBackground());
-		findInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		//加监听
         addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addui();
@@ -105,17 +102,35 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
         
         deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int chosenRow = allInfoTable.getSelectedRow();
-				String ID = (String)(allModel.getValueAt(chosenRow,1));
+				int chosenRow = -1; 
+				String ID = "";
+				if(isFindPattern){
+					 chosenRow = findInfoTable.getSelectedRow();
+					 ID = (String)(findModel.getValueAt(chosenRow, 1));
+				}
+				else{
+					chosenRow = allInfoTable.getSelectedRow();
+					ID = (String)(allModel.getValueAt(chosenRow,1));
+				}
 				//System.out.println("要删除编号为"+ID+"的员工");
-				userBL.deleteUser(ID);
-				allInfoTable.updateUI();//刷新
+				if(chosenRow != -1){
+					userBL.deleteUser(ID);
+					updateUI();//刷新
+				}
+				else{
+        			warnning("没有选择要删除的用户");
+        		}
 			}
 		});
         
         modifyButton.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent arg0){
-        		int chosenRow = allInfoTable.getSelectedRow();
+        		int chosenRow = -1; 
+				if(isFindPattern)
+					 chosenRow = findInfoTable.getSelectedRow();
+				else
+					chosenRow = allInfoTable.getSelectedRow();
+				
         		if(chosenRow != -1){
         			modifyui(chosenRow);
         		}
@@ -130,18 +145,30 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 				String userID = searchTextField.getText();
 				if(userID.equals("用户编号") || userID.equals("")){
 					allui();
-					}
+				}
 				else
 					searchui();
 			}
 		});
         
+        refreshButton.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent ae){
+        		allui();
+        		findInfoTable.updateUI();
+				allInfoTable.updateUI();
+        	}
+        });
+        
+        
+        //由于查找出来的员工只有一个，不需要涉及到翻页功能，所以只调用了对应全部信息Table的setModel和setBaseInfo方法
+        //如果改成按关键字查询，可能查出来的结果比较多，就可能涉及到翻页功能
+        //以后如果要改成按关键字查询功能，记得这里也要改！！！
         previousPage.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (num == 0)
+				if (pageNum == 0)
 					return;
 				else {
-					num--;
+					pageNum--;
 					allInfoTable.setModel(new AllMessageTableModel());
 					setBaseInfo(allInfoTable);
 				}
@@ -150,10 +177,10 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 
 		nextPage.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (num >= (userBL.showAllUsers().size() - 2) / 12)
+				if (pageNum >= (userBL.showAllUsers().size() - 2) / 10)
 					return;
 				else {
-					num++;
+					pageNum++;
 					allInfoTable.setModel(new AllMessageTableModel());
 					setBaseInfo(allInfoTable);
 				}
@@ -161,6 +188,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		});
         
 		
+		//把组件加到Panel上
         setLayout(null);
 
         add(function);
@@ -169,22 +197,42 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
         add(modifyButton);
         add(searchTextField);
         add(searchButton);
+        add(refreshButton);
         add(allInfoTable.getTableHeader());
         add(allInfoTable);
         add(findInfoTable);
         add(previousPage);
         add(nextPage);
         
+        //颜色、边界、位置、JTable上信息显示设置
+        setBorder();
         setCmpLocation(allInfoTable);
         setBaseInfo(allInfoTable);
         setInfos();
 	}
 	
 	
+	//覆盖Selection事件被触发后原有的方法
 	public void valueChanged(ListSelectionEvent lse){
      	//System.out.println("你选了第"+allInfoTable.getSelectedRow()+"行");
 	}
 	
+	//设置边界
+	public void setBorder(){
+		
+		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+		allInfoTable.setBackground(getBackground());
+		allInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		allInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		findInfoTable.setBackground(getBackground());
+		findInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		findInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	}
+	
+	//设置位置
 	public void setCmpLocation(JTable table){
 		
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
@@ -199,6 +247,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		searchTextField.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 2 / 16,
 				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
 		searchButton.setBounds(PANEL_WIDTH * 22 / 27, PANEL_HEIGHT * 2 / 16,
+				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
+		refreshButton.setBounds(PANEL_WIDTH * 24 / 27, PANEL_HEIGHT * 1 / 24,
 				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
 		allInfoTable.getTableHeader().setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 13 / 60, 
 				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 1 / 20);
@@ -224,6 +274,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		repaint();
 	}
 
+	//设置Table初始显示的信息
 	private void setBaseInfo(JTable table) {
 
 		// 设置成不可编辑不可改变位置，大小
@@ -272,7 +323,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		column5.setCellRenderer(tcr);
 	}
 
-	// 设置载入动态的内容
+	//设置JTable载入动态的内容
 	private void setInfos() {
 		if (userBL.showAllUsers().size() != 0)
 			messageLabel.setText("姓名: "+"  用户编号 : "+"  职位 : ");
@@ -282,7 +333,10 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
 	
+	
+	//新增用户界面
 	public void addui() {
+		
 		/*int width = fatherFrame.getWidth();
 		int height = fatherFrame.getHeight();
 		
@@ -295,14 +349,15 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		addDialog.setFocusable(true);*/
 		
 		UserVO vo = fatherFrame.vo;
-		//fatherFrame.setVisible(false);
 		
 		AdminFrame newAdminFrame = new AdminFrame(vo);
 		newAdminFrame.addFuncLabel(new AddUserPanel(newAdminFrame));
 		newAdminFrame.showFrame();
 	}
 
+	//修改用户信息界面
 	public void modifyui(int chosenRow){
+		
 		/*int width = fatherFrame.getWidth();
 		int height = fatherFrame.getHeight();
 		
@@ -314,58 +369,91 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		ModifyDialog modifyDialog = new ModifyDialog(modifyFrame, chosenRow);
 		modifyDialog.setFocusable(true);*/
 		
-		String userName = (String)allInfoTable.getModel().getValueAt(chosenRow, 0);
-		String userID = (String)allInfoTable.getModel().getValueAt(chosenRow, 1);
-		String userProfession = (String)allInfoTable.getModel().getValueAt(chosenRow, 2);
-		String userOrganization = (String)allInfoTable.getModel().getValueAt(chosenRow, 3);
-		String userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
+		String userName;
+		String userID;
+		String userProfession;
+		String userOrganization;
+		String userSalaryPlan;
+		
+		//如果现在是搜索模式，就载入搜索Table被选中的行的信息
+		if(isFindPattern){
+			userName = (String)findInfoTable.getModel().getValueAt(chosenRow, 0);
+			userID = (String)findInfoTable.getModel().getValueAt(chosenRow, 1);
+			userProfession = (String)findInfoTable.getModel().getValueAt(chosenRow, 2);
+			userOrganization = (String)findInfoTable.getModel().getValueAt(chosenRow, 3);
+			userSalaryPlan = (String)findInfoTable.getModel().getValueAt(chosenRow, 4);
+		}
+		//如果现在不是搜索模式，就载入全部信息Table被选中的行的信息
+		else{
+			userName = (String)allInfoTable.getModel().getValueAt(chosenRow, 0);
+			userID = (String)allInfoTable.getModel().getValueAt(chosenRow, 1);
+			userProfession = (String)allInfoTable.getModel().getValueAt(chosenRow, 2);
+			userOrganization = (String)allInfoTable.getModel().getValueAt(chosenRow, 3);
+			userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
+		}
 		
 		UserVO vo = fatherFrame.vo;
-		//fatherFrame.setVisible(false);
 		
+		//跳转到modifyPanel，传给modifyPanel用户信息，显示在AdminFrame上
+		//由于这个方法是自己写的，所以没有用doge的changePanel方法
 		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new ModifyUserPanel(newAdminFrame, userName, userID, userProfession, userOrganization, userSalaryPlan));
+		newAdminFrame.addFuncLabel(new ModifyUserAuthorityPanel(newAdminFrame, userName, userID, userProfession, userOrganization, userSalaryPlan));
 		newAdminFrame.showFrame();
+		
 	}
 	
+	//搜索模式对应的界面（更改JTable）
 	public void searchui(){
 		this.remove(allInfoTable);
 		this.add(findInfoTable);
 		setCmpLocation(findInfoTable);
         setBaseInfo(findInfoTable);
         setInfos();
+        isFindPattern = true;
+        updateUI();
 	}
 	
+	//全部信息模式对应的界面（更改JTable）
 	public void allui(){
 		this.remove(findInfoTable);
 		this.add(allInfoTable);
 		setCmpLocation(allInfoTable);
         setBaseInfo(allInfoTable);
         setInfos();
+        isFindPattern = false;
+        searchTextField.setText("用户编号");
+        updateUI();
 	}
+
 	
+	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
 		int n = profession.ordinal();
 		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员","财务人员","总经理"};
 		return professionNameList[n];
 	}
 	
+	//根据不同的薪水类型返回薪水类型名，给表去显示
 	public String salaryPlanName(SalaryPlanType salaryPlan){
 		int n = salaryPlan.ordinal();
 		String[] salaryPlanNameList = {"基础月薪+提成","计次提成","基础月薪"};
 		return salaryPlanNameList[n];
 	}
 	
+	//根据不同的权限类型返回权限名，给表去显示
 	public String authorityName(AuthorityType authority){
 		int n = authority.ordinal();
 		String[] authorityNameList = {"最低权限", "管理员权限","普通财务人员权限","最高权限"};
 		return authorityNameList[n];
 	}
 	
+	//出现错误时给用户的提示信息
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
+	
+	//全部信息模式对应的表的Model
 	public class AllMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = 4L;
@@ -387,7 +475,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 				userVector.add(userBL.showAllUsers().get(i));
 			}
 			
-			int index = num * 10 + rowIndex;
+			int index = pageNum * 10 + rowIndex;
 
 				if (index > userVector.size()-1)
 					return null;
@@ -430,7 +518,9 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 
 	}
 	
-public class FindMessageTableModel extends AbstractTableModel {
+	
+	//搜索信息模式对应的表的Model
+	public class FindMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = -4L;
 		
@@ -450,7 +540,7 @@ public class FindMessageTableModel extends AbstractTableModel {
 			userVector = new Vector<UserVO>();
 			userVector.add(userBL.findUser(userID));
 
-			int index = num * 10 + rowIndex;
+			int index = pageNum * 10 + rowIndex;
 			
 			if (index > userVector.size()-1)
 				return null;
@@ -857,6 +947,5 @@ public class FindMessageTableModel extends AbstractTableModel {
 		}
 		
 	}*/
-	
 	
 }

@@ -10,8 +10,8 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+//import javax.swing.JDialog;
+//import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,6 +26,9 @@ import javax.swing.table.TableColumn;
 
 //import presentation.commonui.LocationHelper;
 
+
+
+
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
@@ -36,9 +39,12 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	
 	private static final long serialVersionUID = 8L;
 	
+	private ManageFrame manageFrame;
+	
 	private UserBL userBL;
 	
-	private int num;
+	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
+	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
 	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -49,6 +55,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	private JButton modifyButton;
 	private JButton searchButton;
 	private JTextField searchTextField;
+	private JButton refreshButton;
 	
 	private AllMessageTableModel allModel;
 	private FindMessageTableModel findModel;
@@ -62,11 +69,14 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	
 	//private LocationHelper helper;
 
-	public StaffManagePanel(){
+	public StaffManagePanel(ManageFrame manageFrame){
+		
+		this.manageFrame = manageFrame;
 		
 		this.userBL = new UserBL();
 		
-		num = 0;
+		pageNum = 0;
+		isFindPattern = false;
 		
         function = new JLabel("用户管理 ");
         
@@ -74,6 +84,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
         modifyButton = new JButton("修改用户信息");
         searchTextField = new JTextField("用户编号");
         searchButton = new JButton("查找");
+        refreshButton = new JButton("刷新");
         
         previousPage = new JButton("上一页");
         nextPage = new JButton("下一页");
@@ -96,17 +107,35 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		
         deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int chosenRow = allInfoTable.getSelectedRow();
-				String ID = (String)(allModel.getValueAt(chosenRow,1));
-				System.out.println("要删除编号为"+ID+"的员工");
-				userBL.deleteUser(ID);
-				allInfoTable.updateUI();//刷新
+				int chosenRow = -1; 
+				String ID = "";
+				if(isFindPattern){
+					 chosenRow = findInfoTable.getSelectedRow();
+					 ID = (String)(findModel.getValueAt(chosenRow, 1));
+				}
+				else{
+					chosenRow = allInfoTable.getSelectedRow();
+					ID = (String)(allModel.getValueAt(chosenRow,1));
+				}
+				
+				if(chosenRow != -1){
+					userBL.deleteUser(ID);
+					allInfoTable.updateUI();//刷新
+				}
+				else{
+        			warnning("没有选择要删除的用户");
+        		}
 			}
 		});
         
         modifyButton.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent arg0){
-        		int chosenRow = allInfoTable.getSelectedRow();
+        		int chosenRow = -1; 
+				if(isFindPattern)
+					 chosenRow = findInfoTable.getSelectedRow();
+				else
+					chosenRow = allInfoTable.getSelectedRow();
+				
         		if(chosenRow != -1){
         			modifyui(chosenRow);
         		}
@@ -127,12 +156,22 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 			}
 		});
         
+        refreshButton.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent ae){
+        		findInfoTable.updateUI();
+				allInfoTable.updateUI();
+        	}
+        });
+        
+        //由于查找出来的员工只有一个，不需要涉及到翻页功能，所以只调用了对应全部信息Table的setModel和setBaseInfo方法
+        //如果改成按关键字查询，可能查出来的结果比较多，就可能涉及到翻页功能
+        //以后如果要改成按关键字查询功能，记得这里也要改！！！
         previousPage.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (num == 0)
+				if (pageNum == 0)
 					return;
 				else {
-					num--;
+					pageNum--;
 					allInfoTable.setModel(new AllMessageTableModel());
 					setBaseInfo(allInfoTable);
 				}
@@ -141,10 +180,10 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 
 		nextPage.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (num >= (userBL.showAllUsers().size() - 2) / 12)
+				if (pageNum >= (userBL.showAllUsers().size() - 2) / 10)
 					return;
 				else {
-					num++;
+					pageNum++;
 					allInfoTable.setModel(new AllMessageTableModel());
 					setBaseInfo(allInfoTable);
 				}
@@ -159,6 +198,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
         add(modifyButton);
         add(searchTextField);
         add(searchButton);
+        add(refreshButton);
         add(allInfoTable.getTableHeader());
         add(allInfoTable);
         add(findInfoTable);
@@ -187,6 +227,8 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		searchTextField.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 2 / 16,
 				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
 		searchButton.setBounds(PANEL_WIDTH * 22 / 27, PANEL_HEIGHT * 2 / 16,
+				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
+		refreshButton.setBounds(PANEL_WIDTH * 24 / 27, PANEL_HEIGHT * 1 / 24,
 				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
 		allInfoTable.getTableHeader().setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 13 / 60, 
 				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 1 / 20);
@@ -272,16 +314,34 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	}
 	
 	public void modifyui(int chosenRow){
-		int width = this.getWidth();
-		int height = this.getHeight();
+		String userName;
+		String userID;
+		String userProfession;
+		String userOldOrganization;
+		String userSalaryPlan;
+		String userAuthority;
+		String userGrade;
 		
-		JFrame modifyFrame = new JFrame();
-		modifyFrame.setSize(780, 455);
-		modifyFrame.setVisible(true);
-		modifyFrame.setBounds(width * 99 / 400, height * 7 / 25, 780, 450);
+		if(isFindPattern){
+			userName = (String)findInfoTable.getModel().getValueAt(chosenRow, 0);
+			userID = (String)findInfoTable.getModel().getValueAt(chosenRow, 1);
+			userProfession = (String)findInfoTable.getModel().getValueAt(chosenRow, 2);
+			userOldOrganization = (String)findInfoTable.getModel().getValueAt(chosenRow, 3);
+			userSalaryPlan = (String)findInfoTable.getModel().getValueAt(chosenRow, 4);
+			userAuthority = (String)findInfoTable.getModel().getValueAt(chosenRow, 5);
+			userGrade = (String)findInfoTable.getModel().getValueAt(chosenRow, 6);
+		}
+		else{
+			userName = (String)allInfoTable.getModel().getValueAt(chosenRow, 0);
+			userID = (String)allInfoTable.getModel().getValueAt(chosenRow, 1);
+			userProfession = (String)allInfoTable.getModel().getValueAt(chosenRow, 2);
+			userOldOrganization = (String)allInfoTable.getModel().getValueAt(chosenRow, 3);
+			userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
+			userAuthority = (String)allInfoTable.getModel().getValueAt(chosenRow, 5);
+			userGrade = allInfoTable.getModel().getValueAt(chosenRow, 6)+"";
+		}
 		
-		ModifyDialog modifyDialog = new ModifyDialog(modifyFrame, chosenRow);
-		modifyDialog.setFocusable(true);
+		manageFrame.changePanel(new ModifyStaffOrganizationPanel(manageFrame, userName, userID, userProfession, userOldOrganization, userSalaryPlan, userAuthority, userGrade));
 	}
 	
 	public void searchui(){
@@ -290,6 +350,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		setCmpLocation(findInfoTable);
         setBaseInfo(findInfoTable);
         setInfos();
+        isFindPattern = true;
 	}
 	
 	public void allui(){
@@ -298,6 +359,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		setCmpLocation(allInfoTable);
         setBaseInfo(allInfoTable);
         setInfos();
+        isFindPattern = false;
 	}
 	
 	public String professionName(ProfessionType profession){
@@ -343,7 +405,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 				userVector.add(userBL.showAllUsers().get(i));
 			}
 			
-			int index = num * 10 + rowIndex;
+			int index = pageNum * 10 + rowIndex;
 
 				if (index > userVector.size()-1)
 					return null;
@@ -410,7 +472,7 @@ public class FindMessageTableModel extends AbstractTableModel {
 			userVector = new Vector<UserVO>();
 			userVector.add(userBL.findUser(userID));
 
-			int index = num * 10 + rowIndex;
+			int index = pageNum * 10 + rowIndex;
 			
 			if (index > userVector.size()-1)
 				return null;
@@ -459,7 +521,7 @@ public class FindMessageTableModel extends AbstractTableModel {
 	}
 
 
-	public class ModifyDialog extends JDialog{
+	/*public class ModifyDialog extends JDialog{
 
 		private static final long serialVersionUID = 10L;
 
@@ -678,6 +740,6 @@ public class FindMessageTableModel extends AbstractTableModel {
 				return "绩点";
 		}
 
-	}
+	}*/
 	
 }

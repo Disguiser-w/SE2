@@ -22,8 +22,13 @@ public class CityDistanceDataService_stub implements CityDistanceDataService {
 		return 0;
 	}
     
-    public CityDistancePO findCityDistance(String cityA, String cityB) throws RemoteException{
-		System.out.println("Find city distance succeed!");
+    public ArrayList<CityDistancePO> findCityDistanceBySingle(String city) throws RemoteException{
+    	System.out.println("Find city distance by single succeed!");
+		return null;
+    }
+    
+    public CityDistancePO findCityDistanceByBoth(String cityA, String cityB) throws RemoteException{
+		System.out.println("Find city distance by both succeed!");
 		return null;
 	}
     
