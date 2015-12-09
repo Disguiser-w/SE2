@@ -9,7 +9,7 @@ public class ReviewReceiptController {
 
 	private ReviewReceiptBL reviewReceipt;
 	
-	public boolean modify(ReceiptVO vo){
+	/*public boolean modify(ReceiptVO vo){
 		return reviewReceipt.modify(null);
 	}
 	public boolean batch(String[] ID){
@@ -30,6 +30,6 @@ public class ReviewReceiptController {
 	
 	public ArrayList<ReceiptVO> refresh(){
 		return reviewReceipt.refresh();
-	}
+	}*/
 	
 }

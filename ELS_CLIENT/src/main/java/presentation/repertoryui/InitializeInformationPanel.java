@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import presentation.commonui.LocationHelper;
-import presentation.commonui.LiziFrameTest;
 import businesslogic.repertorybl.RepertoryBL;
 
 
@@ -17,7 +16,7 @@ public class InitializeInformationPanel extends JPanel {
 	
 	private static final long serialVersionUID = -147L;
 
-	private LiziFrameTest fatherFrame;
+	private RepertoryFrame fatherFrame;
 	
 	private RepertoryBL repertoryBL;
 	
@@ -38,8 +37,8 @@ public class InitializeInformationPanel extends JPanel {
 
 	private LocationHelper helper;
 
-	public InitializeInformationPanel(LiziFrameTest frame) {
-		repertoryBL = new RepertoryBL();
+	public InitializeInformationPanel(RepertoryFrame frame) {
+		repertoryBL = new RepertoryBL("CK-00001");
 		
 		maxRowLabel = new JLabel("请输入最大排数");
 		maxRowField = new JTextField();
@@ -77,7 +76,7 @@ public class InitializeInformationPanel extends JPanel {
 				int maxShelf = Integer.parseInt(maxShelfField.getText());
 				int maxDigit = Integer.parseInt(maxBitField.getText());
 				int warningRatio = Integer.parseInt(maxRatioField.getText());
-				repertoryBL.inventoryInitialization(repertoryID, maxRow, maxShelf, maxDigit, warningRatio)
+				repertoryBL.inventoryInitialization(maxRow, maxShelf, maxDigit, warningRatio);
 			}
 		});
 	}

@@ -25,8 +25,8 @@ public class CityDistanceController {
 		return cityDistance.modifyCityDistance(cityDistancevo);
 	}
 	
-	public double findCityDistance(String cityA, String cityB){
-		return cityDistance.findCityDistance(cityA, cityB);
+	public CityDistanceVO findCityDistanceByBoth(String cityA, String cityB){
+		return cityDistance.findCityDistanceByBoth(cityA, cityB);
 	}
 	
 	public ArrayList<CityDistanceVO> showAllCityDistances(){
