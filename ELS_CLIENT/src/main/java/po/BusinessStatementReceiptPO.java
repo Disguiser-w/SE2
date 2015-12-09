@@ -1,13 +1,13 @@
-﻿package po;
+package po;
 
 import java.util.ArrayList;
 
-/*我就不信你还是更不上去！！！！！*/
+
 
 public class BusinessStatementReceiptPO {
 	String beginTime;
 	String endTime;
-	// 可以有这种包含关系吗,还是要分到每个具体属性
+	
 	ArrayList<CollectionReceiptPO> cpos;
 	ArrayList<PaymentReceiptPO> ppos;
 

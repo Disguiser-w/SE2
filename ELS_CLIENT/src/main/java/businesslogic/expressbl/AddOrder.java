@@ -63,7 +63,6 @@ public class AddOrder {
 			// 增加订单到本营业厅当日订单列表中
 			String organizationID = expressVO.organization.organizationID;
 
-
 			result = expressData.addOrder(po, organizationID);
 			// 增加此订单ID到此快递员的SubmitOrderID中
 			expressData.addSubmitOrder(organizationID, expressVO.ID, vo.ID);
@@ -85,8 +84,8 @@ public class AddOrder {
 
 		double distance = 0;
 		try {
-//			distance = DataFactory.getCityDistanceData().findCityDistance(city1, city2).getDistance();
-			distance = 1000;
+			distance = DataFactory.getCityDistanceData().findCityDistanceByBoth(city1, city2).getDistance();
+			// distance = 1000;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

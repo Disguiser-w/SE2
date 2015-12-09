@@ -77,8 +77,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 		for (OrderVO order : waitingOrderList) {
 			String[] address_end = order.recipientAddress.split(" ");
 			String[] address_start = order.senderAddress.split(" ");
-			double distance = cdbl.findCityDistance(address_start[0],
-					address_end[0]);
+			double distance = cdbl.findCityDistanceByBoth(address_start[0],
+					address_end[0]).getDistance();
 			if (order.expressType == ExpressType.FAST
 					|| (order.expressType == ExpressType.STANDARD && distance > STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE)) {

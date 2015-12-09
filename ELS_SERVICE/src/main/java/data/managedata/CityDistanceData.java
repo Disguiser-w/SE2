@@ -1,4 +1,4 @@
-﻿package data.managedata;
+package data.managedata;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -12,7 +12,7 @@ import dataservice.managedataservice.CityDistanceDataService;
 
 public class CityDistanceData extends UnicastRemoteObject implements CityDistanceDataService {
 
-	// 我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+
 	private static final long serialVersionUID = 131250152L;
 
 	JXCFile cityDistanceFile;
@@ -170,11 +170,11 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		try{
 			cityDistanceData = new CityDistanceData();
 			try{
-				cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 600));
-				cityDistanceData.addCityDistance(new CityDistancePO("上海", "北京", 1000));
-				cityDistanceData.addCityDistance(new CityDistancePO("南京", "北京", 1400));
+				cityDistanceData.addCityDistance(new CityDistancePO("������", "������", 600));
+				cityDistanceData.addCityDistance(new CityDistancePO("������", "������", 1000));
+				cityDistanceData.addCityDistance(new CityDistancePO("������", "������", 1400));
 				
-				System.out.println("添加后:");
+				System.out.println("���������:");
 				ArrayList<CityDistancePO> cityDistancepoList0 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList0 != null){
 					for(int i=0;i<cityDistancepoList0.size();i++){
@@ -185,15 +185,15 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				else 
 					System.out.println("Cannot find the cityDistance");
 				
-				CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "南京");
+				CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("������", "������");
 				if(cityDistancepo != null)
 					System.out.println("Find the cityDistance: "+cityDistancepo.getCityA()+" "+cityDistancepo.getCityB()+" "+cityDistancepo.getDistance());
 				else
 					System.out.println("Cannot find the cityDistance");
 				
 				
-				cityDistanceData.modifyCityDistance(new CityDistancePO("北京", "上海", 1800));
-				System.out.println("修改后:");
+				cityDistanceData.modifyCityDistance(new CityDistancePO("������", "������", 1800));
+				System.out.println("���������:");
 				ArrayList<CityDistancePO> cityDistancepoList1 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList1 != null){
 					for(int i=0;i<cityDistancepoList1.size();i++){
@@ -205,7 +205,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 					System.out.println("Cannot find the cityDistance");
 				
 				
-				System.out.println("没有删除前:");
+				System.out.println("���������������:");
 				ArrayList<CityDistancePO> cityDistancepoList2 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList2 != null){
 					for(int i=0;i<cityDistancepoList2.size();i++){
@@ -216,8 +216,8 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				else 
 					System.out.println("Cannot find the cityDistance");
 				
-				//cityDistanceData.deleteCityDistance("上海", "南京");
-				System.out.println("删除后:");
+				//cityDistanceData.deleteCityDistance("������", "������");
+				System.out.println("���������:");
 				ArrayList<CityDistancePO> cityDistancepoList3 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList3 != null){
 					for(int i=0;i<cityDistancepoList3.size();i++){
@@ -245,7 +245,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 			CityDistanceDataService cityDistanceData = new CityDistanceData();
 			LocateRegistry.createRegistry(6005);
 
-			// 绑定RMI名称进行发布
+			// ������RMI������������������
 			Naming.rebind("rmi://172.25.132.40:6005/CityDistanceDataService", cityDistanceData);
 			System.out.println("CityDistance Service start!");
 
@@ -254,7 +254,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				System.out.println("CityA: " + cityDistance.getCityA() + ", CityB: " + cityDistance.getCityB()
 						+ ", CityDistance: " + cityDistance.getDistance());
 
-			CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "上海");
+			CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("������", "������");
 			System.out.println("CityA: " + cityDistancepo.getCityA() + ", CityB: " + cityDistancepo.getCityB()
 					+ ", CityDistance: " + cityDistancepo.getDistance());
 
