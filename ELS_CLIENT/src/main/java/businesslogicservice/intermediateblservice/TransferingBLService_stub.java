@@ -1,5 +1,9 @@
 package businesslogicservice.intermediateblservice;
 
+import java.rmi.RemoteException;
+
+import type.OperationState;
+import vo.OrderVO;
 import vo.TransferingReceiptVO;
 
 public class TransferingBLService_stub implements TransferingBLService {
@@ -10,16 +14,16 @@ public class TransferingBLService_stub implements TransferingBLService {
 		return null;
 	}
 
-	public boolean addOrder(String ID) {
+	public OperationState addOrder(String ID) {
 		// TODO 自动生成的方法存根
 		System.out.println("add successfully!");
-		return true;
+		return null;
 	}
 
-	public boolean deleteOrder(String ID) {
+	public OperationState deleteOrder(String ID) {
 		// TODO 自动生成的方法存根
 		System.out.println("delete successfully!");
-		return true;
+		return null;
 	}
 
 	public boolean modifyOrder(String ID) {
@@ -40,6 +44,18 @@ public class TransferingBLService_stub implements TransferingBLService {
 
 	public TransferingReceiptVO updateTransferingReceipt(TransferingReceiptVO vo) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OperationState modifyOrder(OrderVO order) throws Exception {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public OperationState saveTransferingReceipt() throws RemoteException {
+		// TODO 自动生成的方法存根
 		return null;
 	}
 

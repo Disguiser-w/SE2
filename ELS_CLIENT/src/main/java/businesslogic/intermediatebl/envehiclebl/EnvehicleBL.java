@@ -53,7 +53,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
 			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
 			IntermediateDataService intermediateData) {
-//		updateMessage();
+		// updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
 		this.trainManeger = trainManeger;
@@ -203,5 +203,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 
 	public AllocateWaitingOrderBL getAllocateWwaitingOrderBL() {
 		return awobl;
+	}
+
+	public ArrayList<OrderVO> getWaitingOrderList() {
+		return waitingOrderList;
 	}
 }

@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -33,9 +35,10 @@ public class BusinessStateReceiptPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton startDateButton;
-//	private JLabel startDateLabel;
-	private JButton endDateButton;
+//	private JButton startDateButton;
+	private JLabel startDateLabel;
+//	private JButton endDateButton;
+	private JLabel endDateLabel;
 	private JButton dateOKButton;
 	private JButton printButton;
 	private JButton sendButton;
@@ -63,9 +66,10 @@ public class BusinessStateReceiptPanel extends JPanel {
 	public BusinessStateReceiptPanel(BusinessStatementReceiptBLController controller) {
 		this.controller=controller;
 		
-		startDateButton = new JButton("start");
-//		startDateLabel = new JLabel("开始");
-		endDateButton = new JButton("end");
+//		startDateButton = new JButton("start");
+		startDateLabel = new JLabel("开始日期");
+//		endDateButton = new JButton("end");
+		endDateLabel =new JLabel("结束日期");
 		dateOKButton = new JButton("ok");
 		printButton = new JButton("print");
 		sendButton = new JButton("send");
@@ -78,6 +82,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 		startDate_Input = new JTextField("", 11);
 		endDate_Input = new JTextField("", 11);
 
+		//提示框
 		startDate_Input.setToolTipText("例:2015-12-08");
 //		info = new BusinessStateReceiptInfoTable(13, 4);
 		
@@ -94,18 +99,14 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 //		setCmpLocation();
 
-		startDateButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
+		startDateLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
 				startui();
 			}
 		});
 
-		endDateButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
+		endDateLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
 				endui();
 			}
 		});
@@ -152,8 +153,10 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 		setLayout(null);
 
-		add(startDateButton);
-		add(endDateButton);
+//		add(startDateButton);
+		add(startDateLabel);
+//		add(endDateButton);
+		add(endDateLabel);
 		add(dateOKButton);
 		add(printButton);
 		add(sendButton);
@@ -165,6 +168,11 @@ public class BusinessStateReceiptPanel extends JPanel {
 		add(endDate_Input);
 		
 		add(table);
+		startDateLabel.setLayout(new BorderLayout());
+		startDateLabel.add(new DateChooser(startDate_Input),BorderLayout.CENTER);
+		
+		endDateLabel.setLayout(new BorderLayout());
+		endDateLabel.add(new DateChooser(endDate_Input),BorderLayout.CENTER);
 //		add(info);
 		
 //		helper = new LocationHelper(this);
@@ -177,8 +185,11 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 		super.setBounds(x, y, width, height);
 
-		startDateButton.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
-		endDateButton.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
+		
+//		startDateButton.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
+        startDateLabel.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
+//		endDateButton.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
+        endDateLabel.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
 		dateOKButton.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		printButton.setBounds((int)(width * 19.54719387755102/25),(int)(height * 0.43052837573385516/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.5264187866927592/20));
 		sendButton.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
@@ -250,8 +261,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 	}
 
 	public void startui() {
-		startDateButton.setLayout(new BorderLayout());
-		startDateButton.add(new DateChooser(startDate_Input), BorderLayout.CENTER);
+		
 	}
 
 	public void endui() {
@@ -265,17 +275,9 @@ public class BusinessStateReceiptPanel extends JPanel {
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
 					JOptionPane.CLOSED_OPTION);
 		}
-		else if(beginTime.length()!=8){
-			JOptionPane.showMessageDialog(null, "请输入正确的日期格式！", "提示",
-					JOptionPane.CLOSED_OPTION);
-			startDate_Input.setText("");
-		}
-		else if(endTime.length()!=8){
-			JOptionPane.showMessageDialog(null, "请输入正确的日期格式！", "提示",
-					JOptionPane.CLOSED_OPTION);
-			endDate_Input.setText("");
-		}
 		else{
+			beginTime=beginTime.substring(0, 4)+beginTime.substring(5,7)+beginTime.substring(8);
+			endTime=endTime.substring(0, 4)+endTime.substring(5, 7)+endTime.substring(8);
 		BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
 		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
@@ -311,7 +313,7 @@ class BusinessStatementModel extends AbstractTableModel{
 		private static final long serialVersionUID = 1L;
 		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
-		String head[]={"编号","日期","操作人","金额"};
+		String head[]={"编号","日期","金额","操作人"};
 		
 	 public BusinessStatementModel(ArrayList<ArrayList<String>> content) {
 			c=content;

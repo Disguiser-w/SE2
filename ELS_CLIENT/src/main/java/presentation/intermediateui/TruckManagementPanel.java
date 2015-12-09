@@ -6,16 +6,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import vo.PlaneVO;
 import vo.TruckVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class TruckManagementPanel extends JLabel {
+public class TruckManagementPanel extends JPanel {
 	private IntermediateMainController controller;
+
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -24,10 +28,15 @@ public class TruckManagementPanel extends JLabel {
 	private JButton deleteButton;
 	private JButton next;
 	private JButton previous;
+	private JButton delete_ok;
+	private JButton modifyButton;
 
 	private JLabel function;
 
 	private JTextField searchTextField;
+
+	private JCheckBox[] isDelete;
+	private JButton[] isModify;
 
 	private VehicleManagementInfoTable info;
 	private VehicleManagementTableModel model;
@@ -35,13 +44,17 @@ public class TruckManagementPanel extends JLabel {
 	private int pageNum;
 	private int pageNum_max;
 
-	public TruckManagementPanel(IntermediateMainController controller) {
-		this.controller = controller;
+	public TruckManagementPanel(IntermediateMainController c,
+			IntermediateFrame f) {
+		this.controller = c;
+		this.frame = f;
 
 		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
 		next = new JButton("next");
 		previous = new JButton("previous");
+		delete_ok = new JButton("ok");
+		modifyButton = new JButton("modify");
 
 		function = new JLabel("汽车信息管理 ");
 
@@ -51,7 +64,6 @@ public class TruckManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getTruckList().size() - 2) / 13;
 
 		setCmpLocation();
 
@@ -73,21 +85,30 @@ public class TruckManagementPanel extends JLabel {
 			}
 		});
 
+		modifyButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				modifyui();
+			}
+		});
+
 		next.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				pageNum_max = (controller.getTruckList().size()) / 12;
 				if (pageNum >= pageNum_max)
 					return;
 				else {
 					pageNum++;
 					info.setModel(new VehicleManagementTableModel());
 					info.setuiInfo();
-					;
 				}
 			}
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				pageNum_max = (controller.getTruckList().size()) / 12;
 				if (pageNum == 0)
 					return;
 				else {
@@ -98,10 +119,20 @@ public class TruckManagementPanel extends JLabel {
 			}
 		});
 
+		delete_ok.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				delete_okui();
+			}
+		});
+
+		info.setBackground(getBackground());
 		setLayout(null);
 
 		add(addButton);
 		add(deleteButton);
+		add(modifyButton);
 		add(next);
 		add(previous);
 		add(function);
@@ -117,15 +148,19 @@ public class TruckManagementPanel extends JLabel {
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		deleteButton.setBounds(PANEL_WIDTH * 5 / 9, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		modifyButton.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		searchTextField.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 24);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
+		previous.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
+		next.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -137,10 +172,85 @@ public class TruckManagementPanel extends JLabel {
 	}
 
 	public void addui() {
-
+		frame.changePanel(new TrainManagement_newPanel(controller, frame));
 	}
 
 	public void deleteui() {
+		if (pageNum != pageNum_max)
+			isDelete = new JCheckBox[12];
+		else
+			isDelete = new JCheckBox[controller.getTruckList().size() - 12
+					* pageNum];
+
+		for (int i = 0; i < isDelete.length; i++) {
+			isDelete[i] = new JCheckBox();
+			isDelete[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isDelete[i]);
+			isDelete[i].setVisible(true);
+		}
+
+		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		add(delete_ok);
+		delete_ok.setVisible(true);
+	}
+
+	public void delete_okui() {
+		for (int i = 0; i < isDelete.length; i++) {
+			int delete_num = 0;
+			if (isDelete[i].isSelected()) {
+				try {
+					controller.getTruckManagerBL().deleteTruck(
+							controller.getTruckList().get(
+									i + pageNum * 12 - delete_num++));
+				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+			isDelete[i].setVisible(false);
+		}
+
+		delete_ok.setVisible(false);
+
+		frame.toMainPanel();
+	}
+
+	public void modifyui() {
+		if (pageNum != pageNum_max)
+			isModify = new JButton[12];
+		else
+			isModify = new JButton[controller.getPlaneList().size() - 12
+					* pageNum];
+
+		for (int i = 0; i < isModify.length; i++) {
+			isModify[i] = new JButton();
+			isModify[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isModify[i]);
+
+			isModify[i].addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					int count = 0;
+					JButton temp = (JButton) e.getSource();
+					for (; count < isModify.length; count++) {
+						if (temp == isModify[count]) {
+							break;
+						}
+					}
+
+					frame.changePanel(new TruckManagement_modifyPanel(
+							controller, frame, controller.getTruckList().get(
+									pageNum * 12 + count)));
+
+					for (JButton button : isModify)
+						button.setVisible(false);
+				}
+			});
+		}
 
 	}
 
@@ -148,7 +258,7 @@ public class TruckManagementPanel extends JLabel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -160,9 +270,12 @@ public class TruckManagementPanel extends JLabel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
-			if (index > controller.getTruckList().size() - 1)
+			// System.out.println(controller.getTruckList().size());
+			int index = pageNum * 12 + rowIndex;
+			if (index > controller.getTruckList().size() - 1) {
+				// System.out.println("gaga");
 				return null;
+			}
 			TruckVO truck = controller.getTruckList().get(index);
 			if (truck != null) {
 				switch (columnIndex) {
@@ -197,11 +310,10 @@ public class TruckManagementPanel extends JLabel {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TruckManagementPanel(null));
-		frame.setVisible(true);
-	}
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new TruckManagementPanel(null));
+	// frame.setVisible(true);
+	// }
 }

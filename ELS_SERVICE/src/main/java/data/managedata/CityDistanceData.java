@@ -22,7 +22,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 	}
 
 	public int addCityDistance(CityDistancePO cityDistancepo) throws RemoteException {
-		if (findCityDistance(cityDistancepo.getCityA(), cityDistancepo.getCityB()) == null) {
+		if (findCityDistanceByBoth(cityDistancepo.getCityA(), cityDistancepo.getCityB()) == null) {
 			cityDistanceFile.write(cityDistancepo);
 			return 0;
 		} else
@@ -72,7 +72,24 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		return 0;
 	}
 
-	public CityDistancePO findCityDistance(String cityA, String cityB) throws RemoteException {
+	public ArrayList<CityDistancePO> findCityDistanceBySingle(String city) throws RemoteException {
+		ArrayList<Object> objectList = cityDistanceFile.read();
+		ArrayList<CityDistancePO> cityToFindDistanceList = new ArrayList<CityDistancePO>();
+		
+		if (objectList == null)
+			return null;
+
+		for (int i = 0; i < objectList.size(); i++) {
+			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
+			if ((tempCityDistancePO.getCityA().equals(city)) || (tempCityDistancePO.getCityB().equals(city)) ){
+				cityToFindDistanceList.add(tempCityDistancePO);
+			}
+		}
+
+		return cityToFindDistanceList;
+	}
+	
+	public CityDistancePO findCityDistanceByBoth(String cityA, String cityB) throws RemoteException {
 		ArrayList<Object> objectList = cityDistanceFile.read();
 
 		if (objectList == null)
@@ -168,7 +185,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				else 
 					System.out.println("Cannot find the cityDistance");
 				
-				CityDistancePO cityDistancepo = cityDistanceData.findCityDistance("北京", "南京");
+				CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "南京");
 				if(cityDistancepo != null)
 					System.out.println("Find the cityDistance: "+cityDistancepo.getCityA()+" "+cityDistancepo.getCityB()+" "+cityDistancepo.getDistance());
 				else
@@ -199,7 +216,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				else 
 					System.out.println("Cannot find the cityDistance");
 				
-				cityDistanceData.deleteCityDistance("上海", "南京");
+				//cityDistanceData.deleteCityDistance("上海", "南京");
 				System.out.println("删除后:");
 				ArrayList<CityDistancePO> cityDistancepoList3 = cityDistanceData.showAllCityDistances();
 				if(cityDistancepoList3 != null){
@@ -220,65 +237,6 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		}*/
     
 
-	/*--------------------------------------------------Test Part---------------------------------------------------*/
-
-	/*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
-
-	/*
-	 * public static void main(String[] args){ CityDistanceData
-	 * cityDistanceData; try{ cityDistanceData = new CityDistanceData(); try{
-	 * cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 600));
-	 * cityDistanceData.addCityDistance(new CityDistancePO("上海", "北京", 1000));
-	 * cityDistanceData.addCityDistance(new CityDistancePO("南京", "北京", 1400));
-	 * 
-	 * System.out.println("添加后:"); ArrayList<CityDistancePO> cityDistancepoList0
-	 * = cityDistanceData.showAllCityDistances(); if(cityDistancepoList0 !=
-	 * null){ for(int i=0;i<cityDistancepoList0.size();i++){ CityDistancePO
-	 * tempCityDistancepo = cityDistancepoList0.get(i);
-	 * System.out.println(tempCityDistancepo.getCityA()+"  "
-	 * +tempCityDistancepo.getCityB()+"  "+tempCityDistancepo.getDistance()); }
-	 * } else System.out.println("Cannot find the cityDistance");
-	 * 
-	 * CityDistancePO cityDistancepo = cityDistanceData.findCityDistance("北京",
-	 * "南京"); if(cityDistancepo != null) System.out.println(
-	 * "Find the cityDistance: "+cityDistancepo.getCityA()+" "
-	 * +cityDistancepo.getCityB()+" "+cityDistancepo.getDistance()); else
-	 * System.out.println("Cannot find the cityDistance");
-	 * 
-	 * 
-	 * cityDistanceData.modifyCityDistance(new CityDistancePO("北京", "上海",
-	 * 1800)); System.out.println("修改后:"); ArrayList<CityDistancePO>
-	 * cityDistancepoList1 = cityDistanceData.showAllCityDistances();
-	 * if(cityDistancepoList1 != null){ for(int
-	 * i=0;i<cityDistancepoList1.size();i++){ CityDistancePO tempCityDistancepo
-	 * = cityDistancepoList1.get(i);
-	 * System.out.println(tempCityDistancepo.getCityA()+"  "
-	 * +tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance()); } }
-	 * else System.out.println("Cannot find the cityDistance");
-	 * 
-	 * 
-	 * System.out.println("没有删除前:"); ArrayList<CityDistancePO>
-	 * cityDistancepoList2 = cityDistanceData.showAllCityDistances();
-	 * if(cityDistancepoList2 != null){ for(int
-	 * i=0;i<cityDistancepoList2.size();i++){ CityDistancePO tempCityDistancepo
-	 * = cityDistancepoList2.get(i);
-	 * System.out.println(tempCityDistancepo.getCityA()+"  "
-	 * +tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance()); } }
-	 * else System.out.println("Cannot find the cityDistance");
-	 * 
-	 * cityDistanceData.deleteCityDistance("上海", "南京");
-	 * System.out.println("删除后:"); ArrayList<CityDistancePO> cityDistancepoList3
-	 * = cityDistanceData.showAllCityDistances(); if(cityDistancepoList3 !=
-	 * null){ for(int i=0;i<cityDistancepoList3.size();i++){ CityDistancePO
-	 * tempCityDistancepo = cityDistancepoList3.get(i);
-	 * System.out.println(tempCityDistancepo.getCityA()+"  "
-	 * +tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance()); } }
-	 * else System.out.println("Cannot find the cityDistance");
-	 * 
-	 * }catch(RemoteException exception){ exception.printStackTrace(); }
-	 * }catch(RemoteException exception){ exception.printStackTrace(); } }
-	 */
-
 	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
 
 	public static void main(String[] args) {
@@ -296,7 +254,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 				System.out.println("CityA: " + cityDistance.getCityA() + ", CityB: " + cityDistance.getCityB()
 						+ ", CityDistance: " + cityDistance.getDistance());
 
-			CityDistancePO cityDistancepo = cityDistanceData.findCityDistance("北京", "上海");
+			CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "上海");
 			System.out.println("CityA: " + cityDistancepo.getCityA() + ", CityB: " + cityDistancepo.getCityB()
 					+ ", CityDistance: " + cityDistancepo.getDistance());
 

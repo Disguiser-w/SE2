@@ -13,12 +13,12 @@ private static final long serialVersionUID = 189L;
 	public ManageFrame(UserVO vo){
 		super();
 		setMessage(vo.getName(), vo.getID());
-		addFuncLabel(new StaffManagePanel());
-		addFuncLabel(new OrganizationManagePanel());
+		addFuncLabel(new StaffManagePanel(this));
+		addFuncLabel(new OrganizationManagePanel(this));
 		addFuncLabel(new CheckReceiptPanel());
 		addFuncLabel(new CheckOperatingPanel());
 		addFuncLabel(new CheckIncomePanel());
-		addFuncLabel(new BasicDataManagerPanel());
+		addFuncLabel(new BasicDataManagePanel(this));
 		showFrame();
 	}
 	

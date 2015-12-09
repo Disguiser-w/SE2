@@ -114,7 +114,8 @@ public class BasicSalaryData extends UnicastRemoteObject implements BasicSalaryD
 				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.manager, 5000));
 				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.financialStaff,  3000));
 				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.administrator,  3000));
-				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.counterman, 3000));
+				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.intermediateCenterCounterman, 3000));
+				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.businessHallCounterman, 3000));
 				basicSalaryData.addBasicSalary(new BasicSalaryPO(ProfessionType.courier, 2000));
 				
 				System.out.println("添加后:");
@@ -126,7 +127,7 @@ public class BasicSalaryData extends UnicastRemoteObject implements BasicSalaryD
 	    			}
 				}
 				
-				BasicSalaryPO basicSalarypo = basicSalaryData.findBasicSalary(ProfessionType.counterman);
+				BasicSalaryPO basicSalarypo = basicSalaryData.findBasicSalary(ProfessionType.intermediateCenterCounterman);
 				if(basicSalarypo != null)
 					System.out.println("Find the basicSalary: "+basicSalarypo.getProfession()+" "+basicSalarypo.getBasicSalary());
 				else
@@ -155,7 +156,7 @@ public class BasicSalaryData extends UnicastRemoteObject implements BasicSalaryD
 				else 
 					System.out.println("Cannot find the basicSalary");
 				
-				basicSalaryData.deleteBasicSalary(ProfessionType.administrator);
+				//basicSalaryData.deleteBasicSalary(ProfessionType.administrator);
 				System.out.println("删除后:");
 				ArrayList<BasicSalaryPO> basicSalarypoList2 = basicSalaryData.showAllBasicSalarys();
 				if(basicSalarypoList2 != null){

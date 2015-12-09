@@ -3,45 +3,52 @@ package businesslogic.financebl;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
+
+import javax.xml.crypto.Data;
 
 import po.InitInfoPO;
 import vo.InitInfoVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
+import dataservice.businessdataservice.BusinessDataService;
+import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.InitialStockDataService;
+import dataservice.managedataservice.OrganizationDataService;
+import dataservice.repertorydataservice.RepertoryDataService;
+import dataservice.userdataservice.UserDataService;
 
 public class InitialStockBL{
 	
-	private InitialStockDataService initData;
-//	private UserDataService userData;
-//	private OrganizationDataService organizationData;
-//	private BusinessDataService businessData;
-//	private RepertoryDataService repertoryData;
-//	private AccountDataService accontData;
+	 InitialStockDataService initData;
+	 UserDataService userData;
+	 OrganizationDataService organizationData;
+	 BusinessDataService businessData;
+	 RepertoryDataService repertoryData;
+	 AccountDataService accontData;
 	
 	/**
 	 * 不过这么多东西怎么用RMI链接
 	 * */
 	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
-		initData=DataFactory.getInitialStockData();
-//		userData=(UserDataService) Naming.lookup("rmi://172.26.209.182:8888/UserDataService");
-//		organizationData=(OrganizationDataService) Naming.lookup("rmi://172.26.209.182:8888/OrganizationDataService");
-//		businessData=(BusinessDataService) Naming.lookup("rmi://172.26.209.182:8888/BusinessDataService");
-//		repertoryData=(RepertoryDataService) Naming.lookup("rmi://172.26.209.182:8888/RepertoryDataService");
-//		accontData=(AccountDataService) Naming.lookup("rmi://172.26.209.182:8888/AccountDataService");
+		/*initData=DataFactory.getInitialStockData();
+		userData=DataFactory.getUserData();
+		organizationData=DataFactory.getOrganizationData();
+		businessData=DataFactory.getBusinessData();
+		repertoryData=DataFactory.getRepertoryData();
+		*/
+		accontData=DataFactory.getAccountData();
 	}
 
 	/**
 	 * 期初建账
-	 * @author wll
-	 * @version Nov,20,2015 21:12
-	 * @throws RemoteException 
 	 * */
 
-	public int initInfo(InitInfoVO vo,String time) throws RemoteException {
+	public int initInfo(String time) throws RemoteException {
 		// TODO Auto-generated method stub
-		InitInfoPO po=FinanceMainController.ivoToPO(vo);
+		InitInfoPO po=new InitInfoPO(time, userData.showAllUsers(), organizationData.showAllOrganizations(), businessData.getVehicleInfos(null), repertoryData.showAllRepertorys(), accontData.showAll());
+//		InitInfoPO po=FinanceMainController.ivoToPO(vo);
 		return initData.initInfo(po,time);
 	}
 

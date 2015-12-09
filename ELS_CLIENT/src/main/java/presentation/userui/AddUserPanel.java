@@ -79,7 +79,8 @@ public class AddUserPanel extends JPanel{
     	user_name = new JLabel("姓名");
     	user_ID = new JLabel("用户编号");
     	user_password = new JLabel("初始密码");
-    	infoOKButton = new JButton("ok");
+    	
+    	infoOKButton = new JButton("确认");
     	returnButton = new JButton("返回");
     	
     	user_profession_choose = new JComboBox<String>(user_profession_type);
@@ -89,9 +90,9 @@ public class AddUserPanel extends JPanel{
     	user_name_Input = new JTextField("");
     	user_ID_Input = new JTextField("");
     	user_password_Input = new JTextField("123456");
+    
     	
-    	setCmpLocation();
-    	
+    	//加监听
     	user_profession_choose.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent event){
     			professionInt = user_profession_choose.getSelectedIndex();
@@ -184,7 +185,9 @@ public class AddUserPanel extends JPanel{
     			returnui();
     		}
     	});
+
     	
+    	//把组件加到Panel上
     	setLayout(null);
     	
     	add(function);
@@ -203,8 +206,14 @@ public class AddUserPanel extends JPanel{
     	add(infoOKButton);
     	add(returnButton);
     	
+    	setVisible(true);
+    	
+    	//位置设置
+    	setCmpLocation();
     }
     
+    
+    //设置位置
     public void setCmpLocation(){
     	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
@@ -249,6 +258,8 @@ public class AddUserPanel extends JPanel{
 		repaint();
 	}
 
+    
+    //返回上一级界面
 	public void returnui() {
 		UserVO vo = fatherFrame.vo;
 		//fatherFrame.setVisible(false);
@@ -258,34 +269,23 @@ public class AddUserPanel extends JPanel{
 		newAdminFrame.showFrame();
 	}
 
-	public boolean isNumber(char ch){
-		if(ch>=48 && ch<= 57)
-			return true;
-		else
-			return false;
-	}
 	
+	//新增成功时返回上一级界面，同时给用户提示信息
 	public void successAdd(){
 		returnui();
 		JOptionPane.showMessageDialog(null, "添加成功(●'◡'●)", "新增用户成功", JOptionPane.INFORMATION_MESSAGE);
-		
 	}
 	
+	//新增失败时返回上一级界面，同时给用户提示信息
 	public void failedAdd(){
 		returnui();
 		JOptionPane.showMessageDialog(null, "添加失败(T_T)", "新增用户失败", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	//出现错误时给用户的提示信息
 	public void warnning(String message){
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
+
 	
-	/*public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new AddUserPanel(frame));
-		frame.setVisible(true);
-	}*/
-    
-    
 }

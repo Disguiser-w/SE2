@@ -154,7 +154,7 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
 				else 
 					System.out.println("Cannot find the perWage");
 				
-				perWageData.deletePerWage(ProfessionType.courier);
+				//perWageData.deletePerWage(ProfessionType.courier);
 				System.out.println("删除后:");
 				ArrayList<PerWagePO> perWagepoList2 = perWageData.showAllPerWages();
 				if(perWagepoList2 != null){

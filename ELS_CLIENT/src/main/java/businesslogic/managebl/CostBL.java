@@ -16,6 +16,14 @@ public class CostBL implements CostBLService{
 	
 	CostDataService codService;
 	
+	public CostBL(){
+		try{
+			codService = (CostDataService)Naming.lookup("rmi://localhost:8888/CostDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	public int addCost(CostVO costvo){
 		try{
 			CostPO costpo = costVOToPO(costvo);

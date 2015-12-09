@@ -13,7 +13,16 @@ import businesslogicservice.manageblservice.PerWageBLService;
 import dataservice.managedataservice.PerWageDataService;
 
 public class PerWageBL implements PerWageBLService{
+	
 	PerWageDataService pwdService;
+	
+	public PerWageBL(){
+		try{
+			pwdService = (PerWageDataService)Naming.lookup("rmi://localhost:8888/PerWageDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 	
 	public int addPerWage(PerWageVO perWagevo){
 		try{

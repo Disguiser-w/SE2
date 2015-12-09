@@ -123,7 +123,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	public AllReceiptShowVO getAllReceiptList(){
-		ArrayList<GatheringReceiptVO> grvoList = BusinessMainController.gatheringReceiptPOToVO(grPO);
+		/*ArrayList<GatheringReceiptVO> grvoList = BusinessMainController.gatheringReceiptPOToVO(grPO);
 		ArrayList<CollectionReceiptVO> crvoList = crBL.getAllCollection();
 		ArrayList<PaymentReceiptVO> prvoList = prBL.getAllPaymentReceipt();
 		ArrayList<EnplaningReceiptVO> ervoList = IntermediateMainController.poToVO_EnplaningReceipt(getAllSubmittedEnplaningReceipt());
@@ -132,7 +132,8 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		ArrayList<OrderAcceptReceiptVO> oarvoList = BusinessMainController.orderAcceptReceiptPOToVO(oarPO);
 		ArrayList<DistributeReceiptVO> drvoList = BusinessMainController.distributeReceiptPOToVO(drPO);
 		AllReceiptShowVO allReceiptVO = new AllReceiptShowVO(grvoList, crvoList, prvoList, ervoList, trvoList, evrvoList, oarvoList, drvoList);
-		return allReceiptVO;
+		return allReceiptVO;*/
+		return null;
 	}
 	
 	//获取全部提交的收款单
@@ -172,7 +173,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	public boolean approveCollectionReceipt(CollectionReceiptVO crVO){
 		CollectionReceiptPO crPO = FinanceMainController.cvoToPO(crVO);
 		crPO.setState(ReceiptState.APPROVE);
-		crdService.saveCollectionReceiptInfo(crPO);
+		//crdService.saveCollectionReceiptInfo(crPO);
 		return true;
 	}
 	
@@ -190,33 +191,35 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	public boolean approvePaymentReceipt(PaymentReceiptVO crVO){
 		PaymentReceiptPO prPO = FinanceMainController.pvoToPO(crVO);
 		prPO.setState(ReceiptState.APPROVE);
-		prdService.savePaymentReceiptInfo(prPO);
+		//prdService.savePaymentReceiptInfo(prPO);
 		return true;
 	}
 
 	//获取全部提交的中转中心装车单
 	public ArrayList<EnplaningReceiptPO> getAllSubmittedEnplaningReceipt(){
-		return itmdService.getSubmittedEnIntermediateReceiptInfo();
+		//return itmdService.getSubmittedEnIntermediateReceiptInfo();
+		return null;
 	}
 	
 	//审批一个中转中心装车单
 	public boolean approveEnplaningReceipt(EnplaningReceiptVO erVO){
 		EnplaningReceiptPO erPO = IntermediateMainController.voToPO(erVO);
 		erPO.setReceiptState(ReceiptState.APPROVE);
-		itmdService.saveEnIntermediateReceiptInfo(erPO);
+		//itmdService.saveEnIntermediateReceiptInfo(erPO);
 		return true;
 	}
 	
 	//获取全部提交的中转中心到达单
 	public ArrayList<TransferingReceiptPO> getAllSubmittedTransferingReceipt(){
-		return itmdService.getSubmittedTransferingReceiptInfo();
+		//return itmdService.getSubmittedTransferingReceiptInfo();
+		return null;
 	}
 	
 	//审批一个中转中心到达单
 	public boolean approveTransferingReceipt(TransferingReceiptVO trVO){
 		TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
 		trPO.setReceiptState(ReceiptState.APPROVE);
-		itmdService.saveTransferingReceiptInfo(trPO);
+		//itmdService.saveTransferingReceiptInfo(trPO);
 		return true;
 	}
 	

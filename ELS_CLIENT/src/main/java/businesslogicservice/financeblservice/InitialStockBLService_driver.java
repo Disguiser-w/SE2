@@ -2,12 +2,10 @@ package businesslogicservice.financeblservice;
 
 import java.rmi.RemoteException;
 
-import vo.InitInfoVO;
-
 public class InitialStockBLService_driver {
 	public void drive(InitialStockBLService ibs) throws RemoteException{
 		String time="20150101";
-		ibs.initInfo(new InitInfoVO(), time);
+		ibs.initInfo(time);
 		ibs.getInitInfo(time);
 		ibs.getAllInitInfo();		
 	}

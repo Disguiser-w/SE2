@@ -17,7 +17,12 @@ import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
-import type.OrganizationType;
+import presentation.intermediateui.EnvehiclePanel;
+import presentation.intermediateui.IntermediateFrame;
+import presentation.intermediateui.PlaneManagementPanel;
+import presentation.intermediateui.TrainManagementPanel;
+import presentation.intermediateui.TransferingPanel;
+import presentation.intermediateui.TruckManagementPanel;
 import type.ReceiptState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
@@ -41,13 +46,13 @@ import businesslogic.intermediatebl.envehiclebl.TruckManagerBL;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateMainController {
+	private IntermediateFrame frame;
 	private EnvehicleBL envehicle;
 	private PlaneManagerBL planeManager;
 	private TrainManagerBL trainManager;
 	private TruckManagerBL truckManager;
 	private TransferingBL transfering;
 	private static IntermediateDataService intermediateData;
-	private ExpressMainController expressMainController;
 
 	private static IntermediateVO intermediate;
 	private OrganizationVO intermediateCentre;
@@ -64,24 +69,18 @@ public class IntermediateMainController {
 
 	public IntermediateMainController(String intermediate_ID)
 			throws MalformedURLException, RemoteException, NotBoundException {
-		// intermediateDataService
-		// expressMainController = new ExpressMainController(null);
 		try {
-			// System.out.println("haha");
 			intermediateData = DataFactory.getIntermediateData();
-			// System.out.println("haha");
-			IntermediatePO po = intermediateData
-					.getIntermediateInfo(intermediate_ID);
-			// System.out.println(po.getOrganization().getRepertory());
-			intermediate = poToVO((IntermediatePO) (po));
-			System.out.println(intermediate.organization.planeList.get(0).ID);
+			intermediate = poToVO((IntermediatePO) (intermediateData
+					.getIntermediateInfo(intermediate_ID)));
+			// System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println(intermediate.ID);
+
 		intermediateCentre = intermediate.organization;
-		// System.out.println(intermediateCentre.planeList.get(2));
+		// System.out.println(intermediateCentre.getName());
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
@@ -91,13 +90,22 @@ public class IntermediateMainController {
 				intermediateData);
 		truckManager = new TruckManagerBL(truckList, intermediateCentre,
 				intermediateData);
-
+		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "", "", ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData);
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
 				truckManager, enplaningReceiptList, entrainingReceiptList,
 				entruckingReceiptList, intermediateData);
+
+		frame = new IntermediateFrame(intermediate);
+		frame.addFuncLabel(new TransferingPanel(this, frame));
+		frame.addFuncLabel(new EnvehiclePanel(this, frame));
+		frame.addFuncLabel(new PlaneManagementPanel(this, frame));
+		frame.addFuncLabel(new TrainManagementPanel(this, frame));
+		frame.addFuncLabel(new TruckManagementPanel(this, frame));
+
+		frame.showFrame();
 	}
 
 	public void updateIntermediateInfo() throws RemoteException {
@@ -400,5 +408,23 @@ public class IntermediateMainController {
 
 	public TransferingBL getTransferingBL() {
 		return transfering;
+	}
+
+	public PlaneManagerBL getPlaneManagerBL() {
+		return planeManager;
+	}
+
+	public TrainManagerBL getTrainManagerBL() {
+		return trainManager;
+	}
+
+	public TruckManagerBL getTruckManagerBL() {
+		return truckManager;
+	}
+
+	public static void main(String[] args) throws MalformedURLException,
+			RemoteException, NotBoundException {
+		IntermediateMainController controller = new IntermediateMainController(
+				"141250185");
 	}
 }

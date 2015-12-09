@@ -17,6 +17,7 @@ import dataservice.repertorydataservice.RepertoryDataService;
 import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.InventoryCheckVO;
+import vo.RepertoryVO;
 
 public class RepertoryBL implements RepertoryBLService{
 
@@ -231,7 +232,27 @@ public class RepertoryBL implements RepertoryBLService{
 		return new InventoryCheckVO(inventorycheckpo.getEnterTotal(), inventorycheckpo.getLeaveTotal(), inventorycheckpo.getEnterFeeTotal(),inventorycheckpo.getLeaveFeeTotal(), inventorycheckpo.getStockNumArray());
 	}
 	
+	public RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
+		return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), 
+				repertorypo.getMaxRow(), repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), 
+				repertorypo.getWarningRatio(), repertorypo.getStockNumArray());
+	}
 	
+	public ArrayList<RepertoryVO> showAllRepertorys(){
+		try{
+			ArrayList<RepertoryPO> repertoryPOList = rdService.showAllRepertorys();
+			ArrayList<RepertoryVO> repertoryVOList = new ArrayList<RepertoryVO>();
+			
+			for(int i=0;i<repertoryPOList.size();i++){
+				repertoryVOList.add(repertoryPOToVO(repertoryPOList.get(i)));
+			}
+			return repertoryVOList;
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return null;
+		}
+		
+	}
 	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
     /*------------------------------------- Test server whether can normally work ----------------------------------*/

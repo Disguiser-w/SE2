@@ -21,6 +21,15 @@ public class OrganizationBL implements OrganizationBLService {
 	public OrganizationDataService odService;
 	public UserDataService udService;
 
+	public OrganizationBL(){
+		try{
+			odService = (OrganizationDataService)Naming.lookup("rmi://localhost:8888/OrganizationDataService");
+			udService = (UserDataService)Naming.lookup("rmi://localhost:8888/UserDataService");
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}	
+	}
+	
 	public int addOrganization(OrganizationVO organizationvo) {
 		try {
 			OrganizationPO neworganizationpo = organizationVOToPO(organizationvo);
@@ -86,33 +95,43 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo) {
-		return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), repertorypo.getMaxRow(),
-				repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), repertorypo.getWarningRatio(),
-				repertorypo.getStockNumArray());
+		if(repertorypo != null){
+			return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), repertorypo.getMaxRow(),
+					repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), repertorypo.getWarningRatio(),
+					repertorypo.getStockNumArray());
+		}
+		else{
+			return null;
+		}
 	}
 
 	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo) {
-		return new RepertoryPO(repertoryvo.getRepertoryID(), repertoryvo.getOwnerID(), repertoryvo.getMaxRow(),
-				repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(), repertoryvo.getWarningRatio(),
-				repertoryvo.getStockNumArray());
+		if(repertoryvo != null){
+			return new RepertoryPO(repertoryvo.getRepertoryID(), repertoryvo.getOwnerID(), repertoryvo.getMaxRow(),
+					repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(), repertoryvo.getWarningRatio(),
+					repertoryvo.getStockNumArray());
+		}else{
+			return null;
+		}
 	}
 
 	public static OrganizationVO organizationPOToVO(OrganizationPO organizationpo) {
-		if (organizationpo.getRepertory() != null)
-			return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
-					organizationpo.getName(), repertoryPOToVO(organizationpo.getRepertory()));
-		else
-			return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
-					organizationpo.getName(), null);
+		if(organizationpo != null){
+			if (organizationpo.getRepertory() != null)
+				return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
+						organizationpo.getName(), repertoryPOToVO(organizationpo.getRepertory()));
+			else
+				return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
+						organizationpo.getName(), null);
+		}
+		else{
+			return null;
+		}
 	}
 
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo) {
-		if(organizationvo.repertory!=null)
 		return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
 				organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
-		else
-			return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
-					organizationvo.getName(), null);
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/

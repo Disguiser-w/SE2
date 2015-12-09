@@ -6,16 +6,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import vo.TrainVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class TrainManagementPanel extends JLabel {
+public class TrainManagementPanel extends JPanel {
 	private IntermediateMainController controller;
+
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -24,10 +27,15 @@ public class TrainManagementPanel extends JLabel {
 	private JButton deleteButton;
 	private JButton next;
 	private JButton previous;
+	private JButton delete_ok;
+	private JButton modifyButton;
 
 	private JLabel function;
 
 	private JTextField searchTextField;
+
+	private JCheckBox[] isDelete;
+	private JButton[] isModify;
 
 	private VehicleManagementInfoTable info;
 	private VehicleManagementTableModel model;
@@ -35,13 +43,17 @@ public class TrainManagementPanel extends JLabel {
 	private int pageNum;
 	private int pageNum_max;
 
-	public TrainManagementPanel(IntermediateMainController controller) {
-		this.controller = controller;
+	public TrainManagementPanel(IntermediateMainController c,
+			IntermediateFrame f) {
+		this.controller = c;
+		this.frame = f;
 
 		addButton = new JButton("add");
 		deleteButton = new JButton("delete");
 		next = new JButton("next");
 		previous = new JButton("previous");
+		delete_ok = new JButton("ok");
+		modifyButton = new JButton("modify");
 
 		function = new JLabel("火车信息管理 ");
 
@@ -51,12 +63,10 @@ public class TrainManagementPanel extends JLabel {
 		info = new VehicleManagementInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getTrainList().size() - 2) / 13;
 
 		setCmpLocation();
 
 		addButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -65,7 +75,6 @@ public class TrainManagementPanel extends JLabel {
 		});
 
 		deleteButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
@@ -73,21 +82,30 @@ public class TrainManagementPanel extends JLabel {
 			}
 		});
 
+		modifyButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				modifyui();
+			}
+		});
+
 		next.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				pageNum_max = (controller.getTrainList().size()) / 12;
 				if (pageNum >= pageNum_max)
 					return;
 				else {
 					pageNum++;
 					info.setModel(new VehicleManagementTableModel());
 					info.setuiInfo();
-					;
 				}
 			}
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				pageNum_max = (controller.getTrainList().size()) / 12;
 				if (pageNum == 0)
 					return;
 				else {
@@ -98,10 +116,20 @@ public class TrainManagementPanel extends JLabel {
 			}
 		});
 
+		delete_ok.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				delete_okui();
+			}
+		});
+
+		info.setBackground(getBackground());
 		setLayout(null);
 
 		add(addButton);
 		add(deleteButton);
+		add(modifyButton);
 		add(next);
 		add(previous);
 		add(function);
@@ -117,15 +145,19 @@ public class TrainManagementPanel extends JLabel {
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		deleteButton.setBounds(PANEL_WIDTH * 5 / 9, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		modifyButton.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		searchTextField.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 24);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
+		previous.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
+		next.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -137,18 +169,92 @@ public class TrainManagementPanel extends JLabel {
 	}
 
 	public void addui() {
-
+		frame.changePanel(new TrainManagement_newPanel(controller, frame));
 	}
 
 	public void deleteui() {
+		if (pageNum != pageNum_max)
+			isDelete = new JCheckBox[12];
+		else
+			isDelete = new JCheckBox[controller.getTrainList().size() - 12
+					* pageNum];
 
+		for (int i = 0; i < isDelete.length; i++) {
+			isDelete[i] = new JCheckBox();
+			isDelete[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isDelete[i]);
+			isDelete[i].setVisible(true);
+		}
+
+		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		add(delete_ok);
+		delete_ok.setVisible(true);
+	}
+
+	public void delete_okui() {
+		for (int i = 0; i < isDelete.length; i++) {
+			int delete_num = 0;
+			if (isDelete[i].isSelected()) {
+				try {
+					controller.getTrainManagerBL().deleteTrain(
+							controller.getTrainList().get(
+									i + pageNum * 12 - delete_num++));
+				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+			isDelete[i].setVisible(false);
+		}
+
+		delete_ok.setVisible(false);
+
+		frame.toMainPanel();
+	}
+
+	public void modifyui() {
+		if (pageNum != pageNum_max)
+			isModify = new JButton[12];
+		else
+			isModify = new JButton[controller.getTrainList().size() - 12
+					* pageNum];
+
+		for (int i = 0; i < isModify.length; i++) {
+			isModify[i] = new JButton();
+			isModify[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isModify[i]);
+
+			isModify[i].addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					int count = 0;
+					JButton temp = (JButton) e.getSource();
+					for (; count < isModify.length; count++) {
+						if (temp == isModify[count]) {
+							break;
+						}
+					}
+
+					frame.changePanel(new TrainManagement_modifyPanel(
+							controller, frame, controller.getTrainList().get(
+									pageNum * 12 + count)));
+
+					for (JButton button : isModify)
+						button.setVisible(false);
+				}
+			});
+		}
 	}
 
 	private class VehicleManagementTableModel extends AbstractTableModel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -160,9 +266,10 @@ public class TrainManagementPanel extends JLabel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
-			if (index > controller.getTrainList().size() - 1)
+			int index = pageNum * 12 + rowIndex;
+			if (index > controller.getTrainList().size() - 1) {
 				return null;
+			}
 			TrainVO train = controller.getTrainList().get(index);
 			if (train != null) {
 				switch (columnIndex) {
@@ -197,11 +304,11 @@ public class TrainManagementPanel extends JLabel {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TrainManagementPanel(null));
-		frame.setVisible(true);
-	}
+	//
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new TrainManagementPanel(null));
+	// frame.setVisible(true);
+	// }
 }

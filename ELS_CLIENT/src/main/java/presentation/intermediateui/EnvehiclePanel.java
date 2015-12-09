@@ -6,15 +6,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
 
 import vo.OrderVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class EnvehiclePanel extends JLabel {
+public class EnvehiclePanel extends JPanel {
 	private IntermediateMainController controller;
+
+	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -31,8 +33,9 @@ public class EnvehiclePanel extends JLabel {
 	private int pageNum;
 	private int pageNum_max;
 
-	public EnvehiclePanel(IntermediateMainController controller) {
-		this.controller = controller;
+	public EnvehiclePanel(IntermediateMainController c, IntermediateFrame f) {
+		this.controller = c;
+		this.frame = f;
 
 		envehicle = new JButton("do");
 		next = new JButton("next");
@@ -44,8 +47,6 @@ public class EnvehiclePanel extends JLabel {
 		info = new EnvehicleInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getEnvehicleBL().getAllocateWwaitingOrderBL()
-				.updateWaitingList().size() - 2) / 13;
 
 		setCmpLocation();
 
@@ -54,25 +55,37 @@ public class EnvehiclePanel extends JLabel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
-				envehicleui();
+				try {
+					envehicleui();
+				} catch (Exception e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
 			}
 		});
 
 		next.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				pageNum_max = (controller.getEnvehicleBL()
+						.getWaitingOrderList().size()) / 12;
+
 				if (pageNum >= pageNum_max)
 					return;
 				else {
 					pageNum++;
 					info.setModel(new EnvehicleTableModel());
 					info.setuiInfo();
-					;
 				}
 			}
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				pageNum_max = (controller.getEnvehicleBL()
+						.getWaitingOrderList().size()) / 12;
+
 				if (pageNum == 0)
 					return;
 				else {
@@ -83,6 +96,7 @@ public class EnvehiclePanel extends JLabel {
 			}
 		});
 
+		info.setBackground(getBackground());
 		setLayout(null);
 
 		add(envehicle);
@@ -103,8 +117,10 @@ public class EnvehiclePanel extends JLabel {
 		envehicle.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 3 / 16,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -115,15 +131,15 @@ public class EnvehiclePanel extends JLabel {
 		repaint();
 	}
 
-	public void envehicleui() {
-
+	public void envehicleui() throws Exception {
+		controller.getEnvehicleBL().envehicle();
 	}
 
 	private class EnvehicleTableModel extends AbstractTableModel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -135,9 +151,9 @@ public class EnvehiclePanel extends JLabel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
-			if (index > controller.getEnvehicleBL()
-					.getAllocateWwaitingOrderBL().updateWaitingList().size() - 1)
+			int index = pageNum * 12 + rowIndex;
+			if (index > controller.getEnvehicleBL().getWaitingOrderList()
+					.size() - 1)
 				return null;
 			OrderVO order = controller.getEnvehicleBL()
 					.getAllocateWwaitingOrderBL().updateWaitingList()
@@ -197,10 +213,10 @@ public class EnvehiclePanel extends JLabel {
 		}
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new EnvehiclePanel(null));
-		frame.setVisible(true);
-	}
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new EnvehiclePanel(null));
+	// frame.setVisible(true);
+	// }
 }

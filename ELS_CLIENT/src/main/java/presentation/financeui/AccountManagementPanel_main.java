@@ -5,14 +5,9 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -74,8 +69,8 @@ public class AccountManagementPanel_main extends JPanel {
 		am=new AccountModel(c);
 		//新建table
 		table=new JTable(am);
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		add(table.getTableHeader());
 		add(table);
@@ -110,17 +105,17 @@ public class AccountManagementPanel_main extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addButton.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 3.4442270058708413/20),(int)(width *  2.1364795918367347 /25),(int)(height *  1.487279843444227/20));
+		addButton.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 3.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.487279843444227/20));
 		deleteButton.setBounds((int)(width * 5.07015306122449/25),(int)(height * 3.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.487279843444227/20));
-		modifyButton.setBounds((int)(width * 7.940051020408164/25),(int)(height * 3.4442270058708413/20),(int)(width *  2.3278061224489797 /25),(int)(height *  1.5264187866927592/20));
-		searchButton.setBounds((int)(width * 20.918367346938776/25),(int)(height * 3.3659491193737767/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.4090019569471623/20));
-		refreshButton.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  1.9770408163265305 /25),(int)(height *  1.4090019569471623/20));
+		modifyButton.setBounds((int)(width * 7.940051020408164/25),(int)(height * 3.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.487279843444227/20));
+		searchButton.setBounds((int)(width * 20.918367346938776/25),(int)(height * 3.3659491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.487279843444227/20));
+		refreshButton.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.4090019569471623/20));
 		next.setBounds((int)(width * 20.854591836734695/25),(int)(height * 17.690802348336597/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.5264187866927592/20));
 		previous.setBounds((int)(width * 22.544642857142858/25),(int)(height * 17.690802348336597/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.487279843444227/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height * 3.4050880626223092/20),(int)(width *  5.420918367346939 /25),(int)(height *  1.36986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
-		table.getTableHeader().setBounds((int)(width * 2.2002551020408165/25), (int)(height * 5.205479452054795/20), (int)(width *  20.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-		table.setBounds((int)(width * 2.2002551020408165/25),(int)(height * 5.205479452054795/20)+(int)(height *  1.1311154598825832/20),(int)(width *  20.057397959183675 /25),(int)(height *  11.311154598825832/20));
+		table.getTableHeader().setBounds((int)(width * 2.2002551020408165/25), (int)(height * 5.205479452054795/20), (int)(width *  21.057397959183675 /25), (int)(height *  1.1311154598825832/20));
+		table.setBounds((int)(width * 2.2002551020408165/25),(int)(height * 5.205479452054795/20)+(int)(height *  1.1311154598825832/20),(int)(width *  21.057397959183675 /25),(int)(height *  11.311154598825832/20));
 
 		setBaseInfo();
 	}
@@ -328,18 +323,7 @@ class AccountModel extends AbstractTableModel{
 		
 	}
 
-//     public void refreshingTable(){
-//    	 ArrayList<AccountVO> vos=controller.showAll();
-//    	 for(AccountVO v:vos){
-////    		 System.out.println("Name: "+v.getName());
-//    		 ArrayList<String> lineInfo=new ArrayList<String>();
-//    		 lineInfo.add(v.getName());
-//    		 lineInfo.add(v.getMoney()+"");
-//    		 c.add(lineInfo);
-//    	 }
-//    	 count=c.size();
-//	
-//       }
+
      
      public void refreshTable(ArrayList<AccountVO> vos){
     	 for(AccountVO v:vos){
@@ -353,7 +337,7 @@ class AccountModel extends AbstractTableModel{
      
  
 	
-	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
+/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		AccountBLController controller=new AccountBLController();
 		FinanceFrame financeFrame=new FinanceFrame();
 		JFrame frame = new JFrame();
@@ -361,6 +345,7 @@ class AccountModel extends AbstractTableModel{
 		frame.add(new AccountManagementPanel_main(controller,financeFrame));
 		frame.setVisible(true);
 	}
+	*/
 }
 
 

@@ -33,10 +33,12 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		return planeList;
 	}
 
-	public OperationState addPlane(String ID, String destination) {
+	public OperationState addPlane(String ID, String destination)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		PlaneVO plane_add = new PlaneVO(ID, destination);
 		planeList.add(plane_add);
+		savePlaneList();
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -45,6 +47,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		for (PlaneVO plane : planeList) {
 			if (plane.ID.equals(plane_delete.ID)) {
 				planeList.remove(plane);
+				savePlaneList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -56,6 +59,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		for (PlaneVO plane : planeList) {
 			if (plane.ID.equals(plane_modify.ID)) {
 				planeList.set(planeList.indexOf(plane), plane_modify);
+				savePlaneList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}

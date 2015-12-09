@@ -7,11 +7,11 @@ import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.RepertoryVO;
 
-public class MockRepertoryBL extends RepertoryBL{
+public class MockRepertoryBL{
 	RepertoryVO repertory;
 	InventoryVO inventory;
 	
-	public MockRepertoryBL(){
+	/*public MockRepertoryBL(){
 		repertory = new RepertoryVO("025-0","CK-00001",0,0,0,0);
 		inventory = new InventoryVO();
 	}
@@ -72,5 +72,5 @@ public class MockRepertoryBL extends RepertoryBL{
 	
 	public InventoryVO getInventory(){
 		return this.inventory;
-	}
+	}*/
 }

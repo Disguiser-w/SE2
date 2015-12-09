@@ -32,8 +32,8 @@ import presentation.financeui.AccountManagementPanel_main;
 import presentation.financeui.BusinessStateReceiptPanel;
 import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
-import presentation.financeui.InitialStockPanel_main;
 import presentation.financeui.ReceiptPanel_new;
+import presentation.financeui.initui.InitialStockPanel_main;
 import type.ReceiptType;
 import vo.AccountVO;
 import vo.BusinessStatementReceiptVO;
@@ -115,7 +115,8 @@ public class FinanceMainController {
 				
 		
 				//初始化界面
-				financeFrame =new FinanceFrame();
+				UserVO user=new UserVO("本宝宝", "CW-00001", "123456", null, null, null, null, 0);
+				financeFrame =new FinanceFrame(user);
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController,financeFrame));
 //				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, costIncomeReceiptBLController));
 				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));

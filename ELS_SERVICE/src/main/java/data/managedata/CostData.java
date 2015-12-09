@@ -155,7 +155,7 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
 				else 
 					System.out.println("Cannot find the cost");
 				
-				costData.deleteCost(ExpressType.STANDARD);
+				//costData.deleteCost(ExpressType.STANDARD);
 				System.out.println("删除后:");
 				ArrayList<CostPO> costpoList3 = costData.showAllCosts();
 				if(costpoList3 != null){
