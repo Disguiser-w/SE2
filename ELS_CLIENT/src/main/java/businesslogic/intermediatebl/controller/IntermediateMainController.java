@@ -73,7 +73,7 @@ public class IntermediateMainController {
 			intermediateData = DataFactory.getIntermediateData();
 			intermediate = poToVO((IntermediatePO) (intermediateData
 					.getIntermediateInfo(intermediate_ID)));
-//			System.out.println(intermediate.organization.planeList.size());
+			// System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,11 +99,11 @@ public class IntermediateMainController {
 				entruckingReceiptList, intermediateData);
 
 		frame = new IntermediateFrame(intermediate);
-		frame.addFuncLabel(new TransferingPanel(this,frame));
-		frame.addFuncLabel(new EnvehiclePanel(this,frame));
+		frame.addFuncLabel(new TransferingPanel(this, frame));
+		frame.addFuncLabel(new EnvehiclePanel(this, frame));
 		frame.addFuncLabel(new PlaneManagementPanel(this, frame));
-		frame.addFuncLabel(new TrainManagementPanel(this,frame));
-		frame.addFuncLabel(new TruckManagementPanel(this,frame));
+		frame.addFuncLabel(new TrainManagementPanel(this, frame));
+		frame.addFuncLabel(new TruckManagementPanel(this, frame));
 
 		frame.showFrame();
 	}
