@@ -97,13 +97,14 @@ public class TrainManagementPanel extends JPanel {
 					pageNum++;
 					info.setModel(new VehicleManagementTableModel());
 					info.setuiInfo();
-					;
 				}
 			}
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
 				pageNum_max = (controller.getTrainList().size()) / 12;
 				if (pageNum == 0)
 					return;
@@ -168,14 +169,14 @@ public class TrainManagementPanel extends JPanel {
 	}
 
 	public void addui() {
-		frame.changePanel(new TrainManageMent_newPanel(controller, frame));
+		frame.changePanel(new TrainManagement_newPanel(controller, frame));
 	}
 
 	public void deleteui() {
 		if (pageNum != pageNum_max)
 			isDelete = new JCheckBox[12];
 		else
-			isDelete = new JCheckBox[controller.getPlaneList().size() - 12
+			isDelete = new JCheckBox[controller.getTrainList().size() - 12
 					* pageNum];
 
 		for (int i = 0; i < isDelete.length; i++) {
@@ -191,6 +192,62 @@ public class TrainManagementPanel extends JPanel {
 				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		add(delete_ok);
 		delete_ok.setVisible(true);
+	}
+
+	public void delete_okui() {
+		for (int i = 0; i < isDelete.length; i++) {
+			int delete_num = 0;
+			if (isDelete[i].isSelected()) {
+				try {
+					controller.getTrainManagerBL().deleteTrain(
+							controller.getTrainList().get(
+									i + pageNum * 12 - delete_num++));
+				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+			isDelete[i].setVisible(false);
+		}
+
+		delete_ok.setVisible(false);
+
+		frame.toMainPanel();
+	}
+
+	public void modifyui() {
+		if (pageNum != pageNum_max)
+			isModify = new JButton[12];
+		else
+			isModify = new JButton[controller.getTrainList().size() - 12
+					* pageNum];
+
+		for (int i = 0; i < isModify.length; i++) {
+			isModify[i] = new JButton();
+			isModify[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isModify[i]);
+
+			isModify[i].addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					int count = 0;
+					JButton temp = (JButton) e.getSource();
+					for (; count < isModify.length; count++) {
+						if (temp == isModify[count]) {
+							break;
+						}
+					}
+
+					frame.changePanel(new TrainManagement_modifyPanel(
+							controller, frame, controller.getTrainList().get(
+									pageNum * 12 + count)));
+
+					for (JButton button : isModify)
+						button.setVisible(false);
+				}
+			});
+		}
 	}
 
 	private class VehicleManagementTableModel extends AbstractTableModel {
@@ -210,8 +267,9 @@ public class TrainManagementPanel extends JPanel {
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 12 + rowIndex;
-			if (index > controller.getTrainList().size() - 1)
+			if (index > controller.getTrainList().size() - 1) {
 				return null;
+			}
 			TrainVO train = controller.getTrainList().get(index);
 			if (train != null) {
 				switch (columnIndex) {

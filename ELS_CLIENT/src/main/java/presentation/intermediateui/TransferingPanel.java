@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,6 +20,7 @@ import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class TransferingPanel extends JPanel {
 	private IntermediateMainController controller;
+
 	private IntermediateFrame frame;
 
 	private int PANEL_WIDTH = 720;
@@ -31,11 +32,14 @@ public class TransferingPanel extends JPanel {
 	private JButton deleteButton;
 	private JButton printButton;
 	private JButton sendButton;
+	private JButton delete_ok;
 
 	private JButton next;
 	private JButton previous;
 
 	private JLabel function;
+
+	private JCheckBox[] isDelete;
 
 	private TransferingInfoTable info;
 	private TransferingTableModel model;
@@ -47,10 +51,9 @@ public class TransferingPanel extends JPanel {
 
 	private JDialog addDialog;
 
-	public TransferingPanel(IntermediateMainController controller,
-			IntermediateFrame frame) {
-		this.controller = controller;
-		this.frame = frame;
+	public TransferingPanel(IntermediateMainController c, IntermediateFrame f) {
+		this.controller = c;
+		this.frame = f;
 
 		addButton = new JButton("new");
 		deleteButton = new JButton("dele");
@@ -59,6 +62,7 @@ public class TransferingPanel extends JPanel {
 		searchTextField = new JTextField("Input", 10);
 		next = new JButton("next");
 		previous = new JButton("pre");
+		delete_ok = new JButton();
 
 		function = new JLabel("中转接收");
 
@@ -66,7 +70,6 @@ public class TransferingPanel extends JPanel {
 		info = new TransferingInfoTable(model);
 
 		pageNum = 0;
-		pageNum_max = (controller.getTransferingReceipt().orderList.size() - 2) / 13;
 
 		setCmpLocation();
 
@@ -109,19 +112,24 @@ public class TransferingPanel extends JPanel {
 
 		next.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				pageNum_max = (controller.getTransferingReceipt().orderList
+						.size()) / 12;
 				if (pageNum >= pageNum_max)
 					return;
 				else {
 					pageNum++;
 					info.setModel(new TransferingTableModel());
 					info.setuiInfo();
-					;
 				}
 			}
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				pageNum_max = (controller.getTransferingReceipt().orderList
+						.size()) / 12;
 				if (pageNum == 0)
 					return;
 				else {
@@ -132,11 +140,20 @@ public class TransferingPanel extends JPanel {
 			}
 		});
 
+		delete_ok.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO 自动生成的方法存根
+				delete_ok();
+			}
+		});
+
 		setLayout(null);
 
 		add(addButton);
 		add(deleteButton);
 		add(sendButton);
+		add(printButton);
 		add(searchTextField);
 		add(info);
 		add(function);
@@ -163,8 +180,10 @@ public class TransferingPanel extends JPanel {
 		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 13 / 20);
+		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
+				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
+		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
+				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -180,14 +199,28 @@ public class TransferingPanel extends JPanel {
 	}
 
 	public void addui() {
-		if (addDialog == null)
-			addDialog = new JDialog(addDialog, "add");
-		addDialog.setVisible(true);
-		addDialog.setSize(400, 300);
+		frame.changePanel(new TransferingPanel(controller, frame));
 	}
 
 	public void deleteui() {
+		if (pageNum != pageNum_max)
+			isDelete = new JCheckBox[12];
+		else
+			isDelete = new JCheckBox[controller.getTransferingReceipt().orderList
+					.size() - 12 * pageNum];
 
+		for (int i = 0; i < isDelete.length; i++) {
+			isDelete[i] = new JCheckBox();
+			isDelete[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
+					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isDelete[i]);
+			isDelete[i].setVisible(true);
+		}
+
+		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		add(delete_ok);
 	}
 
 	public void printui() {
@@ -198,11 +231,29 @@ public class TransferingPanel extends JPanel {
 		controller.getTransferingBL().saveTransferingReceipt();
 	}
 
+	public void delete_ok() {
+		for (int i = 0; i < isDelete.length; i++) {
+			int delete_num = 0;
+			if (isDelete[i].isSelected()) {
+				try {
+					controller.getTransferingBL().deleteOrder(
+							controller.getTransferingReceipt().orderList.get(i
+									+ pageNum * 12 - delete_num++).ID);
+				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+			isDelete[i].setVisible(false);
+		}
+		delete_ok.setVisible(false);
+	}
+
 	private class TransferingTableModel extends AbstractTableModel {
 		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
-			return 13;
+			return 12;
 		}
 
 		@Override
@@ -214,7 +265,7 @@ public class TransferingPanel extends JPanel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			int index = pageNum * 13 + rowIndex + 1;
+			int index = pageNum * 12 + rowIndex;
 			if (index > controller.getTransferingReceipt().orderList.size() - 1)
 				return null;
 			OrderVO order = controller.getTransferingReceipt().orderList
@@ -273,11 +324,11 @@ public class TransferingPanel extends JPanel {
 			return null;
 		}
 	}
-//
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setSize(800, 550);
-//		frame.add(new TransferingPanel(null));
-//		frame.setVisible(true);
-//	}
+	//
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(800, 550);
+	// frame.add(new TransferingPanel(null));
+	// frame.setVisible(true);
+	// }
 }

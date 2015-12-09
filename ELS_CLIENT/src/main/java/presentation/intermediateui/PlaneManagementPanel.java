@@ -93,9 +93,7 @@ public class PlaneManagementPanel extends JPanel {
 					pageNum++;
 					info.setModel(new VehicleManagementTableModel());
 					info.setuiInfo();
-					;
 				}
-				System.out.println(info.WIDTH);
 			}
 		});
 
@@ -265,10 +263,8 @@ public class PlaneManagementPanel extends JPanel {
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
-			// System.out.println(controller.getPlaneList().size());
 			int index = pageNum * 12 + rowIndex;
 			if (index > controller.getPlaneList().size() - 1) {
-				// System.out.println("gaga");
 				return null;
 			}
 			PlaneVO plane = controller.getPlaneList().get(index);

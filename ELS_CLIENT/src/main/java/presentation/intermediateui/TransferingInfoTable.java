@@ -11,45 +11,47 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class TransferingInfoTable extends JTable {
-	private int width;
-	private int height;
+	private int width = 720;
+	private int height = 480;
+
+	TableColumn tc0;
+	TableColumn tc1;
+	TableColumn tc2;
+	TableColumn tc3;
+	TableColumn tc4;
 
 	public TransferingInfoTable(AbstractTableModel model) {
 		super(model);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.getTableHeader().setReorderingAllowed(false);
 		this.getTableHeader().setResizingAllowed(false);
-		width = 720;
-		height = 480;
 		setuiInfo();
+
+		this.setRowHeight(height * 22 / 480);
+		this.setRowSelectionAllowed(false);
+
+		tc0 = this.columnModel.getColumn(0);
+		tc0.setPreferredWidth(width / 3);
+
+		tc1 = this.columnModel.getColumn(1);
+		tc1.setPreferredWidth(width / 8);
+
+		tc2 = this.columnModel.getColumn(2);
+		tc2.setPreferredWidth(width / 8);
+
+		tc3 = this.columnModel.getColumn(3);
+		tc3.setPreferredWidth(width / 8);
+
+		tc4 = this.columnModel.getColumn(4);
+		tc4.setPreferredWidth(width / 8);
 	}
 
 	public void setuiInfo() {
-		height = height / 13 * 13;
-		setSize(width, height);
-
-		this.setRowHeight(height / 13);
-		this.setRowSelectionAllowed(false);
-
-		TableColumn tc0 = this.columnModel.getColumn(0);
-		tc0.setPreferredWidth(width / 3);
-		// tc.setResizable(false);
-
-		TableColumn tc1 = this.columnModel.getColumn(1);
-		tc1.setPreferredWidth(width / 8);
-		// tc.setResizable(false);
-
-		TableColumn tc2 = this.columnModel.getColumn(2);
-		tc2.setPreferredWidth(width / 8);
-		// tc.setResizable(false);
-
-		TableColumn tc3 = this.columnModel.getColumn(3);
-		tc3.setPreferredWidth(width / 8);
-		// tc.setResizable(false);
-
-		TableColumn tc4 = this.columnModel.getColumn(4);
-		tc4.setPreferredWidth(width / 8);
-		// tc.setResizable(false);
+		tc0 = this.columnModel.getColumn(0);
+		tc1 = this.columnModel.getColumn(1);
+		tc2 = this.columnModel.getColumn(2);
+		tc3 = this.columnModel.getColumn(3);
+		tc4 = this.columnModel.getColumn(4);
 
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table,
@@ -78,10 +80,4 @@ public class TransferingInfoTable extends JTable {
 		this.width = width;
 		this.height = height;
 	}
-
-	public void paint(Graphics g) {
-		setuiInfo();
-		super.paint(g);
-	}
-
 }

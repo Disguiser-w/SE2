@@ -10,8 +10,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class VehicleManagementInfoTable extends JTable {
-	private int width;
-	private int height;
+	private int width = 720;
+	private int height = 480;
+
+	TableColumn tc0;
+	TableColumn tc1;
+	TableColumn tc2;
+	TableColumn tc3;
+	TableColumn tc4;
 
 	public VehicleManagementInfoTable(AbstractTableModel model) {
 		super(model);
@@ -19,38 +25,32 @@ public class VehicleManagementInfoTable extends JTable {
 		this.getTableHeader().setReorderingAllowed(false);
 		this.getTableHeader().setResizingAllowed(false);
 		setuiInfo();
+
+		this.setRowHeight(height * 22 / 480);
+		this.setRowSelectionAllowed(false);
+
+		tc0 = this.columnModel.getColumn(0);
+		tc0.setPreferredWidth(width * 80 / 720);
+
+		tc1 = this.columnModel.getColumn(1);
+		tc1.setPreferredWidth(width * 200 / 720);
+
+		tc2 = this.columnModel.getColumn(2);
+		tc2.setPreferredWidth(width * 6 / 72);
+
+		tc3 = this.columnModel.getColumn(3);
+		tc3.setPreferredWidth(width * 20 / 72);
+
+		tc4 = this.columnModel.getColumn(4);
+		tc4.setPreferredWidth(width * 6 / 72);
 	}
 
 	public void setuiInfo() {
-		width = 720;
-		height = 22 * 12;
-
-		setSize(width, height);
-
-		this.setRowHeight(height / 12);
-		this.setRowSelectionAllowed(false);
-//		System.out.println(width);
-//		System.out.println(height / 12);
-
-		TableColumn tc0 = this.columnModel.getColumn(0);
-		tc0.setPreferredWidth(width * 80 / 720);
-		// tc.setResizable(false);
-
-		TableColumn tc1 = this.columnModel.getColumn(1);
-		tc1.setPreferredWidth(width * 200 / 720);
-		// tc.setResizable(false);
-
-		TableColumn tc2 = this.columnModel.getColumn(2);
-		tc2.setPreferredWidth(width * 6 / 72);
-		// tc.setResizable(false);
-
-		TableColumn tc3 = this.columnModel.getColumn(3);
-		tc3.setPreferredWidth(width * 20 / 72);
-		// tc.setResizable(false);
-
-		TableColumn tc4 = this.columnModel.getColumn(4);
-		tc4.setPreferredWidth(width * 6 / 72);
-		// tc.setResizable(false);
+		tc0 = this.columnModel.getColumn(0);
+		tc1 = this.columnModel.getColumn(1);
+		tc2 = this.columnModel.getColumn(2);
+		tc3 = this.columnModel.getColumn(3);
+		tc4 = this.columnModel.getColumn(4);
 
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table,
@@ -79,9 +79,4 @@ public class VehicleManagementInfoTable extends JTable {
 		this.width = width;
 		this.height = height;
 	}
-
-	// public void paint(Graphics g) {
-	// setuiInfo();
-	// super.paint(g);
-	// }
 }
