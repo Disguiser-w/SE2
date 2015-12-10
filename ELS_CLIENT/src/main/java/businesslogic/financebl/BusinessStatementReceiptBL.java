@@ -17,11 +17,22 @@ public class BusinessStatementReceiptBL {
 	CollectionReceiptDataService collectionData;
 	PaymentReceiptDataService paymentData;
 	
-	public BusinessStatementReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
-//		collectionData=(CollectionReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/CollectionReceiptDataService");
-//		paymentData=(PaymentReceiptDataService) Naming.lookup("rmi://172.26.209.182:8888/PaymentReceiptDataService");
-		collectionData=DataFactory.getCollectionReceiptData();
-		paymentData=DataFactory.getPaymentReceiptData();
+	public BusinessStatementReceiptBL() {
+
+		try {
+			collectionData=DataFactory.getCollectionReceiptData();
+			paymentData=DataFactory.getPaymentReceiptData();
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

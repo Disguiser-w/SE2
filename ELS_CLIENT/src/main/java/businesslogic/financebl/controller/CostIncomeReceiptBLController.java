@@ -12,7 +12,7 @@ public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService
 	
 	private CostIncomeReceiptBL costIncomeReceiptBL;
 	
-	public CostIncomeReceiptBLController() throws MalformedURLException, RemoteException, NotBoundException{
+	public CostIncomeReceiptBLController() {
 		costIncomeReceiptBL=new CostIncomeReceiptBL();
 	}
 	

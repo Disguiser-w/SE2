@@ -18,13 +18,19 @@ public class AccountBL {
 //	private AccountPO po;
 	
 	public AccountBL()  {
-			try {
-				accountData=DataFactory.getAccountData();
-			} catch (MalformedURLException | RemoteException
-					| NotBoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				try {
+					accountData=DataFactory.getAccountData();
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NotBoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 	}
 
 	/** 

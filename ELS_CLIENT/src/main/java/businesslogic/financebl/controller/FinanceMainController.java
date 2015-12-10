@@ -95,23 +95,14 @@ public class FinanceMainController {
 			e1.printStackTrace();
 		}
 		//初始化四个controller：把操作拿出来做controller吗
-				try {
+				
 					accountBLController=new AccountBLController();
 					collectionReceiptBLController=new CollectionReceiptBLController();
 					paymentReceiptBLController=new PaymentReceiptBLController();
 					costIncomeReceiptBLController=new CostIncomeReceiptBLController();
 					businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
 					initialStockBLController=new InitialStockBLController();
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NotBoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			
 				
 		
 				//初始化界面

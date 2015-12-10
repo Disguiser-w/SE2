@@ -4,15 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -22,10 +20,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import dataservice.userdataservice.UserDataService;
-import presentation.commonui.LocationHelper;
 import presentation.financeui.FinanceFrame;
-import vo.UserVO;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
@@ -168,6 +163,40 @@ public class InitialStockPanel_new extends JPanel{
 	}
 	 
 	public void addListener(){
+		
+		//人员信息添加
+		humanInfo.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		//机构信息添加
+		organizationInfo.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		//车辆信息添加
+		vehicleInfo.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		//仓库初始信息添加
+		stockInfo.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		//账户信息添加
+		accountInfo.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				changeTable(accountTable);
+				int temp=account.size();
+				
+				
+			}
+		});
 		 //确认添加
 		 InfoOKButton.addActionListener(new ActionListener() {
 
@@ -308,7 +337,58 @@ public class InitialStockPanel_new extends JPanel{
 					column1.setCellRenderer(tcr);
 					column2.setCellRenderer(tcr);
 					column3.setCellRenderer(tcr);
-			
+					}
+					
+					else if(table.equals(vehicleTable)){
+						TableColumn column1 = vehicleTable.getColumnModel().getColumn(0);
+						TableColumn column2 = vehicleTable.getColumnModel().getColumn(1);
+						TableColumn column3 = vehicleTable.getColumnModel().getColumn(2);
+						TableColumn column4 = vehicleTable.getColumnModel().getColumn(3);
+
+						column1.setPreferredWidth(vehicleTable.getWidth() * 3 / 10);
+						column2.setPreferredWidth(vehicleTable.getWidth() * 2 / 10);
+						column3.setPreferredWidth(vehicleTable.getWidth() * 3 / 10);
+						column4.setPreferredWidth(vehicleTable.getWidth() * 2 / 10);
+
+						column1.setCellRenderer(tcr);
+						column2.setCellRenderer(tcr);
+						column3.setCellRenderer(tcr);
+						column4.setCellRenderer(tcr);
+					}
+					
+					else if(table.equals(repertoryTable)){
+						TableColumn column1 = repertoryTable.getColumnModel().getColumn(0);
+						TableColumn column2 = repertoryTable.getColumnModel().getColumn(1);
+						TableColumn column3 = repertoryTable.getColumnModel().getColumn(2);
+						TableColumn column4 = repertoryTable.getColumnModel().getColumn(3);
+						TableColumn column5 = repertoryTable.getColumnModel().getColumn(4);
+						TableColumn column6 = repertoryTable.getColumnModel().getColumn(5);
+						
+						column1.setPreferredWidth(repertoryTable.getWidth() * 3 / 10);
+						column2.setPreferredWidth(repertoryTable.getWidth() * 3 / 10);
+						column3.setPreferredWidth(repertoryTable.getWidth() * 1 / 10);
+						column4.setPreferredWidth(repertoryTable.getWidth() * 1 / 10);
+						column5.setPreferredWidth(repertoryTable.getWidth() * 1 / 10);
+						column6.setPreferredWidth(repertoryTable.getWidth() * 1 / 10);
+
+						column1.setCellRenderer(tcr);
+						column2.setCellRenderer(tcr);
+						column3.setCellRenderer(tcr);
+						column4.setCellRenderer(tcr);
+						column5.setCellRenderer(tcr);
+						column6.setCellRenderer(tcr);					
+					}
+					
+					else{
+						TableColumn column1 = accountTable.getColumnModel().getColumn(0);
+						TableColumn column2 = accountTable.getColumnModel().getColumn(1);
+							
+					    column1.setPreferredWidth(accountTable.getWidth() * 5 / 10);
+						column2.setPreferredWidth(accountTable.getWidth() * 5 / 10);
+							
+						column1.setCellRenderer(tcr);
+						column2.setCellRenderer(tcr);
+						
 					}
 
 	}
@@ -611,7 +691,6 @@ class AccountModel extends AbstractTableModel{
 		}
 
 		public void addRow(ArrayList<String> v) {
-
 			account.add(v);
 		}
 
@@ -620,7 +699,25 @@ class AccountModel extends AbstractTableModel{
 		}
 		
 	}
-	
+
+
+/**
+ * 人员表格信息
+ * */
+
+
+/**
+ * 机构表格信息
+ * */
+/**
+ * 车辆表格信息
+ * */
+/**
+ * 仓库初始信息
+ * */
+/**
+ * 账户信息
+ * */
 
 	/*public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 		InitialStockBLController controller = new InitialStockBLController();

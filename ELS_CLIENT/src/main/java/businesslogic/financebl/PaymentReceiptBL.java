@@ -37,17 +37,27 @@ public class PaymentReceiptBL extends ReceiptBL {
 	PerWageDataService perWageData;
 	
 
-	public PaymentReceiptBL() throws MalformedURLException, RemoteException, NotBoundException{
+	public PaymentReceiptBL(){
 		super();
-		
-		/*userData=DataFactory.getUserData();
-		businessData=DataFactory.getBusinessData();
-		organizationData=DataFactory.getOrganizationData();
-		intermediateData=DataFactory.getIntermediateData();
-		basicSalaryData=DataFactory.getBasicSalaryData();
-		perWageData= DataFactory.getPerWageData();
-		*/
-		paymentData=DataFactory.getPaymentReceiptData();
+			try {
+			/*userData=DataFactory.getUserData();
+			businessData=DataFactory.getBusinessData();
+			organizationData=DataFactory.getOrganizationData();
+			intermediateData=DataFactory.getIntermediateData();
+			basicSalaryData=DataFactory.getBasicSalaryData();
+			perWageData= DataFactory.getPerWageData();
+			*/
+			paymentData=DataFactory.getPaymentReceiptData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

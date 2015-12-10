@@ -1,7 +1,5 @@
 package businesslogic.financebl.controller;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -13,7 +11,7 @@ public class InitialStockBLController implements InitialStockBLService{
 	
 	private InitialStockBL initialStockBL;
 	
-	public InitialStockBLController() throws MalformedURLException, RemoteException, NotBoundException{
+	public InitialStockBLController() {
 		initialStockBL=new InitialStockBL();
 	}
 
