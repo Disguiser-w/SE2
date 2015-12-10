@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class FileGetter {
 	public static File getFile(String path) {
-		File file = new File("target/info/" + path);
+		File file = new File("info/" + path);
 
 		return file;
 	}
