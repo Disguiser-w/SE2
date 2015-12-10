@@ -192,7 +192,7 @@ public class VehicleManagerPanel extends JPanel {
 		setLayout(null);
 		addListener();
 
-		 helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {

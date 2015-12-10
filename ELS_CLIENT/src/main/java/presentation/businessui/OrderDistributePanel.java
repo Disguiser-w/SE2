@@ -24,38 +24,30 @@ import presentation.commonui.LocationHelper;
 
 public class OrderDistributePanel extends JPanel {
 	private JTable messageTable;
-	private JLabel messageTableHeader;
 
-	// private JLabel
-
-	// private JLabel orderNumLabel;
-	private JTextField orderNumField;
+	private JLabel nextPageLabel;
+	private JLabel numOfPage;
+	private JLabel previousPageLabel;
 
 	private JButton distributeButton;
 	private JButton confirmButton;
-	private LocationHelper helper;
-	private JLabel sendLabel;
-	private JLabel printLabel;
-
-	private JLabel nextPageLabel;
-	private JLabel previousPageLabel;
-
-	private JLabel numOfPage;
 
 	private ArrayList<String> result;
 	private DistributeOrderController controller;
 	private int num;
 
+	private LocationHelper helper;
+
 	public OrderDistributePanel(DistributeOrderController controller) {
 		this.controller = controller;
 		messageTable = new JTable();
-		messageTableHeader = new JLabel();
 
-		nextPageLabel = new JLabel();
-		previousPageLabel = new JLabel();
+		nextPageLabel = new JLabel("<");
+		numOfPage = new JLabel();
+		previousPageLabel = new JLabel(">");
+
+		distributeButton = new JButton();
 		confirmButton = new JButton();
-		sendLabel = new JLabel();
-		printLabel = new JLabel();
 
 		num = 0;
 		result = new ArrayList<String>();
@@ -65,13 +57,16 @@ public class OrderDistributePanel extends JPanel {
 		previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		add(messageTable);
-		add(nextPageLabel);
-		add(previousPageLabel);
-		add(confirmButton);
-		add(sendLabel);
-		add(printLabel);
+		add(messageTable.getTableHeader());
 
-		helper = new LocationHelper(this);
+		add(nextPageLabel);
+		add(numOfPage);
+		add(previousPageLabel);
+
+		add(distributeButton);
+		add(confirmButton);
+
+//		helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
@@ -80,20 +75,22 @@ public class OrderDistributePanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		// 设置组件位置
-		messageTable.setBounds((int) (width * 0.9923175416133163 / 25), (int) (height * 3.9732142857142856 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 11.964285714285714 / 20));
-		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-		previousPageLabel.setBounds((int) (width * 11.555697823303458 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 
-		confirmButton.setBounds((int) (width * 21.9910371318822 / 25), (int) (height * 17.232142857142858 / 20),
-				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.3839285714285714 / 20));
-
-		sendLabel.setBounds((int) (width * 22.37516005121639 / 25), (int) (height * 0.8482142857142857 / 20),
-				(int) (width * 1.5685019206145967 / 25), (int) (height * 2.1875 / 20));
-		printLabel.setBounds((int) (width * 20.03841229193342 / 25), (int) (height * 0.8482142857142857 / 20),
-				(int) (width * 1.5685019206145967 / 25), (int) (height * 2.1875 / 20));
+		messageTable.setBounds((int) (width * 1.9526248399487836 / 25), (int) (height * 3.392857142857143 / 20),
+				(int) (width * 21.414852752880922 / 25), (int) (height * 12.142857142857142 / 20));
+		messageTable.getTableHeader().setBounds((int) (width * 1.9526248399487836 / 25),
+				(int) (height * 2.0535714285714284 / 20), (int) (width * 21.414852752880922 / 25),
+				(int) (height * 1.3839285714285714 / 20));
+		nextPageLabel.setBounds((int) (width * 11.267605633802816 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
+		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
+		previousPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
+		distributeButton.setBounds((int) (width * 18.758002560819463 / 25), (int) (height * 16.964285714285715 / 20),
+				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
+		confirmButton.setBounds((int) (width * 21.606914212548016 / 25), (int) (height * 16.964285714285715 / 20),
+				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
 		setInfos();
 	}
 
@@ -130,15 +127,18 @@ public class OrderDistributePanel extends JPanel {
 		});
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				result = new ArrayList<String>();
+				setInfos();
 
-				result = controller.distributeOrder();
-				warnning("不存在需要派件的订单");
 			}
 		});
 		distributeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				result = new ArrayList<String>();
-				setInfos();
+				result = controller.distributeOrder();
+				if (result.size() == 0)
+					warnning("不存在需要派件的订单");
+				else
+					setInfos();
 			}
 		});
 
@@ -154,19 +154,14 @@ public class OrderDistributePanel extends JPanel {
 		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
 		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
 		TableColumn column3 = messageTable.getColumnModel().getColumn(2);
-		TableColumn column4 = messageTable.getColumnModel().getColumn(3);
 
 		// 设置宽度
-		column1.setPreferredWidth(messageTable.getWidth() / 3);
-		column2.setPreferredWidth(messageTable.getWidth() / 3);
-		column3.setPreferredWidth(messageTable.getWidth() / 6);
-		column4.setPreferredWidth(messageTable.getWidth() / 6);
+		column1.setPreferredWidth(messageTable.getWidth() / 4);
+		column2.setPreferredWidth(messageTable.getWidth() / 2);
+		column3.setPreferredWidth(messageTable.getWidth() / 4);
 
 		messageTable.setRowHeight(messageTable.getHeight() / 8);
-		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
-		// messageTable.getTableHeader().getHeight() + 4);
 
-		//
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
@@ -183,7 +178,6 @@ public class OrderDistributePanel extends JPanel {
 		column1.setCellRenderer(tcr);
 		column2.setCellRenderer(tcr);
 		column3.setCellRenderer(tcr);
-		column4.setCellRenderer(tcr);
 	}
 
 	private class MessageTableModel extends AbstractTableModel {
@@ -195,7 +189,7 @@ public class OrderDistributePanel extends JPanel {
 
 		@Override
 		public int getColumnCount() {
-			return 4;
+			return 3;
 		}
 
 		@Override
@@ -213,12 +207,10 @@ public class OrderDistributePanel extends JPanel {
 		public String getColumnName(int c) {
 			switch (c) {
 			case 0:
-				return "车辆编号";
+				return "快递员ID";
 			case 1:
-				return "出发地";
+				return "地址";
 			case 2:
-				return "目的地";
-			case 3:
 				return "订单号";
 			default:
 				return null;
@@ -230,6 +222,6 @@ public class OrderDistributePanel extends JPanel {
 
 	private void warnning(String message) {
 		// fix 放到底部信息栏
-		JOptionPane.showMessageDialog(null, message, "车辆信息错误", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, "", JOptionPane.ERROR_MESSAGE);
 	}
 }

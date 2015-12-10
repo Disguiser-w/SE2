@@ -75,7 +75,6 @@ public class UserFrame extends JFrame {
 		add(operationPanel);
 		add(headerPanel);
 
-
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				setCmpLocation();
@@ -131,20 +130,15 @@ public class UserFrame extends JFrame {
 	}
 
 	public void showFrame() {
-		int count = 0;
-		for (JPanel i : operationPanels)
-			if (count == 0) {
-				count++;
-				continue;
-			} else
-				add(i);
-		
-		setVisible(true);
-		
 
-		for (JPanel i : operationPanels)
-				remove(i);
-		
+//		for (JPanel i : operationPanels)
+//			add(i);
+//
+//		setVisible(true);
+//
+//		for (JPanel i : operationPanels)
+//			remove(i);
+
 		add(operationPanels.get(0));
 		setVisible(true);
 	}

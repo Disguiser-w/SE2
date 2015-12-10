@@ -133,12 +133,13 @@ public class EnVehicle {
 		}
 
 		// 存在今日文件中
-		try {
-			businessData.addEnVehicleReceipt(organizationVO.organizationID, enVehicleReceiptPOs);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (result.size() != 0)
+			try {
+				businessData.addEnVehicleReceipt(organizationVO.organizationID, enVehicleReceiptPOs);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		return result;
 	}

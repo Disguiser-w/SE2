@@ -43,7 +43,7 @@ public class DistributeOrder {
 
 	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
 	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
-	public ArrayList<String> distributeOrder(){
+	public ArrayList<String> distributeOrder() {
 		BusinessMainController.updateBusinessVO();
 
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
@@ -82,7 +82,8 @@ public class DistributeOrder {
 					expressData.addHistory("正在派件", null, i.getID());
 					expressData.addPendingOrder(organizationVO.organizationID, expressPOs.get(j).getID(), i.getID());
 
-					result.add(i.getID() + " " + expressPOs.get(j).getID());
+					result.add(
+							expressPOs.get(j).getID() + " " + i.getRecipientAddress().split(" ")[2] + " " + i.getID());
 					j++;
 					if (j == size)
 						j = 0;

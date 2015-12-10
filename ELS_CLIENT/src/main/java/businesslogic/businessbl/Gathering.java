@@ -20,11 +20,11 @@ import vo.OrganizationVO;
 public class Gathering {
 	private ExpressDataService expressData;
 	private BusinessDataService businessData;
-	
-	public Gathering(){
+
+	public Gathering() {
 		try {
 			expressData = DataFactory.getExpressData();
-			businessData =DataFactory.getBusinessData();
+			businessData = DataFactory.getBusinessData();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class Gathering {
 	public ArrayList<String> getChargeInfo() {
 		// 获取收费信息
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-	
+
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
@@ -53,17 +53,21 @@ public class Gathering {
 		ArrayList<String> chargeInfo = new ArrayList<String>();
 
 		for (ExpressPO i : po) {
-			double charge = Double.parseDouble(i.getChargeCollection().get(0));
+
+			double charge = 0;
+			if (!i.getChargeCollection().isEmpty())
+				charge = Double.parseDouble(i.getChargeCollection().get(0));
+			total += charge;
 			chargeInfo.add(i.getID() + " " + charge);
 		}
+		if (total == 0)
+			return null;
 		return chargeInfo;
 	}
 
 	public double gathering() {
 
-		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		
 
 		// 获取收费信息
 		ArrayList<ExpressPO> po = null;
@@ -84,6 +88,17 @@ public class Gathering {
 
 			charges.add(charge);
 			expressIDs.add(i.getID());
+
+			ArrayList<String> chargeCollection = new ArrayList<String>();
+			chargeCollection.add("0");
+			i.setChargeCollection(chargeCollection);
+			try {
+				expressData.updateChargeCollection(organizationVO.organizationID, i.getID(), chargeCollection);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 		Date d = new Date();

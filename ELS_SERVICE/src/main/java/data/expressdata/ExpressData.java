@@ -348,6 +348,8 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		String path = getPath(orderID);
 		File file = FileGetter.getFile(path);
 
+		if (!file.exists())
+			return false;
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
@@ -398,6 +400,8 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		String path = "orderInfo/" + organizationID + "/" + time + "-order.dat";
 		File file = FileGetter.getFile(path);
 
+		if (!file.exists())
+			return new ArrayList<OrderPO>();
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
@@ -497,20 +501,22 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	public static void main(String[] args) {
 		try {
 
-			File file = FileGetter.getFile("organizationInfo/organization.dat");
-			if (!file.exists()) {
-
-				file.getParentFile().mkdirs();
-				file.createNewFile();
-			}
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			// File file =
+			// FileGetter.getFile("organizationInfo/organization.dat");
+			// if (!file.exists()) {
+			//
+			// file.getParentFile().mkdirs();
+			// file.createNewFile();
+			// }
+			// ObjectOutputStream out = new ObjectOutputStream(new
+			// FileOutputStream(file));
 			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
 					new RepertoryPO("pig", "wo"));
-			ArrayList<OrganizationPO> pos = new ArrayList<OrganizationPO>();
-			pos.add(po);
-
-			out.writeObject(pos);
-			out.close();
+			// ArrayList<OrganizationPO> pos = new ArrayList<OrganizationPO>();
+			// pos.add(po);
+			//
+			// out.writeObject(pos);
+			// out.close();
 
 			File file2 = FileGetter.getFile("expressInfo/025001-express.dat");
 			if (!file2.exists()) {
@@ -520,9 +526,12 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
 			ExpressPO epo = new ExpressPO("狗剩", "KDY-00001", "2.5", new ArrayList<String>(), po,
 					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
+			ExpressPO epo1 = new ExpressPO("doge", "KDY-00002", "2.5", new ArrayList<String>(), po,
+					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
 
 			ArrayList<ExpressPO> epos = new ArrayList<ExpressPO>();
 			epos.add(epo);
+			epos.add(epo1);
 			out2.writeObject(epos);
 			out2.close();
 

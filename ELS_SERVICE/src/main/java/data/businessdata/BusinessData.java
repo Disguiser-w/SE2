@@ -289,7 +289,6 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					i.setDriver(po.getDriver());
 
 				}
-			System.out.println(vehiclePOs.size());
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(vehiclePOs);
 			out.close();
@@ -400,7 +399,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException {
 		String time = getTime();
-		String path = "distribute/" + organizationID + "/" + time + "-distribute.dat";
+		String path = "distributeInfo/" + organizationID + "/" + time + "-distribute.dat";
 		File file = FileGetter.getFile(path);
 		try {
 			ArrayList<DistributeReceiptPO> distributeReceiptPOs = null;

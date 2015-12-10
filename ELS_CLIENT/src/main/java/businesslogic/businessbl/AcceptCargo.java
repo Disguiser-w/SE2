@@ -34,7 +34,7 @@ public class AcceptCargo {
 		}
 	}
 
-	public boolean acceptCargo(String organizationID, String vehicleID, ArrayList<String> orderIDs) {
+	public boolean acceptCargo(String vehicleID, ArrayList<String> orderIDs) {
 
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
@@ -45,7 +45,7 @@ public class AcceptCargo {
 		try {
 			for (String i : orderIDs) {
 				expressData.changeState(OrderState.WAITING_DISTRIBUTE, i);
-				expressData.addHistory("快件已到达" + organizationVO.name + ",正准备派送", organizationID, i);
+				expressData.addHistory("快件已到达" + organizationVO.name + ",正准备派送", organizationVO.organizationID, i);
 			}
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
@@ -81,7 +81,7 @@ public class AcceptCargo {
 
 		OrganizationPO po = null;
 		try {
-			po = businessData.getBusinessInfo(organizationID, null).getOrganizationPO();
+			po = businessData.getBusinessInfo(organizationVO.organizationID, null).getOrganizationPO();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +93,8 @@ public class AcceptCargo {
 			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
 			String receiptID = "YYTDDD-" + organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
-					businessData.getVehicleInfo(organizationID, vehicleID), orderIDs, receiptID, ReceiptState.SUBMIT);
+					businessData.getVehicleInfo(organizationVO.organizationID, vehicleID), orderIDs, receiptID,
+					ReceiptState.SUBMIT);
 
 			result = businessData.addReceipt(organizationVO.organizationID, newPO);
 		} catch (Exception e) {
@@ -102,6 +103,19 @@ public class AcceptCargo {
 		}
 
 		return result;
+	}
+
+	public boolean orderExist(String id) {
+		try {
+			if (expressData.find(id) == null)
+				return false;
+			else
+				return true;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

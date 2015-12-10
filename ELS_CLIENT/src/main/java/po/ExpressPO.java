@@ -14,6 +14,7 @@ public class ExpressPO implements Serializable{
 	private ArrayList<String> submitedOrderID;
 
 	public ExpressPO() {
+		
 	}
 
 	public ExpressPO(String name, String ID, String serviceTime,

@@ -62,7 +62,7 @@ public class EnVehiclePanel extends JPanel {
 		setLayout(null);
 		addListener();
 
-		helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -70,14 +70,15 @@ public class EnVehiclePanel extends JPanel {
 
 		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 3.169642857142857 / 20),
 				(int) (width * 23.111395646606915 / 25), (int) (height * 13.214285714285714 / 20));
-		nextPageLabel.setBounds((int) (width * 13.412291933418693 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
-		previousPageLabel.setBounds((int) (width * 11.267605633802816 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
+
 		distributeButton.setBounds((int) (width * 22.43918053777209 / 25), (int) (height * 17.589285714285715 / 20),
 				(int) (width * 1.6965428937259923 / 25), (int) (height * 1.25 / 20));
 		confirmButton.setBounds((int) (width * 20.166453265044815 / 25), (int) (height * 17.589285714285715 / 20),
 				(int) (width * 1.6965428937259923 / 25), (int) (height * 1.25 / 20));
+		nextPageLabel.setBounds((int) (width * 13.412291933418693 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
+		previousPageLabel.setBounds((int) (width * 11.267605633802816 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.056338028169014 / 25)+1, (int) (height * 1.4732142857142858 / 20));
 		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),
@@ -117,20 +118,23 @@ public class EnVehiclePanel extends JPanel {
 				}
 			}
 		});
+
 		confirmButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!hasEnVehicle) {
 					hasEnVehicle = true;
 					result = controller.autoTruckLoading();
 					setInfos();
-				} else
+				} else {
 					warnning("已完成装车或不存在需要撞车的订单");
+					return;
+				}
 				if (result.size() == 0)
 					warnning("已完成装车或不存在需要撞车的订单");
 			}
 		});
-		distributeButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		distributeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				result = new ArrayList<String>();
 				setInfos();
 			}

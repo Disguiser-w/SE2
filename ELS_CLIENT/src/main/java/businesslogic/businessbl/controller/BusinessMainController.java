@@ -11,8 +11,11 @@ import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.VehiclePO;
 import presentation.businessui.BusinessFrame;
+import presentation.businessui.ChargeCollectionPanel;
 import presentation.businessui.DriverManagerPanel;
 import presentation.businessui.EnVehiclePanel;
+import presentation.businessui.OrderDistributePanel;
+import presentation.businessui.OrderReceiveManagerPanel;
 import presentation.businessui.VehicleManagerPanel;
 import vo.BusinessVO;
 import vo.DistributeReceiptVO;
@@ -37,9 +40,6 @@ public class BusinessMainController {
 	private BusinessFrame businessFrame;
 
 	public BusinessMainController(String businessID) {
-		// RMI
-		// businessData = new BusinessDataService_stub();
-
 		try {
 			businessData = DataFactory.getBusinessData();
 			businessVO = businessPOToVO(businessData.getBusinessInfo(null, businessID));
@@ -65,14 +65,11 @@ public class BusinessMainController {
 		// expressFrame.showFrame();
 		businessFrame = new BusinessFrame(businessVO);
 		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController));
-		// businessFrame.addFuncLabel(new
-		// OrderReceiveManagerPanel(acceptCargoController));
-		// businessFrame.addFuncLabel(new
-		// OrderDistributePanel(distributeorderController));
-		// businessFrame.addFuncLabel(new
-		// ChargeCollectionPanel(gatheringController));
-//		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame));
-//		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame));
+		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController));
+		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController));
+		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController));
+		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame));
+		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame));
 		businessFrame.showFrame();
 		businessFrame.setVisible(true);
 
@@ -80,8 +77,10 @@ public class BusinessMainController {
 
 	public static void updateBusinessVO() {
 		try {
+
 			businessVO = businessPOToVO(
 					businessData.getBusinessInfo(businessVO.organizationVO.organizationID, businessVO.ID));
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,12 +88,12 @@ public class BusinessMainController {
 	}
 
 	public static BusinessVO businessPOToVO(BusinessPO po) {
-		return new BusinessVO(po.getID(), po.getName(), po.getServiceTime(),
+		return new BusinessVO(po.getName(), po.getID(), po.getServiceTime(),
 				OrganizationBL.organizationPOToVO(po.getOrganizationPO()));
 	}
 
 	public static BusinessPO businessVOToPO(BusinessVO vo) {
-		return new BusinessPO(vo.ID, vo.name, vo.serviceTime, OrganizationBL.organizationVOToPO(vo.organizationVO));
+		return new BusinessPO(vo.name, vo.ID, vo.serviceTime, OrganizationBL.organizationVOToPO(vo.organizationVO));
 	}
 
 	public static OrderAcceptReceiptPO orderAcceptReceiptVOToPO(OrderAcceptReceiptVO vo) {
