@@ -32,6 +32,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		if (organizationID != null) {
 			String path = "businessInfo/" + organizationID + "-business.dat";
 			File file = FileGetter.getFile(path);
+			if (!file.exists())
+				return null;
 			try {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 				ArrayList<BusinessPO> businessPOs = (ArrayList<BusinessPO>) in.readObject();
@@ -75,7 +77,6 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
 			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
 			in.close();
 			for (VehiclePO i : vehiclePOs) {
@@ -130,27 +131,52 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public ArrayList<VehiclePO> getVehicleInfos(String organizationID) throws RemoteException {
-		String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
-		File file = FileGetter.getFile(path);
+		if (organizationID != null) {
+			String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
+			File file = FileGetter.getFile(path);
 
-		if (!file.exists()) {
-			return new ArrayList<VehiclePO>();
+			if (!file.exists()) {
+				return new ArrayList<VehiclePO>();
+			}
+
+			try {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
+				in.close();
+
+				return vehiclePOs;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("读写车辆信息失败");
+			}
+
+			return null;
+		} else {
+			String path = "vehicleInfo";
+			File[] files = FileGetter.getFile(path).listFiles();
+			ArrayList<VehiclePO> vehiclePOs = new ArrayList<VehiclePO>();
+
+			for (File i : files) {
+				try {
+					ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
+					ArrayList<VehiclePO> vehiclePO = (ArrayList<VehiclePO>) in.readObject();
+					in.close();
+
+					for (VehiclePO po : vehiclePO) {
+						vehiclePOs.add(po);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("读写车辆信息失败");
+				}
+
+				return vehiclePOs;
+			}
 		}
-
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			@SuppressWarnings("unchecked")
-			ArrayList<VehiclePO> vehiclePOs = (ArrayList<VehiclePO>) in.readObject();
-			in.close();
-
-			return vehiclePOs;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("读写车辆信息失败");
-		}
-
 		return null;
+
 	}
 
 	public boolean addEnVehicleReceipt(String organizationID, ArrayList<EnVehicleReceiptPO> pos)
@@ -372,7 +398,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) throws RemoteException {
 		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
 
-		File dir = FileGetter.getFile("gathering/");
+		File dir = FileGetter.getFile("gatheringInfo/");
 		for (File i : dir.listFiles()) {
 			File[] dirs = i.listFiles();
 			for (File j : dirs) {

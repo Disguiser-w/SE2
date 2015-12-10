@@ -1059,6 +1059,7 @@ public class VehicleManagerPanel extends JPanel {
 
 					String destinationCity = destination.getName().substring(0, name.length() - 3);
 					OrganizationVO local = BusinessMainController.businessVO.organizationVO;
+
 					DriverVO vo = driverVOs.get(driversBox.getSelectedIndex());
 					vo.isUsing = true;
 
