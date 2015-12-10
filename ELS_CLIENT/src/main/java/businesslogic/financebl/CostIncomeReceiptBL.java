@@ -25,12 +25,23 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	CollectionReceiptDataService collectionData;
 	PaymentReceiptDataService paymentData;
 	
-	public CostIncomeReceiptBL() throws MalformedURLException, RemoteException, NotBoundException {
+	public CostIncomeReceiptBL()  {
 		// TODO Auto-generated constructor stub
 		super();
-		costIncomeData=DataFactory.getCostIncomeData();
-		collectionData=DataFactory.getCollectionReceiptData();
-		paymentData=DataFactory.getPaymentReceiptData();
+		try {
+			collectionData=DataFactory.getCollectionReceiptData();
+			paymentData=DataFactory.getPaymentReceiptData();
+			costIncomeData=DataFactory.getCostIncomeData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -145,31 +156,8 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	
 	public static void main(String[] args){
 		CostIncomeReceiptBL bl;
-		try {
-			bl = new CostIncomeReceiptBL();
-			System.out.println("ID"+bl.getCostIncomeListID());
-
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		try {
-//			CostIncomeReceiptDataService costIncomeData=(CostIncomeReceiptDataService)Naming.lookup("rmi://172.26.209.182:8888/CostIncomeReceiptDataService");
-//			costIncomeData.creatCostIncomeList(new CostIncomeReceiptPO("CBSYB-20151129", "lll", null, null, 2222, 3333, 1111));
-//			ArrayList<CostIncomeReceiptPO> pos=costIncomeData.getAllCostIncomeList();
-//			for(CostIncomeReceiptPO p:pos){
-//				System.out.println("ID: "+p.getID());
-//			}
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (NotBoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		bl = new CostIncomeReceiptBL();
+		System.out.println("ID"+bl.getCostIncomeListID());
 
 		
 	}

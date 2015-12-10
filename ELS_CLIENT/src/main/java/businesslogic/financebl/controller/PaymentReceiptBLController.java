@@ -1,8 +1,5 @@
 package businesslogic.financebl.controller;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.PaymentReceiptVO;
@@ -13,7 +10,7 @@ public class PaymentReceiptBLController implements PaymentReceiptBLService{
 	
 	private PaymentReceiptBL paymentReceiptBL;
 	
-	public PaymentReceiptBLController() throws MalformedURLException, RemoteException, NotBoundException{
+	public PaymentReceiptBLController() {
 		paymentReceiptBL=new PaymentReceiptBL();
 	}
 

@@ -1,8 +1,5 @@
 package businesslogic.financebl.controller;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.AccountVO;
@@ -12,7 +9,7 @@ import businesslogicservice.financeblservice.AccountBLService;
 public class AccountBLController implements AccountBLService{
 	private AccountBL accountBL;
 	
-	public AccountBLController() throws MalformedURLException, RemoteException, NotBoundException{
+	public AccountBLController() {
 		accountBL=new AccountBL();
 	}
 

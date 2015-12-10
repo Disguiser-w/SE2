@@ -14,7 +14,7 @@ import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
 public class BusinessStatementReceiptBLController implements BusinessstatementReceiptBLService{
 
 	private BusinessStatementReceiptBL businessStatementReceiptBL;
-	public BusinessStatementReceiptBLController() throws MalformedURLException, RemoteException, NotBoundException{
+	public BusinessStatementReceiptBLController() {
 		 businessStatementReceiptBL=new BusinessStatementReceiptBL();
 	}
 	public BusinessStatementReceiptVO showBSList(String beginTime,

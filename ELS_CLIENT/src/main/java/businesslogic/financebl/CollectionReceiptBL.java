@@ -28,10 +28,22 @@ public class CollectionReceiptBL extends ReceiptBL {
 	BusinessDataService businessData;
 	
 	
-	public CollectionReceiptBL() throws Exception{
+	public CollectionReceiptBL(){
 		super();
-		collectionData=DataFactory.getCollectionReceiptData();
-		businessData=DataFactory.getBusinessData();
+		try {
+			collectionData=DataFactory.getCollectionReceiptData();
+			businessData=DataFactory.getBusinessData();
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**

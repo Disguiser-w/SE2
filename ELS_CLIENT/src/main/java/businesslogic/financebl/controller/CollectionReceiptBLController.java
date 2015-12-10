@@ -11,7 +11,7 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 
 	private CollectionReceiptBL collectionReceiptBL;
 	
-	public CollectionReceiptBLController() throws Exception{
+	public CollectionReceiptBLController(){
 		collectionReceiptBL=new CollectionReceiptBL();
 	}
 	public int creatCollection(CollectionReceiptVO vo) {

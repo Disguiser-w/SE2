@@ -3,10 +3,7 @@ package businesslogic.financebl;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
-
-import javax.xml.crypto.Data;
 
 import po.InitInfoPO;
 import vo.InitInfoVO;
@@ -31,14 +28,26 @@ public class InitialStockBL{
 	/**
 	 * 不过这么多东西怎么用RMI链接
 	 * */
-	public InitialStockBL() throws MalformedURLException, RemoteException, NotBoundException{
-		/*initData=DataFactory.getInitialStockData();
-		userData=DataFactory.getUserData();
-		organizationData=DataFactory.getOrganizationData();
-		businessData=DataFactory.getBusinessData();
-		repertoryData=DataFactory.getRepertoryData();
-		*/
-		accontData=DataFactory.getAccountData();
+	public InitialStockBL(){
+	
+		try {
+			/*initData=DataFactory.getInitialStockData();
+			userData=DataFactory.getUserData();
+			organizationData=DataFactory.getOrganizationData();
+			businessData=DataFactory.getBusinessData();
+			repertoryData=DataFactory.getRepertoryData();
+			*/
+			accontData=DataFactory.getAccountData();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
