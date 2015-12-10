@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,6 +20,14 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import presentation.financeui.FinanceFrame;
+import type.AuthorityType;
+import type.OrganizationType;
+import type.ProfessionType;
+import vo.AccountVO;
+import vo.OrganizationVO;
+import vo.RepertoryVO;
+import vo.UserVO;
+import vo.VehicleVO;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
@@ -76,26 +83,27 @@ public class InitialStockPanel_new extends JPanel{
 	ArrayList<ArrayList<String>> account=new ArrayList<ArrayList<String>>();
 	
 	//表格中数据从各个data中取出来
-	public InitialStockBLController controller;
-	public UserBL userController;
-	public OrganizationController organizationController;
-	public VehicleManagerController vehicleController;
-	public RepertoryBL repertoryController;
-	public AccountBLController accountController;
+	 InitialStockBLController controller;
+	 UserBL userController;
+	 OrganizationController organizationController;
+	 VehicleManagerController vehicleController;
+	 RepertoryBL repertoryController;
+	 AccountBLController accountController;
 	//财务主界面
 	public FinanceFrame financeFrame;
 	
 //	private LocationHelper helper;
 
-	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
-		this.controller=controller;
+//	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+//			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
+	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,AccountBLController accountController,FinanceFrame parent){	
+	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
-		this.organizationController=organizationController;
-		this.vehicleController=vehicleController;
-		this.repertoryController=repertoryController;
-		this.accountController= accountBLController;
+//		this.organizationController=organizationController;
+//		this.vehicleController=vehicleController;
+//		this.repertoryController=repertoryController;
+		this.accountController= accountController;
 		
 		InfoOKButton = new JButton("确认添加");
 		cancelButton = new JButton("返回");
@@ -167,7 +175,14 @@ public class InitialStockPanel_new extends JPanel{
 		//人员信息添加
 		humanInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+				changeTable(userTable);
+				int temp=user.size();
+				refreshUser(userController.showAllUsers());
+				um=new UserModel(user);
+				for(int i=0;i<temp;i++){
+					um.removeRow(0);
+				}
+				userTable.repaint();				
 			}
 		});
 		//机构信息添加
@@ -193,8 +208,13 @@ public class InitialStockPanel_new extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				changeTable(accountTable);
 				int temp=account.size();
-				
-				
+				System.out.println(accountController.showAll().size());
+				refreshAccount(accountController.showAll());
+				am=new AccountModel(account);
+				for(int i=0;i<temp;i++){
+					am.removeRow(0);
+				}
+				accountTable.repaint();				
 			}
 		});
 		 //确认添加
@@ -243,7 +263,6 @@ public class InitialStockPanel_new extends JPanel{
 					setBackground(Color.cyan);
 				else
 					setBackground(Color.white);
-
 				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			}
 		};
@@ -655,7 +674,7 @@ class AccountModel extends AbstractTableModel{
 		private static final long serialVersionUID = 1L;
 //		ArrayList<ArrayList<String>> account = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
-		String head[]={"账号名称","金额"};
+		String head[]={"账户名称","金额"};
 		
 		public AccountModel(ArrayList<ArrayList<String>> content){
 			account=content;
@@ -702,23 +721,102 @@ class AccountModel extends AbstractTableModel{
 
 
 /**
- * 人员表格信息
+ * 人员信息表格: "姓名","编号","职业类型","所属机构","权限","绩点"
+ * courier, driver, stockman, businessHallCounterman, intermediateCenterCounterman, administrator, financialStaff, manager;
+	快递员	 司机	  仓库管理员 		 营业厅业务员				 中转中心业务员，                    管理员			财务人员           	 总经理		
+ * lowest,administrator,commonFianacialStaff,highest;
+ *  最低权限, 管理员权限 , 普通财务人员权限,     最高权限（最高财务人员和总经理）
  * */
-
-
+     public void refreshUser(ArrayList<UserVO> vos){
+    	 for(UserVO v:vos){
+ 			ArrayList<String> lineInfo=new ArrayList<String>();
+ 			lineInfo.add(v.getName());
+ 			lineInfo.add(v.getID());
+ 			lineInfo.add(profession(v.getProfession()));
+ 			lineInfo.add(v.getOrganization());
+ 			lineInfo.add(authority(v.getAuthority()));
+ 			lineInfo.add(v.getGrades()+"");
+ 			user.add(lineInfo);
+    	 }
+   }
+     
 /**
- * 机构表格信息
+ * 机构表格信息: "机构名称","编号","类别"
+ * businessHall, intermediateCenter;
+//	营业厅                 中转中心
  * */
+     public void refreshOrganization(ArrayList<OrganizationVO> vos){
+    	 for(OrganizationVO v:vos){
+  			ArrayList<String> lineInfo=new ArrayList<String>();
+  			lineInfo.add(v.getName());
+  			lineInfo.add(v.getOrganizationID());
+  			lineInfo.add(category(v.getCategory()));
+  			organization.add(lineInfo);
+    	 }
+     }
+     
 /**
  * 车辆表格信息
+ * "编号","所属机构","司机编号","目的机构"
  * */
+     public void refreshVehicle(ArrayList<VehicleVO> vos){
+    	 for(VehicleVO v:vos){
+    		 ArrayList<String> lineInfo = new ArrayList<String>();
+    		 lineInfo.add(v.ID);
+    		 lineInfo.add(v.local.getOrganizationID());
+    		 lineInfo.add(v.driver.ID);
+    		 lineInfo.add(v.destination.getOrganizationID());
+    		 vehicle.add(lineInfo);
+    	 }
+     }
+     
 /**
- * 仓库初始信息
+ * 仓库初始信息： "仓库编号","仓库管理员编号","排数","架数","位数","警戒比例"
  * */
+     public void refreshRepertory(ArrayList<RepertoryVO> vos){
+    	 for(RepertoryVO v:vos){
+    		 ArrayList<String> lineInfo = new ArrayList<String>();
+    		 lineInfo.add(v.getRepertoryID());
+    		 lineInfo.add(v.getOwnerID());
+    		 lineInfo.add(v.getMaxRow()+"");
+    		 lineInfo.add(v.getMaxShelf()+"");
+    		 lineInfo.add(v.getMaxDigit()+"");
+    		 repertory.add(lineInfo);
+    	 }
+     }
+     
 /**
- * 账户信息
+ * 账户信息： "账户名称","金额"
  * */
+     public void refreshAccount(ArrayList<AccountVO> vos){
+    	 for(AccountVO v:vos){
+    		 ArrayList<String> lineInfo = new ArrayList<String>();
+    		 lineInfo.add(v.getName());
+    		 lineInfo.add(v.getMoney()+"");
+    		 account.add(lineInfo);
+    	 }
+     }
 
+     //职业枚举类转为string
+     public String profession(ProfessionType type){
+    	 int n = type.ordinal();
+ 		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员","财务人员","总经理"};
+ 		return professionNameList[n];
+     }
+     
+     //权限枚举类转为String
+     public String authority(AuthorityType type){
+    	 int n = type.ordinal();
+    	 String[] authorityList ={ "最低权限", "管理员权限" , "普通财务人员权限", "最高权限(最高财务人员和总经理)"};
+    	 return authorityList[n];
+     }
+     
+     //机构类型枚举类转为String
+     public String category(OrganizationType type){
+    	 int n = type.ordinal();
+    	 String[] category = {"营业厅","中转中心"};
+    	 return category[n];
+     }
 	/*public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 		InitialStockBLController controller = new InitialStockBLController();
 		AccountBLController accountBLController =new AccountBLController();

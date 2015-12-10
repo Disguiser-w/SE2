@@ -15,8 +15,12 @@ import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
 import po.AccountPO;
 import po.BusinessStatementReceiptPO;
 import po.CollectionReceiptPO;
@@ -71,6 +75,10 @@ public class FinanceMainController {
 	private  CostIncomeReceiptBLController costIncomeReceiptBLController;
 	private  BusinessStatementReceiptBLController businessStatementReceiptBLController;
 	private  InitialStockBLController initialStockBLController;
+	private UserBL userController;
+	 private OrganizationController organizationController;
+	 private VehicleManagerController vehicleController;
+	 private RepertoryBL repertoryController;
 	
 	private  FinanceFrame financeFrame;
 	/**
@@ -102,7 +110,11 @@ public class FinanceMainController {
 					costIncomeReceiptBLController=new CostIncomeReceiptBLController();
 					businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
 					initialStockBLController=new InitialStockBLController();
-			
+					userController=new UserBL();
+					/*	organizationController=new OrganizationController();
+					vehicleController=new VehicleManagerController();
+					repertoryController=new RepertoryBL("CK-00001");
+					*/
 				
 		
 				//初始化界面
@@ -115,7 +127,9 @@ public class FinanceMainController {
 //				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
-				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,financeFrame));
+//				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
+//						vehicleController,repertoryController,accountBLController,financeFrame));
+				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,accountBLController, financeFrame));
 				financeFrame.showFrame();
 				
 		

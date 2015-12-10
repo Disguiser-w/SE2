@@ -464,7 +464,7 @@ public class ReceiptPanel_new extends JPanel {
 			lineInfo.add(v.getRent()+"");
 			lineInfo.add(v.getFare()+"");
 			lineInfo.add(v.getSalary()+"");
-			lineInfo.add(v.getRent()+v.getCost()+v.getSalary()+"");
+			lineInfo.add(v.getRent()+v.getFare()+v.getSalary()+"");
 			lineInfo.add(v.getUserID());
 			lineInfo.add(EnumChange(v.getState()));
 			

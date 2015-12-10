@@ -52,19 +52,27 @@ public class InitialStockPanel_main extends JPanel {
 	
 	InitialStockModel im;
 	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
-	public InitialStockBLController controller;
-	public UserBL userController;
-	public OrganizationController organizationController;
-	public VehicleManagerController vehicleController;
-	public RepertoryBL repertoryController;
-	public AccountBLController accountController;
-	public FinanceFrame financeFrame;
+	 InitialStockBLController controller;
+	 UserBL userController;
+	 OrganizationController organizationController;
+	 VehicleManagerController vehicleController;
+	 RepertoryBL repertoryController;
+	 AccountBLController accountController;
+	 FinanceFrame financeFrame;
 	
 //	private LocationHelper helper;
 
 	
-	public InitialStockPanel_main(InitialStockBLController controller,FinanceFrame parent){
+//	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+//			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
+//			FinanceFrame parent){
+	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,AccountBLController accountController,FinanceFrame parent){
 		this.controller=controller;
+		this.userController=userController;
+//		this.organizationController=organizationController;
+//		this.vehicleController=vehicleController;
+//		this.repertoryController=repertoryController;
+		this.accountController=accountController;
 		this.financeFrame=parent;
 		newButton = new JButton("新建");
 		detailButton =new JButton("详情");
@@ -242,8 +250,9 @@ public class InitialStockPanel_main extends JPanel {
 	}
 
 	public void newInitInfoui() {
-		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
-				vehicleController,repertoryController,accountController, financeFrame));
+//		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
+//				vehicleController,repertoryController,accountController, financeFrame));
+		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,accountController, financeFrame));
 	}
 	
 	public void detailui(){
