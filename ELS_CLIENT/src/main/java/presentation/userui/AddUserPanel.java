@@ -262,8 +262,6 @@ public class AddUserPanel extends JPanel{
     //返回上一级界面
 	public void returnui() {
 		UserVO vo = fatherFrame.vo;
-		//fatherFrame.setVisible(false);
-		
 		AdminFrame newAdminFrame = new AdminFrame(vo);
 		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
 		newAdminFrame.showFrame();

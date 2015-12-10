@@ -39,6 +39,13 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 	/*在基础数据修改界面上，只有城市间距离有增删改查操作, 每次工资，基础月薪，运费系数只能被修改 */
 	
+	ManageFrame manageFrame;
+	
+	private PerWageBL perWageBL;
+	private BasicSalaryBL basicSalaryBL;
+	private CityDistanceBL distancesBL;
+	private CostBL baseFreightBL;
+	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 	
@@ -46,13 +53,6 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	int patternNum;	//patternNum表示是哪一种模式，0表示perWage模式, 1表示basicSalary模式, 2表示cityDistance模式, 3表示cost模式
 	boolean isFindDistanceBySinglePattern;	//isFindDistanceBySinglePattern表示是不是在城市距离界面下的单城市搜索模式
 	boolean isFindDistanceByBothPattern;	//isFindDistanceBySinglePattern表示是不是在城市距离界面下的双城市搜索模式
-	
-	ManageFrame manageFrame;
-	
-	private PerWageBL perWageBL;
-	private BasicSalaryBL basicSalaryBL;
-	private CityDistanceBL distancesBL;
-	private CostBL baseFreightBL;
 	
 	private JLabel perWageLabel;
 	private JLabel basicSalaryLabel;
@@ -349,23 +349,23 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 	
 	//给表加颜色，隔一行一个颜色
-		private void setTableColor(){
+	public void setTableColor(){
 			
-			tcr = new DefaultTableCellRenderer(){
-			
-				private static final long serialVersionUID = 6L;
-
-				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-						boolean hasFocus, int row, int column) {
-					if (row % 2 == 0)
-						setBackground(Color.cyan);
-					else
-						setBackground(Color.white);
+		tcr = new DefaultTableCellRenderer(){
 		
-					return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				}
-			};
-		}
+			private static final long serialVersionUID = 6L;
+
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+	
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+	}
 		
 	//设置边界
 	public void setBorder(){
@@ -406,6 +406,7 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 				(int) (PANEL_WIDTH * 4.3854033290653005 / 25), (int) (PANEL_HEIGHT * 1.3392857142857142 / 20));
 		queryLabel.setBounds((int) (PANEL_WIDTH * 21.286811779769526 / 25), (int) (PANEL_HEIGHT * 4.821428571428571 / 20),
 				(int) (PANEL_WIDTH * 1.6005121638924455 / 25), (int) (PANEL_HEIGHT * 1.2946428571428572 / 20));
+		
 		previousPageLabel.setBounds((int) (PANEL_WIDTH * 17.6696542893726 / 25), (int) (PANEL_HEIGHT * 17.857142857142858 / 20),
 				(int) (PANEL_WIDTH * 1.120358514724712 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
 		nextPageLabel.setBounds((int) (PANEL_WIDTH * 20.774647887323944 / 25), (int) (PANEL_HEIGHT * 17.857142857142858 / 20),
@@ -425,7 +426,6 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 		table.setRowSelectionAllowed(true);
         selectionMode = table.getSelectionModel();
         selectionMode.addListSelectionListener(this);
-        
 	}
 	
 	//重设要显示的表
@@ -475,7 +475,6 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 			column0.setCellRenderer(tcr);
 			column1.setCellRenderer(tcr);
 		}
-		
 	}
 
 	// 设置载入动态的内容
@@ -600,6 +599,7 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 		isFindDistanceByBothPattern = true;
 		System.out.println("双城市搜索下的城市间距离");
 	}
+	
 	
 	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){

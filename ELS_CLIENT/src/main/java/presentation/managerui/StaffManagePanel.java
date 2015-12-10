@@ -29,6 +29,7 @@ import javax.swing.table.TableColumn;
 
 
 
+
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
@@ -43,11 +44,11 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	
 	private UserBL userBL;
 	
-	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
-	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
-	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	
+	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
+	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
 	
 	private JLabel function;
 
@@ -62,6 +63,8 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 	private JTable allInfoTable;
 	private JTable findInfoTable;
 	private JLabel messageLabel;
+	private DefaultTableCellRenderer tcr;
+	
 	private JButton previousPage;
 	private JButton nextPage;
 
@@ -95,16 +98,8 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		findInfoTable = new JTable(findModel);
 		messageLabel = new JLabel();
         
-		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.setBackground(getBackground());
-		allInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.setBackground(getBackground());
-		findInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		//加监听
         deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int chosenRow = -1; 
@@ -191,6 +186,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		});
         
 		
+		//把组件加到Panel上
         setLayout(null);
 
         add(function);
@@ -205,16 +201,49 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
         add(previousPage);
         add(nextPage);
         
+        setVisible(true);
+        
+        //颜色、边界、位置、JTable上信息显示设置
+        setTableColor();
+		setBorder();
         setCmpLocation(allInfoTable);
         setBaseInfo(allInfoTable);
         setInfos();
 	}
 	
 	
+	//覆盖Selection事件被触发后原有的方法
 	public void valueChanged(ListSelectionEvent lse){
      	//System.out.println("你选了第"+allInfoTable.getSelectedRow()+"行");
 	}
 	
+	//给表加颜色，隔一行一个颜色
+	public void setTableColor(){
+			
+		tcr = new DefaultTableCellRenderer(){
+		
+			private static final long serialVersionUID = 6L;
+
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+	
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+	}
+	
+	//设置边界
+	public void setBorder(){
+		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	}
+		
+	//因为有不同类型的JTable传进来，每次重新设置表的位置	
 	public void setCmpLocation(JTable table){
 		
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
@@ -241,9 +270,13 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		table.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15,
 				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 12 / 20);
 		
+		table.setBackground(getBackground());
+		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
 		table.setRowSelectionAllowed(true);
         selectionMode = table.getSelectionModel();
         selectionMode.addListSelectionListener(this);
+        
 	}
 	
 	public void setBounds(int x, int y, int width, int height , JTable table) {
@@ -254,6 +287,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		repaint();
 	}
 	
+	//设置Table初始显示的信息
 	private void setBaseInfo(JTable table) {
 
 		table.getTableHeader().setReorderingAllowed(false);
@@ -278,22 +312,8 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 
 		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 10);
 
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			
-			private static final long serialVersionUID = 6L;
-
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-
 		tcr.setHorizontalAlignment(JLabel.CENTER);
+		
 		column0.setCellRenderer(tcr);
 		column1.setCellRenderer(tcr);
 		column2.setCellRenderer(tcr);
@@ -313,6 +333,8 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
 	
+	
+	//修改用户机构界面
 	public void modifyui(int chosenRow){
 		String userName;
 		String userID;
@@ -344,15 +366,7 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 		manageFrame.changePanel(new ModifyStaffOrganizationPanel(manageFrame, userName, userID, userProfession, userOldOrganization, userSalaryPlan, userAuthority, userGrade));
 	}
 	
-	public void searchui(){
-		this.remove(allInfoTable);
-		this.add(findInfoTable);
-		setCmpLocation(findInfoTable);
-        setBaseInfo(findInfoTable);
-        setInfos();
-        isFindPattern = true;
-	}
-	
+	//显示全部用户信息页面
 	public void allui(){
 		this.remove(findInfoTable);
 		this.add(allInfoTable);
@@ -362,28 +376,45 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
         isFindPattern = false;
 	}
 	
+	//显示搜索用户信息页面
+	public void searchui(){
+		this.remove(allInfoTable);
+		this.add(findInfoTable);
+		setCmpLocation(findInfoTable);
+        setBaseInfo(findInfoTable);
+        setInfos();
+        isFindPattern = true;
+	}
+	
+	
+	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
 		int n = profession.ordinal();
 		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员","财务人员","总经理"};
 		return professionNameList[n];
 	}
 	
+	//根据不同的薪水策略类型返回薪水策略名，给表去显示
 	public String salaryPlanName(SalaryPlanType salaryPlan){
 		int n = salaryPlan.ordinal();
 		String[] salaryPlanNameList = {"基础月薪+提成","计次提成","基础月薪"};
 		return salaryPlanNameList[n];
 	}
 	
+	//根据不同的权限返回权限名，给表去显示
 	public String authorityName(AuthorityType authority){
 		int n = authority.ordinal();
 		String[] authorityNameList = {"最低权限", "管理员权限","普通财务人员权限","最高权限"};
 		return authorityNameList[n];
 	}
 	
+	//出现错误时给用户的提示信息
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
+	
+	//全部用户信息对应的表的Model
 	public class AllMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = 4L;
@@ -452,7 +483,9 @@ public class StaffManagePanel extends JPanel implements ListSelectionListener{
 
 	}
 	
-public class FindMessageTableModel extends AbstractTableModel {
+	
+	//搜索用户信息对应的表的Model
+	public class FindMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = -4L;
 		

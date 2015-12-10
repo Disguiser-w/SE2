@@ -17,7 +17,7 @@ private static final long serialVersionUID = 189L;
 		addFuncLabel(new OrganizationManagePanel(this));
 		addFuncLabel(new CheckReceiptPanel());
 		addFuncLabel(new CheckOperatingPanel());
-		addFuncLabel(new CheckIncomePanel());
+		addFuncLabel(new CheckIncomePanel(this));
 		addFuncLabel(new BasicDataManagePanel(this));
 		showFrame();
 	}

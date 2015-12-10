@@ -153,13 +153,13 @@ public class ModifyPerWagePanel extends JPanel{
 	}
 	
 	
-	//新增成功时返回上一级界面，同时给用户提示信息
+	//修改成功时返回上一级界面，同时给用户提示信息
 	public void successModify(){
 		JOptionPane.showMessageDialog(null, "修改成功(●'◡'●)", "修改每次工资成功", JOptionPane.INFORMATION_MESSAGE);
 		returnui();
 	}
 	
-	//新增失败时返回上一级界面，同时给用户提示信息
+	//修改失败时返回上一级界面，同时给用户提示信息
 	public void failedModify(){
 		JOptionPane.showMessageDialog(null, "修改失败(T_T)", "修改每次工资失败", JOptionPane.INFORMATION_MESSAGE);
 		returnui();

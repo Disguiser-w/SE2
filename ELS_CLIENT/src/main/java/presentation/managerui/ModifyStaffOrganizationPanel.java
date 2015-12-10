@@ -83,8 +83,8 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		OKButton = new JButton("确认");
 		returnButton = new JButton("返回");
 		
-		setCmpLocation();
 		
+		//加监听
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String newOrganization = organizationField.getText();
@@ -106,6 +106,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
     		}
     	});
     	
+    	//把组件加到Panel上
 		setLayout(null);
 		
 		add(name);
@@ -127,8 +128,11 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		
 		setVisible(true);
 		
+		//位置设置
+		setCmpLocation();
     }
     
+    //设置位置
     public void setCmpLocation(){
     	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
@@ -147,7 +151,6 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		grade.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 38 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		
 		
 		nameField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 8 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
@@ -178,21 +181,25 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		repaint();
 	}
 
+    //返回上一级界面
     public void returnui(){
     	manageFrame.changePanel(new StaffManagePanel(manageFrame));
     }
     
+    //修改成功时返回上一级界面，同时给用户提示信息
 	public void successModify(){
 		returnui();
-		JOptionPane.showMessageDialog(null, "修改成功(●'◡'●)", "修改用户权限成功", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "修改成功(●'◡'●)", "为用户选择机构成功", JOptionPane.INFORMATION_MESSAGE);
 		
 	}
 	
+	//修改失败时返回上一级界面，同时给用户提示信息
 	public void failedModify(){
 		returnui();
-		JOptionPane.showMessageDialog(null, "修改失败(T_T)", "修改用户权限失败", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "修改失败(T_T)", "为用户选择机构失败", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	//出现错误时给用户的提示信息
 	public void warnning(String message){
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}

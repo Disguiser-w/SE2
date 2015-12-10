@@ -36,15 +36,15 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	
 	private static final long serialVersionUID = 2L;
 
-	AdminFrame fatherFrame;
+	private AdminFrame adminFrame;
 	
 	private UserBL userBL;
 	
-	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
-	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
-
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	
+	private int pageNum;	//pageNum用来计表格的页数，从0开始计数
+	private boolean isFindPattern;	//isFindPattern表示是不是搜索模式
 	
 	private JLabel function;
 
@@ -66,8 +66,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 
 	ListSelectionModel selectionMode;
 	
-	public UserMainPanel(AdminFrame frame) {
-		this.fatherFrame = frame;
+	public UserMainPanel(AdminFrame adminFrame) {
+		this.adminFrame = adminFrame;
 		
 		this.userBL = new UserBL();
 		
@@ -204,6 +204,8 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
         add(previousPage);
         add(nextPage);
         
+        setVisible(true);
+        
         //颜色、边界、位置、JTable上信息显示设置
         setBorder();
         setCmpLocation(allInfoTable);
@@ -219,17 +221,9 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	
 	//设置边界
 	public void setBorder(){
-		
 		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		allInfoTable.setBackground(getBackground());
-		allInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.setBackground(getBackground());
-		findInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	}
 	
 	//设置位置
@@ -260,6 +254,9 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		
 		table.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15,
 				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 12 / 20);
+		
+		table.setBackground(getBackground());
+		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		table.setRowSelectionAllowed(true);
         selectionMode = table.getSelectionModel();
@@ -348,8 +345,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		AddDialog addDialog = new AddDialog(addFrame);
 		addDialog.setFocusable(true);*/
 		
-		UserVO vo = fatherFrame.vo;
-		
+		UserVO vo = adminFrame.vo;
 		AdminFrame newAdminFrame = new AdminFrame(vo);
 		newAdminFrame.addFuncLabel(new AddUserPanel(newAdminFrame));
 		newAdminFrame.showFrame();
@@ -392,8 +388,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 			userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
 		}
 		
-		UserVO vo = fatherFrame.vo;
-		
+		UserVO vo = adminFrame.vo;
 		//跳转到modifyPanel，传给modifyPanel用户信息，显示在AdminFrame上
 		//由于这个方法是自己写的，所以没有用doge的changePanel方法
 		AdminFrame newAdminFrame = new AdminFrame(vo);
@@ -402,18 +397,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		
 	}
 	
-	//搜索模式对应的界面（更改JTable）
-	public void searchui(){
-		this.remove(allInfoTable);
-		this.add(findInfoTable);
-		setCmpLocation(findInfoTable);
-        setBaseInfo(findInfoTable);
-        setInfos();
-        isFindPattern = true;
-        updateUI();
-	}
-	
-	//全部信息模式对应的界面（更改JTable）
+	//显示全部用户信息页面
 	public void allui(){
 		this.remove(findInfoTable);
 		this.add(allInfoTable);
@@ -424,7 +408,18 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
         searchTextField.setText("用户编号");
         updateUI();
 	}
-
+	
+	//显示搜索用户信息页面
+	public void searchui(){
+		this.remove(allInfoTable);
+		this.add(findInfoTable);
+		setCmpLocation(findInfoTable);
+        setBaseInfo(findInfoTable);
+        setInfos();
+        isFindPattern = true;
+        updateUI();
+	}
+	
 	
 	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
@@ -453,7 +448,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	}
 
 	
-	//全部信息模式对应的表的Model
+	//全部用户信息对应的表的Model
 	public class AllMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = 4L;
@@ -519,7 +514,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 	}
 	
 	
-	//搜索信息模式对应的表的Model
+	//搜索用户信息对应的表的Model
 	public class FindMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = -4L;
@@ -584,6 +579,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 
 	}
 
+	
 /*	public class AddDialog extends JDialog{
 	
 		private static final long serialVersionUID = 11L;

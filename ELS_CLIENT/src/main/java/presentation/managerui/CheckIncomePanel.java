@@ -1,62 +1,138 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.receiptbl.getDate;
 
 public class CheckIncomePanel extends JPanel {
-	private JTable messageTable;
+	
+	private static final long serialVersionUID = 1L;
+	
+	private ManageFrame manageFrame;
+	
+	private CostIncomeReceiptBLController costIncomeReceiptController;
+	
+	private int PANEL_WIDTH = 720;
+	private int PANEL_HEIGHT = 480;
+	
+	private JLabel function;
+	
+	private JLabel costIncomeReceipt_ID;
+	private JLabel startDate;
+	private JLabel endDate;
+	private JLabel totalIncome;
+	private JLabel totalCost;
+	private JLabel totalProfit;
+	
+	private JTextField costIncomeReceipt_ID_Input;
+	private JTextField startDate_Input;
+	private JTextField endDate_Input;
+	private JTextField totalIncome_Input;
+	private JTextField totalCost_Input;
+	private JTextField totalProfit_Input;
+	
+	private String beginTime; 
+	private String endTime;
+	private String ID;
 
-	// 查询信息输入
-	private JTextField queryField;
+	public CheckIncomePanel(ManageFrame manageFrame){
+		
+		this.manageFrame  = manageFrame;
+		
+		this.costIncomeReceiptController = new CostIncomeReceiptBLController();
+		
+		function = new JLabel("成本收益表");
+		costIncomeReceipt_ID = new JLabel("成本收益表编号");
+		beginTime = "2010-01-01";
+		endTime = getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
+		ID = costIncomeReceiptController.getCostIncomeListID();
+		
+		startDate = new JLabel("开始时间");
+		endDate = new JLabel("结束时间");
+		totalCost = new JLabel("总收入");
+		totalIncome = new JLabel("总支出");
+		totalProfit = new JLabel("总利润");
 
-	// 查询按钮
-	private JButton queryButton;
-
-	// 上一面
-	private JLabel previousPageLabel;
-
-	// 下一面
-	private JLabel nextPageLabel;
-
-	// 位置设置
-//	private LocationHelper helper;
-
-	public CheckIncomePanel() {
-		messageTable = new JTable();
-		queryField = new JTextField();
-		queryButton = new JButton();
-		previousPageLabel = new JLabel();
-		nextPageLabel = new JLabel();
-
-		add(messageTable);
-		add(queryField);
-		add(queryButton);
-		add(previousPageLabel);
-		add(nextPageLabel);
-
-//		helper = new LocationHelper(this);
+		costIncomeReceipt_ID_Input = new JTextField(ID);
+		costIncomeReceipt_ID_Input.setEditable(false);
+		startDate_Input = new JTextField(beginTime);
+		startDate_Input.setEditable(false);
+		endDate_Input = new JTextField(endTime);
+		endDate_Input.setEditable(false);
+		double income = costIncomeReceiptController.getIncome();
+		totalCost_Input = new JTextField(income+"");
+		totalCost_Input.setEditable(false);
+		double cost = costIncomeReceiptController.getCost();
+		totalIncome_Input = new JTextField(cost+"");
+		totalIncome_Input.setEditable(false);
+		double profit = costIncomeReceiptController.getProfit(income, cost);
+		totalProfit_Input = new JTextField(profit+"");
+		totalProfit_Input.setEditable(false);
+		
+		
+		//把组件加到Panel上
 		setLayout(null);
+
+		add(function);
+		add(costIncomeReceipt_ID);
+		add(startDate);
+		add(endDate);
+		add(totalCost);
+		add(totalIncome);
+		add(totalProfit);
+		add(costIncomeReceipt_ID_Input);
+		add(startDate_Input);
+		add(endDate_Input);
+		add(totalCost_Input);
+		add(totalIncome_Input);
+		add(totalProfit_Input);
+		
+		//位置设置
+		setCmpLocation();
+	}
+
+	//设置位置
+	public void setCmpLocation() {
+		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
+				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+		
+		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
+				PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
+		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
+				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24,
+				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+		totalIncome.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		totalCost.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		totalProfit.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		
+		costIncomeReceipt_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 4,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		startDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 17 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		endDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 24,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		//
-		messageTable.setBounds((int) (width * 1.9846350832266326 / 25), (int) (height * 4.017857142857143 / 20),
-				(int) (width * 22.0550576184379 / 25), (int) (height * 13.258928571428571 / 20));
-		queryField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 1.5625 / 20),
-				(int) (width * 4.353393085787452 / 25), (int) (height * 1.3392857142857142 / 20));
-		queryButton.setBounds((int) (width * 21.286811779769526 / 25), (int) (height * 1.5625 / 20),
-				(int) (width * 1.6005121638924455 / 25), (int) (height * 1.2946428571428572 / 20));
-		previousPageLabel.setBounds((int) (width * 17.6696542893726 / 25), (int) (height * 17.857142857142858 / 20),
-				(int) (width * 1.120358514724712 / 25), (int) (height * 1.5178571428571428 / 20));
-		nextPageLabel.setBounds((int) (width * 20.774647887323944 / 25), (int) (height * 17.857142857142858 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
-
+		PANEL_WIDTH = width;
+		PANEL_HEIGHT = height;
+		setCmpLocation();
+		repaint();
 	}
 
+	
 }

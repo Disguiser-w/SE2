@@ -56,6 +56,8 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 	private JTable allInfoTable;
 	private JTable findInfoTable;
 	private JLabel messageLabel;
+	private DefaultTableCellRenderer tcr;
+	
 	private JButton previousPage;
 	private JButton nextPage;
 
@@ -87,17 +89,9 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 		findModel = new FindMessageTableModel();
 		findInfoTable = new JTable(findModel);
 		messageLabel = new JLabel();
-        
-		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.setBackground(getBackground());
-		allInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		allInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.setBackground(getBackground());
-		findInfoTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		findInfoTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
+		
+		//加监听
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				addui();
@@ -188,6 +182,8 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 			}
 		});
 		
+		
+		//把组件加到Panel上
 		setLayout(null);
 
         add(function);
@@ -203,16 +199,49 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
         add(previousPage);
         add(nextPage);
         
+        setVisible(true);
+        
+        //颜色、边界、位置、JTable上信息显示设置
+        setTableColor();
+		setBorder();
         setCmpLocation(allInfoTable);
         setBaseInfo(allInfoTable);
         setInfos();
 	}
 	
 	
+	//覆盖Selection事件被触发后原有的方法
 	public void valueChanged(ListSelectionEvent lse){
      	//System.out.println("你选了第"+allInfoTable.getSelectedRow()+"行");
 	}
 	
+	//给表加颜色，隔一行一个颜色
+	public void setTableColor(){
+			
+		tcr = new DefaultTableCellRenderer(){
+		
+			private static final long serialVersionUID = 6L;
+
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+	
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+	}
+	
+	//设置边界
+	public void setBorder(){
+		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	}
+		
+	//因为有不同类型的JTable传进来，每次重新设置表的位置
 	public void setCmpLocation(JTable table){
 		
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
@@ -241,6 +270,9 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 		table.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15,
 				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 12 / 20);
 		
+		table.setBackground(getBackground());
+		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
 		table.setRowSelectionAllowed(true);
         selectionMode = table.getSelectionModel();
         selectionMode.addListSelectionListener(this);
@@ -254,6 +286,7 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 		repaint();
 	}
 	
+	//设置Table初始显示的信息
 	private void setBaseInfo(JTable table) {
 
 		table.getTableHeader().setReorderingAllowed(false);
@@ -272,27 +305,12 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 	
 		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 10);
 
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			
-			private static final long serialVersionUID = 6L;
-
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-
 		tcr.setHorizontalAlignment(JLabel.CENTER);
+		
 		column0.setCellRenderer(tcr);
 		column1.setCellRenderer(tcr);
 		column2.setCellRenderer(tcr);
 		column3.setCellRenderer(tcr);
-	
 	}
 
 	// 设置载入动态的内容
@@ -305,6 +323,8 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
 	
+	
+	//新增机构界面
 	public void addui(){
 		manageFrame.changePanel(new AddOrganizationPanel(manageFrame, this));
 	}
@@ -331,6 +351,18 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 		manageFrame.changePanel(new ModifyOrganizationPanel(manageFrame, this, organizationCategory, organizationID, organizationName, organizationRepertory));
 	}*/
 	
+	
+	//显示全部机构页面
+	public void allui(){
+		this.remove(findInfoTable);
+		this.add(allInfoTable);
+		setCmpLocation(allInfoTable);
+        setBaseInfo(allInfoTable);
+        setInfos();
+        isFindPattern = false;
+	}
+	
+	//显示搜索机构页面
 	public void searchui(){
 		this.remove(allInfoTable);
 		this.add(findInfoTable);
@@ -340,15 +372,8 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
         isFindPattern = true;
 	}
 	
-	public void allui(){
-		this.remove(findInfoTable);
-		this.add(allInfoTable);
-		setCmpLocation(allInfoTable);
-        setBaseInfo(allInfoTable);
-        setInfos();
-        isFindPattern = false;
-	}
 
+	//根据不同的机构类型返回机构类型名，给表去显示
 	public String categoryName(OrganizationType organizationType){
 		if(organizationType.equals(OrganizationType.businessHall))
 			return "营业厅";
@@ -356,10 +381,13 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 			return "中转中心";
 	}
 	
+	//出现错误时给用户的提示信息
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "机构信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
+	
+	//全部机构信息对应的表的Model
 	public class AllMessageTableModel extends AbstractTableModel {
 		
 		private static final long serialVersionUID = 4L;
@@ -418,8 +446,10 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 
 	}
 	
-public class FindMessageTableModel extends AbstractTableModel {
-		
+	
+	//搜索机构信息对应的表的Model
+	public class FindMessageTableModel extends AbstractTableModel {
+			
 		private static final long serialVersionUID = -4L;
 		
 		Vector<OrganizationVO> organizationVector;
@@ -473,7 +503,8 @@ public class FindMessageTableModel extends AbstractTableModel {
 			else 
 				return "下属仓库";
 		}
-
+	
 	}
+	
 
 }
