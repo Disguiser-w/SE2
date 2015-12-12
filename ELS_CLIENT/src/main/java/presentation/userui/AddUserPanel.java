@@ -34,9 +34,10 @@ public class AddUserPanel extends JPanel{
     private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private String[] user_profession_type = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员","财务人员","总经理"};
+    private String[] user_profession_type = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","财务人员","总经理"};
     private String[] user_salaryPlan_type = {"基础月薪+提成","计次提成","基础月薪"};
-    private String[] user_authority_type = {"最低权限（普通人员权限）", "管理员权限","普通财务人员权限","最高权限（最高财务人员和总经理）"};
+    private String[] user_authority_type = {"最低权限（普通人员权限）", "普通财务人员权限", "最高权限（最高财务人员和总经理）"};
+    private String[] user_authority_type_for_financialStaff = {"普通财务人员权限", "最高权限（最高财务人员和总经理）"};
     
     private JLabel function;
     private JLabel user_profession;
@@ -57,15 +58,16 @@ public class AddUserPanel extends JPanel{
     private JButton infoOKButton;
     private JButton returnButton;
     
-    int proInt = 0;
-	int professionInt = 0;
-	int salaryPlanInt = 0;
-	int authorityInt = 0;
-    String userName = "";
-	String userID = "";
-	boolean validName = true;
-	String password = "";
-	String organization = "";
+    int proInt;
+	int professionInt;
+	int salaryPlanInt;
+	int authorityInt;
+    String userName;
+	String userID;
+	String password;
+	String organization;
+	boolean validName;
+	
 	
     public AddUserPanel(AdminFrame frame, UserMainPanel userMainPanel){
     	
@@ -94,7 +96,27 @@ public class AddUserPanel extends JPanel{
     	user_ID_Input = new JTextField("");
     	user_password_Input = new JTextField("123456");
     
-    	
+    	proInt = 0;
+		professionInt = 0;
+		salaryPlanInt = 0;
+		authorityInt = 0;
+	    userName = "";
+		userID = "";
+		validName = true;
+		password = "";
+		organization = "";
+		
+		//先设置为快递员的，就算管理员不点击快递员，其他内容也可以被填充
+		String IDPre = "KD";
+		user_salaryPlan_choose.setSelectedIndex(0);
+		user_salaryPlan_choose.setEditable(false);
+		user_authority_choose.setSelectedIndex(0);
+		user_authority_choose.setEditable(false);
+		String IDPost = userBL.getUserIDPost(ProfessionType.courier);
+		user_ID_Input.setText(IDPre+"-"+IDPost);
+		user_ID_Input.setEditable(false);
+		
+		
     	//加监听
     	user_profession_choose.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent event){
@@ -109,29 +131,45 @@ public class AddUserPanel extends JPanel{
     			else if(professionInt==1){	//司机
     				salaryPlanInt = 1;
     			}
-		    	else if(professionInt==5){	//管理员
+		    	else if(professionInt==5){	//财务人员
     				authorityInt = 1;
     			}
-    			else if(professionInt==6){	//财务人员
+    			else if(professionInt==6){	//总经理
     				authorityInt = 2;
     			}
-    			else if(professionInt==7){	//总经理
-    				authorityInt = 3;
+
+    			user_salaryPlan_choose.setSelectedIndex(salaryPlanInt);
+    			user_salaryPlan_choose.setEnabled(false);
+    			if(professionInt != 5){
+    				//除了财务人员之外的其他人，权限都可以被确定
+    				user_authority_choose.setSelectedIndex(authorityInt);
+    				user_authority_choose.setEnabled(false);
+    			}
+    			else{
+    				//如果是财务人员，权限只有2种
+    				remove(user_authority_choose);
+    				user_authority_choose = new JComboBox<String>(user_authority_type_for_financialStaff);
+    				user_authority_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
+    						PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+    				add(user_authority_choose);
+    				user_authority_choose.setEnabled(true);
+    				authorityInt = user_authority_choose.getSelectedIndex() + 1;
     			}
     			
-    			user_salaryPlan_choose.setSelectedIndex(salaryPlanInt);
-    			user_authority_choose.setSelectedIndex(authorityInt);
-    			
-    			String[] IDPreList = {"KD","SJ","CK","YYT","ZZZX","GLY","CW","JL"};
+    			String[] IDPreList = {"KD","SJ","CK","YYT","ZZZX","CW","JL"};
     			String IDPre = IDPreList[professionInt];
     			ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
 						ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
-						ProfessionType.administrator, ProfessionType.financialStaff, ProfessionType.manager};
+						ProfessionType.financialStaff, ProfessionType.manager};
     			
     			ProfessionType profession = professionList[professionInt];
     			String IDPost = userBL.getUserIDPost(profession);
     			
     			user_ID_Input.setText(IDPre+"-"+IDPost);
+    			user_ID_Input.setEditable(false);
+    			
+    			user_password_Input.setEditable(false);
+    			
     		}
     	});
     	
@@ -153,14 +191,10 @@ public class AddUserPanel extends JPanel{
 					validName = false;
 				}
 				
-				userID = user_ID_Input.getText();
-				password = user_password_Input.getText();
-				organization = "";
-				
 				professionInt = user_profession_choose.getSelectedIndex();
 				ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
 										ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
-										ProfessionType.administrator, ProfessionType.financialStaff, ProfessionType.manager};
+										ProfessionType.financialStaff, ProfessionType.manager};
 				ProfessionType profession = professionList[professionInt];
 				
 				salaryPlanInt = user_salaryPlan_choose.getSelectedIndex();
@@ -168,10 +202,14 @@ public class AddUserPanel extends JPanel{
 				SalaryPlanType salaryPlan = salaryPlanList[salaryPlanInt];
 				
 				authorityInt = user_authority_choose.getSelectedIndex();
-				AuthorityType[] authorityList = {AuthorityType.lowest, AuthorityType.administrator, 
-						AuthorityType.commonFianacialStaff, AuthorityType.highest};
+				AuthorityType[] authorityList = {AuthorityType.lowest,AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
 			
+				userID = user_ID_Input.getText();
+				password = user_password_Input.getText();
+				if(professionInt==5 || professionInt==6)
+				organization = "总部";
+				
 				if(validName){
 					UserVO uservo = new UserVO(userName, userID, password, profession, organization, salaryPlan,authority, 0);
 					int returnNum = userBL.addUser(uservo);

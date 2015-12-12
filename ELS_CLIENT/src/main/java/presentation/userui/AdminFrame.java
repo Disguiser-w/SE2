@@ -1,9 +1,9 @@
 package presentation.userui;
 
 import presentation.commonui.UserFrame;
-//import type.AuthorityType;
-//import type.ProfessionType;
-//import type.SalaryPlanType;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
 import vo.UserVO;
 
 public class AdminFrame extends UserFrame{

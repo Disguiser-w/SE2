@@ -349,7 +349,7 @@ public class MainFrame extends JFrame {
 						e.printStackTrace();
 					}
 					break;
-				case "GLY":
+				case "admin":
 					try {
 						UserMainController userMainController = new UserMainController(userID);
 					} catch (Exception e) {
