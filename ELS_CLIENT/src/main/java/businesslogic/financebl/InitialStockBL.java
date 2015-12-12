@@ -31,12 +31,11 @@ public class InitialStockBL{
 	public InitialStockBL(){
 	
 		try {
-			/*initData=DataFactory.getInitialStockData();
+			initData=DataFactory.getInitialStockData();
 			userData=DataFactory.getUserData();
 			organizationData=DataFactory.getOrganizationData();
 			businessData=DataFactory.getBusinessData();
 			repertoryData=DataFactory.getRepertoryData();
-			*/
 			accontData=DataFactory.getAccountData();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -54,10 +53,11 @@ public class InitialStockBL{
 	 * 期初建账
 	 * */
 
-	public int initInfo(String time) throws RemoteException {
+	public int initInfo(String time,InitInfoVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		InitInfoPO po=new InitInfoPO(time, userData.showAllUsers(), organizationData.showAllOrganizations(), businessData.getVehicleInfos(null), repertoryData.showAllRepertorys(), accontData.showAll());
-//		InitInfoPO po=FinanceMainController.ivoToPO(vo);
+		
+//		InitInfoPO po=new InitInfoPO(time, userData.showAllUsers(), organizationData.showAllOrganizations(), businessData.getVehicleInfos(null), repertoryData.showAllRepertorys(), accontData.showAll());
+		InitInfoPO po=FinanceMainController.ivoToPO(vo);
 		return initData.initInfo(po,time);
 	}
 

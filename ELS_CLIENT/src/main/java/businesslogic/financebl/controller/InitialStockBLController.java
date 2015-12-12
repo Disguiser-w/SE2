@@ -15,9 +15,9 @@ public class InitialStockBLController implements InitialStockBLService{
 		initialStockBL=new InitialStockBL();
 	}
 
-	public int initInfo(String Time) throws RemoteException {
+	public int initInfo(String Time,InitInfoVO vo) throws RemoteException {
 		// TODO Auto-generated method stub
-		return initialStockBL.initInfo(Time);
+		return initialStockBL.initInfo(Time,vo);
 	}
 
 	public InitInfoVO getInitInfo(String time) throws RemoteException {
@@ -29,5 +29,6 @@ public class InitialStockBLController implements InitialStockBLService{
 		// TODO Auto-generated method stub
 		return initialStockBL.getAllInitInfo();
 	}
+
 
 }

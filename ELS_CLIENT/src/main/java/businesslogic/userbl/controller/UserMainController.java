@@ -1,11 +1,15 @@
 package businesslogic.userbl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import businesslogic.datafactory.DataFactory;
 import dataservice.userdataservice.UserDataService;
-import dataservice.userdataservice.UserDataService_stub;
 import vo.UserVO;
 import po.UserPO;
+import presentation.userui.AdminFrame;
+import presentation.userui.UserMainPanel;
 
 public class UserMainController {
 	
@@ -15,12 +19,25 @@ public class UserMainController {
 	// UserData的初始化，UserVO的初始化在此进行
 	public UserMainController(String userID){
 	//RMI
-		userData = new UserDataService_stub();
+		try{
+			userData = DataFactory.getUserData();
+		}catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (RemoteException e1) {
+			e1.printStackTrace();
+		} catch (NotBoundException e1) {
+			e1.printStackTrace();
+		}
+		
 		try{
 			userVO = userPOToVO(userData.findUser(userID));
+			AdminFrame adminFrame = new AdminFrame(userVO);
+			adminFrame.addFuncLabel(new UserMainPanel(adminFrame));
+			adminFrame.showFrame();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
+		
 	}
 	
 	// vo和po的转化,static
