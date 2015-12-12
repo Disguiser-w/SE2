@@ -113,8 +113,8 @@ public class FinanceMainController {
 					userController=new UserBL();
 					organizationController=new OrganizationController();
 						vehicleController=new VehicleManagerController();
-						/*repertoryController=new RepertoryBL("CK-00001");
-					*/
+					/*	repertoryController=new RepertoryBL("");
+					 */
 				
 		
 				//初始化界面
@@ -127,9 +127,9 @@ public class FinanceMainController {
 //				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
-//				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
-//						vehicleController,repertoryController,accountBLController,financeFrame));
-				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,organizationController,vehicleController,accountBLController, financeFrame));
+				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
+						vehicleController,repertoryController,accountBLController,financeFrame));
+//				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,organizationController,vehicleController,accountBLController, financeFrame));
 				financeFrame.showFrame();
 				
 		

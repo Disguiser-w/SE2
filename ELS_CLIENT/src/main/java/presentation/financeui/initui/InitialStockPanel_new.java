@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -63,6 +65,11 @@ public class InitialStockPanel_new extends JPanel{
 	private JTable repertoryTable;
 	private JTable accountTable;
 	
+	private ArrayList<JCheckBox> selectedUser;
+	private ArrayList<JCheckBox> selectedOrganization;
+	private ArrayList<JCheckBox> selectedVehicle;
+	private ArrayList<JCheckBox> selectedRepertory;
+	private ArrayList<JCheckBox> selectedAccount;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -82,6 +89,13 @@ public class InitialStockPanel_new extends JPanel{
 	ArrayList<ArrayList<String>> repertory=new ArrayList<ArrayList<String>>();
 	ArrayList<ArrayList<String>> account=new ArrayList<ArrayList<String>>();
 	
+	//最终加入InitInfoVO中的数据
+	ArrayList<UserVO> init_user=new ArrayList<UserVO>();
+	ArrayList<OrganizationVO> init_organization=new ArrayList<OrganizationVO>();
+	ArrayList<VehicleVO> init_vehicle=new ArrayList<VehicleVO>();
+	ArrayList<RepertoryVO> init_repertory=new ArrayList<RepertoryVO>();
+	ArrayList<AccountVO> init_account=new ArrayList<AccountVO>();
+	
 	//表格中数据从各个data中取出来
 	 InitialStockBLController controller;
 	 UserBL userController;
@@ -94,17 +108,17 @@ public class InitialStockPanel_new extends JPanel{
 	
 //	private LocationHelper helper;
 
-//	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-//			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
 	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-			 VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){	
+			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
+//	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+//			 VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){	
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
 		this.organizationController=organizationController;
 		this.vehicleController=vehicleController;
-//		this.repertoryController=repertoryController;
-		this.accountController= accountController;
+		this.repertoryController=repertoryController;
+		this.accountController= accountBLController;
 		
 		InfoOKButton = new JButton("确认添加");
 		cancelButton = new JButton("返回");
@@ -128,6 +142,28 @@ public class InitialStockPanel_new extends JPanel{
 		repertoryTable = new JTable(rm);
 		am =new AccountModel(account);
 		accountTable =new JTable(am);
+		
+		//复选框的初始化
+		selectedUser=new ArrayList<JCheckBox>();
+		for(int i=0;i<8;i++){
+			selectedUser.add(new JCheckBox());
+		}
+		selectedOrganization=new ArrayList<JCheckBox>();
+		for(int i=0;i<8;i++){
+			selectedOrganization.add(new JCheckBox());
+		}
+		selectedVehicle=new ArrayList<JCheckBox>();
+		for(int i=0;i<8;i++){
+			selectedVehicle.add(new JCheckBox());
+		}
+		selectedRepertory=new ArrayList<JCheckBox>();
+		for(int i=0;i<8;i++){
+			selectedRepertory.add(new JCheckBox());
+		}
+		selectedAccount=new ArrayList<JCheckBox>();
+		for(int i=0;i<8;i++){
+			selectedAccount.add(new JCheckBox());
+		}
 		
 		addListener();
 		
@@ -160,8 +196,8 @@ public class InitialStockPanel_new extends JPanel{
 		add(accountTable);		
 //		helper = new LocationHelper(this);
 		
-		currentTable = accountTable;
-		currentTableHeader = accountTable.getTableHeader();
+		currentTable = userTable;
+		currentTableHeader = userTable.getTableHeader();
 		setTableColor();
 		setCmpLocation(currentTable);
 		setBaseInfo(currentTable);
@@ -171,10 +207,11 @@ public class InitialStockPanel_new extends JPanel{
 
 	}
 	 
+	 //监听方法
 	public void addListener(){
-		
-		//人员信息添加
+		//人员信息显示
 		humanInfo.addMouseListener(new MouseAdapter() {
+			//显示当前所有user信息
 			public void mouseClicked(MouseEvent e) {
 				changeTable(userTable);
 				int temp=user.size();
@@ -183,10 +220,10 @@ public class InitialStockPanel_new extends JPanel{
 				for(int i=0;i<temp;i++){
 					um.removeRow(0);
 				}
-				userTable.repaint();				
-			}
-		});
-		//机构信息添加
+				userTable.repaint();	
+			}			
+		});		
+		//机构信息显示
 		organizationInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				changeTable(organizationTable);
@@ -199,7 +236,7 @@ public class InitialStockPanel_new extends JPanel{
 				organizationTable.repaint();
 			}
 		});
-		//车辆信息添加
+		//车辆信息显示
 		vehicleInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				changeTable(vehicleTable);
@@ -213,13 +250,13 @@ public class InitialStockPanel_new extends JPanel{
 				vehicleTable.repaint();
 			}
 		});
-		//仓库初始信息添加
+		//仓库初始信息显示
 		stockInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
 			}
 		});
-		//账户信息添加
+		//账户信息显示
 		accountInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				changeTable(accountTable);
@@ -233,11 +270,11 @@ public class InitialStockPanel_new extends JPanel{
 				accountTable.repaint();				
 			}
 		});
-		 //确认添加
+		 //添加信息（通过复选框选择后确认添加------暂时不使用复选框）
 		 InfoOKButton.addActionListener(new ActionListener() {
-
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO 自动生成的方法存根
+					addInfo(currentTable);
 				}
 			});
 			
@@ -267,8 +304,47 @@ public class InitialStockPanel_new extends JPanel{
 			});
 		 
 	 }
-
 	
+	//选中添加信息的具体方法
+	public void addInfo(JTable table){
+		int row=table.getSelectedRow();
+		if(row==-1){
+			JOptionPane.showMessageDialog(null, "请选择需要添加的信息！", "提示",
+					JOptionPane.CLOSED_OPTION);
+		}
+		else{
+			//当前表格为人员表格
+			if(table.equals(userTable)){
+				String ID=um.getValueAt(row, 1);
+				if(ID==null){
+					JOptionPane.showMessageDialog(null,"请选择需要添加的人员！", "提示",
+							JOptionPane.CLOSED_OPTION);
+				}
+				else{
+				UserVO vo=userController.findUser(ID);
+				init_user.add(vo);
+				JOptionPane.showMessageDialog(null, "添加人员成功！", "提示",
+						JOptionPane.CLOSED_OPTION);
+				}
+			}
+			
+			//当前表格为机构表格
+			else if(table.equals(organizationTable)){
+				String ID=om.getValueAt(row, 1);
+				if(ID==null){
+					JOptionPane.showMessageDialog(null,"请选择需要添加的人员！", "提示",
+							JOptionPane.CLOSED_OPTION);
+				}
+				else{
+					OrganizationVO vo=organizationController.findOrganization(ID);
+					
+				}
+				}
+			}
+		}
+	
+	
+
 	public void setTableColor(){
 		tcr = new DefaultTableCellRenderer(){
 
@@ -312,13 +388,13 @@ public class InitialStockPanel_new extends JPanel{
 		table.setBounds(PANEL_WIDTH *3/ 32, PANEL_HEIGHT * 3 / 14+PANEL_HEIGHT *3/ 50,
 				PANEL_WIDTH *44 /50 , PANEL_HEIGHT *30/ 50-PANEL_HEIGHT *3/ 50);
 		
-		currentTableHeader.setColumnModel(table.getColumnModel());
-		currentTableHeader.setBounds(PANEL_WIDTH *3/ 32, PANEL_HEIGHT * 3 / 14,
+		table.getTableHeader().setColumnModel(table.getColumnModel());
+		table.getTableHeader().setBounds(PANEL_WIDTH *3/ 32, PANEL_HEIGHT * 3 / 14,
 				PANEL_WIDTH *44 /50 , PANEL_HEIGHT *3/ 50);
 		
 		table.setBackground(getBackground());
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		currentTableHeader.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		currentTableHeader.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		table.setRowSelectionAllowed(true);
         selectionModel = table.getSelectionModel();
@@ -331,9 +407,9 @@ public class InitialStockPanel_new extends JPanel{
 					table.getTableHeader().setReorderingAllowed(false);
 					table.getTableHeader().setResizingAllowed(false);
 
-					table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
+					table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) *1/8 );
 					tcr.setHorizontalAlignment(JLabel.CENTER);
-					
+					//人员 6列
 					if(table.equals(userTable)){
 						TableColumn column1 = userTable.getColumnModel().getColumn(0);
 						TableColumn column2 = userTable.getColumnModel().getColumn(1);
@@ -358,6 +434,7 @@ public class InitialStockPanel_new extends JPanel{
 						column6.setCellRenderer(tcr);
 
 					}
+					//机构 3列
 					else if(table.equals(organizationTable)){
 					TableColumn column1 = organizationTable.getColumnModel().getColumn(0);
 					TableColumn column2 = organizationTable.getColumnModel().getColumn(1);
@@ -373,7 +450,7 @@ public class InitialStockPanel_new extends JPanel{
 					column2.setCellRenderer(tcr);
 					column3.setCellRenderer(tcr);
 					}
-					
+					//车辆 4列
 					else if(table.equals(vehicleTable)){
 						TableColumn column1 = vehicleTable.getColumnModel().getColumn(0);
 						TableColumn column2 = vehicleTable.getColumnModel().getColumn(1);
@@ -390,7 +467,7 @@ public class InitialStockPanel_new extends JPanel{
 						column3.setCellRenderer(tcr);
 						column4.setCellRenderer(tcr);
 					}
-					
+					//仓库 6列
 					else if(table.equals(repertoryTable)){
 						TableColumn column1 = repertoryTable.getColumnModel().getColumn(0);
 						TableColumn column2 = repertoryTable.getColumnModel().getColumn(1);
@@ -414,6 +491,7 @@ public class InitialStockPanel_new extends JPanel{
 						column6.setCellRenderer(tcr);					
 					}
 					
+					//账户 2列
 					else{
 						TableColumn column1 = accountTable.getColumnModel().getColumn(0);
 						TableColumn column2 = accountTable.getColumnModel().getColumn(1);
@@ -448,7 +526,7 @@ public class InitialStockPanel_new extends JPanel{
 		add(currentTable);
 		setCmpLocation(table);
 		setBaseInfo(currentTable);
-		repaint();
+		currentTable.repaint();
 	}
 
 	
@@ -487,7 +565,7 @@ public class InitialStockPanel_new extends JPanel{
 				return 0;
 			}
 			else{
-			return user.size();
+			return 8;
 			}
 		}
 
@@ -497,13 +575,10 @@ public class InitialStockPanel_new extends JPanel{
 		}
 		
 		public String getValueAt(int row, int col) {
-			if(user==null){
-				System.out.println("null");
+			if(row>user.size()-1){
 				return null;
 			}
-			else{
 			return user.get(row).get(col);
-			}
 		}
 
 		public String getColumnName(int col) {
@@ -540,7 +615,7 @@ public class InitialStockPanel_new extends JPanel{
 					return 0;
 				}
 				else{
-				return organization.size();
+				return 8;
 				}
 			}
 
@@ -550,13 +625,10 @@ public class InitialStockPanel_new extends JPanel{
 			}
 			
 			public String getValueAt(int row, int col) {
-				if(organization==null){
-					System.out.println("null");
+				if(row>organization.size()-1){
 					return null;
 				}
-				else{
 				return organization.get(row).get(col);
-				}
 			}
 
 			public String getColumnName(int col) {
@@ -590,12 +662,8 @@ public class InitialStockPanel_new extends JPanel{
 			//行数
 			public int getRowCount() {
 				// TODO Auto-generated method stub
-				if(vehicle==null){
-					return 0;
-				}
-				else{
-				return vehicle.size();
-				}
+				return 8;
+				
 			}
 
 			public int getColumnCount() {
@@ -604,13 +672,10 @@ public class InitialStockPanel_new extends JPanel{
 			}
 			
 			public String getValueAt(int row, int col) {
-				if(vehicle==null){
-					System.out.println("null");
+				if(row>vehicle.size()-1){
 					return null;
 				}
-				else{
 				return vehicle.get(row).get(col);
-				}
 			}
 
 			public String getColumnName(int col) {
@@ -645,12 +710,7 @@ public class InitialStockPanel_new extends JPanel{
 			//行数
 			public int getRowCount() {
 				// TODO Auto-generated method stub
-				if(repertory==null){
-					return 0;
-				}
-				else{
-				return repertory.size();
-				}
+				return 8;
 			}
 
 			public int getColumnCount() {
@@ -659,13 +719,10 @@ public class InitialStockPanel_new extends JPanel{
 			}
 			
 			public String getValueAt(int row, int col) {
-				if(repertory==null){
-					System.out.println("null");
+				if(row>repertory.size()-1){
 					return null;
 				}
-				else{
 				return repertory.get(row).get(col);
-				}
 			}
 
 			public String getColumnName(int col) {
@@ -698,12 +755,7 @@ class AccountModel extends AbstractTableModel{
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			if(account==null){
-				return 0;
-			}
-			else{
-			return account.size();
-			}
+			return 8;
 		}
 
 		public int getColumnCount() {
@@ -712,13 +764,10 @@ class AccountModel extends AbstractTableModel{
 		}
 		
 		public String getValueAt(int row, int col) {
-			if(account==null){
-				System.out.println("null");
+			if(row>account.size()-1){
 				return null;
 			}
-			else{
 			return account.get(row).get(col);
-			}
 		}
 
 		public String getColumnName(int col) {
@@ -880,5 +929,23 @@ column2.setCellRenderer(tcr);
 
 }
 */
+     
+     /*	public AuthorityType getAuthorityType(String str){
+		if(str.equals("最低权限")){
+			return AuthorityType.lowest;
+		}
+		else if(str.equals("管理员权限")){
+			return AuthorityType.administrator;
+		}
+		else if(str.equals("普通财务人员权限")){
+			return AuthorityType.commonFianacialStaff;
+		}
+		else{
+			return AuthorityType.highest;
+		}
+	}
+	*/
+
+	
 
 }

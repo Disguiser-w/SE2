@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 public class InitialStockBLService_driver {
 	public void drive(InitialStockBLService ibs) throws RemoteException{
 		String time="20150101";
-		ibs.initInfo(time);
+		ibs.initInfo(time,null);
 		ibs.getInitInfo(time);
 		ibs.getAllInitInfo();		
 	}

@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.userbl.UserBL;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
@@ -337,6 +338,14 @@ public class MainFrame extends JFrame {
 					BusinessMainController businessMainController = new BusinessMainController(userID);
 					break;
 				// 来这里加吧，上面的 uservo通过 logvo.uservo得到
+				case "CW":
+					try {
+						FinanceMainController financeMainController = new FinanceMainController(userID);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
 				case "":
 					break;
 

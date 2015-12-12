@@ -59,10 +59,10 @@ public class InitialStockPanel_main extends JPanel {
 //	private LocationHelper helper;
 
 	
-//	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-//			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
-//			FinanceFrame parent){
-	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){
+	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
+			FinanceFrame parent){
+//	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){
 		this.controller=controller;
 		this.userController=userController;
 		this.organizationController=organizationController;
@@ -246,9 +246,7 @@ public class InitialStockPanel_main extends JPanel {
 	}
 
 	public void newInitInfoui() {
-//		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
-//				vehicleController,repertoryController,accountController, financeFrame));
-		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,vehicleController,accountController, financeFrame));
+		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,vehicleController,repertoryController,accountController, financeFrame));
 	}
 	
 	public void detailui(){
