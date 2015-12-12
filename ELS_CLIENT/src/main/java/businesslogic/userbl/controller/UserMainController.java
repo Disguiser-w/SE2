@@ -31,9 +31,7 @@ public class UserMainController {
 		
 		try{
 			userVO = userPOToVO(userData.findUser(userID));
-			AdminFrame adminFrame = new AdminFrame(userVO);
-			adminFrame.addFuncLabel(new UserMainPanel(adminFrame));
-			adminFrame.showFrame();
+			new AdminFrame(userVO);
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}

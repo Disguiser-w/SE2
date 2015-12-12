@@ -26,7 +26,8 @@ public class AddUserPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
-	AdminFrame fatherFrame;
+	AdminFrame adminFrame;
+	UserMainPanel userMainPanel;
 	
 	UserBL userBL;
 	
@@ -66,8 +67,10 @@ public class AddUserPanel extends JPanel{
 	String password = "";
 	String organization = "";
 	
-    public AddUserPanel(AdminFrame frame){
-    	this.fatherFrame = frame;
+    public AddUserPanel(AdminFrame frame, UserMainPanel userMainPanel){
+    	
+    	this.adminFrame = frame;
+    	this.userMainPanel = userMainPanel;
     	
     	this.userBL = new UserBL();
     	
@@ -261,10 +264,7 @@ public class AddUserPanel extends JPanel{
     
     //返回上一级界面
 	public void returnui() {
-		UserVO vo = fatherFrame.uservo;
-		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
-		newAdminFrame.showFrame();
+		adminFrame.changePanel(userMainPanel);
 	}
 
 	

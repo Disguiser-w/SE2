@@ -11,14 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import type.AuthorityType;
-import vo.UserVO;
 import businesslogic.userbl.UserBL;
 
 public class ModifyUserAuthorityPanel extends JPanel{
 
 	private static final long serialVersionUID = 15L;
 
-	AdminFrame fatherFrame;
+	AdminFrame adminFrame;
+	UserMainPanel  userMainPanel;
 	
 	UserBL userBL;
 	
@@ -43,8 +43,10 @@ public class ModifyUserAuthorityPanel extends JPanel{
     private JButton OKButton;
     private JButton returnButton;
 	
-    public ModifyUserAuthorityPanel(AdminFrame frame, String userName, String userID, String userProfession, String userOrganization, String userSalaryPlan){
-    	this.fatherFrame = frame;
+    public ModifyUserAuthorityPanel(AdminFrame frame, UserMainPanel userMainPanel, String userName, String userID, String userProfession, String userOrganization, String userSalaryPlan){
+    	
+    	this.adminFrame = frame;
+    	this.userMainPanel = userMainPanel;
     	
     	this.userBL = new UserBL();
     	
@@ -182,10 +184,7 @@ public class ModifyUserAuthorityPanel extends JPanel{
     
     //返回上一级界面
 	public void returnui() {
-		UserVO vo = fatherFrame.uservo;
-		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
-		newAdminFrame.showFrame();
+		adminFrame.changePanel(userMainPanel);
 	}
 
 	

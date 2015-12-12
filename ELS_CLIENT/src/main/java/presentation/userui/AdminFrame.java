@@ -18,6 +18,9 @@ public class AdminFrame extends UserFrame{
 		this.uservo = vo;
 		
 		setMessage(vo.getName(), vo.getID());
+		
+		addFuncLabel(new UserMainPanel(this));
+		showFrame();
 	}
 	
 	/*public static void main(String[] args){

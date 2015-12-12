@@ -114,8 +114,13 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 				}
 				//System.out.println("要删除编号为"+ID+"的员工");
 				if(chosenRow != -1){
-					userBL.deleteUser(ID);
-					updateUI();//刷新
+					if(ID.startsWith("GLY-")){
+						warnning("不可以删除管理员哦！(●'◡'●)");
+					}
+					else{
+						userBL.deleteUser(ID);
+						updateUI();//刷新
+					}
 				}
 				else{
         			warnning("没有选择要删除的用户");
@@ -345,10 +350,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		AddDialog addDialog = new AddDialog(addFrame);
 		addDialog.setFocusable(true);*/
 		
-		UserVO vo = adminFrame.uservo;
-		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new AddUserPanel(newAdminFrame));
-		newAdminFrame.showFrame();
+		adminFrame.changePanel(new AddUserPanel(adminFrame, this));
 	}
 
 	//修改用户信息界面
@@ -388,13 +390,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 			userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
 		}
 		
-		UserVO vo = adminFrame.uservo;
-		//跳转到modifyPanel，传给modifyPanel用户信息，显示在AdminFrame上
-		//由于这个方法是自己写的，所以没有用doge的changePanel方法
-		AdminFrame newAdminFrame = new AdminFrame(vo);
-		newAdminFrame.addFuncLabel(new ModifyUserAuthorityPanel(newAdminFrame, userName, userID, userProfession, userOrganization, userSalaryPlan));
-		newAdminFrame.showFrame();
-		
+		adminFrame.changePanel(new ModifyUserAuthorityPanel(adminFrame, this, userName, userID, userProfession, userOrganization, userSalaryPlan));
 	}
 	
 	//显示全部用户信息页面
