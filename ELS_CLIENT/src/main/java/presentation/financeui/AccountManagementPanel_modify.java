@@ -117,7 +117,6 @@ public class AccountManagementPanel_modify extends JPanel{
 			else{
 				AccountVO accountVO=new AccountVO(nameInit, Double.parseDouble(money));
 				int result=controller.modifyAccount(accountVO, name);
-//				System.out.println(accountVO.getName()+" "+name);
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);

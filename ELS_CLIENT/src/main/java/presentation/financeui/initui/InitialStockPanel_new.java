@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ import type.AuthorityType;
 import type.OrganizationType;
 import type.ProfessionType;
 import vo.AccountVO;
+import vo.InitInfoVO;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
@@ -34,6 +36,7 @@ import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
 import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.receiptbl.getDate;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
 
@@ -43,6 +46,8 @@ public class InitialStockPanel_new extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private JLabel completeLabel;
 	private JButton InfoOKButton;
 	private JButton cancelButton;
 	private JButton next;
@@ -57,7 +62,9 @@ public class InitialStockPanel_new extends JPanel{
 	private JLabel stockInfo;
 	private JLabel accountInfo;
 	
+	
 	private JTable currentTable;
+	@SuppressWarnings("unused")
 	private JTableHeader currentTableHeader;
 	private JTable userTable;
 	private JTable organizationTable;
@@ -96,6 +103,8 @@ public class InitialStockPanel_new extends JPanel{
 	ArrayList<RepertoryVO> init_repertory=new ArrayList<RepertoryVO>();
 	ArrayList<AccountVO> init_account=new ArrayList<AccountVO>();
 	
+	InitInfoVO initVO=new InitInfoVO();
+	
 	//表格中数据从各个data中取出来
 	 InitialStockBLController controller;
 	 UserBL userController;
@@ -110,8 +119,6 @@ public class InitialStockPanel_new extends JPanel{
 
 	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
-//	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-//			 VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){	
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
@@ -120,6 +127,7 @@ public class InitialStockPanel_new extends JPanel{
 		this.repertoryController=repertoryController;
 		this.accountController= accountBLController;
 		
+		completeLabel  = new JLabel("建账完成");
 		InfoOKButton = new JButton("确认添加");
 		cancelButton = new JButton("返回");
 		next = new JButton("上一页");
@@ -172,6 +180,7 @@ public class InitialStockPanel_new extends JPanel{
 
 		setLayout(null);
 
+		add(completeLabel);
 		add(InfoOKButton);
 		add(cancelButton);
 		add(next);
@@ -280,10 +289,26 @@ public class InitialStockPanel_new extends JPanel{
 			
 		 //返回
 			cancelButton.addActionListener(new ActionListener() {
-				
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
 					financeFrame.toMainPanel();
+				}
+			});
+			
+			//期初建账完成(存储期初信息)
+			completeLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					initVO=new InitInfoVO(getDate.getdate(), init_user, init_organization, init_vehicle, init_repertory, init_account);
+					/*if(init_account.size()==0||init_organization.size()==0||init_repertory.size()==0
+							||init_user.size()==0||init_vehicle.size()==0){
+						JOptionPane.showMessageDialog(null,"输入的期初信息不完整（一共有五项哟）！", "提示",
+								JOptionPane.CLOSED_OPTION);
+					}
+					else{
+					*/
+					System.out.println(getDate.getdate());
+						controller.initInfo(initVO,getDate.getdate());
+//					}
 				}
 			});
 
@@ -325,6 +350,9 @@ public class InitialStockPanel_new extends JPanel{
 				init_user.add(vo);
 				JOptionPane.showMessageDialog(null, "添加人员成功！", "提示",
 						JOptionPane.CLOSED_OPTION);
+				um.removeRow(row);
+				userTable.repaint();
+			
 				}
 			}
 			
@@ -332,14 +360,78 @@ public class InitialStockPanel_new extends JPanel{
 			else if(table.equals(organizationTable)){
 				String ID=om.getValueAt(row, 1);
 				if(ID==null){
-					JOptionPane.showMessageDialog(null,"请选择需要添加的人员！", "提示",
+					JOptionPane.showMessageDialog(null,"请选择需要添加的机构！", "提示",
 							JOptionPane.CLOSED_OPTION);
 				}
 				else{
 					OrganizationVO vo=organizationController.findOrganization(ID);
-					
+					init_organization.add(vo);
+					JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
+							JOptionPane.CLOSED_OPTION);
+					om.removeRow(row);
+					organizationTable.repaint();
 				}
 				}
+			
+			//当前表格为车辆表格
+			else if(table.equals(vehicleTable)){
+				String ID=vm.getValueAt(row, 0);
+				if(ID==null){
+					JOptionPane.showMessageDialog(null, "请选择需要添加的车辆！", "提示",
+							JOptionPane.CLOSED_OPTION);
+					}
+				else{
+					ArrayList<VehicleVO> all=vehicleController.getVehicleInfo();
+					for(VehicleVO v:all){
+						if(v.ID.equals(ID)){
+							init_vehicle.add(v);
+							JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
+									JOptionPane.CLOSED_OPTION);
+							vm.removeRow(row);
+							vehicleTable.repaint();
+						}
+					}
+				}
+			}
+			
+			//当前表格为库存表格
+			else if(table.equals(repertoryTable)){
+				String ID=rm.getValueAt(row, 0);
+				if(ID==null){
+					JOptionPane.showMessageDialog(null, "请选择需要添加的仓库！", "提示",
+							JOptionPane.CLOSED_OPTION);
+				}
+				else{
+					ArrayList<RepertoryVO> all=repertoryController.showAllRepertorys();
+					for(RepertoryVO v:all){
+						if(v.getRepertoryID().equals(ID)){
+							init_repertory.add(v);
+							JOptionPane.showMessageDialog(null, "添加仓库成功！", "提示",
+									JOptionPane.CLOSED_OPTION);
+							rm.removeRow(row);
+							repertoryTable.repaint();
+						}
+					}
+				}
+			}
+			
+			//当前表格为账户表格
+			else{
+				String name=am.getValueAt(row, 0);
+				if(name==null){
+					JOptionPane.showMessageDialog(null, "请选择需要添加的账户！", "提示",
+							JOptionPane.CLOSED_OPTION);
+				}
+				else{
+					AccountVO  vo=accountController.findbyName(name);
+					init_account.add(vo);
+					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
+							JOptionPane.CLOSED_OPTION);
+					am.removeRow(row);
+					accountTable.repaint();
+				}
+			}
+			
 			}
 		}
 	
@@ -374,6 +466,8 @@ public class InitialStockPanel_new extends JPanel{
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
 		accountInfo.setBounds(PANEL_WIDTH * 100 / 180, PANEL_HEIGHT * 5 / 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+		completeLabel.setBounds(PANEL_WIDTH *31/ 36, PANEL_HEIGHT / 24,
+				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		InfoOKButton.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *40 / 48,
 				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *2 / 24);
 		cancelButton.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 40 / 48,

@@ -276,7 +276,7 @@ public class InitialStockPanel_main extends JPanel {
 		public int getRowCount() {
 			// TODO Auto-generated method stub
 
-			return c.size();
+			return 10;
 		}
 
 		public int getColumnCount() {
@@ -286,6 +286,9 @@ public class InitialStockPanel_main extends JPanel {
 		}
 		
 		public String getValueAt(int row, int col) {
+			if(row>c.size()-1){
+				return null;
+			}
 			return c.get(row).get(col);
 		}
 
@@ -301,6 +304,10 @@ public class InitialStockPanel_main extends JPanel {
 		public void removeRow(int row) {
 			c.remove(row);
 		}
+		
+	}
+	
+	public void refreshTable(){
 		
 	}
 

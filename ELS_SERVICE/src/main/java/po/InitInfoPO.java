@@ -1,22 +1,17 @@
 package po;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class InitInfoPO extends UnicastRemoteObject{
+public class InitInfoPO extends UnicastRemoteObject implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// 机构信息
-	// 人员信息
-	// 车辆信息
-	// 库存信息
-	// 账户信息
-	ArrayList<AccountPO> accout;
-	String date;
+	private String date;
 	private ArrayList<AccountPO>  accoutPOs;
 	private ArrayList<OrganizationPO> organizationPOs;
 	private ArrayList<VehiclePO> vehiclePOs;
@@ -25,12 +20,12 @@ public class InitInfoPO extends UnicastRemoteObject{
 	
 	
 	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs) throws RemoteException{
-		super();
 		this.date=date;
 		this.userPOs=userPOs;
 		this.organizationPOs=organizationPOs;
 		this.vehiclePOs=vehiclePOs;
 		this.repertoryPOs=repertoryPOs;
+		this.accoutPOs=accoutPOs;
 	}
 	
 	   //人员信息
@@ -58,8 +53,4 @@ public class InitInfoPO extends UnicastRemoteObject{
 		public String getDate(){
 			return date;
 		}
-		
-	public ArrayList<AccountPO> getAccount() {
-		return accout;
-	}
 }

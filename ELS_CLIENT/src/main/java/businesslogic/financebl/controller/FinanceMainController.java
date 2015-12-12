@@ -18,6 +18,7 @@ import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
@@ -38,6 +39,7 @@ import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
 import presentation.financeui.ReceiptPanel_new;
 import presentation.financeui.initui.InitialStockPanel_main;
+import type.AuthorityType;
 import type.ReceiptType;
 import vo.AccountVO;
 import vo.BusinessStatementReceiptVO;
@@ -79,6 +81,8 @@ public class FinanceMainController {
 	 private OrganizationController organizationController;
 	 private VehicleManagerController vehicleController;
 	 private RepertoryBL repertoryController;
+	 
+	 private UserVO user;
 	
 	private  FinanceFrame financeFrame;
 	/**
@@ -92,6 +96,7 @@ public class FinanceMainController {
 			costincomeData=DataFactory.getCostIncomeData();
 			initData=DataFactory.getInitialStockData();
 			accountData=DataFactory.getAccountData();
+			userData=DataFactory.getUserData();
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -118,19 +123,27 @@ public class FinanceMainController {
 				
 		
 				//初始化界面
-				UserVO user=new UserVO("本宝宝", "CW-00001", "123456", null, null, null, null, 0);
+				user=ManageMainController.userPOToVO(userData.findUser(financeID));
 				financeFrame =new FinanceFrame(user);
+				if(user.getAuthority().equals(AuthorityType.highest)){
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController,financeFrame));
-//				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, costIncomeReceiptBLController));
 				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));
-//				financeFrame.addFuncLabel(new CollectionReceiptPanel(collectionReceiptBLController,financeFrame));
-//				financeFrame.addFuncLabel(new PaymentReceiptPanel(paymentReceiptBLController));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
 				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
 						vehicleController,repertoryController,accountBLController,financeFrame));
 //				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,organizationController,vehicleController,accountBLController, financeFrame));
 				financeFrame.showFrame();
+				}
+				else{
+					financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));
+					financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
+					financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
+					financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
+							vehicleController,repertoryController,accountBLController,financeFrame));
+//					financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,organizationController,vehicleController,accountBLController, financeFrame));
+					financeFrame.showFrame();
+				}
 				
 		
 //		try {
@@ -439,9 +452,9 @@ public class FinanceMainController {
 	 * */
 	 public static InitInfoPO ivoToPO(InitInfoVO vo) {
 		// TODO Auto-generated method stub
-		if(vo==null)
+		if(vo==null){
 			return null;
-		
+		}
 		//-----------------------------------------需要的参数------------------------------------------------------------
 		ArrayList<UserVO> userVOs=vo.getUserVOs();
 		ArrayList<UserPO> userPOs;
@@ -506,18 +519,22 @@ public class FinanceMainController {
 			for(AccountVO v:accountVOs){
 				AccountPO po=new AccountPO(v.getName(), v.getMoney());
 				accountPOs.add(po);
+				System.out.println("hhh"+accountPOs.get(0).getName());
 			}
 		}
 		
 		InitInfoPO initPO;
-		try {
-			initPO = new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
-			return initPO;
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	
+			try {
+				initPO = new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+				return initPO;
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+			
+		
 	
 	}
 	
@@ -584,9 +601,5 @@ public class FinanceMainController {
 		}
 		return vos;
 	}
-	
-	
-	public static void main(String[] args) throws Exception{
-		new FinanceMainController("CW-00001");
-	}
+
 	}
