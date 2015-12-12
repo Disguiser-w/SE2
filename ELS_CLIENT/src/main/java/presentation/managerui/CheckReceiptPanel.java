@@ -9,6 +9,9 @@ import javax.swing.JTextField;
 import presentation.commonui.LocationHelper;
 
 public class CheckReceiptPanel extends JPanel {
+	
+	private static final long serialVersionUID = 2489522262816361616L;
+	
 	// 刷新
 	private JLabel refreshLabel;
 	// 时间

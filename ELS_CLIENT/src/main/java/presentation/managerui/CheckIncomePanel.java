@@ -11,8 +11,6 @@ public class CheckIncomePanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ManageFrame manageFrame;
-	
 	private CostIncomeReceiptBLController costIncomeReceiptController;
 	
 	private int PANEL_WIDTH = 720;
@@ -38,13 +36,11 @@ public class CheckIncomePanel extends JPanel {
 	private String endTime;
 	private String ID;
 
-	public CheckIncomePanel(ManageFrame manageFrame){
-		
-		this.manageFrame  = manageFrame;
+	public CheckIncomePanel(){
 		
 		this.costIncomeReceiptController = new CostIncomeReceiptBLController();
 		
-		function = new JLabel("成本收益表");
+		function = new JLabel("查看成本收益表");
 		costIncomeReceipt_ID = new JLabel("成本收益表编号");
 		beginTime = "2010-01-01";
 		endTime = getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
