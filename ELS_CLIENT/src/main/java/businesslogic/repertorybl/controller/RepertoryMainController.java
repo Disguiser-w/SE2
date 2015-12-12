@@ -1,8 +1,14 @@
 package businesslogic.repertorybl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import businesslogic.datafactory.DataFactory;
 import po.UserPO;
+import presentation.repertoryui.RepertoryFrame;
+import presentation.userui.AdminFrame;
+import presentation.userui.UserMainPanel;
 import vo.UserVO;
 import dataservice.userdataservice.UserDataService;
 import dataservice.userdataservice.UserDataService_stub;
@@ -15,12 +21,23 @@ public class RepertoryMainController {
 	// UserData的初始化，UserVO的初始化在此进行
 	public RepertoryMainController(String stockManID){
 	//RMI
-		userData = new UserDataService_stub();
+		try{
+			userData = DataFactory.getUserData();
+		}catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (RemoteException e1) {
+			e1.printStackTrace();
+		} catch (NotBoundException e1) {
+			e1.printStackTrace();
+		}
+		
 		try{
 			stockManVO = userPOToVO(userData.findUser(stockManID));
+			new RepertoryFrame(stockManVO);
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
+		
 	}
 	
 	// vo和po的转化,static

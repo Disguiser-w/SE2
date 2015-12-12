@@ -20,7 +20,10 @@ import javax.swing.JTextField;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.financebl.controller.FinanceMainController;
+import businesslogic.managebl.controller.ManageMainController;
+import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
+import businesslogic.userbl.controller.UserMainController;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
 import vo.LogVO;
@@ -346,9 +349,30 @@ public class MainFrame extends JFrame {
 						e.printStackTrace();
 					}
 					break;
-				case "":
+				case "GLY":
+					try {
+						UserMainController userMainController = new UserMainController(userID);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
-
+				case "JL":
+					try {
+						ManageMainController manageMainController = new ManageMainController(userID);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				case "CK":
+					try {
+						RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
 				default:
 					System.out.println("该类人员不存在，请联系管理员");
 				}

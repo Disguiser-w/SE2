@@ -1,7 +1,10 @@
 package businesslogic.managebl.controller;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import businesslogic.datafactory.DataFactory;
 import po.BasicSalaryPO;
 import po.CityDistancePO;
 import po.CostPO;
@@ -9,6 +12,7 @@ import po.OrganizationPO;
 import po.PerWagePO;
 import po.RepertoryPO;
 import po.UserPO;
+import presentation.managerui.ManageFrame;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
@@ -28,7 +32,7 @@ public class ManageMainController {
 	public static CostDataService costData;
 	public static PerWageDataService perWageData;
 	public static OrganizationDataService organizationData;
-	public static UserDataService manageData;
+	public static UserDataService userData;
 	
 	public static BasicSalaryController basicSalaryController;
 	public static CityDistanceController cityDistanceController;
@@ -41,29 +45,37 @@ public class ManageMainController {
 	
 	public ManageMainController(String managerID){
 		// RMI
-		basicSalaryData = new BasicSalaryDataService_stub();
-		cityDistanceData = new CityDistanceDataService_stub();
-		costData = new CostDataService_stub();
-		perWageData = new PerWageDataService_stub();
-		organizationData = new OrganizationDataService_stub();
-		manageData  = new UserDataService_stub();
-		
 		try{
-			manageVO = userPOToVO(manageData.findUser(managerID));
-		}catch(RemoteException exception){
-			exception.printStackTrace();
+			basicSalaryData = DataFactory.getBasicSalaryData();
+			cityDistanceData = DataFactory.getCityDistanceData();
+			costData = DataFactory.getCostData();
+			perWageData = DataFactory.getPerWageData();
+			organizationData = DataFactory.getOrganizationData();
+			userData  = DataFactory.getUserData();
+		}catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (RemoteException e1) {
+			e1.printStackTrace();
+		} catch (NotBoundException e1) {
+			e1.printStackTrace();
 		}
-		
-		//初始化8个controller
-		basicSalaryController = new BasicSalaryController();
-		cityDistanceController = new CityDistanceController();
-		costController = new CostController();
-		perWageController = new PerWageController();
-		organizationController = new OrganizationController();
-		checkBusinessStatementReceiptController = new CheckBusinessStatementReceiptController();
-		checkCostIncomeReceiptController = new CheckCostIncomeReceiptController();
-		reviewReceiptController = new ReviewReceiptController();
-		
+			
+			//初始化8个controller
+			basicSalaryController = new BasicSalaryController();
+			cityDistanceController = new CityDistanceController();
+			costController = new CostController();
+			perWageController = new PerWageController();
+			organizationController = new OrganizationController();
+			checkBusinessStatementReceiptController = new CheckBusinessStatementReceiptController();
+			checkCostIncomeReceiptController = new CheckCostIncomeReceiptController();
+			reviewReceiptController = new ReviewReceiptController();
+			
+			try{
+				manageVO = userPOToVO(userData.findUser(managerID));
+				new ManageFrame(manageVO);
+			}catch(RemoteException exception){
+				exception.printStackTrace();
+			}
 		
 	}
 	

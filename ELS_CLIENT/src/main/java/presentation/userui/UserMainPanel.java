@@ -345,7 +345,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 		AddDialog addDialog = new AddDialog(addFrame);
 		addDialog.setFocusable(true);*/
 		
-		UserVO vo = adminFrame.vo;
+		UserVO vo = adminFrame.uservo;
 		AdminFrame newAdminFrame = new AdminFrame(vo);
 		newAdminFrame.addFuncLabel(new AddUserPanel(newAdminFrame));
 		newAdminFrame.showFrame();
@@ -388,7 +388,7 @@ public class UserMainPanel extends JPanel implements ListSelectionListener{
 			userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
 		}
 		
-		UserVO vo = adminFrame.vo;
+		UserVO vo = adminFrame.uservo;
 		//跳转到modifyPanel，传给modifyPanel用户信息，显示在AdminFrame上
 		//由于这个方法是自己写的，所以没有用doge的changePanel方法
 		AdminFrame newAdminFrame = new AdminFrame(vo);

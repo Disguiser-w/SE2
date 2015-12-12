@@ -123,7 +123,7 @@ public class AddUserPanel extends JPanel{
     			String IDPre = IDPreList[professionInt];
     			ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
 						ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
-    					ProfessionType.financialStaff, ProfessionType.administrator,ProfessionType.manager};
+						ProfessionType.administrator, ProfessionType.financialStaff, ProfessionType.manager};
     			
     			ProfessionType profession = professionList[professionInt];
     			String IDPost = userBL.getUserIDPost(profession);
@@ -157,7 +157,7 @@ public class AddUserPanel extends JPanel{
 				professionInt = user_profession_choose.getSelectedIndex();
 				ProfessionType[] professionList = {ProfessionType.courier, ProfessionType.driver,
 										ProfessionType.stockman,ProfessionType.businessHallCounterman, ProfessionType.intermediateCenterCounterman, 
-				    					ProfessionType.financialStaff, ProfessionType.administrator,ProfessionType.manager};
+										ProfessionType.administrator, ProfessionType.financialStaff, ProfessionType.manager};
 				ProfessionType profession = professionList[professionInt];
 				
 				salaryPlanInt = user_salaryPlan_choose.getSelectedIndex();
@@ -261,7 +261,7 @@ public class AddUserPanel extends JPanel{
     
     //返回上一级界面
 	public void returnui() {
-		UserVO vo = fatherFrame.vo;
+		UserVO vo = fatherFrame.uservo;
 		AdminFrame newAdminFrame = new AdminFrame(vo);
 		newAdminFrame.addFuncLabel(new UserMainPanel(newAdminFrame));
 		newAdminFrame.showFrame();
