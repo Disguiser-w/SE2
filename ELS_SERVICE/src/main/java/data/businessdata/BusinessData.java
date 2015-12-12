@@ -672,6 +672,29 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		return 0;
 	}
 
+	public int getNumOfDrivers(String organizationID) throws RemoteException {
+		String path = "driverInfo/" + organizationID + "-driver.dat";
+		File file = FileGetter.getFile(path);
+
+		if (!file.exists())
+			return 0;
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+			ArrayList<DriverPO> driverPOs = (ArrayList<DriverPO>) in.readObject();
+			in.close();
+
+			return driverPOs.size();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("车辆信息读写失败");
+		}
+
+		return 0;
+	}
+
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
 		String path = "organizationInfo/organization.dat";
 		File file = FileGetter.getFile(path);

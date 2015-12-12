@@ -86,4 +86,15 @@ public class DriverManager {
 		return result;
 	}
 
+	public int getNumOfDriver() {
+		int num = 0;
+		try {
+			num = businessData.getNumOfDrivers();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return num;
+	}
+
 }

@@ -118,4 +118,17 @@ public class AcceptCargo {
 		return false;
 	}
 
+	public boolean vehicleExist(String vehicleID) {
+		try {
+			if (businessData.getVehicleInfo(null, vehicleID) == null)
+				return false;
+			else
+				return true;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

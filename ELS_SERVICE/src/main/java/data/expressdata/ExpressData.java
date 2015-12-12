@@ -186,6 +186,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		String path = "expressInfo/" + organizationID + "-express.dat";
 		File file = FileGetter.getFile(path);
 		try {
+			if (!file.exists())
+				return new ArrayList<ExpressPO>();
+
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
 			in.close();

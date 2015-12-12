@@ -108,6 +108,6 @@ public class ExpressMainController {
 
 	// test
 	public static void main(String[] args) {
-		new ExpressMainController("KDY-00002");
+		new ExpressMainController("KD-00001");
 	}
 }

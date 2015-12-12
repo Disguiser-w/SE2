@@ -2,6 +2,9 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -47,6 +50,7 @@ public class OrderReceiveManagerPanel extends JPanel {
 	private JLabel tableHead;
 
 	private int num;
+	private boolean isFirstTime;
 
 	// 定为
 	private LocationHelper helper;
@@ -107,10 +111,9 @@ public class OrderReceiveManagerPanel extends JPanel {
 		orderNumField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-//		helper = new LocationHelper(this);
-
+		// helper = new LocationHelper(this);
+		isFirstTime = true;
 		setLayout(null);
-		setBaseInfo();
 		addListener();
 	}
 
@@ -150,19 +153,53 @@ public class OrderReceiveManagerPanel extends JPanel {
 		setInfos();
 	}
 
-	private void setBaseInfo() {
+	public void paintComponent(Graphics g) {
+		if (isFirstTime) {
+			isFirstTime = false;
+			setInfos();
+		}
+		super.paintComponent(g);
+
+	}
+
+	private void setBaseInfos() {
 		timeField.setText(getDate());
 		timeField.setEditable(false);
 
 		localField.setText(BusinessMainController.businessVO.organizationVO.organizationID);
 		localField.setEditable(false);
+
+		// 设置成不可编辑不可改变位置，大小
+		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		messageTable.getTableHeader().setReorderingAllowed(false);
+		messageTable.getTableHeader().setResizingAllowed(false);
+
+		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
+
+		messageTable.setRowHeight(messageTable.getHeight() / 8);
+
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+
+		tcr.setHorizontalAlignment(JLabel.CENTER);
+		column1.setCellRenderer(tcr);
+
 	}
 
 	private void setInfos() {
-		messageTable.setModel(new MessageTableModel());
-		setTableInfos();
 		numOfPage.setText(num + 1 + "/" + ((orderNum.size() - 1) / 8 + 1));
-		repaint();
+		messageTable.setModel(new MessageTableModel());
+		setBaseInfos();
+
 	}
 
 	private void addListener() {
@@ -189,62 +226,52 @@ public class OrderReceiveManagerPanel extends JPanel {
 				}
 			}
 		});
-		// confirmButton.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
-		// if (orderNum.size() == 0) {
-		// warnning("当前订单数为0");
-		// return;
-		// }
-		//
-		// setInfos();
-		// }
-		// });
-		//
-		// inputConfirmButton.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent e) {
-		// String orderNumber = orderNumField.getText();
-		// if (orderNumber.equals("")) {
-		// warnning("请输入订单号");
-		// return;
-		// }
-		// if (!controller.orderExist(orderNumber)) {
-		// warnning("不存在此订单号，请检查订单号是否有误");
-		// return;
-		// }
-		//
-		// orderNum.add(orderNumber);
-		// setInfos();
-		// orderNumField.setText("");
-		// }
-		// });
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (orderNum.size() == 0) {
+					warnning("当前订单数为0");
+					return;
+				}
 
-	}
+				String vehicleID = vehicleIDField.getText();
+				if (vehicleID.equals("")) {
+					warnning("请输入车辆ID");
+					return;
+				}
 
-	private void setTableInfos() {
+				if (!controller.vehicleExist(vehicleID)) {
+					warnning("该车辆不存在,请检查车辆ID是否有误");
+					return;
+				}
 
-		// 设置成不可编辑不可改变位置，大小
-		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		messageTable.getTableHeader().setReorderingAllowed(false);
-		messageTable.getTableHeader().setResizingAllowed(false);
+				if (controller.acceptCargo(vehicleID, orderNum)) {
+					success("成功");
+				} else {
+					warnning("失败");
+				}
 
-		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
+				setInfos();
 
-		messageTable.setRowHeight(messageTable.getHeight() / 8);
-
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			}
-		};
+		});
 
-		tcr.setHorizontalAlignment(JLabel.CENTER);
-		column1.setCellRenderer(tcr);
+		inputConfirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String orderNumber = orderNumField.getText();
+				if (orderNumber.equals("")) {
+					warnning("请输入订单号");
+					return;
+				}
+				if (!controller.orderExist(orderNumber)) {
+					warnning("不存在此订单号，请检查订单号是否有误");
+					return;
+				}
+
+				orderNum.add(orderNumber);
+				setInfos();
+				orderNumField.setText("");
+			}
+		});
 
 	}
 

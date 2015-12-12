@@ -63,6 +63,7 @@ public class DriverManagerPanel extends JPanel {
 
 	private int numOfChoose;
 	private int num;
+	private boolean isFirstTime;
 
 	private JCheckBox b;
 
@@ -87,6 +88,7 @@ public class DriverManagerPanel extends JPanel {
 		for (int i = 0; i < 8; i++) {
 			JCheckBox box = new JCheckBox();
 			selectDriver.add(box);
+			add(box);
 		}
 		numOfPage = new JLabel();
 
@@ -107,6 +109,7 @@ public class DriverManagerPanel extends JPanel {
 		num = 0;
 		numOfChoose = 0;
 		isModify = false;
+		isFirstTime = true;
 
 		drivers = controller.getDriverInfo();
 
@@ -157,7 +160,29 @@ public class DriverManagerPanel extends JPanel {
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
+	}
 
+	public void paintComponent(Graphics g) {
+
+		if (isFirstTime) {
+			setInfos();
+			isFirstTime = false;
+		}
+		super.paintComponent(g);
+
+	}
+
+	// 设置载入动态的内容
+	private void setInfos() {
+		for (JCheckBox i : selectDriver) {
+			i.setVisible(false);
+		}
+		drivers = controller.getDriverInfo();
+		numOfPage.setText(num + 1 + "/" + ((drivers.size() - 1) / 8 + 1));
+
+		messageTable.setModel(new MessgeTableModel());
+		setBaseInfos();
+		// repaint();
 	}
 
 	private void addListener() {
@@ -224,6 +249,7 @@ public class DriverManagerPanel extends JPanel {
 					for (JCheckBox i : selectDriver) {
 
 						if (i.isSelected()) {
+							i.setSelected(false);
 							break;
 						}
 						n++;
@@ -239,8 +265,8 @@ public class DriverManagerPanel extends JPanel {
 		delLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (isDel) {
-					if (JOptionPane.showConfirmDialog(null, "确认要删除该司机信息吗", "",
-							JOptionPane.DEFAULT_OPTION) == JOptionPane.NO_OPTION) {
+					if (JOptionPane.showConfirmDialog(null, "确认删除该司机信息？", "",
+							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 						return;
 					}
 					int n = 0;
@@ -259,17 +285,17 @@ public class DriverManagerPanel extends JPanel {
 					if ((drivers.size() - m - 1) / 8 + 1 < num + 1) {
 						num--;
 					}
-					repaint();
+					setInfos();
 				}
 			}
 		});
 	}
 
 	// 设置table的基本内容，图片，什么的
-	private void setBaseInfo() {
+	private void setBaseInfos() {
 
 		// 设置成不可编辑不可改变位置，大小
-		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		messageTable.getTableHeader().setReorderingAllowed(false);
 		messageTable.getTableHeader().setResizingAllowed(false);
 
@@ -314,18 +340,6 @@ public class DriverManagerPanel extends JPanel {
 
 	}
 
-	// 设置载入动态的内容
-	private void setInfos() {
-		for (JCheckBox i : selectDriver) {
-			remove(i);
-		}
-		drivers = controller.getDriverInfo();
-		numOfPage.setText(num + 1 + "/" + ((drivers.size() - 1) / 8 + 1));
-
-		messageTable.setModel(new MessgeTableModel());
-		setBaseInfo();
-	}
-
 	private class MessgeTableModel extends AbstractTableModel {
 
 		@Override
@@ -349,7 +363,7 @@ public class DriverManagerPanel extends JPanel {
 
 			switch (columnIndex) {
 			case 0:
-				add(selectDriver.get(rowIndex));
+				selectDriver.get(rowIndex).setVisible(true);
 
 				return vo.ID;
 			case 1:
@@ -388,13 +402,6 @@ public class DriverManagerPanel extends JPanel {
 				return null;
 			}
 		}
-
-	}
-
-	public void paintComponent(Graphics g) {
-
-		setInfos();
-		super.paintComponent(g);
 
 	}
 
@@ -509,7 +516,7 @@ public class DriverManagerPanel extends JPanel {
 			add(female);
 			setLayout(null);
 
-			setInfo();
+			setInfo1();
 			addListener1();
 
 			// helper = new LocationHelper(this);
@@ -569,27 +576,7 @@ public class DriverManagerPanel extends JPanel {
 					(int) (width * 2.848911651728553 / 25), (int) (height * 1.3392857142857142 / 20));
 		}
 
-		private void setInfo() {
-			// private JLabel idCardNumLabel;
-			// private JTextField idCardNumField;
-			//
-			// private JLabel phoneNumberLabel;
-			// private JTextField phoneNumberField;
-			//
-			// private JLabel registrationDeadlineLabel;
-			// private JTextField registrationDeadlineField;
-			//
-			// private JLabel timeLabel;
-			// private JTextField timeField;
-			//
-			// private JButton confirmButton;
-			// private JButton cancelButton;
-			//
-			// private JLabel sexLabel;
-			// // private JComboBox sexBox;
-			// private JRadioButton male;
-			// private JRadioButton female;
-			//
+		private void setInfo1() {
 
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
@@ -719,7 +706,6 @@ public class DriverManagerPanel extends JPanel {
 
 					if (controller.modifyDriver(modifierVO)) {
 						successing("成功修改司机信息");
-						setInfos();
 
 					} else {
 						warnning("操作失败，请检查网络连接");
@@ -730,6 +716,7 @@ public class DriverManagerPanel extends JPanel {
 
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					setInfos();
 					mainFrame.toMainPanel();
 				}
 			});
@@ -794,6 +781,8 @@ public class DriverManagerPanel extends JPanel {
 		// private JComboBox sexBox;
 		private JRadioButton male;
 		private JRadioButton female;
+
+		private boolean hasAdd;
 
 		public AddPanel() {
 
@@ -864,7 +853,9 @@ public class DriverManagerPanel extends JPanel {
 			add(female);
 			setLayout(null);
 
-			setInfo();
+			hasAdd = false;
+
+			setInfo1();
 			addListener2();
 
 			// helper = new LocationHelper(this);
@@ -924,27 +915,7 @@ public class DriverManagerPanel extends JPanel {
 					(int) (width * 2.848911651728553 / 25), (int) (height * 1.3392857142857142 / 20));
 		}
 
-		private void setInfo() {
-			// private JLabel idCardNumLabel;
-			// private JTextField idCardNumField;
-			//
-			// private JLabel phoneNumberLabel;
-			// private JTextField phoneNumberField;
-			//
-			// private JLabel registrationDeadlineLabel;
-			// private JTextField registrationDeadlineField;
-			//
-			// private JLabel timeLabel;
-			// private JTextField timeField;
-			//
-			// private JButton confirmButton;
-			// private JButton cancelButton;
-			//
-			// private JLabel sexLabel;
-			// // private JComboBox sexBox;
-			// private JRadioButton male;
-			// private JRadioButton female;
-			//
+		private void setInfo1() {
 
 			String ID = getNextID();
 
@@ -1059,8 +1030,8 @@ public class DriverManagerPanel extends JPanel {
 
 					if (controller.addDriver(vo)) {
 						successing("成功添加司机");
-						setInfos();
 						clear();
+						hasAdd = true;
 					} else {
 						warnning("提交失败，请检查网络连接");
 					}
@@ -1069,6 +1040,8 @@ public class DriverManagerPanel extends JPanel {
 
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if (hasAdd)
+						
 					mainFrame.toMainPanel();
 				}
 			});
@@ -1107,7 +1080,7 @@ public class DriverManagerPanel extends JPanel {
 		}
 
 		private String getNextID() {
-			int num = drivers.size();
+			int num = controller.getNumOfDriver();
 			int numOfZero = 5 - (num + "").length();
 			String ID = num + "";
 			for (int i = 0; i < numOfZero; i++) {

@@ -47,11 +47,13 @@ public class Gathering {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		if (po == null) {
+			return null;
+		}
 
 		double total = 0;
 
 		ArrayList<String> chargeInfo = new ArrayList<String>();
-
 		for (ExpressPO i : po) {
 
 			double charge = 0;

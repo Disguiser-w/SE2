@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.userbl.UserBL;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
@@ -115,6 +117,8 @@ public class MainFrame extends JFrame {
 		private JTextField orderNumField;
 		private JButton queryButton;
 		private JButton cancelButton;
+		
+		private LocationHelper helper;
 
 		public QueryPanel() {
 			inputLabel = new JLabel("   请输入订单号:");
@@ -123,6 +127,7 @@ public class MainFrame extends JFrame {
 			cancelButton = new JButton("取消");
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
+			
 
 			inputLabel.setBounds((int) (width * 9.0 / 25), (int) (height * 4.0 / 20), (int) (width * 6.375 / 25),
 					(int) (height * 1.8666666666666667 / 20));
@@ -151,7 +156,7 @@ public class MainFrame extends JFrame {
 			add(queryButton);
 			add(cancelButton);
 
-			// helper = new LocationHelper(this);
+			
 
 		}
 
@@ -164,7 +169,7 @@ public class MainFrame extends JFrame {
 
 		// 调用bl层的方法进行查询
 		public void query(String orderID) {
-
+			
 		}
 
 	}
@@ -319,6 +324,27 @@ public class MainFrame extends JFrame {
 				// 成功登录，生成界面
 				nameController.addNewName(userID);
 				updateNames();
+
+				String type = userID.split("-")[0];
+				// 不同人员的方式自己来补完
+				switch (type) {
+				case "KD":
+					// 快递员登录
+					ExpressMainController expressMainController = new ExpressMainController(userID);
+					break;
+				case "YYT":
+					// 营业厅业务员登录
+					BusinessMainController businessMainController = new BusinessMainController(userID);
+					break;
+				// 来这里加吧，上面的 uservo通过 logvo.uservo得到
+				case "":
+					break;
+
+				default:
+					System.out.println("该类人员不存在，请联系管理员");
+				}
+
+				frame.setVisible(false);
 			}
 		}
 	}

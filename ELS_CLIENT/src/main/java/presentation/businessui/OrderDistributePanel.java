@@ -2,6 +2,7 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -36,6 +36,7 @@ public class OrderDistributePanel extends JPanel {
 	private DistributeOrderController controller;
 	private int num;
 
+	private boolean isFirstTime;
 	private LocationHelper helper;
 
 	public OrderDistributePanel(DistributeOrderController controller) {
@@ -66,7 +67,8 @@ public class OrderDistributePanel extends JPanel {
 		add(distributeButton);
 		add(confirmButton);
 
-//		helper = new LocationHelper(this);
+		isFirstTime = true;
+		// helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
@@ -94,14 +96,24 @@ public class OrderDistributePanel extends JPanel {
 		setInfos();
 	}
 
+	public void paintComponent(Graphics g) {
+		if (isFirstTime) {
+			isFirstTime = false;
+			setInfos();
+		}
+		super.paintComponent(g);
+
+	}
+
 	public void setInfos() {
-		messageTable.setModel(new MessageTableModel());
-		setTableInfos();
 		numOfPage.setText(num + 1 + "/" + ((result.size() - 1) / 8 + 1));
-		repaint();
+		messageTable.setModel(new MessageTableModel());
+		setBaseInfos();
+
 	}
 
 	public void addListener() {
+
 		previousPageLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (num == 0)
@@ -144,7 +156,7 @@ public class OrderDistributePanel extends JPanel {
 
 	}
 
-	private void setTableInfos() {
+	private void setBaseInfos() {
 
 		// 设置成不可编辑不可改变位置，大小
 		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

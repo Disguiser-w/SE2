@@ -9,8 +9,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -131,13 +129,13 @@ public class UserFrame extends JFrame {
 
 	public void showFrame() {
 
-//		for (JPanel i : operationPanels)
-//			add(i);
-//
-//		setVisible(true);
-//
-//		for (JPanel i : operationPanels)
-//			remove(i);
+		// for (JPanel i : operationPanels)
+		// add(i);
+		//
+		// setVisible(true);
+		//
+		// for (JPanel i : operationPanels)
+		// remove(i);
 
 		add(operationPanels.get(0));
 		setVisible(true);
@@ -257,8 +255,12 @@ public class UserFrame extends JFrame {
 		operationPanel.setBounds(height * 6 / 25, height * 6 / 25, width - height * 7 / 25, height * 7 / 10);
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				FuncLabel label = (FuncLabel) (e.getSource());
+				if (operationPanel == label.getPanel())
+					return;
+
 				remove(operationPanel);
-				operationPanel = ((FuncLabel) (e.getSource())).getPanel();
+				operationPanel = label.getPanel();
 				num = operationPanels.indexOf(operationPanel);
 				add(operationPanel);
 				repaint();

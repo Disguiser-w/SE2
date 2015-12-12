@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -16,11 +14,13 @@ import data.managedata.OrganizationData;
 //import type.SalaryPlanType;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
+import po.BusinessPO;
 import po.ExpressPO;
 import po.OrganizationPO;
 import po.UserPO;
 import type.AuthorityType;
 import type.ProfessionType;
+import type.SalaryPlanType;
 
 public class UserData extends UnicastRemoteObject implements UserDataService { // extends
 																				// UnicastRemoteObject???
@@ -68,10 +68,77 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 
 			if (tempUserPO.getUserID().equals(userID)) {
+
+				if (!tempUserPO.getOrganization().equals("")) {
+					String newOrganization = tempUserPO.getOrganization();
+					switch (tempUserPO.getProfession()) {
+					// 快递员
+					case courier:
+						File file = FileGetter.getFile("expressInfo/" + newOrganization + "-express.dat");
+						try {
+							ArrayList<ExpressPO> expressPOs = null;
+							if (file.exists()) {
+								ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+								expressPOs = (ArrayList<ExpressPO>) in.readObject();
+								in.close();
+
+								int size = expressPOs.size();
+								for (int j = 0; j < size; j++) {
+									if (expressPOs.get(j).getID().equals(tempUserPO.getUserID())) {
+										expressPOs.remove(j);
+										break;
+									}
+								}
+
+								ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+								out.writeObject(expressPOs);
+								out.close();
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						break;
+					case businessHallCounterman:
+
+						OrganizationPO organizationPO1 = (new OrganizationData()).findOrganization(newOrganization);
+						BusinessPO po1 = new BusinessPO(tempUserPO.getName(), tempUserPO.getUserID(), "0",
+								organizationPO1);
+
+						File file1 = FileGetter.getFile("businessInfo/" + newOrganization + "-business.dat");
+
+						try {
+							ArrayList<BusinessPO> businessPOs = null;
+							if (file1.exists()) {
+								ObjectInputStream in = new ObjectInputStream(new FileInputStream(file1));
+								businessPOs = (ArrayList<BusinessPO>) in.readObject();
+								in.close();
+
+								int size = businessPOs.size();
+								for (int j = 0; j < size; j++) {
+									if (businessPOs.get(j).getID().equals(tempUserPO.getUserID())) {
+										businessPOs.remove(j);
+										break;
+									}
+								}
+
+								ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file1));
+								out.writeObject(businessPOs);
+								out.close();
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						break;
+
+					}
+				}
+
 				objectList.remove(i);
 				break;
-
-				// 删除快递员信息
 
 			}
 		}
@@ -133,46 +200,79 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
-			// 删除对应的人员信息
-			switch (tempUserPO.getProfession()) {
+			// 增加对应的人员信息
 
-			// 快递员
-			case courier:
-				OrganizationPO organizationPO = (new OrganizationData()).findOrganization(newOrganization);
-				ExpressPO po = new ExpressPO(tempUserPO.getName(), tempUserPO.getUserID(), "0", new ArrayList<String>(),
-						organizationPO, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
-				File file = FileGetter.getFile("expressInfo/" + newOrganization + "-express.dat");
+			if (tempUserPO.getUserID().equals(userID)) {
 
-				try {
-					ArrayList<ExpressPO> expressPOs = null;
-					if (!file.exists()) {
-						file.getParentFile().mkdirs();
-						file.createNewFile();
-						expressPOs = new ArrayList<ExpressPO>();
-					} else {
-						ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-						expressPOs = (ArrayList<ExpressPO>) in.readObject();
-						in.close();
+				switch (tempUserPO.getProfession()) {
+				// 快递员
+				case courier:
+					OrganizationPO organizationPO = (new OrganizationData()).findOrganization(newOrganization);
+					ExpressPO po = new ExpressPO(tempUserPO.getName(), tempUserPO.getUserID(), "0",
+							new ArrayList<String>(), organizationPO, new ArrayList<String>(), new ArrayList<String>(),
+							new ArrayList<String>());
+					File file = FileGetter
+							.getFile("expressInfo/" + organizationPO.getOrganizationID() + "-express.dat");
+
+					try {
+						ArrayList<ExpressPO> expressPOs = null;
+						if (!file.exists()) {
+							file.getParentFile().mkdirs();
+							file.createNewFile();
+							expressPOs = new ArrayList<ExpressPO>();
+						} else {
+							ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+							expressPOs = (ArrayList<ExpressPO>) in.readObject();
+							in.close();
+
+						}
 
 						expressPOs.add(po);
 
 						ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 						out.writeObject(expressPOs);
 						out.close();
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 
-				} catch (Exception e) {
-					e.printStackTrace();
+					break;
+				case businessHallCounterman:
+
+					OrganizationPO organizationPO1 = (new OrganizationData()).findOrganization(newOrganization);
+					BusinessPO po1 = new BusinessPO(tempUserPO.getName(), tempUserPO.getUserID(), "0", organizationPO1);
+
+					File file1 = FileGetter
+							.getFile("businessInfo/" + organizationPO1.getOrganizationID() + "-business.dat");
+
+					try {
+						ArrayList<BusinessPO> businessPOs = null;
+						if (!file1.exists()) {
+							file1.getParentFile().mkdirs();
+							file1.createNewFile();
+							businessPOs = new ArrayList<BusinessPO>();
+						} else {
+							ObjectInputStream in = new ObjectInputStream(new FileInputStream(file1));
+							businessPOs = (ArrayList<BusinessPO>) in.readObject();
+							in.close();
+
+						}
+
+						businessPOs.add(po1);
+
+						ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file1));
+						out.writeObject(businessPOs);
+						out.close();
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					break;
+
 				}
 
-				break;
-			case businessHallCounterman:
-
-				break;
-
-			}
-
-			if (tempUserPO.getUserID().equals(userID)) {
 				UserPO userpo = new UserPO(tempUserPO.getName(), userID, tempUserPO.getPassword(),
 						tempUserPO.getProfession(), newOrganization, tempUserPO.getSalaryPlan(),
 						tempUserPO.getAuthority(), tempUserPO.getGrades());
@@ -264,96 +364,117 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		} else {
 			return "00" + professionCount;
 		}
+		
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
 
 	/*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
 
-	/*
-	 * public static void main(String[] args){ UserData userData; try{ userData
-	 * = new UserData(); try{ userData.addUser(new UserPO("魏彦淑" ,"JL-00001",
-	 * "123456", ProfessionType.manager, "总部",
-	 * SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
-	 * userData.addUser(new UserPO("王丽莉" ,"CW-00001", "123456",
-	 * ProfessionType.financialStaff, "总部", SalaryPlanType.basicStaffSalaryPlan,
-	 * AuthorityType.highest, 0)); userData.addUser(new UserPO("丁二玉"
-	 * ,"GLY-00001","123456", ProfessionType.administrator, "总部",
-	 * SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
-	 * userData.addUser(new UserPO("张家盛" ,"YYT-00001","123456",
-	 * ProfessionType.businessHallCounterman, "南京中转中心",
-	 * SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
-	 * userData.addUser(new UserPO("张词校" ,"KD-00001","123456",
-	 * ProfessionType.courier, "鼓楼营业厅", SalaryPlanType.courierSalaryPlan,
-	 * AuthorityType.lowest, 0)); userData.addUser(new UserPO("王卉"
-	 * ,"CK-00001","123456", ProfessionType.stockman, "南京中转中心",
-	 * SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
-	 * userData.addUser(new UserPO("吴秦月" ,"SJ-00001","123456",
-	 * ProfessionType.driver, "仙林营业厅", SalaryPlanType.driverSalaryPlan,
-	 * AuthorityType.lowest, 0));
-	 * 
-	 * System.out.println("添加后:"); ArrayList<UserPO> userpoList0 =
-	 * userData.showAllUsers(); if(userpoList0 != null){ for(int
-	 * i=0;i<userpoList0.size();i++){ UserPO tempUserpo = userpoList0.get(i);
-	 * System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "
-	 * +tempUserpo.getOrganization()+"  "+tempUserpo.getProfession()); } }
-	 * 
-	 * UserPO userpo = userData.findUser("KD-00001"); if(userpo != null)
-	 * System.out.println("Find the user: "+userpo.getName()+" "
-	 * +userpo.getUserID()+" "+userpo.getOrganization()+" "
-	 * +userpo.getProfession()); else System.out.println("Cannot find the user"
-	 * );
-	 * 
-	 * userData.modifyUserOrganization("张Doge","仙林营业厅");
-	 * System.out.println("修改后:"); ArrayList<UserPO> userpoList3 =
-	 * userData.showAllUsers(); if(userpoList3 != null){ for(int
-	 * i=0;i<userpoList3.size();i++){ UserPO tempUserpo = userpoList3.get(i);
-	 * System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "
-	 * +tempUserpo.getOrganization()+"  "+tempUserpo.getProfession()); } } else
-	 * System.out.println("Cannot find the user");
-	 * 
-	 * System.out.println("没有删除前:"); ArrayList<UserPO> userpoList1 =
-	 * userData.showAllUsers(); if(userpoList1 != null){ for(int
-	 * i=0;i<userpoList1.size();i++){ UserPO tempUserpo = userpoList1.get(i);
-	 * System.out.println(tempUserpo.getName()+"  "+tempUserpo.getUserID()+"  "
-	 * +tempUserpo.getOrganization()+"  "+tempUserpo.getProfession()); } } else
-	 * System.out.println("Cannot find the user");
-	 * 
-	 * //userData.deleteUser("CW-00001"); System.out.println("删除后:");
-	 * ArrayList<UserPO> userpoList2 = userData.showAllUsers(); if(userpoList2
-	 * != null){ for(int i=0;i<userpoList2.size();i++){ UserPO tempUserpo =
-	 * userpoList2.get(i); System.out.println(tempUserpo.getName()+"  "
-	 * +tempUserpo.getUserID()+"  "+tempUserpo.getOrganization()+"  "
-	 * +tempUserpo.getProfession()); } } else System.out.println(
-	 * "Cannot find the user");
-	 * 
-	 * }catch(RemoteException exception){ exception.printStackTrace(); }
-	 * }catch(RemoteException exception){ exception.printStackTrace(); } }
-	 */
+	public static void main(String[] args) {
+		UserData userData;
+		try {
+			userData = new UserData();
+			try {
+				userData.addUser(new UserPO("魏彦淑", "JL-00001", "123456", ProfessionType.manager, "总部",
+						SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
+				userData.addUser(new UserPO("王丽莉", "CW-00001", "123456", ProfessionType.financialStaff, "总部",
+						SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
+				userData.addUser(new UserPO("丁二玉", "GLY-00001", "123456", ProfessionType.administrator, "总部",
+						SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
+				userData.addUser(new UserPO("张家盛", "YYT-00001", "123456", ProfessionType.businessHallCounterman,
+						"南京中转中心", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("张词校", "KD-00001", "123456", ProfessionType.courier, "鼓楼营业厅",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("王卉", "CK-00001", "123456", ProfessionType.stockman, "南京中转中心",
+						SalaryPlanType.basicStaffSalaryPlan, AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("吴秦月", "SJ-00001", "123456", ProfessionType.driver, "仙林营业厅",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest, 0));
+
+				System.out.println("添加后:");
+				ArrayList<UserPO> userpoList0 = userData.showAllUsers();
+				if (userpoList0 != null) {
+					for (int i = 0; i < userpoList0.size(); i++) {
+						UserPO tempUserpo = userpoList0.get(i);
+						System.out.println(tempUserpo.getName() + "  " + tempUserpo.getUserID() + "  "
+								+ tempUserpo.getOrganization() + "  " + tempUserpo.getProfession());
+					}
+				}
+
+				UserPO userpo = userData.findUser("KD-00001");
+				if (userpo != null)
+					System.out.println("Find the user: " + userpo.getName() + " " + userpo.getUserID() + " "
+							+ userpo.getOrganization() + " " + userpo.getProfession());
+				else
+					System.out.println("Cannot find the user");
+
+				userData.modifyUserOrganization("张Doge", "仙林营业厅");
+				System.out.println("修改后:");
+				ArrayList<UserPO> userpoList3 = userData.showAllUsers();
+				if (userpoList3 != null) {
+					for (int i = 0; i < userpoList3.size(); i++) {
+						UserPO tempUserpo = userpoList3.get(i);
+						System.out.println(tempUserpo.getName() + "  " + tempUserpo.getUserID() + "  "
+								+ tempUserpo.getOrganization() + "  " + tempUserpo.getProfession());
+					}
+				} else
+					System.out.println("Cannot find the user");
+
+				System.out.println("没有删除前:");
+				ArrayList<UserPO> userpoList1 = userData.showAllUsers();
+				if (userpoList1 != null) {
+					for (int i = 0; i < userpoList1.size(); i++) {
+						UserPO tempUserpo = userpoList1.get(i);
+						System.out.println(tempUserpo.getName() + "  " + tempUserpo.getUserID() + "  "
+								+ tempUserpo.getOrganization() + "  " + tempUserpo.getProfession());
+					}
+				} else
+					System.out.println("Cannot find the user");
+
+				// userData.deleteUser("CW-00001"); System.out.println("删除后:");
+				ArrayList<UserPO> userpoList2 = userData.showAllUsers();
+				if (userpoList2 != null) {
+					for (int i = 0; i < userpoList2.size(); i++) {
+						UserPO tempUserpo = userpoList2.get(i);
+						System.out.println(tempUserpo.getName() + "  " + tempUserpo.getUserID() + "  "
+								+ tempUserpo.getOrganization() + "  " + tempUserpo.getProfession());
+					}
+				} else
+					System.out.println("Cannot find the user");
+
+			} catch (RemoteException exception) {
+				exception.printStackTrace();
+			}
+		} catch (RemoteException exception) {
+			exception.printStackTrace();
+		}
+	}
 
 	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
 
-	public static void main(String[] args) {
-		try {
-			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
-			UserDataService userData = new UserData();
-			LocateRegistry.createRegistry(6000);
-
-			// 绑定RMI名称进行发布
-			Naming.rebind("rmi://172.25.132.40:6000/UserDataService", userData);
-			System.out.println("User Service start!");
-
-			ArrayList<UserPO> userList0 = userData.showAllUsers();
-			for (UserPO user : userList0)
-				System.out.println("ID: " + user.getUserID() + ", Name: " + user.getName());
-
-			UserPO user = userData.findUser("JL-01");
-			System.out.println("ID: " + user.getUserID() + ", Name: " + user.getName());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	// public static void main(String[] args) {
+	// try {
+	// System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+	// UserDataService userData = new UserData();
+	// LocateRegistry.createRegistry(6000);
+	//
+	// // 绑定RMI名称进行发布
+	// Naming.rebind("rmi://172.25.132.40:6000/UserDataService", userData);
+	// System.out.println("User Service start!");
+	//
+	// ArrayList<UserPO> userList0 = userData.showAllUsers();
+	// for (UserPO user : userList0)
+	// System.out.println("ID: " + user.getUserID() + ", Name: " +
+	// user.getName());
+	//
+	// UserPO user = userData.findUser("JL-01");
+	// System.out.println("ID: " + user.getUserID() + ", Name: " +
+	// user.getName());
+	//
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 
 }

@@ -33,5 +33,9 @@ public class DriverManagerController implements DriverManagerBLService {
 		// TODO Auto-generated method stub
 		return driverManager.modifyDriver(vo);
 	}
+	
+	public int getNumOfDriver(){
+		return driverManager.getNumOfDriver();
+	}
 
 }

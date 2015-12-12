@@ -28,4 +28,6 @@ public interface DriverManagerBLService {
 	 */
 	public boolean modifyDriver(DriverVO vo);
 
+	public int getNumOfDriver();
+
 }

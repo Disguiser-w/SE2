@@ -2,6 +2,7 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,6 +34,7 @@ public class EnVehiclePanel extends JPanel {
 	private ArrayList<String> result;
 	private int num;
 	private boolean hasEnVehicle;
+	private boolean isFirstTime;
 
 	public EnVehiclePanel(EnVehicleController controller) {
 		this.controller = controller;
@@ -59,10 +61,12 @@ public class EnVehiclePanel extends JPanel {
 		add(confirmButton);
 		add(numOfPage);
 
+		isFirstTime = true;
+
 		setLayout(null);
 		addListener();
 
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -78,20 +82,31 @@ public class EnVehiclePanel extends JPanel {
 		nextPageLabel.setBounds((int) (width * 13.412291933418693 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.056338028169014 / 25), (int) (height * 1.4732142857142858 / 20));
 		previousPageLabel.setBounds((int) (width * 11.267605633802816 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.056338028169014 / 25)+1, (int) (height * 1.4732142857142858 / 20));
+				(int) (width * 1.056338028169014 / 25) + 1, (int) (height * 1.4732142857142858 / 20));
 		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),
 				(int) (height * 1.7857142857142858 / 20), (int) (width * 23.111395646606915 / 25),
 				(int) (height * 1.3839285714285714 / 20));
 		setInfos();
+
+	}
+
+	public void paintComponent(Graphics g) {
+		if (isFirstTime) {
+			isFirstTime = false;
+			setInfos();
+		}
+		super.paintComponent(g);
+
 	}
 
 	public void setInfos() {
-		messageTable.setModel(new MessageTableModel());
-		setTableInfos();
+
 		numOfPage.setText(num + 1 + "/" + ((result.size() - 1) / 8 + 1));
-		repaint();
+		messageTable.setModel(new MessageTableModel());
+		setBaseInfos();
+
 	}
 
 	public void addListener() {
@@ -142,7 +157,7 @@ public class EnVehiclePanel extends JPanel {
 
 	}
 
-	private void setTableInfos() {
+	private void setBaseInfos() {
 
 		// 设置成不可编辑不可改变位置，大小
 		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

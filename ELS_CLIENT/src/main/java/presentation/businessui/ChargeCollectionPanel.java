@@ -2,6 +2,7 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -38,6 +39,7 @@ public class ChargeCollectionPanel extends JPanel {
 
 	private ArrayList<String> chargeInfos;
 	private GatheringController controller;
+	private boolean isFirstTime;
 
 	public ChargeCollectionPanel(GatheringController controller) {
 
@@ -63,13 +65,15 @@ public class ChargeCollectionPanel extends JPanel {
 		add(numOfPage);
 		add(nextPage);
 
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
 
 		chargeInfos = controller.getChargeInfo();
 		if (chargeInfos == null) {
 			chargeInfos = new ArrayList<String>();
 		}
+
+		isFirstTime = true;
 
 		addListener();
 
@@ -97,11 +101,20 @@ public class ChargeCollectionPanel extends JPanel {
 		setInfos();
 	}
 
+	public void paintComponent(Graphics g) {
+		if (isFirstTime) {
+			setInfos();
+			isFirstTime = false;
+		}
+		super.paintComponent(g);
+
+	}
+
 	public void setInfos() {
+		numOfPage.setText(num + 1 + "/" + ((chargeInfos.size() - 1) / 8 + 1));
 		messageTable.setModel(new MessageTableModel());
 		setTableInfos();
-		numOfPage.setText(num + 1 + "/" + ((chargeInfos.size() - 1) / 8 + 1));
-		repaint();
+
 	}
 
 	public void addListener() {
@@ -160,7 +173,6 @@ public class ChargeCollectionPanel extends JPanel {
 		column1.setPreferredWidth(messageTable.getWidth() / 2);
 		column2.setPreferredWidth(messageTable.getWidth() / 2);
 
-		
 		messageTable.setRowHeight(messageTable.getHeight() / 8);
 		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
 		// messageTable.getTableHeader().getHeight() + 4);

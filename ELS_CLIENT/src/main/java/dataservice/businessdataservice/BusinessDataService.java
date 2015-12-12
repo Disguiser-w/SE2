@@ -103,6 +103,7 @@ public interface BusinessDataService extends Remote {
 	public ArrayList<OrganizationPO> getOrganizationInfos()throws RemoteException;
 	
 	public int getNumOfVehicles(String organizationID) throws RemoteException;
+	public int getNumOfDrivers(String organizationID) throws RemoteException;
 	//
 	// /**
 	// * 返回待转运的订单的列表

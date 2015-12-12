@@ -22,4 +22,7 @@ public class AcceptCargoController implements AcceptCargoBLService {
 		return acceptCargo.orderExist(id);
 	}
 
+	public boolean vehicleExist(String vehicleID){
+		return acceptCargo.vehicleExist(vehicleID);
+	}
 }
