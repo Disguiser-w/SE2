@@ -172,13 +172,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getUserID().equals(userID)) {
-				UserPO userpo = new UserPO(tempUserPO.getName(), userID,
-						newPassword, tempUserPO.getProfession(),
-						tempUserPO.getOrganization(),
-						tempUserPO.getSalaryPlan(), tempUserPO.getAuthority(),
-						tempUserPO.getGrades());
-				objectList.add(userpo);
-				objectList.remove(i);
+				tempUserPO.setPassWord(newPassword);
 				break;
 			}
 		}
@@ -197,13 +191,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getUserID().equals(userID)) {
-				UserPO userpo = new UserPO(tempUserPO.getName(), userID,
-						tempUserPO.getPassword(), tempUserPO.getProfession(),
-						tempUserPO.getOrganization(),
-						tempUserPO.getSalaryPlan(), authority,
-						tempUserPO.getGrades());
-				objectList.add(userpo);
-				objectList.remove(i);
+				tempUserPO.setAuthority(authority);
 				break;
 			}
 		}
@@ -341,12 +329,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 					break;
 				}
 
-				UserPO userpo = new UserPO(tempUserPO.getName(), userID,
-						tempUserPO.getPassword(), tempUserPO.getProfession(),
-						newOrganization, tempUserPO.getSalaryPlan(),
-						tempUserPO.getAuthority(), tempUserPO.getGrades());
-				objectList.add(userpo);
-				objectList.remove(i);
+				tempUserPO.setOrganization(newOrganization);
 				break;
 
 			}
@@ -366,13 +349,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getUserID().equals(userID)) {
-				UserPO userpo = new UserPO(tempUserPO.getName(), userID,
-						tempUserPO.getPassword(), tempUserPO.getProfession(),
-						tempUserPO.getOrganization(),
-						tempUserPO.getSalaryPlan(), tempUserPO.getAuthority(),
-						newGrades);
-				objectList.add(userpo);
-				objectList.remove(i);
+				tempUserPO.setGrades(newGrades);
 				break;
 			}
 		}
