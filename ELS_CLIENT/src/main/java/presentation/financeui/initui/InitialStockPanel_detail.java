@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import presentation.financeui.FinanceFrame;
+import vo.UserVO;
 import businesslogic.financebl.controller.InitialStockBLController;
 
 public class InitialStockPanel_detail extends JPanel{
@@ -145,6 +146,13 @@ public class InitialStockPanel_detail extends JPanel{
 
 	public void nextui() {
 
+	}
+	
+	public static void main(String[] args){
+		UserVO vo=new UserVO("本宝宝", "CW-00001", null, null, null, null,	 null, 0);
+		FinanceFrame parent=new FinanceFrame(vo);
+		InitialStockBLController controller=new InitialStockBLController();
+		new InitialStockPanel_detail(controller, parent);
 	}
 
 }

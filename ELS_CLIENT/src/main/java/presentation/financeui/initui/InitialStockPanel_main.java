@@ -4,14 +4,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -66,11 +62,11 @@ public class InitialStockPanel_main extends JPanel {
 //	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 //			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
 //			FinanceFrame parent){
-	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,AccountBLController accountController,FinanceFrame parent){
+	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){
 		this.controller=controller;
 		this.userController=userController;
-//		this.organizationController=organizationController;
-//		this.vehicleController=vehicleController;
+		this.organizationController=organizationController;
+		this.vehicleController=vehicleController;
 //		this.repertoryController=repertoryController;
 		this.accountController=accountController;
 		this.financeFrame=parent;
@@ -252,11 +248,11 @@ public class InitialStockPanel_main extends JPanel {
 	public void newInitInfoui() {
 //		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
 //				vehicleController,repertoryController,accountController, financeFrame));
-		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,accountController, financeFrame));
+		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,vehicleController,accountController, financeFrame));
 	}
 	
 	public void detailui(){
-		
+		financeFrame.changePanel(new InitialStockPanel_detail(controller, financeFrame));
 	}
 
 	public void nextui() {

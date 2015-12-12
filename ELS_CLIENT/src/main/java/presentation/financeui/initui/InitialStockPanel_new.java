@@ -96,12 +96,13 @@ public class InitialStockPanel_new extends JPanel{
 
 //	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 //			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
-	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,AccountBLController accountController,FinanceFrame parent){	
+	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+			 VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){	
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
-//		this.organizationController=organizationController;
-//		this.vehicleController=vehicleController;
+		this.organizationController=organizationController;
+		this.vehicleController=vehicleController;
 //		this.repertoryController=repertoryController;
 		this.accountController= accountController;
 		
@@ -188,13 +189,28 @@ public class InitialStockPanel_new extends JPanel{
 		//机构信息添加
 		organizationInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+				changeTable(organizationTable);
+				int temp=organization.size();
+				refreshOrganization(organizationController.showAllOrganizations());
+				om=new OrganizationModel(organization);
+				for(int i=0;i<temp;i++){
+					om.removeRow(0);
+				}
+				organizationTable.repaint();
 			}
 		});
 		//车辆信息添加
 		vehicleInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+				changeTable(vehicleTable);
+				int temp=vehicle.size();
+				System.out.println(vehicleController.getVehicleInfo().size());
+				refreshVehicle(vehicleController.getVehicleInfo());
+				vm=new VehicleModel(vehicle);
+				for(int i=0;i<temp;i++){
+					vm.removeRow(0);
+				}
+				vehicleTable.repaint();
 			}
 		});
 		//仓库初始信息添加
@@ -327,12 +343,12 @@ public class InitialStockPanel_new extends JPanel{
 						TableColumn column6 = userTable.getColumnModel().getColumn(5);
 
 						
-						column1.setPreferredWidth(userTable.getWidth() * 3 / 10);
+						column1.setPreferredWidth(userTable.getWidth() * 1 / 10);
 						column2.setPreferredWidth(userTable.getWidth() * 2 / 10);
-						column3.setPreferredWidth(userTable.getWidth() * 1 / 10);
-						column4.setPreferredWidth(userTable.getWidth() * 1 / 10);
-						column5.setPreferredWidth(userTable.getWidth() * 1 / 10);
-						column6.setPreferredWidth(userTable.getWidth() * 2 / 10);
+						column3.setPreferredWidth(userTable.getWidth() * 2 / 10);
+						column4.setPreferredWidth(userTable.getWidth() * 2 / 10);
+						column5.setPreferredWidth(userTable.getWidth() * 2 / 10);
+						column6.setPreferredWidth(userTable.getWidth() * 1 / 10);
 
 						column1.setCellRenderer(tcr);
 						column2.setCellRenderer(tcr);

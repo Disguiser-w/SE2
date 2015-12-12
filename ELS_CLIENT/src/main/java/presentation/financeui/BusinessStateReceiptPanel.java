@@ -24,6 +24,7 @@ import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import presentation.commonui.DateChooser;
+import vo.AccountVO;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
@@ -254,12 +255,6 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 	}
 
-	public void setList(ArrayList<CollectionReceiptVO> collectionReceiptList,
-			ArrayList<PaymentReceiptVO> paymentReceiptList) {
-		
-//		info.setList(collectionReceiptList, paymentReceiptList);
-	}
-
 	public void startui() {
 		
 	}
@@ -368,6 +363,8 @@ class BusinessStatementModel extends AbstractTableModel{
 			c.add(lineInfo);
 		 }
  }
+ 
+
 
 //	public static void main(String[] args) {
 //		

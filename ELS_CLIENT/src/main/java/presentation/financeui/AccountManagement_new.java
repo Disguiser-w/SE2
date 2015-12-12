@@ -2,19 +2,13 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import presentation.financeui.AccountManagementPanel_main.AccountModel;
 import businesslogic.financebl.controller.AccountBLController;
 import vo.AccountVO;
 
@@ -119,6 +113,10 @@ public class AccountManagement_new extends JPanel {
 					JOptionPane.CLOSED_OPTION);
 		}
 		else{
+			/**
+			 * 如果输入的是汉字
+			 * */
+			try{
 			double moneyD=Double.parseDouble(money);
 			if(moneyD<0){
 				JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
@@ -139,10 +137,13 @@ public class AccountManagement_new extends JPanel {
 					JOptionPane.showMessageDialog(null, "该账户名已存在！", "提示",
 							JOptionPane.WARNING_MESSAGE);
 				}
-				
 			}
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "请输入正确的金额数字！", "提示",
+					JOptionPane.WARNING_MESSAGE);
+			account_money_Input.setText("");
 		}
-		
+		}
 	}
 	
 	public void cancelui(){

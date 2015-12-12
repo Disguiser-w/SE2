@@ -159,17 +159,16 @@ public class CollectionReceiptPanel extends JPanel {
 			TableColumn column1 = table.getColumnModel().getColumn(0);
 			TableColumn column2 = table.getColumnModel().getColumn(1);
 			TableColumn column3 = table.getColumnModel().getColumn(2);
+			TableColumn column4 = table.getColumnModel().getColumn(3);
+
 			// 设置宽度
-			column1.setPreferredWidth(table.getWidth() * 4 / 10);
+			column1.setPreferredWidth(table.getWidth() * 2 / 10);
 			column2.setPreferredWidth(table.getWidth() * 2/ 10);
 			column3.setPreferredWidth(table.getWidth() * 4 / 10);
-
+			column3.setPreferredWidth(table.getWidth() * 2 / 10);
 
 			table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
-			// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
-			// messageTable.getTableHeader().getHeight() + 4);
-
-			//
+		
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 				/**
 				 * 
@@ -191,7 +190,7 @@ public class CollectionReceiptPanel extends JPanel {
 			column1.setCellRenderer(tcr);
 			column2.setCellRenderer(tcr);
 			column3.setCellRenderer(tcr);
-
+			column4.setCellRenderer(tcr);
 		}
 
 		
@@ -202,8 +201,6 @@ public class CollectionReceiptPanel extends JPanel {
 	                  /**
 	                    * 选择日期
 	                   * */
-			
-
 			/**
 			 * 确认日期输入
 			 * */
@@ -277,18 +274,18 @@ public class CollectionReceiptPanel extends JPanel {
 	public void okui() {
 		//这里需要格式的转化"2015/11/10——20151110"
 		date_str=date_Input.getText();
-		date_str=date_str.substring(0, 4)+date_str.substring(5, 7)+date_str.substring(8);
+		String test=date_str.substring(0, 4)+date_str.substring(5, 7)+date_str.substring(8);
 
 		if(date_str.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
 					JOptionPane.CLOSED_OPTION);
 		}
-		else if(date_str.length()!=8){
+		else if(test.length()!=8){
 			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
 					JOptionPane.CLOSED_OPTION);
 			date_Input.setText("");
 		}
-		else if(date_str.substring(0,4).compareTo("2015")>0||date_str.substring(4,6).compareTo("12")>0||date_str.substring(6,8).compareTo("31")>0){
+		else if(test.substring(0,4).compareTo("2015")>0||test.substring(4,6).compareTo("12")>0||test.substring(6,8).compareTo("31")>0){
 			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
 					JOptionPane.CLOSED_OPTION);
 			date_Input.setText("");
@@ -296,12 +293,8 @@ public class CollectionReceiptPanel extends JPanel {
 		else{
 			//我可以把获取数据的过程放在这里啊2333
 			int temp=c.size();
-//			ArrayList<GatheringReceiptVO> gatherings=controller.getGathering(date_str);
-			GatheringReceiptVO vo1=new GatheringReceiptVO(null, "20151203", null, null, 299, "SKD-20151203", ReceiptState.SUBMIT);
-			GatheringReceiptVO vo2=new GatheringReceiptVO(null, "20151201", null, null, 200, "SKD-20151201", ReceiptState.APPROVE);
-			ArrayList<GatheringReceiptVO> gatherings=new ArrayList<GatheringReceiptVO>();
-			gatherings.add(vo1);
-			gatherings.add(vo2);
+			System.out.println(date_str);
+			ArrayList<GatheringReceiptVO> gatherings=controller.getGathering(date_str);
 	      refreshGatheringTable(gatherings);
 	      cm=new CollectionModel(c);
 	      for(int i=0;i<temp;i++){
@@ -343,7 +336,7 @@ public class CollectionReceiptPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 //		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
-		String head[]={"收款单编号","日期","金额"};
+		String head[]={"收款单编号","日期","营业厅编号","金额"};
 		
 		public CollectionModel(ArrayList<ArrayList<String>> content){
 			c=content;
@@ -351,12 +344,8 @@ public class CollectionReceiptPanel extends JPanel {
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			if(c==null){
-				return 0;
-			}
-			else{
-			return c.size();
-			}
+		
+			return 10;
 		}
 
 		public int getColumnCount() {
@@ -366,13 +355,10 @@ public class CollectionReceiptPanel extends JPanel {
 		}
 		
 		public String getValueAt(int row, int col) {
-			if(c==null){
-				System.out.println("null");
+			if(row>c.size()-1){
 				return null;
 			}
-			else{
 			return c.get(row).get(col);
-			}
 		}
 
 		public String getColumnName(int col) {
@@ -396,6 +382,7 @@ public class CollectionReceiptPanel extends JPanel {
 			ArrayList<String> lineInfo=new ArrayList<String>();
 			lineInfo.add(gvo.receiptID);
 			lineInfo.add(gvo.time);
+			lineInfo.add(gvo.businesshall.organizationID);
 			lineInfo.add(gvo.totalmoney+"");
 			c.add(lineInfo);
 		}

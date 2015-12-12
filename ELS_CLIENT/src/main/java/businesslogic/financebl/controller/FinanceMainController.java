@@ -111,9 +111,9 @@ public class FinanceMainController {
 					businessStatementReceiptBLController=new BusinessStatementReceiptBLController();
 					initialStockBLController=new InitialStockBLController();
 					userController=new UserBL();
-					/*	organizationController=new OrganizationController();
-					vehicleController=new VehicleManagerController();
-					repertoryController=new RepertoryBL("CK-00001");
+					organizationController=new OrganizationController();
+						vehicleController=new VehicleManagerController();
+						/*repertoryController=new RepertoryBL("CK-00001");
 					*/
 				
 		
@@ -129,7 +129,7 @@ public class FinanceMainController {
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
 //				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
 //						vehicleController,repertoryController,accountBLController,financeFrame));
-				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,accountBLController, financeFrame));
+				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,organizationController,vehicleController,accountBLController, financeFrame));
 				financeFrame.showFrame();
 				
 		
@@ -286,7 +286,7 @@ public class FinanceMainController {
 				gatheringReceiptVOs.add(vo);
 			}
 		}
-		return null;
+		return gatheringReceiptVOs;
 	}
 	/**
 	 * ColletionPO to VO

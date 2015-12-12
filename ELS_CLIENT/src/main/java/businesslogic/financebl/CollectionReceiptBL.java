@@ -74,10 +74,6 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * */
 	public int excute(CollectionReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
 		AccountBL a=new AccountBL();
-//		ArrayList<GatheringReceiptVO> grvo=vo.getGathering();
-//		for(GatheringReceiptVO v:grvo){
-//			a.addMoney(v.getHallId(), v.getTotalmoney());
-//		}
 		a.addMoney(vo.getAccount(), vo.getIncome());
 			System.out.println("执行成功！");
 		
@@ -93,6 +89,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 		ArrayList<GatheringReceiptPO> gatheringReceiptPOs;
 		try {
 			gatheringReceiptPOs = businessData.getGatheringReceipt(Time);
+			System.out.println(gatheringReceiptPOs.get(0).getReceiptID());
 			 return FinanceMainController.gposToVOs(gatheringReceiptPOs);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -198,6 +195,11 @@ public class CollectionReceiptBL extends ReceiptBL {
 	}
 }
 
+/*public static void main(String[] args){
+	CollectionReceiptBL test=new CollectionReceiptBL();
+
+}
+*/
 	
 /*	public static void main(String[] args){
 		CollectionReceiptBLService test=new CollectionReceiptBL();
