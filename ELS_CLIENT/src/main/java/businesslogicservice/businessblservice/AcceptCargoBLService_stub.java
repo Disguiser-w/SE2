@@ -18,4 +18,10 @@ public class AcceptCargoBLService_stub implements AcceptCargoBLService {
 		return false;
 	}
 
+	@Override
+	public boolean vehicleExist(String vehicleID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

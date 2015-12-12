@@ -579,42 +579,211 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public ArrayList<GatheringReceiptPO> getSubmittedGatheringReceiptInfo() throws RemoteException {
-		// TODO Auto-generated method stub
+		File file = FileGetter.getFile("gatheringInfo");
+		if (!file.exists())
+			return new ArrayList<GatheringReceiptPO>();
+		ArrayList<GatheringReceiptPO> gatheringReceiptPO = new ArrayList<GatheringReceiptPO>();
+		File[] dirs = file.listFiles();
+		try {
+			for (File i : dirs) {
+				File[] files = i.listFiles();
+				for (File j : files) {
+					ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
+					GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
+					in.close();
+
+					gatheringReceiptPO.add(po);
+
+				}
+			}
+
+			return gatheringReceiptPO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	public ArrayList<DistributeReceiptPO> getSubmittedDistributeReceiptInfo() throws RemoteException {
-		// TODO Auto-generated method stub
+		File file = FileGetter.getFile("distributeInfo");
+		if (!file.exists())
+			return new ArrayList<DistributeReceiptPO>();
+		ArrayList<DistributeReceiptPO> distributeReceiptPO = new ArrayList<DistributeReceiptPO>();
+		File[] dirs = file.listFiles();
+		try {
+			for (File i : dirs) {
+				File[] files = i.listFiles();
+				for (File j : files) {
+					ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
+					ArrayList<DistributeReceiptPO> pos = (ArrayList<DistributeReceiptPO>) in.readObject();
+					in.close();
+
+					for (DistributeReceiptPO onePO : pos) {
+						distributeReceiptPO.add(onePO);
+					}
+				}
+			}
+
+			return distributeReceiptPO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	public ArrayList<EnVehicleReceiptPO> getSubmittedEnVehicleReceiptInfo() throws RemoteException {
-		// TODO Auto-generated method stub
+		File file = FileGetter.getFile("enVehicleInfo");
+		if (!file.exists())
+			return new ArrayList<EnVehicleReceiptPO>();
+		ArrayList<EnVehicleReceiptPO> enVehicleReceiptPO = new ArrayList<EnVehicleReceiptPO>();
+		File[] dirs = file.listFiles();
+		try {
+			for (File i : dirs) {
+				File[] files = i.listFiles();
+				for (File j : files) {
+					ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
+					ArrayList<EnVehicleReceiptPO> pos = (ArrayList<EnVehicleReceiptPO>) in.readObject();
+					in.close();
+
+					for (EnVehicleReceiptPO onePO : pos) {
+						enVehicleReceiptPO.add(onePO);
+					}
+				}
+			}
+
+			return enVehicleReceiptPO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo() throws RemoteException {
-		// TODO Auto-generated method stub
+		File file = FileGetter.getFile("enVehicleInfo");
+		if (!file.exists())
+			return new ArrayList<OrderAcceptReceiptPO>();
+		ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPO = new ArrayList<OrderAcceptReceiptPO>();
+		File[] dirs = file.listFiles();
+		try {
+			for (File i : dirs) {
+				File[] files = i.listFiles();
+				for (File j : files) {
+					ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
+					ArrayList<OrderAcceptReceiptPO> pos = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
+					in.close();
+
+					for (OrderAcceptReceiptPO onePO : pos) {
+						orderAcceptReceiptPO.add(onePO);
+					}
+				}
+			}
+
+			return orderAcceptReceiptPO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
 	public void saveDistributeReceiptInfo(DistributeReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
+		String organizationID = po.getID().split("-")[1];
+		String time = po.getTime();
+
+		File file = FileGetter.getFile("distributeInfo/" + organizationID + "/" + time + "-distribute.dat");
+		if (!file.exists())
+			return;
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<DistributeReceiptPO> pos = (ArrayList<DistributeReceiptPO>) in.readObject();
+			for (DistributeReceiptPO i : pos) {
+				if (po.getID().equals(i.getID())) {
+					i.setReceiptState(po.getReceiptState());
+				}
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	public void saveOrderAcceptReceiptInfo(OrderAcceptReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
+		String organizationID = po.getReceiptID().split("-")[1];
+		String time = po.getTime();
+		File file = FileGetter.getFile("orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat");
+		if (!file.exists())
+			return;
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<OrderAcceptReceiptPO> pos = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
+			for (OrderAcceptReceiptPO i : pos) {
+				if (po.getReceiptID().equals(i.getReceiptID())) {
+					i.setReceiptState(po.getReceiptState());
+				}
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	public void saveEnVehicleReceiptInfo(EnVehicleReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
+		String organizationID = po.getReceiptID().split("-")[1];
+		String time = po.getTime();
+		File file = FileGetter.getFile("enVehicleInfo/" + organizationID + "/" + time + "-enVehicle.dat");
+		if (!file.exists())
+			return;
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<EnVehicleReceiptPO> pos = (ArrayList<EnVehicleReceiptPO>) in.readObject();
+			for (EnVehicleReceiptPO i : pos) {
+				if (po.getReceiptID().equals(i.getReceiptID())) {
+					i.setReceiptState(po.getReceiptState());
+				}
+			}
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	public void saveGatheringReceiptInfo(GatheringReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
+		String organizationID = po.getReceiptID().split("-")[1];
+		String time = po.getTime();
+		File file = FileGetter.getFile("orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat");
+		if (!file.exists())
+			return;
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			GatheringReceiptPO pos = (GatheringReceiptPO) in.readObject();
+
+			pos.setReceiptState(po.getReceiptState());
+
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -696,7 +865,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
-		String path = "organizationInfo/organization.dat";
+		String path = "../src/organization.ser";
 		File file = FileGetter.getFile(path);
 
 		if (!file.exists())
