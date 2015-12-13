@@ -367,14 +367,6 @@ public class MainFrame extends JFrame {
 					// 中转中心业务员登录
 					try {
 						IntermediateMainController intermediateMaincontroller = new IntermediateMainController(
-								
-								
-								
-								
-								
-								
-								
-								
 								userID);
 					} catch (Exception e1) {
 						// TODO 自动生成的 catch 块
