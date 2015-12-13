@@ -30,4 +30,9 @@ public class DriverManagerBLService_stub implements DriverManagerBLService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public int getNumOfDriver() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

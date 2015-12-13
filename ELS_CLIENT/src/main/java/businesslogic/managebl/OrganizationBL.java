@@ -6,12 +6,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
 import businesslogicservice.manageblservice.OrganizationBLService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
+import po.OrganizationPO;
+import po.RepertoryPO;
+import po.UserPO;
 import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
@@ -21,15 +21,15 @@ public class OrganizationBL implements OrganizationBLService {
 	public OrganizationDataService odService;
 	public UserDataService udService;
 
-	public OrganizationBL(){
-		try{
-			odService = (OrganizationDataService)Naming.lookup("rmi://localhost:8888/OrganizationDataService");
-			udService = (UserDataService)Naming.lookup("rmi://localhost:8888/UserDataService");
-		}catch(Exception ex){
+	public OrganizationBL() {
+		try {
+			odService = (OrganizationDataService) Naming.lookup("rmi://localhost:8888/OrganizationDataService");
+			udService = (UserDataService) Naming.lookup("rmi://localhost:8888/UserDataService");
+		} catch (Exception ex) {
 			ex.printStackTrace();
-		}	
+		}
 	}
-	
+
 	public int addOrganization(OrganizationVO organizationvo) {
 		try {
 			OrganizationPO neworganizationpo = organizationVOToPO(organizationvo);
@@ -85,6 +85,9 @@ public class OrganizationBL implements OrganizationBLService {
 		try {
 			ArrayList<OrganizationPO> organizationPOList = odService.showAllOrganizations();
 			ArrayList<OrganizationVO> organizationVOList = new ArrayList<OrganizationVO>();
+			
+			
+			
 			for (OrganizationPO organization : organizationPOList)
 				organizationVOList.add(organizationPOToVO(organization));
 			return organizationVOList;
@@ -95,36 +98,34 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo) {
-		if(repertorypo != null){
+		if (repertorypo != null) {
 			return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), repertorypo.getMaxRow(),
 					repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), repertorypo.getWarningRatio(),
 					repertorypo.getStockNumArray());
-		}
-		else{
+		} else {
 			return null;
 		}
 	}
 
 	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo) {
-		if(repertoryvo != null){
+		if (repertoryvo != null) {
 			return new RepertoryPO(repertoryvo.getRepertoryID(), repertoryvo.getOwnerID(), repertoryvo.getMaxRow(),
 					repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(), repertoryvo.getWarningRatio(),
 					repertoryvo.getStockNumArray());
-		}else{
+		} else {
 			return null;
 		}
 	}
 
 	public static OrganizationVO organizationPOToVO(OrganizationPO organizationpo) {
-		if(organizationpo != null){
+		if (organizationpo != null) {
 			if (organizationpo.getRepertory() != null)
 				return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
 						organizationpo.getName(), repertoryPOToVO(organizationpo.getRepertory()));
 			else
 				return new OrganizationVO(organizationpo.getCategory(), organizationpo.getOrganizationID(),
 						organizationpo.getName(), null);
-		}
-		else{
+		} else {
 			return null;
 		}
 	}
@@ -166,5 +167,3 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 }
-
-	
