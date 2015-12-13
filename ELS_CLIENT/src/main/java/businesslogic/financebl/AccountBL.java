@@ -15,7 +15,6 @@ public class AccountBL {
 
 	
 	private AccountDataService accountData;
-//	private AccountPO po;
 	
 	public AccountBL()  {
 				try {

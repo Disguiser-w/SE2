@@ -89,7 +89,7 @@ public class DriverManager {
 	public int getNumOfDriver() {
 		int num = 0;
 		try {
-			num = businessData.getNumOfDrivers();
+			num = businessData.getNumOfDrivers(BusinessMainController.businessVO.organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

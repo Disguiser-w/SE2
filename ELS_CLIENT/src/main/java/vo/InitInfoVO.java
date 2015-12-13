@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class InitInfoVO {
 	String time;
-	private ArrayList<AccountVO>  accoutVOs;
-	private ArrayList<OrganizationVO> organizationVOs;
-	private ArrayList<VehicleVO> vehicleVOs;
-	private ArrayList<RepertoryVO> repertoryVOs;
-	private ArrayList<UserVO> userVOs;
+	public  ArrayList<AccountVO>  accoutVOs;
+	public  ArrayList<OrganizationVO> organizationVOs;
+	public ArrayList<VehicleVO> vehicleVOs;
+	public ArrayList<RepertoryVO> repertoryVOs;
+	public ArrayList<UserVO> userVOs;
 	public InitInfoVO(){
 	}
 	
@@ -21,6 +21,7 @@ public class InitInfoVO {
 		this.organizationVOs=organizationVOs;
 		this.vehicleVOs=vehicleVOs;
 		this.repertoryVOs=repertoryVOs;
+		this.accoutVOs=accountVOs;
 	}
 	
 	   //人员信息

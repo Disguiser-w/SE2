@@ -35,7 +35,6 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	public int addAccount(AccountPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		if(findbyName(po.getName())==null){
-			System.out.println("add");
 			file.write(po);
 			return 0;
 		}
@@ -103,7 +102,6 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 		}
 		for(Object o:os){
 			AccountPO po=(AccountPO) o;
-			System.out.println(name);
 			if(po.getName().equals(name)){
 				return po;
 			}

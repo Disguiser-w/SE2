@@ -184,4 +184,10 @@ public class BusinessDataService_stub implements BusinessDataService {
 		return 0;
 	}
 
+	@Override
+	public int getNumOfDrivers(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

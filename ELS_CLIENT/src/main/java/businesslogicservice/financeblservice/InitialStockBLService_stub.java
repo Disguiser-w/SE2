@@ -6,7 +6,7 @@ import vo.InitInfoVO;
 
 public class InitialStockBLService_stub implements InitialStockBLService {
 
-	public int initInfo(String Time,InitInfoVO vo) {
+	public int initInfo(InitInfoVO vo,String Time) {
 		// TODO Auto-generated method stub
 		System.out.println("Initialize successfully!");
 		return 0;

@@ -321,9 +321,9 @@ public class MainFrame extends JFrame {
 			LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("nouser")) {
-				//
+				
 			} else if (logvo.logReply.equals("falsepassword")) {
-				//
+				
 			} else {
 				// 成功登录，生成界面
 				nameController.addNewName(userID);

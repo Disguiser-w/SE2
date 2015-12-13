@@ -1,6 +1,5 @@
 package businesslogic.financebl.controller;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.InitInfoVO;
@@ -15,17 +14,17 @@ public class InitialStockBLController implements InitialStockBLService{
 		initialStockBL=new InitialStockBL();
 	}
 
-	public int initInfo(String Time,InitInfoVO vo) throws RemoteException {
+	public int initInfo(InitInfoVO vo,String Time)  {
 		// TODO Auto-generated method stub
-		return initialStockBL.initInfo(Time,vo);
+		return initialStockBL.initInfo(vo,Time);
 	}
 
-	public InitInfoVO getInitInfo(String time) throws RemoteException {
+	public InitInfoVO getInitInfo(String time) {
 		// TODO Auto-generated method stub
 		return initialStockBL.getInitInfo(time);
 	}
 
-	public ArrayList<InitInfoVO> getAllInitInfo() throws RemoteException {
+	public ArrayList<InitInfoVO> getAllInitInfo()  {
 		// TODO Auto-generated method stub
 		return initialStockBL.getAllInitInfo();
 	}

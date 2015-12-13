@@ -511,11 +511,10 @@ public class AddOrderPanel extends JPanel {
 				// 计算
 
 				controller.calculateCost(newOrder);
-				System.out.println(newOrder.packingExpense);
-				
+
 				String costStr = ((int) ((newOrder.freight + newOrder.packingExpense) * 10)) / 10 + "";
 				cost.setText(newOrder.freight + newOrder.packingExpense + "元");
-				
+
 				if (senderCountry.equals(receiverCountry))
 					time.setText("一天");
 				else
