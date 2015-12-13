@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
+		setUndecorated(true);
 		setVisible(true);
 
 	}
@@ -121,7 +122,7 @@ public class MainFrame extends JFrame {
 		private JTextField orderNumField;
 		private JButton queryButton;
 		private JButton cancelButton;
-		
+
 		private LocationHelper helper;
 
 		public QueryPanel() {
@@ -131,7 +132,6 @@ public class MainFrame extends JFrame {
 			cancelButton = new JButton("取消");
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
-			
 
 			inputLabel.setBounds((int) (width * 9.0 / 25), (int) (height * 4.0 / 20), (int) (width * 6.375 / 25),
 					(int) (height * 1.8666666666666667 / 20));
@@ -160,8 +160,6 @@ public class MainFrame extends JFrame {
 			add(queryButton);
 			add(cancelButton);
 
-			
-
 		}
 
 		public void cancel() {
@@ -173,7 +171,7 @@ public class MainFrame extends JFrame {
 
 		// 调用bl层的方法进行查询
 		public void query(String orderID) {
-			
+
 		}
 
 	}
@@ -321,9 +319,9 @@ public class MainFrame extends JFrame {
 			LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("nouser")) {
-				
+
 			} else if (logvo.logReply.equals("falsepassword")) {
-				
+
 			} else {
 				// 成功登录，生成界面
 				nameController.addNewName(userID);
@@ -331,6 +329,7 @@ public class MainFrame extends JFrame {
 
 				String type = userID.split("-")[0];
 				// 不同人员的方式自己来补完
+				
 				switch (type) {
 				case "KD":
 					// 快递员登录

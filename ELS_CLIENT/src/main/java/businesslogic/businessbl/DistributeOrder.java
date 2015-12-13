@@ -59,15 +59,20 @@ public class DistributeOrder {
 
 		// 获得改营业厅前一天接收的准备拍派件的订单
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, -1); // 得到前一天
-		Date date = calendar.getTime();
+		Date today = calendar.getTime();
+		calendar.add(Calendar.DATE, -1); // 得到前一天还有今天
+		Date yestoday = calendar.getTime();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String time = df.format(date);
+		String time1 = df.format(yestoday);
+		String time2 = df.format(today);
 
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<OrderPO> distributingOrders = null;
 		try {
-			distributingOrders = expressData.getOrderInfosByTime(organizationVO.organizationID, time);
+			distributingOrders = expressData.getOrderInfosByTime(organizationVO.organizationID, time1);
+			ArrayList<OrderPO> pos2 = expressData.getOrderInfosByTime(organizationVO.organizationID, time2);
+			for (OrderPO i : pos2)
+				distributingOrders.add(i);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -98,7 +103,7 @@ public class DistributeOrder {
 
 		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime, result,
 				nowTime, ReceiptState.SUBMIT);
-		// 增加派件单，一天一天
+		// 增加派件单，一天一个
 		try {
 			businessData.addDistributeReceipt(organizationVO.organizationID, po);
 		} catch (RemoteException e) {

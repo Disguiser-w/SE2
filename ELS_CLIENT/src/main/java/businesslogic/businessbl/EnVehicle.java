@@ -41,21 +41,26 @@ public class EnVehicle {
 		}
 	}
 
-	// 从前一天的订单列表中找出待转运的订单，按目的地分配给车辆
+	// 从前一天的订单列表中找出待转运的订单(今天和昨天的)，按目的地分配给车辆
 	public ArrayList<String> autoTruckLoading() {
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
 
 		Calendar calendar = Calendar.getInstance();
+		Date today = calendar.getTime();
 		calendar.add(Calendar.DATE, -1); // 得到前一天
-		Date date = calendar.getTime();
+		Date yesTaday = calendar.getTime();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String time = df.format(date);
+		String time1 = df.format(yesTaday);
+		String time2 = df.format(today);
 		// 获取订单
 		ArrayList<OrderPO> distributingPo = new ArrayList<OrderPO>();
 		ArrayList<OrderPO> po = null;
 		try {
-			po = expressData.getOrderInfosByTime(organizationVO.organizationID, time);
+			po = expressData.getOrderInfosByTime(organizationVO.organizationID, time1);
+			ArrayList<OrderPO> po2 = expressData.getOrderInfosByTime(organizationVO.organizationID, time2);
+			for (OrderPO i : po2)
+				po.add(i);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
