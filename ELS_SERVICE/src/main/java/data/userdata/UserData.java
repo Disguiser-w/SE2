@@ -398,15 +398,15 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		if (objectList == null)
 			return "00001";
 
-		int professionCount = 0; 	// 记录该职业的用户有多少人
-		
+		int professionCount = 0; // 记录该职业的用户有多少人
+
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getProfession().equals(profession)) {
 				String[] parts = tempUserPO.getUserID().split("-");
-				int professionMaxTemp = Integer.parseInt(parts[1]);	//该用户目前的编号后缀
-				professionCount++; //已有该职业用户的个数
-				if(professionCount != professionMaxTemp){	//如果该用户目前的编号不等于已有该职业用户的个数，证明中间某编号是空余的
+				int professionMaxTemp = Integer.parseInt(parts[1]); // 该用户目前的编号后缀
+				professionCount++; // 已有该职业用户的个数
+				if (professionCount != professionMaxTemp) { // 如果该用户目前的编号不等于已有该职业用户的个数，证明中间某编号是空余的
 					if (professionCount <= 9) {
 						return "0000" + professionCount;
 					} else if (professionCount >= 10 && professionCount <= 100) {
@@ -415,13 +415,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 						return "00" + professionCount;
 					}
 				}
-				
+
 			}
 		}
-		
-		if(professionCount == 0)
-			return "00001";	//如果遍历完所有的,没有找到对应职业的用户，就返回00001
-		else{	//如果遍历完所有的,用户个数和编号都一一对应，用户个数加一，返回
+
+		if (professionCount == 0)
+			return "00001"; // 如果遍历完所有的,没有找到对应职业的用户，就返回00001
+		else { // 如果遍历完所有的,用户个数和编号都一一对应，用户个数加一，返回
 			professionCount++;
 			if (professionCount <= 9) {
 				return "0000" + professionCount;
@@ -456,6 +456,10 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 						AuthorityType.administrator, 0));
 				userData.addUser(new UserPO("张家盛", "YYT-00001", "123456",
 						ProfessionType.businessHallCounterman, "南京中转中心",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("Aaron", "ZZZX-00001", "cxzz.0518",
+						ProfessionType.intermediateCenterCounterman, "南京中转中心",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.lowest, 0));
 				userData.addUser(new UserPO("张词校", "KD-00001", "123456",
