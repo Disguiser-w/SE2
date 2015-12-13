@@ -535,7 +535,8 @@ public class IntermediateData extends UnicastRemoteObject implements
 
 	/**************************** test **********************************************************/
 	public static void main(String[] args) {
-		File file = FileGetter.getFile("intermediateInfo");
+//		File file = FileGetter.getFile("intermediateInfo");
+		File file = new File("info/intermediateInfo");
 		try {
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
