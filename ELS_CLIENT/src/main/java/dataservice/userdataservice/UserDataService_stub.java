@@ -39,6 +39,11 @@ public class UserDataService_stub implements UserDataService{
 		return null;
 	}
     
+    public ArrayList<UserPO> findUserByKeyword(String keyword) throws RemoteException{
+    	System.out.println("Find user by keyword succeed!");
+		return null;
+    }
+    
     public ArrayList<UserPO> showAllUsers() throws RemoteException{
 		System.out.println("Show all users succeed!");
 		return null;

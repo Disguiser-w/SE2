@@ -9,7 +9,6 @@ import dataservice.userdataservice.UserDataService;
 import vo.UserVO;
 import po.UserPO;
 import presentation.userui.AdminFrame;
-import presentation.userui.UserMainPanel;
 
 public class UserMainController {
 	
@@ -40,8 +39,8 @@ public class UserMainController {
 	
 	// vo和po的转化,static
 	public static UserPO userVOToPO(UserVO uservo){
-		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
-					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
+		UserPO userpo = new UserPO(uservo.userName,uservo.userID,uservo.password,uservo.profession,
+				uservo.organization,uservo.salaryPlan,uservo.authority,uservo.grades);
 		return userpo;
 	}
 	

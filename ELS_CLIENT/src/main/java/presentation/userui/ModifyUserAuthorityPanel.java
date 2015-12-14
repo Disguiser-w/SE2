@@ -182,6 +182,7 @@ public class ModifyUserAuthorityPanel extends JPanel{
     //返回上一级界面
 	public void returnui() {
 		adminFrame.changePanel(userMainPanel);
+		userMainPanel.setInfos();
 	}
 
 	

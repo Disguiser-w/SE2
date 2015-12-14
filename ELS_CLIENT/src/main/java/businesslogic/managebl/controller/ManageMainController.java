@@ -1,4 +1,4 @@
-package businesslogic.managebl.controller;
+﻿package businesslogic.managebl.controller;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -82,8 +82,8 @@ public class ManageMainController {
 	
 	// vo和po的转化,static
 	public static UserPO userVOToPO(UserVO uservo){
-		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
-					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
+		UserPO userpo = new UserPO(uservo.userName,uservo.userID,uservo.password,uservo.profession,
+					uservo.organization,uservo.salaryPlan,uservo.authority,uservo.grades);
 		return userpo;
 	}
 	

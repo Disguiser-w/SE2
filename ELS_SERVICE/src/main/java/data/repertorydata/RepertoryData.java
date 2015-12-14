@@ -23,18 +23,37 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250148L;
 	
-	JXCFile organzationFile;
+	JXCFile organizationFile;
 	JXCFile goodsFile;
 	GoodsData goodsData;
 	
 	public RepertoryData() throws RemoteException{
-		organzationFile = new JXCFile("src/organization.ser");
+		organizationFile = new JXCFile("src/organization.ser");
 		goodsFile = new JXCFile("src/goods.ser");
 		goodsData = new GoodsData();
 	}
 	
+	public int modifyRepertoryOwner(String repertoryID, String ownerID){
+		ArrayList<Object> organizationList = organizationFile.read();
+
+		int returnNum = 1;
+		for(int i=0;i<organizationList.size();i++){
+			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			RepertoryPO repertory = organization.getRepertory();
+			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
+				repertory.setOwnerID(ownerID);
+				returnNum = 0;
+				break;
+			}
+		}
+		
+		organizationFile.writeM(organizationList);
+		return returnNum;
+	}
+	
+	
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
@@ -57,12 +76,12 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 			}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -75,7 +94,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public RepertoryPO findRepertoryByOwnerID(String ownerID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -88,7 +107,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public ArrayList<RepertoryPO> showAllRepertorys() throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		if(organizationList==null)
 			return null;
@@ -104,7 +123,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum =1;
 		for(int i=0;i<organizationList.size();i++){
@@ -127,12 +146,12 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 			}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
 	public int deleteInventory(String repertoryID, String JJD_ID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum =1;
 loop1:		for(int i=0;i<organizationList.size();i++){
@@ -161,7 +180,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
