@@ -329,7 +329,7 @@ public class MainFrame extends JFrame {
 
 				String type = userID.split("-")[0];
 				// 不同人员的方式自己来补完
-				
+
 				switch (type) {
 				case "KD":
 					// 快递员登录

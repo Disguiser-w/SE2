@@ -192,12 +192,20 @@ public class VehicleManagerPanel extends JPanel {
 	}
 
 	private void addListener() {
+		confirmButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		});
+		
 		previousPageLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (num == 0)
 					return;
 				else {
 					num--;
+					for(JCheckBox i:selectVehicle)
+						i.setSelected(false);
 					setInfos();
 
 				}
@@ -211,6 +219,8 @@ public class VehicleManagerPanel extends JPanel {
 					return;
 				else {
 					num++;
+					for(JCheckBox i:selectVehicle)
+						i.setSelected(false);
 					setInfos();
 				}
 			}

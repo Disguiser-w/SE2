@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import common.FileGetter;
+import data.managedata.OrganizationData;
 import dataservice.businessdataservice.BusinessDataService;
 import po.BusinessPO;
 import po.DistributeReceiptPO;
@@ -865,8 +866,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
-		String path = "../src/organization.ser";
-		File file = FileGetter.getFile(path);
+		File file = FileGetter.getFile("../src/organization.ser");
 
 		if (!file.exists())
 			return new ArrayList<OrganizationPO>();
@@ -874,7 +874,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 
-			ArrayList<OrganizationPO> organizationPOs = (ArrayList<OrganizationPO>) in.readObject();
+			ArrayList<OrganizationPO> organizationPOs = (ArrayList<OrganizationPO>) (new OrganizationData())
+					.showAllOrganizations();
 			in.close();
 
 			return organizationPOs;
@@ -889,7 +890,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	public static void main(String[] args) {
 		try {
-			File file = FileGetter.getFile("businessInfo/025001-business.dat");
+			File file = FileGetter.getFile("organizationInfo/organizationInfo.dat");
 			if (!file.exists()) {
 
 				file.getParentFile().mkdirs();
@@ -898,9 +899,9 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
 					new RepertoryPO("pig", "wo"));
-			ArrayList<BusinessPO> bpo = new ArrayList<BusinessPO>();
-			BusinessPO b = new BusinessPO("doge", "YYT-00001", "2年", po);
-			bpo.add(b);
+			ArrayList<OrganizationPO> bpo = new ArrayList<OrganizationPO>();
+
+			bpo.add(po);
 
 			out.writeObject(bpo);
 			out.close();

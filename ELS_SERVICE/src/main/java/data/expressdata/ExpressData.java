@@ -451,22 +451,20 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	public int getOrderNum(String organizationID) throws RemoteException {
 
 		String time = getTime();
-		String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
+		String orderPath = "orderInfo/total.dat";
 		File file = FileGetter.getFile(orderPath);
 
 		if (!file.exists()) {
-			System.out.println("当日订单数为0");
 			return 0;
-
 		}
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
+			AVLTree<String, String> orderPOs = (AVLTree<String, String>) in.readObject();
 
 			in.close();
 
-			return orderPOs.size();
+			return orderPOs.getSize();
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -84,8 +84,7 @@ public class AddOrder {
 
 		double distance = 0;
 		try {
-//			distance = DataFactory.getCityDistanceData().findCityDistanceByBoth(city1, city2).getDistance();
-			 distance = 1000;
+			distance = DataFactory.getCityDistanceData().findCityDistanceByBoth(city1, city2).getDistance();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

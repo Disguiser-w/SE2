@@ -1,12 +1,15 @@
 package businesslogic.managebl;
 
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.OrganizationBLService;
+import common.FileGetter;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.userdataservice.UserDataService;
 import po.OrganizationPO;
@@ -85,9 +88,7 @@ public class OrganizationBL implements OrganizationBLService {
 		try {
 			ArrayList<OrganizationPO> organizationPOList = odService.showAllOrganizations();
 			ArrayList<OrganizationVO> organizationVOList = new ArrayList<OrganizationVO>();
-			
-			
-			
+
 			for (OrganizationPO organization : organizationPOList)
 				organizationVOList.add(organizationPOToVO(organization));
 			return organizationVOList;
@@ -141,26 +142,32 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public static void main(String[] args) {
 		try {
-			OrganizationDataService organizationData = (OrganizationDataService) Naming
-					.lookup("rmi://172.25.132.40:6006/OrganizationDataService");
+//			OrganizationDataService organizationData = DataFactory.getOrganizationData();
+//
+//			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
+//			for (OrganizationPO organization : organizationList0)
+//				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+//
+//			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
+//
+//			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
+//			for (OrganizationPO organization : organizationList1)
+//				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
 
-			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
-			for (OrganizationPO organization : organizationList0)
-				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+			OrganizationPO po1 = new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅");
 
-			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
+			File file = FileGetter.getFile("../src/organization.ser");
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
 
-			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
-			for (OrganizationPO organization : organizationList1)
-				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+			ArrayList<OrganizationPO> pos = new ArrayList<OrganizationPO>();
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
 
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

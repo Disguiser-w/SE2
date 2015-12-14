@@ -65,8 +65,6 @@ public class DriverManagerPanel extends JPanel {
 	private int num;
 	private boolean isFirstTime;
 
-	private JCheckBox b;
-
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
@@ -193,7 +191,9 @@ public class DriverManagerPanel extends JPanel {
 				else {
 					num--;
 					setInfos();
-
+					for (JCheckBox i : selectDriver)
+						i.setSelected(false);
+					// repaint();
 				}
 			}
 		});
@@ -206,6 +206,9 @@ public class DriverManagerPanel extends JPanel {
 				else {
 					num++;
 					setInfos();
+					for (JCheckBox i : selectDriver)
+						i.setSelected(false);
+					// repaint();
 				}
 			}
 		});
@@ -1041,7 +1044,7 @@ public class DriverManagerPanel extends JPanel {
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (hasAdd)
-						
+						setInfos();
 					mainFrame.toMainPanel();
 				}
 			});
@@ -1086,7 +1089,7 @@ public class DriverManagerPanel extends JPanel {
 			for (int i = 0; i < numOfZero; i++) {
 				ID = 0 + ID;
 			}
-			return "JS-" + ID;
+			return "SJ-" + BusinessMainController.businessVO.organizationVO.organizationID + "-" + ID;
 		}
 	}
 
