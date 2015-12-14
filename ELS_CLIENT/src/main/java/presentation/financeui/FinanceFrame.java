@@ -43,7 +43,6 @@ public class FinanceFrame extends UserFrame{
 	
 	
 	
-	
 //	public static void main(String[] args){
 //		new FinanceFrame();
 //	}

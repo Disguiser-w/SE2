@@ -372,11 +372,16 @@ class AccountModel extends AbstractTableModel{
      
      public void refreshTable(ArrayList<AccountVO> vos){
     	 //每次刷新时c清0
+    	 if(vos==null){
+    		 return;
+    	 }
+    	 else{
     	 for(AccountVO v:vos){
     		 ArrayList<String> lineInfo = new ArrayList<String>();
  			lineInfo.add(v.getName());
  			lineInfo.add(String.valueOf(v.getMoney()));
  			c.add(lineInfo);
+    	 }
     	 }
      }
      

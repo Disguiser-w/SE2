@@ -5,12 +5,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class InitInfoPO extends UnicastRemoteObject implements Serializable{
+public class InitInfoPO  implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 
 	String date;
 	public  ArrayList<AccountPO>  accountPOs;

@@ -188,7 +188,8 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 ////		AccountPO po=data.findbyName("刘钦");
 ////		System.out.println("Data中的"+po.getMoney());
 		AccountPO po=new AccountPO("本宝宝", 200);
-		data.modifyAccount(po, "其他宝宝");
+//		data.modifyAccount(po, "其他宝宝");
+		data.addAccount(po);
 		ArrayList<AccountPO> pos=data.showAll();
 		for(AccountPO p:pos){
 			System.out.println("Name: "+p.getName()+" "+p.getMoney());

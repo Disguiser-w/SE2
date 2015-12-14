@@ -86,11 +86,13 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * 频率：一天整理合计一次
 	 * */
 	public ArrayList<GatheringReceiptVO> getGathering(String Time){
-		ArrayList<GatheringReceiptPO> gatheringReceiptPOs;
 		try {
-			gatheringReceiptPOs = businessData.getGatheringReceipt(Time);
-			System.out.println(gatheringReceiptPOs.get(0).getReceiptID());
-			 return FinanceMainController.gposToVOs(gatheringReceiptPOs);
+			if(businessData.getGatheringReceipt(Time)!=null){
+			 return FinanceMainController.gposToVOs(businessData.getGatheringReceipt(Time));
+			}
+			else{
+				return null;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

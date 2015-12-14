@@ -40,13 +40,13 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public PaymentReceiptBL(){
 		super();
 			try {
-			/*userData=DataFactory.getUserData();
+			userData=DataFactory.getUserData();
 			businessData=DataFactory.getBusinessData();
 			organizationData=DataFactory.getOrganizationData();
 			intermediateData=DataFactory.getIntermediateData();
 			basicSalaryData=DataFactory.getBasicSalaryData();
 			perWageData= DataFactory.getPerWageData();
-			*/
+			
 			paymentData=DataFactory.getPaymentReceiptData();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

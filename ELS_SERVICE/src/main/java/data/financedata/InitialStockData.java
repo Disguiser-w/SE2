@@ -4,7 +4,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import po.AccountPO;
+import po.DriverPO;
 import po.InitInfoPO;
+import po.OrganizationPO;
+import po.RepertoryPO;
+import po.UserPO;
+import po.VehiclePO;
+import type.AuthorityType;
+import type.OrganizationType;
+import type.ProfessionType;
+import type.SalaryPlanType;
+import type.Sexuality;
 import dataservice.financedataservice.InitialStockDataService;
 import file.JXCFile;
 
@@ -87,7 +98,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 //
 //			UserPO user=new UserPO("ben", "CW", ProfessionType.financialStaff, "总部",SalaryPlanType.basicStaffSalaryPlan	, AuthorityType.commonFianacialStaff,0);
 //			OrganizationPO org=new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼");
-//			VehiclePO vehicle=new VehiclePO("00001", "2014", "2014", "20", "2013", "3", null, "南京", null, null);
+//			VehiclePO vehicle=new VehiclePO("cw", "110", "110", "110", "110", "110",org, "123", org, new DriverPO("123", "123", "123", "123", "123", org, Sexuality.FEMALE, "123",0));
 //			RepertoryPO repertory=new RepertoryPO("0251", "SJ");
 //			AccountPO account=new AccountPO("CW", 100);
 //			userPOs.add(user);
@@ -99,12 +110,14 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 //			InitInfoPO po=new InitInfoPO("2015-12-11", userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 //			data.initInfo(po, "2015-12-11");
 //			System.out.println(data.getInitInfo("2015-12-11").getAccountPOs());
-			InitInfoPO po=data.getInitInfo("2015-12-11");
-			System.out.println(po.getUserPOs().get(0).getName());
-			System.out.println(po.getOrganizationPOs().get(0).getName());
-			System.out.println(po.getVehiclePOs().get(0).getID());
-			System.out.println(po.getVehiclePOs().get(0).getID());
-			System.out.println(po.getAccountPOs().get(0).getName());
+//			InitInfoPO po1=data.getInitInfo("2015-12-11");
+//			System.out.println(po1.getUserPOs().get(0).getName());
+//			System.out.println(po1.getOrganizationPOs().get(0).getName());
+//			System.out.println(po1.getVehiclePOs().get(0).getID());
+//			System.out.println(po1.getVehiclePOs().get(0).getID());
+//			System.out.println(po1.getAccountPOs().get(0).getName());
+//			ArrayList<InitInfoPO> pos=data.getAllInitInfo();
+//			System.out.println(pos.size());
 					} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

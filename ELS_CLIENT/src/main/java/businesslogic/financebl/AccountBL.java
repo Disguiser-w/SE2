@@ -151,7 +151,12 @@ public class AccountBL {
 	public ArrayList<AccountVO> showAll() {
 		// TODO Auto-generated method stub
 		try {
+			if(accountData.showAll()!=null){
 			return FinanceMainController.aposToVOs(accountData.showAll());
+			}
+			else{
+				return null;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

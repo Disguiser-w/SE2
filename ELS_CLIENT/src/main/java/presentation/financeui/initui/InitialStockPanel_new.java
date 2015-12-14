@@ -270,7 +270,6 @@ public class InitialStockPanel_new extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				changeTable(accountTable);
 				int temp=account.size();
-				System.out.println(accountController.showAll().size());
 				refreshAccount(accountController.showAll());
 				am=new AccountModel(account);
 				for(int i=0;i<temp;i++){
@@ -306,8 +305,9 @@ public class InitialStockPanel_new extends JPanel{
 					}
 					else{
 					*/
-					System.out.println(getDate.getdate());
 						controller.initInfo(initVO,getDate.getdate());
+						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
+								JOptionPane.CLOSED_OPTION);
 //					}
 				}
 			});

@@ -2,6 +2,7 @@ package presentation.financeui.initui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public class InitialStockPanel_main extends JPanel {
 	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
 			FinanceFrame parent){
-//	 public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,VehicleManagerController vehicleController,AccountBLController accountController,FinanceFrame parent){
 		this.controller=controller;
 		this.userController=userController;
 		this.organizationController=organizationController;
@@ -84,6 +84,7 @@ public class InitialStockPanel_main extends JPanel {
 		startDate_Input = new JTextField("", 11);
 		endDate_Input = new JTextField("", 11);
 		
+		refreshTable(controller.getAllInitInfo());
 		im=new InitialStockModel(c);
 		table=new JTable(im);
 		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -197,15 +198,12 @@ public class InitialStockPanel_main extends JPanel {
 		TableColumn column1 = table.getColumnModel().getColumn(0);
 		TableColumn column2 = table.getColumnModel().getColumn(1);
 		// 设置宽度
-		column1.setPreferredWidth(table.getWidth() * 4 / 10);
-		column2.setPreferredWidth(table.getWidth() * 6/ 10);
+		column1.setPreferredWidth(table.getWidth() * 5/ 10);
+		column2.setPreferredWidth(table.getWidth() * 5/ 10);
 
 
 		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
-		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
-		// messageTable.getTableHeader().getHeight() + 4);
 
-		//
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
 			/**
 			 * 
@@ -247,7 +245,7 @@ public class InitialStockPanel_main extends JPanel {
 
 	public void newInitInfoui() {
 		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,vehicleController,repertoryController,accountController, financeFrame));
-	}
+		}
 	
 	public void detailui(){
 		financeFrame.changePanel(new InitialStockPanel_detail(controller, financeFrame));
@@ -261,13 +259,27 @@ public class InitialStockPanel_main extends JPanel {
 
 	}
 	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		refresh();
+	}
+	
+	public void refresh(){
+		int temp = c.size();
+		refreshTable(controller.getAllInitInfo());
+		im = new InitialStockModel(c);
+		for(int i=0;i<temp;i++){
+			im.removeRow(0);
+		}
+		table.repaint();
+	}
 	class InitialStockModel extends AbstractTableModel{
 
 		
 		private static final long serialVersionUID = 1L;
 		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
-		String head[]={"账名称","建账日期"};
+		String head[]={"建账时间","操作员"};
 		
 		public InitialStockModel(ArrayList<ArrayList<String>> content){
 			c=content;
@@ -275,13 +287,11 @@ public class InitialStockPanel_main extends JPanel {
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-
-			return 10;
+			return 8;
 		}
 
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
-//			System.out.println(head.length);
 			return head.length;
 		}
 		
@@ -289,7 +299,9 @@ public class InitialStockPanel_main extends JPanel {
 			if(row>c.size()-1){
 				return null;
 			}
+			else{
 			return c.get(row).get(col);
+			}
 		}
 
 		public String getColumnName(int col) {
@@ -297,7 +309,6 @@ public class InitialStockPanel_main extends JPanel {
 		}
 
 		public void addRow(ArrayList<String> v) {
-
 			c.add(v);
 		}
 
@@ -307,9 +318,20 @@ public class InitialStockPanel_main extends JPanel {
 		
 	}
 	
-	public void refreshTable(){
-		
+	public void refreshTable(ArrayList<InitInfoVO> vos){
+		if(vos==null){
+			return;
+		}
+		else{
+		for(InitInfoVO v:vos){
+			ArrayList<String> lineInfo=new ArrayList<String>();
+			lineInfo.add(v.getTime().substring(0,4)+"-"+v.getTime().substring(4,6)+"-"+v.getTime().substring(6));
+			lineInfo.add("CW-00001");
+			c.add(lineInfo);
+		}
+		}
 	}
+	
 
 /*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		InitialStockBLController controller=new InitialStockBLController();

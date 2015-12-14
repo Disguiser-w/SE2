@@ -353,8 +353,9 @@ public class FinanceMainController {
 		if(po==null)
 			return null;
 		
-//		ArrayList<UserPO> userPOs=po.getUserPOs();
-		ArrayList<UserPO> userPOs=userData.showAllUsers();
+		ArrayList<UserPO> userPOs=po.getUserPOs();
+
+//		ArrayList<UserPO> userPOs=userData.showAllUsers();
 		ArrayList<UserVO> userVOs;
 		if(userPOs==null){
 			userVOs=null;
@@ -367,8 +368,8 @@ public class FinanceMainController {
 			}
 		}
 		
-//		ArrayList<OrganizationPO> organizationPOs=po.getOrganizationPOs();
-		ArrayList<OrganizationPO> organizationPOs=organizationData.showAllOrganizations();
+		ArrayList<OrganizationPO> organizationPOs=po.getOrganizationPOs();
+//		ArrayList<OrganizationPO> organizationPOs=organizationData.showAllOrganizations();
 		ArrayList<OrganizationVO> organizationVOs;
 		if(organizationPOs==null){
 			organizationVOs=null;
@@ -381,8 +382,8 @@ public class FinanceMainController {
 			}
 		}
 		
-//		ArrayList<VehiclePO> vehiclePOs=po.getVehiclePOs();
-		ArrayList<VehiclePO> vehiclePOs=businessData.getVehicleInfos(null);
+		ArrayList<VehiclePO> vehiclePOs=po.getVehiclePOs();
+//		ArrayList<VehiclePO> vehiclePOs=businessData.getVehicleInfos(null);
 		ArrayList<VehicleVO> vehicleVOs;
 		if(vehiclePOs==null){
 			vehicleVOs=null;
@@ -397,8 +398,8 @@ public class FinanceMainController {
 		
 	
 		
-//		ArrayList<RepertoryPO> repertoryPOs=po.getRepertoryPOs();
-		ArrayList<RepertoryPO> repertoryPOs=repertoryData.showAllRepertorys();
+		ArrayList<RepertoryPO> repertoryPOs=po.getRepertoryPOs();
+//		ArrayList<RepertoryPO> repertoryPOs=repertoryData.showAllRepertorys();
 		ArrayList<RepertoryVO> repertoryVOs;
 		if(repertoryPOs==null){
 			repertoryVOs=null;
@@ -411,8 +412,8 @@ public class FinanceMainController {
 			}
 		}
 		
-//		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
-		ArrayList<AccountPO> accountPOs=accountData.showAll();
+		ArrayList<AccountPO> accountPOs=po.getAccountPOs();
+//		ArrayList<AccountPO> accountPOs=accountData.showAll();
 		ArrayList<AccountVO> accountVOs;
 		if(accountPOs==null){
 			accountVOs=null;
