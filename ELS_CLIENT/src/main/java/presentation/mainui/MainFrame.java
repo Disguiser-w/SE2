@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -20,6 +23,7 @@ import javax.swing.JTextField;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.financebl.controller.FinanceMainController;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
@@ -81,6 +85,7 @@ public class MainFrame extends JFrame {
 		private JButton queryButton;
 		// 登录按钮
 		private JButton signInButton;
+
 		// private LocationHelper helper;
 
 		public MainPanel() {
@@ -90,9 +95,11 @@ public class MainFrame extends JFrame {
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
 
-			queryButton.setBounds((int) (width * 15.1875 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
+			queryButton.setBounds((int) (width * 15.1875 / 25),
+					(int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
 					(int) (height * 2.533333333333333 / 20));
-			signInButton.setBounds((int) (width * 5.0625 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
+			signInButton.setBounds((int) (width * 5.0625 / 25),
+					(int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
 					(int) (height * 2.533333333333333 / 20));
 			queryButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -133,13 +140,18 @@ public class MainFrame extends JFrame {
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
 
-			inputLabel.setBounds((int) (width * 9.0 / 25), (int) (height * 4.0 / 20), (int) (width * 6.375 / 25),
+			inputLabel.setBounds((int) (width * 9.0 / 25),
+					(int) (height * 4.0 / 20), (int) (width * 6.375 / 25),
 					(int) (height * 1.8666666666666667 / 20));
-			orderNumField.setBounds((int) (width * 4.6875 / 25), (int) (height * 7.933333333333334 / 20),
-					(int) (width * 15.6875 / 25), (int) (height * 1.8666666666666667 / 20));
-			queryButton.setBounds((int) (width * 6.375 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+			orderNumField.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 7.933333333333334 / 20),
+					(int) (width * 15.6875 / 25),
+					(int) (height * 1.8666666666666667 / 20));
+			queryButton.setBounds((int) (width * 6.375 / 25),
+					(int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
 					(int) (height * 1.9333333333333333 / 20));
-			cancelButton.setBounds((int) (width * 14.25 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+			cancelButton.setBounds((int) (width * 14.25 / 25),
+					(int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
 					(int) (height * 1.9333333333333333 / 20));
 
 			queryButton.addActionListener(new ActionListener() {
@@ -190,6 +202,7 @@ public class MainFrame extends JFrame {
 		// private JComboBox names;
 
 		private UserNameController nameController;
+
 		// private LocationHelper helper;
 
 		public SignInPanel() {
@@ -210,7 +223,8 @@ public class MainFrame extends JFrame {
 			signInButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					signIn((String) names.getSelectedItem(), new String(passwordField.getPassword()));
+					signIn((String) names.getSelectedItem(), new String(
+							passwordField.getPassword()));
 				}
 			});
 
@@ -240,19 +254,30 @@ public class MainFrame extends JFrame {
 
 			// helper = new LocationHelper(this);
 
-			userNameLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 9.266666666666667 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			names.setBounds((int) (width * 8.9375 / 25), (int) (height * 9.266666666666667 / 20),
+			userNameLabel.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 9.266666666666667 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			names.setBounds((int) (width * 8.9375 / 25),
+					(int) (height * 9.266666666666667 / 20),
 					(int) (width * 11.4375 / 25), (int) (height * 1.8 / 20));
-			passwordLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 11.933333333333334 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			passwordField.setBounds((int) (width * 8.9375 / 25), (int) (height * 11.933333333333334 / 20),
+			passwordLabel.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 11.933333333333334 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			passwordField.setBounds((int) (width * 8.9375 / 25),
+					(int) (height * 11.933333333333334 / 20),
 					(int) (width * 11.5 / 25), (int) (height * 1.8 / 20));
-			signInButton.setBounds((int) (width * 6.625 / 25), (int) (height * 15.733333333333333 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			cancelButton.setBounds((int) (width * 14.1875 / 25), (int) (height * 15.733333333333333 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			imageLabel.setBounds((int) (width * 9.125 / 25), (int) (height * 2.2666666666666666 / 20),
+			signInButton.setBounds((int) (width * 6.625 / 25),
+					(int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			cancelButton.setBounds((int) (width * 14.1875 / 25),
+					(int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			imageLabel.setBounds((int) (width * 9.125 / 25),
+					(int) (height * 2.2666666666666666 / 20),
 					(int) (width * 6.6875 / 25), (int) (height * 5.6 / 20));
 
 		}
@@ -271,17 +296,19 @@ public class MainFrame extends JFrame {
 			names.setEditable(true);// 将JComboBox设成是可编辑的.
 			ComboBoxEditor editor = names.getEditor();
 			names.configureEditor(editor, "");
-			names.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-				public void keyPressed(KeyEvent e) {
-					if (names.getItemCount() == 0)
-						return;
-					if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-						nameController.deleteName((String) names.getSelectedItem());
-						updateNames();
-						repaint();
-					}
-				}
-			});
+			names.getEditor().getEditorComponent()
+					.addKeyListener(new KeyAdapter() {
+						public void keyPressed(KeyEvent e) {
+							if (names.getItemCount() == 0)
+								return;
+							if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+								nameController.deleteName((String) names
+										.getSelectedItem());
+								updateNames();
+								repaint();
+							}
+						}
+					});
 
 		}
 
@@ -333,24 +360,37 @@ public class MainFrame extends JFrame {
 				switch (type) {
 				case "KD":
 					// 快递员登录
-					ExpressMainController expressMainController = new ExpressMainController(userID);
+					ExpressMainController expressMainController = new ExpressMainController(
+							userID);
 					break;
+				case "ZZZX":
+					// 中转中心业务员登录
+					try {
+						IntermediateMainController intermediateMaincontroller = new IntermediateMainController(
+								userID);
+					} catch (Exception e1) {
+						// TODO 自动生成的 catch 块
+						e1.printStackTrace();
+					}
 				case "YYT":
 					// 营业厅业务员登录
-					BusinessMainController businessMainController = new BusinessMainController(userID);
+					BusinessMainController businessMainController = new BusinessMainController(
+							userID);
 					break;
 				// 来这里加吧，上面的 uservo通过 logvo.uservo得到
 				case "CW":
 					try {
-						FinanceMainController financeMainController = new FinanceMainController(userID);
+						FinanceMainController financeMainController = new FinanceMainController(
+								userID);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;
-				case "GLY":
+				case "admin":
 					try {
-						UserMainController userMainController = new UserMainController(userID);
+						UserMainController userMainController = new UserMainController(
+								userID);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -358,7 +398,8 @@ public class MainFrame extends JFrame {
 					break;
 				case "JL":
 					try {
-						ManageMainController manageMainController = new ManageMainController(userID);
+						ManageMainController manageMainController = new ManageMainController(
+								userID);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -366,7 +407,8 @@ public class MainFrame extends JFrame {
 					break;
 				case "CK":
 					try {
-						RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
+						RepertoryMainController repertoryMainController = new RepertoryMainController(
+								userID);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

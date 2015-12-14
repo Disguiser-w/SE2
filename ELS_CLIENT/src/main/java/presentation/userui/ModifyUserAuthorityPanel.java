@@ -75,8 +75,6 @@ public class ModifyUserAuthorityPanel extends JPanel{
 		
 		authority = new JLabel("权限");
 		userAuthority = new JComboBox<String>();
-		userAuthority.addItem("最低权限（普通人员权限）");
-		userAuthority.addItem("管理员权限");
 		userAuthority.addItem("普通财务人员权限");
 		userAuthority.addItem("最高权限");
 
@@ -88,8 +86,7 @@ public class ModifyUserAuthorityPanel extends JPanel{
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int authorityInt = userAuthority.getSelectedIndex();
-				AuthorityType[] authorityList = {AuthorityType.lowest, AuthorityType.administrator, 
-						AuthorityType.commonFianacialStaff, AuthorityType.highest};
+				AuthorityType[] authorityList = {AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
 			
 				int returnNum = userBL.modifyUserAuthority(userIDStr, authority);

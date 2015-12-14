@@ -71,6 +71,17 @@ public class TransferingPanel extends JPanel {
 
 		pageNum = 0;
 
+		isDelete = new JCheckBox[12];
+		for (int i = 0; i < isDelete.length; i++) {
+			isDelete[i] = new JCheckBox();
+			isDelete[i].setBounds(PANEL_WIDTH * 2 / 33, PANEL_HEIGHT * 29 / 120
+					+ PANEL_HEIGHT * (i + 1) / 22 + PANEL_HEIGHT / 80,
+					PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+			add(isDelete[i]);
+			isDelete[i].setVisible(false);
+		}
+		delete_ok.setVisible(false);
+
 		setCmpLocation();
 
 		addButton.addActionListener(new ActionListener() {
@@ -160,6 +171,7 @@ public class TransferingPanel extends JPanel {
 		add(next);
 		add(previous);
 		add(info.getTableHeader());
+		add(delete_ok);
 	}
 
 	public void setCmpLocation() {
@@ -184,6 +196,8 @@ public class TransferingPanel extends JPanel {
 				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
 		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
 				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
+		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
+				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -199,28 +213,15 @@ public class TransferingPanel extends JPanel {
 	}
 
 	public void addui() {
-		frame.changePanel(new TransferingPanel(controller, frame));
+		frame.changePanel(new Transfering_newPanel(controller, frame));
 	}
 
 	public void deleteui() {
-		if (pageNum != pageNum_max)
-			isDelete = new JCheckBox[12];
-		else
-			isDelete = new JCheckBox[controller.getTransferingReceipt().orderList
-					.size() - 12 * pageNum];
-
-		for (int i = 0; i < isDelete.length; i++) {
-			isDelete[i] = new JCheckBox();
-			isDelete[i].setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
-					+ PANEL_HEIGHT * (i + 1) * 99 / 20 / 100 + PANEL_HEIGHT
-					/ 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-			add(isDelete[i]);
+		delete_ok.setVisible(true);
+		for (int i = 0; i < controller.getTransferingReceipt().orderList.size()
+				- 12 * pageNum; i++)
 			isDelete[i].setVisible(true);
-		}
-
-		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
-				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		add(delete_ok);
+		delete_ok.setVisible(true);
 	}
 
 	public void printui() {
