@@ -26,9 +26,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 //import javax.swing.ListSelectionModel;
 
+
+
 import java.util.ArrayList;
 
+import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
+import vo.OrganizationVO;
 import vo.UserVO;
 import type.ProfessionType;
 import type.SalaryPlanType;
@@ -41,6 +45,7 @@ public class UserMainPanel extends JPanel{
 	private AdminFrame adminFrame;
 	
 	private UserBL userBL;
+	private OrganizationBL organizationBL;
 	
 	private JLabel addLabel;
 	private JLabel delLabel;
@@ -56,6 +61,7 @@ public class UserMainPanel extends JPanel{
 	
 	private ArrayList<JCheckBox> selectUser;
 	private JLabel numOfPage;
+	
 	private ArrayList<UserVO> users;
 	
 	private boolean isDel;
@@ -69,6 +75,7 @@ public class UserMainPanel extends JPanel{
 		this.adminFrame = adminFrame;
 		
 		this.userBL = new UserBL();
+		this.organizationBL = new OrganizationBL();
 		
 		addLabel = new JLabel("增");
 		delLabel = new JLabel("删");
@@ -263,8 +270,10 @@ public class UserMainPanel extends JPanel{
 						if (i.isSelected()) {
 							i.setSelected(false);
 							UserVO vo = users.get(num * 8 + n);
-							userBL.deleteUser(vo.userID);
-							m++;
+							if(!vo.profession.equals(ProfessionType.administrator)){
+								userBL.deleteUser(vo.userID);
+								m++;
+							}
 						}
 						n++;
 						isDel = false;
@@ -375,7 +384,13 @@ public class UserMainPanel extends JPanel{
 			case 2:
 				return professionName(uservo.profession);
 			case 3:
-				return uservo.organization;
+				if(uservo.organization.equals("总部"))
+					return "总部";
+				else if(uservo.organization.equals(""))
+					return "";
+				else
+					return organizationName(uservo.organization);
+				//return uservo.organization;
 			case 4:
 				return salaryPlanName(uservo.salaryPlan);
 			case 5:
@@ -510,6 +525,19 @@ public class UserMainPanel extends JPanel{
 			return professionNameList[n-1];
 	}
 	
+	//根据不同的机构编号返回薪机构名，给表去显示
+	public String organizationName(String organizationID){
+		if(organizationID.endsWith("-CK")){
+			organizationID = organizationID.substring(0,5);
+			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			return organizationvo.name+"仓库";
+		}
+		else{
+			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			return organizationvo.name;
+		}
+	}
+		
 	//根据不同的薪水类型返回薪水类型名，给表去显示
 	public String salaryPlanName(SalaryPlanType salaryPlan){
 		int n = salaryPlan.ordinal();

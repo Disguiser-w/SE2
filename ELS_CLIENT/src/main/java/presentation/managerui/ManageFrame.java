@@ -13,7 +13,7 @@ private static final long serialVersionUID = 189L;
 	public ManageFrame(UserVO vo){
 		super();
 		
-		setMessage(vo.getName(), vo.getID());
+		setMessage(vo.userName, vo.userID);
 		
 		addFuncLabel(new StaffManagePanel(this));
 		addFuncLabel(new OrganizationManagePanel(this));
@@ -26,8 +26,10 @@ private static final long serialVersionUID = 189L;
 	}
 	
 	public static void main(String[] args){
-		new ManageFrame(new UserVO("魏彦淑","JL-00001","123456", ProfessionType.manager, 
+		ManageFrame manageFrame = new ManageFrame(new UserVO("魏彦淑","JL-00001","123456", ProfessionType.manager, 
 				"总部", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0));
+	
+		manageFrame.setVisible(true);
 	}
 	
 }

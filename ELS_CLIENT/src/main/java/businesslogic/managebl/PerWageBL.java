@@ -36,7 +36,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public int deletePerWage(PerWageVO perWagevo){
 		try{
-			return(pwdService.deletePerWage(perWagevo.getProfession()));
+			return(pwdService.deletePerWage(perWagevo.profession));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -77,7 +77,7 @@ public class PerWageBL implements PerWageBLService{
 	}
 	
 	public static PerWagePO perWageVOToPO(PerWageVO perWagevo){
-		return new PerWagePO(perWagevo.getProfession(),perWagevo.getPerWage());
+		return new PerWagePO(perWagevo.profession,perWagevo.perWage);
 	}
 	
 	public static PerWageVO perWagePOToVO(PerWagePO perWagepo){

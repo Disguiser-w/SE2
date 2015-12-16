@@ -2,13 +2,17 @@ package presentation.managerui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import vo.OrganizationVO;
+import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
 
 public class ModifyStaffOrganizationPanel extends JPanel{
@@ -18,6 +22,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 	private ManageFrame manageFrame;
 	
 	UserBL userBL;
+	OrganizationBL organizationBL;
 	
     private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
@@ -31,7 +36,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
     private JLabel profession;
     private JTextField professionField;
     private JLabel organization;
-    private JTextField organizationField;
+    private JComboBox<String> organizationChoose;
     private JLabel salaryPlan;
     private JTextField salaryPlanField;
     private JLabel authority;
@@ -48,7 +53,17 @@ public class ModifyStaffOrganizationPanel extends JPanel{
     	this.manageFrame =frame;
     	
     	this.userBL = new UserBL();
+    	this.organizationBL = new OrganizationBL();
     	
+    	ArrayList<OrganizationVO> organizationArr = organizationBL.showAllOrganizations();
+		String[] organizationNameList = new String[50];
+		String[] organizationIDList = new String[50];
+		
+		for(int i=0;i<organizationArr.size();i++){
+			organizationNameList[i] = (organizationArr.get(i).name);
+			organizationIDList[i] = (organizationArr.get(i).organizationID);
+		}
+		
     	function = new JLabel("用户管理——修改用户机构");
     	
     	name = new JLabel("用户姓名");
@@ -65,8 +80,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		professionField.setEditable(false);
 		
 		organization = new JLabel("机构");
-		organizationField = new JTextField(userOldOrganization);
-		organizationField.setEditable(true);
+		organizationChoose = new JComboBox<String>(organizationNameList);
 		
 		salaryPlan = new JLabel("薪水策略");
 		salaryPlanField = new JTextField(userSalaryPlan);
@@ -87,9 +101,10 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		//加监听
 		OKButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String newOrganization = organizationField.getText();
+				int chosenInt = organizationChoose.getSelectedIndex();
+				String newOrganizationID = organizationIDList[chosenInt];
 				
-				int returnNum = userBL.modifyUserOrganization(userIDStr, newOrganization);
+				int returnNum = userBL.modifyUserOrganization(userIDStr, newOrganizationID);
 				
 				if(returnNum==0){
 					successModify();
@@ -116,7 +131,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 		add(profession);
 		add(professionField);
 		add(organization);
-		add(organizationField);
+		add(organizationChoose);
 		add(salaryPlan);
 		add(salaryPlanField);
 		add(authority);
@@ -158,7 +173,7 @@ public class ModifyStaffOrganizationPanel extends JPanel{
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		professionField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		organizationField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
+		organizationChoose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		salaryPlanField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);

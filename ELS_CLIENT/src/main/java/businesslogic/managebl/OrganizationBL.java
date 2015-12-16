@@ -110,9 +110,9 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo) {
 		if (repertoryvo != null) {
-			return new RepertoryPO(repertoryvo.getRepertoryID(), repertoryvo.getOwnerID(), repertoryvo.getMaxRow(),
-					repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(), repertoryvo.getWarningRatio(),
-					repertoryvo.getStockNumArray());
+			return new RepertoryPO(repertoryvo.repertoryID, repertoryvo.ownerID, repertoryvo.maxRow,
+					repertoryvo.maxShelf, repertoryvo.maxDigit, repertoryvo.warningRatio,
+					repertoryvo.stockNum);
 		} else {
 			return null;
 		}
@@ -132,8 +132,8 @@ public class OrganizationBL implements OrganizationBLService {
 	}
 
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo) {
-		return new OrganizationPO(organizationvo.getCategory(), organizationvo.getOrganizationID(),
-				organizationvo.getName(), repertoryVOToPO(organizationvo.getRepertory()));
+		return new OrganizationPO(organizationvo.category, organizationvo.organizationID,
+				organizationvo.name, repertoryVOToPO(organizationvo.repertory));
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
@@ -142,19 +142,19 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public static void main(String[] args) {
 		try {
-//			OrganizationDataService organizationData = DataFactory.getOrganizationData();
-//
-//			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
-//			for (OrganizationPO organization : organizationList0)
-//				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
-//
-//			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
-//
-//			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
-//			for (OrganizationPO organization : organizationList1)
-//				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+			OrganizationDataService organizationData = DataFactory.getOrganizationData();
 
-			OrganizationPO po1 = new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅");
+			ArrayList<OrganizationPO> organizationList0 = organizationData.showAllOrganizations();
+			for (OrganizationPO organization : organizationList0)
+				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+
+			organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅"));
+
+			ArrayList<OrganizationPO> organizationList1 = organizationData.showAllOrganizations();
+			for (OrganizationPO organization : organizationList1)
+				System.out.println(("ID: " + organization.getOrganizationID() + ", Name: " + organization.getName()));
+
+			//OrganizationPO po1 = new OrganizationPO(OrganizationType.businessHall, "012000", "南极营业厅");
 
 			File file = FileGetter.getFile("../src/organization.ser");
 			if (!file.exists()) {

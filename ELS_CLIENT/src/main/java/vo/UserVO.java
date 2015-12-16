@@ -5,6 +5,7 @@ import type.SalaryPlanType;
 import type.AuthorityType;
 
 public class UserVO {
+	
 	public String userName;
 	public String userID;
 	public String password;

@@ -5,8 +5,8 @@ public class RepertoryBLService_driver {
 	public void drive(RepertoryBLService_stub repertoryBLService){
     	
     	repertoryBLService.inventoryInitialization(100, 10, 10, 90);
-        repertoryBLService.enterRepertory("JJD-20151001-00001", 0, "20151002");
-        repertoryBLService.leaveRepertory("JJD-20151001-00001", "20151003");
+        repertoryBLService.enterRepertory("JJD-20151001-00001", 0, 0, 0, 0);
+        repertoryBLService.leaveRepertory("JJD-20151001-00001");
         repertoryBLService.inventoryWarning(); 
         repertoryBLService.inventoryCheck("20151001", "20151003");
         repertoryBLService.inventoryStockTaking();

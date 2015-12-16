@@ -2,9 +2,9 @@ package vo;
 
 public class RepertoryVO {
 
-	private String repertoryID, ownerID;
-	private int maxRow, maxShelf, maxDigit,warningRadio;
-	private int stockNum[];
+	public String repertoryID, ownerID;
+	public int maxRow, maxShelf, maxDigit,warningRatio;
+	public int stockNum[];
 
 	public RepertoryVO(String repertoryID, String ownerID){
 		this.repertoryID = repertoryID;
@@ -12,7 +12,7 @@ public class RepertoryVO {
 		this.maxRow = 10;
 		this.maxShelf = 10;
 		this.maxDigit = 10;
-		this.warningRadio = 80;
+		this.warningRatio = 80;
 		stockNum = new int [4];
 		/*this.planeBlockStockNum = 0;
 		this.trainBlockStockNum = 0;
@@ -28,60 +28,8 @@ public class RepertoryVO {
 		this.maxRow = maxRow;
 		this.maxShelf = maxShelf;
 		this.maxDigit = maxDigit;
-		this.warningRadio = warningRatio;
+		this.warningRatio = warningRatio;
 		this.stockNum = stockNum;
 	}
 
-	public String getRepertoryID() {
-		return this.repertoryID;
-	}
-
-	public void setRepertoryID(String repertoryID) {
-		this.repertoryID = repertoryID;
-	}
-
-	public String getOwnerID() {
-		return this.ownerID;
-	}
-
-	public void setOwnerID(String ownerID) {
-		this.ownerID = ownerID;
-	}
-
-	public int getMaxRow() {
-		return this.maxRow;
-	}
-
-	public void setMaxRow(int maxRow) {
-		this.maxRow = maxRow;
-	}
-
-	public int getMaxShelf() {
-		return this.maxShelf;
-	}
-
-	public void setMaxShelf(int maxShelf) {
-		this.maxShelf = maxShelf;
-	}
-
-	public int getMaxDigit() {
-		return this.maxDigit;
-	}
-
-	public void setMaxDigit(int maxDigit) {
-		this.maxDigit = maxDigit;
-	}
-
-	public int getWarningRatio() {
-		return this.warningRadio;
-	}
-
-	public void setWarningRatio(int warningRatio) {
-		this.warningRadio = warningRatio;
-	}
-
-	public int[] getStockNumArray(){
-		return this.stockNum;
-	}
-	
 }

@@ -36,7 +36,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public int deleteBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
-			return(bsdService.deleteBasicSalary(basicSalaryvo.getProfession()));
+			return(bsdService.deleteBasicSalary(basicSalaryvo.profession));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -77,7 +77,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	}
 	
 	public static BasicSalaryPO basicSalaryVOToPO(BasicSalaryVO basicSalaryvo){
-		return new BasicSalaryPO(basicSalaryvo.getProfession(),basicSalaryvo.getBasicSalary());
+		return new BasicSalaryPO(basicSalaryvo.profession,basicSalaryvo.basicSalary);
 	}
 	
 	public static BasicSalaryVO basicSalaryPOToVO(BasicSalaryPO basicSalarypo){

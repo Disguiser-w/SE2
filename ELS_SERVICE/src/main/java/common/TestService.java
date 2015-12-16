@@ -16,6 +16,7 @@ import data.managedata.CityDistanceData;
 import data.managedata.CostData;
 import data.managedata.OrganizationData;
 import data.managedata.PerWageData;
+import data.repertorydata.GoodsData;
 import data.repertorydata.RepertoryData;
 import data.userdata.UserData;
 import dataservice.businessdataservice.BusinessDataService;
@@ -31,6 +32,7 @@ import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
+import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 
@@ -55,6 +57,7 @@ public class TestService {
 			UserDataService userData = new UserData();
 			OrganizationDataService organizationData = new OrganizationData();
 			RepertoryDataService repertoryData = new RepertoryData();
+			GoodsDataService goodsData = new GoodsData();
 			PerWageDataService perWageData = new PerWageData();
 			BasicSalaryDataService basicSalaryData = new BasicSalaryData();
 			CityDistanceDataService cityDistanceData = new CityDistanceData();
@@ -85,6 +88,8 @@ public class TestService {
 					organizationData);
 			Naming.rebind("rmi://localhost:8888/RepertoryDataService", 
 					repertoryData);
+			Naming.rebind("rmi://localhost:8888/GoodsDataService", 
+					goodsData);
 			Naming.rebind("rmi://localhost:8888/PerWageDataService", 
 					perWageData);
 			Naming.rebind("rmi://localhost:8888/BasicSalaryDataService", 

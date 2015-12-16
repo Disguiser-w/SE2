@@ -1,6 +1,11 @@
 package po;
 
-public class InventoryCheckPO {
+import java.io.Serializable;
+
+public class InventoryCheckPO implements Serializable{
+	
+	private static final long serialVersionUID = 141250184L;
+
 	private int enterTotal, leaveTotal;
 	private double enterFeeTotal, leaveFeeTotal;
 	private int[] stockNum;

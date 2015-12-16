@@ -465,12 +465,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 
 	/*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		UserData userData;
 		try {
 			userData = new UserData();
 			try {
-				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
+				/*userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
 						ProfessionType.manager, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.highest, 0));
@@ -497,7 +497,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 				userData.addUser(new UserPO("吴秦月", "SJ-00001", "123456",
 						ProfessionType.driver, "030000",
 						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
-						0));
+						0));*/
 
 				System.out.println("添加后:");
 				ArrayList<UserPO> userpoList0 = userData.showAllUsers();
@@ -511,12 +511,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 					}
 				}
 
-				UserPO userpo = userData.findUser("KD-00001");
-				if (userpo != null)
-					System.out.println("Find the user: " + userpo.getName()
-							+ " " + userpo.getUserID() + " "
-							+ userpo.getOrganization() + " "
-							+ userpo.getProfession());
+				UserPO userpo1 = userData.findUser("KD-00001");
+				if (userpo1 != null)
+					System.out.println("Find the user: " + userpo1.getName()
+							+ " " + userpo1.getUserID() + " "
+							+ userpo1.getOrganization() + " "
+							+ userpo1.getProfession());
 				else
 					System.out.println("Cannot find the user");
 
@@ -566,7 +566,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		} catch (RemoteException exception) {
 			exception.printStackTrace();
 		}
-	}*/
+	}
 
 	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
 

@@ -2,9 +2,9 @@ package vo;
 
 public class InventoryCheckVO {
 
-	private int enterTotal, leaveTotal;
-	private double enterFeeTotal, leaveFeeTotal;
-	private int[] stockNum;
+	public int enterTotal, leaveTotal;
+	public double enterFeeTotal, leaveFeeTotal;
+	public int[] stockNum;
 	
 	public InventoryCheckVO(){
 		this.enterTotal = 0;
@@ -26,32 +26,16 @@ public class InventoryCheckVO {
 		this.enterTotal++;
 	}
 	
-	public int getEnterTotal(){
-		return this.enterTotal;
-	}
-	
 	public void leaveTotalPlus(){
 		this.leaveTotal++;
 	}
-	
-	public int getLeaveTotal(){
-		return this.leaveTotal;
-	} 
 	
 	public void enterFeeTotalPlus(double fee){
 		this.enterFeeTotal += fee;
 	}
 	
-	public double getEnterFeeTotal(){
-		return this.enterFeeTotal;
-	}
-	
 	public void leaveFeeTotalPlus(double fee){
 		this.leaveFeeTotal += fee;
-	}
-	
-	public double getLeaveFeeTotal(){
-		return this.leaveFeeTotal;
 	}
 	
 	public void setStockNumArray(int[] stockNum){
