@@ -5,7 +5,8 @@ import presentation.mainui.MainFrame;
 
 public class Client {
 	public static void main(String[] args) {
-		new MainFrame();
+		MainFrame frame = new MainFrame();
+		frame.showFrame();
 	}
 }
 

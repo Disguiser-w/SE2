@@ -46,22 +46,22 @@ import vo.OrderVO;
 /**
  * 打开客户端的第一个界面
  */
-public class MainFrame extends JFrame {
+public class MainFrame1 extends JFrame {
 
 	// 宽度和长度
-	public static final int MAIN_WIDTH = 400;
-	public static final int MAIN_HEIGHT = 300;
+	public static final int MAIN_WIDTH = 918;
+	public static final int MAIN_HEIGHT = 252;
 	private JFrame frame = this;
-	private JPanel mainPanel;
+	// private JPanel mainPanel;
 	private JPanel queryPanel;
 	private JPanel signInPanel;
 	private JScrollPane resultPanel;
 	private UserBL userbl;
 
-	public MainFrame() {
+	public MainFrame1() {
 
-		mainPanel = new MainPanel();
-		add(mainPanel);
+		// mainPanel = new MainPanel();
+		// add(mainPanel);
 		userbl = new UserBL();
 
 		setTitle("                       ELS");
@@ -70,108 +70,33 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setUndecorated(true);
-
-	}
-
-	public void showFrame() {
-
 		setVisible(true);
-		((MainPanel) mainPanel).showPanel();
+
 	}
 
-	public void toQueryPanel() {
-		queryPanel = new QueryPanel();
-		remove(mainPanel);
-		add(queryPanel);
-
-		setVisible(true);
-	}
-
-	public void toSignInPanel() {
-		signInPanel = new SignInPanel();
-		remove(mainPanel);
-		add(signInPanel);
-
-		setVisible(true);
-	}
-
-	// 主界面
-	class MainPanel extends JPanel {
-		private float alpha;
-		// 查询按钮
-		private JButton queryButton;
-		// 登录按钮
-		private JButton signInButton;
-
-		// private LocationHelper helper;
-
-		public MainPanel() {
-			alpha = 0;
-
-			queryButton = new JButton("物流查询");
-			signInButton = new JButton("登录");
-
-			int width = MAIN_WIDTH;
-			int height = MAIN_HEIGHT;
-
-			queryButton.setBounds((int) (width * 15.1875 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
-					(int) (height * 2.533333333333333 / 20));
-			signInButton.setBounds((int) (width * 5.0625 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
-					(int) (height * 2.533333333333333 / 20));
-			queryButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					toQueryPanel();
-				}
-			});
-
-			signInButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					toSignInPanel();
-				}
-			});
-
-			setLayout(null);
-			add(queryButton);
-			add(signInButton);
-
-			// helper = new LocationHelper(this);
-
-		}
-
-		public void showPanel() {
-			(new Thread(new Runnable() {
-				public void run() {
-					for (int i = 0; i < 5; i++) {
-						alpha += 0.2f;
-						if (alpha > 1f)
-							alpha = 1f;
-						repaint();
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			})).start();
-		}
-
-		public void paintComponent(Graphics g) {
-			Graphics2D g2d = (Graphics2D) g;
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-			g2d.fillRect(0, 0, getWidth(), getHeight());
-			super.paintComponent(g2d);
-		}
-	}
+	// public void toQueryPanel() {
+	// queryPanel = new QueryPanel();
+	// remove(mainPanel);
+	// add(queryPanel);
+	//
+	// setVisible(true);
+	// }
+	//
+	// public void toSignInPanel() {
+	// signInPanel = new SignInPanel();
+	// remove(mainPanel);
+	// add(signInPanel);
+	//
+	// setVisible(true);
+	// }
 
 	// 物流查询界面
 	class QueryPanel extends JPanel {
+		private JTextField orderNumField;
+		private JLabel queryLabel;
+		private JLabel toLogInLabel;
 
 		private LogisticQuery query;
-		private JTextField orderNumField;
-		private JLabel queryButton;
 
 		private LocationHelper helper;
 		private Image queryPanelImage;
@@ -179,7 +104,7 @@ public class MainFrame extends JFrame {
 		public QueryPanel() {
 			query = new LogisticQuery();
 			orderNumField = new MyTextField();
-			queryButton = new JLabel("查询");
+			queryLabel = new JLabel("查询");
 
 			queryPanelImage = ImageGetter.getImage("queryPanel.png").getImage();
 			int width = MAIN_WIDTH;
@@ -187,10 +112,10 @@ public class MainFrame extends JFrame {
 
 			orderNumField.setBounds((int) (width * 4.6875 / 25), (int) (height * 7.933333333333334 / 20),
 					(int) (width * 15.6875 / 25), (int) (height * 1.8666666666666667 / 20));
-			queryButton.setBounds((int) (width * 6.375 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+			queryLabel.setBounds((int) (width * 6.375 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
 					(int) (height * 1.9333333333333333 / 20));
 
-			queryButton.addMouseListener(new MouseAdapter() {
+			queryLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					query(orderNumField.getText());
 				}
@@ -206,20 +131,25 @@ public class MainFrame extends JFrame {
 
 			setLayout(null);
 			add(orderNumField);
-			add(queryButton);
+			add(queryLabel);
 
 			repaint();
 
 		}
 
 		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(queryPanelImage, 0, 0, getWidth(), getHeight(), this);
+
+			Graphics2D g2d = (Graphics2D) g;
+			Composite composite = g2d.getComposite();
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+			g2d.fillRect(0, 0, getWidth(), getHeight());
+			super.paintComponent(g2d);
+			g2d.drawImage(queryPanelImage, 0, 0, getWidth(), getHeight(), this);
 		}
 
 		public void cancel() {
 			frame.remove(queryPanel);
-			frame.add(mainPanel);
+			// frame.add(mainPanel);
 			frame.repaint();
 
 		}
@@ -327,7 +257,7 @@ public class MainFrame extends JFrame {
 
 		public void cancel() {
 			frame.remove(signInPanel);
-			frame.add(mainPanel);
+			// frame.add(mainPanel);
 			frame.repaint();
 
 		}

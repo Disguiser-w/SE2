@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import vo.OrderVO;
 import businesslogic.expressbl.controller.LogisticQueryController;
+import presentation.commonui.LocationHelper;
+import vo.OrderVO;
 
 public class QueryPanel extends JPanel {
+
 	private JLabel timeInputLabel;
 	private JTextField timeField;
 	private JLabel timeSetLabel;
@@ -36,9 +39,11 @@ public class QueryPanel extends JPanel {
 	private JTable messageTable;
 	private JLabel messageHeader;
 
+	private ArrayList<JLabel> queryLabels;
+
 	private ArrayList<OrderVO> submitOrders;
 	private ArrayList<String> queryOrders;
-	// private LocationHelper help;
+	private LocationHelper help;
 	private int num;
 
 	private LogisticQueryController controller;
@@ -52,8 +57,9 @@ public class QueryPanel extends JPanel {
 		confirmButton = new JButton();
 		nextPageLabel = new JLabel(">");
 		previousPageLabel = new JLabel("<");
-
 		messageTable = new JTable();
+
+		queryLabels = new ArrayList<JLabel>();
 
 		queryOrders = new ArrayList<String>();
 
@@ -68,6 +74,12 @@ public class QueryPanel extends JPanel {
 		messageTable.setBackground(this.getBackground());
 
 		timeInputLabel.setHorizontalAlignment(JLabel.CENTER);
+		for (int i = 0; i < 8; i++) {
+			JLabel label = new JLabel("0");
+			label.setBorder(BorderFactory.createLineBorder(Color.black));
+			queryLabels.add(label);
+			add(label);
+		}
 
 		add(timeInputLabel);
 		add(timeField);
@@ -77,8 +89,9 @@ public class QueryPanel extends JPanel {
 		add(previousPageLabel);
 		add(messageTable);
 		add(messageTable.getTableHeader());
+
 		timeSetLabel.setLayout(new BorderLayout());
-//		timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
+		// timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
 
 		// help = new LocationHelper(this);
 		setLayout(null);
@@ -123,6 +136,22 @@ public class QueryPanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		// setBounds
 		super.setBounds(x, y, width, height);
+		queryLabels.get(0).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 6.25 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(1).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 7.544642857142857 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(2).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 8.883928571428571 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(3).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 10.223214285714286 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(4).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 11.5625 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(5).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 12.901785714285714 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(6).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 14.241071428571429 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+		queryLabels.get(7).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 15.580357142857142 / 20),
+				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
 		timeInputLabel.setBounds((int) (width * 1.3764404609475032 / 25), (int) (height * 1.8303571428571428 / 20),
 				(int) (width * 3.8092189500640203 / 25), (int) (height * 1.1160714285714286 / 20));
 		timeField.setBounds((int) (width * 6.370038412291933 / 25), (int) (height * 1.8303571428571428 / 20),
@@ -136,7 +165,7 @@ public class QueryPanel extends JPanel {
 		previousPageLabel.setBounds((int) (width * 20.230473751600513 / 25), (int) (height * 17.589285714285715 / 20),
 				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
 		messageTable.setBounds((int) (width * 1.3764404609475032 / 25), (int) (height * 6.026785714285714 / 20),
-				(int) (width * 22.151088348271447 / 25), (int) (height * 10.982142857142858 / 20));
+				(int) (width * 22.247119078104994 / 25), (int) (height * 10.714285714285714 / 20));
 		messageTable.getTableHeader().setBounds((int) (width * 1.3764404609475032 / 25),
 				(int) (height * 4.642857142857143 / 20), (int) (width * 22.151088348271447 / 25),
 				(int) (height * 1.4285714285714286 / 20));
@@ -163,8 +192,9 @@ public class QueryPanel extends JPanel {
 
 		// 设置宽度
 		column1.setPreferredWidth(messageTable.getWidth() * 3 / 4);
-		column2.setPreferredWidth(messageTable.getWidth() / 20);
-		column3.setPreferredWidth(messageTable.getWidth() / 5);
+		column2.setPreferredWidth(messageTable.getWidth() / 5);
+		column3.setPreferredWidth(messageTable.getWidth() / 20);
+
 		messageTable.setRowHeight(messageTable.getHeight() / 8);
 		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
 		// messageTable.getTableHeader().getHeight() + 4);
@@ -250,6 +280,14 @@ public class QueryPanel extends JPanel {
 				setInfos();
 
 			}
+			
+			MouseListener listener = new MouseAdapter(){
+				public void mouseClicked(MouseEvent e){
+					
+				}
+			};
+			
+			
 		});
 
 		// messageTable.addMouseListener(new MouseAdapter() {
@@ -284,7 +322,7 @@ public class QueryPanel extends JPanel {
 				String[] info = infos.split(" ");
 				if (columnIndex == 0)
 					return info[0];
-				else if (columnIndex == 2)
+				else if (columnIndex == 1)
 					return info[1];
 				else
 					return null;
@@ -297,9 +335,9 @@ public class QueryPanel extends JPanel {
 			if (c == 0)
 				return "订单号";
 			else if (c == 1)
-				return "";
+				return "运货状态";
 			else
-				return "货运状态";
+				return "";
 		}
 
 	}

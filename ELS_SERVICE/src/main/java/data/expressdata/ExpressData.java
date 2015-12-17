@@ -239,8 +239,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			in.close();
 
 			for (OrderPO i : orderPOs)
-				if (i.getID().equals(ID))
+				if (i.getID().equals(ID)) {
 					return i;
+				}
 
 		} catch (Exception e) {
 			e.printStackTrace();

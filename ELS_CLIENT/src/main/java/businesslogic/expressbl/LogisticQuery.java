@@ -1,10 +1,12 @@
 package businesslogic.expressbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.expressdataservice.ExpressDataService;
+import po.OrderPO;
 import vo.OrderVO;
 
 public class LogisticQuery {
@@ -36,4 +38,18 @@ public class LogisticQuery {
 
 	}
 
+	public OrderVO getOrderInfo(String id) {
+		try {
+			OrderPO po = expressData.find(id);
+			if (po == null)
+				return null;
+			OrderVO vo = ExpressMainController.orderPOToVO(po);
+			return vo;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 }
