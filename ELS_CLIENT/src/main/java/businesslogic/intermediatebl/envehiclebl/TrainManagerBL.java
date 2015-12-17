@@ -74,7 +74,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 		// TODO 自动生成的方法存根
 		for (TrainVO train : trainList)
 			trainList_temp.add(IntermediateMainController.voToPO(train));
-		intermediateData.saveTrainList(intermediateCentre.getOrganizationID(),
+		intermediateData.saveTrainList(intermediateCentre.organizationID,
 				trainList_temp);
 		return OperationState.SUCCEED_OPERATION;
 	}

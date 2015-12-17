@@ -8,11 +8,12 @@ import java.util.Date;
 
 import type.ReceiptState;
 
-public class EnIntermediateReceiptPO implements Serializable{
+public class EnIntermediateReceiptPO implements Serializable {
 	private OrganizationPO intermediateCentre;
 
 	private ArrayList<OrderPO> orderList;
 
+	private double fare;
 	private String ID;
 	private String date;
 
@@ -67,5 +68,13 @@ public class EnIntermediateReceiptPO implements Serializable{
 
 	public void setReceiptState(ReceiptState receiptState) {
 		this.receiptState = receiptState;
+	}
+
+	public double getFare() {
+		return fare;
+	}
+
+	public void setFare(double fare) {
+		this.fare = fare;
 	}
 }
