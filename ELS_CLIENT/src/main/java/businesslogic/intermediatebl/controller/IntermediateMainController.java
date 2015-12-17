@@ -40,11 +40,11 @@ import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.intermediatebl.EnvehicleBL;
+import businesslogic.intermediatebl.PlaneManagerBL;
+import businesslogic.intermediatebl.TrainManagerBL;
 import businesslogic.intermediatebl.TransferingBL;
-import businesslogic.intermediatebl.envehiclebl.EnvehicleBL;
-import businesslogic.intermediatebl.envehiclebl.PlaneManagerBL;
-import businesslogic.intermediatebl.envehiclebl.TrainManagerBL;
-import businesslogic.intermediatebl.envehiclebl.TruckManagerBL;
+import businesslogic.intermediatebl.TruckManagerBL;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateMainController {

@@ -251,25 +251,24 @@ public class IntermediateData extends UnicastRemoteObject implements
 	}
 
 	public TransferingReceiptPO getTransferingReceiptInfo(
-			String organization_ID, String date, String ID)
-			throws RemoteException {
+			String organization_ID, String date) throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/" + organization_ID + "/" + date
+		String path = "intermediateCentreInfo/" + organization_ID + "-" + date
 				+ "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					file));
-			@SuppressWarnings("unchecked")
-			ArrayList<TransferingReceiptPO> transferingReceiptPOList = (ArrayList<TransferingReceiptPO>) in
-					.readObject();
-			in.close();
-			for (TransferingReceiptPO transferingReceipt : transferingReceiptPOList) {
-				if (transferingReceipt.getID().equals(ID))
-					return transferingReceipt;
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
 			}
 
-			throw new Exception("找不到该ID的中转中心到达单！");
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					file));
+			TransferingReceiptPO transferingReceipt = (TransferingReceiptPO) in
+					.readObject();
+			in.close();
+
+			return transferingReceipt;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,6 +288,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 			out.writeObject(transferingReceipt);
@@ -298,10 +301,14 @@ public class IntermediateData extends UnicastRemoteObject implements
 			System.out.println("保存中转中心到达单信息失败！");
 		}
 
-		path = "transferingReceiptInfo.dat";
+		path = "ReceiptInfo/transferingReceiptInfo.dat";
 		file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file, true));
 			out.writeObject(transferingReceipt);
@@ -535,7 +542,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 
 	/**************************** test **********************************************************/
 	public static void main(String[] args) {
-//		File file = FileGetter.getFile("intermediateInfo");
+		// File file = FileGetter.getFile("intermediateInfo");
 		File file = new File("info/intermediateInfo");
 		try {
 			if (!file.exists()) {

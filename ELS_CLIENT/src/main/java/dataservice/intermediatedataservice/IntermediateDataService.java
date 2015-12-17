@@ -36,8 +36,7 @@ public interface IntermediateDataService extends Remote {
 			ArrayList<TruckPO> trainList) throws RemoteException;
 
 	public TransferingReceiptPO getTransferingReceiptInfo(
-			String organization_ID, String date, String ID)
-			throws RemoteException;
+			String organization_ID, String date) throws RemoteException;
 
 	public OperationState saveTransferingReceiptInfo(
 			TransferingReceiptPO transferingReceipt, String organization_ID)

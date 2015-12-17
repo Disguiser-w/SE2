@@ -1,4 +1,4 @@
-package businesslogic.intermediatebl.envehiclebl;
+package businesslogic.intermediatebl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

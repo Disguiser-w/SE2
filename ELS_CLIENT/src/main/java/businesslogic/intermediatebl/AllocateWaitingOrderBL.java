@@ -1,4 +1,4 @@
-package businesslogic.intermediatebl.envehiclebl;
+package businesslogic.intermediatebl;
 
 import java.util.ArrayList;
 
