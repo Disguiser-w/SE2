@@ -17,7 +17,7 @@ public class CollectionReceiptVO extends ReceiptVO {
 	public String account;
 	public ReceiptType type;
 	public CollectionReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double totalMoney,String date,String account){
-		super(ID,userID,ReceiptType.COLLECTIONRECEIPT,state);
+		super(ID,userID,"", ReceiptType.COLLECTIONRECEIPT,state);
 		this.totalMoney = totalMoney;
 		this.date = date;
 		this.ID=ID;

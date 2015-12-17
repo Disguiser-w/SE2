@@ -685,8 +685,8 @@ public class VehicleManagerPanel extends JPanel {
 						hasChange = true;
 
 					OrganizationVO destination = organizationVOs.get(destinationBox.getSelectedIndex());
-					String name = destination.getName();
-					String destinationCity = destination.getName().substring(0, name.length() - 3);
+					String name = destination.name;
+					String destinationCity = destination.name.substring(0, name.length() - 3);
 
 					if (!destinationCity.equals(oldVO.destinationCity))
 						hasChange = true;
@@ -1000,9 +1000,9 @@ public class VehicleManagerPanel extends JPanel {
 					}
 
 					OrganizationVO destination = organizationVOs.get(destinationBox.getSelectedIndex());
-					String name = destination.getName();
+					String name = destination.name;
 
-					String destinationCity = destination.getName().substring(0, name.length() - 3);
+					String destinationCity = destination.name.substring(0, name.length() - 3);
 					OrganizationVO local = BusinessMainController.businessVO.organizationVO;
 
 					DriverVO vo = driverVOs.get(driversBox.getSelectedIndex());

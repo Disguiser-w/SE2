@@ -74,6 +74,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public VehiclePO getVehicleInfo(String organizationID, String vehicleID) throws RemoteException {
+
 		String path = "vehilceInfo/" + organizationID + "-vehicle.dat";
 		File file = FileGetter.getFile(path);
 		try {
@@ -91,7 +92,6 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		}
 
 		return null;
-
 	}
 
 	// OrderAcceptReceipt
@@ -156,8 +156,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		} else {
 			String path = "vehicleInfo";
 			File[] files = FileGetter.getFile(path).listFiles();
-			ArrayList<VehiclePO> vehiclePOs = new ArrayList<VehiclePO>();
 
+			ArrayList<VehiclePO> vehiclePOs = new ArrayList<VehiclePO>();
 			for (File i : files) {
 				try {
 					ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
@@ -173,10 +173,10 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					System.out.println("读写车辆信息失败");
 				}
 
-				return vehiclePOs;
+				
 			}
+			return vehiclePOs;
 		}
-		return null;
 
 	}
 
@@ -890,21 +890,30 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	public static void main(String[] args) {
 		try {
-			File file = FileGetter.getFile("organizationInfo/organizationInfo.dat");
-			if (!file.exists()) {
+			// File file =
+			// FileGetter.getFile("organizationInfo/organizationInfo.dat");
+			// if (!file.exists()) {
+			//
+			// file.getParentFile().mkdirs();
+			// file.createNewFile();
+			// }
+			// ObjectOutputStream out = new ObjectOutputStream(new
+			// FileOutputStream(file));
+			// OrganizationPO po = new
+			// OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
+			// new RepertoryPO("pig", "wo"));
+			// ArrayList<OrganizationPO> bpo = new ArrayList<OrganizationPO>();
+			//
+			// bpo.add(po);
+			//
+			// out.writeObject(bpo);
+			// out.close();
+			BusinessData data = new BusinessData();
+			ArrayList<VehiclePO> pos = data.getVehicleInfos(null);
+			for(VehiclePO po:pos)
+				System.out.println(po.getID());
+			
 
-				file.getParentFile().mkdirs();
-				file.createNewFile();
-			}
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
-					new RepertoryPO("pig", "wo"));
-			ArrayList<OrganizationPO> bpo = new ArrayList<OrganizationPO>();
-
-			bpo.add(po);
-
-			out.writeObject(bpo);
-			out.close();
 		} catch (Exception e) {
 
 		}
