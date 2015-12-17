@@ -95,8 +95,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 		bm=new BusinessStatementModel(c);
 		//新建table
 		table=new JTable(bm);
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		add(table.getTableHeader());
 		add(table);

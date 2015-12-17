@@ -2,8 +2,6 @@ package dataservice.financedataservice;
 
 import java.rmi.RemoteException;
 
-import po.InitInfoPO;
-
 public class InitialStockDataService_driver {
 	public void drive(InitialStockDataService ids) throws RemoteException{
 		ids.initInfo(null, null);

@@ -63,7 +63,6 @@ public class PaymentReceiptDataService_stub implements PaymentReceiptDataService
 		return null;
 	}
 
-	@Override
 	public int saveSubmittedPaymentReceiptInfo(PaymentReceiptPO po)
 			throws RemoteException {
 		// TODO Auto-generated method stub

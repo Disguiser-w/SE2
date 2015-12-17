@@ -25,7 +25,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	JXCFile file;
 	public AccountData() throws RemoteException{
 		super();
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 	}
 	
 	
@@ -47,7 +47,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	 * */
 	public int deleteAccount(AccountPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 //		ArrayList<AccountPO> accountPOs=new ArrayList<AccountPO>();
 		ArrayList<Object> os=file.read();
 		if(os==null){
@@ -71,7 +71,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	 * */
 	public int modifyAccount(AccountPO po, String name) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		if(findbyName(po.getName())==null){
 			System.out.println("需要修改的账户不存在");
 			return 1;
@@ -94,7 +94,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 
 	public AccountPO findbyName(String name) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取文件account.ser失败");
@@ -112,7 +112,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 
 	public ArrayList<AccountPO> findByKeyword(String s) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取文件account.ser失败");
@@ -130,7 +130,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 
 	public ArrayList<AccountPO> showAll() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取文件account.ser失败");
@@ -146,7 +146,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 
 	public int addMoney(String name, double m) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取文件account.ser失败");
@@ -165,7 +165,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 
 	public int delMoney(String name, double m) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("account.ser");
+		file=new JXCFile("info/accountInfo/account.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取文件account.ser失败");

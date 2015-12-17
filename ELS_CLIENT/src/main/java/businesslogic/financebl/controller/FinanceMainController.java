@@ -123,7 +123,7 @@ public class FinanceMainController {
 				
 		
 				//初始化界面
-				user=ManageMainController.userPOToVO(userData.findUser(financeID));
+				user=ManageMainController.userPOToVO(userData.findUserByID(financeID));
 				financeFrame =new FinanceFrame(user);
 				if(user.authority.equals(AuthorityType.highest)){
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController,financeFrame));

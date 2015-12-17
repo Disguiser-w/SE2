@@ -54,7 +54,6 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return null;
 	}
 
-	@Override
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return 0;

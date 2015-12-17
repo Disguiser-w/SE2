@@ -22,12 +22,12 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	int num;
 	public PaymentReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 	}
 
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		po.setState(ReceiptState.SUBMIT);
 		file.write(po);
 		num++;
@@ -37,7 +37,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 //		ArrayList<Object> payment=file.read();
 		ArrayList<Object> payment=file.read();
 		if(payment==null){
@@ -55,7 +55,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	}
 	
 	public int getNum()  throws RemoteException{
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		return num;
 	}
 	
@@ -73,7 +73,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * success
 	 * */
 	public int delete(String ID) throws RemoteException{
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("文件为空");
@@ -112,7 +112,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
 			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		ArrayList<Object> os=file.read();
 		ArrayList<PaymentReceiptPO> pos=new ArrayList<PaymentReceiptPO>();
 		if(beginTime.compareTo(endTime)>0){
@@ -135,7 +135,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * */
 	public ArrayList<PaymentReceiptPO> getUnapprovedPaymentReceipt() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		ArrayList<Object> os=file.read();
 		ArrayList<PaymentReceiptPO> unprovedPOs=new ArrayList<PaymentReceiptPO>();
 		for(Object o:os){
@@ -151,7 +151,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * 存储审批后的信息（总经理审批单据用）
 	 * */
 	 public int saveSubmittedPaymentReceiptInfo(PaymentReceiptPO po) throws RemoteException{
-		 file=new JXCFile("payment.ser");
+		 file=new JXCFile("info/paymentInfo/payment.ser");
 		 ArrayList<Object> os=file.read();
 		 for(int i=0;i<os.size();i++){
 			 //文件中的
@@ -169,7 +169,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	
 	public PaymentReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("payment.ser");
+		file=new JXCFile("info/paymentInfo/payment.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取付款单失败或付款单为空");

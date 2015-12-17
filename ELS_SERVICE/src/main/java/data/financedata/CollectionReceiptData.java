@@ -21,7 +21,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	int num;
 	public CollectionReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public int createCollection(CollectionReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		po.setState(ReceiptState.SUBMIT);
 		file.write(po);
 		//每创建一个对象num+1
@@ -45,7 +45,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public ArrayList<CollectionReceiptPO> getAllCollection()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		ArrayList<Object> collection=file.read();
 		if(collection==null){
 			System.out.println("读文件collection.ser失败或者文件为空");
@@ -67,7 +67,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		return num;
 	}
 
@@ -77,7 +77,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public CollectionReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读文件collection.ser失败或者文件为空");
@@ -106,7 +106,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * success
 	 * */
 	public int delete(String ID) throws RemoteException{
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("文件为空");
@@ -129,7 +129,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
 			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		ArrayList<Object> os=file.read();
 		ArrayList<CollectionReceiptPO> pos=new ArrayList<CollectionReceiptPO>();		
 		//判断格式这个是不是应该放到bl里？？？
@@ -154,7 +154,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("collection.ser");
+		file=new JXCFile("info/collectionInfo/collection.ser");
 		ArrayList<Object> os=file.read();
 		ArrayList<CollectionReceiptPO> unprovedPOs=new ArrayList<CollectionReceiptPO>();
 		for(Object o:os){
@@ -170,7 +170,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * 总经理审批的信息通知
 	 * */
 	public String getFeedback(CollectionReceiptPO po){
-		 file=new JXCFile("collection.ser");
+		 file=new JXCFile("info/collectionInfo/collection.ser");
 		 String feedback=po.getID();
 		 ArrayList<Object> os=file.read();
 		 for(int i=0;i<os.size();i++){
@@ -193,7 +193,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * 存储审批后结果
 	 * */
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptPO  po) throws RemoteException{
-		 file=new JXCFile("collection.ser");
+		 file=new JXCFile("info/collectionInfo/collection.ser");
 		 ArrayList<Object> os=file.read();
 		 for(int i=0;i<os.size();i++){
 			 //文件中的
