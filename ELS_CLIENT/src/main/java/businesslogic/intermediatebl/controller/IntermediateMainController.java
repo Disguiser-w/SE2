@@ -101,11 +101,11 @@ public class IntermediateMainController {
 				entruckingReceiptList, intermediateData);
 
 		frame = new IntermediateFrame(intermediate);
-		frame.addFuncLabel(new TransferingPanel(this, frame));
-		frame.addFuncLabel(new EnvehiclePanel(this, frame));
-		frame.addFuncLabel(new PlaneManagementPanel(this, frame));
-		frame.addFuncLabel(new TrainManagementPanel(this, frame));
-		frame.addFuncLabel(new TruckManagementPanel(this, frame));
+		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收");
+		frame.addFuncLabel(new EnvehiclePanel(this, frame), "装车分配");
+		frame.addFuncLabel(new PlaneManagementPanel(this, frame), "飞机信息管理");
+		frame.addFuncLabel(new TrainManagementPanel(this, frame), "火车信息管理");
+		frame.addFuncLabel(new TruckManagementPanel(this, frame), "汽车信息管理");
 
 		frame.showFrame();
 	}

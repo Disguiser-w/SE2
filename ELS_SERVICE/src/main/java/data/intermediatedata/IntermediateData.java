@@ -70,7 +70,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/" + organization_ID
-				+ "/plane.dat";
+				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -101,7 +101,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/" + organization_ID
-				+ "/train.dat";
+				+ "-train.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -132,7 +132,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/" + organization_ID
-				+ "/truck.dat";
+				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -174,18 +174,18 @@ public class IntermediateData extends UnicastRemoteObject implements
 				e.printStackTrace();
 			}
 		}
-		for (PlanePO plane : planeList) {
-			try {
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(file));
-				out.writeObject(plane);
-				out.close();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("保存飞机信息失败！");
-			}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			out.writeObject(planeList);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("保存飞机信息失败！");
 		}
+
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -193,7 +193,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			ArrayList<TrainPO> trainList) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/" + organization_ID
-				+ "/train.dat";
+				+ "-train.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -205,18 +205,17 @@ public class IntermediateData extends UnicastRemoteObject implements
 			}
 		}
 
-		for (TrainPO train : trainList) {
-			try {
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(file));
-				out.writeObject(train);
-				out.close();
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			out.writeObject(trainList);
+			out.close();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("保存火车信息失败！");
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("保存火车信息失败！");
 		}
+
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -224,7 +223,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			ArrayList<TruckPO> truckList) throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/" + organization_ID
-				+ "/truck.dat";
+				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -235,18 +234,18 @@ public class IntermediateData extends UnicastRemoteObject implements
 				e.printStackTrace();
 			}
 		}
-		for (TruckPO truck : truckList) {
-			try {
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(file));
-				out.writeObject(truck);
-				out.close();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("保存汽车信息失败！");
-			}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			out.writeObject(truckList);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("保存汽车信息失败！");
 		}
+
 		return OperationState.SUCCEED_OPERATION;
 	}
 
