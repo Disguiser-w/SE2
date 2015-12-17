@@ -74,7 +74,7 @@ public class TruckManagerBL implements TruckManageBLService {
 		// TODO 自动生成的方法存根
 		for (TruckVO train : truckList)
 			truckList_temp.add(IntermediateMainController.voToPO(train));
-		intermediateData.saveTruckList(intermediateCentre.getOrganizationID(),
+		intermediateData.saveTruckList(intermediateCentre.organizationID,
 				truckList_temp);
 		return OperationState.SUCCEED_OPERATION;
 	}

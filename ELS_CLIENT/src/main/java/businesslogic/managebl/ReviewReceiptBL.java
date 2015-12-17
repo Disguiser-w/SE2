@@ -1,8 +1,12 @@
 package businesslogic.managebl;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import type.OperationState;
 import type.ReceiptState;
 import vo.AllReceiptShowVO;
 import vo.ReceiptVO;
@@ -18,23 +22,17 @@ import vo.OrderVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
-import po.CollectionReceiptPO;
-import po.PaymentReceiptPO;
+import po.EnIntermediateReceiptPO;
 import po.GatheringReceiptPO;
 import po.TransferingReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EnVehicleReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.DistributeReceiptPO;
-import businesslogic.businessbl.DistributeOrder;
-import businesslogic.businessbl.Gathering;
 import businesslogic.businessbl.controller.BusinessMainController;
-import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.financebl.CollectionReceiptBL;
 import businesslogic.financebl.PaymentReceiptBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.intermediatebl.envehiclebl.EnvehicleBL;
-import businesslogic.receiptbl.ReceiptBL;
 import businesslogicservice.manageblservice.ReviewReceiptBLService;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
@@ -45,13 +43,40 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 
 	private BusinessDataService bdService;
 	private IntermediateDataService itmdService;
-	private CollectionReceiptDataService crdService;
-	private PaymentReceiptDataService prdService;
 	
-	private CollectionReceiptBL crBL;
-	private PaymentReceiptBL prBL;
+	private CollectionReceiptBL collectionBL;
+	private PaymentReceiptBL paymentBL;
 	
-	public boolean approve(String receiptID, Object ob){
+	private ArrayList<GatheringReceiptVO> gatheringReceiptVOList;
+	private ArrayList<CollectionReceiptVO> collectionReceiptVOList;
+	private ArrayList<PaymentReceiptVO> paymentReceiptVOList;
+	private ArrayList<EnIntermediateReceiptVO> enIntermediateReceiptVOList;
+	private ArrayList<TransferingReceiptVO> transferingReceiptVOList;
+	private ArrayList<EnVehicleReceiptVO> enVehicleReceiptVOList;
+	private ArrayList<OrderAcceptReceiptVO> orderAcceptReceiptVOList;
+	private ArrayList<DistributeReceiptVO> distributeReceiptVOList;
+	
+	private ArrayList<GatheringReceiptPO> gatheringReceiptPOList;
+	private ArrayList<EnIntermediateReceiptPO> enIntermediateReceiptPOList;
+	private ArrayList<TransferingReceiptPO> transferingReceiptPOList;
+	private ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOList;
+	private ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPOList;
+	private ArrayList<DistributeReceiptPO> distributeReceiptPOList;
+	
+	public ReviewReceiptBL(){
+		try{
+			bdService = (BusinessDataService)Naming.lookup("rmi://localhost:8888/BusinessDataService");
+			itmdService = (IntermediateDataService)Naming.lookup("rmi://localhost:8888/IntermediateDataService");
+			
+			collectionBL = new CollectionReceiptBL();
+			paymentBL = new PaymentReceiptBL();
+
+		}catch(RemoteException | MalformedURLException | NotBoundException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public int approve(String receiptID, Object ob){
 		
 		//收款单	GatheringReceipt
 		if(receiptID.startsWith("SKD")){
@@ -102,131 +127,170 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		}
 
 		else{
-			return false;
+			return 0;
 		} 
 			
 	}
 
-	public boolean batch(String[] receiptIDList, ArrayList<Object> obList){
+	public int batch(String[] receiptIDList, ArrayList<Object> obList){
 		for(int i=0;i<receiptIDList.length;i++){
 			approve(receiptIDList[i], obList.get(i));
 		}
-		return true;
+		return 0;
 	}
 	
-	/*public void reply(String userID){
-		receiptBL.reply(userID);
-	}*/
+	public void reply(String userID){
+		//receiptBL.reply(userID);
+	}
 	
 	public AllReceiptShowVO refresh(){
 		return null;
 	}
 	
 	public AllReceiptShowVO getAllReceiptList(){
-		/*ArrayList<GatheringReceiptVO> grvoList = BusinessMainController.gatheringReceiptPOToVO(grPO);
-		ArrayList<CollectionReceiptVO> crvoList = crBL.getAllCollection();
-		ArrayList<PaymentReceiptVO> prvoList = prBL.getAllPaymentReceipt();
-		ArrayList<EnplaningReceiptVO> ervoList = IntermediateMainController.poToVO_EnplaningReceipt(getAllSubmittedEnplaningReceipt());
-		ArrayList<TransferingReceiptVO> trvoList = IntermediateMainController.poToVO_TransferingReceiptList(getAllSubmittedTransferingReceipt());
-		ArrayList<EnVehicleReceiptVO> evrvoList = BusinessMainController.enVehicleReceiptPOToVO(evrPO);
+		ArrayList<GatheringReceiptVO> gatheringReceiptVOList = getAllSubmittedGatheringReceipt();
+		collectionReceiptVOList = collectionBL.getAllCollection();
+		paymentReceiptVOList = paymentBL.getAllPaymentReceipt();
+		//ArrayList<EnplaningReceiptVO> ervoList = IntermediateMainController.getAllSubmittedEnplaningReceipt();
+		//ArrayList<TransferingReceiptVO> trvoList = IntermediateMainController.poToVO_TransferingReceiptList(getAllSubmittedTransferingReceipt());
+		/*ArrayList<EnVehicleReceiptVO> evrvoList = BusinessMainController.enVehicleReceiptPOToVO(evrPO);
 		ArrayList<OrderAcceptReceiptVO> oarvoList = BusinessMainController.orderAcceptReceiptPOToVO(oarPO);
 		ArrayList<DistributeReceiptVO> drvoList = BusinessMainController.distributeReceiptPOToVO(drPO);
-		AllReceiptShowVO allReceiptVO = new AllReceiptShowVO(grvoList, crvoList, prvoList, ervoList, trvoList, evrvoList, oarvoList, drvoList);
-		return allReceiptVO;*/
+		AllReceiptShowVO allReceiptVO = new AllReceiptShowVO(grvoList, crvoList, prvoList, ervoList, trvoList, evrvoList, oarvoList, drvoList);*/
+		//return allReceiptVO;
 		return null;
 	}
 	
 	//获取全部提交的收款单
-	public ArrayList<GatheringReceiptPO> getAllSubmittedGatheringReceipt(){
+	public ArrayList<GatheringReceiptVO> getAllSubmittedGatheringReceipt(){
 		try{
-			return bdService.getSubmittedGatheringReceiptInfo();
-		}catch(RemoteException e){
+			gatheringReceiptPOList = bdService.getSubmittedGatheringReceiptInfo();
+			gatheringReceiptVOList = new ArrayList<GatheringReceiptVO>();
+			
+			for(int i=0;i<gatheringReceiptPOList.size();i++){
+				gatheringReceiptVOList.add(BusinessMainController.gatheringPOToVO(gatheringReceiptPOList.get(i)));
+			}
+			return gatheringReceiptVOList;
+		}catch (RemoteException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
 	//审批一个收款单
-	public boolean approveGatheringReceipt(GatheringReceiptVO grVO){
+	public int approveGatheringReceipt(GatheringReceiptVO grVO){
 		GatheringReceiptPO grPO = BusinessMainController.gatheringVOToPO(grVO);
 		grPO.setReceiptState(ReceiptState.APPROVE);
-		try {
+		try{
 			bdService.saveGatheringReceiptInfo(grPO);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			return 0;
+		}catch (RemoteException e) {
 			e.printStackTrace();
+			return 1;
 		}
-		return true;
 	}	
 	
-	//获取全部提交的合计收款单
-	public ArrayList<CollectionReceiptPO> getAllSubmittedCollectionReceipt(){
-		try{
-			return crdService.getUnapprovedCollectionReceipt();
-		}catch(RemoteException e){
-			e.printStackTrace();
-			return null;
-		}
+	//获取全部提交的、待审批的合计收款单
+	public ArrayList<CollectionReceiptVO> getAllSubmittedCollectionReceipt(){
+		collectionReceiptVOList = collectionBL.getUnapprovedCollectionReceipt();
+		return collectionReceiptVOList;
 	}
 	
-	//审批一个合计收款单
-	public boolean approveCollectionReceipt(CollectionReceiptVO crVO){
-		CollectionReceiptPO crPO = FinanceMainController.cvoToPO(crVO);
+	//审批一个合计收款单(BL层的方法呢？？？)
+	public int approveCollectionReceipt(CollectionReceiptVO crVO){
+		/*CollectionReceiptPO crPO = FinanceMainController.cvoToPO(crVO);
 		crPO.setState(ReceiptState.APPROVE);
-		//crdService.saveCollectionReceiptInfo(crPO);
-		return true;
+		crdService.saveCollectionReceiptInfo(crPO);
+		*/
+		return 0;
 	}
 	
-	//获取全部提交的付款单
-	public ArrayList<PaymentReceiptPO> getAllSubmittedPaymentReceipt(){
-		try{
-			return prdService.getUnapprovedPaymentReceipt();
-		}catch(RemoteException e){
-			e.printStackTrace();
-			return null;
-		}
+	//获取全部提交的、待审批的付款单
+	public ArrayList<PaymentReceiptVO> getAllSubmittedPaymentReceipt(){
+		paymentReceiptVOList = paymentBL.getUnapprovedPaymentReceipt();
+		return paymentReceiptVOList;
 	}
 	
-	//审批一个付款单
-	public boolean approvePaymentReceipt(PaymentReceiptVO crVO){
-		PaymentReceiptPO prPO = FinanceMainController.pvoToPO(crVO);
+	//审批一个付款单(BL层的方法呢？？？)
+	public int approvePaymentReceipt(PaymentReceiptVO crVO){
+		/*PaymentReceiptPO prPO = FinanceMainController.pvoToPO(crVO);
 		prPO.setState(ReceiptState.APPROVE);
-		//prdService.savePaymentReceiptInfo(prPO);
-		return true;
+		try {
+			prdService.saveSubmittedPaymentReceiptInfo(prPO);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return 1;
+		}*/
 	}
 
 	//获取全部提交的中转中心装车单
-	public ArrayList<EnplaningReceiptPO> getAllSubmittedEnplaningReceipt(){
-		//return itmdService.getSubmittedEnIntermediateReceiptInfo();
-		return null;
+	public ArrayList<EnIntermediateReceiptVO> getAllSubmittedEnplaningReceipt(){
+		try{
+			enIntermediateReceiptPOList = itmdService.getSubmittedEnIntermediateReceiptInfo();
+			enIntermediateReceiptVOList = new ArrayList<EnIntermediateReceiptVO>();
+			
+			for(int i=0; i<enIntermediateReceiptPOList.size();i++){
+				enIntermediateReceiptVOList.add(IntermediateMainController.poToVO(enIntermediateReceiptPOList.get(i)));
+			}
+			return enIntermediateReceiptVOList;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	//审批一个中转中心装车单
-	public boolean approveEnplaningReceipt(EnplaningReceiptVO erVO){
+	public int approveEnplaningReceipt(EnIntermediateReceiptVO erVO){
 		EnplaningReceiptPO erPO = IntermediateMainController.voToPO(erVO);
 		erPO.setReceiptState(ReceiptState.APPROVE);
-		//itmdService.saveEnIntermediateReceiptInfo(erPO);
-		return true;
+		try{
+			itmdService.saveEnIntermediateReceiptInfo(erPO);
+			return 0;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+			return 1;
+		}
 	}
 	
 	//获取全部提交的中转中心到达单
-	public ArrayList<TransferingReceiptPO> getAllSubmittedTransferingReceipt(){
-		//return itmdService.getSubmittedTransferingReceiptInfo();
-		return null;
+	public ArrayList<TransferingReceiptVO> getAllSubmittedTransferingReceipt(){
+		try{
+			transferingReceiptPOList = itmdService.getSubmittedTransferingReceiptInfo();
+			transferingReceiptVOList = new ArrayList<TransferingReceiptVO>();
+			
+			for(int i=0;i<transferingReceiptPOList.size();i++){
+				transferingReceiptVOList.add(IntermediateMainController.poToVO(transferingReceiptPOList.get(i))); 
+			}
+			return transferingReceiptVOList;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	//审批一个中转中心到达单
-	public boolean approveTransferingReceipt(TransferingReceiptVO trVO){
+	public int approveTransferingReceipt(TransferingReceiptVO trVO){
 		TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
 		trPO.setReceiptState(ReceiptState.APPROVE);
-		//itmdService.saveTransferingReceiptInfo(trPO);
-		return true;
+		try{
+			itmdService.saveTransferingReceiptInfo(trPO);
+			return 0;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+			return 1;
+		}
 	}
 	
 	//获取全部提交的营业厅装车单
-	public ArrayList<EnVehicleReceiptPO> getAllSubmittedEnVehicleReceipt(){
+	public ArrayList<EnVehicleReceiptVO> getAllSubmittedEnVehicleReceipt(){
 		try{
-			return bdService.getSubmittedEnVehicleReceiptInfo();
+			enVehicleReceiptPOList = bdService.getSubmittedEnVehicleReceiptInfo();
+			enVehicleReceiptVOList = new ArrayList<EnVehicleReceiptVO>();
+			
+			for(int i=0; i<enVehicleReceiptPOList.size();i++){
+				enVehicleReceiptVOList.add(BusinessMainController.enVehicleReceiptPOToVO(enVehicleReceiptPOList.get(i)));
+			}
+			return enVehicleReceiptVOList;
 		}catch(RemoteException e){
 			e.printStackTrace();
 			return null;
@@ -234,21 +298,28 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	//审批一个营业厅装车单
-	public boolean approveEnVehicleReceipt(EnVehicleReceiptVO evrVO){
+	public int approveEnVehicleReceipt(EnVehicleReceiptVO evrVO){
 		EnVehicleReceiptPO evrPO = BusinessMainController.enVehicleReceiptVOToPO(evrVO);
 		evrPO.setReceiptState(ReceiptState.APPROVE);
-		try {
+		try{
 			bdService.saveEnVehicleReceiptInfo(evrPO);
-		} catch (RemoteException e) {
+			return 0;
+		}catch (RemoteException e) {
 			e.printStackTrace();
+			return 1;
 		}
-		return true;
 	}
 	
 	//获取全部提交的营业厅到达单
-	public ArrayList<OrderAcceptReceiptPO> getAllSubmittedOrderAcceptReceipt(){
+	public ArrayList<OrderAcceptReceiptVO> getAllSubmittedOrderAcceptReceipt(){
 		try{
-			return bdService.getSubmittedOrderAcceptReceiptInfo();
+			orderAcceptReceiptPOList = bdService.getSubmittedOrderAcceptReceiptInfo();
+			orderAcceptReceiptVOList = new ArrayList<OrderAcceptReceiptVO>();
+			
+			for(int i=0;i<orderAcceptReceiptPOList.size();i++){
+				orderAcceptReceiptVOList.add(BusinessMainController.orderAcceptReceiptPOToVO(orderAcceptReceiptPOList.get(i))); 
+			}
+			return orderAcceptReceiptVOList;
 		}catch(RemoteException e){
 			e.printStackTrace();
 			return null;
@@ -256,22 +327,28 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	//审批一个营业厅到达单
-	public boolean approveOrderAcceptReceipt(OrderAcceptReceiptVO oarVO){
+	public int approveOrderAcceptReceipt(OrderAcceptReceiptVO oarVO){
 		OrderAcceptReceiptPO oarPO = BusinessMainController.orderAcceptReceiptVOToPO(oarVO);
 		oarPO.setReceiptState(ReceiptState.APPROVE);
 		try {
 			bdService.saveOrderAcceptReceiptInfo(oarPO);
+			return 0;
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 1;
 		}
-		return true;
 	}
 	
 	//获取全部提交的派件单
-	public ArrayList<DistributeReceiptPO> getAllSubmittedDistributeReceipt(){
+	public ArrayList<DistributeReceiptVO> getAllSubmittedDistributeReceipt(){
 		try{
-			return bdService.getSubmittedDistributeReceiptInfo();
+			distributeReceiptPOList = bdService.getSubmittedDistributeReceiptInfo();
+			distributeReceiptVOList = new ArrayList<DistributeReceiptVO>();
+			
+			for(int i=0;i<distributeReceiptPOList.size();i++){
+				distributeReceiptVOList.add(BusinessMainController.distributePOToVO(distributeReceiptPOList.get(i)));
+			}
+			return distributeReceiptVOList;
 		}catch(RemoteException e){
 			e.printStackTrace();
 			return null;
@@ -279,16 +356,16 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	//审批一个派件单
-	public boolean approveDistributeReceipt(DistributeReceiptVO drVO){
+	public int approveDistributeReceipt(DistributeReceiptVO drVO){
 		DistributeReceiptPO drPO = BusinessMainController.distributeVOToPO(drVO);
 		drPO.setReceiptState(ReceiptState.APPROVE);
 		try {
 			bdService.saveDistributeReceiptInfo(drPO);
+			return 0;
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return 1;
 		}
-		return true;
 	}
 	
 }

@@ -29,7 +29,7 @@ public class UserMainController {
 		}
 		
 		try{
-			userVO = userPOToVO(userData.findUser(userID));
+			userVO = userPOToVO(userData.findUserByID(userID));
 			new AdminFrame(userVO);
 		}catch(RemoteException exception){
 			exception.printStackTrace();

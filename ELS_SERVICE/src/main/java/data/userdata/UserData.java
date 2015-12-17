@@ -13,7 +13,6 @@ import po.BusinessPO;
 import po.ExpressPO;
 import po.IntermediatePO;
 import po.OrganizationPO;
-import po.RepertoryPO;
 import po.UserPO;
 import type.AuthorityType;
 import type.ProfessionType;
@@ -25,10 +24,12 @@ import data.repertorydata.RepertoryData;
 import dataservice.userdataservice.UserDataService;
 import file.JXCFile;
 
-public class UserData extends UnicastRemoteObject implements UserDataService { // extends
-																				// UnicastRemoteObject???
+/**
+ * 用户数据的处理，包括新增用户，删除用户，修改用户,查询用户等基本操作
+ * */
 
-	// 我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
+public class UserData extends UnicastRemoteObject implements UserDataService { 
+
 	private static final long serialVersionUID = 131250147L;
 
 	JXCFile userFile;
@@ -37,6 +38,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		userFile = new JXCFile("src/user.ser");
 	}
 
+	/**
+	 * 新增用户
+	 * @param UserPO userpo
+	 * @return int : 0(add succeed), 1(user with the ID has already existed)
+	 * 
+	 * */
 	public int addUser(UserPO userpo) throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
@@ -61,6 +68,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 
 	}
 
+	
+	/**
+	 * 删除用户
+	 * @param String userID
+	 * @return int : 0(delete succeed), 1(delete failed)
+	 * 
+	 * */
 	public int deleteUser(String userID) throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
@@ -162,6 +176,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return 0;
 	}
 
+	
+	/**
+	 * 修改用户密码
+	 * @param String userID, String newPassword
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
 	public int modifyUserPassword(String userID, String newPassword)
 			throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
@@ -181,6 +202,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return 0;
 	}
 
+	
+	/**
+	 * 修改用户权限
+	 * @param String userID, AuthorityType authority
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
 	public int modifyUserAuthority(String userID, AuthorityType authority)
 			throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
@@ -200,6 +228,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return 0;
 	}
 
+	
+	/**
+	 * 修改用户机构
+	 * @param String userID, String newOrganizationID 
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
 	public int modifyUserOrganization(String userID, String newOrganizationID) throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
@@ -349,7 +384,14 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return 0;
 	}
 
-	public int modifyUserGrades(String userID, int newGrades)
+	
+	/**
+	 * 修改用户绩点
+	 * @param String userID, int newGrade
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+	public int modifyUserGrades(String userID, int newGrade)
 			throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
@@ -359,7 +401,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getUserID().equals(userID)) {
-				tempUserPO.setGrades(newGrades);
+				tempUserPO.setGrades(newGrade);
 				break;
 			}
 		}
@@ -368,7 +410,14 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return 0;
 	}
 
-	public UserPO findUser(String userID) throws RemoteException {
+	
+	/**
+	 * 根据编号查找用户（精确搜索）
+	 * @param String userID
+	 * @return UserPO
+	 * 
+	 * */
+	public UserPO findUserByID(String userID) throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
 		if (objectList == null)
@@ -385,6 +434,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return null;
 	}
 	
+	
+	/**
+	 * 根据关键字查找用户（模糊搜索）
+	 * @param String keyword
+	 * @return ArrayList<UserPO>
+	 * 
+	 * */
 	public ArrayList<UserPO> findUserByKeyword(String keyword) throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 		ArrayList<UserPO> userpoList = new ArrayList<UserPO>();
@@ -403,6 +459,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		}
 	}
 
+	
+	/**
+	 * 显示所有用户
+	 * @return ArrayList<UserPO>
+	 * 
+	 * */
 	public ArrayList<UserPO> showAllUsers() throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
@@ -419,6 +481,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		return userList;
 	}
 
+	
+	/**
+	 * 获得某职业用户编号后缀
+	 * @return String 
+	 * 
+	 * */
 	public String getUserIDPost(ProfessionType profession)
 			throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
@@ -470,7 +538,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 		try {
 			userData = new UserData();
 			try {
-				/*userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
+				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
 						ProfessionType.manager, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.highest, 0));
@@ -497,7 +565,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 				userData.addUser(new UserPO("吴秦月", "SJ-00001", "123456",
 						ProfessionType.driver, "030000",
 						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
-						0));*/
+						0));
 
 				System.out.println("添加后:");
 				ArrayList<UserPO> userpoList0 = userData.showAllUsers();
@@ -511,7 +579,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 					}
 				}
 
-				UserPO userpo1 = userData.findUser("KD-00001");
+				UserPO userpo1 = userData.findUserByID("KD-00001");
 				if (userpo1 != null)
 					System.out.println("Find the user: " + userpo1.getName()
 							+ " " + userpo1.getUserID() + " "
@@ -570,29 +638,29 @@ public class UserData extends UnicastRemoteObject implements UserDataService { /
 
 	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
 
-	// public static void main(String[] args) {
-	// try {
-	// System.setProperty("java.rmi.server.hostname", "172.25.132.40");
-	// UserDataService userData = new UserData();
-	// LocateRegistry.createRegistry(6000);
-	//
-	// // 绑定RMI名称进行发布
-	// Naming.rebind("rmi://172.25.132.40:6000/UserDataService", userData);
-	// System.out.println("User Service start!");
-	//
-	// ArrayList<UserPO> userList0 = userData.showAllUsers();
-	// for (UserPO user : userList0)
-	// System.out.println("ID: " + user.getUserID() + ", Name: " +
-	// user.getName());
-	//
-	// UserPO user = userData.findUser("JL-01");
-	// System.out.println("ID: " + user.getUserID() + ", Name: " +
-	// user.getName());
-	//
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
+	/* public static void main(String[] args) {
+	 try {
+	 System.setProperty("java.rmi.server.hostname", "172.25.132.40");
+	 UserDataService userData = new UserData();
+	 LocateRegistry.createRegistry(6000);
+	
+	 // 绑定RMI名称进行发布
+	 Naming.rebind("rmi://172.25.132.40:6000/UserDataService", userData);
+	 System.out.println("User Service start!");
+	
+	 ArrayList<UserPO> userList0 = userData.showAllUsers();
+	 for (UserPO user : userList0)
+	 System.out.println("ID: " + user.getUserID() + ", Name: " +
+	 user.getName());
+	
+	 UserPO user = userData.findUser("JL-01");
+	 System.out.println("ID: " + user.getUserID() + ", Name: " +
+	 user.getName());
+	
+	 } catch (Exception e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	 }*/
 
 }

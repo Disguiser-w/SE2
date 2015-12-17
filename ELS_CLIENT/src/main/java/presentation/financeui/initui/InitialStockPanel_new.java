@@ -1,6 +1,5 @@
 package presentation.financeui.initui;
 
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -73,12 +72,7 @@ public class InitialStockPanel_new extends JPanel{
 	private JTable repertoryTable;
 	private JTable accountTable;
 	
-//	private ArrayList<JCheckBox> selectedUser;
-//	private ArrayList<JCheckBox> selectedOrganization;
-//	private ArrayList<JCheckBox> selectedVehicle;
-//	private ArrayList<JCheckBox> selectedRepertory;
-//	private ArrayList<JCheckBox> selectedAccount;
-	
+
 	private ArrayList<JCheckBox> selected;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -258,7 +252,14 @@ public class InitialStockPanel_new extends JPanel{
 		//仓库初始信息显示
 		stockInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				
+				changeTable(repertoryTable);
+				int temp=repertory.size();
+				refreshRepertory(repertoryController.showAllRepertorys());
+				rm = new RepertoryModel(repertory);
+				for(int i=0;i<temp;i++){
+					rm.removeRow(0);
+				}
+				repertoryTable.repaint();
 			}
 		});
 		//账户信息显示
@@ -782,7 +783,6 @@ public class InitialStockPanel_new extends JPanel{
 		else if(currentTable == accountTable){
 			count5--;
 			if(getAccountOnThisPage(count5)!=null&&count5>=0){
-				
 				int total=account.size();
 				ArrayList<AccountVO> temp=getAccountOnThisPage(count5);
 				refreshAccount(temp);
@@ -940,7 +940,10 @@ public class InitialStockPanel_new extends JPanel{
 				selected.get(row).setVisible(false);
 				return null;
 			}
+			else{
+				selected.get(row).setVisible(true);
 			return user.get(row).get(col);
+			}
 		}
 
 		public String getColumnName(int col) {
@@ -991,7 +994,10 @@ public class InitialStockPanel_new extends JPanel{
 					selected.get(row).setVisible(false);
 					return null;
 				}
+				else{
+					selected.get(row).setVisible(true);
 				return organization.get(row).get(col);
+				}
 			}
 
 			public String getColumnName(int col) {
@@ -1039,7 +1045,10 @@ public class InitialStockPanel_new extends JPanel{
 					selected.get(row).setVisible(false);
 					return null;
 				}
+				else{
+					selected.get(row).setVisible(true);
 				return vehicle.get(row).get(col);
+				}
 			}
 
 			public String getColumnName(int col) {
@@ -1087,7 +1096,10 @@ public class InitialStockPanel_new extends JPanel{
 					selected.get(row).setVisible(false);
 					return null;
 				}
+				else{
+					selected.get(row).setVisible(true);
 				return repertory.get(row).get(col);
+				}
 			}
 
 			public String getColumnName(int col) {
@@ -1133,8 +1145,10 @@ class AccountModel extends AbstractTableModel{
 				selected.get(row).setVisible(false);
 				return null;
 			}
+			else{
 			selected.get(row).setVisible(true);
 			return account.get(row).get(col);
+			}
 		}
 
 		public String getColumnName(int col) {
@@ -1213,6 +1227,7 @@ class AccountModel extends AbstractTableModel{
     		 lineInfo.add(v.maxRow+"");
     		 lineInfo.add(v.maxShelf+"");
     		 lineInfo.add(v.maxDigit+"");
+    		 lineInfo.add(v.warningRatio+"");
     		 repertory.add(lineInfo);
     	 }
      }

@@ -18,7 +18,7 @@ public class CostIncomeReceiptVO extends ReceiptVO{
 	public String userID;
 	
 	public CostIncomeReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double cost,double income,double profit){
-		super(ID,userID,ReceiptType.COSTINCOMERECEPTION,state);
+//		super(ID,userID,ReceiptType.COSTINCOMERECEPTION,state);
 		this.cost=cost;
 		this.income=income;
 		this.profit=income-cost;

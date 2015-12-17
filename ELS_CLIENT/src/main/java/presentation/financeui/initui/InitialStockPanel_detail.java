@@ -970,6 +970,7 @@ class AccountModel extends AbstractTableModel{
     		 lineInfo.add(v.maxRow+"");
     		 lineInfo.add(v.maxShelf+"");
     		 lineInfo.add(v.maxDigit+"");
+    		 lineInfo.add(v.warningRatio+"");
     		 repertory.add(lineInfo);
     	 }
      }

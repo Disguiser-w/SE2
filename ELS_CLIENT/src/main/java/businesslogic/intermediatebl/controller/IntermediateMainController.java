@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
@@ -24,6 +25,7 @@ import presentation.intermediateui.TrainManagementPanel;
 import presentation.intermediateui.TransferingPanel;
 import presentation.intermediateui.TruckManagementPanel;
 import type.ReceiptState;
+import vo.EnIntermediateReceiptVO;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
@@ -315,6 +317,18 @@ public class IntermediateMainController {
 				IntermediateMainController.poToVO(intermediate
 						.getOrganization()), intermediate.getName(),
 				intermediate.getID());
+	}
+
+	public static EnIntermediateReceiptVO poToVO(
+			EnIntermediateReceiptPO enIntermediateReceipt) {
+		return new EnIntermediateReceiptVO(
+				IntermediateMainController.poToVO(enIntermediateReceipt
+						.getIntermediateCentre()),
+				IntermediateMainController
+						.poToVO_OrderList(enIntermediateReceipt.getOrderList()),
+				enIntermediateReceipt.getFare(), enIntermediateReceipt.getID(),
+				enIntermediateReceipt.getDate(), enIntermediateReceipt
+						.getReceiptState());
 	}
 
 	public static EnplaningReceiptVO poToVO(EnplaningReceiptPO enplaningReceipt) {

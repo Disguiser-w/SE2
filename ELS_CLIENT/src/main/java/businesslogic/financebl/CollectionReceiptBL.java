@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CollectionReceiptPO;
-import po.GatheringReceiptPO;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import vo.CollectionReceiptVO;
@@ -194,6 +193,21 @@ public class CollectionReceiptBL extends ReceiptBL {
 			System.out.println("获取未审批的单据失败");
 			return null;
 		}
+	}
+	
+	/**
+	 * 获取总经理审批后的结果
+	 * */
+	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo){
+		try {
+			return collectionData.saveSubmittedCollectionReceiptInfo(FinanceMainController.cvoToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取总经理审批后结果失败");
+			return 0;
+		}
+		
 	}
 }
 

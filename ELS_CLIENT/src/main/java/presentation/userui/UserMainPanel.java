@@ -80,6 +80,7 @@ public class UserMainPanel extends JPanel{
 		addLabel = new JLabel("增");
 		delLabel = new JLabel("删");
 		modifyLabel = new JLabel("改");
+		
 		addLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		delLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		modifyLabel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -103,6 +104,8 @@ public class UserMainPanel extends JPanel{
         
 		numOfPage = new JLabel();
 
+		setLayout(null);
+		
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
@@ -124,7 +127,6 @@ public class UserMainPanel extends JPanel{
 		
 		users = userBL.showAllUsers();
 
-		setLayout(null);
 		addListener();
 		
 		// helper = new LocationHelper(this);
@@ -357,7 +359,7 @@ public class UserMainPanel extends JPanel{
 
 	private class MessageTableModel extends AbstractTableModel {
 
-		private static final long serialVersionUID = 4945586293640191297L;
+		private static final long serialVersionUID = 297L;
 
 		public int getRowCount() {
 			return 8;
@@ -427,6 +429,7 @@ public class UserMainPanel extends JPanel{
 		adminFrame.changePanel(new AddUserPanel(adminFrame, this));
 	}
 
+	//修改用户权限界面
 	public void modifyui(){
 		int n = 0;
 		for(JCheckBox i : selectUser){
@@ -446,74 +449,6 @@ public class UserMainPanel extends JPanel{
 		}
 	}
 	
-	//修改用户信息界面
-	/*public void modifyui(int chosenRow){
-	
-		String userName;
-		String userID;
-		String userProfession;
-		String userOrganization;
-		String userSalaryPlan;
-	
-		//如果现在是搜索模式，就载入搜索Table被选中的行的信息
-		if(isFindPattern){
-			if(((String)findInfoTable.getModel().getValueAt(chosenRow, 2)).equals("财务人员")){
-				//只有财务人员才有修改权限的需要
-				userName = (String)findInfoTable.getModel().getValueAt(chosenRow, 0);
-				userID = (String)findInfoTable.getModel().getValueAt(chosenRow, 1);
-				userProfession = (String)findInfoTable.getModel().getValueAt(chosenRow, 2);
-				userOrganization = (String)findInfoTable.getModel().getValueAt(chosenRow, 3);
-				userSalaryPlan = (String)findInfoTable.getModel().getValueAt(chosenRow, 4);
-				
-				adminFrame.changePanel(new ModifyUserAuthorityPanel(adminFrame, this, userName, userID, userProfession, userOrganization, userSalaryPlan));
-			}
-			else{
-				warnning("该用户不是财务人员，不需要修改权限");
-			}
-		}
-		
-		//如果现在不是搜索模式，就载入全部信息Table被选中的行的信息
-		else{
-			if(((String)allInfoTable.getModel().getValueAt(chosenRow, 2)).equals("财务人员")){
-				//只有财务人员才有修改权限的需要
-				userName = (String)allInfoTable.getModel().getValueAt(chosenRow, 0);
-				userID = (String)allInfoTable.getModel().getValueAt(chosenRow, 1);
-				userProfession = (String)allInfoTable.getModel().getValueAt(chosenRow, 2);
-				userOrganization = (String)allInfoTable.getModel().getValueAt(chosenRow, 3);
-				userSalaryPlan = (String)allInfoTable.getModel().getValueAt(chosenRow, 4);
-				
-				adminFrame.changePanel(new ModifyUserAuthorityPanel(adminFrame, this, userName, userID, userProfession, userOrganization, userSalaryPlan));
-			}
-			else{
-				warnning("该用户不是财务人员，不需要修改权限");
-			}
-		}
-		
-	}*/
-	
-	/*//显示全部用户信息页面
-	public void allui(){
-		this.remove(findInfoTable);
-		this.add(allInfoTable);
-		setCmpLocation(allInfoTable);
-        setBaseInfo(allInfoTable);
-        setInfos();
-        isFindPattern = false;
-        searchTextField.setText("用户编号");
-        updateUI();
-	}
-	
-	//显示搜索用户信息页面
-	public void searchui(){
-		this.remove(allInfoTable);
-		this.add(findInfoTable);
-		setCmpLocation(findInfoTable);
-        setBaseInfo(findInfoTable);
-        setInfos();
-        isFindPattern = true;
-        updateUI();
-	}*/
-	
 	
 	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
@@ -525,7 +460,7 @@ public class UserMainPanel extends JPanel{
 			return professionNameList[n-1];
 	}
 	
-	//根据不同的机构编号返回薪机构名，给表去显示
+	//根据不同的机构编号返回机构名，给表去显示
 	public String organizationName(String organizationID){
 		if(organizationID.endsWith("-CK")){
 			organizationID = organizationID.substring(0,5);

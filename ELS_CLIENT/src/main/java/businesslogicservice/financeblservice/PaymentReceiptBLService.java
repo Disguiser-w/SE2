@@ -5,6 +5,8 @@
 package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
+
+import type.OperationState;
 import vo.PaymentReceiptVO;
 /**
  * 创建付款单
@@ -28,6 +30,9 @@ public interface PaymentReceiptBLService {
 	
 	//获取未审批的入款单
 	public ArrayList<PaymentReceiptVO> getUnapprovedPaymentReceipt();
+	
+	//获取总经理审批后的结果
+	public int saveSubmittedPaymentReceiptInfo(PaymentReceiptVO vo);
 	
 	
 //	//获取日期

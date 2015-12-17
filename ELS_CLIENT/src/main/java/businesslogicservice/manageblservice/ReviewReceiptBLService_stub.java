@@ -11,9 +11,9 @@ public class ReviewReceiptBLService_stub implements ReviewReceiptBLService{
 		return true;
 	}
 	
-	public boolean approve(String ID, Object ob){
+	public int approve(String ID, Object ob){
 		System.out.println("Approve receipt succeed!");
-		return true;
+		return 0;
 	}
 	
 	public void reply(String userID){

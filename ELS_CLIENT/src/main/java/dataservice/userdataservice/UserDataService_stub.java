@@ -34,7 +34,12 @@ public class UserDataService_stub implements UserDataService{
 		return 0;
 	}
     
-    public UserPO findUser(String userID) throws RemoteException{
+    public int modifyUserGrades(String userID, int newGrade) throws RemoteException{
+		System.out.println("Modify user grades succeed!");
+		return 0;
+	}
+    
+    public UserPO findUserByID(String userID) throws RemoteException{
 		System.out.println("Find user succeed!");
 		return null;
 	}

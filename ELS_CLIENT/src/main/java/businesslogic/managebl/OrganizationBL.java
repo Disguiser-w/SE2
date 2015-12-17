@@ -74,7 +74,7 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public int chooseDepartment(String userID, String organizationID) {
 		try {
-			UserPO userpo = udService.findUser(userID);
+			UserPO userpo = udService.findUserByID(userID);
 			userpo.setOrganization(organizationID);
 			return 0;
 		} catch (RemoteException exception) {

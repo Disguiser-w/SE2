@@ -162,7 +162,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 				 }
 		 }
 		 file.writeM(os);
-		return -1;
+		return 0;
 		 
 	 }
 	    

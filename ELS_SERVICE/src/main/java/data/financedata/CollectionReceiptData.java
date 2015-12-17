@@ -204,7 +204,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 				 }
 		 }
 		 file.writeM(os);
-		return -1;
+		return 0;
 		
 	}
 
