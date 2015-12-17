@@ -52,7 +52,6 @@ public class EnvehiclePanel extends JPanel {
 
 		envehicle.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				try {
@@ -136,19 +135,16 @@ public class EnvehiclePanel extends JPanel {
 	}
 
 	private class EnvehicleTableModel extends AbstractTableModel {
-		@Override
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
 			return 12;
 		}
 
-		@Override
 		public int getColumnCount() {
 			// TODO 自动生成的方法存根
 			return 5;
 		}
 
-		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 12 + rowIndex;

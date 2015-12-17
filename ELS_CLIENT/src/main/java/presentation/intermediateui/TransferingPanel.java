@@ -136,7 +136,7 @@ public class TransferingPanel extends JPanel {
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				pageNum_max = (controller.getTransferingReceipt().orderList
@@ -152,7 +152,7 @@ public class TransferingPanel extends JPanel {
 		});
 
 		delete_ok.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				delete_ok();
@@ -251,19 +251,17 @@ public class TransferingPanel extends JPanel {
 	}
 
 	private class TransferingTableModel extends AbstractTableModel {
-		@Override
+
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
 			return 12;
 		}
 
-		@Override
 		public int getColumnCount() {
 			// TODO 自动生成的方法存根
 			return 5;
 		}
 
-		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 12 + rowIndex;

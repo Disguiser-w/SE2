@@ -181,7 +181,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 		// TODO 自动生成的方法存根
 		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
 				.voToPO_EnplaningReceipt(enplaningReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(enplaningReceipt);
+			intermediateData.saveEnIntermediateReceiptInfo(enplaningReceipt,
+					transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -189,7 +190,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 		// TODO 自动生成的方法存根
 		for (EntrainingReceiptPO entrainingReceipt : IntermediateMainController
 				.voToPO_EntrainingReceipt(entrainingReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(entrainingReceipt);
+			intermediateData.saveEnIntermediateReceiptInfo(entrainingReceipt,
+					transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -197,7 +199,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 		// TODO 自动生成的方法存根
 		for (EntruckingReceiptPO entruckingReceipt : IntermediateMainController
 				.voToPO_EntruckingReceipt(entruckingReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(entruckingReceipt);
+			intermediateData.saveEnIntermediateReceiptInfo(entruckingReceipt,
+					transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
 	}
 

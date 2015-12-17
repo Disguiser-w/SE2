@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
-import vo.PlaneVO;
 import vo.TruckVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
@@ -90,7 +89,6 @@ public class TruckManagementPanel extends JPanel {
 
 		addButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				addui();
@@ -99,7 +97,6 @@ public class TruckManagementPanel extends JPanel {
 
 		deleteButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				deleteui();
@@ -126,7 +123,7 @@ public class TruckManagementPanel extends JPanel {
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				pageNum_max = (controller.getTruckList().size()) / 12;
@@ -141,7 +138,7 @@ public class TruckManagementPanel extends JPanel {
 		});
 
 		delete_ok.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				delete_okui();
@@ -253,19 +250,17 @@ public class TruckManagementPanel extends JPanel {
 	}
 
 	private class VehicleManagementTableModel extends AbstractTableModel {
-		@Override
+
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
 			return 12;
 		}
 
-		@Override
 		public int getColumnCount() {
 			// TODO 自动生成的方法存根
 			return 5;
 		}
 
-		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			// System.out.println(controller.getTruckList().size());

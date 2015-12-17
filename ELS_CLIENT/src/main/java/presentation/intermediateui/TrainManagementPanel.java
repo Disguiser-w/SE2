@@ -88,7 +88,7 @@ public class TrainManagementPanel extends JPanel {
 		setCmpLocation();
 
 		addButton.addActionListener(new ActionListener() {
-			@Override
+
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				addui();
@@ -96,7 +96,7 @@ public class TrainManagementPanel extends JPanel {
 		});
 
 		deleteButton.addActionListener(new ActionListener() {
-			@Override
+
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO 自动生成的方法存根
 				deleteui();
@@ -123,7 +123,7 @@ public class TrainManagementPanel extends JPanel {
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				pageNum_max = (controller.getTrainList().size()) / 12;
@@ -138,7 +138,7 @@ public class TrainManagementPanel extends JPanel {
 		});
 
 		delete_ok.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				delete_okui();
@@ -249,19 +249,17 @@ public class TrainManagementPanel extends JPanel {
 	}
 
 	private class VehicleManagementTableModel extends AbstractTableModel {
-		@Override
+
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
 			return 12;
 		}
 
-		@Override
 		public int getColumnCount() {
 			// TODO 自动生成的方法存根
 			return 5;
 		}
 
-		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 12 + rowIndex;

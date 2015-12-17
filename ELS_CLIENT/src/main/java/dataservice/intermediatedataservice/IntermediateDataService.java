@@ -36,21 +36,38 @@ public interface IntermediateDataService extends Remote {
 			ArrayList<TruckPO> trainList) throws RemoteException;
 
 	public TransferingReceiptPO getTransferingReceiptInfo(
-			String organization_ID, String date) throws RemoteException;
+			String organization_ID, String date, String ID)
+			throws RemoteException;
 
 	public OperationState saveTransferingReceiptInfo(
-			TransferingReceiptPO transferingReceipt) throws RemoteException;
+			TransferingReceiptPO transferingReceipt, String organization_ID)
+			throws RemoteException;
 
 	public EnIntermediateReceiptPO getEnIntermediateReceiptInfo(
-			String organization_ID, String EnIntermediateReceipt_ID)
+			String organization_ID, String EnIntermediateReceipt_ID, String date)
 			throws RemoteException;
 
 	public OperationState saveEnIntermediateReceiptInfo(
-			EnIntermediateReceiptPO enIntermediateReceipt)
+			EnIntermediateReceiptPO enIntermediateReceipt,
+			String organization_ID) throws RemoteException;
+
+	public FarePO getFareInfo(String organization_ID, String fare_ID,
+			String date) throws RemoteException;
+
+	public OperationState saveFareInfo(String organization_ID, FarePO fare)
 			throws RemoteException;
 
-	public FarePO getFareInfo(String organization_ID, String date)
+	public ArrayList<TransferingReceiptPO> getSubmittedTransferingReceiptInfo()
 			throws RemoteException;
 
-	public OperationState saveFareInfo(FarePO fare) throws RemoteException;
+	public OperationState saveSubmittedTransferingReceiptInfo(
+			ArrayList<TransferingReceiptPO> transferingReceiptList)
+			throws RemoteException;
+
+	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo()
+			throws RemoteException;
+
+	public OperationState saveSubmittedEnIntermediateReceiptInfo(
+			ArrayList<EnIntermediateReceiptPO> enIntermeidiateReceiptList)
+			throws RemoteException;
 }

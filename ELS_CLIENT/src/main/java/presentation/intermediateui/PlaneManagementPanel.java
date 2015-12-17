@@ -119,7 +119,7 @@ public class PlaneManagementPanel extends JPanel {
 		});
 
 		previous.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				pageNum_max = (controller.getPlaneList().size()) / 12;
@@ -134,7 +134,7 @@ public class PlaneManagementPanel extends JPanel {
 		});
 
 		delete_ok.addMouseListener(new MouseAdapter() {
-			@Override
+
 			public void mouseClicked(MouseEvent e) {
 				// TODO 自动生成的方法存根
 				delete_okui();
@@ -246,19 +246,17 @@ public class PlaneManagementPanel extends JPanel {
 	}
 
 	private class VehicleManagementTableModel extends AbstractTableModel {
-		@Override
+
 		public int getRowCount() {
 			// TODO 自动生成的方法存根
 			return 12;
 		}
 
-		@Override
 		public int getColumnCount() {
 			// TODO 自动生成的方法存根
 			return 5;
 		}
 
-		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			// TODO 自动生成的方法存根
 			int index = pageNum * 12 + rowIndex;

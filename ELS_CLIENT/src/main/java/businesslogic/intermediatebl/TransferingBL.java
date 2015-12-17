@@ -62,8 +62,9 @@ public class TransferingBL implements TransferingBLService {
 
 	public OperationState saveTransferingReceipt() throws RemoteException {
 		// TODO 自动生成的方法存根
-		intermediateData.saveTransferingReceiptInfo(IntermediateMainController
-				.voToPO(transferingReceipt));
+		intermediateData.saveTransferingReceiptInfo(
+				IntermediateMainController.voToPO(transferingReceipt),
+				transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
 	}
 }
