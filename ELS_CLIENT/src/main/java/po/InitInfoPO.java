@@ -2,14 +2,11 @@ package po;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class InitInfoPO  implements Serializable{
 
-	/**
-	 * 
-	 */
+	private static final long serialVersionUID = 660222571968038789L;
 
 	String date;
 	public  ArrayList<AccountPO>  accountPOs;

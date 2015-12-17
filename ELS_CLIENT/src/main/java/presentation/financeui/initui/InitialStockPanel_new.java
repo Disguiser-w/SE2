@@ -1,15 +1,14 @@
 package presentation.financeui.initui;
 
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -50,8 +49,10 @@ public class InitialStockPanel_new extends JPanel{
 	private JLabel completeLabel;
 	private JButton InfoOKButton;
 	private JButton cancelButton;
-	private JButton next;
-	private JButton previous;
+//	private JButton next;
+	private JLabel next;
+//	private JButton previous;
+	private JLabel previous;
 
 	private JCheckBox all;
 
@@ -72,14 +73,21 @@ public class InitialStockPanel_new extends JPanel{
 	private JTable repertoryTable;
 	private JTable accountTable;
 	
-	private ArrayList<JCheckBox> selectedUser;
-	private ArrayList<JCheckBox> selectedOrganization;
-	private ArrayList<JCheckBox> selectedVehicle;
-	private ArrayList<JCheckBox> selectedRepertory;
-	private ArrayList<JCheckBox> selectedAccount;
-
+//	private ArrayList<JCheckBox> selectedUser;
+//	private ArrayList<JCheckBox> selectedOrganization;
+//	private ArrayList<JCheckBox> selectedVehicle;
+//	private ArrayList<JCheckBox> selectedRepertory;
+//	private ArrayList<JCheckBox> selectedAccount;
+	
+	private ArrayList<JCheckBox> selected;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	
+	int count1=0;
+	int count2=0;
+	int count3=0;
+	int count4=0;
+	int count5=0;
 	
 	ListSelectionModel selectionModel;
 	private DefaultTableCellRenderer tcr;
@@ -130,8 +138,8 @@ public class InitialStockPanel_new extends JPanel{
 		completeLabel  = new JLabel("建账完成");
 		InfoOKButton = new JButton("确认添加");
 		cancelButton = new JButton("返回");
-		next = new JButton("上一页");
-		previous = new JButton("下一页");
+		next = new JLabel(">");
+		previous = new JLabel("<");
 		all = new JCheckBox("全选");
 		function = new JLabel("期初建账");
 		humanInfo = new JLabel("人员信息");
@@ -140,6 +148,7 @@ public class InitialStockPanel_new extends JPanel{
 		stockInfo = new JLabel("库存信息");
 		accountInfo = new JLabel("银行账户");
 		
+		refreshUser(userController.showAllUsers());
 		um = new UserModel(user);
 		userTable = new JTable(um);
 		om = new OrganizationModel(organization);
@@ -152,25 +161,12 @@ public class InitialStockPanel_new extends JPanel{
 		accountTable =new JTable(am);
 		
 		//复选框的初始化
-		selectedUser=new ArrayList<JCheckBox>();
+
+		selected = new ArrayList<JCheckBox>();
 		for(int i=0;i<8;i++){
-			selectedUser.add(new JCheckBox());
-		}
-		selectedOrganization=new ArrayList<JCheckBox>();
-		for(int i=0;i<8;i++){
-			selectedOrganization.add(new JCheckBox());
-		}
-		selectedVehicle=new ArrayList<JCheckBox>();
-		for(int i=0;i<8;i++){
-			selectedVehicle.add(new JCheckBox());
-		}
-		selectedRepertory=new ArrayList<JCheckBox>();
-		for(int i=0;i<8;i++){
-			selectedRepertory.add(new JCheckBox());
-		}
-		selectedAccount=new ArrayList<JCheckBox>();
-		for(int i=0;i<8;i++){
-			selectedAccount.add(new JCheckBox());
+			JCheckBox box = new JCheckBox();
+			selected.add(box);
+			add(box);
 		}
 		
 		addListener();
@@ -305,133 +301,197 @@ public class InitialStockPanel_new extends JPanel{
 					}
 					else{
 					*/
+					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
+					if(vos==null){
 						controller.initInfo(initVO,getDate.getdate());
 						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
 								JOptionPane.CLOSED_OPTION);
-//					}
+					}
+					else{
+					boolean isExsit=false;
+					for(InitInfoVO v:vos){
+						if(v.time.equals(getDate.getdate())){
+							isExsit=true;
+						}
+					}
+					if(isExsit==true){
+						JOptionPane.showMessageDialog(null,"建账失败（该日期总账已存在）！", "提示",
+								JOptionPane.WARNING_MESSAGE);
+					}
+					else{
+						controller.initInfo(initVO,getDate.getdate());
+						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
+								JOptionPane.CLOSED_OPTION);
+					}
+					}
 				}
 			});
 
 			//下一页
-			next.addActionListener(new ActionListener() {
-
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO 自动生成的方法存根
-				}
-			});
+			 next.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						nextui();
+					}
+				});
 
 			//上一页
-			previous.addActionListener(new ActionListener() {
-
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO 自动生成的方法存根
-				}
-			});
+			 previous.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e){
+						previousui();
+					}
+				});
 		 
 	 }
 	
 	//选中添加信息的具体方法
 	public void addInfo(JTable table){
-		int row=table.getSelectedRow();
-		if(row==-1){
-			JOptionPane.showMessageDialog(null, "请选择需要添加的信息！", "提示",
-					JOptionPane.CLOSED_OPTION);
-		}
-		else{
+//		int row=table.getSelectedRow();
+//		if(row==-1){
+//			JOptionPane.showMessageDialog(null, "请选择需要添加的信息！", "提示",
+//					JOptionPane.CLOSED_OPTION);
+//		}
+//		else{
 			//当前表格为人员表格
 			if(table.equals(userTable)){
-				String ID=um.getValueAt(row, 1);
-				if(ID==null){
-					JOptionPane.showMessageDialog(null,"请选择需要添加的人员！", "提示",
-							JOptionPane.CLOSED_OPTION);
+				int n=0;
+				for(JCheckBox b:selected){
+					//选中
+					if(b.isSelected()){
+						b.setSelected(false);
+						UserVO vo = userController.showAllUsers().get(count1*8+n);
+						init_user.add(vo);
+					}	
+					n++;
 				}
-				else{
-				UserVO vo=userController.findUser(ID);
-				init_user.add(vo);
 				JOptionPane.showMessageDialog(null, "添加人员成功！", "提示",
 						JOptionPane.CLOSED_OPTION);
-				um.removeRow(row);
-				userTable.repaint();
-			
-				}
 			}
 			
 			//当前表格为机构表格
 			else if(table.equals(organizationTable)){
-				String ID=om.getValueAt(row, 1);
-				if(ID==null){
-					JOptionPane.showMessageDialog(null,"请选择需要添加的机构！", "提示",
-							JOptionPane.CLOSED_OPTION);
-				}
-				else{
-					OrganizationVO vo=organizationController.findOrganization(ID);
-					init_organization.add(vo);
+//				String ID=om.getValueAt(row, 1);
+//				if(ID==null){
+//					JOptionPane.showMessageDialog(null,"请选择需要添加的机构！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//				}
+//				else{
+//					OrganizationVO vo=organizationController.findOrganization(ID);
+//					init_organization.add(vo);
+//					JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//					om.removeRow(row);
+//					organizationTable.repaint();
+//				}
+					int n=0;
+					for(JCheckBox b:selected){
+						//选中
+						if(b.isSelected()){
+							b.setSelected(false);
+							OrganizationVO vo = organizationController.showAllOrganizations().get(count2*8+n);
+							init_organization.add(vo);
+						}	
+						n++;
+					}
 					JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
-					om.removeRow(row);
-					organizationTable.repaint();
-				}
 				}
 			
 			//当前表格为车辆表格
 			else if(table.equals(vehicleTable)){
-				String ID=vm.getValueAt(row, 0);
-				if(ID==null){
-					JOptionPane.showMessageDialog(null, "请选择需要添加的车辆！", "提示",
-							JOptionPane.CLOSED_OPTION);
-					}
-				else{
-					ArrayList<VehicleVO> all=vehicleController.getVehicleInfo();
-					for(VehicleVO v:all){
-						if(v.ID.equals(ID)){
-							init_vehicle.add(v);
-							JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
-									JOptionPane.CLOSED_OPTION);
-							vm.removeRow(row);
-							vehicleTable.repaint();
-						}
-					}
+//				String ID=vm.getValueAt(row, 0);
+//				if(ID==null){
+//					JOptionPane.showMessageDialog(null, "请选择需要添加的车辆！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//					}
+//				else{
+//					ArrayList<VehicleVO> all=vehicleController.getVehicleInfo();
+//					for(VehicleVO v:all){
+//						if(v.ID.equals(ID)){
+//							init_vehicle.add(v);
+//							JOptionPane.showMessageDialog(null, "添加机构成功！", "提示",
+//									JOptionPane.CLOSED_OPTION);
+//							vm.removeRow(row);
+//							vehicleTable.repaint();
+//						}
+//					}
+//				}
+				int n=0;
+				for(JCheckBox b:selected){
+					//选中
+					if(b.isSelected()){
+						b.setSelected(false);
+						VehicleVO vo = vehicleController.getVehicleInfo().get(count3*8+n);
+						init_vehicle.add(vo);
+					}	
+					n++;
 				}
+				JOptionPane.showMessageDialog(null, "添加车辆成功！", "提示",
+						JOptionPane.CLOSED_OPTION);
 			}
 			
 			//当前表格为库存表格
 			else if(table.equals(repertoryTable)){
-				String ID=rm.getValueAt(row, 0);
-				if(ID==null){
-					JOptionPane.showMessageDialog(null, "请选择需要添加的仓库！", "提示",
-							JOptionPane.CLOSED_OPTION);
+//				String ID=rm.getValueAt(row, 0);
+//				if(ID==null){
+//					JOptionPane.showMessageDialog(null, "请选择需要添加的仓库！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//				}
+//				else{
+//					ArrayList<RepertoryVO> all=repertoryController.showAllRepertorys();
+//					for(RepertoryVO v:all){
+//						if(v.getRepertoryID().equals(ID)){
+//							init_repertory.add(v);
+//							JOptionPane.showMessageDialog(null, "添加仓库成功！", "提示",
+//									JOptionPane.CLOSED_OPTION);
+//							rm.removeRow(row);
+//							repertoryTable.repaint();
+//						}
+//					}
+//				}
+				int n=0;
+				for(JCheckBox b:selected){
+					//选中
+					if(b.isSelected()){
+						b.setSelected(false);
+						RepertoryVO vo = repertoryController.showAllRepertorys().get(count4*8+n);
+						init_repertory.add(vo);
+					}	
+					n++;
 				}
-				else{
-					ArrayList<RepertoryVO> all=repertoryController.showAllRepertorys();
-					for(RepertoryVO v:all){
-						if(v.getRepertoryID().equals(ID)){
-							init_repertory.add(v);
-							JOptionPane.showMessageDialog(null, "添加仓库成功！", "提示",
-									JOptionPane.CLOSED_OPTION);
-							rm.removeRow(row);
-							repertoryTable.repaint();
-						}
-					}
-				}
+				JOptionPane.showMessageDialog(null, "添加库存信息成功！", "提示",
+						JOptionPane.CLOSED_OPTION);
 			}
 			
 			//当前表格为账户表格
 			else{
-				String name=am.getValueAt(row, 0);
-				if(name==null){
-					JOptionPane.showMessageDialog(null, "请选择需要添加的账户！", "提示",
-							JOptionPane.CLOSED_OPTION);
+//				String name=am.getValueAt(row, 0);
+//				if(name==null){
+//					JOptionPane.showMessageDialog(null, "请选择需要添加的账户！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//				}
+//				else{
+//					AccountVO  vo=accountController.findbyName(name);
+//					init_account.add(vo);
+//					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
+//							JOptionPane.CLOSED_OPTION);
+//					am.removeRow(row);
+//					accountTable.repaint();
+//				}
+//			}
+				int n=0;
+				for(JCheckBox b:selected){
+					//选中
+					if(b.isSelected()){
+						b.setSelected(false);
+						AccountVO vo = accountController.showAll().get(count5*8+n);
+						init_account.add(vo);
+					}	
+					n++;
 				}
-				else{
-					AccountVO  vo=accountController.findbyName(name);
-					init_account.add(vo);
-					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
-							JOptionPane.CLOSED_OPTION);
-					am.removeRow(row);
-					accountTable.repaint();
-				}
-			}
+				JOptionPane.showMessageDialog(null, "添加库存信息成功！", "提示",
+						JOptionPane.CLOSED_OPTION);
 			
+//			
 			}
 		}
 	
@@ -454,6 +514,7 @@ public class InitialStockPanel_new extends JPanel{
 	}
 	
 	public void setCmpLocation(JTable table){
+		
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		humanInfo.setBounds(PANEL_WIDTH* 6/ 60, PANEL_HEIGHT * 5 / 32,
@@ -476,6 +537,22 @@ public class InitialStockPanel_new extends JPanel{
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 		previous.setBounds(PANEL_WIDTH *19/ 40, PANEL_HEIGHT * 42 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
+		selected.get(0).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 9 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(1).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 11 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(2).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 13 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(3).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 15 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(4).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 17 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(5).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 19 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(6).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 21 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		selected.get(7).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 23 / 32,
+				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 	
@@ -630,19 +707,209 @@ public class InitialStockPanel_new extends JPanel{
 
 	}
 
+	/**
+	 * 向上翻页
+	 * */
 	public void previousui() {
-
+		if(currentTable == userTable){
+			count1--;
+			if(getUserOnThisPage(count1)!=null&&count1>=0){
+				int total=user.size();
+				ArrayList<UserVO> temp=getUserOnThisPage(count1);
+				refreshUser(temp);
+				um=new UserModel(user);
+				for(int i=0;i<total;i++){
+					um.removeRow(0);
+				}
+				userTable.repaint();
+			}
+			else{
+				count1++;
+				return;
+			}
+		}
+		else if(currentTable == organizationTable){
+			count2--;
+			if(getOrganizationOnThisPage(count2)!=null&&count2>=0){
+				int total=organization.size();
+				ArrayList<OrganizationVO> temp=getOrganizationOnThisPage(count2);
+				refreshOrganization(temp);
+				om=new OrganizationModel(organization);
+				for(int i=0;i<total;i++){
+					om.removeRow(0);
+				}
+				organizationTable.repaint();
+			}
+			else{
+				count2++;
+				return;
+			}
+		}
+		else if(currentTable == vehicleTable){
+			count3--;
+			if(getVehicleOnThisPage(count3)!=null&&count3>=0){
+				int total=vehicle.size();
+				ArrayList<VehicleVO> temp=getVehicleOnThisPage(count3);
+				refreshVehicle(temp);
+				vm=new VehicleModel(vehicle);
+				for(int i=0;i<total;i++){
+					vm.removeRow(0);
+				}
+				vehicleTable.repaint();
+			}
+			else{
+				count3++;
+				return;
+			}
+		}
+		else if(currentTable == repertoryTable){
+			count4--;
+			if(getRepertoryOnThisPage(count4)!=null&&count4>=0){
+				int total=repertory.size();
+				ArrayList<RepertoryVO> temp=getRepertoryOnThisPage(count4);
+				refreshRepertory(temp);
+				rm=new RepertoryModel(repertory);
+				for(int i=0;i<total;i++){
+					rm.removeRow(0);
+				}
+				repertoryTable.repaint();
+			}
+			else{
+				count4++;
+				return;
+			}
+		}
+		else if(currentTable == accountTable){
+			count5--;
+			if(getAccountOnThisPage(count5)!=null&&count5>=0){
+				
+				int total=account.size();
+				ArrayList<AccountVO> temp=getAccountOnThisPage(count5);
+				refreshAccount(temp);
+				am=new AccountModel(account);
+				for(int i=0;i<total;i++){
+					am.removeRow(0);
+				}
+				accountTable.repaint();
+			}
+			else{
+				count5++;
+				return;
+			}
+		}
 	}
 
+	/**
+	 * 向下翻页
+	 * */
 	public void nextui() {
-
+		if(currentTable == userTable){
+			count1++;
+			if(getUserOnThisPage(count1)!=null){
+				for(JCheckBox b:selected){
+					b.setSelected(false);
+				}
+				int total=user.size();
+				ArrayList<UserVO> temp=getUserOnThisPage(count1);
+				refreshUser(temp);
+				um=new UserModel(user);
+				for(int i=0;i<total;i++){
+					um.removeRow(0);
+				}
+				userTable.repaint();
+			}
+			else{
+				count1--;
+				return;
+			}
+		}
+		else if(currentTable == organizationTable){
+			count2++;
+			if(getOrganizationOnThisPage(count2)!=null){
+				for(JCheckBox b:selected){
+					b.setSelected(false);
+				}
+				int total=organization.size();
+				ArrayList<OrganizationVO> temp=getOrganizationOnThisPage(count2);
+				refreshOrganization(temp);
+				om=new OrganizationModel(organization);
+				for(int i=0;i<total;i++){
+					om.removeRow(0);
+				}
+				organizationTable.repaint();
+			}
+			else{
+				count2--;
+				return;
+			}
+		}
+		else if(currentTable == vehicleTable){
+			count3++;
+			if(getVehicleOnThisPage(count3)!=null){
+				for(JCheckBox b:selected){
+					b.setSelected(false);
+				}
+				int total=vehicle.size();
+				ArrayList<VehicleVO> temp=getVehicleOnThisPage(count3);
+				refreshVehicle(temp);
+				vm=new VehicleModel(vehicle);
+				for(int i=0;i<total;i++){
+					vm.removeRow(0);
+				}
+				vehicleTable.repaint();
+			}
+			else{
+				count3--;
+				return;
+			}
+		}
+		else if(currentTable == repertoryTable){
+			count4++;
+			if(getRepertoryOnThisPage(count4)!=null){
+				for(JCheckBox b:selected){
+					b.setSelected(false);
+				}
+				int total=repertory.size();
+				ArrayList<RepertoryVO> temp=getRepertoryOnThisPage(count4);
+				refreshRepertory(temp);
+				rm=new RepertoryModel(repertory);
+				for(int i=0;i<total;i++){
+					rm.removeRow(0);
+				}
+				repertoryTable.repaint();
+			}
+			else{
+				count4--;
+				return;
+			}
+		}
+		else if(currentTable == accountTable){
+			count5++;
+			if(getAccountOnThisPage(count5)!=null){
+				for(JCheckBox b:selected){
+					b.setSelected(false);
+				}
+				int total=account.size();
+				ArrayList<AccountVO> temp=getAccountOnThisPage(count5);
+				refreshAccount(temp);
+				am=new AccountModel(account);
+				for(int i=0;i<total;i++){
+					am.removeRow(0);
+				}
+				accountTable.repaint();
+			}
+			else{
+				count5--;
+				return;
+			}
+		}
 	}
 	
 	
 	/**
 	 * 人员表格原型
 	 * */
-	class UserModel extends AbstractTableModel{
+	public class UserModel extends AbstractTableModel{
 
 		private static final long serialVersionUID = 1L;
 
@@ -670,6 +937,7 @@ public class InitialStockPanel_new extends JPanel{
 		
 		public String getValueAt(int row, int col) {
 			if(row>user.size()-1){
+				selected.get(row).setVisible(false);
 				return null;
 			}
 			return user.get(row).get(col);
@@ -720,6 +988,7 @@ public class InitialStockPanel_new extends JPanel{
 			
 			public String getValueAt(int row, int col) {
 				if(row>organization.size()-1){
+					selected.get(row).setVisible(false);
 					return null;
 				}
 				return organization.get(row).get(col);
@@ -767,6 +1036,7 @@ public class InitialStockPanel_new extends JPanel{
 			
 			public String getValueAt(int row, int col) {
 				if(row>vehicle.size()-1){
+					selected.get(row).setVisible(false);
 					return null;
 				}
 				return vehicle.get(row).get(col);
@@ -814,6 +1084,7 @@ public class InitialStockPanel_new extends JPanel{
 			
 			public String getValueAt(int row, int col) {
 				if(row>repertory.size()-1){
+					selected.get(row).setVisible(false);
 					return null;
 				}
 				return repertory.get(row).get(col);
@@ -859,8 +1130,10 @@ class AccountModel extends AbstractTableModel{
 		
 		public String getValueAt(int row, int col) {
 			if(row>account.size()-1){
+				selected.get(row).setVisible(false);
 				return null;
 			}
+			selected.get(row).setVisible(true);
 			return account.get(row).get(col);
 		}
 
@@ -889,12 +1162,12 @@ class AccountModel extends AbstractTableModel{
      public void refreshUser(ArrayList<UserVO> vos){
     	 for(UserVO v:vos){
  			ArrayList<String> lineInfo=new ArrayList<String>();
- 			lineInfo.add(v.getName());
- 			lineInfo.add(v.getID());
- 			lineInfo.add(profession(v.getProfession()));
- 			lineInfo.add(v.getOrganization());
- 			lineInfo.add(authority(v.getAuthority()));
- 			lineInfo.add(v.getGrades()+"");
+ 			lineInfo.add(v.userName);
+ 			lineInfo.add(v.userID);
+ 			lineInfo.add(profession(v.profession));
+ 			lineInfo.add(v.organization);
+ 			lineInfo.add(authority(v.authority));
+ 			lineInfo.add(v.grades+"");
  			user.add(lineInfo);
     	 }
    }
@@ -907,9 +1180,9 @@ class AccountModel extends AbstractTableModel{
      public void refreshOrganization(ArrayList<OrganizationVO> vos){
     	 for(OrganizationVO v:vos){
   			ArrayList<String> lineInfo=new ArrayList<String>();
-  			lineInfo.add(v.getName());
-  			lineInfo.add(v.getOrganizationID());
-  			lineInfo.add(category(v.getCategory()));
+  			lineInfo.add(v.name);
+  			lineInfo.add(v.organizationID);
+  			lineInfo.add(category(v.category));
   			organization.add(lineInfo);
     	 }
      }
@@ -922,9 +1195,9 @@ class AccountModel extends AbstractTableModel{
     	 for(VehicleVO v:vos){
     		 ArrayList<String> lineInfo = new ArrayList<String>();
     		 lineInfo.add(v.ID);
-    		 lineInfo.add(v.local.getOrganizationID());
+    		 lineInfo.add(v.local.organizationID);
     		 lineInfo.add(v.driver.ID);
-    		 lineInfo.add(v.destination.getOrganizationID());
+    		 lineInfo.add(v.destination.organizationID);
     		 vehicle.add(lineInfo);
     	 }
      }
@@ -935,11 +1208,11 @@ class AccountModel extends AbstractTableModel{
      public void refreshRepertory(ArrayList<RepertoryVO> vos){
     	 for(RepertoryVO v:vos){
     		 ArrayList<String> lineInfo = new ArrayList<String>();
-    		 lineInfo.add(v.getRepertoryID());
-    		 lineInfo.add(v.getOwnerID());
-    		 lineInfo.add(v.getMaxRow()+"");
-    		 lineInfo.add(v.getMaxShelf()+"");
-    		 lineInfo.add(v.getMaxDigit()+"");
+    		 lineInfo.add(v.repertoryID);
+    		 lineInfo.add(v.ownerID);
+    		 lineInfo.add(v.maxRow+"");
+    		 lineInfo.add(v.maxShelf+"");
+    		 lineInfo.add(v.maxDigit+"");
     		 repertory.add(lineInfo);
     	 }
      }
@@ -950,8 +1223,8 @@ class AccountModel extends AbstractTableModel{
      public void refreshAccount(ArrayList<AccountVO> vos){
     	 for(AccountVO v:vos){
     		 ArrayList<String> lineInfo = new ArrayList<String>();
-    		 lineInfo.add(v.getName());
-    		 lineInfo.add(v.getMoney()+"");
+    		 lineInfo.add(v.name);
+    		 lineInfo.add(v.money+"");
     		 account.add(lineInfo);
     	 }
      }
@@ -976,6 +1249,94 @@ class AccountModel extends AbstractTableModel{
     	 String[] category = {"营业厅","中转中心"};
     	 return category[n];
      }
+     
+     
+     /*
+      * 为了翻页而写的若干个方法
+      * 统计当前count页上的数据
+      * **/
+     public ArrayList<UserVO> getUserOnThisPage(int num){
+    	 ArrayList<UserVO> vos = userController.showAllUsers();
+    	 ArrayList<UserVO> userTemp = new ArrayList<UserVO>();
+    	 if(vos.size()<=num*8||num<0){
+    		 return null;
+    	 }
+    	 else{
+    	 for(int i=8*num;i<=8*num+7;i++){
+    		 if(vos.size()>i){
+    		 userTemp.add(vos.get(i));
+    		 }
+    	 }
+    	 return userTemp;
+     }
+     }
+    	 
+    	 public ArrayList<OrganizationVO> getOrganizationOnThisPage(int num){
+        	 ArrayList<OrganizationVO> vos = organizationController.showAllOrganizations();
+        	 ArrayList<OrganizationVO> organizationTemp = new ArrayList<OrganizationVO>();
+        	 if(vos.size()<=num*8||num<0){
+        		 return null;
+        	 }
+        	 else{
+        	 for(int i=8*num;i<=8*num+7;i++){
+        		 if(vos.size()>i){
+        			 organizationTemp.add(vos.get(i));
+        		 }
+        	 }
+        	 return organizationTemp;
+         }
+    	 }
+    	 
+    	 public ArrayList<VehicleVO> getVehicleOnThisPage(int num){
+        	 ArrayList<VehicleVO> vos = vehicleController.getVehicleInfo();
+        	 ArrayList<VehicleVO> vehicleTemp = new ArrayList<VehicleVO>();
+        	 if(vos.size()<=num*8||num<0){
+        		 return null;
+        	 }
+        	 else{
+        	 for(int i=8*num;i<=8*num+7;i++){
+        		 if(vos.size()>i){
+        			 vehicleTemp.add(vos.get(i));
+        		 }
+        	 }
+        	 return vehicleTemp;
+         }
+    	 }
+     
+        	 public ArrayList<RepertoryVO> getRepertoryOnThisPage(int num){
+            	 ArrayList<RepertoryVO> vos = repertoryController.showAllRepertorys();
+            	 ArrayList<RepertoryVO> repertoryTemp = new ArrayList<RepertoryVO>();
+            	 if(vos.size()<=num*8||num<0){
+            		 return null;
+            	 }
+            	 else{
+            	 for(int i=8*num;i<=8*num+7;i++){
+            		 if(vos.size()>i){
+            			 repertoryTemp.add(vos.get(i));
+            		 }
+            	 }
+            	 return repertoryTemp;
+             }
+        	 }
+        	 
+        	 public ArrayList<AccountVO> getAccountOnThisPage(int num){
+            	 ArrayList<AccountVO> vos = accountController.showAll();
+            	 ArrayList<AccountVO> accountTemp = new ArrayList<AccountVO>();
+            	 if(vos.size()<=num*8||num<0){
+            		 return null;
+            	 }
+            	 else{
+            	 for(int i=8*num;i<=8*num+7;i++){
+            		 if(vos.size()>i){
+            			 accountTemp.add(vos.get(i));
+            		 }
+            	 }
+            	 return accountTemp;
+             }
+        	 }
+        	 
+        	
+     
 	/*public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 		InitialStockBLController controller = new InitialStockBLController();
 		AccountBLController accountBLController =new AccountBLController();

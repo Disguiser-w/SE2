@@ -54,4 +54,9 @@ public class PaymentReceiptBLController implements PaymentReceiptBLService{
 		return paymentReceiptBL.getUnapprovedPaymentReceipt();
 	}
 
+	public static void main(String[] args){
+		PaymentReceiptBLController controller = new PaymentReceiptBLController();
+		ArrayList<PaymentReceiptVO> vos = controller.getAllPaymentReceipt();
+		System.out.println(vos.size());
+	}
 }

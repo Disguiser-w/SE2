@@ -43,8 +43,10 @@ public class BusinessStateReceiptPanel extends JPanel {
 	private JButton dateOKButton;
 	private JButton printButton;
 	private JButton sendButton;
-	private JButton next;
-	private JButton previous;
+//	private JButton next;
+	private JLabel next;
+//	private JButton previous;
+	private JLabel previous;
 
 	private JLabel function;
 	private JLabel dateRange;
@@ -60,6 +62,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 	public BusinessStatementReceiptBLController controller;
 	public CollectionReceiptBLController collectionController;
 	public PaymentReceiptBLController paymentController;
+	
+	private int count=0;
 
 //	private LocationHelper helper;
 
@@ -74,8 +78,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 		dateOKButton = new JButton("ok");
 		printButton = new JButton("print");
 		sendButton = new JButton("send");
-		next = new JButton("next");
-		previous = new JButton("previous");
+		next = new JLabel(">");
+		previous = new JLabel("<");
 
 		function = new JLabel("经营情况表");
 		dateRange = new JLabel("日期范围");
@@ -136,21 +140,21 @@ public class BusinessStateReceiptPanel extends JPanel {
 			}
 		});
 
-		next.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				nextui();
-			}
-		});
+		//下一页
+		 next.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					nextui();
+				}
+			});
 
-		previous.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				previousui();
-			}
-		});
+		//上一页
+		 previous.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e){
+					previousui();
+				}
+			});
+	 
 
 		setLayout(null);
 
@@ -194,8 +198,8 @@ public class BusinessStateReceiptPanel extends JPanel {
 		dateOKButton.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		printButton.setBounds((int)(width * 19.54719387755102/25),(int)(height * 0.43052837573385516/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.5264187866927592/20));
 		sendButton.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
-		next.setBounds((int)(width * 21.237244897959183/25),(int)(height * 18.238747553816047/20),(int)(width *  1.0841836734693877 /25),(int)(height *  1.2915851272015655/20));
-		previous.setBounds((int)(width * 22.5765306122449/25),(int)(height * 18.199608610567516/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2915851272015655/20));
+		previous.setBounds((int)(width * 21.237244897959183/25),(int)(height * 18.238747553816047/20),(int)(width *  1.0841836734693877 /25),(int)(height *  1.2915851272015655/20));
+		next.setBounds((int)(width * 22.5765306122449/25),(int)(height * 18.199608610567516/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2915851272015655/20));
 		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
 		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
 		startDate_Input.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
@@ -225,7 +229,7 @@ public class BusinessStateReceiptPanel extends JPanel {
 
 
 
-		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 12);
+		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
 		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
 		// messageTable.getTableHeader().getHeight() + 4);
 
@@ -291,12 +295,30 @@ public class BusinessStateReceiptPanel extends JPanel {
 	}
 
 	public void sendui() {
+		
 
 	}
 
 	public void nextui() {
-
-	}
+		count++;
+		System.out.println(c.size());
+		if(getStringOnthisPage(count)!=null){
+			int total = c.size();
+			System.out.println(c.size());
+			ArrayList<ArrayList<String>> temp =getStringOnthisPage(count);
+			bm = new BusinessStatementModel(temp);
+			System.out.println("temp"+temp.size());
+//			for(int i=0;i<total;i++){
+//				bm.removeRow(0);
+//			}
+			table.repaint();
+		}
+		else{
+			System.out.println("here");
+			count--;
+			return;
+		}
+		}
 
 	public void previousui() {
 
@@ -317,7 +339,7 @@ class BusinessStatementModel extends AbstractTableModel{
 		public int getRowCount() {
 			// TODO Auto-generated method stub
 
-			return c.size();
+			return 9;
 		}
 
 		public int getColumnCount() {
@@ -327,6 +349,9 @@ class BusinessStatementModel extends AbstractTableModel{
 		}
 		
 		public String getValueAt(int row, int col) {
+			if(row>c.size()-1){
+				return null;
+			}
 			return c.get(row).get(col);
 		}
 
@@ -348,22 +373,38 @@ class BusinessStatementModel extends AbstractTableModel{
  public void refreshTable(ArrayList<CollectionReceiptVO> cvos,ArrayList<PaymentReceiptVO> pvos){
 	 for(CollectionReceiptVO v1:cvos){
 		ArrayList<String> lineInfo=new ArrayList<String>();
-		lineInfo.add(v1.getID());
-		lineInfo.add(v1.getDate());
-		lineInfo.add(v1.getIncome()+"");
-		lineInfo.add(v1.getUserID());
+		lineInfo.add(v1.ID);
+		lineInfo.add(v1.date);
+		lineInfo.add(v1.totalMoney+"");
+		lineInfo.add(v1.userID);
 		c.add(lineInfo);
 	 }
 	 for(PaymentReceiptVO v2:pvos){
 			ArrayList<String> lineInfo=new ArrayList<String>();
-			lineInfo.add(v2.getID());
-			lineInfo.add(v2.getDate());
-			lineInfo.add(v2.getCost()+"");
-			lineInfo.add(v2.getUserID());
+			lineInfo.add(v2.ID);
+			lineInfo.add(v2.date);
+			lineInfo.add(v2.cost+"");
+			lineInfo.add(v2.userID);
 			c.add(lineInfo);
 		 }
  }
  
+ public ArrayList<ArrayList<String>>  getStringOnthisPage(int num){
+	 ArrayList<ArrayList<String>> all = c;
+	 ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+	 if(all.size()<=9*num||num<0){
+		 return null;
+	 }
+	 else{
+		 for(int i =9*num;i<=9*num+8;i++){
+			 if(all.size()>i){
+				 temp.add(all.get(i));
+			 }
+		 }
+	 }
+	 return temp;
+ }
+  
 
 
 //	public static void main(String[] args) {

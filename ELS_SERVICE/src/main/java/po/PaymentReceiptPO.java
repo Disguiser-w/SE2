@@ -6,10 +6,8 @@ import type.ReceiptState;
 import type.ReceiptType;
 
 public class PaymentReceiptPO extends ReceiptPO implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 382688175146232382L;
 //	//条目
 //	String clause;
 	//付款金额

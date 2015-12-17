@@ -82,7 +82,7 @@ public class AccountBL {
 	public int modifyAccount(AccountVO vo,String name) {
 		// TODO Auto-generated method stub
 		try {
-			AccountPO po=accountData.findbyName(vo.getName());
+			AccountPO po=accountData.findbyName(vo.name);
 			if(po==null){
 				System.out.println("修改账户失败！");
 				return 1;

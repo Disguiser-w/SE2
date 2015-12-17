@@ -33,8 +33,8 @@ public class InitialStockBLController implements InitialStockBLService{
 		InitialStockBLController controller = new InitialStockBLController();
 		ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 		System.out.println(vos.size());
-		System.out.println(vos.get(0).getUserVOs().get(0).getName());
-		System.out.println(vos.get(0).getTime());
+		System.out.println(vos.get(0).userVOs);
+		System.out.println(vos.get(0).time);
 	}
 
 }

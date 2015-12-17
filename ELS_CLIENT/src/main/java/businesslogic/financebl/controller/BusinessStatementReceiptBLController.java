@@ -35,10 +35,10 @@ public class BusinessStatementReceiptBLController implements BusinessstatementRe
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
 		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
 		for(CollectionReceiptVO v:cvos){
-			System.out.println(v.getID());
+			System.out.println(v.ID);
 		}
 		for(PaymentReceiptVO v2:pvos){
-			System.out.println(v2.getID()+" "+v2.getUserID()+" "+v2.getDate()+" "+v2.getCost());
+			System.out.println(v2.ID+" "+v2.userID+" "+v2.date+" "+v2.cost);
 		}
 	}
 

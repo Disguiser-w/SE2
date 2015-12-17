@@ -17,6 +17,10 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import type.ReceiptState;
+import type.ReceiptType;
+import vo.PaymentReceiptVO;
+import vo.UserVO;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 
 public class PaymentReceiptPanel extends JPanel {
@@ -54,12 +58,13 @@ public class PaymentReceiptPanel extends JPanel {
 
 	public PaymentReceiptBLController controller;
 	public FinanceFrame financeFrame;
+	public UserVO user;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent) {
+	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent,UserVO user) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		
+		this.user = user;
 		dateChooseButton = new JButton("日期");
 		dateOKButton = new JButton("确认");
 		cancelButton =new JButton("取消");
@@ -81,8 +86,8 @@ public class PaymentReceiptPanel extends JPanel {
 		pm=new PaymentModel(c);
 		//新建table
 		table=new JTable(pm);
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		add(table.getTableHeader());
 		add(table);
@@ -265,7 +270,10 @@ public class PaymentReceiptPanel extends JPanel {
 	}
 
 	public void ok() {
-
+		String time =date_Input.getText();
+		PaymentReceiptVO vo = new PaymentReceiptVO(controller.getPaymentReceiptListID(), user.userID, ReceiptType.PAYMENTRECEIPT,
+				ReceiptState.DRAFT, controller.getRent(time), controller.getFare(time), controller.getSalary(time),time,"总账", user.userName);
+		controller.creatPaymentReceipt(vo);
 	}
 	
 	public void cancelui(){

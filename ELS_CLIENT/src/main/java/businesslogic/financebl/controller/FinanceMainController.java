@@ -125,9 +125,9 @@ public class FinanceMainController {
 				//初始化界面
 				user=ManageMainController.userPOToVO(userData.findUser(financeID));
 				financeFrame =new FinanceFrame(user);
-				if(user.getAuthority().equals(AuthorityType.highest)){
+				if(user.authority.equals(AuthorityType.highest)){
 				financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController,financeFrame));
-				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));
+				financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame,user));
 				financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 				financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
 				financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
@@ -136,7 +136,7 @@ public class FinanceMainController {
 				financeFrame.showFrame();
 				}
 				else{
-					financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame));
+					financeFrame.addFuncLabel(new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame,user));
 					financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController,financeFrame));
 					financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController));
 					financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController,userController,organizationController,
@@ -187,8 +187,8 @@ public class FinanceMainController {
 	 * Account单个vo转化为po
 	 * */
 	public static AccountPO avoToPO(AccountVO vo){
-		String name=vo.getName();
-		double money=vo.getMoney();
+		String name=vo.name;
+		double money=vo.money;
 		AccountPO po=new AccountPO(name, money);
 		return po;
 	}
@@ -245,11 +245,11 @@ public class FinanceMainController {
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs=new ArrayList<CollectionReceiptPO>();
 		ArrayList<PaymentReceiptPO> paymentReceiptPOs=new ArrayList<PaymentReceiptPO>();
 		for(CollectionReceiptVO v1:collectionReceiptVOs){
-			CollectionReceiptPO po=new CollectionReceiptPO(v1.getID()	,v1.getUserID(),v1.getType(), v1.getState(), v1.getIncome(),v1.getDate(),v1.getAccount());
+			CollectionReceiptPO po=new CollectionReceiptPO(v1.ID,v1.userID,v1.type, v1.state, v1.totalMoney,v1.date,v1.account);
 			collectionReceiptPOs.add(po);
 		}
 		for(PaymentReceiptVO v2:paymentReceiptVOs){
-			PaymentReceiptPO po=new PaymentReceiptPO(v2.getID(), v2.getUserID(),v2.getType(), v2.getState(), v2.getRent(), v2.getFare(),v2.getSalary(), v2.getDate(), v2.getAccount(), v2.getName());
+			PaymentReceiptPO po=new PaymentReceiptPO(v2.ID, v2.userID,v2.type, v2.state, v2.rent, v2.fare,v2.salary, v2.date, v2.account, v2.name);
 			paymentReceiptPOs.add(po);
 		}
 		BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(vo.beginTime, vo.endTime, collectionReceiptPOs, paymentReceiptPOs);
@@ -261,7 +261,7 @@ public class FinanceMainController {
 	 * CollectionVO to PO
 	 * */
 	public static CollectionReceiptPO cvoToPO(CollectionReceiptVO vo){
-		CollectionReceiptPO collectionReceiptPO=new CollectionReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(), vo.getIncome(), vo.getDate(), vo.getAccount());
+		CollectionReceiptPO collectionReceiptPO=new CollectionReceiptPO(vo.ID, vo.userID, vo.type, vo.state, vo.totalMoney, vo.date, vo.account);
 		return collectionReceiptPO;
 	}
 	/**
@@ -337,7 +337,7 @@ public class FinanceMainController {
 	 * */
 	public static CostIncomeReceiptPO voToPO(CostIncomeReceiptVO vo) {
 		// TODO Auto-generated method stub
-		CostIncomeReceiptPO po=new CostIncomeReceiptPO(vo.getID(),vo.getUserID(),ReceiptType.COSTINCOMERECEPTION,vo.getState(),vo.getCost(),vo.getIncome(), vo.getProfit());
+		CostIncomeReceiptPO po=new CostIncomeReceiptPO(vo.ID,vo.userID,ReceiptType.COSTINCOMERECEPTION,vo.state,vo.cost,vo.income, vo.profit);
 		return po;
 	}
 	
@@ -457,7 +457,7 @@ public class FinanceMainController {
 			return null;
 		}
 		//-----------------------------------------需要的参数------------------------------------------------------------
-		ArrayList<UserVO> userVOs=vo.getUserVOs();
+		ArrayList<UserVO> userVOs=vo.userVOs;
 		ArrayList<UserPO> userPOs;
 		if(userVOs==null){
 			userPOs=null;
@@ -465,13 +465,13 @@ public class FinanceMainController {
 		else{
 			userPOs=new ArrayList<UserPO>();
 			for(UserVO v:userVOs){
-				UserPO po=new UserPO(v.getName(), v.getID(), v.getProfession(), v.getOrganization(), v.getSalaryPlan(), v.getAuthority(), v.getGrades());
+				UserPO po=new UserPO(v.userName, v.userID, v.profession, v.organization, v.salaryPlan, v.authority, v.grades);
 				userPOs.add(po);
 			}
 		}
 		
 		
-		ArrayList<OrganizationVO>organizationVOs=vo.getOrganizationVOs();
+		ArrayList<OrganizationVO>organizationVOs=vo.organizationVOs;
 		ArrayList<OrganizationPO> organizationPOs;
 		if(organizationVOs==null){
 			organizationPOs=null;
@@ -479,12 +479,12 @@ public class FinanceMainController {
 		else{
 			organizationPOs=new ArrayList<OrganizationPO>();
 			for(OrganizationVO v:organizationVOs){
-				OrganizationPO po=new OrganizationPO(v.getCategory(), v.getOrganizationID(), v.getName());
+				OrganizationPO po=new OrganizationPO(v.category, v.organizationID, v.name);
 				organizationPOs.add(po);
 			}
 		}
 		
-		ArrayList<VehicleVO> vehicleVOs=vo.getVehicleVOs();
+		ArrayList<VehicleVO> vehicleVOs=vo.vehicleVOs;
 		ArrayList<VehiclePO> vehiclePOs;
 		if(vehicleVOs==null){
 			vehiclePOs=null;
@@ -497,7 +497,7 @@ public class FinanceMainController {
 			}
 		}
 		
-		ArrayList<RepertoryVO> repertoryVOs=vo.getRepertoryVOs();
+		ArrayList<RepertoryVO> repertoryVOs=vo.repertoryVOs;
 		ArrayList<RepertoryPO> repertoryPOs;
 		if(repertoryVOs==null){
 			repertoryPOs=null;
@@ -505,12 +505,12 @@ public class FinanceMainController {
 		else{
 			repertoryPOs=new ArrayList<RepertoryPO>();
 			for(RepertoryVO v:repertoryVOs){
-				RepertoryPO po=new RepertoryPO(v.getRepertoryID(), v.getOwnerID(), v.getMaxRow(), v.getMaxShelf(), v.getMaxDigit(), v.getWarningRatio(), v.getStockNumArray());
+				RepertoryPO po=new RepertoryPO(v.repertoryID, v.ownerID, v.maxRow, v.maxShelf, v.maxDigit, v.warningRatio, v.stockNum);
 				repertoryPOs.add(po);
 			}
 		}
 		
-		ArrayList<AccountVO> accountVOs=vo.getAccountVOs();
+		ArrayList<AccountVO> accountVOs=vo.accoutVOs;
 		ArrayList<AccountPO> accountPOs;
 		if(accountVOs==null){
 			accountPOs=null;
@@ -518,7 +518,7 @@ public class FinanceMainController {
 		else{
 			accountPOs=new ArrayList<AccountPO>();
 			for(AccountVO v:accountVOs){
-				AccountPO po=new AccountPO(v.getName(), v.getMoney());
+				AccountPO po=new AccountPO(v.name, v.money);
 				accountPOs.add(po);
 				System.out.println("hhh"+accountPOs.get(0).getName());
 			}
@@ -527,7 +527,7 @@ public class FinanceMainController {
 		InitInfoPO initPO;
 	
 			try {
-				initPO = new InitInfoPO(vo.getTime(), userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+				initPO = new InitInfoPO(vo.time, userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 				return initPO;
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
@@ -565,7 +565,7 @@ public class FinanceMainController {
 			return null;
 		}
 		else{
-			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
+			ppo=new PaymentReceiptPO(vo.ID, vo.userID, vo.type, vo.state,vo.rent, vo.fare,vo.salary, vo.date, vo.account, vo.name);
 			return ppo;
 		}
 	}

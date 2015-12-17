@@ -104,7 +104,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 //		for(PaymentItemVO v:paymentItems){
 //			account.delMoney(v.getAccount(), v.getMoney());
 //		}
-		account.delMoney(vo.getAccount(), vo.getCost());
+		account.delMoney(vo.account, vo.cost);
 		System.out.println("执行成功！");
 		return 0;
 	}
