@@ -71,7 +71,7 @@ public class ManageMainController {
 			reviewReceiptController = new ReviewReceiptController();
 			
 			try{
-				manageVO = userPOToVO(userData.findUser(managerID));
+				manageVO = userPOToVO(userData.findUserByID(managerID));
 				new ManageFrame(manageVO);
 			}catch(RemoteException exception){
 				exception.printStackTrace();

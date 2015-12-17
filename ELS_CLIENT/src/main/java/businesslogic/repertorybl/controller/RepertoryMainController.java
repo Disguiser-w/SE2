@@ -29,7 +29,7 @@ public class RepertoryMainController {
 		}
 		
 		try{
-			stockManVO = userPOToVO(userData.findUser(stockManID));
+			stockManVO = userPOToVO(userData.findUserByID(stockManID));
 			new RepertoryFrame(stockManVO);
 		}catch(RemoteException exception){
 			exception.printStackTrace();
