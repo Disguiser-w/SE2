@@ -13,7 +13,5 @@ public class BusinessFrame extends UserFrame {
 		// addFuncLabel(new FinishedOrderPanel());
 		// 设置用户名和ID
 
-		setMessage(vo.ID, vo.name);
-
 	}
 }

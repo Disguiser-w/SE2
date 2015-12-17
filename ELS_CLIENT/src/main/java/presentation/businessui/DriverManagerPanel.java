@@ -32,11 +32,12 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
+import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import type.Sexuality;
 import vo.DriverVO;
 
-public class DriverManagerPanel extends JPanel {
+public class DriverManagerPanel extends OperationPanel {
 
 	private JLabel addLabel;
 	private JLabel delLabel;

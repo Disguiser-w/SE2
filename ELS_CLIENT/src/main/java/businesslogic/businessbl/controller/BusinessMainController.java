@@ -64,12 +64,12 @@ public class BusinessMainController {
 		//
 		// expressFrame.showFrame();
 		businessFrame = new BusinessFrame(businessVO);
-		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController));
-		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController));
-		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController));
-		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController));
-		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame));
-		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame));
+		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController),"装车管理");
+		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController),"货物接收");
+		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController),"派件");
+		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController),"收款汇总");
+		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame),"司机管理");
+		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame),"车辆管理");
 		businessFrame.showFrame();
 		businessFrame.setVisible(true);
 

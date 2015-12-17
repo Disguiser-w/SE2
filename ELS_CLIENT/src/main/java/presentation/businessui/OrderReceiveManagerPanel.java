@@ -15,7 +15,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -25,8 +24,9 @@ import javax.swing.table.TableColumn;
 import businesslogic.businessbl.controller.AcceptCargoController;
 import businesslogic.businessbl.controller.BusinessMainController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.OperationPanel;
 
-public class OrderReceiveManagerPanel extends JPanel {
+public class OrderReceiveManagerPanel extends OperationPanel {
 	private JLabel vehicleIDLabel;
 	private JTextField vehicleIDField;
 

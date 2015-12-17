@@ -15,7 +15,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -24,8 +23,9 @@ import javax.swing.table.TableColumn;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.GatheringController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.OperationPanel;
 
-public class ChargeCollectionPanel extends JPanel {
+public class ChargeCollectionPanel extends OperationPanel {
 	// private JLabel tablehead;
 	private JTable messageTable;
 	private JLabel totalMessageLabel;

@@ -32,12 +32,13 @@ import javax.swing.table.TableColumn;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.DriverVO;
 import vo.OrganizationVO;
 import vo.VehicleVO;
 
-public class VehicleManagerPanel extends JPanel {
+public class VehicleManagerPanel extends OperationPanel {
 
 	private JLabel addLabel;
 	private JLabel delLabel;

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -20,8 +19,9 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.businessbl.controller.EnVehicleController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.OperationPanel;
 
-public class EnVehiclePanel extends JPanel {
+public class EnVehiclePanel extends OperationPanel{
 	private JTable messageTable;
 	private JLabel nextPageLabel;
 	private JLabel previousPageLabel;

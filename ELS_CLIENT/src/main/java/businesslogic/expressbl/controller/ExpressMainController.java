@@ -46,10 +46,10 @@ public class ExpressMainController {
 		receiptOrderController = new ReceiptOrderController();
 
 		expressFrame = new ExpressFrame(expressVO);
-		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
-		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController));
-		expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
-		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController));
+		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController),"添加订单");
+		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController),"收费汇总");
+		expressFrame.addFuncLabel(new QueryPanel(logisticQuery),"订单查询");
+		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController),"订单接收");
 
 		expressFrame.showFrame();
 

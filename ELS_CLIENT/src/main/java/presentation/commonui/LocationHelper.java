@@ -1,6 +1,7 @@
 package presentation.commonui;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -72,7 +73,7 @@ public class LocationHelper {
 							remainHeight = ((JComponent) e.getSource()).getHeight();
 						}
 						if ((e.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
-							((JComponent) e.getSource()).setSize(remainWidth,remainHeight);
+							((JComponent) e.getSource()).setSize(remainWidth, remainHeight);
 						}
 					} else {
 						if (isPalMoving)
@@ -122,12 +123,12 @@ public class LocationHelper {
 	}
 
 	private int num;
-	private JComponent container;
+	private Container container;
 
 	private ArrayList<ComponentStates> components;
 	private ArrayList<String> names;
 
-	public LocationHelper(JComponent container) {
+	public LocationHelper(Container container) {
 
 		this.container = container;
 		components = new ArrayList<ComponentStates>();
