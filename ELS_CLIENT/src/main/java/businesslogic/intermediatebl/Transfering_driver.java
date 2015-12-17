@@ -29,7 +29,7 @@ public class Transfering_driver {
 				null, OrderState.TRANSFERING, null);
 		OrderVO order2 = new OrderVO("0250010000100002", null, null, null,
 				null, null, null, null, null, null, null, 0, null, null, null,
-				ExpressType.ECONOMIC, PackType.CARTONS, 0, 0, null, null, null,
+				ExpressType.FAST, PackType.CARTONS, 0, 0, null, null, null,
 				null, OrderState.TRANSFERING, null);
 		OrderVO order3 = new OrderVO("0250010000100003", null, null, null,
 				null, null, null, null, null, null, null, 0, null, null, null,
@@ -81,7 +81,7 @@ public class Transfering_driver {
 
 		try {
 			System.out.println("修改前： "
-					+ transferingReceipt.orderList.get(2).expressType
+					+ transferingReceipt.orderList.get(1).expressType
 							.toString());
 			tbl.modifyOrder(new OrderVO("0250010000100002", null, null, null,
 					null, null, null, null, null, null, null, 0, null, null,
@@ -89,7 +89,7 @@ public class Transfering_driver {
 					null, null, null, OrderState.TRANSFERING, null));
 			System.out.println("修改一个ID为00002的订单后：");
 			System.out.println("修改后： "
-					+ transferingReceipt.orderList.get(2).expressType
+					+ transferingReceipt.orderList.get(1).expressType
 							.toString());
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块

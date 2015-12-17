@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
-public class EnIntermediateReceiptVO {
+public class EnIntermediateReceiptVO extends ReceiptVO {
 	public final OrganizationVO intermediateCentre;
 
 	public final ArrayList<OrderVO> orderList;

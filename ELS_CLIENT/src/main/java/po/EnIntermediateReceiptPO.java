@@ -8,7 +8,7 @@ import java.util.Date;
 
 import type.ReceiptState;
 
-public class EnIntermediateReceiptPO implements Serializable {
+public class EnIntermediateReceiptPO extends ReceiptPO implements Serializable {
 	private OrganizationPO intermediateCentre;
 
 	private ArrayList<OrderPO> orderList;
