@@ -5,22 +5,20 @@ import type.ReceiptType;
 
 
 public class ReceiptVO {
-	// 编号
-	String ID;
-	// 用户
-	String userID;
-	// 类型
-	ReceiptType type;
-	// 状态
-	ReceiptState state;
+	public String receiptID;
+	public String userID;
+	public String createTime;
+	public ReceiptType type;
+	public ReceiptState state;
 
 	public ReceiptVO(){
 		
 	}
 	
-	public ReceiptVO(String ID, String userID, ReceiptType type,ReceiptState state) {
-		this.ID=ID;
+	public ReceiptVO(String ID, String userID, String time, ReceiptType type, ReceiptState state) {
+		this.receiptID = ID;
 		this.userID = userID;
+		this.createTime = time;
 		this.type = type;
 		this.state = state;
 	
