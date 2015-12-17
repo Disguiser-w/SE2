@@ -48,6 +48,11 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		// TODO Auto-generated method stub
 		return collectionReceiptBL.getUnapprovedCollectionReceipt();
 	}
+	
+	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return collectionReceiptBL.saveSubmittedCollectionReceiptInfo(vo);
+	}
 
 	
 	public static void main(String[] args) throws Exception{
@@ -59,4 +64,5 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 			System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
 		}
 	}
+	
 }

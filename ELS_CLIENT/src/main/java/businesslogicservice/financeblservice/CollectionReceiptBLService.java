@@ -25,7 +25,8 @@ public interface CollectionReceiptBLService {
 	public String getCollectionListID();
 	//获取未审批的合计收款单(审批单据需要)
 	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt();
-	
+	//保存审批后的结果
+	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo);
 	
 //	//获取营业厅编号
 //	public String getHallID();

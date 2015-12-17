@@ -52,6 +52,12 @@ public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {
 		return null;
 	}
 
+	@Override
+	public int saveSubmittedPaymentReceiptInfo(PaymentReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 

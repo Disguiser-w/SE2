@@ -77,6 +77,8 @@ public class PaymentReceiptBL extends ReceiptBL {
 		}
 	}
 	
+	
+	
 //	public PaymentReceiptPO pvoToPO(PaymentReceiptVO vo){
 //		PaymentReceiptPO ppo;
 //		if(vo==null){
@@ -269,6 +271,19 @@ public class PaymentReceiptBL extends ReceiptBL {
 		}
 	}
 	
+	/**
+	 * 返回总经理审批后的结果
+	 * */
+	public int saveSubmittedPaymentReceiptInfo(PaymentReceiptVO vo){
+		try {
+			return paymentData.saveSubmittedPaymentReceiptInfo(FinanceMainController.pvoToPO(vo));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取审批后的付款单信息失败");
+			return 1;
+		}
+	}
 	
 
 	public static void main(String[] args){

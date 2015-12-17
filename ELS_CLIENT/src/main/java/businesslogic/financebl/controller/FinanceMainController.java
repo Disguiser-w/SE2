@@ -118,8 +118,8 @@ public class FinanceMainController {
 					userController=new UserBL();
 					organizationController=new OrganizationController();
 						vehicleController=new VehicleManagerController();
-					/*	repertoryController=new RepertoryBL("");
-					 */
+						repertoryController=new RepertoryBL("CK-00001");
+					 
 				
 		
 				//初始化界面

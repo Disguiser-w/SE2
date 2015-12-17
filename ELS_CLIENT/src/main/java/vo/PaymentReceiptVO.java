@@ -31,7 +31,7 @@ public class PaymentReceiptVO extends ReceiptVO{
 	public ReceiptState state;
 	
 	public PaymentReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double rent,double fare,double salary,String date,String account,String name ){
-		super(ID,userID,ReceiptType.PAYMENTRECEIPT,state);
+//		super(ID,userID,ReceiptType.PAYMENTRECEIPT,state);
 		this.rent= rent;
 		this.fare=fare;
 		this.salary=salary;
