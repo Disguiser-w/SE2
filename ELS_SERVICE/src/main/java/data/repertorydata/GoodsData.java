@@ -16,7 +16,7 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	JXCFile goodsFile;
 	
 	public GoodsData() throws RemoteException{
-		goodsFile = new JXCFile("src/main/java/goods.ser");
+		goodsFile = new JXCFile("src/goods.ser");
 	}
 	
 	public int addGoods(GoodsPO goodspo) throws RemoteException{
@@ -24,8 +24,10 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
     		goodsFile.write(goodspo);
     		return 0;
     	}
-    	else 
+    	else {
+    		System.out.println("chongfule");
     		return 1;
+    		}
     }
     
     public int deleteGoods(String JJD_ID) throws RemoteException{
@@ -56,8 +58,82 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 		for(int i=0; i<objectList.size(); i++){
 			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
 			if(tempGoodsPO.getOrder_ID().equals(goodspo.getOrder_ID())){
-				objectList.add(goodspo);
-				objectList.remove(i);
+				tempGoodsPO.setEnterTime(goodspo.getLatestEnterTime());
+				tempGoodsPO.setLeaveTime(goodspo.getLatestLeaveTime());
+				tempGoodsPO.setEnterRepertoryID(goodspo.getLatestEnterRepertoryID());
+				tempGoodsPO.setLeaveRepertoryID(goodspo.getLatestLeaveTime());
+				break;
+			}
+		}
+		
+		goodsFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyGoodsEnterTime(String goodsID, String enterTime) throws RemoteException{
+    	ArrayList<Object> objectList = goodsFile.read();
+    	
+		if(objectList==null)	
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
+			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
+				tempGoodsPO.setEnterTime(enterTime);
+				break;
+			}
+		}
+		
+		goodsFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyGoodsEnterRepertoryID(String goodsID, String enterRepertoryID) throws RemoteException{
+    	ArrayList<Object> objectList = goodsFile.read();
+    	
+		if(objectList==null)	
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
+			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
+				tempGoodsPO.setEnterRepertoryID(enterRepertoryID);
+				break;
+			}
+		}
+		
+		goodsFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyGoodsLeaveTime(String goodsID, String leaveTime) throws RemoteException{
+    	ArrayList<Object> objectList = goodsFile.read();
+    	
+		if(objectList==null)	
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
+			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
+				tempGoodsPO.setLeaveTime(leaveTime);
+				break;
+			}
+		}
+		
+		goodsFile.writeM(objectList);
+		return 0;
+    }
+    
+    public int modifyGoodsLeaveRepertoryID(String goodsID, String leaveRepertoryID) throws RemoteException{
+    	ArrayList<Object> objectList = goodsFile.read();
+    	
+		if(objectList==null)	
+			return 1;  	  
+		
+		for(int i=0; i<objectList.size(); i++){
+			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
+			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
+				tempGoodsPO.setLeaveRepertoryID(leaveRepertoryID);
 				break;
 			}
 		}
@@ -103,7 +179,7 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
 	
-     /*public static void main(String[] args){
+     public static void main(String[] args){
 		GoodsData goodsData;
 		try{
 			goodsData = new GoodsData();
@@ -123,14 +199,14 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	    			}
 				}
 				
-				GoodsPO goodspo = goodsData.findGoods("20151101-00012");
+				GoodsPO goodspo = goodsData.findGoods("20151001-00001");
 				if(goodspo != null)
 					System.out.println("Find the goods: "+goodspo.getOrder_ID()+" "+goodspo.getFee()+" "+goodspo.getDeparturePlace()+" "+goodspo.getDestination()+" "
 						+goodspo.getLatestEnterTime()+" "+goodspo.getLatestLeaveTime());
 				else
 					System.out.println("Cannot find the goods");
 				
-				goodsData.modifyGoods(new GoodsPO("20151024-00007", 250, "南京", "南极"));
+				goodsData.modifyGoodsEnterTime("20151024-00007", "2015-12-26 21:59:59");
 				System.out.println("修改后:");
 				ArrayList<GoodsPO> goodspoList3 = goodsData.showAllGoods();
 				if(goodspoList3 != null){
@@ -149,20 +225,22 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	    			for(int i=0;i<goodspoList1.size();i++){
 	    				GoodsPO tempGoodspo = goodspoList1.get(i);
 	    				System.out.println(tempGoodspo.getOrder_ID()+" "+tempGoodspo.getFee()+" "+tempGoodspo.getDeparturePlace()+" "+tempGoodspo.getDestination()+" "
-						+tempGoodspo.getLatestEnterTime()+" "+tempGoodspo.getLatestLeaveTime());
+	    						+tempGoodspo.getLatestEnterTime()+" "+tempGoodspo.getLatestEnterRepertoryID()+" "
+		    					+tempGoodspo.getLatestLeaveTime()+" "+tempGoodspo.getLatestLeaveRepertoryID());
 	    			}
 				}
 				else 
 					System.out.println("Cannot find the goods");
 				
-				goodsData.deleteGoods("20151101-00012");
+				//goodsData.deleteGoods("20151101-00012");
 				System.out.println("删除后:");
 				ArrayList<GoodsPO> goodspoList2 = goodsData.showAllGoods();
 				if(goodspoList2 != null){
 	    			for(int i=0;i<goodspoList2.size();i++){
 	    				GoodsPO tempGoodspo = goodspoList2.get(i);
 	    				System.out.println(tempGoodspo.getOrder_ID()+" "+tempGoodspo.getFee()+" "+tempGoodspo.getDeparturePlace()+" "+tempGoodspo.getDestination()+" "
-						+tempGoodspo.getLatestEnterTime()+" "+tempGoodspo.getLatestLeaveTime());
+						+tempGoodspo.getLatestEnterTime()+" "+tempGoodspo.getLatestEnterRepertoryID()+" "
+	    					+tempGoodspo.getLatestLeaveTime()+" "+tempGoodspo.getLatestLeaveRepertoryID());
 	    			}
 				}
 				else 
@@ -174,7 +252,7 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
-	}*/
+	}
 	
     
 }

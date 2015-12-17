@@ -192,19 +192,19 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public static void main(String[] args) throws RemoteException{
 		
 		PaymentReceiptData data=new PaymentReceiptData();
-//		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
-//		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101-00002", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
-//		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
-//		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151127-00001", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151127", "boss", "本宝宝");
+		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20110101", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20110101", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
+		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151126", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151126", "boss", "本宝宝");
+		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151127", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151127", "boss", "本宝宝");
 		try {
 //			data.delete("FKD-20110101-00001");
 //			data.delete("FKD-20110101-00002");
 //			data.delete("FKD-20151126-00001");
 //			data.delete("FKD-20151127-00001");
-//			data.creatPaymentReceipt(po1);
-//			data.creatPaymentReceipt(po2);
-//			data.creatPaymentReceipt(po3);
-//			data.creatPaymentReceipt(po4);
+			data.creatPaymentReceipt(po1);
+			data.creatPaymentReceipt(po2);
+			data.creatPaymentReceipt(po3);
+			data.creatPaymentReceipt(po4);
 			
 			ArrayList<PaymentReceiptPO> All;
 							All = data.getAllPaymentReceipt();

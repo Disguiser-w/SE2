@@ -24,6 +24,7 @@ import businesslogic.financebl.controller.PaymentReceiptBLController;
 import type.ReceiptState;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
+import vo.UserVO;
 
 public class ReceiptPanel_new extends JPanel {
 	/**
@@ -38,8 +39,10 @@ public class ReceiptPanel_new extends JPanel {
 	private JButton paymentReceiptButton_new;
 //	private JButton costIncomeReceiptButton_new;
 	
-	private JButton next;
-	private JButton previous;
+//	private JButton next;
+	private JLabel next;
+//	private JButton previous;
+	private JLabel previous;
 
 	private JLabel function;
 	private JLabel collectionReceiptInfo;
@@ -54,6 +57,8 @@ public class ReceiptPanel_new extends JPanel {
 	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
+	int count1=0;
+	int count2=0;
 	ListSelectionModel selectionModel;
 	private DefaultTableCellRenderer tcr;
 	private CollectionModel cm;
@@ -64,19 +69,21 @@ public class ReceiptPanel_new extends JPanel {
 	 public CollectionReceiptBLController collectionController;
 	 public PaymentReceiptBLController paymentReceiptBLController;
 	 public FinanceFrame financeFrame;
+	 public UserVO user;
 
 	public ReceiptPanel_new(CollectionReceiptBLController collectionController, PaymentReceiptBLController paymentReceiptBLController
-			            ,FinanceFrame parent) {
+			            ,FinanceFrame parent,UserVO user) {
 		this.collectionController=collectionController;
 		this.paymentReceiptBLController=paymentReceiptBLController;
 		this.financeFrame=parent;
+		this.user = user;
 		
 		sendButton = new JButton("发送");
 		printButton = new JButton("导出");
 		collectionReceiptButton_new = new JButton("新建入款单");
 		paymentReceiptButton_new = new JButton("新建付款单");
-		next = new JButton("下一页");
-		previous = new JButton("上一页");
+		next = new JLabel(">");
+		previous = new JLabel("<");
 		function = new JLabel("新建表单");
 		collectionReceiptInfo = new JLabel("入款单");
 		paymentReceiptInfo = new JLabel("付款单");
@@ -137,8 +144,8 @@ public class ReceiptPanel_new extends JPanel {
 		currentTableHeader.setBounds((int)(PANEL_WIDTH * 1.371173469387755/25),(int)(PANEL_HEIGHT * 4.383757338551859/20),(int)(PANEL_WIDTH *  23.651785714285715 /25),(int)(PANEL_HEIGHT *  1.1819960861056751/20));
 
 		table.setBackground(getBackground());
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		currentTableHeader.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//		currentTableHeader.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		table.setRowSelectionAllowed(true);
         selectionModel = table.getSelectionModel();
@@ -304,21 +311,19 @@ public class ReceiptPanel_new extends JPanel {
 			}
 		});
 
-		next.addActionListener(new ActionListener() {
+		//下一页
+		 next.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					nextui();
+				}
+			});
 
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				nextui();
-			}
-		});
-
-		previous.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				previousui();
-			}
-		});
+		//上一页
+		 previous.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e){
+					previousui();
+				}
+			});
 
 		collectionReceiptButton_new.addActionListener(new ActionListener() {
 
@@ -348,21 +353,94 @@ public class ReceiptPanel_new extends JPanel {
 	}
 
 	public void new1ui() {
-		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame));
+		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame,user));
 	}
 
 	public void new2ui() {
-		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame));
+		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame,user));
 	}
 
+	/**
+	 * 向下翻页
+	 * */
 	public void nextui() {
-
+		if(currentTable == table1){
+			count1++;
+			if(getCollectionOnThisPage(count1)!=null){
+				int total=collection.size();
+				ArrayList<CollectionReceiptVO> temp=getCollectionOnThisPage(count1);
+				refreshCollection(temp);
+				cm=new CollectionModel(collection);
+				for(int i=0;i<total;i++){
+					cm.removeRow(0);
+				}
+				table1.repaint();
+			}
+			else{
+				count1--;
+				return;
+			}
+		}
+		else{
+			count2++;
+			if(getPaymentOnThisPage(count2)!=null){
+				int total=payment.size();
+				ArrayList<PaymentReceiptVO> temp=getPaymentOnThisPage(count2);
+				refreshPayment(temp);
+				pm=new PaymentModel(payment);
+				for(int i=0;i<total;i++){
+					cm.removeRow(0);
+				}
+				table2.repaint();
+			}
+			else{
+				count2--;
+				return;
+			}
+			
+		}
 	}
 
+	/**
+	 * 向上翻页
+	 * */
 	public void previousui() {
+		if(currentTable == table1){
+			count1--;
+			if(getCollectionOnThisPage(count1)!=null&&count1>=0){
+				int total=collection.size();
+				ArrayList<CollectionReceiptVO> temp=getCollectionOnThisPage(count1);
+				refreshCollection(temp);
+				cm=new CollectionModel(collection);
+				for(int i=0;i<total;i++){
+					cm.removeRow(0);
+				}
+				table1.repaint();
+			}
+			else{
+				count1++;
+				return;
+			}
+		}
+		else{
+			count2--;
+			if(getPaymentOnThisPage(count2)!=null&&count2>=0){
+				int total=payment.size();
+				ArrayList<PaymentReceiptVO> temp=getPaymentOnThisPage(count2);
+				refreshPayment(temp);
+				pm=new PaymentModel(payment);
+				for(int i=0;i<total;i++){
+					cm.removeRow(0);
+				}
+				table2.repaint();
+			}
+			else{
+				count2++;
+				return;
+			}
 
 	}
-	
+	}
 
 /**
  * 合计收款单的表格
@@ -378,7 +456,7 @@ public class ReceiptPanel_new extends JPanel {
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			return collection.size();
+			return 9;
 		}
 
 		public int getColumnCount() {
@@ -387,6 +465,9 @@ public class ReceiptPanel_new extends JPanel {
 		}
 		
 		public String getValueAt(int row, int col) {
+			if(row>collection.size()-1){
+				return null;
+			}
 			return collection.get(row).get(col);
 		}
 		
@@ -417,7 +498,7 @@ public class ReceiptPanel_new extends JPanel {
 		//行数
 		public int getRowCount() {
 			// TODO Auto-generated method stub
-			return payment.size();
+			return 9;
 		}
 
 		public int getColumnCount() {
@@ -426,6 +507,9 @@ public class ReceiptPanel_new extends JPanel {
 		}
 		
 		public String getValueAt(int row, int col) {
+			if(row>payment.size()-1){
+				return null;
+			}
 			return payment.get(row).get(col);
 		}
 		
@@ -446,11 +530,11 @@ public class ReceiptPanel_new extends JPanel {
 	public void refreshCollection(ArrayList<CollectionReceiptVO> cvos){
 		for(CollectionReceiptVO v:cvos){
 			ArrayList<String> lineInfo=new ArrayList<String>();
-			lineInfo.add(v.getID());
-			lineInfo.add(v.getDate());
-			lineInfo.add(v.getIncome()+"");
-			lineInfo.add(v.getUserID());
-			lineInfo.add(EnumChange(v.getState()));
+			lineInfo.add(v.ID);
+			lineInfo.add(v.date);
+			lineInfo.add(v.totalMoney+"");
+			lineInfo.add(v.userID);
+			lineInfo.add(EnumChange(v.state));
 			
 			collection.add(lineInfo);
 		}
@@ -459,14 +543,14 @@ public class ReceiptPanel_new extends JPanel {
 	public void refreshPayment(ArrayList<PaymentReceiptVO> pvos){
 		for(PaymentReceiptVO v:pvos){
 			ArrayList<String> lineInfo=new ArrayList<String>();
-			lineInfo.add(v.getID());
-			lineInfo.add(v.getDate());
-			lineInfo.add(v.getRent()+"");
-			lineInfo.add(v.getFare()+"");
-			lineInfo.add(v.getSalary()+"");
-			lineInfo.add(v.getRent()+v.getFare()+v.getSalary()+"");
-			lineInfo.add(v.getUserID());
-			lineInfo.add(EnumChange(v.getState()));
+			lineInfo.add(v.ID);
+			lineInfo.add(v.date);
+			lineInfo.add(v.rent+"");
+			lineInfo.add(v.fare+"");
+			lineInfo.add(v.salary+"");
+			lineInfo.add(v.cost+"");
+			lineInfo.add(v.userID);
+			lineInfo.add(EnumChange(v.state));
 			
 			payment.add(lineInfo);
 		}
@@ -487,6 +571,42 @@ public class ReceiptPanel_new extends JPanel {
 			return "草稿状态";
 		}
 	}
+	
+	  /*
+     * 为了翻页而写的若干个方法
+     * 统计当前count页上的数据
+     * **/
+    public ArrayList<CollectionReceiptVO> getCollectionOnThisPage(int num){
+   	 ArrayList<CollectionReceiptVO> vos = collectionController.getAllCollection();
+   	 ArrayList<CollectionReceiptVO> collectionTemp = new ArrayList<CollectionReceiptVO>();
+   	 if(vos.size()<=num*9||num<0){
+   		 return null;
+   	 }
+   	 else{
+   	 for(int i=9*num;i<=9*num+8;i++){
+   		 if(vos.size()>i){
+   			collectionTemp.add(vos.get(i));
+   		 }
+   	 }
+   	 return collectionTemp;
+    }
+    }
+   	 
+    public ArrayList<PaymentReceiptVO> getPaymentOnThisPage(int num){
+      	 ArrayList<PaymentReceiptVO> vos = paymentReceiptBLController.getAllPaymentReceipt();
+      	 ArrayList<PaymentReceiptVO> paymentTemp = new ArrayList<PaymentReceiptVO>();
+      	 if(vos.size()<=num*8||num<0){
+      		 return null;
+      	 }
+      	 else{
+      	 for(int i=8*num;i<=8*num+7;i++){
+      		 if(vos.size()>i){
+      			paymentTemp.add(vos.get(i));
+      		 }
+      	 }
+      	 return paymentTemp;
+       }
+       }
 	
 		
 	

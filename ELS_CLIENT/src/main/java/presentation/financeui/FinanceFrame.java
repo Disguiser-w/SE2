@@ -18,7 +18,7 @@ public class FinanceFrame extends UserFrame{
 	public FinanceFrame(UserVO vo){
 		super();
 		
-		setMessage(vo.getName(), vo.getID());
+		setMessage(vo.userName, vo.userID);
 //		addFuncLabel(new AccountManagementPanel_main());
 //		addFuncLabel(new CollectionReceiptPanel());
 //		addFuncLabel(new PaymentReceiptPanel());
@@ -40,7 +40,6 @@ public class FinanceFrame extends UserFrame{
 		
 		
 	}
-	
 	
 	
 	

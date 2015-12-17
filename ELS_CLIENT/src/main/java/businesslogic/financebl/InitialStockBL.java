@@ -94,11 +94,12 @@ public class InitialStockBL{
 		// TODO Auto-generated method stub
 		
 		try {
-			ArrayList<InitInfoPO> pos=initData.getAllInitInfo();
-			ArrayList<InitInfoVO> vos;
-			vos = FinanceMainController.iposToVOs(pos);
-			return vos;
-
+			if(initData.getAllInitInfo()!=null){
+			return FinanceMainController.iposToVOs(initData.getAllInitInfo());
+			}
+			else{
+				return null;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,10 +109,11 @@ public class InitialStockBL{
 	}
 	
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		InitialStockBL bl=new InitialStockBL();
 		InitInfoVO v=bl.getInitInfo("2015-12-11");
 		System.out.println(v.getTime());
 	}
+	*/
 
 }

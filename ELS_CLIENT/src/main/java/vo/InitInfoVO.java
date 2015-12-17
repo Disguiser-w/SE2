@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class InitInfoVO {
-	String time;
+	public String time;
 	public  ArrayList<AccountVO>  accoutVOs;
 	public  ArrayList<OrganizationVO> organizationVOs;
 	public ArrayList<VehicleVO> vehicleVOs;
@@ -24,30 +24,30 @@ public class InitInfoVO {
 		this.accoutVOs=accountVOs;
 	}
 	
-	   //人员信息
-		public ArrayList<UserVO> getUserVOs(){
-			return userVOs;
-		}
-	    //机构信息
-	public ArrayList<OrganizationVO> getOrganizationVOs(){
-		return organizationVOs;		
-	}
-	
-		//车辆信息
-	public ArrayList<VehicleVO> getVehicleVOs(){
-		return vehicleVOs;
-		}
-		//库存信息
-	public ArrayList<RepertoryVO> getRepertoryVOs(){
-		return repertoryVOs;	
-	}
-		//账户信息
-		public ArrayList<AccountVO> getAccountVOs(){
-			return accoutVOs ;
-		}
-		
-		public String getTime(){
-			return time;
-		}
+//	   //人员信息
+//		public ArrayList<UserVO> getUserVOs(){
+//			return userVOs;
+//		}
+//	    //机构信息
+//	public ArrayList<OrganizationVO> getOrganizationVOs(){
+//		return organizationVOs;		
+//	}
+//	
+//		//车辆信息
+//	public ArrayList<VehicleVO> getVehicleVOs(){
+//		return vehicleVOs;
+//		}
+//		//库存信息
+//	public ArrayList<RepertoryVO> getRepertoryVOs(){
+//		return repertoryVOs;	
+//	}
+//		//账户信息
+//		public ArrayList<AccountVO> getAccountVOs(){
+//			return accoutVOs ;
+//		}
+//		
+//		public String getTime(){
+//			return time;
+//		}
 	
 	}

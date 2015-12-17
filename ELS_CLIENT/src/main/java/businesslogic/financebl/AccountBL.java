@@ -82,7 +82,7 @@ public class AccountBL {
 	public int modifyAccount(AccountVO vo,String name) {
 		// TODO Auto-generated method stub
 		try {
-			AccountPO po=accountData.findbyName(vo.getName());
+			AccountPO po=accountData.findbyName(vo.name);
 			if(po==null){
 				System.out.println("修改账户失败！");
 				return 1;
@@ -151,7 +151,12 @@ public class AccountBL {
 	public ArrayList<AccountVO> showAll() {
 		// TODO Auto-generated method stub
 		try {
+			if(accountData.showAll()!=null){
 			return FinanceMainController.aposToVOs(accountData.showAll());
+			}
+			else{
+				return null;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

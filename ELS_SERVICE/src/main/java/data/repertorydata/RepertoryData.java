@@ -23,18 +23,37 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250148L;
 	
-	JXCFile organzationFile;
+	JXCFile organizationFile;
 	JXCFile goodsFile;
 	GoodsData goodsData;
 	
 	public RepertoryData() throws RemoteException{
-		organzationFile = new JXCFile("src/organization.ser");
+		organizationFile = new JXCFile("src/organization.ser");
 		goodsFile = new JXCFile("src/goods.ser");
 		goodsData = new GoodsData();
 	}
 	
+	public int modifyRepertoryOwner(String repertoryID, String ownerID){
+		ArrayList<Object> organizationList = organizationFile.read();
+
+		int returnNum = 1;
+		for(int i=0;i<organizationList.size();i++){
+			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			RepertoryPO repertory = organization.getRepertory();
+			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
+				repertory.setOwnerID(ownerID);
+				returnNum = 0;
+				break;
+			}
+		}
+		
+		organizationFile.writeM(organizationList);
+		return returnNum;
+	}
+	
+	
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
@@ -57,12 +76,12 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 			}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -75,7 +94,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public RepertoryPO findRepertoryByOwnerID(String ownerID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -88,7 +107,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public ArrayList<RepertoryPO> showAllRepertorys() throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		if(organizationList==null)
 			return null;
@@ -104,7 +123,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	}
 	
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum =1;
 		for(int i=0;i<organizationList.size();i++){
@@ -116,23 +135,23 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 				repertory.stockNumPlus(inventorypo.getBlockNum());
 				
 				//把GoodsPO的一个未填写的enterTime补充为现在的时间，进入的仓库编号中增加该仓库编号
-				GoodsPO goodspo = inventorypo.getGood();
+				/*GoodsPO goodspo = inventorypo.getGood();
 				String time = getTimeNow();
 				goodspo.setEnterRepertoryID(repertoryID);
 				goodspo.setEnterTime(time);
-				goodsData.modifyGoods(goodspo);
+				goodsData.modifyGoods(goodspo);*/
 				
 				returnNum = 0;
 				break;
 			}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
 	public int deleteInventory(String repertoryID, String JJD_ID) throws RemoteException{
-		ArrayList<Object> organizationList = organzationFile.read();
+		ArrayList<Object> organizationList = organizationFile.read();
 
 		int returnNum =1;
 loop1:		for(int i=0;i<organizationList.size();i++){
@@ -147,11 +166,11 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 								repertory.stockNumSub(tempInventory.getBlockNum());
 								
 								//把GoodsPO的一个未填写的leaveTime补充为现在的时间，离开的仓库编号中增加该仓库编号
-								GoodsPO goodspo = tempInventory.getGood();
+								/*GoodsPO goodspo = tempInventory.getGood();
 								String time = getTimeNow();
 								goodspo.setLeaveRepertoryID(repertoryID);
 								goodspo.setLeaveTime(time);
-								goodsData.modifyGoods(goodspo);
+								goodsData.modifyGoods(goodspo);*/
 								
 								returnNum = 0;
 								break loop2;
@@ -161,7 +180,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				}
 		}
 		
-		organzationFile.writeM(organizationList);
+		organizationFile.writeM(organizationList);
 		return returnNum;
 	}
 	
@@ -293,7 +312,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
 	
-	/*public static void main(String[] args){
+	public static void main(String[] args){
 		RepertoryData repertoryData;
 		try{
 			repertoryData = new RepertoryData();
@@ -311,7 +330,16 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				else
 					System.out.println("Cannot find the reperory");
 				
-				RepertoryPO repertory = repertoryData.findRepertory("040-CK");
+				RepertoryPO repertoryByOwner = repertoryData.findRepertoryByOwnerID("CK-00001");
+				if(repertoryByOwner != null)
+					System.out.println("Find the repertoryByOwner: "+repertoryByOwner.getRepertoryID()+" "+repertoryByOwner.getOwnerID()+" "+repertoryByOwner.getMaxRow()
+							+" "+repertoryByOwner.getMaxShelf()+" "+repertoryByOwner.getMaxDigit()+" "
+							+repertoryByOwner.getWarningRatio()+" "+repertoryByOwner.getStockNum(0)+" "+repertoryByOwner.getStockNum(1)
+							+" "+repertoryByOwner.getStockNum(2)+" "+repertoryByOwner.getStockNum(3));
+				else
+					System.out.println("Cannot find the repertoryByOwner");
+				
+				RepertoryPO repertory = repertoryData.findRepertory("025-0-CK");
 				if(repertory != null)
 					System.out.println("Find the repertory: "+repertory.getRepertoryID()+" "+repertory.getOwnerID()+" "+repertory.getMaxRow()
 							+" "+repertory.getMaxShelf()+" "+repertory.getMaxDigit()+" "
@@ -320,7 +348,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				else
 					System.out.println("Cannot find the repertory");
 				
-				repertoryData.modifyRepertory(new RepertoryPO("030-CK", "CK-01", 100,10,10,50,new int[4]));
+				/*repertoryData.modifyRepertory(new RepertoryPO("030-CK", "CK-01", 100,10,10,50,new int[4]));
 				System.out.println("修改后:");
 				ArrayList<RepertoryPO> repertoryList1 = repertoryData.showAllRepertorys();
 				if(repertoryList1 != null){
@@ -333,17 +361,17 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 					}
 				}
 				else
-					System.out.println("Cannot find the reperory");
+					System.out.println("Cannot find the reperory");*/
 				
 				System.out.println("入库：");
-				repertoryData.addInventory("030-CK", new InventoryPO(new GoodsPO("20151001-00001", 12, "南京", "上海"),3,0,0,0));
-				repertoryData.addInventory("030-CK", new InventoryPO(new GoodsPO("20151002-00003", 15, "北京", "上海"),2,0,1,0));
-				repertoryData.addInventory("040-CK", new InventoryPO(new GoodsPO("20151101-00012", 120, "洛杉矶", "北京"),1,0,6,0));
-				repertoryData.addInventory("030-CK", new InventoryPO(new GoodsPO("20151024-00007", 250, "南京", "北极"),0,5,0,0));
-				repertoryData.addInventory("030-CK", new InventoryPO(new GoodsPO("20151124-00004", 30, "铁岭", "海南"),2,5,0,0));
+				//repertoryData.addInventory("025-0-CK", new InventoryPO(new GoodsPO("20151001-00001", 12, "南京", "上海"),3,0,0,0));
+				//repertoryData.addInventory("025-0-CK", new InventoryPO(new GoodsPO("20151002-00003", 15, "北京", "上海"),2,0,1,0));
+				//repertoryData.addInventory("040-0-CK", new InventoryPO(new GoodsPO("20151101-00012", 120, "洛杉矶", "北京"),1,0,6,0));
+				//repertoryData.addInventory("030-0-CK", new InventoryPO(new GoodsPO("20151024-00007", 250, "南京", "北极"),0,5,0,0));
+				//repertoryData.addInventory("030-0-CK", new InventoryPO(new GoodsPO("20151124-00004", 30, "铁岭", "海南"),2,5,0,0));
 				
-				System.out.println("查找库存");
-				InventoryPO inventorypo1 = repertoryData.findInventorybyID("030-CK", "20151001-00001");
+				/*System.out.println("查找库存");
+				InventoryPO inventorypo1 = repertoryData.findInventorybyID("025-0-CK", "20151001-00001");
 				if(inventorypo1 != null)
 					System.out.println("Find the inventory: "+inventorypo1.getGood().getOrder_ID()+" "+inventorypo1.getGood().getFee()+" "+inventorypo1.getGood().getDeparturePlace()
 							+" "+inventorypo1.getGood().getDestination()+" "+inventorypo1.getGood().getLatestEnterTime()+" "+inventorypo1.getGood().getLatestLeaveTime()+" "
@@ -352,17 +380,19 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 					System.out.println("Cannot find the inventory");
 				
 				System.out.println("查找库存");
-				InventoryPO inventorypo2 = repertoryData.findInventorybyID("030-CK", "20151001-00005");
+				InventoryPO inventorypo2 = repertoryData.findInventorybyID("025-0-CK", "20151002-00003");
 				if(inventorypo2 != null)
 					System.out.println("Find the inventory: "+inventorypo2.getGood().getOrder_ID()+" "+inventorypo2.getGood().getFee()+" "+inventorypo2.getGood().getDeparturePlace()
 							+" "+inventorypo2.getGood().getDestination()+" "+inventorypo2.getGood().getLatestEnterTime()+" "+inventorypo2.getGood().getLatestLeaveTime()+" "
 							+inventorypo2.getBlockNum()+" "+inventorypo2.getRowNum()+" "+inventorypo2.getShelfNum()+" "+inventorypo2.getDigitNum());
 				else
-					System.out.println("Cannot find the inventory");
+					System.out.println("Cannot find the inventory");*/
 				
 				System.out.println("库存盘点");
-				ArrayList<InventoryPO> inventoryList1 = repertoryData.findInventorybyTime("030-CK", "now");
+				String time1 = getTimeNow();
+				ArrayList<InventoryPO> inventoryList1 = repertoryData.findInventorybyTime("025-0-CK", time1);
 				if(inventoryList1 != null){
+					System.out.println(inventoryList1.size());
 					for(int i=0;i<inventoryList1.size();i++){
 						InventoryPO tempInventory = inventoryList1.get(i);
 						System.out.println(tempInventory.getGood().getOrder_ID()+" "+tempInventory.getGood().getFee()+" "+tempInventory.getGood().getDeparturePlace()+" "
@@ -373,12 +403,14 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				else 
 					System.out.println("Cannot find the inventory");
 				
-				System.out.println("出库：");
-				repertoryData.deleteInventory("030-CK", "20151002-00003");
+				/*System.out.println("出库：");
+				repertoryData.deleteInventory("025-0-CK", "20151002-00003");*/
 				
 				System.out.println("库存盘点");
-				ArrayList<InventoryPO> inventoryList2 = repertoryData.findInventorybyTime("030-CK", "now");
+				String time2 = getTimeNow();
+				ArrayList<InventoryPO> inventoryList2 = repertoryData.findInventorybyTime("030-0-CK", time2);
 				if(inventoryList2 != null){
+					System.out.println(inventoryList2.size());
 					for(int i=0;i<inventoryList2.size();i++){
 						InventoryPO tempInventory = inventoryList2.get(i);
 						System.out.println(tempInventory.getGood().getOrder_ID()+" "+tempInventory.getGood().getFee()+" "+tempInventory.getGood().getDeparturePlace()+" "
@@ -389,7 +421,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				else 
 					System.out.println("Cannot find the inventory");
 				
-				InventoryCheckPO inventoryCheck = repertoryData.findInventorybyDate("030-CK", "2015-11-01", "2015-12-01");
+				InventoryCheckPO inventoryCheck = repertoryData.findInventorybyDate("030-0-CK", "2015-11-01", "2015-12-01");
 				if(inventoryCheck != null){
 					int stockNum[] = inventoryCheck.getStockNumArray();
 					System.out.println("入库数量："+inventoryCheck.getEnterTotal()+"  出库数量："+inventoryCheck.getLeaveTotal()+
@@ -405,10 +437,11 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
-	}*/
+	}
 	
 	/*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
-	public static void main(String[] args){
+	
+	/*public static void main(String[] args){
      	try{
 			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
 			RepertoryDataService repertoryData = new RepertoryData();
@@ -430,7 +463,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
 }

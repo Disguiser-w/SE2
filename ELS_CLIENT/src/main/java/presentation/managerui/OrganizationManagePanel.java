@@ -417,14 +417,14 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 	
 				if (organizationvo != null) {
 					if(columnIndex==0)
-						return categoryName(organizationvo.getCategory());
+						return categoryName(organizationvo.category);
 					else if(columnIndex==1)
-						return organizationvo.getName();
+						return organizationvo.name;
 					else if(columnIndex==2)
-						return organizationvo.getOrganizationID();
+						return organizationvo.organizationID;
 					else {
-						if(organizationvo.getRepertory() != null)
-							return organizationvo.getRepertory().getRepertoryID();
+						if(organizationvo.repertory != null)
+							return organizationvo.repertory.repertoryID;
 						else
 							return "/";
 					}
@@ -476,14 +476,14 @@ public class OrganizationManagePanel extends JPanel implements ListSelectionList
 	
 			if (organizationvo != null){
 				if(columnIndex==0)
-					return categoryName(organizationvo.getCategory());
+					return categoryName(organizationvo.category);
 				else if(columnIndex==1)
-					return organizationvo.getName();
+					return organizationvo.name;
 				else if(columnIndex==2)
-					return organizationvo.getOrganizationID();
+					return organizationvo.organizationID;
 				else {
-					if(organizationvo.getRepertory() != null)
-						return organizationvo.getRepertory().getRepertoryID();
+					if(organizationvo.repertory != null)
+						return organizationvo.repertory.repertoryID;
 					else
 						return "/";
 				}

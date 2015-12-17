@@ -56,7 +56,7 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 //		controller.creatCollection(vo);
 		ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
 		for(CollectionReceiptVO v:vos){
-			System.out.println(v.getID()+" "+v.getUserID()+" "+v.getDate()+" "+v.getIncome());
+			System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
 		}
 	}
 }

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import presentation.commonui.LocationHelper;
+//import presentation.commonui.LocationHelper;
 
 public class CheckReceiptPanel extends JPanel {
 	
@@ -31,14 +31,10 @@ public class CheckReceiptPanel extends JPanel {
 	// 查询按钮
 	private JButton queryButton;
 
-	// 上一面
 	private JLabel previousPageLabel;
-
-	// 下一面
 	private JLabel nextPageLabel;
 
-	// 位置设置
-	private LocationHelper helper;
+//	private LocationHelper helper;
 
 	public CheckReceiptPanel() {
 
@@ -65,7 +61,8 @@ public class CheckReceiptPanel extends JPanel {
 		add(previousPageLabel);
 		add(nextPageLabel);
 
-		helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
+		
 		setLayout(null);
 
 	}

@@ -132,17 +132,22 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",
 						new RepertoryPO("hehe", "haha")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "025-0",
-						"南京中转中心", new RepertoryPO("025-CK", "CK-01")));
+						"南京中转中心", new RepertoryPO("025-0-CK", "CK-00001")));
+				organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "035000", "上海浦东营业厅",
+						new RepertoryPO("hehe", "haha")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "025001", "仙林营业厅",
 						new RepertoryPO("hehe", "haha")));
+				organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "035001", "北京天安门营业厅",
+						new RepertoryPO("hehe", "haha")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "030-0",
-						"上海中转中心", new RepertoryPO("030-CK", "CK-02")));
+						"上海中转中心", new RepertoryPO("030-0-CK", "CK-00002")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "035-0",
-						"北京中转中心", new RepertoryPO("035-CK", "CK-03")));
+						"北京中转中心", new RepertoryPO("035-0-CK", "CK-00003")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "040-0",
-						"坦桑尼亚中转中心", new RepertoryPO("040-CK", "CK-04")));
+						"坦桑尼亚中转中心", new RepertoryPO("040-0-CK", "CK-00004")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "045-0",
-						"洛杉矶中转中心", new RepertoryPO("045-CK", "CK-05")));
+						"洛杉矶中转中心", new RepertoryPO("045-0-CK", "CK-00005")));
+				
 
 				System.out.println("添加后:");
 				ArrayList<OrganizationPO> organizationpoList0 = organizationData.showAllOrganizations();

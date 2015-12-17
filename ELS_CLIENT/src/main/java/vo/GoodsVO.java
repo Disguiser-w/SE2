@@ -1,9 +1,10 @@
 package vo;
 
 public class GoodsVO {
-	private String Order_ID;
-	private String departurePlace, destination;
-	private String enterDate[], leaveDate[];
+	
+	public String Order_ID;
+	public String departurePlace, destination;
+	public String enterDate[], leaveDate[];
 
 	public GoodsVO(String Order_ID, String departurePlace, String destination) {
 		this.Order_ID = Order_ID;

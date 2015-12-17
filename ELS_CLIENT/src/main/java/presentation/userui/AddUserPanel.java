@@ -109,9 +109,9 @@ public class AddUserPanel extends JPanel{
 		//先设置为快递员的，就算管理员不点击快递员，其他内容也可以被填充
 		String IDPre = "KD";
 		user_salaryPlan_choose.setSelectedIndex(0);
-		user_salaryPlan_choose.setEditable(false);
+		user_salaryPlan_choose.setEnabled(false);
 		user_authority_choose.setSelectedIndex(0);
-		user_authority_choose.setEditable(false);
+		user_authority_choose.setEnabled(false);
 		String IDPost = userBL.getUserIDPost(ProfessionType.courier);
 		user_ID_Input.setText(IDPre+"-"+IDPost);
 		user_ID_Input.setEditable(false);
@@ -302,6 +302,7 @@ public class AddUserPanel extends JPanel{
     
     //返回上一级界面
 	public void returnui() {
+		userMainPanel.setInfos();
 		adminFrame.changePanel(userMainPanel);
 	}
 

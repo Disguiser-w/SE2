@@ -1,4 +1,4 @@
-package businesslogic.managebl.controller;
+﻿package businesslogic.managebl.controller;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -82,8 +82,8 @@ public class ManageMainController {
 	
 	// vo和po的转化,static
 	public static UserPO userVOToPO(UserVO uservo){
-		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
-					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
+		UserPO userpo = new UserPO(uservo.userName,uservo.userID,uservo.password,uservo.profession,
+					uservo.organization,uservo.salaryPlan,uservo.authority,uservo.grades);
 		return userpo;
 	}
 	
@@ -94,7 +94,7 @@ public class ManageMainController {
 	}
 	
 	public static BasicSalaryPO basicSalaryVOToPO(BasicSalaryVO basicSalaryvo){
-		return new BasicSalaryPO(basicSalaryvo.getProfession(),basicSalaryvo.getBasicSalary());
+		return new BasicSalaryPO(basicSalaryvo.profession,basicSalaryvo.basicSalary);
 	}
 	
 	public static BasicSalaryVO basicSalaryPOToVO(BasicSalaryPO basicSalarypo){
@@ -102,7 +102,7 @@ public class ManageMainController {
 	}
 	
 	public static CityDistancePO cityDistanceVOToPO(CityDistanceVO cityDistancevo){
-		return new CityDistancePO(cityDistancevo.getCityA(),cityDistancevo.getCityB(), cityDistancevo.getDistance());
+		return new CityDistancePO(cityDistancevo.cityA,cityDistancevo.cityB, cityDistancevo.distance);
 	}
 	
 	public static CityDistanceVO cityDistancePOToVO(CityDistancePO cityDistancepo){
@@ -110,7 +110,7 @@ public class ManageMainController {
 	}
 	
 	public static CostPO costVOToPO(CostVO costvo){
-		return new CostPO(costvo.getCategory(), costvo.getCost());
+		return new CostPO(costvo.category, costvo.cost);
 	}
 	
 	public static CostVO costPOToVO(CostPO costpo){
@@ -118,7 +118,7 @@ public class ManageMainController {
 	}
 	
 	public static PerWagePO perWageVOToPO(PerWageVO perWagevo){
-		return new PerWagePO(perWagevo.getProfession(),perWagevo.getPerWage());
+		return new PerWagePO(perWagevo.profession,perWagevo.perWage);
 	}
 	
 	public static PerWageVO perWagePOToVO(PerWagePO perWagepo){
@@ -130,7 +130,7 @@ public class ManageMainController {
 	}
 	
 	public static OrganizationPO organizationVOToPO(OrganizationVO organizationvo){
-		return new OrganizationPO(organizationvo.getCategory(),organizationvo.getOrganizationID(),organizationvo.getName(),repertoryVOToPO(organizationvo.getRepertory()));
+		return new OrganizationPO(organizationvo.category,organizationvo.organizationID,organizationvo.name,repertoryVOToPO(organizationvo.repertory));
 	}
 	
 	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
@@ -138,7 +138,7 @@ public class ManageMainController {
 	}
 	
 	public static RepertoryPO repertoryVOToPO(RepertoryVO repertoryvo){
-		return new RepertoryPO(repertoryvo.getRepertoryID(),repertoryvo.getOwnerID(),repertoryvo.getMaxRow(),repertoryvo.getMaxShelf(), repertoryvo.getMaxDigit(),repertoryvo.getWarningRatio(),repertoryvo.getStockNumArray());
+		return new RepertoryPO(repertoryvo.repertoryID,repertoryvo.ownerID,repertoryvo.maxRow,repertoryvo.maxShelf, repertoryvo.maxDigit,repertoryvo.warningRatio,repertoryvo.stockNum);
 	}
 	
 	

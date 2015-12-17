@@ -662,9 +662,9 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 				if (perWagevo != null) {
 					if(columnIndex==0)
-						return professionName(perWagevo.getProfession());
+						return professionName(perWagevo.profession);
 					else 
-						return perWagevo.getPerWage();
+						return perWagevo.perWage;
 				} 
 				else
 					return null;
@@ -710,9 +710,9 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 			if (basicSalaryvo != null){
 				if(columnIndex==0)
-					return professionName(basicSalaryvo.getProfession());
+					return professionName(basicSalaryvo.profession);
 				else
-					return basicSalaryvo.getBasicSalary();
+					return basicSalaryvo.basicSalary;
 			}
 			else{
 				return null;
@@ -759,11 +759,11 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 				if (cityDistancevo != null) {
 					if(columnIndex==0)
-						return cityDistancevo.getCityA();
+						return cityDistancevo.cityA;
 					else if(columnIndex==1)
-						return cityDistancevo.getCityB();
+						return cityDistancevo.cityB;
 					else 
-						return cityDistancevo.getDistance();
+						return cityDistancevo.distance;
 				} 
 				else
 					return null;
@@ -811,9 +811,9 @@ public class BasicDataManagePanel extends JPanel implements ListSelectionListene
 	
 			if (costvo != null){
 				if(columnIndex==0)
-					return expressCategoryName(costvo.getCategory());
+					return expressCategoryName(costvo.category);
 				else 
-					return costvo.getCost();
+					return costvo.cost;
 			}
 			else{
 				return null;

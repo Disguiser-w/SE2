@@ -22,6 +22,7 @@ import type.ReceiptState;
 import type.ReceiptType;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.UserVO;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.receiptbl.getDate;
 /**
@@ -56,15 +57,17 @@ public class CollectionReceiptPanel extends JPanel {
 
 	public CollectionReceiptBLController controller;
 	public FinanceFrame financeFrame;
+	public UserVO user;
 
 
 	String hallID_str;
 	String date_str;
 	CollectionModel cm;
 	 ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
-	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent) {
+	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,UserVO user) {
 		this.controller=controller;
 		this.financeFrame=parent;
+		this.user = user;
 //		dateChooseButton = new JButton("日期");
 		dateChooseLabel =new JLabel("日期");
 		infoOKButton = new JButton("营业厅");
@@ -318,7 +321,7 @@ public class CollectionReceiptPanel extends JPanel {
 		double money=0;
 		infoLine.setText("日期："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
 				.substring(6)+"    金额总和："+money);
-		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");
+		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), user.userID, ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");
 		controller.creatCollection(vo);
 	}
 

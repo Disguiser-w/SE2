@@ -78,7 +78,6 @@ public class AccountManagement_new extends JPanel {
 		
 		cancelButton.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				cancelui();
@@ -110,7 +109,7 @@ public class AccountManagement_new extends JPanel {
 		money=account_money_Input.getText();
 		if(name.equals("")||money.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
-					JOptionPane.CLOSED_OPTION);
+					JOptionPane.WARNING_MESSAGE);
 		}
 		else{
 			/**
@@ -120,7 +119,7 @@ public class AccountManagement_new extends JPanel {
 			double moneyD=Double.parseDouble(money);
 			if(moneyD<0){
 				JOptionPane.showMessageDialog(null, "请输入正确的金额！", "提示",
-						JOptionPane.CLOSED_OPTION);
+						JOptionPane.WARNING_MESSAGE);
 				account_money_Input.setText("");
 			}
 			else{
@@ -129,7 +128,7 @@ public class AccountManagement_new extends JPanel {
 
 				if(result==0){
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
-							JOptionPane.CLOSED_OPTION);
+							JOptionPane.DEFAULT_OPTION);
 					account_name_Input.setText("");
 					account_money_Input.setText("");
 				}

@@ -7,11 +7,8 @@ import java.rmi.RemoteException;
 import businesslogic.datafactory.DataFactory;
 import po.UserPO;
 import presentation.repertoryui.RepertoryFrame;
-import presentation.userui.AdminFrame;
-import presentation.userui.UserMainPanel;
 import vo.UserVO;
 import dataservice.userdataservice.UserDataService;
-import dataservice.userdataservice.UserDataService_stub;
 
 public class RepertoryMainController {
 
@@ -42,8 +39,8 @@ public class RepertoryMainController {
 	
 	// vo和po的转化,static
 	public static UserPO userVOToPO(UserVO uservo){
-		UserPO userpo = new UserPO(uservo.getName(),uservo.getID(),uservo.getPassword(),uservo.getProfession(),
-					uservo.getOrganization(),uservo.getSalaryPlan(),uservo.getAuthority(),uservo.getGrades());
+		UserPO userpo = new UserPO(uservo.userName, uservo.userID, uservo.password, uservo.profession,
+					uservo.organization, uservo.salaryPlan, uservo.authority, uservo.grades);
 		return userpo;
 	}
 	

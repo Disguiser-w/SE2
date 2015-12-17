@@ -40,13 +40,13 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public PaymentReceiptBL(){
 		super();
 			try {
-			/*userData=DataFactory.getUserData();
+			userData=DataFactory.getUserData();
 			businessData=DataFactory.getBusinessData();
 			organizationData=DataFactory.getOrganizationData();
 			intermediateData=DataFactory.getIntermediateData();
 			basicSalaryData=DataFactory.getBasicSalaryData();
 			perWageData= DataFactory.getPerWageData();
-			*/
+			
 			paymentData=DataFactory.getPaymentReceiptData();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -104,7 +104,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 //		for(PaymentItemVO v:paymentItems){
 //			account.delMoney(v.getAccount(), v.getMoney());
 //		}
-		account.delMoney(vo.getAccount(), vo.getCost());
+		account.delMoney(vo.account, vo.cost);
 		System.out.println("执行成功！");
 		return 0;
 	}

@@ -36,7 +36,7 @@ public class CostBL implements CostBLService{
 	
 	public int deleteCost(CostVO costvo){
 		try{
-			return(codService.deleteCost(costvo.getCategory()));
+			return(codService.deleteCost(costvo.category));
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return 2;
@@ -77,7 +77,7 @@ public class CostBL implements CostBLService{
 	}
 	
 	public static CostPO costVOToPO(CostVO costvo){
-		return new CostPO(costvo.getCategory(), costvo.getCost());
+		return new CostPO(costvo.category, costvo.cost);
 	}
 	
 	public static CostVO costPOToVO(CostPO costpo){

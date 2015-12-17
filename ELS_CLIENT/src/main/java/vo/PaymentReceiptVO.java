@@ -9,21 +9,26 @@ public class PaymentReceiptVO extends ReceiptVO{
 //	//条目
 //	String clause;
 	//付款金额
-	double cost;
+	public double cost;
 	//租金
-	double rent;
+	public double rent;
 	//运费
-	double fare;
+	public double fare;
 	//工资
-	double salary;
+	public double salary;
 	//付款日期
-	String date;
+	public String date;
 	//付款账户
-	String account;
+	public String account;
 	//付款人
-	String name;
+	public String name;
 	//付款记录
-	ArrayList<PaymentItemVO> paymentItemVOs;
+	public ArrayList<PaymentItemVO> paymentItemVOs;
+	
+	public String ID;
+	public String userID;
+	public ReceiptType type;
+	public ReceiptState state;
 	
 	public PaymentReceiptVO(String ID,String userID,ReceiptType type,ReceiptState state,double rent,double fare,double salary,String date,String account,String name ){
 		super(ID,userID,ReceiptType.PAYMENTRECEIPT,state);
@@ -33,6 +38,11 @@ public class PaymentReceiptVO extends ReceiptVO{
 		this.date=date;
 		this.account=account;
 		this.name=name;
+		this.ID=ID;
+		this.userID=userID;
+		this.type=ReceiptType.PAYMENTRECEIPT;
+		this.state=state;
+		this.cost=rent+fare+salary;
 	}
 
 	
@@ -43,54 +53,54 @@ public class PaymentReceiptVO extends ReceiptVO{
 //	}
 	
 	//
-	public double getCost(){
-		return rent+fare+salary;
-	}
-	
-	public double getRent(){
-		return rent;
-	}
-	
-	public double getFare(){
-		return fare;
-	}
-	
-	public double getSalary(){
-		return salary;
-	}
-	public String getDate(){
-		return date;
-	}
-	
-	public String getAccount(){
-		return account;
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public String getID(){
-		return ID;
-	}
-	
-	public String getUserID(){
-		return userID;
-	}
-	
-	public ReceiptType getType(){
-		return type;
-	}
-	public ReceiptState getState(){
-		return state;
-	}
-
-
-
-
-	public ArrayList<PaymentItemVO> getPaymentItems() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	public double getCost(){
+//		return rent+fare+salary;
+//	}
+//	
+//	public double getRent(){
+//		return rent;
+//	}
+//	
+//	public double getFare(){
+//		return fare;
+//	}
+//	
+//	public double getSalary(){
+//		return salary;
+//	}
+//	public String getDate(){
+//		return date;
+//	}
+//	
+//	public String getAccount(){
+//		return account;
+//	}
+//	
+//	public String getName(){
+//		return name;
+//	}
+//	
+//	public String getID(){
+//		return ID;
+//	}
+//	
+//	public String getUserID(){
+//		return userID;
+//	}
+//	
+//	public ReceiptType getType(){
+//		return type;
+//	}
+//	public ReceiptState getState(){
+//		return state;
+//	}
+//
+//
+//
+//
+//	public ArrayList<PaymentItemVO> getPaymentItems() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

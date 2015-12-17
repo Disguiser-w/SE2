@@ -10,22 +10,20 @@ public class AdminFrame extends UserFrame{
 	
 	private static final long serialVersionUID = 189L;
 
-	public UserVO uservo;
-	
 	public AdminFrame(UserVO vo){
 		super();
 		
-		this.uservo = vo;
-		
-		setMessage(vo.getName(), vo.getID());
+		setMessage(vo.userName, vo.userID);
 		
 		addFuncLabel(new UserMainPanel(this));
+		
 		showFrame();
 	}
 	
-	/*public static void main(String[] args){
-		AdminFrame adminFrame = new AdminFrame(new UserVO("汪文藻","GLY-00001","123456", ProfessionType.administrator, 
+	public static void main(String[] args){
+		AdminFrame adminFrame = new AdminFrame(new UserVO("魏彦淑","admin","admin", ProfessionType.administrator, 
 				"总部", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
-	}*/
+		adminFrame.setVisible(true);
+	}
 	
 }

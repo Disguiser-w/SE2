@@ -2,11 +2,9 @@ package po;
 
 import java.io.Serializable;
 
-public class AccountPO implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class AccountPO implements Serializable{	
+
+	private static final long serialVersionUID = 4654444934945714270L;
 	String name;
 	double money;
 	

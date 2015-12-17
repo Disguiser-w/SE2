@@ -8,10 +8,8 @@ import type.ReceiptType;
 
 public class CostIncomeReceiptPO extends ReceiptPO implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7845997179584179464L;
+	
 	ArrayList<CollectionReceiptPO> cpo=new ArrayList<CollectionReceiptPO>();
 	ArrayList<PaymentReceiptPO> ppo=new ArrayList<PaymentReceiptPO>();
 	double cost;

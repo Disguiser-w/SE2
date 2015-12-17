@@ -10,10 +10,8 @@ import type.ReceiptType;
 //vo不能被序列化，po中存在set
 public class CollectionReceiptPO extends ReceiptPO implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3008819827906560098L;
+	
 	ArrayList<GatheringReceiptPO> gpo=new ArrayList<GatheringReceiptPO> ();
 	double[] money;
 	double totalMoney;

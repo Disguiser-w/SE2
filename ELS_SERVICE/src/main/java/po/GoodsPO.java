@@ -17,9 +17,21 @@ public class GoodsPO implements Serializable{
 		this.departurePlace = departurePlace;
 		this.destination = destination;
 		enterTime = new String[4];
+		for(int i=0;i<4;i++){
+			enterTime[i] = "无";
+		}
 		leaveTime = new String[4];
+		for(int i=0;i<4;i++){
+			leaveTime[i] = "无";
+		}
 		enterRepertoryID = new String[4];
+		for(int i=0;i<4;i++){
+			enterRepertoryID[i] = "无";
+		}
 		leaveRepertoryID = new String[4];
+		for(int i=0;i<4;i++){
+			leaveRepertoryID[i] = "无";
+		}
 	}
 	
 	public GoodsPO(String Order_ID, double fee, String departurePlace, String destination, String[] enterTime, String[] leaveTime,
@@ -37,6 +49,7 @@ public class GoodsPO implements Serializable{
 	public String getOrder_ID(){
 		return this.Order_ID;
 	}
+	
 	public double getFee(){
 		return this.fee;
 	}
@@ -64,7 +77,10 @@ public class GoodsPO implements Serializable{
 	public String[] getEnterDate(){
 		String[] enterDate = new String[4];
 		for(int i=0;i<4;i++){
-			if(enterTime[i] != null){
+			enterDate[i] = "无";
+		}
+		for(int i=0;i<4;i++){
+			if(!enterTime[i].equals("无")){
 				String[] parts = enterTime[i].split(" ");
 				enterDate[i] = parts[0];
 			}
@@ -74,15 +90,15 @@ public class GoodsPO implements Serializable{
 	
 	public String getLatestEnterTime(){
 		for(int i=0;i<3;i++){
-			if((this.enterTime[i] != null)&&(this.enterTime[i+1] == null))
+			if(( !this.enterTime[i].equals("无") ) && (this.enterTime[i+1].equals("无")))
 				return this.enterTime[i];	
 		}
-		return null;
+		return "无";
 	}
 	
 	public void setEnterTime(String enterTime){
 		for(int i=0;i<4;i++){
-			if(this.enterTime[i] == null){
+			if(this.enterTime[i].equals("无")){
 				this.enterTime[i] = enterTime;
 				break;
 			}
@@ -96,7 +112,11 @@ public class GoodsPO implements Serializable{
 	public String[] getLeaveDate(){
 		String[] leaveDate = new String[4];
 		for(int i=0;i<4;i++){
-			if(leaveTime[i] != null){
+			leaveDate[i] = "无";
+		}
+		
+		for(int i=0;i<4;i++){
+			if(!leaveTime[i].equals("无")){
 				String[] parts = leaveTime[i].split(" ");
 				leaveDate[i] = parts[0];
 			}
@@ -106,15 +126,15 @@ public class GoodsPO implements Serializable{
 	
 	public String getLatestLeaveTime(){
 		for(int i=0;i<3;i++){
-			if((this.leaveTime[i] != null)&&(this.leaveTime[i+1] == null))
+			if(( !leaveTime[i].equals("无") ) && (leaveTime[i+1].equals("无")))
 				return this.leaveTime[i];	
 		}
-		return null;
+		return "无";
 	}
 	
 	public void setLeaveTime(String leaveTime){
 		for(int i=0;i<4;i++){
-			if(this.leaveTime[i] == null){
+			if(this.leaveTime[i].equals("无")){
 				this.leaveTime[i] = leaveTime;
 				break;
 			}
@@ -125,18 +145,21 @@ public class GoodsPO implements Serializable{
 		return this.enterRepertoryID;
 	}
 	
+	
 	public String getLatestEnterRepertoryID(){
 		for(int i=0;i<3;i++){
-			if((this.enterRepertoryID[i] != null)&&(this.enterRepertoryID[i+1] == null))
+			if((!this.enterRepertoryID[i].equals("无"))&&(this.enterRepertoryID[i+1].equals("无")))
 				return this.enterRepertoryID[i];	
 		}
-		return null;
+		return "无";
 	}
 	
 	public void setEnterRepertoryID(String enterRepertoryID){
 		for(int i=0;i<4;i++){
-			if(this.enterRepertoryID[i] == null)
-			this.enterRepertoryID[i] = enterRepertoryID;
+			if(this.enterRepertoryID[i].equals("无")){
+				this.enterRepertoryID[i] = enterRepertoryID;
+				break;
+			}
 		}
 	}
 	
@@ -146,16 +169,18 @@ public class GoodsPO implements Serializable{
 	
 	public String getLatestLeaveRepertoryID(){
 		for(int i=0;i<3;i++){
-			if((this.leaveRepertoryID[i] != null)&&(this.leaveRepertoryID[i+1] == null))
+			if((!this.leaveRepertoryID[i].equals("无"))&&(this.leaveRepertoryID[i+1].equals("无")))
 				return this.leaveRepertoryID[i];	
 		}
-		return null;
+		return "无";
 	}
 	
 	public void setLeaveRepertoryID(String leaveRepertoryID){
 		for(int i=0;i<4;i++){
-			if(this.leaveRepertoryID[i] == null)
-			this.leaveRepertoryID[i] = leaveRepertoryID;
+			if(this.leaveRepertoryID[i].equals("无")){
+				this.leaveRepertoryID[i] = leaveRepertoryID;
+				break;
+			}
 		}
 	}
 	
