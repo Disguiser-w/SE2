@@ -27,8 +27,7 @@ import common.FileGetter;
  */
 public class UserFrame extends JFrame {
 	// private JLabel panel;
-	public static final int DEFAULT_WIDTH = 960;
-	public static final int DEFAULT_HEIGHT = 640;
+
 	private JLabel imageLabel;
 	private MessagePanel messagePanel;
 	private FunctionPanel functionPanel;
@@ -39,7 +38,9 @@ public class UserFrame extends JFrame {
 
 	private File propertiesFile;
 	private Properties settings;
-
+	private LocationHelper helper;
+	public static final int DEFAULT_WIDTH = 960;
+	public static final int DEFAULT_HEIGHT = 640;
 	public UserFrame() {
 		num = 0;
 		// panel = new JLabel();
@@ -86,7 +87,9 @@ public class UserFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		// setResizable(false);
+		setBackground(new Color(0,0,0,0));
 		setFocusable(false);
+		helper = new LocationHelper((JPanel)getContentPane());
 
 	}
 
