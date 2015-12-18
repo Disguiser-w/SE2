@@ -168,33 +168,36 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 
 						OrganizationPO organizationPO2 = (new OrganizationData())
 								.findOrganizationByID(newOrganization);
-						IntermediatePO po2 = new IntermediatePO(organizationPO2,tempUserPO.getName(),
+						IntermediatePO po2 = new IntermediatePO(
+								organizationPO2, tempUserPO.getName(),
 								tempUserPO.getUserID());
 
-						File file2 = FileGetter.getFile("IntermediateCentreInfo/"
-								+ tempUserPO.getUserID() + "-intermediate.dat");
+						File file2 = FileGetter
+								.getFile("IntermediateCentreInfo/intermediate/"
+										+ tempUserPO.getUserID()
+										+ "-intermediate.dat");
 
 						try {
-							ArrayList<BusinessPO> businessPOs = null;
-							if (file1.exists()) {
+							ArrayList<IntermediatePO> intermediatePOs = null;
+							if (file2.exists()) {
 								ObjectInputStream in = new ObjectInputStream(
-										new FileInputStream(file1));
-								businessPOs = (ArrayList<BusinessPO>) in
+										new FileInputStream(file2));
+								intermediatePOs = (ArrayList<IntermediatePO>) in
 										.readObject();
 								in.close();
 
-								int size = businessPOs.size();
+								int size = intermediatePOs.size();
 								for (int j = 0; j < size; j++) {
-									if (businessPOs.get(j).getID()
+									if (intermediatePOs.get(j).getID()
 											.equals(tempUserPO.getUserID())) {
-										businessPOs.remove(j);
+										intermediatePOs.remove(j);
 										break;
 									}
 								}
 
 								ObjectOutputStream out = new ObjectOutputStream(
-										new FileOutputStream(file1));
-								out.writeObject(businessPOs);
+										new FileOutputStream(file2));
+								out.writeObject(intermediatePOs);
 								out.close();
 							}
 
@@ -379,8 +382,10 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					IntermediatePO po2 = new IntermediatePO(organizationPO2,
 							tempUserPO.getName(), tempUserPO.getUserID());
 
-					File file2 = FileGetter.getFile("intermediateCentreInfo/"
-							+ tempUserPO.getUserID() + "-intermediate.dat");
+					File file2 = FileGetter
+							.getFile("intermediateCentreInfo/intermediate/"
+									+ tempUserPO.getUserID()
+									+ "-intermediate.dat");
 
 					try {
 						ArrayList<IntermediatePO> intermediatePOs = null;
@@ -553,12 +558,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				professionCount += 1;
 			}
 		}
-		
-		boolean exist[] = new boolean[professionCount+1];
-		for (int i = 0; i <= professionCount; i++){
+
+		boolean exist[] = new boolean[professionCount + 1];
+		for (int i = 0; i <= professionCount; i++) {
 			exist[professionCount] = false;
 		}
-		
+
 		int currentCount = 0;
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
@@ -568,23 +573,23 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				exist[currentCount] = true;
 			}
 		}
-		
+
 		for (int i = 1; i <= professionCount; i++) {
 			if (exist[i] == false) {
 				return formatPostString(i);
 			}
 		}
-		
-		return formatPostString(professionCount+1);
+
+		return formatPostString(professionCount + 1);
 	}
-	
-	public String formatPostString(int post){
-		if(post>0 && post<=9)
-			return "0000"+post;
-		else if(post>=10 && post<= 99)
-			return "000"+post;
-		else 
-			return "00"+post;
+
+	public String formatPostString(int post) {
+		if (post > 0 && post <= 9)
+			return "0000" + post;
+		else if (post >= 10 && post <= 99)
+			return "000" + post;
+		else
+			return "00" + post;
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
@@ -767,7 +772,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 
 				String now = userData.getUserIDPost(ProfessionType.courier);
 				System.out.println(now);
-				
+
 				UserPO userpo1 = userData.findUserByID("KD-00001");
 				if (userpo1 != null)
 					System.out.println("Find the user: " + userpo1.getName()
