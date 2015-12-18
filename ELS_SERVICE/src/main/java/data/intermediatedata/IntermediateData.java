@@ -41,7 +41,6 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public IntermediatePO getIntermediateInfo(String intermediate_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		// System.out.println("hhaa");
 		String path = "intermediateInfo";
 		File file = FileGetter.getFile(path);
 		try {
@@ -53,7 +52,6 @@ public class IntermediateData extends UnicastRemoteObject implements
 			in.close();
 			for (IntermediatePO intermediate : intermediatePOList) {
 				if (intermediate.getID().equals(intermediate_ID)) {
-					// System.out.println(intermediate.getName());
 					return intermediate;
 				}
 			}
