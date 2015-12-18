@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
@@ -19,13 +20,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import businesslogic.businessbl.controller.VehicleManagerController;
-import businesslogic.financebl.controller.AccountBLController;
-import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationController;
-import businesslogic.receiptbl.getDate;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogic.userbl.UserBL;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
 import type.AuthorityType;
@@ -37,6 +31,13 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
+import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.receiptbl.getDate;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
 
 public class InitialStockPanel_new extends OperationPanel{
 
@@ -53,7 +54,7 @@ public class InitialStockPanel_new extends OperationPanel{
 //	private JButton previous;
 	private JLabel previous;
 
-	private JCheckBox all;
+//	private JCheckBox all;
 
 	private JLabel function;
 	private JLabel humanInfo;
@@ -134,7 +135,7 @@ public class InitialStockPanel_new extends OperationPanel{
 		cancelButton = new JButton("返回");
 		next = new JLabel(">");
 		previous = new JLabel("<");
-		all = new JCheckBox("全选");
+//		all = new JCheckBox("全选");
 		function = new JLabel("期初建账");
 		humanInfo = new JLabel("人员信息");
 		organizationInfo = new JLabel("机构信息");
@@ -175,7 +176,7 @@ public class InitialStockPanel_new extends OperationPanel{
 		add(cancelButton);
 		add(next);
 		add(previous);
-		add(all);
+//		add(all);
 		add(function);
 		add(humanInfo);
 		add(organizationInfo);
@@ -240,8 +241,7 @@ public class InitialStockPanel_new extends OperationPanel{
 			public void mouseClicked(MouseEvent e) {
 				changeTable(vehicleTable);
 				int temp=vehicle.size();
-				System.out.println(vehicleController.getVehicleInfo().size());
-				refreshVehicle(vehicleController.getVehicleInfo());
+				refreshVehicle(controller.getVehicleInfo());
 				vm=new VehicleModel(vehicle);
 				for(int i=0;i<temp;i++){
 					vm.removeRow(0);
@@ -295,13 +295,13 @@ public class InitialStockPanel_new extends OperationPanel{
 			completeLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					initVO=new InitInfoVO(getDate.getdate(), init_user, init_organization, init_vehicle, init_repertory, init_account);
-					/*if(init_account.size()==0||init_organization.size()==0||init_repertory.size()==0
+					if(init_account.size()==0||init_organization.size()==0||init_repertory.size()==0
 							||init_user.size()==0||init_vehicle.size()==0){
 						JOptionPane.showMessageDialog(null,"输入的期初信息不完整（一共有五项哟）！", "提示",
 								JOptionPane.CLOSED_OPTION);
 					}
 					else{
-					*/
+					
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){
 						controller.initInfo(initVO,getDate.getdate());
@@ -323,6 +323,7 @@ public class InitialStockPanel_new extends OperationPanel{
 						controller.initInfo(initVO,getDate.getdate());
 						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
 								JOptionPane.CLOSED_OPTION);
+					}
 					}
 					}
 				}
@@ -421,7 +422,7 @@ public class InitialStockPanel_new extends OperationPanel{
 					//选中
 					if(b.isSelected()){
 						b.setSelected(false);
-						VehicleVO vo = vehicleController.getVehicleInfo().get(count3*8+n);
+						VehicleVO vo = controller.getVehicleInfo().get(count3*8+n);
 						init_vehicle.add(vo);
 					}	
 					n++;
@@ -554,8 +555,8 @@ public class InitialStockPanel_new extends OperationPanel{
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 		selected.get(7).setBounds(PANEL_WIDTH * 4 / 72, PANEL_HEIGHT * 23 / 32,
 				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+//		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+//				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 	
 		table.setBounds(PANEL_WIDTH *3/ 32, PANEL_HEIGHT * 3 / 14+PANEL_HEIGHT *3/ 50,
 				PANEL_WIDTH *44 /50 , PANEL_HEIGHT *30/ 50-PANEL_HEIGHT *3/ 50);

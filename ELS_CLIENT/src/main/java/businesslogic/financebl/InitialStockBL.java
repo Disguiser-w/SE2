@@ -6,7 +6,10 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.InitInfoPO;
+import po.VehiclePO;
 import vo.InitInfoVO;
+import vo.VehicleVO;
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import dataservice.businessdataservice.BusinessDataService;
@@ -108,6 +111,25 @@ public class InitialStockBL{
 		}
 	}
 	
+	
+	public ArrayList<VehicleVO> getVehicleInfo(){
+		ArrayList<VehiclePO> pos;
+		try {
+			pos = businessData.getVehicleInfos(null);
+			ArrayList<VehicleVO> vos = new ArrayList<VehicleVO>();
+			for(VehiclePO p : pos){
+				VehicleVO v = BusinessMainController.vehiclePOToVO(p);
+				vos.add(v);
+			}
+			return vos;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("获取车辆信心失败");
+			return null;
+		}
+		
+	}
 	
 	/*public static void main(String[] args){
 		InitialStockBL bl=new InitialStockBL();

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
@@ -18,12 +19,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import businesslogic.businessbl.controller.VehicleManagerController;
-import businesslogic.financebl.controller.AccountBLController;
-import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationController;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogic.userbl.UserBL;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
 import type.AuthorityType;
@@ -35,6 +30,12 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
+import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
 
 public class InitialStockPanel_detail extends OperationPanel{
 
@@ -47,7 +48,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	private JLabel next;
 	private JLabel previous;
 
-	private JCheckBox all;
+//	private JCheckBox all;
 
 	private JLabel function;
 	private JLabel humanInfo;
@@ -124,7 +125,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 		cancelButton = new JButton("返回");
 		next = new JLabel(">");
 		previous = new JLabel("<");
-		all = new JCheckBox("全选");
+//		all = new JCheckBox("全选");
 		function = new JLabel("期初建账");
 		humanInfo = new JLabel("人员信息");
 		organizationInfo = new JLabel("机构信息");
@@ -176,7 +177,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 		add(cancelButton);
 		add(next);
 		add(previous);
-		add(all);
+//		add(all);
 		add(function);
 		add(humanInfo);
 		add(organizationInfo);
@@ -336,8 +337,8 @@ public class InitialStockPanel_detail extends OperationPanel{
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
 		previous.setBounds(PANEL_WIDTH *19/ 40, PANEL_HEIGHT * 42 / 48,
 				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+//		all.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+//				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
 	
 		table.setBounds(PANEL_WIDTH *3/ 32, PANEL_HEIGHT * 3 / 14+PANEL_HEIGHT *3/ 50,
 				PANEL_WIDTH *44 /50 , PANEL_HEIGHT *30/ 50-PANEL_HEIGHT *3/ 50);

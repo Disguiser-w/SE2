@@ -3,6 +3,7 @@ package businesslogic.financebl.controller;
 import java.util.ArrayList;
 
 import vo.InitInfoVO;
+import vo.VehicleVO;
 import businesslogic.financebl.InitialStockBL;
 import businesslogicservice.financeblservice.InitialStockBLService;
 
@@ -27,6 +28,10 @@ public class InitialStockBLController implements InitialStockBLService{
 	public ArrayList<InitInfoVO> getAllInitInfo()  {
 		// TODO Auto-generated method stub
 		return initialStockBL.getAllInitInfo();
+	}
+	
+	public ArrayList<VehicleVO> getVehicleInfo(){
+		return initialStockBL.getVehicleInfo();
 	}
 	
 	public static void main(String[] args){
