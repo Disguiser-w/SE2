@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import vo.AccountVO;
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.OperationPanel;
+import vo.AccountVO;
 
-public class AccountManagementPanel_main extends JPanel {
+public class AccountManagementPanel_main extends OperationPanel {
 	/**
 	 * 
 	 */

@@ -6,24 +6,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import businesslogic.financebl.controller.PaymentReceiptBLController;
+import presentation.commonui.OperationPanel;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.PaymentReceiptVO;
 import vo.UserVO;
-import businesslogic.financebl.controller.PaymentReceiptBLController;
 
-public class PaymentReceiptPanel extends JPanel {
+public class PaymentReceiptPanel extends OperationPanel {
 	/**
 	 * 
 	 */

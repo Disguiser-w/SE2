@@ -139,30 +139,6 @@ public class MainFrame extends JFrame {
 		}
 
 		public void showPanel() {
-			(new Thread(new Runnable() {
-				public void run() {
-					for (int i = 0; i < 5; i++) {
-						alpha += 0.2f;
-						if (alpha > 1f)
-							alpha = 1f;
-						repaint();
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			})).start();
-		}
-
-		public void paintComponent(Graphics g) {
-			Graphics2D g2d = (Graphics2D) g;
-			Composite composite = g2d.getComposite();
-			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-			g2d.fillRect(0, 0, getWidth(), getHeight());
-			super.paintComponent(g2d);
 		}
 	}
 
@@ -253,7 +229,7 @@ public class MainFrame extends JFrame {
 		private JButton signInButton;
 		private JButton cancelButton;
 		private JLabel imageLabel;
-		private JComboBox names;
+		private JComboBox<String> names;
 		// private JComboBox names;
 
 		private UserNameController nameController;
@@ -269,7 +245,7 @@ public class MainFrame extends JFrame {
 			cancelButton = new JButton("取消");
 
 			imageLabel = new JLabel();
-			names = new JComboBox();
+			names = new JComboBox<String>();
 
 			imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -391,68 +367,76 @@ public class MainFrame extends JFrame {
 			} else if (logvo.logReply.equals("falsepassword")) {
 
 			} else {
-				// 成功登录，生成界面
-				nameController.addNewName(userID);
-				updateNames();
 
-				String type = userID.split("-")[0];
-				// 不同人员的方式自己来补完
+				(new Thread(new Runnable() {
+					public void run() {
+						// 成功登录，生成界面
+						nameController.addNewName(userID);
+						updateNames();
 
-				switch (type) {
-				case "KD":
-					// 快递员登录
-					ExpressMainController expressMainController = new ExpressMainController(userID);
-					break;
-				case "ZZZX":
-					// 中转中心业务员登录
-					try {
-						IntermediateMainController intermediateMaincontroller = new IntermediateMainController(userID);
-					} catch (Exception e1) {
-						// TODO 自动生成的 catch 块
-						e1.printStackTrace();
-					}
-				case "YYT":
-					// 营业厅业务员登录
-					BusinessMainController businessMainController = new BusinessMainController(userID);
-					break;
-				// 来这里加吧，上面的 uservo通过 logvo.uservo得到
-				case "CW":
-					try {
-						FinanceMainController financeMainController = new FinanceMainController(userID);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-				case "admin":
-					try {
-						UserMainController userMainController = new UserMainController(userID);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-				case "JL":
-					try {
-						ManageMainController manageMainController = new ManageMainController(userID);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-				case "CK":
-					try {
-						RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-				default:
-					System.out.println("该类人员不存在，请联系管理员");
-				}
+						String type = userID.split("-")[0];
+						// 不同人员的方式自己来补完
 
-				frame.setVisible(false);
+						switch (type) {
+						case "KD":
+							// 快递员登录
+							ExpressMainController expressMainController = new ExpressMainController(userID);
+							break;
+						case "ZZZX":
+							// 中转中心业务员登录
+							try {
+								IntermediateMainController intermediateMaincontroller = new IntermediateMainController(
+										userID);
+							} catch (Exception e1) {
+								// TODO 自动生成的 catch 块
+								e1.printStackTrace();
+							}
+							break;
+						case "YYT":
+							// 营业厅业务员登录
+							BusinessMainController businessMainController = new BusinessMainController(userID);
+							break;
+						// 来这里加吧，上面的 uservo通过 logvo.uservo得到
+						case "CW":
+							try {
+								FinanceMainController financeMainController = new FinanceMainController(userID);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case "admin":
+							try {
+								UserMainController userMainController = new UserMainController(userID);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case "JL":
+							try {
+								ManageMainController manageMainController = new ManageMainController(userID);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case "CK":
+							try {
+								RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						default:
+							System.out.println("该类人员不存在，请联系管理员");
+						}
+						frame.setVisible(false);
+
+					}
+				})).start();
+
 			}
 		}
 	}
@@ -565,4 +549,5 @@ public class MainFrame extends JFrame {
 	private void warnning(String msg) {
 		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.INFORMATION_MESSAGE);
 	}
+
 }

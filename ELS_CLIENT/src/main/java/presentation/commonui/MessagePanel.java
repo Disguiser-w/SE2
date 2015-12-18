@@ -2,9 +2,9 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +15,8 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import presentation.image.ImageGetter;
 
 class MessagePanel extends JPanel {
 	// private JLabel changePasswordLabel;
@@ -29,6 +31,7 @@ class MessagePanel extends JPanel {
 	private int oldX;
 	private int oldY;
 	private boolean isMoving;
+	private Image background;
 
 	public MessagePanel(JFrame frame) {
 		this.frame = frame;
@@ -39,6 +42,7 @@ class MessagePanel extends JPanel {
 		oldX = 0;
 		oldY = 0;
 		isMoving = false;
+		background = ImageGetter.getImage("background2.png").getImage();
 		// add(changePasswordLabel);
 		// add(messageLabel);
 		add(exitLabel);
@@ -136,6 +140,8 @@ class MessagePanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(102, 102, 102));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
+		// 圆角
+		// g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
+		g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 	}
 }

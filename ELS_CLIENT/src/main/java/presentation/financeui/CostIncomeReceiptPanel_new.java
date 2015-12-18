@@ -2,20 +2,16 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.getDate;
+import presentation.commonui.OperationPanel;
 
-public class CostIncomeReceiptPanel_new extends JPanel {
+public class CostIncomeReceiptPanel_new extends OperationPanel {
 	/**
 	 * 
 	 */
@@ -39,20 +35,21 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	private JTextField totalIncome_Input;
 	private JTextField totalCost_Input;
 	private JTextField totalProfit_Input;
-	
-	private String beginTime; 
+
+	private String beginTime;
 	private String endTime;
 	private String ID;
 	public CostIncomeReceiptBLController controller;
 	FinanceFrame financeFrame;
 
-	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller,FinanceFrame parent) {
-		this.controller=controller;
-		this.financeFrame=parent;
-		
-		beginTime="2010-01-01";
-		endTime=getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
-		ID=controller.getCostIncomeListID();
+	public CostIncomeReceiptPanel_new(CostIncomeReceiptBLController controller, FinanceFrame parent) {
+		this.controller = controller;
+		this.financeFrame = parent;
+
+		beginTime = "2010-01-01";
+		endTime = getDate.getdate().substring(0, 4) + "-" + getDate.getdate().substring(4, 6) + "-"
+				+ getDate.getdate().substring(6);
+		ID = controller.getCostIncomeListID();
 		infoOKButton = new JButton("确认");
 		function = new JLabel("成本收益表");
 		costIncomeReceipt_ID = new JLabel("成本收益表编号");
@@ -68,17 +65,17 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 		startDate_Input.setEditable(false);
 		endDate_Input = new JTextField(endTime);
 		endDate_Input.setEditable(false);
-		double income=controller.getIncome();
-		totalCost_Input = new JTextField(income+"");
+		double income = controller.getIncome();
+		totalCost_Input = new JTextField(income + "");
 		totalCost_Input.setEditable(false);
-		double cost=controller.getCost();
-		totalIncome_Input = new JTextField(cost+"");
+		double cost = controller.getCost();
+		totalIncome_Input = new JTextField(cost + "");
 		totalIncome_Input.setEditable(false);
-		double profit=controller.getProfit(income, cost);
-		totalProfit_Input = new JTextField(profit+"");
+		double profit = controller.getProfit(income, cost);
+		totalProfit_Input = new JTextField(profit + "");
 		totalProfit_Input.setEditable(false);
 		setCmpLocation();
-		
+
 		infoOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,34 +103,20 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 	}
 
 	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 44 / 48,
-				PANEL_WIDTH / 15, PANEL_HEIGHT / 15);
-		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
-				PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
-		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		totalIncome.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16,
-				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		totalCost.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3,
-				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		totalProfit.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48,
-				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		costIncomeReceipt_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 4,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		startDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 17 / 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		endDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 24,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 44 / 48, PANEL_WIDTH / 15, PANEL_HEIGHT / 15);
+		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4, PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
+		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+		totalIncome.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16, PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		totalCost.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3, PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		totalProfit.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48, PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		costIncomeReceipt_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 4, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		startDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 17 / 48, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		endDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 24, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -149,13 +132,13 @@ public class CostIncomeReceiptPanel_new extends JPanel {
 
 	}
 
-/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-		CostIncomeReceiptBLController controller=new CostIncomeReceiptBLController();
-		FinanceFrame financeFrame=new FinanceFrame();
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new CostIncomeReceiptPanel_new(controller,financeFrame));
-		frame.setVisible(true);
-	}
-	*/
+	/*
+	 * public static void main(String[] args) throws MalformedURLException,
+	 * RemoteException, NotBoundException { CostIncomeReceiptBLController
+	 * controller=new CostIncomeReceiptBLController(); FinanceFrame
+	 * financeFrame=new FinanceFrame(); JFrame frame = new JFrame();
+	 * frame.setSize(800, 550); frame.add(new
+	 * CostIncomeReceiptPanel_new(controller,financeFrame));
+	 * frame.setVisible(true); }
+	 */
 }

@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
@@ -20,6 +19,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.receiptbl.getDate;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
+import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
 import type.AuthorityType;
 import type.OrganizationType;
@@ -30,15 +37,8 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
-import businesslogic.businessbl.controller.VehicleManagerController;
-import businesslogic.financebl.controller.AccountBLController;
-import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationController;
-import businesslogic.receiptbl.getDate;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogic.userbl.UserBL;
 
-public class InitialStockPanel_new extends JPanel{
+public class InitialStockPanel_new extends OperationPanel{
 
 	/**
 	 * 

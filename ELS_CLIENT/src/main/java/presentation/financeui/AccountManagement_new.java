@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.OperationPanel;
 import vo.AccountVO;
 
-public class AccountManagement_new extends JPanel {
+public class AccountManagement_new extends OperationPanel {
 	
 	/**
 	 * 

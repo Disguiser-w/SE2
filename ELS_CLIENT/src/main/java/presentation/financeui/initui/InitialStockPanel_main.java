@@ -12,22 +12,22 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import presentation.financeui.FinanceFrame;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
 import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
+import presentation.commonui.OperationPanel;
+import presentation.financeui.FinanceFrame;
 import vo.InitInfoVO;
 
-public class InitialStockPanel_main extends JPanel {
+public class InitialStockPanel_main extends OperationPanel {
 
 	/**
 	 * 

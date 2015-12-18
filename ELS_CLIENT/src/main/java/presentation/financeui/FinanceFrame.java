@@ -16,9 +16,9 @@ public class FinanceFrame extends UserFrame{
 	private static final long serialVersionUID = 1L;
 	
 	public FinanceFrame(UserVO vo){
-		super();
+		super(vo.userName, vo.userID);
 		
-		setMessage(vo.userName, vo.userID);
+//		setMessage(vo.userName, vo.userID);
 //		addFuncLabel(new AccountManagementPanel_main());
 //		addFuncLabel(new CollectionReceiptPanel());
 //		addFuncLabel(new PaymentReceiptPanel());

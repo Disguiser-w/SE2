@@ -10,25 +10,25 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import businesslogic.financebl.controller.CollectionReceiptBLController;
+import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
+import presentation.commonui.OperationPanel;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
 import vo.UserVO;
-import businesslogic.financebl.controller.CollectionReceiptBLController;
-import businesslogic.receiptbl.getDate;
 /**
  * 暂时先把根据营业厅筛选的去掉了，以后有时间再说吧
  * */
-public class CollectionReceiptPanel extends JPanel {
+public class CollectionReceiptPanel extends OperationPanel {
 	/**
 	 * 
 	 */

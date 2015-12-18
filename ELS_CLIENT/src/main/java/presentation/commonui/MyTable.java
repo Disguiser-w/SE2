@@ -97,13 +97,18 @@ public class MyTable extends JPanel {
 	}
 
 	public void loadPanels() {
+
+		row = infos.size();
+
 		int extend = 0;
 		if (multiChoose)
 			extend = 80;
 		else
 			extend = 50;
 		setSize(width + extend, getHeight());
+
 		rowPanel = new ArrayList<MyRowPanel>();
+
 		for (int i = 0; i < row; i++) {
 			MyRowPanel panel = new MyRowPanel(i);
 			rowPanel.add(panel);
@@ -119,7 +124,6 @@ public class MyTable extends JPanel {
 			remove(i);
 
 		this.infos = infos;
-
 		loadPanels();
 	}
 
@@ -213,6 +217,7 @@ public class MyTable extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new Color(245, 245, 245));
@@ -220,7 +225,7 @@ public class MyTable extends JPanel {
 
 		int widths = 30;
 
-		g2d.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+		g2d.setFont(new Font("Microsoft YaHei", Font.PLAIN, 12));
 		FontMetrics fm = g2d.getFontMetrics();
 		int ascent = fm.getAscent();
 
@@ -242,6 +247,7 @@ public class MyTable extends JPanel {
 		// widths += columnWidth[column - 1];
 		// g2d.drawLine(widths, 0, widths, height);
 		// }
+
 	}
 
 	class MyRowPanel extends JPanel {
@@ -291,7 +297,7 @@ public class MyTable extends JPanel {
 
 			// g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			// RenderingHints.VALUE_ANTIALIAS_ON);
-			g2d.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
+			g2d.setFont(new Font("Microsoft YaHei", Font.PLAIN, 12));
 			FontMetrics fm = g2d.getFontMetrics();
 			int ascent = fm.getAscent();
 			g2d.setColor(Color.WHITE);
@@ -315,10 +321,11 @@ public class MyTable extends JPanel {
 					g2d.drawLine(widths, 0, widths, height);
 			}
 			widths += columnWidth[column - 1];
+			int width = getWidth();
 			if (multiChoose) {
 
 				g2d.setColor(new Color(235, 235, 235));
-				g2d.drawLine(widths - 101, 0, widths - 101, height);
+				g2d.drawLine(width - 31, 0, width - 31, height);
 			}
 
 			g2d.setColor(new Color(0, 134, 255));
@@ -326,11 +333,10 @@ public class MyTable extends JPanel {
 				g2d.drawRect(0, 0, widths - 1, height - 1);
 
 			if (box.getSelected()) {
-				if (!multiChoose)
-					widths -= 30;
-				g2d.drawRect(0, 0, widths - 70 - 1, height - 1);
-				g2d.drawRect(1, 1, widths - 70 - 3, height - 3);
-				g2d.drawRect(2, 2, widths - 70 - 5, height - 5);
+
+				g2d.drawRect(0, 0, width - 1, height - 1);
+				g2d.drawRect(1, 1, width - 3, height - 3);
+				g2d.drawRect(2, 2, width - 5, height - 5);
 			}
 
 		}
@@ -413,7 +419,6 @@ public class MyTable extends JPanel {
 		panel.add(table);
 
 		table.setLocationAndSize(0, 0, 380, 200);
-		frame.add(table.getScrollPanel());
 
 		try {
 			Thread.sleep(5000);

@@ -3,8 +3,6 @@ package presentation.businessui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -16,7 +14,6 @@ import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,13 +50,6 @@ public class DriverManagerPanel extends OperationPanel {
 	private UserFrame mainFrame;
 	private ArrayList<DriverVO> drivers;
 
-	private boolean isModify;
-	private boolean isDel;
-
-	private int numOfChoose;
-	private int num;
-	private boolean isFirstTime;
-
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
@@ -85,18 +75,11 @@ public class DriverManagerPanel extends OperationPanel {
 		add(searchLabel);
 		add(inputField);
 		add(confirmButton);
-		add(messageTable);
+
 		add(previousPageLabel);
 		add(nextPageLabel);
 
 		add(numOfPage);
-
-		messageTable.setBackground(getBackground());
-
-		num = 0;
-		numOfChoose = 0;
-		isModify = false;
-		isFirstTime = true;
 
 		drivers = controller.getDriverInfo();
 
@@ -123,8 +106,9 @@ public class DriverManagerPanel extends OperationPanel {
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
 		confirmButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25),
+				(int) (height * 5.401785714285714 / 20), (int) (width * 22.98335467349552 / 25),
+				(int) (height * 10.535714285714286 / 20));
 
 		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
@@ -134,6 +118,14 @@ public class DriverManagerPanel extends OperationPanel {
 
 	private void setBaseInfos() {
 		String[] head = new String[] { "司机编号", "姓名", "身份证号", "手机", "性别", "运货次数" };
+
+		int[] widths = { 120, 60, 170, 120, 60, 60 };
+
+		messageTable = new MyTable(head, getInfos(), widths, true);
+		add(messageTable.getScrollPanel());
+	}
+
+	private ArrayList<String[]> getInfos() {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		for (DriverVO i : drivers) {
 			String sex = null;
@@ -143,14 +135,12 @@ public class DriverManagerPanel extends OperationPanel {
 				sex = "女";
 			infos.add(new String[] { i.ID, i.name, i.IdCardNumber, i.phoneNumber, sex, i.time + "" });
 		}
-
-		int[] widths = { 110, 88, 198, 176, 66, 66 };
-
-		messageTable = new MyTable(head, infos, widths, true);
+		return infos;
 	}
 
 	private void updateTable() {
-
+		drivers = controller.getDriverInfo();
+		messageTable.setInfos(getInfos());
 	}
 
 	private void addListener() {
@@ -180,27 +170,13 @@ public class DriverManagerPanel extends OperationPanel {
 
 		delLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (isDel) {
-					if (JOptionPane.showConfirmDialog(null, "确认删除该司机信息？", "",
-							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-						return;
-					}
-					int n = 0;
-					int m = 0;
-					for (JCheckBox i : selectDriver) {
-						if (i.isSelected()) {
-							i.setSelected(false);
-							DriverVO vo = drivers.get(num * 8 + n);
-							controller.deleteDriver(vo);
-							m++;
-						}
-						n++;
-						isDel = false;
-					}
-
-					if ((drivers.size() - m - 1) / 8 + 1 < num + 1) {
-						num--;
-					}
+				ArrayList<Integer> selectedIndex = messageTable.getSelectedIndex();
+				int size = selectedIndex.size();
+				if (size == 0)
+					return;
+				else {
+					for (int i : selectedIndex)
+						controller.deleteDriver(drivers.get(i));
 					updateTable();
 				}
 			}
@@ -508,6 +484,7 @@ public class DriverManagerPanel extends OperationPanel {
 
 					if (controller.modifyDriver(modifierVO)) {
 						successing("成功修改司机信息");
+						updateTable();
 
 					} else {
 						warnning("操作失败，请检查网络连接");
@@ -518,7 +495,7 @@ public class DriverManagerPanel extends OperationPanel {
 
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					updateTable();
+
 					mainFrame.toMainPanel();
 				}
 			});
@@ -832,8 +809,9 @@ public class DriverManagerPanel extends OperationPanel {
 
 					if (controller.addDriver(vo)) {
 						successing("成功添加司机");
+						updateTable();
 						clear();
-						hasAdd = true;
+
 					} else {
 						warnning("提交失败，请检查网络连接");
 					}
@@ -842,8 +820,6 @@ public class DriverManagerPanel extends OperationPanel {
 
 			cancelButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if (hasAdd)
-						updateTable();
 					mainFrame.toMainPanel();
 				}
 			});

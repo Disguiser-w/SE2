@@ -8,10 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
@@ -21,12 +19,13 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
+import presentation.commonui.OperationPanel;
 import type.ReceiptState;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.UserVO;
 
-public class ReceiptPanel_new extends JPanel {
+public class ReceiptPanel_new extends  OperationPanel {
 	/**
 	 * 
 	 */

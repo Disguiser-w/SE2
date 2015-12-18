@@ -3,20 +3,25 @@ package presentation.commonui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import presentation.image.ImageGetter;
+
 public class FunctionPanel extends JPanel {
 	private ArrayList<FuncLabel> funcLabels;
 	private int numOfFunc;
 	private int nowFunc;
+	private Image background;
 
 	public FunctionPanel() {
 		funcLabels = new ArrayList<FuncLabel>();
 		numOfFunc = 0;
 		nowFunc = 0;
+		background = ImageGetter.getImage("background3.png").getImage();
 		setLayout(null);
 
 	}
@@ -54,7 +59,10 @@ public class FunctionPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(0, 121, 255));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
+		// 圆角方法
+		// g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
+		g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+
 		for (int i = 0; i < numOfFunc; i++) {
 			g2d.setColor(new Color(0, 82, 130));
 			g2d.fillRect(0, (i + 1) * (height / 9 + 1) - 1, width, 1);

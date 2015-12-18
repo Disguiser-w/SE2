@@ -2,16 +2,17 @@ package presentation.financeui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import vo.AccountVO;
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.OperationPanel;
+import vo.AccountVO;
 
-public class AccountManagementPanel_modify extends JPanel{
+public class AccountManagementPanel_modify extends OperationPanel{
 
 	/**
 	 * 
