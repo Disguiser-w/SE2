@@ -164,6 +164,45 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						}
 
 						break;
+					case intermediateCenterCounterman:
+
+						OrganizationPO organizationPO2 = (new OrganizationData())
+								.findOrganizationByID(newOrganization);
+						IntermediatePO po2 = new IntermediatePO(organizationPO2,tempUserPO.getName(),
+								tempUserPO.getUserID());
+
+						File file2 = FileGetter.getFile("IntermediateCentreInfo/"
+								+ tempUserPO.getUserID() + "-intermediate.dat");
+
+						try {
+							ArrayList<BusinessPO> businessPOs = null;
+							if (file1.exists()) {
+								ObjectInputStream in = new ObjectInputStream(
+										new FileInputStream(file1));
+								businessPOs = (ArrayList<BusinessPO>) in
+										.readObject();
+								in.close();
+
+								int size = businessPOs.size();
+								for (int j = 0; j < size; j++) {
+									if (businessPOs.get(j).getID()
+											.equals(tempUserPO.getUserID())) {
+										businessPOs.remove(j);
+										break;
+									}
+								}
+
+								ObjectOutputStream out = new ObjectOutputStream(
+										new FileOutputStream(file1));
+								out.writeObject(businessPOs);
+								out.close();
+							}
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						break;
 
 					}
 				}

@@ -1,11 +1,10 @@
 package presentation.mainui;
 
-import java.awt.AlphaComposite;
+import init.UserNameController;
+
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +26,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import presentation.commonui.LocationHelper;
+import presentation.commonui.MyTextField;
+import presentation.image.ImageGetter;
+import vo.LogVO;
+import vo.OrderVO;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.LogisticQuery;
 import businesslogic.expressbl.controller.ExpressMainController;
@@ -36,12 +40,6 @@ import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
-import init.UserNameController;
-import presentation.commonui.LocationHelper;
-import presentation.commonui.MyTextField;
-import presentation.image.ImageGetter;
-import vo.LogVO;
-import vo.OrderVO;
 
 /**
  * 打开客户端的第一个界面
@@ -345,7 +343,7 @@ public class MainFrame extends JFrame {
 		}
 
 		// 调用bl层的方法登录
-		public void signIn(String userID, String password) {
+		public void signIn(final String userID, String password) {
 			// try{
 			// UserPO userpo = udService.findUser(userID);
 			// if(userpo.equals(null)) //找不到该用户，返回2
