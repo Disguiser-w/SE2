@@ -2,7 +2,6 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -26,9 +26,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
@@ -115,7 +118,7 @@ public class DriverManagerPanel extends OperationPanel {
 		setLayout(null);
 		addListener();
 
-		// helper = new LocationHelper(this);
+		messageTable.updateUI();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -159,16 +162,7 @@ public class DriverManagerPanel extends OperationPanel {
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-	}
-
-	public void paintComponent(Graphics g) {
-
-		if (isFirstTime) {
-			setInfos();
-			isFirstTime = false;
-		}
-		super.paintComponent(g);
-
+		setInfos();
 	}
 
 	// 设置载入动态的内容
@@ -178,10 +172,9 @@ public class DriverManagerPanel extends OperationPanel {
 		}
 		drivers = controller.getDriverInfo();
 		numOfPage.setText(num + 1 + "/" + ((drivers.size() - 1) / 8 + 1));
-
 		messageTable.setModel(new MessgeTableModel());
 		setBaseInfos();
-		// repaint();
+		messageTable.updateUI();
 	}
 
 	private void addListener() {
@@ -408,6 +401,7 @@ public class DriverManagerPanel extends OperationPanel {
 		}
 
 	}
+	
 
 	class ModifyPanel extends JPanel {
 		private JLabel idLabel;

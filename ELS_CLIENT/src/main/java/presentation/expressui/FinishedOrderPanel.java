@@ -10,15 +10,15 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
+import presentation.commonui.OperationPanel;
 import vo.OrderVO;
 
-public class FinishedOrderPanel extends JPanel {
+public class FinishedOrderPanel extends OperationPanel {
 	private JTextField orderIDField;
 	private JButton queryButton;
 	private JTextArea messageArea;
@@ -50,7 +50,7 @@ public class FinishedOrderPanel extends JPanel {
 		receiverPhoneNumField = new JTextField();
 
 		confirmButton = new JButton();
-		
+
 		orderIDField.setToolTipText("例如:DD-20151204-2");
 		// timeSetLabel = new JLabel();
 

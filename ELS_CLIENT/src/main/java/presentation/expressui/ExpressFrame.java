@@ -6,6 +6,6 @@ import vo.ExpressVO;
 public class ExpressFrame extends UserFrame {
 
 	public ExpressFrame(ExpressVO vo) {
-		super();
+		super(vo.name, vo.ID);
 	}
 }

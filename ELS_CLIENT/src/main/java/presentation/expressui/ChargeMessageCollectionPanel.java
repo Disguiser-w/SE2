@@ -10,7 +10,6 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -18,8 +17,9 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.expressbl.controller.ChargeCollectionController;
 import businesslogic.expressbl.controller.ExpressMainController;
+import presentation.commonui.OperationPanel;
 
-public class ChargeMessageCollectionPanel extends JPanel {
+public class ChargeMessageCollectionPanel extends OperationPanel {
 
 	private JTable messageTable;
 	private JLabel totalMessageLabel;
@@ -204,6 +204,7 @@ public class ChargeMessageCollectionPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		setInfos();
 	}
 	// }

@@ -76,6 +76,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 		isFirstTime = true;
 
 		addListener();
+		messageTable.updateUI();
 
 	}
 
@@ -83,7 +84,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
 
-		messageTable.getTableHeader().setBounds((int) (width * 1.120358514724712 / 25),
+		messageTable.getTableHeader().setBounds((int) (width * 1.120358514724712 / 25) - 1,
 				(int) (height * 1.3839285714285714 / 20), (int) (width * 22.791293213828425 / 25),
 				(int) (height * 1.2946428571428572 / 20));
 		messageTable.setBounds((int) (width * 1.120358514724712 / 25), (int) (height * 2.6339285714285716 / 20),
@@ -114,7 +115,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 		numOfPage.setText(num + 1 + "/" + ((chargeInfos.size() - 1) / 8 + 1));
 		messageTable.setModel(new MessageTableModel());
 		setTableInfos();
-
+		messageTable.updateUI();
 	}
 
 	public void addListener() {
@@ -174,6 +175,11 @@ public class ChargeCollectionPanel extends OperationPanel {
 		column2.setPreferredWidth(messageTable.getWidth() / 2);
 
 		messageTable.setRowHeight(messageTable.getHeight() / 8);
+		messageTable.setBorder(null);
+		// messageTable.setShowGrid(false);
+
+		// messageTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.white));
+		// messageTable.setGridColor(Color.WHITE);
 		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
 		// messageTable.getTableHeader().getHeight() + 4);
 
@@ -182,7 +188,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 				if (row % 2 == 0)
-					setBackground(Color.cyan);
+					setBackground(new Color(247, 247, 247));
 				else
 					setBackground(Color.white);
 

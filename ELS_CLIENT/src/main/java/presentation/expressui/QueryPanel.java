@@ -17,7 +17,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -26,9 +25,10 @@ import javax.swing.table.TableColumn;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.OperationPanel;
 import vo.OrderVO;
 
-public class QueryPanel extends JPanel {
+public class QueryPanel extends OperationPanel {
 
 	private JLabel timeInputLabel;
 	private JTextField timeField;

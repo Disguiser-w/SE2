@@ -8,12 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import businesslogic.businessbl.controller.BusinessMainController;
-import vo.BusinessVO;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
@@ -31,12 +27,11 @@ public class UserFrame extends JFrame {
 	public static final int DEFAULT_WIDTH = 960;
 	public static final int DEFAULT_HEIGHT = 640;
 
-	public UserFrame() {
+	public UserFrame(String name, String ID) {
+		
 		num = 0;
 		operationPanels = new ArrayList<JPanel>();
-
-		BusinessVO vo = BusinessMainController.businessVO;
-		imageLabel = new ImageLabel(new String[] { vo.name, vo.ID });
+		imageLabel = new ImageLabel(new String[] { name, ID });
 		messagePanel = new MessagePanel(this);
 		functionPanel = new FunctionPanel();
 		operationPanel = new JPanel();
@@ -137,7 +132,6 @@ public class UserFrame extends JFrame {
 
 		newPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
 				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
-		newPanel.setBackground(new Color(240, 240, 240));
 		operationPanels.add(newPanel);
 
 		FuncLabel funcLabel = new FuncLabel(str);

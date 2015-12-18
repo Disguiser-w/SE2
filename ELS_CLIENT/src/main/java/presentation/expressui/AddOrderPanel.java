@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import businesslogic.datafactory.DataFactory;
@@ -20,11 +19,12 @@ import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.OrganizationDataService;
+import presentation.commonui.OperationPanel;
 import type.ExpressType;
 import type.PackType;
 import vo.OrderVO;
 
-public class AddOrderPanel extends JPanel {
+public class AddOrderPanel extends OperationPanel {
 	/**
 	 * 
 	 */
@@ -598,7 +598,6 @@ public class AddOrderPanel extends JPanel {
 
 		packageTypeList.setSelectedIndex(0);
 
-		cost.setOpaque(true);
 		cost.setText("-");
 
 		time.setText("-");
@@ -634,7 +633,5 @@ public class AddOrderPanel extends JPanel {
 		return true;
 	}
 
-	public void paintComponent(Graphics g) {
-	}
 
 }

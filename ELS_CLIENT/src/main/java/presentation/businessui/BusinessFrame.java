@@ -6,7 +6,7 @@ import vo.BusinessVO;
 public class BusinessFrame extends UserFrame {
 	public BusinessFrame(BusinessVO vo) {
 
-		super();
+		super(vo.name, vo.ID);
 		// addFuncLabel(new QueryPanel());
 		// addFuncLabel(new ChargeMessageCollectionPanel());
 		// addFuncLabel(new AddOrderPanel());

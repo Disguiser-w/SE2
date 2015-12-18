@@ -106,12 +106,7 @@ public class Gathering {
 		Date d = new Date();
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		String time = fm.format(d);
-
-		// public OrganizationVO businesshall;
-		// public String time;
-		// public ArrayList<String> expressIDs;
-		// public ArrayList<Double> money;
-		// public double totalmoney;
+		
 		String receiptID = "SKD-" + organizationVO.organizationID + "-" + time;
 
 		GatheringReceiptPO grp = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(organizationVO), time,
