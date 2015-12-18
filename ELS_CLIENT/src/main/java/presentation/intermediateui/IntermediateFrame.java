@@ -5,7 +5,6 @@ import vo.IntermediateVO;
 
 public class IntermediateFrame extends UserFrame {
 	public IntermediateFrame(IntermediateVO intermediate) {
-		super();
-		setMessage(intermediate.name, intermediate.ID);
+		super(intermediate.name, intermediate.ID);
 	}
 }

@@ -15,7 +15,7 @@ public class AllReceiptShowVO {
 	public AllReceiptShowVO(ArrayList<GatheringReceiptVO> gatheringList,
 												ArrayList<CollectionReceiptVO> collectionList,
 												ArrayList<PaymentReceiptVO> paymentList,
-												ArrayList<EnplaningReceiptVO> enplaningList,
+												ArrayList<EnIntermediateReceiptVO> enIntermediateList,
 												ArrayList<TransferingReceiptVO> transferingList,
 												ArrayList<EnVehicleReceiptVO> enVehicleList,
 												ArrayList<OrderAcceptReceiptVO> orderAcceptList,
@@ -23,7 +23,7 @@ public class AllReceiptShowVO {
 		this.addGatheringReceipt(gatheringList);
 		this.addCollectiongReceipt(collectionList);
 		this.addPaymentReceipt(paymentList);
-		this.addEnplaningReceipt(enplaningList);
+		this.addEnIntermediateReceipt(enIntermediateList);
 		this.addTransferingReceipt(transferingList);
 		this.addEnVehicleReceipt(enVehicleList);
 		this.addOrderAcceptReceipt(orderAcceptList);
@@ -66,12 +66,12 @@ public class AllReceiptShowVO {
 		}
 	}
 	
-	public void addEnplaningReceipt(ArrayList<EnplaningReceiptVO> enplaningList){
-		if(enplaningList != null){
-			for(EnplaningReceiptVO erVO : enplaningList){
+	public void addEnIntermediateReceipt(ArrayList<EnIntermediateReceiptVO> enIntermediateList){
+		if(enIntermediateList != null){
+			for(EnIntermediateReceiptVO erVO : enIntermediateList){
 				allReceiptList.add(erVO);
 			}
-			count[3] = enplaningList.size();
+			count[3] = enIntermediateList.size();
 		}
 		else{
 			count[3] = 0;
