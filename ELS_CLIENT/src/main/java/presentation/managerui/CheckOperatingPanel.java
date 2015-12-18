@@ -278,18 +278,18 @@ public class CheckOperatingPanel extends JPanel {
 	public void refreshTable(ArrayList<CollectionReceiptVO> cvos, ArrayList<PaymentReceiptVO> pvos){
 		 for(CollectionReceiptVO v1: cvos){
 			ArrayList<String> lineInfo = new ArrayList<String>();
-			lineInfo.add(v1.getID());
-			lineInfo.add(v1.getDate());
-			lineInfo.add(v1.getIncome()+"");
-			lineInfo.add(v1.getUserID());
+			lineInfo.add(v1.ID);
+			lineInfo.add(v1.date);
+			lineInfo.add(v1.totalMoney+"");
+			lineInfo.add(v1.userID);
 			arr.add(lineInfo);
 		 }
 		 for(PaymentReceiptVO v2: pvos){
 			ArrayList<String> lineInfo = new ArrayList<String>();
-			lineInfo.add(v2.getID());
-			lineInfo.add(v2.getDate());
-			lineInfo.add(v2.getCost()+"");
-			lineInfo.add(v2.getUserID());
+			lineInfo.add(v2.ID);
+			lineInfo.add(v2.date);
+			lineInfo.add(v2.cost+"");
+			lineInfo.add(v2.userID);
 			arr.add(lineInfo);
 		 }
 	 }

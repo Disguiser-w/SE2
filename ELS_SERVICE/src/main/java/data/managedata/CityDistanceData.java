@@ -12,7 +12,6 @@ import dataservice.managedataservice.CityDistanceDataService;
 
 public class CityDistanceData extends UnicastRemoteObject implements CityDistanceDataService {
 
-	// 我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250152L;
 
 	JXCFile cityDistanceFile;
@@ -170,9 +169,15 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		try {
 
 			cityDistanceData = new CityDistanceData();
-			cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 600));
-			cityDistanceData.addCityDistance(new CityDistancePO("上海", "北京", 1000));
-			cityDistanceData.addCityDistance(new CityDistancePO("南京", "北京", 1400));
+			//cityDistanceData.deleteCityDistance("南京", "上海");
+			//cityDistanceData.deleteCityDistance("北京", "上海");
+			//cityDistanceData.deleteCityDistance("南京", "北京");
+			cityDistanceData.addCityDistance(new CityDistancePO("北京", "上海", 1064.7));
+			cityDistanceData.addCityDistance(new CityDistancePO("北京", "广州", 1888.8));
+			cityDistanceData.addCityDistance(new CityDistancePO("北京", "南京", 900));
+			cityDistanceData.addCityDistance(new CityDistancePO("上海", "广州", 1213));
+			cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 266));
+			cityDistanceData.addCityDistance(new CityDistancePO("广州", "南京", 1132));
 		} catch (Exception e) {
 
 		}

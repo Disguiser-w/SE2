@@ -331,7 +331,7 @@ public class RepertoryBL implements RepertoryBLService{
 	public String repertoryName(String repertoryID){
 		try{
 			String organizationID = repertoryID.substring(0,5);
-			OrganizationPO organizationpo = odService.findOrganization(organizationID);
+			OrganizationPO organizationpo = odService.findOrganizationByID(organizationID);
 			return organizationpo.getName()+"仓库";
 		}catch(RemoteException ex){
 			ex.printStackTrace();

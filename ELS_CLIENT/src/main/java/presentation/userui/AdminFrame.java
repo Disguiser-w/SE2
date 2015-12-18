@@ -11,11 +11,9 @@ public class AdminFrame extends UserFrame{
 	private static final long serialVersionUID = 189L;
 
 	public AdminFrame(UserVO vo){
-		super();
+		super(vo.userName, vo.userID);
 		
-		setMessage(vo.userName, vo.userID);
-		
-		addFuncLabel(new UserMainPanel(this));
+		addFuncLabel(new UserMainPanel(this), "用户管理");
 		
 		showFrame();
 	}

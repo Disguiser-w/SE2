@@ -11,16 +11,14 @@ public class ManageFrame extends UserFrame{
 private static final long serialVersionUID = 189L;
 	
 	public ManageFrame(UserVO vo){
-		super();
+		super(vo.userName, vo.userID);
 		
-		setMessage(vo.userName, vo.userID);
-		
-		addFuncLabel(new StaffManagePanel(this));
-		addFuncLabel(new OrganizationManagePanel(this));
-		addFuncLabel(new CheckReceiptPanel());
-		addFuncLabel(new CheckOperatingPanel());
-		addFuncLabel(new CheckIncomePanel());
-		addFuncLabel(new BasicDataManagePanel(this));
+		addFuncLabel(new StaffManagePanel(this), "用户管理");
+		addFuncLabel(new OrganizationManagePanel(this), "机构管理");
+		addFuncLabel(new CheckReceiptPanel(), "单据审批");
+		addFuncLabel(new CheckOperatingPanel(), "查看经营情况表");
+		addFuncLabel(new CheckIncomePanel(),"查看成本收益表");
+		addFuncLabel(new BasicDataManagePanel(this),"基础数据设置");
 		
 		showFrame();
 	}

@@ -59,7 +59,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		else {
 			for (int i = 0; i < objectList.size(); i++) {
 				UserPO tempUserPO = (UserPO) (objectList.get(i));
-				if (tempUserPO.getName().equals(userpo.getName())) {
+				if (tempUserPO.getUserID().equals(userpo.getUserID())) {
 					return 1;
 				}
 			}
@@ -128,7 +128,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					case businessHallCounterman:
 
 						OrganizationPO organizationPO1 = (new OrganizationData())
-								.findOrganization(newOrganization);
+								.findOrganizationByID(newOrganization);
 						BusinessPO po1 = new BusinessPO(tempUserPO.getName(),
 								tempUserPO.getUserID(), "0", organizationPO1);
 
@@ -156,47 +156,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 								ObjectOutputStream out = new ObjectOutputStream(
 										new FileOutputStream(file1));
 								out.writeObject(businessPOs);
-								out.close();
-							}
-
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-						break;
-					case intermediateCenterCounterman:
-
-						OrganizationPO organizationPO2 = (new OrganizationData())
-								.findOrganization(newOrganization);
-						IntermediatePO po2 = new IntermediatePO(
-								organizationPO2, tempUserPO.getName(),
-								tempUserPO.getUserID());
-
-						File file2 = FileGetter
-								.getFile("intermediateCentreInfo/"
-										+ newOrganization + "-intermediate.dat");
-
-						try {
-							ArrayList<IntermediatePO> intermediatePOs = null;
-							if (file2.exists()) {
-								ObjectInputStream in = new ObjectInputStream(
-										new FileInputStream(file2));
-								intermediatePOs = (ArrayList<IntermediatePO>) in
-										.readObject();
-								in.close();
-
-								int size = intermediatePOs.size();
-								for (int j = 0; j < size; j++) {
-									if (intermediatePOs.get(j).getID()
-											.equals(tempUserPO.getUserID())) {
-										intermediatePOs.remove(j);
-										break;
-									}
-								}
-
-								ObjectOutputStream out = new ObjectOutputStream(
-										new FileOutputStream(file2));
-								out.writeObject(intermediatePOs);
 								out.close();
 							}
 
@@ -298,7 +257,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				// 快递员
 				case courier:
 					OrganizationPO organizationPO = (new OrganizationData())
-							.findOrganization(newOrganizationID);
+							.findOrganizationByID(newOrganizationID);
 					ExpressPO po = new ExpressPO(tempUserPO.getName(),
 							tempUserPO.getUserID(), "0",
 							new ArrayList<String>(), organizationPO,
@@ -338,7 +297,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				case businessHallCounterman:
 
 					OrganizationPO organizationPO1 = (new OrganizationData())
-							.findOrganization(newOrganizationID);
+							.findOrganizationByID(newOrganizationID);
 					BusinessPO po1 = new BusinessPO(tempUserPO.getName(),
 							tempUserPO.getUserID(), "0", organizationPO1);
 
@@ -377,13 +336,12 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				case intermediateCenterCounterman:
 
 					OrganizationPO organizationPO2 = (new OrganizationData())
-							.findOrganization(newOrganizationID);
+							.findOrganizationByID(newOrganizationID);
 					IntermediatePO po2 = new IntermediatePO(organizationPO2,
 							tempUserPO.getName(), tempUserPO.getUserID());
 
-					File file2 = FileGetter.getFile("intermediateInfo/"
-							+ organizationPO2.getOrganizationID()
-							+ "-intermediate.dat");
+					File file2 = FileGetter.getFile("intermediateCentreInfo/"
+							+ tempUserPO.getUserID() + "-intermediate.dat");
 
 					try {
 						ArrayList<IntermediatePO> intermediatePOs = null;
@@ -515,7 +473,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	}
 
 	/**
-	 * 显示所有用户
+	 * 显示所有用户信息
 	 * 
 	 * @return ArrayList<UserPO>
 	 * 
@@ -550,38 +508,44 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 			return "00001";
 
 		int professionCount = 0; // 记录该职业的用户有多少人
-
+		for (int i = 0; i < objectList.size(); i++) {
+			UserPO tempUserPO = (UserPO) (objectList.get(i));
+			if (tempUserPO.getProfession().equals(profession)) {
+				professionCount += 1;
+			}
+		}
+		
+		boolean exist[] = new boolean[professionCount+1];
+		for (int i = 0; i <= professionCount; i++){
+			exist[professionCount] = false;
+		}
+		
+		int currentCount = 0;
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getProfession().equals(profession)) {
 				String[] parts = tempUserPO.getUserID().split("-");
-				int professionMaxTemp = Integer.parseInt(parts[1]); // 该用户目前的编号后缀
-				professionCount++; // 已有该职业用户的个数
-				if (professionCount != professionMaxTemp) { // 如果该用户目前的编号不等于已有该职业用户的个数，证明中间某编号是空余的
-					if (professionCount <= 9) {
-						return "0000" + professionCount;
-					} else if (professionCount >= 10 && professionCount <= 100) {
-						return "000" + professionCount;
-					} else {
-						return "00" + professionCount;
-					}
-				}
-
+				currentCount = Integer.parseInt(parts[1]); // 该用户目前的编号后缀
+				exist[currentCount] = true;
 			}
 		}
-
-		if (professionCount == 0)
-			return "00001"; // 如果遍历完所有的,没有找到对应职业的用户，就返回00001
-		else { // 如果遍历完所有的,用户个数和编号都一一对应，用户个数加一，返回
-			professionCount++;
-			if (professionCount <= 9) {
-				return "0000" + professionCount;
-			} else if (professionCount >= 10 && professionCount <= 100) {
-				return "000" + professionCount;
-			} else {
-				return "00" + professionCount;
+		
+		for (int i = 1; i <= professionCount; i++) {
+			if (exist[i] == false) {
+				return formatPostString(i);
 			}
 		}
+		
+		return formatPostString(professionCount+1);
+	}
+	
+	public String formatPostString(int post){
+		if(post>0 && post<=9)
+			return "0000"+post;
+		else if(post>=10 && post<= 99)
+			return "000"+post;
+		else 
+			return "00"+post;
 	}
 
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
@@ -593,7 +557,14 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		try {
 			userData = new UserData();
 			try {
+				userData.deleteUser("ZZZX-00001");
+				userData.deleteUser("KD-00001");
+
 				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
+						ProfessionType.manager, "总部",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.highest, 0));
+				userData.addUser(new UserPO("丁二玉", "JL-00002", "123456",
 						ProfessionType.manager, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.highest, 0));
@@ -601,24 +572,145 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						ProfessionType.financialStaff, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.highest, 0));
+				userData.addUser(new UserPO("王腻腻", "CW-00002", "123456",
+						ProfessionType.financialStaff, "总部",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.commonFianacialStaff, 0));
 				userData.addUser(new UserPO("魏彦淑", "admin", "admin",
 						ProfessionType.administrator, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.administrator, 0));
-				userData.addUser(new UserPO("张家盛", "YYT-00001", "123456",
-						ProfessionType.businessHallCounterman, "025-0",
+
+				userData.addUser(new UserPO("张家盛", "ZZZX-00001", "123456",
+						ProfessionType.intermediateCenterCounterman, "",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.lowest, 0));
-				userData.addUser(new UserPO("张词校", "KD-00001", "123456",
-						ProfessionType.courier, "025000",
-						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
-						0));
-				userData.addUser(new UserPO("王卉", "CK-00001", "123456",
+				userData.addUser(new UserPO("张方浩", "ZZZX-00002", "123456",
+						ProfessionType.intermediateCenterCounterman, "021-0",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("张海涛", "ZZZX-00003", "123456",
+						ProfessionType.intermediateCenterCounterman, "010-0",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("张晨剑", "ZZZX-00004", "123456",
+						ProfessionType.intermediateCenterCounterman, "020-0",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+
+				userData.addUser(new UserPO("万云天", "CK-00001", "123456",
 						ProfessionType.stockman, "025-0-CK",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.lowest, 0));
-				userData.addUser(new UserPO("吴秦月", "SJ-00001", "123456",
-						ProfessionType.driver, "030000",
+				userData.addUser(new UserPO("汪盼", "CK-00002", "123456",
+						ProfessionType.stockman, "021-0-CK",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("王成垚", "CK-00003", "123456",
+						ProfessionType.stockman, "010-0-CK",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("王栋", "CK-00004", "123456",
+						ProfessionType.stockman, "020-0-CK",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+
+				userData.addUser(new UserPO("杨关", "YYT-00001", "123456",
+						ProfessionType.businessHallCounterman, "025000",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("杨华安", "YYT-00002", "123456",
+						ProfessionType.businessHallCounterman, "025001",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("杨三洋", "YYT-00003", "123456",
+						ProfessionType.businessHallCounterman, "021000",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("杨雁飞", "YYT-00004", "123456",
+						ProfessionType.businessHallCounterman, "021001",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("曾攀", "YYT-00005", "123456",
+						ProfessionType.businessHallCounterman, "010000",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("朱文沛", "YYT-00006", "123456",
+						ProfessionType.businessHallCounterman, "010001",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("朱宇翔", "YYT-00007", "123456",
+						ProfessionType.businessHallCounterman, "020000",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+				userData.addUser(new UserPO("邹瀚真", "YYT-00008", "123456",
+						ProfessionType.businessHallCounterman, "020001",
+						SalaryPlanType.basicStaffSalaryPlan,
+						AuthorityType.lowest, 0));
+
+				userData.addUser(new UserPO("张词校", "KD-00001", "123456",
+						ProfessionType.courier, "",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("徐朱峰", "KD-00002", "123456",
+						ProfessionType.courier, "025001",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("徐江河", "KD-00003", "123456",
+						ProfessionType.courier, "021000",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("徐亚帆", "KD-00004", "123456",
+						ProfessionType.courier, "021001",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("徐文杰", "KD-00005", "123456",
+						ProfessionType.courier, "010000",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("徐家逸", "KD-00006", "123456",
+						ProfessionType.courier, "010001",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("孙浩", "KD-00007", "123456",
+						ProfessionType.courier, "020000",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("孙旭", "KD-00008", "123456",
+						ProfessionType.courier, "020001",
+						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
+						0));
+
+				userData.addUser(new UserPO("孙超", "SJ-00001", "123456",
+						ProfessionType.driver, "025000",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("宋益明", "SJ-00002", "123456",
+						ProfessionType.driver, "025001",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("宋子微", "SJ-00003", "123456",
+						ProfessionType.driver, "021000",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("苏琰梓", "SJ-00004", "123456",
+						ProfessionType.driver, "021001",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("孙政", "SJ-00005", "123456",
+						ProfessionType.driver, "010000",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("王杰", "SJ-00006", "123456",
+						ProfessionType.driver, "010001",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("王家玮", "SJ-00007", "123456",
+						ProfessionType.driver, "020000",
+						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
+						0));
+				userData.addUser(new UserPO("王嘉琛", "SJ-00008", "123456",
+						ProfessionType.driver, "020001",
 						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
 						0));
 
@@ -634,6 +726,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					}
 				}
 
+				String now = userData.getUserIDPost(ProfessionType.courier);
+				System.out.println(now);
+				
 				UserPO userpo1 = userData.findUserByID("KD-00001");
 				if (userpo1 != null)
 					System.out.println("Find the user: " + userpo1.getName()

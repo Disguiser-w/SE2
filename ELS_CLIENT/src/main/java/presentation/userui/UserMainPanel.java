@@ -58,9 +58,9 @@ public class UserMainPanel extends JPanel{
 	
 	private JLabel previousPageLabel;
 	private JLabel nextPageLabel;
+	private JLabel numOfPage;
 	
 	private ArrayList<JCheckBox> selectUser;
-	private JLabel numOfPage;
 	
 	private ArrayList<UserVO> users;
 	
@@ -125,8 +125,6 @@ public class UserMainPanel extends JPanel{
 		isModify = false;
 		isFirstTime = true;
 		
-		users = userBL.showAllUsers();
-
 		addListener();
 		
 		// helper = new LocationHelper(this);
@@ -134,8 +132,6 @@ public class UserMainPanel extends JPanel{
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 		selectUser.get(0).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 5.625 / 20),
 				(int) (width * 0.6722151088348272 / 25), (int) (height * 0.8035714285714286 / 20));
 		selectUser.get(1).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 6.830357142857143 / 20),
@@ -166,13 +162,14 @@ public class UserMainPanel extends JPanel{
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
 		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
-		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),
-				(int) (height * 5.401785714285714 / 20) - (int) (height * 1.435714285714286 / 20),
+		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),(int) (height * 5.401785714285714 / 20) - (int) (height * 1.435714285714286 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 1.435714285714286 / 20));
 		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
 		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
 				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
+		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 	}
 
 	public void paintComponent(Graphics g) {
@@ -188,7 +185,15 @@ public class UserMainPanel extends JPanel{
 		for (JCheckBox i : selectUser) {
 			i.setVisible(false);
 		}
-		users = userBL.showAllUsers();
+		
+		//不显示管理员相关信息
+		users = new ArrayList<UserVO>();
+		for (int i=0; i < userBL.showAllUsers().size(); i++){
+			UserVO tempUservo = userBL.showAllUsers().get(i);
+			if(!(tempUservo.profession.equals(ProfessionType.administrator)))
+				users.add(tempUservo);
+		}
+		
 		numOfPage.setText(num + 1 + "/" + ((users.size() - 1) / 8 + 1));
 
 		messageTable.setModel(new MessageTableModel());
@@ -238,12 +243,14 @@ public class UserMainPanel extends JPanel{
 
 				if(numOfChoose == 1){
 					isModify = true;
+					//modifyLabel.setEnabled(true);
 				} 
 				else
 					isModify = false;
 
 				if (numOfChoose >= 1)
 					isDel = true;
+					//modifyLabel.setEnabled(false);
 			}
 		};
 
@@ -392,7 +399,7 @@ public class UserMainPanel extends JPanel{
 					return "";
 				else
 					return organizationName(uservo.organization);
-				//return uservo.organization;
+					//return uservo.organization;
 			case 4:
 				return salaryPlanName(uservo.salaryPlan);
 			case 5:

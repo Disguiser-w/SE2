@@ -72,15 +72,20 @@ public class IntermediateMainController {
 	public IntermediateMainController(String intermediate_ID)
 			throws MalformedURLException, RemoteException, NotBoundException {
 		try {
+			if(DataFactory.getUserData().findUserByID(intermediate_ID) != null){
+				System.out.println("cunzaizhege");
+			}
 			intermediateData = DataFactory.getIntermediateData();
 			intermediate = poToVO((IntermediatePO) (intermediateData
 					.getIntermediateInfo(intermediate_ID)));
+			// System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		intermediateCentre = intermediate.organization;
+		// System.out.println(intermediateCentre.getName());
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
@@ -334,6 +339,7 @@ public class IntermediateMainController {
 	}
 
 	public static IntermediateVO poToVO(IntermediatePO intermediate) {
+		// System.out.println(intermediate.getName());
 		return new IntermediateVO(
 				IntermediateMainController.poToVO(intermediate
 						.getOrganization()), intermediate.getName(),

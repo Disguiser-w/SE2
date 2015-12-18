@@ -64,7 +64,7 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public OrganizationVO findOrganization(String organizationID) {
 		try {
-			OrganizationPO organizationpo = odService.findOrganization(organizationID);
+			OrganizationPO organizationpo = odService.findOrganizationByID(organizationID);
 			return organizationPOToVO(organizationpo);
 		} catch (RemoteException exception) {
 			exception.printStackTrace();
@@ -72,10 +72,24 @@ public class OrganizationBL implements OrganizationBLService {
 		}
 	}
 
+	public ArrayList<OrganizationVO> findOrganizationByKeyword(String keyword) {
+		try {
+			ArrayList<OrganizationPO> organizationpoList = odService.findOrganizationByKeyword(keyword);
+			ArrayList<OrganizationVO> organizationvoList = new ArrayList<OrganizationVO>();
+
+			for (OrganizationPO organization : organizationpoList)
+				organizationvoList.add(organizationPOToVO(organization));
+			return organizationvoList;
+		} catch (RemoteException exception) {
+			exception.printStackTrace();
+			return null;
+		}
+	}
+	
 	public int chooseDepartment(String userID, String organizationID) {
 		try {
 			UserPO userpo = udService.findUserByID(userID);
-			userpo.setOrganization(organizationID);
+			udService.modifyUserOrganization(userpo.getID(), organizationID);
 			return 0;
 		} catch (RemoteException exception) {
 			exception.printStackTrace();

@@ -13,17 +13,15 @@ public class RepertoryFrame extends UserFrame{
 	public UserVO uservo;
 	
 	public RepertoryFrame(UserVO vo) {
-		super();
+		super(vo.userName, vo.userID);
 		
 		this.uservo = vo;
 		
-		setMessage(vo.userName, vo.userID);
-		
-		addFuncLabel(new InitializeInformationPanel(uservo));
-		addFuncLabel(new WarehousingPanel(uservo));
-		addFuncLabel(new EXwarehousePanel(uservo));
-		addFuncLabel(new ViewInventoryPanel(uservo));
-		addFuncLabel(new InventoryVerificationPanel(uservo));
+		addFuncLabel(new InitializeInformationPanel(uservo), "库存信息初始化");
+		addFuncLabel(new WarehousingPanel(uservo), "入库");
+		addFuncLabel(new EXwarehousePanel(uservo), "出库");
+		addFuncLabel(new ViewInventoryPanel(uservo),"库存盘点");
+		addFuncLabel(new InventoryVerificationPanel(uservo), "库存查看");
 		showFrame();
 	}
 	

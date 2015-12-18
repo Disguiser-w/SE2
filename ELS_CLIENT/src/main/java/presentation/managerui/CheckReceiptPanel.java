@@ -21,6 +21,7 @@ import type.ReceiptState;
 import type.ReceiptType;
 import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
+import vo.EnIntermediateReceiptVO;
 import vo.EnVehicleReceiptVO;
 import vo.EnplaningReceiptVO;
 import vo.GatheringReceiptVO;
@@ -87,6 +88,7 @@ public class CheckReceiptPanel extends JPanel {
 		
 		collectionList = receiptBL.getAllSubmittedCollectionReceipt();
 		paymentList = receiptBL.getAllSubmittedPaymentReceipt();
+		receiptList = new ArrayList<ReceiptVO>();
 		
 		previousPageLabel = new JLabel("<");
 		nextPageLabel = new JLabel(">");
@@ -94,6 +96,7 @@ public class CheckReceiptPanel extends JPanel {
 		receiptCategoryChoose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
 				int chosen = receiptCategoryChoose.getSelectedIndex();
+				System.out.println(chosen);
 				changeTableMessage(chosen);
 			}
 		});
@@ -115,6 +118,8 @@ public class CheckReceiptPanel extends JPanel {
 		setCmpLocation();
 		setInfos();
 		setBaseInfos();
+		
+		changeTableMessage(1);
 	}
 
 	public void setCmpLocation() {
@@ -148,17 +153,27 @@ public class CheckReceiptPanel extends JPanel {
 		repaint();
 	}
 	
-	public String receiptTypeName(ReceiptType receiptType){
-		if(receiptType.equals(ReceiptType.COLLECTIONRECEIPT))
+	public String receiptTypeName(String receiptID){
+		if(receiptID.startsWith("SKD"))
+			return "收款单";
+		if(receiptID.startsWith("HJSKD"))
 			return "合计收款单";
-		if(receiptType.equals(ReceiptType.PAYMENTRECEIPT))
+		if(receiptID.startsWith("FKD"))
 			return "付款单";
-		/*if(receiptType.equals(ReceiptType.COLLECTIONRECEIPT))
-			return "中转中心业务员";
-		if(receiptType.startsWith("CK"))
-			return "仓库管理员";
-		if(receiptType.startsWith("CW"))
-			return "财务人员";*/
+		if(receiptID.startsWith("ZZZXZCD"))
+			return "中转中心装车单";
+		if(receiptID.startsWith("ZZZXDDD"))
+			return "中转中心到达单";
+		if(receiptID.startsWith("YYTZCD"))
+			return "营业厅装车单";
+		if(receiptID.startsWith("YYTDDD"))
+			return "营业厅到达单";
+		if(receiptID.startsWith("PJD"))
+			return "派件单";
+		if(receiptID.startsWith("RKD"))
+			return "入库单";
+		if(receiptID.startsWith("CKD"))
+			return "出库单";
 		else
 			return "";
 	}
@@ -257,10 +272,10 @@ public class CheckReceiptPanel extends JPanel {
 	public void changeTableMessage(int chosen){
 		switch (chosen) {
 		case 0: ArrayList<GatheringReceiptVO> gatheringList = receiptBL.getAllSubmittedGatheringReceipt();
-				receiptList.clear();
-				for(int i=0;i<gatheringList.size();i++){
+				//receiptList.clear();
+				/*for(int i=0;i<gatheringList.size();i++){
 					receiptList.add((ReceiptVO)gatheringList.get(i));
-				}
+				}*/
 				repaint();
 				break;
 		case 1: ArrayList<CollectionReceiptVO> collectionList = receiptBL.getAllSubmittedCollectionReceipt();
@@ -277,10 +292,10 @@ public class CheckReceiptPanel extends JPanel {
 				}
 				repaint();
 				break;
-		case 3: ArrayList<EnplaningReceiptVO> enplaningList = receiptBL.getAllSubmittedEnplaningReceipt();
+		case 3: ArrayList<EnIntermediateReceiptVO> enIntermediateList = receiptBL.getAllSubmittedEnIntermediateReceipt();
 				receiptList.clear();
-				for(int i=0;i<enplaningist.size();i++){
-					receiptList.add((ReceiptVO)enplaningList.get(i));
+				for(int i=0;i<enIntermediateList.size();i++){
+					receiptList.add((ReceiptVO)enIntermediateList.get(i));
 				}
 				repaint();
 				break;
@@ -292,27 +307,27 @@ public class CheckReceiptPanel extends JPanel {
 				repaint();
 				break;
 		case 5: ArrayList<EnVehicleReceiptVO> enVehicleList = receiptBL.getAllSubmittedEnVehicleReceipt();
-				receiptList.clear();
-				for(int i=0;i<enVehicleList.size();i++){
+				//receiptList.clear();
+				/*for(int i=0;i<enVehicleList.size();i++){
 					receiptList.add((ReceiptVO)enVehicleList.get(i));
-				}
+				}*/
 				repaint();
 				break;
 		case 6: ArrayList<OrderAcceptReceiptVO> orderAcceptList = receiptBL.getAllSubmittedOrderAcceptReceipt();
-				receiptList.clear();
-				for(int i=0;i<orderAcceptList.size();i++){
+				//receiptList.clear();
+				/*for(int i=0;i<orderAcceptList.size();i++){
 					receiptList.add((ReceiptVO)orderAcceptList.get(i));
-				}
+				}*/
 				repaint();
 				break;
 		case 7: ArrayList<DistributeReceiptVO> distributeList = receiptBL.getAllSubmittedDistributeReceipt();
-				receiptList.clear();
-				for(int i=0;i<distributeList.size();i++){
+				//receiptList.clear();
+				/*for(int i=0;i<distributeList.size();i++){
 					receiptList.add((ReceiptVO)distributeList.get(i));
-				}
+				}*/
 				repaint();
 				break;
-		case 8: ArrayList<GatheringReceiptVO> gatheringList = receiptBL.getAllSubmittedGatheringReceipt();
+		/*case 8: ArrayList<GatheringReceiptVO> gatheringList = receiptBL.getAllSubmittedGatheringReceipt();
 				receiptList.clear();
 				for(int i=0;i<gatheringList.size();i++){
 					receiptList.add((ReceiptVO)gatheringList.get(i));
@@ -332,8 +347,9 @@ public class CheckReceiptPanel extends JPanel {
 					receiptList.add((ReceiptVO)gatheringList.get(i));
 				}
 				repaint();
+				break;*/
+		default:
 				break;
-		
 		}
 	}
 		
@@ -362,7 +378,7 @@ public class CheckReceiptPanel extends JPanel {
 				selectReceipt.get(rowIndex).setVisible(true);
 				return receiptvo.receiptID;
 			case 1:
-				return receiptTypeName(receiptvo.type);
+				return receiptTypeName(receiptvo.receiptID);
 			case 2:
 				return receiptvo.userID;
 			case 3:

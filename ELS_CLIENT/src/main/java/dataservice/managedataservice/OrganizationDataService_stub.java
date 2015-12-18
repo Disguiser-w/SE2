@@ -22,11 +22,15 @@ public class OrganizationDataService_stub implements OrganizationDataService{
 		return 0;
 	}
     
-    public OrganizationPO findOrganization(String organizationID) throws RemoteException{
-		System.out.println("Find organization succeed!");
+    public OrganizationPO findOrganizationByID(String organizationID) throws RemoteException{
+		System.out.println("Find organization by ID succeed!");
 		return null;
 	}
     
+    public ArrayList<OrganizationPO> findOrganizationByKeyword(String keyword) throws RemoteException{
+    	System.out.println("Find organization by keyword succeed!");
+		return null;
+    }
     public ArrayList<OrganizationPO> showAllOrganizations() throws RemoteException{
 		System.out.println("Show all organization succeed!");
 		return null;

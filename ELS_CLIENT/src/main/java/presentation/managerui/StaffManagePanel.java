@@ -378,6 +378,7 @@ public class StaffManagePanel extends JPanel{
 				else if(uservo.organization.equals(""))
 					return "";
 				else
+					//return uservo.organization;
 					return organizationName(uservo.organization);
 			case 4:
 				return salaryPlanName(uservo.salaryPlan);

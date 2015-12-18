@@ -96,10 +96,10 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			return approvePaymentReceipt(prvo);
 		}
 		
-		//中转中心装车单	EnplaningReceipt
+		//中转中心装车单	EnIntermediateReceipt
 		if(receiptID.startsWith("ZZZXZCD")){
-			EnplaningReceiptVO ervo = (EnplaningReceiptVO)ob;
-			return approveEnplaningReceipt(ervo);
+			EnIntermediateReceiptVO ervo = (EnIntermediateReceiptVO)ob;
+			return approveEnIntermediateReceipt(ervo);
 		}
 		
 		//中转中心到达单	TransferingReceipt
@@ -148,17 +148,17 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	public AllReceiptShowVO getAllReceiptList(){
-		ArrayList<GatheringReceiptVO> gatheringReceiptVOList = getAllSubmittedGatheringReceipt();
-		collectionReceiptVOList = collectionBL.getAllCollection();
-		paymentReceiptVOList = paymentBL.getAllPaymentReceipt();
-		//ArrayList<EnplaningReceiptVO> ervoList = IntermediateMainController.getAllSubmittedEnplaningReceipt();
-		//ArrayList<TransferingReceiptVO> trvoList = IntermediateMainController.poToVO_TransferingReceiptList(getAllSubmittedTransferingReceipt());
-		/*ArrayList<EnVehicleReceiptVO> evrvoList = BusinessMainController.enVehicleReceiptPOToVO(evrPO);
-		ArrayList<OrderAcceptReceiptVO> oarvoList = BusinessMainController.orderAcceptReceiptPOToVO(oarPO);
-		ArrayList<DistributeReceiptVO> drvoList = BusinessMainController.distributeReceiptPOToVO(drPO);
-		AllReceiptShowVO allReceiptVO = new AllReceiptShowVO(grvoList, crvoList, prvoList, ervoList, trvoList, evrvoList, oarvoList, drvoList);*/
-		//return allReceiptVO;
-		return null;
+		gatheringReceiptVOList = getAllSubmittedGatheringReceipt();
+		collectionReceiptVOList = getAllSubmittedCollectionReceipt();
+		paymentReceiptVOList = getAllSubmittedPaymentReceipt();
+		enIntermediateReceiptVOList = getAllSubmittedEnIntermediateReceipt();
+		transferingReceiptVOList = getAllSubmittedTransferingReceipt();
+		enVehicleReceiptVOList = getAllSubmittedEnVehicleReceipt();
+		orderAcceptReceiptVOList = getAllSubmittedOrderAcceptReceipt();
+		distributeReceiptVOList = getAllSubmittedDistributeReceipt();
+		AllReceiptShowVO allReceiptVO = new AllReceiptShowVO(gatheringReceiptVOList, collectionReceiptVOList, paymentReceiptVOList, enIntermediateReceiptVOList, 
+				transferingReceiptVOList, enVehicleReceiptVOList, orderAcceptReceiptVOList, distributeReceiptVOList);
+		return allReceiptVO;
 	}
 	
 	//获取全部提交的收款单
@@ -198,11 +198,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个合计收款单(BL层的方法呢？？？)
 	public int approveCollectionReceipt(CollectionReceiptVO crVO){
-		/*CollectionReceiptPO crPO = FinanceMainController.cvoToPO(crVO);
-		crPO.setState(ReceiptState.APPROVE);
-		crdService.saveCollectionReceiptInfo(crPO);
-		*/
-		return 0;
+		return collectionBL.saveSubmittedCollectionReceiptInfo(crVO);
 	}
 	
 	//获取全部提交的、待审批的付款单
@@ -212,19 +208,12 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	//审批一个付款单(BL层的方法呢？？？)
-	public int approvePaymentReceipt(PaymentReceiptVO crVO){
-		/*PaymentReceiptPO prPO = FinanceMainController.pvoToPO(crVO);
-		prPO.setState(ReceiptState.APPROVE);
-		try {
-			prdService.saveSubmittedPaymentReceiptInfo(prPO);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return 1;
-		}*/
+	public int approvePaymentReceipt(PaymentReceiptVO prVO){
+		return paymentBL.saveSubmittedPaymentReceiptInfo(prVO);
 	}
 
 	//获取全部提交的中转中心装车单
-	public ArrayList<EnIntermediateReceiptVO> getAllSubmittedEnplaningReceipt(){
+	public ArrayList<EnIntermediateReceiptVO> getAllSubmittedEnIntermediateReceipt(){
 		try{
 			enIntermediateReceiptPOList = itmdService.getSubmittedEnIntermediateReceiptInfo();
 			enIntermediateReceiptVOList = new ArrayList<EnIntermediateReceiptVO>();
@@ -240,7 +229,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	}
 	
 	//审批一个中转中心装车单
-	public int approveEnplaningReceipt(EnIntermediateReceiptVO erVO){
+	public int approveEnIntermediateReceipt(EnIntermediateReceiptVO erVO){
 		EnplaningReceiptPO erPO = IntermediateMainController.voToPO(erVO);
 		erPO.setReceiptState(ReceiptState.APPROVE);
 		try{
