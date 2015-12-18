@@ -19,7 +19,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -27,6 +26,7 @@ import javax.swing.table.TableColumn;
 //import javax.swing.ListSelectionModel;
 
 
+import presentation.commonui.OperationPanel;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ import type.ProfessionType;
 import type.SalaryPlanType;
 import type.AuthorityType;
 
-public class UserMainPanel extends JPanel{
+public class UserMainPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 2L;
 

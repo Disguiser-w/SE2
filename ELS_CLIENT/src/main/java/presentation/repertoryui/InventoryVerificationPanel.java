@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import presentation.commonui.OperationPanel;
 import businesslogic.repertorybl.RepertoryBL;
 import vo.InventoryVO;
 import vo.UserVO;
 //import presentation.commonui.LocationHelper;
 
-public class InventoryVerificationPanel extends JPanel {
+public class InventoryVerificationPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 38L;
 	

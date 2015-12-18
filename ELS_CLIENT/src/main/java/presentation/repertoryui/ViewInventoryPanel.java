@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -18,11 +17,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import presentation.commonui.DateChooser;
+import presentation.commonui.OperationPanel;
 import vo.InventoryCheckVO;
 import vo.UserVO;
 import businesslogic.repertorybl.RepertoryBL;
 
-public class ViewInventoryPanel extends JPanel {
+public class ViewInventoryPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 99L;
 	

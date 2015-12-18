@@ -4,8 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import presentation.commonui.OperationPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ import businesslogic.managebl.OrganizationBL;
 import type.OrganizationType;
 import vo.OrganizationVO;
 
-public class AddOrganizationPanel extends JPanel{
+public class AddOrganizationPanel extends OperationPanel {
 
 	private static final long serialVersionUID = 21L;
 	

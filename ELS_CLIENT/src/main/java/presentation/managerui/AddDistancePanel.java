@@ -3,9 +3,9 @@ package presentation.managerui;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
 
@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class AddDistancePanel extends JPanel{
+public class AddDistancePanel extends OperationPanel {
 
 	private static final long serialVersionUID = 67L;
 

@@ -12,7 +12,13 @@ import po.OrganizationPO;
 import po.PerWagePO;
 import po.RepertoryPO;
 import po.UserPO;
+import presentation.managerui.BasicDataManagePanel;
+import presentation.managerui.CheckIncomePanel;
+import presentation.managerui.CheckOperatingPanel;
+import presentation.managerui.CheckReceiptPanel;
 import presentation.managerui.ManageFrame;
+import presentation.managerui.OrganizationManagePanel;
+import presentation.managerui.StaffManagePanel;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
@@ -43,6 +49,7 @@ public class ManageMainController {
 	public static CheckCostIncomeReceiptController checkCostIncomeReceiptController;
 	public static ReviewReceiptController reviewReceiptController;
 	
+	private ManageFrame manageFrame;
 	public ManageMainController(String managerID){
 		// RMI
 		try{
@@ -72,7 +79,15 @@ public class ManageMainController {
 			
 			try{
 				manageVO = userPOToVO(userData.findUserByID(managerID));
-				new ManageFrame(manageVO);
+				manageFrame = new ManageFrame(manageVO);
+				manageFrame.addFuncLabel(new StaffManagePanel(manageFrame), "用户管理");
+				manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame), "机构管理");
+				manageFrame.addFuncLabel(new CheckReceiptPanel(), "单据审批");
+				manageFrame.addFuncLabel(new CheckOperatingPanel(), "查看经营情况表");
+				manageFrame.addFuncLabel(new CheckIncomePanel(),"查看成本收益表");
+				manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame),"基础数据设置");
+				
+				manageFrame.showFrame();
 			}catch(RemoteException exception){
 				exception.printStackTrace();
 			}

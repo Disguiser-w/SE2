@@ -18,7 +18,6 @@ import javax.swing.JCheckBox;
 //import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 //import javax.swing.ListSelectionModel;
@@ -32,6 +31,8 @@ import javax.swing.table.TableColumn;
 
 
 
+
+import presentation.commonui.OperationPanel;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
@@ -40,7 +41,7 @@ import vo.UserVO;
 import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
 
-public class StaffManagePanel extends JPanel{
+public class StaffManagePanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 8L;
 	

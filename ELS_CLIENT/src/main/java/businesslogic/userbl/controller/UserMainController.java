@@ -9,11 +9,15 @@ import dataservice.userdataservice.UserDataService;
 import vo.UserVO;
 import po.UserPO;
 import presentation.userui.AdminFrame;
+import presentation.userui.UserMainPanel;
 
 public class UserMainController {
 	
 	public static UserDataService userData;
+	
 	public static UserVO userVO;
+	
+	private AdminFrame adminFrame;
 	
 	// UserData的初始化，UserVO的初始化在此进行
 	public UserMainController(String userID){
@@ -30,7 +34,10 @@ public class UserMainController {
 		
 		try{
 			userVO = userPOToVO(userData.findUserByID(userID));
-			new AdminFrame(userVO);
+			adminFrame = new AdminFrame(userVO);
+			adminFrame.addFuncLabel(new UserMainPanel(adminFrame), "用户管理");
+			
+			adminFrame.showFrame();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}

@@ -6,16 +6,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import businesslogic.repertorybl.RepertoryBL;
 import vo.UserVO;
 
 //import presentation.commonui.LocationHelper;
 
-public class WarehousingPanel extends JPanel {
+public class WarehousingPanel extends OperationPanel {
 
 	private static final long serialVersionUID = 92L;
 
@@ -246,15 +246,15 @@ public class WarehousingPanel extends JPanel {
 		intermediateMessageArea.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 5.223214285714286 / 20),
 				(int) (width * 9.85403329065301 / 25), (int) (height * 5.151785714285714 / 20));
 		chooseLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 10.892857142857142 / 20),
-				(int) (width * 3.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
+				(int) (width * 3.649167733674776 / 25), (int) (height * 1.6071428571428572 / 20));
 		planeButton.setBounds((int) (width * 3.0409731113956466 / 25), (int) (height * 13.080357142857142 / 20),
-				(int) (width * 2.6888604353393086 / 25), (int) (height * 1.6071428571428572 / 20));
+				(int) (width * 2.496798975672215 / 25), (int) (height * 1.6071428571428572 / 20));
 		trainButton.setBounds((int) (width * 7.746478873239437 / 25), (int) (height * 13.348214285714286 / 20),
-				(int) (width * 2.496798975672215 / 25), (int) (height * 1.25 / 20));
+				(int) (width * 2.496798975672215 / 25), (int) (height * 1.6071428571428572 / 20));
 		vehicleButton.setBounds((int) (width * 12.195902688860436 / 25), (int) (height * 13.482142857142858 / 20),
-				(int) (width * 2.496798975672215 / 25), (int) (height * 1.1160714285714286 / 20));
+				(int) (width * 2.496798975672215 / 25), (int) (height * 1.6071428571428572 / 20));
 		motorButton.setBounds((int) (width * 16.389244558258643 / 25), (int) (height * 13.348214285714286 / 20),
-				(int) (width * 3.0409731113956466 / 25), (int) (height * 1.25 / 20));
+				(int) (width * 2.496798975672215 / 25), (int) (height * 1.25 / 20));
 		addressLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 15.892857142857142 / 20),
 				(int) (width * 4.673495518565941 / 25), (int) (height * 1.3839285714285714 / 20));
 		blockField.setBounds((int) (width * 7.5864276568501925 / 25), (int) (height * 15.892857142857142 / 20),

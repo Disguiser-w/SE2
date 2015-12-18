@@ -3,8 +3,9 @@ package presentation.managerui;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import presentation.commonui.OperationPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,7 @@ import vo.CostVO;
 import type.ExpressType;
 import businesslogic.managebl.CostBL;
 
-public class ModifyBaseFreightPanel extends JPanel{
+public class ModifyBaseFreightPanel extends OperationPanel {
 
 	private static final long serialVersionUID = 68L;
 

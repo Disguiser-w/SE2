@@ -7,13 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import type.AuthorityType;
 import businesslogic.userbl.UserBL;
 
-public class ModifyUserAuthorityPanel extends JPanel{
+public class ModifyUserAuthorityPanel extends OperationPanel {
 
 	private static final long serialVersionUID = 15L;
 

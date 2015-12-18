@@ -12,7 +12,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -22,13 +21,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import presentation.commonui.OperationPanel;
 import vo.OrganizationVO;
 import type.OrganizationType;
 import businesslogic.managebl.OrganizationBL;
 
 //import presentation.commonui.LocationHelper;
 
-public class OrganizationManagePanel extends JPanel implements ListSelectionListener{
+public class OrganizationManagePanel extends OperationPanel implements ListSelectionListener{
 	
 	private static final long serialVersionUID = 20L;
 

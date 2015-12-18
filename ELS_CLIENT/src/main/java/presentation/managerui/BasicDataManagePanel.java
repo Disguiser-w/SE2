@@ -9,7 +9,6 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
@@ -22,6 +21,8 @@ import javax.swing.ListSelectionModel;
 
 //import presentation.commonui.LocationHelper;
 
+
+import presentation.commonui.OperationPanel;
 import vo.PerWageVO;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
@@ -33,7 +34,7 @@ import businesslogic.managebl.BasicSalaryBL;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogic.managebl.CostBL;
 
-public class BasicDataManagePanel extends JPanel implements ListSelectionListener{
+public class BasicDataManagePanel extends OperationPanel implements ListSelectionListener{
 
 	private static final long serialVersionUID = 30L;
 	

@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import businesslogic.repertorybl.RepertoryBL;
 import vo.InventoryVO;
 import vo.UserVO;
@@ -17,7 +17,7 @@ import vo.UserVO;
 //import presentation.commonui.LocationHelper;
 
 
-public class EXwarehousePanel extends JPanel {
+public class EXwarehousePanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 23L;
 	

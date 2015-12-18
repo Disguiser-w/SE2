@@ -3,8 +3,9 @@ package presentation.repertoryui;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import presentation.commonui.OperationPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,7 @@ import java.awt.event.ActionEvent;
 import businesslogic.repertorybl.RepertoryBL;
 import vo.UserVO;
 
-public class InitializeInformationPanel extends JPanel {
+public class InitializeInformationPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 147L;
 

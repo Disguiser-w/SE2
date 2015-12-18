@@ -6,7 +6,12 @@ import java.rmi.RemoteException;
 
 import businesslogic.datafactory.DataFactory;
 import po.UserPO;
+import presentation.repertoryui.EXwarehousePanel;
+import presentation.repertoryui.InitializeInformationPanel;
+import presentation.repertoryui.InventoryVerificationPanel;
 import presentation.repertoryui.RepertoryFrame;
+import presentation.repertoryui.ViewInventoryPanel;
+import presentation.repertoryui.WarehousingPanel;
 import vo.UserVO;
 import dataservice.userdataservice.UserDataService;
 
@@ -14,6 +19,8 @@ public class RepertoryMainController {
 
 	public static UserDataService userData;
 	public static UserVO stockManVO;
+	
+	private RepertoryFrame repertoryFrame;
 	
 	// UserData的初始化，UserVO的初始化在此进行
 	public RepertoryMainController(String stockManID){
@@ -30,7 +37,13 @@ public class RepertoryMainController {
 		
 		try{
 			stockManVO = userPOToVO(userData.findUserByID(stockManID));
-			new RepertoryFrame(stockManVO);
+			repertoryFrame = new RepertoryFrame(stockManVO);
+			repertoryFrame.addFuncLabel(new InitializeInformationPanel(stockManVO), "库存信息初始化");
+			repertoryFrame.addFuncLabel(new WarehousingPanel(stockManVO), "入库");
+			repertoryFrame.addFuncLabel(new EXwarehousePanel(stockManVO), "出库");
+			repertoryFrame.addFuncLabel(new ViewInventoryPanel(stockManVO),"库存盘点");
+			repertoryFrame.addFuncLabel(new InventoryVerificationPanel(stockManVO), "库存查看");
+			repertoryFrame.showFrame();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}

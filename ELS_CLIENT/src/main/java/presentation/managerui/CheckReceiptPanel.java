@@ -10,12 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import presentation.commonui.OperationPanel;
 import businesslogic.managebl.ReviewReceiptBL;
 import type.ReceiptState;
 import type.ReceiptType;
@@ -32,7 +32,7 @@ import vo.TransferingReceiptVO;
 
 //import presentation.commonui.LocationHelper;
 
-public class CheckReceiptPanel extends JPanel {
+public class CheckReceiptPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 16L;
 	

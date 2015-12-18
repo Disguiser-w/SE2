@@ -7,22 +7,23 @@ import java.awt.event.ActionEvent;
 //import java.awt.event.FocusEvent;
 
 
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 //import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPanel;
 
 import businesslogic.userbl.UserBL;
 import vo.UserVO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
+import presentation.commonui.OperationPanel;
 import presentation.userui.UserMainPanel;
 
-public class AddUserPanel extends JPanel{
+public class AddUserPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 1L;
 

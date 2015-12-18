@@ -8,14 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import vo.OrganizationVO;
 import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
 
-public class ModifyStaffOrganizationPanel extends JPanel{
+public class ModifyStaffOrganizationPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 16L;
 

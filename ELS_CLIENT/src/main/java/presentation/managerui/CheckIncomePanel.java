@@ -1,13 +1,13 @@
 package presentation.managerui;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.OperationPanel;
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.getDate;
 
-public class CheckIncomePanel extends JPanel {
+public class CheckIncomePanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
