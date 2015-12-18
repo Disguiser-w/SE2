@@ -63,7 +63,7 @@ public class FuncLabel extends JLabel {
 		if (isChoosed) {
 			g2d.setColor(new Color(0, 82, 130));
 		} else if (isMouseOn) {
-			g2d.setColor(new Color(0,111, 192));
+			g2d.setColor(new Color(0, 111, 192));
 		} else {
 			g2d.setColor(new Color(0, 121, 255));
 		}
@@ -71,8 +71,8 @@ public class FuncLabel extends JLabel {
 		g2d.fillRect(0, 0, width, height);
 
 		g2d.setColor(Color.WHITE);
-		g2d.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
-		g2d.drawString(name, width * 2 / 5, height * 2 / 3 - 3);
+		g2d.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		g2d.drawString(name, width * 2 / 5, height * 2 / 3 - 4);
 
 		//
 		g2d.drawRoundRect(height / 2, height / 4, height / 2, height / 2, 6, 6);
@@ -92,8 +92,8 @@ public class FuncLabel extends JLabel {
 		isMouseOn = false;
 		repaint();
 	}
-	
-	public void setChoosed(){
+
+	public void setChoosed() {
 		isChoosed = true;
 		repaint();
 	}
