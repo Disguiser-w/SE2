@@ -3,6 +3,7 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
@@ -17,7 +18,6 @@ import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
-import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
@@ -41,6 +41,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
+	private ArrayList<EnIntermediateReceiptPO> enList = new ArrayList<EnIntermediateReceiptPO>();
 	private TransferingReceiptVO transferingReceipt;
 
 	private final double STANDARD_PLANE = 200;
@@ -177,30 +178,20 @@ public class EnvehicleBL implements EnvehicleBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState saveEnplaningReceiptList() throws RemoteException {
+	public OperationState saveEnIntermediateReceiptList()
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
-				.voToPO_EnplaningReceipt(enplaningReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(enplaningReceipt,
-					transferingReceipt.interdiateCentre.organizationID);
-		return OperationState.SUCCEED_OPERATION;
-	}
-
-	public OperationState saveEntrainingReceiptList() throws RemoteException {
-		// TODO 自动生成的方法存根
+				.voToPO_enplaningReceiptList(enplaningReceiptList))
+			enList.add(enplaningReceipt);
 		for (EntrainingReceiptPO entrainingReceipt : IntermediateMainController
-				.voToPO_EntrainingReceipt(entrainingReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(entrainingReceipt,
-					transferingReceipt.interdiateCentre.organizationID);
-		return OperationState.SUCCEED_OPERATION;
-	}
-
-	public OperationState saveEntruckingReceiptList() throws RemoteException {
-		// TODO 自动生成的方法存根
+				.voToPO_entrainingReceiptList(entrainingReceiptList))
+			enList.add(entrainingReceipt);
 		for (EntruckingReceiptPO entruckingReceipt : IntermediateMainController
-				.voToPO_EntruckingReceipt(entruckingReceiptList))
-			intermediateData.saveEnIntermediateReceiptInfo(entruckingReceipt,
-					transferingReceipt.interdiateCentre.organizationID);
+				.voToPO_entruckingReceiptList(entruckingReceiptList))
+			enList.add(entruckingReceipt);
+		intermediateData.saveEnIntermediateReceiptInfo(enList,
+				transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
 	}
 

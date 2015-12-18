@@ -24,7 +24,9 @@ import po.TruckPO;
 import type.OperationState;
 import type.OrganizationType;
 import type.ReceiptState;
+
 import common.FileGetter;
+
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 @SuppressWarnings("serial")
@@ -348,8 +350,8 @@ public class IntermediateData extends UnicastRemoteObject implements
 	}
 
 	public OperationState saveEnIntermediateReceiptInfo(
-			EnIntermediateReceiptPO enIntermediateReceipt,
-			String organization_ID) throws RemoteException {
+			ArrayList<EnIntermediateReceiptPO> enList, String organization_ID)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
 		String path = "intermediateCentreInfo/" + organization_ID + "-" + date
@@ -359,7 +361,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
-			out.writeObject(enIntermediateReceipt);
+			out.writeObject(enList);
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -372,7 +374,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file, true));
-			out.writeObject(enIntermediateReceipt);
+			out.writeObject(enList);
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();

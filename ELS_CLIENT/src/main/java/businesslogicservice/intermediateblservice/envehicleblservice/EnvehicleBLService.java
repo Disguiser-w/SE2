@@ -17,15 +17,11 @@ public interface EnvehicleBLService {
 	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane)
 			throws Exception;
 
-	public OperationState saveEnplaningReceiptList() throws RemoteException;
-
 	public ArrayList<EnplaningReceiptVO> showEnplaningReceiptList()
 			throws Exception;
 
 	public EntrainingReceiptVO showEntrainingReceiptVO(TrainVO train)
 			throws Exception;
-
-	public OperationState saveEntrainingReceiptList() throws RemoteException;
 
 	public ArrayList<EntrainingReceiptVO> showEntrainingReceiptList()
 			throws Exception;
@@ -33,10 +29,11 @@ public interface EnvehicleBLService {
 	public EntruckingReceiptVO showEntruckingReceiptVO(TruckVO truck)
 			throws Exception;
 
-	public OperationState saveEntruckingReceiptList() throws RemoteException;
-
 	public ArrayList<EntruckingReceiptVO> showEntruckingReceiptList()
 			throws Exception;
 
 	public OperationState updateMessage();
+
+	public OperationState saveEnIntermediateReceiptList()
+			throws RemoteException;
 }

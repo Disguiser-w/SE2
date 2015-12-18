@@ -207,6 +207,30 @@ public class IntermediateMainController {
 				orderList, entruckingReceipt.fare, entruckingReceipt.ID);
 	}
 
+	public static ArrayList<EnplaningReceiptPO> voToPO_enplaningReceiptList(
+			ArrayList<EnplaningReceiptVO> enplaningReceiptList) {
+		ArrayList<EnplaningReceiptPO> list = new ArrayList<EnplaningReceiptPO>();
+		for (EnplaningReceiptVO enplaningReceipt : enplaningReceiptList)
+			list.add(IntermediateMainController.voToPO(enplaningReceipt));
+		return list;
+	}
+
+	public static ArrayList<EntrainingReceiptPO> voToPO_entrainingReceiptList(
+			ArrayList<EntrainingReceiptVO> entrainingReceiptList) {
+		ArrayList<EntrainingReceiptPO> list = new ArrayList<EntrainingReceiptPO>();
+		for (EntrainingReceiptVO entrainingReceipt : entrainingReceiptList)
+			list.add(IntermediateMainController.voToPO(entrainingReceipt));
+		return list;
+	}
+
+	public static ArrayList<EntruckingReceiptPO> voToPO_entruckingReceiptList(
+			ArrayList<EntruckingReceiptVO> entruckingReceiptList) {
+		ArrayList<EntruckingReceiptPO> list = new ArrayList<EntruckingReceiptPO>();
+		for (EntruckingReceiptVO entruckingReceipt : entruckingReceiptList)
+			list.add(IntermediateMainController.voToPO(entruckingReceipt));
+		return list;
+	}
+
 	public static ArrayList<EnplaningReceiptPO> voToPO_EnplaningReceipt(
 			ArrayList<EnplaningReceiptVO> list) {
 		ArrayList<EnplaningReceiptPO> enplaningReceiptList = new ArrayList<EnplaningReceiptPO>();
