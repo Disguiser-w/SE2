@@ -63,10 +63,11 @@ public class FunctionPanel extends JPanel {
 		g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
 		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
-		// for (int i = 0; i < numOfFunc; i++) {
-		// g2d.setColor(new Color(0, 82, 130));
-		// g2d.fillRect(0, (i + 1) * (height / 9 + 1) - 1, width, 1);
-		//
-		// }
+		g2d.setColor(new Color(0, 82, 130));
+		for (int i = 0; i < numOfFunc; i++) {
+
+			g2d.fillRect(0, (i + 1) * (height / 9 + 1) - 1, width, 1);
+
+		}
 	}
 }

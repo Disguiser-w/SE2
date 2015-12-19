@@ -1,14 +1,8 @@
 
 package presentation.businessui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -17,22 +11,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.DriverVO;
@@ -41,192 +31,88 @@ import vo.VehicleVO;
 
 public class VehicleManagerPanel extends OperationPanel {
 
-	private JLabel addLabel;
-	private JLabel delLabel;
-	private JLabel modifyLabel;
+	private MyLabel addLabel;
+	private MyLabel delLabel;
+	private MyLabel modifyLabel;
+	private MyTable messageTable;
 
-	private JLabel searchLabel;
-	private JTextField inputField;
-	private JButton confirmButton;
-
-	private JTable messageTable;
-	private JLabel previousPageLabel;
-	private JLabel nextPageLabel;
-	private ArrayList<JCheckBox> selectVehicle;
-	private JLabel numOfPage;
+	private MyTextField inputField;
+	private MyLabel confirmLabel;
 
 	private VehicleManagerController controller;
 
 	private UserFrame mainFrame;
 	private ArrayList<VehicleVO> vehicles;
-
 	private ArrayList<DriverVO> driverVOs;
+
 	private ArrayList<OrganizationVO> organizationVOs;
 
-	private boolean isModify;
-	private boolean isDel;
-
-	private int numOfChoose;
-	private int num;
-
-	private boolean isFirstTime;
-
 	private LocationHelper helper;
+	private int selectedIndex;
 
 	public VehicleManagerPanel(VehicleManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
-		addLabel = new JLabel("增");
-		delLabel = new JLabel("删");
-		modifyLabel = new JLabel("改");
-		addLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		delLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		modifyLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		selectedIndex = -1;
+		addLabel = new MyLabel("增");
+		delLabel = new MyLabel("删");
+		modifyLabel = new MyLabel("改");
 
-		searchLabel = new JLabel();
-		inputField = new JTextField();
-		confirmButton = new JButton();
-		MessgeTableModel model = new MessgeTableModel();
-		messageTable = new JTable(model);
-		previousPageLabel = new JLabel(" < ");
-		nextPageLabel = new JLabel(" > ");
-		selectVehicle = new ArrayList<JCheckBox>();
-		for (int i = 0; i < 8; i++) {
-			JCheckBox box = new JCheckBox();
-			selectVehicle.add(box);
-			add(box);
-		}
-		numOfPage = new JLabel();
+		inputField = new MyTextField();
+		confirmLabel = new MyLabel();
 
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
-		add(searchLabel);
 		add(inputField);
-		add(confirmButton);
-		add(messageTable);
-		add(previousPageLabel);
-		add(nextPageLabel);
-		add(messageTable.getTableHeader());
-		add(numOfPage);
-		messageTable.setBackground(getBackground());
-
-		num = 0;
-		numOfChoose = 0;
-		isModify = false;
-		isFirstTime = true;
+		add(confirmLabel);
 
 		vehicles = controller.getVehicleInfo();
 
 		setLayout(null);
 		addListener();
 
-		// helper = new LocationHelper(this);
+		setBaseInfos();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
-		selectVehicle.get(0).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 5.625 / 20),
-				(int) (width * 0.6722151088348272 / 25), (int) (height * 0.8035714285714286 / 20));
-		selectVehicle.get(1).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 6.830357142857143 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(2).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 8.125 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(3).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 9.419642857142858 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(4).setBounds((int) (width * 0.2560819462227913 / 25),
-				(int) (height * 10.758928571428571 / 20), (int) (width * 0.6402048655569782 / 25),
-				(int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(5).setBounds((int) (width * 0.2560819462227913 / 25),
-				(int) (height * 12.098214285714286 / 20), (int) (width * 0.6402048655569782 / 25),
-				(int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(6).setBounds((int) (width * 0.2560819462227913 / 25),
-				(int) (height * 13.348214285714286 / 20), (int) (width * 0.6402048655569782 / 25),
-				(int) (height * 0.8928571428571429 / 20));
-		selectVehicle.get(7).setBounds((int) (width * 0.2560819462227913 / 25),
-				(int) (height * 14.642857142857142 / 20), (int) (width * 0.6402048655569782 / 25),
-				(int) (height * 0.8928571428571429 / 20));
-		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		delLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
-		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		confirmButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
-		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),
-				(int) (height * 5.401785714285714 / 20) - (int) (height * 1.435714285714286 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 1.435714285714286 / 20));
-		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
+		addLabel.setBounds((int) (width * 1.2278308321964528 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+		delLabel.setBounds((int) (width * 6.207366984993179 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+
+		inputField.setBounds((int) (width * 15.654843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
+				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
+		confirmLabel.setBounds((int) (width * 21.350613915416098 / 25), (int) (height * 1.2186379928315412 / 20),
+				(int) (width * 1.6371077762619373 / 25), (int) (height * 1.039426523297491 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25),
+				(int) (height * 3.369175627240143 / 20), (int) (width * 22.98335467349552 / 25),
+				(int) (height * 15.412186379928315 / 20));
 
 	}
 
-	public void paintComponent(Graphics g) {
-		if (isFirstTime) {
-			setInfos();
-			isFirstTime = false;
-		}
-		super.paintComponent(g);
+	private void setBaseInfos() {
+		String[] head = new String[] { "车辆编号", "出发地", "目的地", "司机" };
 
+		int[] widths = { 173, 150, 150, 120 };
+
+		messageTable = new MyTable(head, getInfos(), widths, true);
+		add(messageTable);
 	}
 
-	// 设置载入动态的内容
-	private void setInfos() {
-		for (JCheckBox i : selectVehicle) {
-			i.setVisible(false);
-		}
-		vehicles = controller.getVehicleInfo();
-		numOfPage.setText(num + 1 + "/" + ((vehicles.size() - 1) / 8 + 1));
+	private ArrayList<String[]> getInfos() {
+		ArrayList<String[]> infos = new ArrayList<String[]>();
+		for (VehicleVO i : vehicles) {
 
-		messageTable.setModel(new MessgeTableModel());
-		setBaseInfo();
+			infos.add(new String[] { i.ID, i.destination.name, i.local.name, i.driver.name });
+		}
+		return infos;
 	}
 
 	private void addListener() {
-		confirmButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-
-		previousPageLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (num == 0)
-					return;
-				else {
-					num--;
-					for (JCheckBox i : selectVehicle)
-						i.setSelected(false);
-					setInfos();
-
-				}
-			}
-		});
-
-		nextPageLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-
-				if (num >= (vehicles.size() - 1) / 8)
-					return;
-				else {
-					num++;
-					for (JCheckBox i : selectVehicle)
-						i.setSelected(false);
-					setInfos();
-				}
-			}
-		});
 
 		addLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -234,229 +120,109 @@ public class VehicleManagerPanel extends OperationPanel {
 				mainFrame.changePanel(addPanel);
 			}
 		});
-		ItemListener listener = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				JCheckBox button = ((JCheckBox) (e.getSource()));
-				if (button.isSelected()) {
-					numOfChoose++;
-				} else {
-					numOfChoose--;
-				}
-
-				if (numOfChoose == 1) {
-					isModify = true;
-				} else
-					isModify = false;
-
-				if (numOfChoose >= 1)
-					isDel = true;
-
-			}
-
-		};
-
-		for (JCheckBox i : selectVehicle) {
-			i.addItemListener(listener);
-		}
 
 		modifyLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (isModify) {
-					int n = 0;
 
-					for (JCheckBox i : selectVehicle) {
+				ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+				int size = selectedIndexs.size();
 
-						if (i.isSelected()) {
-							i.setSelected(false);
-							break;
-						}
-						n++;
+				if (size != 1)
+					return;
 
-					}
-					VehicleVO vo = vehicles.get(num * 8 + n);
-					ModifyPanel panel = new ModifyPanel(vo);
-					mainFrame.changePanel(panel);
-				}
+				selectedIndex = selectedIndexs.get(0);
+				VehicleVO vo = vehicles.get(selectedIndex);
+				messageTable.cancelSelected(selectedIndex);
+
+				ModifyPanel panel = new ModifyPanel(vo);
+				mainFrame.changePanel(panel);
+
 			}
 		});
 
 		delLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (isDel) {
-					if (JOptionPane.showConfirmDialog(null, "确认删除该车辆信息？", "",
-							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-						return;
-					}
-					int n = 0;
-					int m = 0;
-					for (JCheckBox i : selectVehicle) {
-						if (i.isSelected()) {
-							i.setSelected(false);
-							VehicleVO vo = vehicles.get(num * 8 + n);
-							controller.deleteVehicle(vo);
-							m++;
-						}
-						n++;
-						isDel = false;
-					}
+				messageTable.setAllSelected(false);
 
-					if ((vehicles.size() - m - 1) / 8 + 1 < num + 1) {
-						num--;
-					}
-					setInfos();
+				ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+				int size = selectedIndexs.size();
+				if (size == 0)
+					return;
+				else {
+					for (int i : selectedIndexs)
+						controller.deleteVehicle(vehicles.get(i));
+
+					vehicles = controller.getVehicleInfo();
+					messageTable.setInfos(getInfos());
+
 				}
+			}
+		});
 
+		confirmLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入车辆ID");
+
+				for (VehicleVO i : vehicles) {
+					if (i.ID.equals(id)) {
+						mainFrame.changePanel(new WatchPanel(i));
+					}
+				}
 			}
 		});
 	}
 
-	// 设置table的基本内容，图片，什么的
-	private void setBaseInfo() {
-
-		// 设置成不可编辑不可改变位置，大小
-		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		messageTable.getTableHeader().setReorderingAllowed(false);
-		messageTable.getTableHeader().setResizingAllowed(false);
-
-		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
-		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
-		TableColumn column3 = messageTable.getColumnModel().getColumn(2);
-		TableColumn column4 = messageTable.getColumnModel().getColumn(3);
-
-		// 设置宽度
-		int tWidth = messageTable.getWidth();
-		column1.setPreferredWidth(tWidth * 5 / 18);
-		column2.setPreferredWidth(tWidth * 5 / 18);
-		column3.setPreferredWidth(tWidth * 5 / 18);
-		column4.setPreferredWidth(tWidth / 6);
-
-		messageTable.setRowHeight(messageTable.getHeight() / 8);
-
-		//
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-
-		tcr.setHorizontalAlignment(JLabel.CENTER);
-		column1.setCellRenderer(tcr);
-		column2.setCellRenderer(tcr);
-		column3.setCellRenderer(tcr);
-		column4.setCellRenderer(tcr);
-
-	}
-
-	private class MessgeTableModel extends AbstractTableModel {
-
-		@Override
-		public int getRowCount() {
-			return 8;
-		}
-
-		@Override
-		public int getColumnCount() {
-			return 4;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			int index = num * 8 + rowIndex;
-
-			if (index > vehicles.size() - 1)
-				return null;
-
-			VehicleVO vo = vehicles.get(index);
-
-			switch (columnIndex) {
-			case 0:
-				// add(selectVehicle.get(rowIndex));
-				selectVehicle.get(rowIndex).setVisible(true);
-				return vo.ID;
-			case 1:
-				return vo.local.name;
-			case 2:
-				return vo.destination.name;
-			case 3:
-				return vo.driver.name;
-			default:
-				return null;
-			}
-		}
-
-		public String getColumnName(int c) {
-			switch (c) {
-			case 0:
-				return "车辆编号";
-			case 1:
-				return "出发地";
-			case 2:
-				return "目的地";
-			case 3:
-				return "司机";
-
-			default:
-				return null;
-			}
-		}
-
-	}
-
 	class ModifyPanel extends JPanel {
 
-		private JLabel idLabel;
-		private JTextField idField;
+		protected JLabel idLabel;
+		protected JTextField idField;
 
-		private JLabel engineNumberLabel;
-		private JTextField engineNumberField;
+		protected JLabel engineNumberLabel;
+		protected JTextField engineNumberField;
 
-		private JLabel licensePlateNumberLabel;
-		private JTextField liscenPlateNumberField;
+		protected JLabel licensePlateNumberLabel;
+		protected JTextField liscenPlateNumberField;
 
-		private JLabel lowNumberPlateLabel;
-		private JTextField lowNumberPlateField;
+		protected JLabel lowNumberPlateLabel;
+		protected JTextField lowNumberPlateField;
 
-		private JLabel buyTimeLabel;
-		private JComboBox<Integer> year;
-		private JLabel gap1;
-		private JComboBox<Integer> month;
-		private JLabel gap2;
-		private JComboBox<Integer> day;
+		protected JLabel buyTimeLabel;
+		protected JComboBox<Integer> year;
+		protected JLabel gap1;
+		protected JComboBox<Integer> month;
+		protected JLabel gap2;
+		protected JComboBox<Integer> day;
 
-		// private JLabel year;
-		// private JLabel gap1;
-		// private JLabel month;
-		// private JLabel gap2;
-		// private JLabel day;
+		// protected JLabel year;
+		// protected JLabel gap1;
+		// protected JLabel month;
+		// protected JLabel gap2;
+		// protected JLabel day;
 
 		// 从购买到现在
-		private JLabel serviceTimeLabel;
-		private JTextField serviceTimeField;
+		protected JLabel serviceTimeLabel;
+		protected JTextField serviceTimeField;
 
 		// 所有机构
-		private JLabel destinationLabel;
-		private JComboBox<String> destinationBox;
-		// private JLabel destinationBox;
+		protected JLabel destinationLabel;
+		protected JComboBox<String> destinationBox;
+		// protected JLabel destinationBox;
 
 		// local和destinationcity自己设置
 
 		// 选一个司机,如果没司机就不行
-		private JLabel driversLabel;
-		private JComboBox<String> driversBox;
-		// private JLabel driversBox;
+		protected JLabel driversLabel;
+		protected JComboBox<String> driversBox;
+		// protected JLabel driversBox;
 
-		private JButton confirmButton;
-		private JButton cancelButton;
+		protected JLabel confirmLabel;
+		protected JLabel cancelLabel;
 
-		private VehicleVO oldVO;
+		protected VehicleVO oldVO;
 
-		private LocationHelper helper;
+		protected LocationHelper helper;
 
 		public ModifyPanel(VehicleVO vo) {
 			this.oldVO = vo;
@@ -493,8 +259,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			driversBox = new JComboBox<String>();
 			// driversBox = new JLabel();
 
-			confirmButton = new JButton("确认");
-			cancelButton = new JButton("取消");
+			confirmLabel = new JLabel("确认");
+			cancelLabel = new JLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -516,8 +282,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			add(destinationBox);
 			add(driversLabel);
 			add(driversBox);
-			add(confirmButton);
-			add(cancelButton);
+			add(confirmLabel);
+			add(cancelLabel);
 
 			organizationVOs = controller.getOrganizationInfos();
 			for (OrganizationVO i : organizationVOs)
@@ -579,13 +345,13 @@ public class VehicleManagerPanel extends OperationPanel {
 					(int) (width * 4.0332906530089625 / 25), (int) (height * 1.1607142857142858 / 20));
 			driversBox.setBounds((int) (width * 13.636363636363637 / 25), (int) (height * 12.723214285714286 / 20),
 					(int) (width * 5.377720870678617 / 25), (int) (height * 1.1607142857142858 / 20));
-			confirmButton.setBounds((int) (width * 7.010243277848912 / 25), (int) (height * 16.517857142857142 / 20),
+			confirmLabel.setBounds((int) (width * 7.010243277848912 / 25), (int) (height * 16.517857142857142 / 20),
 					(int) (width * 2.464788732394366 / 25), (int) (height * 1.3839285714285714 / 20));
-			cancelButton.setBounds((int) (width * 14.660691421254802 / 25), (int) (height * 16.517857142857142 / 20),
+			cancelLabel.setBounds((int) (width * 14.660691421254802 / 25), (int) (height * 16.517857142857142 / 20),
 					(int) (width * 2.464788732394366 / 25), (int) (height * 1.3839285714285714 / 20));
 		}
 
-		private void setInfo1() {
+		protected void setInfo1() {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
@@ -635,10 +401,10 @@ public class VehicleManagerPanel extends OperationPanel {
 
 		}
 
-		private void addListener1() {
+		protected void addListener1() {
 
-			confirmButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			confirmLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 
 					boolean hasChange = false;
 
@@ -714,6 +480,10 @@ public class VehicleManagerPanel extends OperationPanel {
 
 					if (controller.modifyVehicle(newVO)) {
 						successing("成功修改车辆信息");
+						messageTable.setRowValueAt(new String[] { id, destination.name, local.name, vo.name },
+								selectedIndex);
+						vehicles = controller.getVehicleInfo();
+						mainFrame.toMainPanel();
 
 					} else {
 						warnning("操作失败，请检查网络连接");
@@ -723,9 +493,8 @@ public class VehicleManagerPanel extends OperationPanel {
 				}
 			});
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setInfos();
+			cancelLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					mainFrame.toMainPanel();
 
 				}
@@ -793,8 +562,8 @@ public class VehicleManagerPanel extends OperationPanel {
 		private JComboBox<String> driversBox;
 		// private JLabel driversBox;
 
-		private JButton confirmButton;
-		private JButton cancelButton;
+		private JLabel confirmLabel;
+		private JLabel cancelLabel;
 
 		private boolean hasAdd;
 		private LocationHelper helper;
@@ -833,8 +602,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			driversBox = new JComboBox<String>();
 			// driversBox = new JLabel();
 
-			confirmButton = new JButton("确认");
-			cancelButton = new JButton("取消");
+			confirmLabel = new JLabel("确认");
+			cancelLabel = new JLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -856,8 +625,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			add(destinationBox);
 			add(driversLabel);
 			add(driversBox);
-			add(confirmButton);
-			add(cancelButton);
+			add(confirmLabel);
+			add(cancelLabel);
 
 			organizationVOs = controller.getOrganizationInfos();
 			for (OrganizationVO i : organizationVOs)
@@ -921,9 +690,9 @@ public class VehicleManagerPanel extends OperationPanel {
 					(int) (width * 4.0332906530089625 / 25), (int) (height * 1.1607142857142858 / 20));
 			driversBox.setBounds((int) (width * 13.636363636363637 / 25), (int) (height * 12.723214285714286 / 20),
 					(int) (width * 5.377720870678617 / 25), (int) (height * 1.1607142857142858 / 20));
-			confirmButton.setBounds((int) (width * 7.010243277848912 / 25), (int) (height * 16.517857142857142 / 20),
+			confirmLabel.setBounds((int) (width * 7.010243277848912 / 25), (int) (height * 16.517857142857142 / 20),
 					(int) (width * 2.464788732394366 / 25), (int) (height * 1.3839285714285714 / 20));
-			cancelButton.setBounds((int) (width * 14.660691421254802 / 25), (int) (height * 16.517857142857142 / 20),
+			cancelLabel.setBounds((int) (width * 14.660691421254802 / 25), (int) (height * 16.517857142857142 / 20),
 					(int) (width * 2.464788732394366 / 25), (int) (height * 1.3839285714285714 / 20));
 		}
 
@@ -973,8 +742,8 @@ public class VehicleManagerPanel extends OperationPanel {
 
 		private void addListener2() {
 
-			confirmButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			confirmLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 
 					String id = idField.getText();
 					String engineNumber = engineNumberField.getText();
@@ -1017,7 +786,9 @@ public class VehicleManagerPanel extends OperationPanel {
 						successing("成功增加车辆信息");
 						setInfo2();
 						clear();
-						hasAdd = true;
+						messageTable.addRow(new String[] { id, destination.name, local.name, vo.name });
+						vehicles = controller.getVehicleInfo();
+						mainFrame.toMainPanel();
 
 					} else {
 						warnning("操作失败，请检查网络连接");
@@ -1026,10 +797,8 @@ public class VehicleManagerPanel extends OperationPanel {
 				}
 			});
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (hasAdd)
-						setInfos();
+			cancelLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					mainFrame.toMainPanel();
 				}
 			});
@@ -1114,5 +883,33 @@ public class VehicleManagerPanel extends OperationPanel {
 	}
 
 	// 调整位置
+
+	class WatchPanel extends ModifyPanel {
+
+		public WatchPanel(VehicleVO vo) {
+			super(vo);
+
+			idField.setEditable(false);
+			engineNumberField.setEditable(false);
+			liscenPlateNumberField.setEditable(false);
+			lowNumberPlateField.setEditable(false);
+			serviceTimeField.setEditable(false);
+			destinationBox.setEnabled(false);
+			driversBox.setEnabled(false);
+
+			int width = getWidth();
+			int height = getHeight();
+
+			remove(confirmLabel);
+			cancelLabel.setBounds((int) (width * 11.308629961587707 / 25), (int) (height * 16.383928571428573 / 20),
+					(int) (width * 2.4007682458386683 / 25), (int) (height * 1.25 / 20));
+
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+
+		}
+
+	}
 
 }

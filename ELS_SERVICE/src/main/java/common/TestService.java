@@ -62,45 +62,27 @@ public class TestService {
 			BasicSalaryDataService basicSalaryData = new BasicSalaryData();
 			CityDistanceDataService cityDistanceData = new CityDistanceData();
 			CostDataService costData = new CostData();
-			
 
 			LocateRegistry.createRegistry(8888);
-			
-			Naming.rebind("rmi://localhost:8888/ExpressDataService",
-					expressData);
-			Naming.rebind("rmi://localhost:8888/BusinessDataService",
-					businessData);
-			Naming.rebind("rmi://localhost:8888/AccountDataService",
-					accountData);
-			Naming.rebind("rmi://localhost:8888/CollectionReceiptDataService",
-					collectionData);
-			Naming.rebind("rmi://localhost:8888/PaymentReceiptDataService",
-					paymentData);
-			Naming.rebind("rmi://localhost:8888/CostIncomeReceiptDataService",
-					costincomeData);
-			Naming.rebind("rmi://localhost:8888/InitialStockDataService",
-					initialData);
-			Naming.rebind("rmi://localhost:8888/IntermediateDataService",
-					intermediateData);
-			Naming.rebind("rmi://localhost:8888/UserDataService", 
-					userData);
-			Naming.rebind("rmi://localhost:8888/OrganizationDataService", 
-					organizationData);
-			Naming.rebind("rmi://localhost:8888/RepertoryDataService", 
-					repertoryData);
-			Naming.rebind("rmi://localhost:8888/GoodsDataService", 
-					goodsData);
-			Naming.rebind("rmi://localhost:8888/PerWageDataService", 
-					perWageData);
-			Naming.rebind("rmi://localhost:8888/BasicSalaryDataService", 
-					basicSalaryData);
-			Naming.rebind("rmi://localhost:8888/CityDistanceDataService", 
-					cityDistanceData);
-			Naming.rebind("rmi://localhost:8888/CostDataService", 
-					costData);
-			Naming.rebind("rmi://localhost:8888/RepertoryDataService", 
-					repertoryData);
-			
+
+			Naming.rebind("rmi://localhost:8888/ExpressDataService", expressData);
+			Naming.rebind("rmi://localhost:8888/BusinessDataService", businessData);
+			Naming.rebind("rmi://localhost:8888/AccountDataService", accountData);
+			Naming.rebind("rmi://localhost:8888/CollectionReceiptDataService", collectionData);
+			Naming.rebind("rmi://localhost:8888/PaymentReceiptDataService", paymentData);
+			Naming.rebind("rmi://localhost:8888/CostIncomeReceiptDataService", costincomeData);
+			Naming.rebind("rmi://localhost:8888/InitialStockDataService", initialData);
+			Naming.rebind("rmi://localhost:8888/IntermediateDataService", intermediateData);
+			Naming.rebind("rmi://localhost:8888/UserDataService", userData);
+			Naming.rebind("rmi://localhost:8888/OrganizationDataService", organizationData);
+			Naming.rebind("rmi://localhost:8888/RepertoryDataService", repertoryData);
+			Naming.rebind("rmi://localhost:8888/GoodsDataService", goodsData);
+			Naming.rebind("rmi://localhost:8888/PerWageDataService", perWageData);
+			Naming.rebind("rmi://localhost:8888/BasicSalaryDataService", basicSalaryData);
+			Naming.rebind("rmi://localhost:8888/CityDistanceDataService", cityDistanceData);
+			Naming.rebind("rmi://localhost:8888/CostDataService", costData);
+			Naming.rebind("rmi://localhost:8888/RepertoryDataService", repertoryData);
+
 			System.out.println("Service start");
 
 		} catch (Exception e) {

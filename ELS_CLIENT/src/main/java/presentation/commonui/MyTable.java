@@ -125,7 +125,7 @@ public class MyTable extends JPanel {
 			extend = 80;
 		else
 			extend = 50;
-		setSize(width + extend, (row + 1) * 38 + 8);
+		setSize(scrollPanel.getWidth(), (row + 1) * 38 + 8);
 
 		rowPanel = new ArrayList<MyRowPanel>();
 
@@ -147,7 +147,6 @@ public class MyTable extends JPanel {
 
 		this.infos = infos;
 		loadPanels();
-
 	}
 
 	public ArrayList<Integer> getSelectedIndex() {
@@ -197,9 +196,7 @@ public class MyTable extends JPanel {
 		row--;
 
 		setSize(getWidth(), (row + 1) * 38 + 8);
-
 		scrollPanel.repaint();
-		// loadPanels();
 	}
 
 	public void setSelectedNum(int index) {
