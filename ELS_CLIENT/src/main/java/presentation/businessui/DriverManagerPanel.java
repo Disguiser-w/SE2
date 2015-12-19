@@ -1,6 +1,5 @@
 package presentation.businessui;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,19 +11,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
-import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import type.Sexuality;
@@ -36,7 +33,7 @@ public class DriverManagerPanel extends OperationPanel {
 	private JLabel delLabel;
 	private JLabel modifyLabel;
 
-	private JTextField inputField;
+	private MyTextField inputField;
 	private JLabel confirmLabel;
 
 	private MyTable messageTable;
@@ -56,7 +53,7 @@ public class DriverManagerPanel extends OperationPanel {
 		delLabel = new MyLabel("删");
 		modifyLabel = new MyLabel("改");
 
-		inputField = new JTextField();
+		inputField = new MyTextField();
 		confirmLabel = new MyLabel();
 
 		selectedIndex = -1;
@@ -181,10 +178,10 @@ public class DriverManagerPanel extends OperationPanel {
 
 	class ModifyPanel extends JPanel {
 		protected JLabel idLabel;
-		protected JTextField idField;
+		protected MyTextField idField;
 
 		protected JLabel nameLabel;
-		protected JTextField nameField;
+		protected MyTextField nameField;
 
 		protected JLabel birthLabel;
 		protected JComboBox<Integer> year;
@@ -200,19 +197,19 @@ public class DriverManagerPanel extends OperationPanel {
 		// protected JLabel day;
 
 		protected JLabel idCardNumLabel;
-		protected JTextField idCardNumField;
+		protected MyTextField idCardNumField;
 
 		protected JLabel phoneNumberLabel;
-		protected JTextField phoneNumberField;
+		protected MyTextField phoneNumberField;
 
 		protected JLabel registrationDeadlineLabel;
-		protected JTextField registrationDeadlineField;
+		protected MyTextField registrationDeadlineField;
 
 		protected JLabel timeLabel;
-		protected JTextField timeField;
+		protected MyTextField timeField;
 
-		protected JButton confirmButton;
-		protected JButton cancelButton;
+		protected MyLabel confirmButton;
+		protected MyLabel cancelButton;
 
 		protected JLabel sexLabel;
 		// protected JComboBox sexBox;
@@ -224,10 +221,10 @@ public class DriverManagerPanel extends OperationPanel {
 		public ModifyPanel(DriverVO vo) {
 			this.oldVO = vo;
 			idLabel = new JLabel("ID");
-			idField = new JTextField();
+			idField = new MyTextField();
 
 			nameLabel = new JLabel("姓名");
-			nameField = new JTextField();
+			nameField = new MyTextField();
 
 			birthLabel = new JLabel("出生日期");
 
@@ -243,16 +240,16 @@ public class DriverManagerPanel extends OperationPanel {
 			// day = new JLabel();
 
 			idCardNumLabel = new JLabel("身份证号码");
-			idCardNumField = new JTextField();
+			idCardNumField = new MyTextField();
 
 			phoneNumberLabel = new JLabel("手机号");
-			phoneNumberField = new JTextField();
+			phoneNumberField = new MyTextField();
 
 			registrationDeadlineLabel = new JLabel("行驶证期限");
-			registrationDeadlineField = new JTextField();
+			registrationDeadlineField = new MyTextField();
 
 			timeLabel = new JLabel("本月次数");
-			timeField = new JTextField();
+			timeField = new MyTextField();
 
 			sexLabel = new JLabel("性别");
 			male = new JRadioButton("男");
@@ -260,8 +257,8 @@ public class DriverManagerPanel extends OperationPanel {
 			ButtonGroup group = new ButtonGroup();
 			group.add(male);
 			group.add(female);
-			confirmButton = new JButton("确认");
-			cancelButton = new JButton("取消");
+			confirmButton = new MyLabel("确认");
+			cancelButton = new MyLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -399,8 +396,8 @@ public class DriverManagerPanel extends OperationPanel {
 
 		protected void addListener1() {
 
-			confirmButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			confirmButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					String id = idField.getText();
 
 					// 检查格式
@@ -497,9 +494,8 @@ public class DriverManagerPanel extends OperationPanel {
 				}
 			});
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
+			cancelButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					mainFrame.toMainPanel();
 				}
 			});
@@ -527,10 +523,10 @@ public class DriverManagerPanel extends OperationPanel {
 	// 新增车辆JPanel,和Modify基本一样，但是不同也有点多所以
 	class AddPanel extends JPanel {
 		private JLabel idLabel;
-		private JTextField idField;
+		private MyTextField idField;
 
 		private JLabel nameLabel;
-		private JTextField nameField;
+		private MyTextField nameField;
 
 		private JLabel birthLabel;
 		private JComboBox<Integer> year;
@@ -546,19 +542,19 @@ public class DriverManagerPanel extends OperationPanel {
 		// private JLabel day;
 
 		private JLabel idCardNumLabel;
-		private JTextField idCardNumField;
+		private MyTextField idCardNumField;
 
 		private JLabel phoneNumberLabel;
-		private JTextField phoneNumberField;
+		private MyTextField phoneNumberField;
 
 		private JLabel registrationDeadlineLabel;
-		private JTextField registrationDeadlineField;
+		private MyTextField registrationDeadlineField;
 
 		private JLabel timeLabel;
-		private JTextField timeField;
+		private MyTextField timeField;
 
-		private JButton confirmButton;
-		private JButton cancelButton;
+		private MyLabel confirmButton;
+		private MyLabel cancelButton;
 
 		private JLabel sexLabel;
 		// private JComboBox sexBox;
@@ -568,10 +564,10 @@ public class DriverManagerPanel extends OperationPanel {
 		public AddPanel() {
 
 			idLabel = new JLabel("ID");
-			idField = new JTextField();
+			idField = new MyTextField();
 
 			nameLabel = new JLabel("姓名");
-			nameField = new JTextField();
+			nameField = new MyTextField();
 
 			birthLabel = new JLabel("出生日期");
 
@@ -587,16 +583,16 @@ public class DriverManagerPanel extends OperationPanel {
 			// day = new JLabel();
 
 			idCardNumLabel = new JLabel("身份证号码");
-			idCardNumField = new JTextField();
+			idCardNumField = new MyTextField();
 
 			phoneNumberLabel = new JLabel("手机号");
-			phoneNumberField = new JTextField();
+			phoneNumberField = new MyTextField();
 
 			registrationDeadlineLabel = new JLabel("行驶证期限");
-			registrationDeadlineField = new JTextField();
+			registrationDeadlineField = new MyTextField();
 
 			timeLabel = new JLabel("本月次数");
-			timeField = new JTextField();
+			timeField = new MyTextField();
 
 			sexLabel = new JLabel("性别");
 			male = new JRadioButton("男");
@@ -604,8 +600,8 @@ public class DriverManagerPanel extends OperationPanel {
 			ButtonGroup group = new ButtonGroup();
 			group.add(male);
 			group.add(female);
-			confirmButton = new JButton("确认");
-			cancelButton = new JButton("取消");
+			confirmButton = new MyLabel("确认");
+			cancelButton = new MyLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -728,8 +724,8 @@ public class DriverManagerPanel extends OperationPanel {
 
 		private void addListener2() {
 
-			confirmButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			confirmButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					String ID = idField.getText();
 
 					// 检查格式
@@ -825,8 +821,8 @@ public class DriverManagerPanel extends OperationPanel {
 				}
 			});
 
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			cancelButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 					mainFrame.toMainPanel();
 				}
 			});
@@ -917,21 +913,19 @@ public class DriverManagerPanel extends OperationPanel {
 			registrationDeadlineField.setEditable(false);
 			timeField.setEditable(false);
 
-
 			int width = getWidth();
 			int height = getHeight();
 
 			remove(confirmButton);
 			cancelButton.setBounds((int) (width * 11.308629961587707 / 25), (int) (height * 16.383928571428573 / 20),
 					(int) (width * 2.4007682458386683 / 25), (int) (height * 1.25 / 20));
-			
+
 			year.setEnabled(false);
 			month.setEnabled(false);
 			day.setEnabled(false);
 			male.setEnabled(false);
 			female.setEnabled(false);
-			
-			
+
 		}
 
 	}
