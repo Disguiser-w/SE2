@@ -26,6 +26,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.PlaneVO;
@@ -42,23 +43,12 @@ public class PlaneManagementPanel extends OperationPanel {
 	private JLabel delLabel;
 	private JLabel modifyLabel;
 
-	private JLabel searchLabel;
 	private JTextField inputField;
-	private JButton confirmButton;
+	private JLabel confirmButton;
 
-	private JTable messageTable;
-	private JLabel previousPageLabel;
-	private JLabel nextPageLabel;
-	private ArrayList<JCheckBox> selectItem;
-	private JLabel numOfPage;
+	private MyTable messageTable;
 
-	private boolean isModify;
-	private boolean isDel;
-
-	private int numOfChoose;
-	private int num;
-
-	private boolean isFirstTime;
+	private int selectedIndex;
 
 	public PlaneManagementPanel(IntermediateMainController c, UserFrame f) {
 		this.controller = c;
