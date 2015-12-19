@@ -11,13 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.UserFrame;
 import vo.TrainVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class TrainManagement_modifyPanel extends JPanel {
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
 	private JButton OKButton;
 
@@ -41,10 +42,10 @@ public class TrainManagement_modifyPanel extends JPanel {
 	private int PANEL_HEIGHT = 480;
 
 	public TrainManagement_modifyPanel(IntermediateMainController c,
-			IntermediateFrame f, TrainVO p) {
+			UserFrame f, TrainVO t) {
 		this.controller = c;
 		this.frame = f;
-		this.train = p;
+		this.train = t;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();

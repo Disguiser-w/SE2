@@ -1,310 +1,447 @@
 package presentation.intermediateui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
+import presentation.commonui.OperationPanel;
+import presentation.commonui.UserFrame;
 import vo.TrainVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class TrainManagementPanel extends JPanel {
+public class TrainManagementPanel extends OperationPanel {
 	private IntermediateMainController controller;
 
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+	private ArrayList<TrainVO> trainList;
 
-	private JButton addButton;
-	private JButton deleteButton;
-	private JButton next;
-	private JButton previous;
-	private JButton delete_ok;
-	private JButton modifyButton;
+	private JLabel addLabel;
+	private JLabel delLabel;
+	private JLabel modifyLabel;
 
-	private JLabel function;
+	private JLabel searchLabel;
+	private JTextField inputField;
+	private JButton confirmButton;
 
-	private JTextField searchTextField;
+	private JTable messageTable;
+	private JLabel previousPageLabel;
+	private JLabel nextPageLabel;
+	private ArrayList<JCheckBox> selectItem;
+	private JLabel numOfPage;
 
-	private JCheckBox[] isDelete;
-	private JButton[] isModify;
+	private boolean isModify;
+	private boolean isDel;
 
-	private VehicleManagementInfoTable info;
-	private VehicleManagementTableModel model;
+	private int numOfChoose;
+	private int num;
 
-	private int pageNum;
-	private int pageNum_max;
+	private boolean isFirstTime;
 
-	public TrainManagementPanel(IntermediateMainController c,
-			IntermediateFrame f) {
+	public TrainManagementPanel(IntermediateMainController c, UserFrame f) {
 		this.controller = c;
 		this.frame = f;
 
-		addButton = new JButton("add");
-		deleteButton = new JButton("delete");
-		next = new JButton("next");
-		previous = new JButton("previous");
-		delete_ok = new JButton("ok");
-		modifyButton = new JButton("modify");
+		trainList = c.getTrainList();
 
-		function = new JLabel("火车信息管理 ");
+		addLabel = new JLabel("增");
+		delLabel = new JLabel("删");
+		modifyLabel = new JLabel("改");
+		addLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		delLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		modifyLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		searchTextField = new JTextField("KD-00001");
-
-		model = new VehicleManagementTableModel();
-		info = new VehicleManagementInfoTable(model);
-
-		pageNum = 0;
-
-		isDelete = new JCheckBox[12];
-		for (int i = 0; i < isDelete.length; i++) {
-			isDelete[i] = new JCheckBox();
-			isDelete[i].setBounds(PANEL_WIDTH * 2 / 33, PANEL_HEIGHT * 29 / 120
-					+ PANEL_HEIGHT * (i + 1) / 22 + PANEL_HEIGHT / 80,
-					PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-			add(isDelete[i]);
-			isDelete[i].setVisible(false);
+		searchLabel = new JLabel();
+		inputField = new JTextField();
+		confirmButton = new JButton();
+		MessgeTableModel model = new MessgeTableModel();
+		messageTable = new JTable(model);
+		previousPageLabel = new JLabel(" < ");
+		nextPageLabel = new JLabel(" > ");
+		selectItem = new ArrayList<JCheckBox>();
+		for (int i = 0; i < 8; i++) {
+			JCheckBox box = new JCheckBox();
+			selectItem.add(box);
+			add(box);
 		}
-		delete_ok.setVisible(false);
+		numOfPage = new JLabel();
 
-		isModify = new JButton[12];
-		for (int i = 0; i < isModify.length; i++) {
-			isModify[i] = new JButton();
-			isModify[i].setBounds(PANEL_WIDTH * 2 / 33, PANEL_HEIGHT * 29 / 120
-					+ PANEL_HEIGHT * (i + 1) / 22 + PANEL_HEIGHT / 80,
-					PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-			add(isModify[i]);
-			isModify[i].setVisible(false);
-		}
+		add(addLabel);
+		add(delLabel);
+		add(modifyLabel);
+		add(searchLabel);
+		add(inputField);
+		add(confirmButton);
+		add(messageTable);
+		add(previousPageLabel);
+		add(nextPageLabel);
+		add(messageTable.getTableHeader());
+		add(numOfPage);
+		messageTable.setBackground(getBackground());
 
-		setCmpLocation();
+		num = 0;
+		numOfChoose = 0;
+		isModify = false;
+		isFirstTime = true;
 
-		addButton.addActionListener(new ActionListener() {
+		trainList = controller.getTrainList();
 
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				addui();
-			}
-		});
-
-		deleteButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				deleteui();
-			}
-		});
-
-		modifyButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				modifyui();
-			}
-		});
-
-		next.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				pageNum_max = (controller.getTrainList().size()) / 12;
-				if (pageNum >= pageNum_max)
-					return;
-				else {
-					pageNum++;
-					info.setModel(new VehicleManagementTableModel());
-					info.setuiInfo();
-				}
-			}
-		});
-
-		previous.addMouseListener(new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				// TODO 自动生成的方法存根
-				pageNum_max = (controller.getTrainList().size()) / 12;
-				if (pageNum == 0)
-					return;
-				else {
-					pageNum--;
-					info.setModel(new VehicleManagementTableModel());
-					info.setuiInfo();
-				}
-			}
-		});
-
-		delete_ok.addMouseListener(new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				// TODO 自动生成的方法存根
-				delete_okui();
-			}
-		});
-
-		info.setBackground(getBackground());
 		setLayout(null);
-
-		add(addButton);
-		add(deleteButton);
-		add(modifyButton);
-		add(next);
-		add(previous);
-		add(function);
-		add(searchTextField);
-		add(info);
-		add(info.getTableHeader());
-		add(delete_ok);
-	}
-
-	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		addButton.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		deleteButton.setBounds(PANEL_WIDTH * 5 / 9, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		modifyButton.setBounds(PANEL_WIDTH * 11 / 18, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-		searchTextField.setBounds(PANEL_WIDTH * 13 / 18, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH * 2 / 9, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		next.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
-				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
-		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
-		delete_ok.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15
-				+ PANEL_HEIGHT / 240, PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
+		addListener();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		PANEL_WIDTH = width;
-		PANEL_HEIGHT = height;
-		setCmpLocation();
-		repaint();
+		numOfPage.setBounds((int) (width * 12.32394366197183 / 25),
+				(int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.088348271446863 / 25),
+				(int) (height * 1.4732142857142858 / 20));
+		selectItem.get(0).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 5.625 / 20),
+				(int) (width * 0.6722151088348272 / 25),
+				(int) (height * 0.8035714285714286 / 20));
+		selectItem.get(1).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 6.830357142857143 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(2).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 8.125 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(3).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 9.419642857142858 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(4).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 10.758928571428571 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(5).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 12.098214285714286 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(6).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 13.348214285714286 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		selectItem.get(7).setBounds((int) (width * 0.2560819462227913 / 25),
+				(int) (height * 14.642857142857142 / 20),
+				(int) (width * 0.6402048655569782 / 25),
+				(int) (height * 0.8928571428571429 / 20));
+		addLabel.setBounds((int) (width * 2.624839948783611 / 25),
+				(int) (height * 1.1607142857142858 / 20),
+				(int) (width * 1.3124199743918055 / 25),
+				(int) (height * 1.8303571428571428 / 20));
+		delLabel.setBounds((int) (width * 6.594110115236876 / 25),
+				(int) (height * 1.1607142857142858 / 20),
+				(int) (width * 1.3124199743918055 / 25),
+				(int) (height * 1.8303571428571428 / 20));
+		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25),
+				(int) (height * 1.1607142857142858 / 20),
+				(int) (width * 1.3124199743918055 / 25),
+				(int) (height * 1.8303571428571428 / 20));
+		searchLabel.setBounds((int) (width * 15.781049935979514 / 25),
+				(int) (height * 1.3392857142857142 / 20),
+				(int) (width * 0.9282970550576184 / 25),
+				(int) (height * 1.2946428571428572 / 20));
+		inputField.setBounds((int) (width * 16.677336747759284 / 25),
+				(int) (height * 1.3392857142857142 / 20),
+				(int) (width * 4.321382842509603 / 25),
+				(int) (height * 1.3392857142857142 / 20));
+		confirmButton.setBounds((int) (width * 22.247119078104994 / 25),
+				(int) (height * 1.3392857142857142 / 20),
+				(int) (width * 1.7285531370038412 / 25),
+				(int) (height * 1.2946428571428572 / 20));
+		messageTable.setBounds((int) (width * 1.0243277848911652 / 25),
+				(int) (height * 5.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25),
+				(int) (height * 10.535714285714286 / 20));
+		messageTable.getTableHeader().setBounds(
+				(int) (width * 1.0243277848911652 / 25),
+				(int) (height * 5.401785714285714 / 20)
+						- (int) (height * 1.435714285714286 / 20),
+				(int) (width * 22.98335467349552 / 25),
+				(int) (height * 1.435714285714286 / 20));
+		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25),
+				(int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.0243277848911652 / 25),
+				(int) (height * 1.4732142857142858 / 20));
+		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25),
+				(int) (height * 17.321428571428573 / 20),
+				(int) (width * 1.0243277848911652 / 25),
+				(int) (height * 1.4732142857142858 / 20));
+
 	}
 
-	public void addui() {
-		frame.changePanel(new TrainManagement_newPanel(controller, frame));
+	public void paintComponent(Graphics g) {
+		if (isFirstTime) {
+			setInfos();
+			isFirstTime = false;
+		}
+		super.paintComponent(g);
+
 	}
 
-	public void deleteui() {
-		delete_ok.setVisible(true);
-		for (int i = 0; i < controller.getTrainList().size() - 12 * pageNum; i++)
-			isDelete[i].setVisible(true);
-		delete_ok.setVisible(true);
+	private void setInfos() {
+		for (JCheckBox i : selectItem) {
+			i.setVisible(false);
+		}
+		trainList = controller.getTrainList();
+		numOfPage.setText(num + 1 + "/" + ((trainList.size() - 1) / 8 + 1));
+
+		messageTable.setModel(new MessgeTableModel());
+		setBaseInfo();
 	}
 
-	public void delete_okui() {
-		for (int i = 0; i < isDelete.length; i++) {
-			int delete_num = 0;
-			if (isDelete[i].isSelected()) {
-				try {
-					controller.getTrainManagerBL().deleteTrain(
-							controller.getTrainList().get(
-									i + pageNum * 12 - delete_num++));
-				} catch (Exception e1) {
-					// TODO 自动生成的 catch 块
-					e1.printStackTrace();
+	private void addListener() {
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+
+		previousPageLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (num == 0)
+					return;
+				else {
+					num--;
+					for (JCheckBox i : selectItem)
+						i.setSelected(false);
+					setInfos();
 				}
 			}
-			isDelete[i].setVisible(false);
+		});
+
+		nextPageLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (num >= (trainList.size() - 1) / 8)
+					return;
+				else {
+					num++;
+					for (JCheckBox i : selectItem)
+						i.setSelected(false);
+					setInfos();
+				}
+			}
+		});
+
+		addLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				TrainManagement_newPanel addPanel = new TrainManagement_newPanel(
+						controller, frame);
+				frame.changePanel(addPanel);
+			}
+		});
+		ItemListener listener = new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				JCheckBox button = ((JCheckBox) (e.getSource()));
+				if (button.isSelected()) {
+					numOfChoose++;
+				} else {
+					numOfChoose--;
+				}
+
+				if (numOfChoose == 1) {
+					isModify = true;
+				} else
+					isModify = false;
+
+				if (numOfChoose >= 1)
+					isDel = true;
+
+			}
+
+		};
+
+		for (JCheckBox i : selectItem) {
+			i.addItemListener(listener);
 		}
 
-		delete_ok.setVisible(false);
+		modifyLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (isModify) {
+					int n = 0;
 
-		frame.toMainPanel();
-	}
+					for (JCheckBox i : selectItem) {
 
-	public void modifyui() {
-		for (int i = 0; i < controller.getTrainList().size() - 12 * pageNum; i++) {
-			isModify[i].setVisible(true);
-			isModify[i].addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					int count = 0;
-					JButton temp = (JButton) e.getSource();
-					for (; count < isModify.length; count++) {
-						if (temp == isModify[count]) {
+						if (i.isSelected()) {
+							i.setSelected(false);
 							break;
 						}
+						n++;
+
+					}
+					TrainVO vo = trainList.get(num * 8 + n);
+					TrainManagement_modifyPanel modifyPanel = new TrainManagement_modifyPanel(
+							controller, frame, vo);
+					frame.changePanel(modifyPanel);
+				}
+			}
+		});
+
+		delLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (isDel) {
+					if (JOptionPane.showConfirmDialog(null, "确认删除该飞机信息？", "",
+							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+						return;
+					}
+					int n = 0;
+					int m = 0;
+					for (JCheckBox i : selectItem) {
+						if (i.isSelected()) {
+							i.setSelected(false);
+							TrainVO vo = trainList.get(num * 8 + n);
+							try {
+								controller.getTrainManagerBL().deleteTrain(vo);
+							} catch (Exception e1) {
+								// TODO 自动生成的 catch 块
+								e1.printStackTrace();
+							}
+							m++;
+						}
+						n++;
+						isDel = false;
 					}
 
-					frame.changePanel(new TrainManagement_modifyPanel(
-							controller, frame, controller.getTrainList().get(
-									pageNum * 12 + count)));
-
-					for (JButton button : isModify)
-						button.setVisible(false);
+					if ((trainList.size() - m - 1) / 8 + 1 < num + 1) {
+						num--;
+					}
+					setInfos();
 				}
-			});
-		}
+
+			}
+		});
 	}
 
-	private class VehicleManagementTableModel extends AbstractTableModel {
+	private void setBaseInfo() {
 
+		// 设置成不可编辑不可改变位置，大小
+		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		messageTable.getTableHeader().setReorderingAllowed(false);
+		messageTable.getTableHeader().setResizingAllowed(false);
+
+		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
+		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
+		TableColumn column3 = messageTable.getColumnModel().getColumn(2);
+		TableColumn column4 = messageTable.getColumnModel().getColumn(3);
+
+		// 设置宽度
+		int tWidth = messageTable.getWidth();
+		column1.setPreferredWidth(tWidth * 5 / 18);
+		column2.setPreferredWidth(tWidth * 5 / 18);
+		column3.setPreferredWidth(tWidth * 5 / 18);
+		column4.setPreferredWidth(tWidth / 6);
+
+		messageTable.setRowHeight(messageTable.getHeight() / 8);
+
+		//
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table,
+					Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				if (row % 2 == 0)
+					setBackground(Color.cyan);
+				else
+					setBackground(Color.white);
+
+				return super.getTableCellRendererComponent(table, value,
+						isSelected, hasFocus, row, column);
+			}
+		};
+
+		tcr.setHorizontalAlignment(JLabel.CENTER);
+		column1.setCellRenderer(tcr);
+		column2.setCellRenderer(tcr);
+		column3.setCellRenderer(tcr);
+		column4.setCellRenderer(tcr);
+
+	}
+
+	private class MessgeTableModel extends AbstractTableModel {
+
+		@Override
 		public int getRowCount() {
-			// TODO 自动生成的方法存根
-			return 12;
+			return 8;
 		}
 
+		@Override
 		public int getColumnCount() {
-			// TODO 自动生成的方法存根
-			return 5;
+			return 4;
 		}
 
+		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO 自动生成的方法存根
-			int index = pageNum * 12 + rowIndex;
-			if (index > controller.getTrainList().size() - 1) {
+			int index = num * 8 + rowIndex;
+
+			if (index > trainList.size() - 1)
+				return null;
+
+			TrainVO vo = trainList.get(index);
+
+			switch (columnIndex) {
+			case 0:
+				// add(selectVehicle.get(rowIndex));
+				selectItem.get(rowIndex).setVisible(true);
+				return vo.ID;
+			case 1:
+				return controller.getIntermediateCentre().name;
+			case 2:
+				return vo.destination;
+			case 3:
+				return vo.farePrice;
+			default:
 				return null;
 			}
-			TrainVO train = controller.getTrainList().get(index);
-			if (train != null) {
-				switch (columnIndex) {
-				case 0:
-					return train.ID;
-				case 1:
-					return controller.getIntermediateCentre().name;
-				case 2:
-					return train.destination;
-				case 3:
-					return train.farePrice;
-				case 4:
-					return "工作中";
-				}
-			} else
-				return null;
-			return null;
 		}
 
 		public String getColumnName(int c) {
-			if (c == 0)
-				return "火车编号";
-			if (c == 1)
+			switch (c) {
+			case 0:
+				return "飞机编号";
+			case 1:
 				return "所属机构";
-			if (c == 2)
-				return "到达地";
-			if (c == 3)
+			case 2:
+				return "目的地";
+			case 3:
 				return "运送价格";
-			if (c == 4)
-				return "状态";
 
-			return null;
+			default:
+				return null;
+			}
 		}
+
 	}
-	//
-	// public static void main(String[] args) {
-	// JFrame frame = new JFrame();
-	// frame.setSize(800, 550);
-	// frame.add(new TrainManagementPanel(null));
-	// frame.setVisible(true);
-	// }
+
+	public static void main(String[] args) throws MalformedURLException,
+			RemoteException, NotBoundException {
+		JFrame frame = new JFrame();
+		frame.setSize(800, 550);
+		frame.add(new TrainManagementPanel(new IntermediateMainController(
+				"141250185"), new UserFrame("任婧雯", "CW-00001")));
+		frame.setVisible(true);
+	}
 }

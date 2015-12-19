@@ -11,12 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.UserFrame;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class TrainManagement_newPanel extends JPanel {
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
 	private JButton OKButton;
 
@@ -41,8 +42,7 @@ public class TrainManagement_newPanel extends JPanel {
 	private String intermediateCenterID;
 	private String trainID;
 
-	public TrainManagement_newPanel(IntermediateMainController c,
-			IntermediateFrame f) {
+	public TrainManagement_newPanel(IntermediateMainController c, UserFrame f) {
 		this.controller = c;
 		this.frame = f;
 
@@ -53,12 +53,18 @@ public class TrainManagement_newPanel extends JPanel {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
-		trainNum = Integer.parseInt(controller.getTrainList().get(
-				controller.getTrainList().size() - 1).ID.substring(
-				controller.getTrainList().get(
-						controller.getTrainList().size() - 1).ID.length() - 3,
-				controller.getTrainList().get(
-						controller.getTrainList().size() - 1).ID.length())) + 1;
+		if (controller.getPlaneList().size() == 0)
+			trainNum = 1;
+		else
+			trainNum = Integer
+					.parseInt(controller.getTrainList().get(
+							controller.getTrainList().size() - 1).ID.substring(
+							controller.getTrainList().get(
+									controller.getTrainList().size() - 1).ID
+									.length() - 3,
+							controller.getTrainList().get(
+									controller.getTrainList().size() - 1).ID
+									.length())) + 1;
 		intermediateCenterID = controller.getIntermediateCentre().organizationID;
 
 		if (trainNum < 10)
