@@ -24,6 +24,7 @@ import po.OrganizationPO;
 import po.RepertoryPO;
 import po.VehiclePO;
 import type.OrganizationType;
+import type.Sexuality;
 
 public class BusinessData extends UnicastRemoteObject implements BusinessDataService {
 	public BusinessData() throws RemoteException {
@@ -173,7 +174,6 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					System.out.println("读写车辆信息失败");
 				}
 
-				
 			}
 			return vehiclePOs;
 		}
@@ -890,29 +890,34 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	public static void main(String[] args) {
 		try {
-			// File file =
-			// FileGetter.getFile("organizationInfo/organizationInfo.dat");
-			// if (!file.exists()) {
+			File file = FileGetter.getFile("driverInfo/025000-driver.dat");
+			if (!file.exists()) {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			}
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
+					new RepertoryPO("pig", "wo"));
+			ArrayList<DriverPO> vpo = new ArrayList<DriverPO>();
+
 			//
-			// file.getParentFile().mkdirs();
-			// file.createNewFile();
-			// }
-			// ObjectOutputStream out = new ObjectOutputStream(new
-			// FileOutputStream(file));
-			// OrganizationPO po = new
-			// OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
-			// new RepertoryPO("pig", "wo"));
-			// ArrayList<OrganizationPO> bpo = new ArrayList<OrganizationPO>();
-			//
-			// bpo.add(po);
-			//
-			// out.writeObject(bpo);
-			// out.close();
-			BusinessData data = new BusinessData();
-			ArrayList<VehiclePO> pos = data.getVehicleInfos(null);
-			for(VehiclePO po:pos)
-				System.out.println(po.getID());
-			
+			// private String ID;
+			// private String name;
+			// private String DateOfBirth;
+			// private String IdCardNumber;
+			// private String phoneNumber;
+			// private OrganizationPO vehicleOrganization;
+			// private Sexuality sexuality;
+			// private String registrationDeadline;
+			// private int time;
+			// private boolean isUsing;
+			for (int i = 0; i < 50; i++) {
+				DriverPO dpo = new DriverPO(i + "", "pig" + i, "2014-12-14", "123456789123456789", "12345678900", po,
+						Sexuality.MALE, "3", 5);
+				vpo.add(dpo);
+			}
+			out.writeObject(vpo);
+			out.close();
 
 		} catch (Exception e) {
 

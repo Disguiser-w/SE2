@@ -17,6 +17,10 @@ public class OperationPanel extends JPanel {
 		background = ImageGetter.getImage("background4.png").getImage();
 	}
 
+	public void add(MyTable table) {
+		add(table.getScrollPanel());
+	}
+
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -30,8 +34,8 @@ public class OperationPanel extends JPanel {
 
 		g2d.setColor(Color.WHITE);
 		// 圆角方法
-		// g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
-		g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
+		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
 	}
 

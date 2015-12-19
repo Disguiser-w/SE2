@@ -3,6 +3,7 @@ package presentation.businessui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -193,19 +194,19 @@ public class VehicleManagerPanel extends OperationPanel {
 	}
 
 	private void addListener() {
-		confirmButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
-		
+
 		previousPageLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (num == 0)
 					return;
 				else {
 					num--;
-					for(JCheckBox i:selectVehicle)
+					for (JCheckBox i : selectVehicle)
 						i.setSelected(false);
 					setInfos();
 
@@ -220,7 +221,7 @@ public class VehicleManagerPanel extends OperationPanel {
 					return;
 				else {
 					num++;
-					for(JCheckBox i:selectVehicle)
+					for (JCheckBox i : selectVehicle)
 						i.setSelected(false);
 					setInfos();
 				}

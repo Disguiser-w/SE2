@@ -33,8 +33,8 @@ class MessagePanel extends JPanel {
 	private boolean isMoving;
 	private Image background;
 
-	public MessagePanel(JFrame frame) {
-		this.frame = frame;
+	public MessagePanel(JFrame f) {
+		this.frame = f;
 		// changePasswordLabel = new JLabel("修改密码");
 		// messageLabel = new JLabel("消息");
 		exitLabel = new ExitLabel();
@@ -141,7 +141,7 @@ class MessagePanel extends JPanel {
 		g2d.setColor(new Color(102, 102, 102));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// 圆角
-		// g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
-		g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		 g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
+//		g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 	}
 }
