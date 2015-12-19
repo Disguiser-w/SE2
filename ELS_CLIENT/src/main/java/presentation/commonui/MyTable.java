@@ -13,6 +13,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -45,13 +46,9 @@ public class MyTable extends JPanel {
 
 	public MyTable(String[] head, ArrayList<String[]> infos, int[] widths, boolean multiChoose) {
 		scrollPanel = new JPanel();
+		scrollPanel.setBackground(new Color(235, 235, 235));
+		setBackground(new Color(235, 235, 235));
 		columnWidth = widths;
-		// addMouseListener(new MouseAdapter() {
-		// public void mouseClicked(MouseEvent e) {
-		// System.out.println(e.getY());
-		// }
-		// });
-
 		width = 0;
 		for (int i : widths)
 			width += i;
@@ -85,9 +82,8 @@ public class MyTable extends JPanel {
 				}
 
 			});
+			add(myBox);
 		}
-
-		add(myBox);
 
 		// 声明
 		loadPanels();
@@ -116,7 +112,7 @@ public class MyTable extends JPanel {
 	public void setLocationAndSize(int x, int y, int width, int height) {
 		scrollPanel.setBounds(x, y, width, height);
 		scrollPanel.setLayout(null);
-		setBounds(0, 0, getWidth(), (row + 1) * 38 + 8);
+		setBounds(0, 0, scrollPanel.getWidth(), (row + 1) * 38 + 8);
 		scrollPanel.add(this);
 	}
 
@@ -129,7 +125,7 @@ public class MyTable extends JPanel {
 			extend = 80;
 		else
 			extend = 50;
-		setSize(width + extend, getHeight());
+		setSize(width + extend, (row + 1) * 38 + 8);
 
 		rowPanel = new ArrayList<MyRowPanel>();
 
@@ -151,6 +147,7 @@ public class MyTable extends JPanel {
 
 		this.infos = infos;
 		loadPanels();
+
 	}
 
 	public ArrayList<Integer> getSelectedIndex() {
@@ -181,6 +178,7 @@ public class MyTable extends JPanel {
 		panel.setLocation(10, 38 * row + 8);
 		rowPanel.add(panel);
 		add(panel);
+		setSize(getWidth(), (row + 1) * 38 + 8);
 
 		scrollPanel.repaint();
 	}
@@ -196,8 +194,9 @@ public class MyTable extends JPanel {
 
 		remove(rowPanel.remove(row - 1));
 		infos.remove(r);
-
 		row--;
+
+		setSize(getWidth(), (row + 1) * 38 + 8);
 
 		scrollPanel.repaint();
 		// loadPanels();
@@ -258,15 +257,9 @@ public class MyTable extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		// g2d.setColor(new Color(245, 245, 245));
-		g2d.setColor(Color.BLACK);
-		g2d.fillRect(0, 0, width, height);
-
 		int widths = 30;
 
 		g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
-
-		g2d.setStroke(new BasicStroke(1.0f));
 		FontMetrics fm = g2d.getFontMetrics();
 		int ascent = fm.getAscent();
 
@@ -401,45 +394,45 @@ public class MyTable extends JPanel {
 		return scrollPanel;
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(400, 300);
-		frame.setVisible(true);
-		// frame.addMouseListener(new MouseAdapter() {
-		// public void mouseClicked(MouseEvent e) {
-		// System.out.println(e.getY());
-		// }
-		// });
-
-		// MyCheckBox box = new MyCheckBox();
-		// box.setBounds(40, 40, 24, 24);
-		// frame.add(box);
-
-		String[] head = { "第一列", "第二列", "第三列" };
-		ArrayList<String[]> infos = new ArrayList<String[]>();
-		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
-
-		int[] width = { 100, 100, 100 };
-		MyTable table = new MyTable(head, infos, width, true);
-		table.setLocationAndSize(0, 0, 380, 200);
-		frame.setLayout(null);
-		frame.add(table.getScrollPanel());
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		// frame.repaint();
-
-		// ArrayList<String[]> infos1 = new ArrayList<String[]>();
-		// infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-		// infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-
-		table.setRowValueAt(new String[] { "asdf", "asdfa", "asdfasdf" }, 2);
-	}
+	// public static void main(String[] args) {
+	// JFrame frame = new JFrame();
+	// frame.setSize(400, 300);
+	// frame.setVisible(true);
+	// // frame.addMouseListener(new MouseAdapter() {
+	// // public void mouseClicked(MouseEvent e) {
+	// // System.out.println(e.getY());
+	// // }
+	// // });
+	//
+	// // MyCheckBox box = new MyCheckBox();
+	// // box.setBounds(40, 40, 24, 24);
+	// // frame.add(box);
+	//
+	// String[] head = { "第一列", "第二列", "第三列" };
+	// ArrayList<String[]> infos = new ArrayList<String[]>();
+	// infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+	// infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+	// infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+	//
+	// int[] width = { 100, 100, 100 };
+	// MyTable table = new MyTable(head, infos, width, true);
+	// table.setLocationAndSize(0, 0, 380, 200);
+	// frame.setLayout(null);
+	// frame.add(table.getScrollPanel());
+	//
+	// try {
+	// Thread.sleep(5000);
+	// } catch (InterruptedException e) {
+	// e.printStackTrace();
+	// }
+	// // frame.repaint();
+	//
+	// // ArrayList<String[]> infos1 = new ArrayList<String[]>();
+	// // infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+	// // infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+	//
+	// table.setRowValueAt(new String[] { "asdf", "asdfa", "asdfasdf" }, 2);
+	// }
 
 	public int getSelectedNum() {
 		return selectedNum;
@@ -447,6 +440,10 @@ public class MyTable extends JPanel {
 
 	public void cancelSelected(int index) {
 		rowPanel.get(index).box.setSelected(false);
+	}
+
+	public void setAllSelected(boolean b) {
+		myBox.setSelected(b);
 	}
 
 }

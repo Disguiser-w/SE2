@@ -32,11 +32,11 @@ public class OperationPanel extends JPanel {
 		// g2d.setColor(Color.BLACK);
 		// g2d.fillRect(0, 0, getWidth(), 2);
 
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(new Color(245, 245, 245));
 		// 圆角方法
 		g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
-		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
+		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 	}
 
 }

@@ -68,6 +68,14 @@ public class FuncLabel extends JLabel {
 			g2d.setColor(new Color(0, 121, 255));
 		}
 
+//		if (isChoosed) {
+//			g2d.setColor(new Color(0, 0, 0, 150));
+//		} else if (isMouseOn) {
+//			g2d.setColor(new Color(0, 0, 0, 100));
+//		} else {
+//			g2d.setColor(new Color(0, 0, 0, 0));
+//		}
+
 		g2d.fillRect(0, 0, width, height);
 
 		g2d.setColor(Color.WHITE);

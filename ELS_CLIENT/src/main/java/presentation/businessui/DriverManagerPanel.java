@@ -1,6 +1,6 @@
 package presentation.businessui;
 
-import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +22,8 @@ import javax.swing.JTextField;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
+import presentation.commonui.LocationHelper;
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
@@ -35,15 +36,10 @@ public class DriverManagerPanel extends OperationPanel {
 	private JLabel delLabel;
 	private JLabel modifyLabel;
 
-	private JLabel searchLabel;
 	private JTextField inputField;
-	private JButton confirmButton;
+	private JLabel confirmLabel;
 
 	private MyTable messageTable;
-	private JLabel previousPageLabel;
-	private JLabel nextPageLabel;
-
-	private JLabel numOfPage;
 
 	private DriverManagerController controller;
 
@@ -51,38 +47,26 @@ public class DriverManagerPanel extends OperationPanel {
 	private ArrayList<DriverVO> drivers;
 
 	private int selectedIndex;
+	// private LocationHelper helper;
 
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
-		addLabel = new JLabel("增");
-		delLabel = new JLabel("删");
-		modifyLabel = new JLabel("改");
-		addLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		delLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		modifyLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		addLabel = new MyLabel("增");
+		delLabel = new MyLabel("删");
+		modifyLabel = new MyLabel("改");
 
-		searchLabel = new JLabel();
 		inputField = new JTextField();
-		confirmButton = new JButton();
+		confirmLabel = new MyLabel();
 
-		previousPageLabel = new JLabel(" < ");
-		nextPageLabel = new JLabel(" > ");
-
-		numOfPage = new JLabel();
 		selectedIndex = -1;
 
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
-		add(searchLabel);
+
 		add(inputField);
-		add(confirmButton);
-
-		add(previousPageLabel);
-		add(nextPageLabel);
-
-		add(numOfPage);
+		add(confirmLabel);
 
 		drivers = controller.getDriverInfo();
 
@@ -94,35 +78,27 @@ public class DriverManagerPanel extends OperationPanel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
 
-		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		delLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
-		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		confirmButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
+		addLabel.setBounds((int) (width * 1.2278308321964528 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+		delLabel.setBounds((int) (width * 6.207366984993179 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+
+		inputField.setBounds((int) (width * 15.654843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
+				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
+		confirmLabel.setBounds((int) (width * 21.350613915416098 / 25), (int) (height * 1.2186379928315412 / 20),
+				(int) (width * 1.6371077762619373 / 25), (int) (height * 1.039426523297491 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25),
-				(int) (height * 5.401785714285714 / 20), (int) (width * 22.98335467349552 / 25),
-				(int) (height * 10.535714285714286 / 20));
-
-		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
+				(int) (height * 3.369175627240143 / 20), (int) (width * 22.98335467349552 / 25),
+				(int) (height * 15.412186379928315 / 20));
 	}
 
 	private void setBaseInfos() {
 		String[] head = new String[] { "司机编号", "姓名", "身份证号", "手机", "性别", "运货次数" };
 
-		int[] widths = { 120, 60, 170, 120, 60, 60 };
+		int[] widths = { 120, 60, 170, 120, 60, 63 };
 
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -139,11 +115,6 @@ public class DriverManagerPanel extends OperationPanel {
 			infos.add(new String[] { i.ID, i.name, i.IdCardNumber, i.phoneNumber, sex, i.time + "" });
 		}
 		return infos;
-	}
-
-	private void updateTable() {
-		drivers = controller.getDriverInfo();
-		messageTable.setInfos(getInfos());
 	}
 
 	private void addListener() {
@@ -176,6 +147,8 @@ public class DriverManagerPanel extends OperationPanel {
 
 		delLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				messageTable.setAllSelected(false);
+
 				ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
 				int size = selectedIndexs.size();
 				if (size == 0)
@@ -183,53 +156,70 @@ public class DriverManagerPanel extends OperationPanel {
 				else {
 					for (int i : selectedIndexs)
 						controller.deleteDriver(drivers.get(i));
-					updateTable();
+
+					drivers = controller.getDriverInfo();
+					messageTable.setInfos(getInfos());
+
+				}
+			}
+		});
+
+		confirmLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入司机ID");
+
+				for (DriverVO i : drivers) {
+					if (i.ID.equals(id)) {
+						mainFrame.changePanel(new WatchPanel(i));
+					}
 				}
 			}
 		});
 	}
 
 	class ModifyPanel extends JPanel {
-		private JLabel idLabel;
-		private JTextField idField;
+		protected JLabel idLabel;
+		protected JTextField idField;
 
-		private JLabel nameLabel;
-		private JTextField nameField;
+		protected JLabel nameLabel;
+		protected JTextField nameField;
 
-		private JLabel birthLabel;
-		private JComboBox<Integer> year;
-		private JLabel gap1;
-		private JComboBox<Integer> month;
-		private JLabel gap2;
-		private JComboBox<Integer> day;
+		protected JLabel birthLabel;
+		protected JComboBox<Integer> year;
+		protected JLabel gap1;
+		protected JComboBox<Integer> month;
+		protected JLabel gap2;
+		protected JComboBox<Integer> day;
 
-		// private JLabel year;
-		// private JLabel gap1;
-		// private JLabel month;
-		// private JLabel gap2;
-		// private JLabel day;
+		// protected JLabel year;
+		// protected JLabel gap1;
+		// protected JLabel month;
+		// protected JLabel gap2;
+		// protected JLabel day;
 
-		private JLabel idCardNumLabel;
-		private JTextField idCardNumField;
+		protected JLabel idCardNumLabel;
+		protected JTextField idCardNumField;
 
-		private JLabel phoneNumberLabel;
-		private JTextField phoneNumberField;
+		protected JLabel phoneNumberLabel;
+		protected JTextField phoneNumberField;
 
-		private JLabel registrationDeadlineLabel;
-		private JTextField registrationDeadlineField;
+		protected JLabel registrationDeadlineLabel;
+		protected JTextField registrationDeadlineField;
 
-		private JLabel timeLabel;
-		private JTextField timeField;
+		protected JLabel timeLabel;
+		protected JTextField timeField;
 
-		private JButton confirmButton;
-		private JButton cancelButton;
+		protected JButton confirmButton;
+		protected JButton cancelButton;
 
-		private JLabel sexLabel;
-		// private JComboBox sexBox;
-		private JRadioButton male;
-		private JRadioButton female;
+		protected JLabel sexLabel;
+		// protected JComboBox sexBox;
+		protected JRadioButton male;
+		protected JRadioButton female;
 
-		private DriverVO oldVO;
+		protected DriverVO oldVO;
 
 		public ModifyPanel(DriverVO vo) {
 			this.oldVO = vo;
@@ -360,7 +350,7 @@ public class DriverManagerPanel extends OperationPanel {
 					(int) (width * 2.848911651728553 / 25), (int) (height * 1.3392857142857142 / 20));
 		}
 
-		private void setInfo1() {
+		protected void setInfo1() {
 
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
@@ -407,7 +397,7 @@ public class DriverManagerPanel extends OperationPanel {
 				female.setSelected(true);
 		}
 
-		private void addListener1() {
+		protected void addListener1() {
 
 			confirmButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -497,10 +487,9 @@ public class DriverManagerPanel extends OperationPanel {
 							sex = "女";
 						messageTable.setRowValueAt(new String[] { id, newName, idNum, mobilePhone, sex, times + "" },
 								selectedIndex);
-						System.out.println(messageTable.getSelectedNum());
-
+						drivers = controller.getDriverInfo();
 						//
-
+						mainFrame.toMainPanel();
 					} else {
 						warnning("操作失败，请检查网络连接");
 						return;
@@ -576,8 +565,6 @@ public class DriverManagerPanel extends OperationPanel {
 		private JRadioButton male;
 		private JRadioButton female;
 
-		private boolean hasAdd;
-
 		public AddPanel() {
 
 			idLabel = new JLabel("ID");
@@ -646,8 +633,6 @@ public class DriverManagerPanel extends OperationPanel {
 			add(male);
 			add(female);
 			setLayout(null);
-
-			hasAdd = false;
 
 			setInfo1();
 			addListener2();
@@ -831,8 +816,9 @@ public class DriverManagerPanel extends OperationPanel {
 						else
 							sex = "女";
 						messageTable.addRow(new String[] { ID, newName, idNum, mobilePhone, sex, times + "" });
+						drivers = controller.getDriverInfo();
 						clear();
-
+						mainFrame.toMainPanel();
 					} else {
 						warnning("提交失败，请检查网络连接");
 					}
@@ -918,5 +904,35 @@ public class DriverManagerPanel extends OperationPanel {
 		c.set(year, month, 1);
 		c.add(Calendar.DAY_OF_YEAR, -1);
 		return c.get(Calendar.DAY_OF_MONTH);
+	}
+
+	class WatchPanel extends ModifyPanel {
+
+		public WatchPanel(DriverVO vo) {
+			super(vo);
+
+			nameField.setEditable(false);
+			idCardNumField.setEditable(false);
+			phoneNumberField.setEditable(false);
+			registrationDeadlineField.setEditable(false);
+			timeField.setEditable(false);
+
+
+			int width = getWidth();
+			int height = getHeight();
+
+			remove(confirmButton);
+			cancelButton.setBounds((int) (width * 11.308629961587707 / 25), (int) (height * 16.383928571428573 / 20),
+					(int) (width * 2.4007682458386683 / 25), (int) (height * 1.25 / 20));
+			
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+			male.setEnabled(false);
+			female.setEnabled(false);
+			
+			
+		}
+
 	}
 }
