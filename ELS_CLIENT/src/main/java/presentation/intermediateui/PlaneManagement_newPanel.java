@@ -11,12 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.UserFrame;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class PlaneManagement_newPanel extends JPanel {
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
 	private JButton OKButton;
 
@@ -41,8 +42,7 @@ public class PlaneManagement_newPanel extends JPanel {
 	private String intermediateCenterID;
 	private String planeID;
 
-	public PlaneManagement_newPanel(IntermediateMainController c,
-			IntermediateFrame f) {
+	public PlaneManagement_newPanel(IntermediateMainController c, UserFrame f) {
 		this.controller = c;
 		this.frame = f;
 
@@ -53,12 +53,18 @@ public class PlaneManagement_newPanel extends JPanel {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
-		planeNum = Integer.parseInt(controller.getPlaneList().get(
-				controller.getPlaneList().size() - 1).ID.substring(
-				controller.getPlaneList().get(
-						controller.getPlaneList().size() - 1).ID.length() - 3,
-				controller.getPlaneList().get(
-						controller.getPlaneList().size() - 1).ID.length())) + 1;
+		if (controller.getPlaneList().size() == 0)
+			planeNum = 1;
+		else
+			planeNum = Integer
+					.parseInt(controller.getPlaneList().get(
+							controller.getPlaneList().size() - 1).ID.substring(
+							controller.getPlaneList().get(
+									controller.getPlaneList().size() - 1).ID
+									.length() - 3,
+							controller.getPlaneList().get(
+									controller.getPlaneList().size() - 1).ID
+									.length())) + 1;
 		intermediateCenterID = controller.getIntermediateCentre().organizationID;
 
 		if (planeNum < 10)

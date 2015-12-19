@@ -10,13 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.UserFrame;
 import vo.PlaneVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class PlaneManagement_modifyPanel extends JPanel {
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
 	private JButton OKButton;
 
@@ -40,7 +41,7 @@ public class PlaneManagement_modifyPanel extends JPanel {
 	private int PANEL_HEIGHT = 480;
 
 	public PlaneManagement_modifyPanel(IntermediateMainController c,
-			IntermediateFrame f, PlaneVO p) {
+			UserFrame f, PlaneVO p) {
 		this.controller = c;
 		this.frame = f;
 		this.plane = p;
