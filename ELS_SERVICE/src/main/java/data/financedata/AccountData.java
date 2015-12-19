@@ -235,15 +235,15 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 //			data = new AccountData();
 //        --------------------------------------------------------------
 			
-//			AccountPO po1=new AccountPO("鼓楼", 100);
-//			AccountPO po2=new AccountPO("总账",10000);
-//			AccountPO po3=new AccountPO("玄武",100);
-//			AccountPO po4=new AccountPO("钟楼",1000);
-//			data.addAccount(po1);
-//			data.addAccount(po2);
-//			data.addAccount(po3);
-//			data.deleteAccount(po1);
-//			data.addAccount(po4);
+			AccountPO po1=new AccountPO("鼓楼", 100);
+			AccountPO po2=new AccountPO("总账",10000);
+			AccountPO po3=new AccountPO("玄武",100);
+			AccountPO po4=new AccountPO("钟楼",1000);
+			data.addAccount(po1);
+			data.addAccount(po2);
+			data.addAccount(po3);
+			data.deleteAccount(po1);
+			data.addAccount(po4);
 			
 //			----------------------------------------------------------------------------
 //			ArrayList<AccountPO> pos=data.showAll();

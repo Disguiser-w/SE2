@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import vo.AccountVO;
 
@@ -42,7 +43,9 @@ public class AccountManagementPanel_main extends OperationPanel {
 	
 	private JTextField searchTextField;
 	private JLabel function;
-	private JTable table;
+//	private JTable table;
+	
+	private MyTable accountTable;
 
 //	private ArrayList<JCheckBox> selected;
 	AccountModel am;
@@ -51,6 +54,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	ArrayList<AccountVO> accountVOs;
 	FinanceFrame financeFrame;
 	int count;
+	private int selectedIndex;
 	
 
 	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
@@ -68,13 +72,16 @@ public class AccountManagementPanel_main extends OperationPanel {
 
 		searchTextField = new JTextField("");
 		
-		refreshTable(controller.showAll());
-		am=new AccountModel(c);
-		//新建table
-		table=new JTable(am);
-
-		add(table.getTableHeader());
-		add(table);
+		accountVOs = controller.showAll();
+		selectedIndex = -1;
+		
+//		refreshTable(controller.showAll());
+//		am=new AccountModel(c);
+//		//新建table
+//		table=new JTable(am);
+//
+//		add(table.getTableHeader());
+//		add(table);
 		
 		setLayout(null);
 
@@ -87,19 +94,9 @@ public class AccountManagementPanel_main extends OperationPanel {
 		add(previous);
 		add(searchTextField);
 		add(function);
-		add(table);
-//		add(info);
-//		helper = new LocationHelper(this);
-		
-//		selected = new ArrayList<JCheckBox>();
-//		for(int i=0;i<8;i++){
-//			JCheckBox box = new JCheckBox();
-//			selected.add(box);
-//			add(box);
-//		}
-		
-		addListener();
 
+		addListener();
+		setBaseInfo();
 	}
 
 
@@ -116,27 +113,20 @@ public class AccountManagementPanel_main extends OperationPanel {
 		previous.setBounds((int)(width * 11.354591836734695/25),(int)(height * 17.690802348336597/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.5264187866927592/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height * 3.4050880626223092/20),(int)(width *  5.420918367346939 /25),(int)(height *  1.36986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
-//		selected.get(0).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 10.005479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(1).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 12.005479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(2).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 14.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(3).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 16.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(4).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 18.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(5).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 20.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(6).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 22.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-//		selected.get(7).setBounds((int)(width * 1.2002551020408165/25), (int)(height * 24.205479452054795/32), (int)(width *  1.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-		
-		table.getTableHeader().setBounds((int)(width * 2.2002551020408165/25), (int)(height * 5.205479452054795/20), (int)(width *  21.057397959183675 /25), (int)(height *  1.1311154598825832/20));
-		table.setBounds((int)(width * 2.2002551020408165/25),(int)(height * 5.205479452054795/20)+(int)(height *  1.1311154598825832/20),(int)(width *  21.057397959183675 /25),(int)(height *  11.311154598825832/20));
 
-		setBaseInfo();
+//		table.getTableHeader().setBounds((int)(width * 2.2002551020408165/25), (int)(height * 5.205479452054795/20), (int)(width *  21.057397959183675 /25), (int)(height *  1.1311154598825832/20));
+//		table.setBounds((int)(width * 2.2002551020408165/25),(int)(height * 5.205479452054795/20)+(int)(height *  1.1311154598825832/20),(int)(width *  21.057397959183675 /25),(int)(height *  11.311154598825832/20));
+
+		accountTable.setLocationAndSize((int)(width * 2.2002551020408165/25),(int)(height * 5.205479452054795/20)+(int)(height *  1.1311154598825832/20),(int)(width *  21.057397959183675 /25),(int)(height *  11.311154598825832/20));
 	}
 	
 	 /**
      * 设置表格的基本内容
+     * 设置MyTable 的基本信息
      * */
 	private void setBaseInfo() {
 
-		// 设置成不可编辑不可改变位置，大小
+	/*	// 设置成不可编辑不可改变位置，大小
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
@@ -151,9 +141,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 8);
 		
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -170,7 +158,45 @@ public class AccountManagementPanel_main extends OperationPanel {
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		column1.setCellRenderer(tcr);
 		column2.setCellRenderer(tcr);
-
+		*/
+		String head[] = new String[]{"名称","金额"};
+		int[] width ={260,260};
+		accountTable = new MyTable(head, getInfos(), width, true);
+		add(accountTable);
+	}
+	
+	/**
+	 * Mytable中的信息设置
+	 * */
+	public ArrayList<String[]> getInfos(){
+		ArrayList<String[]> lineInfo = new ArrayList<String[]>();
+		accountVOs = controller.showAll();
+		System.out.println(accountVOs.size());
+		for(AccountVO v :  accountVOs){
+			lineInfo.add(new String[]{v.name,v.money+""});
+		}
+		return lineInfo;
+	}
+	
+	/**
+	 *设置 Mytable 中信息的改写
+	 * */
+	public ArrayList<String[]> newGetInfos(ArrayList<AccountVO> vos){
+		ArrayList<String[]> lineInfo = new ArrayList<String[]>();
+		accountVOs = controller.showAll();
+		System.out.println(accountVOs.size());
+		for(AccountVO v :  accountVOs){
+			lineInfo.add(new String[]{v.name,v.money+""});
+		}
+		return lineInfo;
+	}
+	
+	/**
+	 * Mytable中信息更新
+	 * */
+	public void updateTable(){
+//		accountVOs = controller.showAll();
+		accountTable.setInfos(getInfos());
 	}
 
 	
@@ -205,21 +231,6 @@ public class AccountManagementPanel_main extends OperationPanel {
 				refreshui();
 			}
 		});
-		
-		
-          next.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				nextui();
-			}
-		});
-
-		previous.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e){
-				previousui();
-			}
-		});
 	}
 
 	public void addui() {
@@ -227,7 +238,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	}
 
 	public void deleteui() {
-		int row=table.getSelectedRow();
+	/*	int row=table.getSelectedRow();
 		if(row==-1){
 			JOptionPane.showMessageDialog(null, "请选择需要删除的行！", "提示",
 					JOptionPane.CLOSED_OPTION);
@@ -246,10 +257,21 @@ public class AccountManagementPanel_main extends OperationPanel {
 			table.repaint();
 			}
 		}
+		*/
+		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
+		int size = selectedIndexs.size();
+		if (size == 0)
+			return ;
+		else {
+			for (int i : selectedIndexs){
+				controller.deleteAccount(accountVOs.get(i).name);
+			updateTable();
+			}
+		}
 	}
 	
 	public void modifyui(){
-		int row=table.getSelectedRow();
+		/*int row=table.getSelectedRow();
 		if(row==-1){
 			JOptionPane.showMessageDialog(null, "请选择需要修改的行！", "提示",
 					JOptionPane.CLOSED_OPTION);
@@ -259,10 +281,21 @@ public class AccountManagementPanel_main extends OperationPanel {
 			String money=(String) am.getValueAt(row, 1);
 			financeFrame.changePanel(new AccountManagementPanel_modify(controller, money, nameInit,financeFrame));			
 		}
+		*/
+		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
+		int size = selectedIndexs.size();
+		if(size!= 1){
+			return ;
+		}
+		selectedIndex = selectedIndexs.get(0);
+		AccountVO  vo = accountVOs.get(selectedIndex);
+		accountTable.cancelSelected(selectedIndex);
+		
+		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame));		
 	}
 	
 	public void searchui(){
-		String name=searchTextField.getText();
+		/*String name=searchTextField.getText();
 		if(name.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入查找名称", "提示",
 					JOptionPane.WARNING_MESSAGE);
@@ -275,21 +308,31 @@ public class AccountManagementPanel_main extends OperationPanel {
 		   am.removeRow(0);
 	   }
 		table.repaint();
+		*/
+		String name = searchTextField.getText();
+		if(name.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入查找名称", "提示",
+					JOptionPane.WARNING_MESSAGE);
+		}
+		ArrayList<AccountVO> vos = controller.findByKeyword(name);
+		
 	}
 
 	public void refreshui(){
-		int total=c.size();
+		
+	/*	int total=c.size();
 		ArrayList<AccountVO> temp=getAccountOnThisPage(count);
 		refreshTable(temp);
 		am=new AccountModel(c);
 		for(int i=0;i<total;i++){
 			am.removeRow(0);
 		}
-		table.repaint();
-	
+		accountTable.repaint();
+	*/
+		updateTable();
 	}
 
-	public void nextui() {
+	/*public void nextui() {
 		count++;
 		if(getAccountOnThisPage(count)!=null){
 			int total=c.size();
@@ -326,22 +369,12 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 
 	}
+	*/
 	
 	//不能刷新的解决
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		refresh();
-	}
-	//刷新整个表格
-	public void refresh(){
-		int temp=c.size();
-		refreshTable(controller.showAll());
-		am=new AccountModel(c);
-		for(int i=0;i<temp;i++){
-			am.removeRow(0);
-		}
-		table.repaint();
-		
+		updateTable();
 	}
 	
 class AccountModel extends AbstractTableModel{

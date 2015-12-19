@@ -618,5 +618,14 @@ public class FinanceMainController {
 		}
 		return vos;
 	}
+	
+	public static void main(String[] args){
+		try {
+			new FinanceMainController("CW-00001");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
