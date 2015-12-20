@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.xml.namespace.QName;
 
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyTextField;
@@ -47,8 +49,8 @@ import businesslogic.userbl.controller.UserMainController;
 public class MainFrame extends JFrame {
 
 	// 宽度和长度
-	public static final int MAIN_WIDTH = 400;
-	public static final int MAIN_HEIGHT = 300;
+	public static final int MAIN_WIDTH = 320;
+	public static final int MAIN_HEIGHT = 600;
 	private JFrame frame = this;
 	private JPanel mainPanel;
 	private JPanel queryPanel;
@@ -95,35 +97,95 @@ public class MainFrame extends JFrame {
 
 	// 主界面
 	class MainPanel extends JPanel {
+		private Image image;
+		private ImageIcon query_normal;
+		private ImageIcon query_hover;
+		private ImageIcon query_press;
+		private ImageIcon signIn_normal;
+		private ImageIcon signIn_hover;
+		private ImageIcon signIn_press;
+
 		private float alpha;
 		// 查询按钮
-		private JButton queryButton;
+		private JLabel queryButton;
 		// 登录按钮
-		private JButton signInButton;
+		private JLabel signInButton;
+
+		private boolean isPressed;
 
 		// private LocationHelper helper;
 
 		public MainPanel() {
 			alpha = 0;
 
-			queryButton = new JButton("物流查询");
-			signInButton = new JButton("登录");
+			image = ImageGetter.getImage("loginPanel.png").getImage();
+
+			query_normal = ImageGetter.getImage("query_0.png");
+			query_hover = ImageGetter.getImage("query_1.png");
+			query_press = ImageGetter.getImage("query_2.png");
+			signIn_normal = ImageGetter.getImage("signIn_0.png");
+			signIn_hover = ImageGetter.getImage("signIn_1.png");
+			signIn_press = ImageGetter.getImage("signIn_2.png");
+
+			queryButton = new JLabel();
+			signInButton = new JLabel();
 
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
 
-			queryButton.setBounds((int) (width * 15.1875 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
-					(int) (height * 2.533333333333333 / 20));
-			signInButton.setBounds((int) (width * 5.0625 / 25), (int) (height * 12.8 / 20), (int) (width * 4.5625 / 25),
-					(int) (height * 2.533333333333333 / 20));
-			queryButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			queryButton.setIcon(query_normal);
+			signInButton.setIcon(signIn_normal);
+			queryButton.setBounds((int) (width * 38 / 320),
+					(int) (height * 297 / 600), (int) (width * 97 / 320),
+					(int) (height * 36 / 600));
+			signInButton.setBounds((int) (width * 186 / 320),
+					(int) (height * 297 / 600), (int) (width * 97 / 320),
+					(int) (height * 36 / 600));
+
+			queryButton.addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent e) {
+					if (!isPressed) {
+						queryButton.setIcon(query_hover);
+					}
+
+				}
+
+				public void mouseExited(MouseEvent e) {
+					queryButton.setIcon(query_normal);
+				}
+
+				public void mousePressed(MouseEvent e) {
+					isPressed = true;
+					queryButton.setIcon(query_press);
+				}
+
+				public void mouseReleased(MouseEvent e) {
+					isPressed = false;
+					queryButton.setIcon(query_hover);
 					toQueryPanel();
 				}
 			});
 
-			signInButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			signInButton.addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent e) {
+					if (!isPressed) {
+						signInButton.setIcon(signIn_hover);
+					}
+
+				}
+
+				public void mouseExited(MouseEvent e) {
+					signInButton.setIcon(signIn_normal);
+				}
+
+				public void mousePressed(MouseEvent e) {
+					isPressed = true;
+					signInButton.setIcon(signIn_press);
+				}
+
+				public void mouseReleased(MouseEvent e) {
+					isPressed = false;
+					signInButton.setIcon(signIn_hover);
 					toSignInPanel();
 				}
 			});
@@ -137,6 +199,13 @@ public class MainFrame extends JFrame {
 		}
 
 		public void showPanel() {
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			int width = getWidth();
+			int height = getHeight();
+			g.drawImage(image, 0, 0, width, height, this);
 		}
 	}
 
@@ -159,9 +228,12 @@ public class MainFrame extends JFrame {
 			int width = MAIN_WIDTH;
 			int height = MAIN_HEIGHT;
 
-			orderNumField.setBounds((int) (width * 4.6875 / 25), (int) (height * 7.933333333333334 / 20),
-					(int) (width * 15.6875 / 25), (int) (height * 1.8666666666666667 / 20));
-			queryButton.setBounds((int) (width * 6.375 / 25), (int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
+			orderNumField.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 7.933333333333334 / 20),
+					(int) (width * 15.6875 / 25),
+					(int) (height * 1.8666666666666667 / 20));
+			queryButton.setBounds((int) (width * 6.375 / 25),
+					(int) (height * 15.2 / 20), (int) (width * 4.3125 / 25),
 					(int) (height * 1.9333333333333333 / 20));
 
 			queryButton.addMouseListener(new MouseAdapter() {
@@ -170,11 +242,11 @@ public class MainFrame extends JFrame {
 				}
 
 				public void mousePressed(MouseEvent e) {
-					///
+					// /
 				}
 
 				public void mouseReleased(MouseEvent e) {
-					///
+					// /
 				}
 			});
 
@@ -252,7 +324,8 @@ public class MainFrame extends JFrame {
 			signInButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					signIn((String) names.getSelectedItem(), new String(passwordField.getPassword()));
+					signIn((String) names.getSelectedItem(), new String(
+							passwordField.getPassword()));
 				}
 			});
 
@@ -282,19 +355,30 @@ public class MainFrame extends JFrame {
 
 			// helper = new LocationHelper(this);
 
-			userNameLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 9.266666666666667 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			names.setBounds((int) (width * 8.9375 / 25), (int) (height * 9.266666666666667 / 20),
+			userNameLabel.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 9.266666666666667 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			names.setBounds((int) (width * 8.9375 / 25),
+					(int) (height * 9.266666666666667 / 20),
 					(int) (width * 11.4375 / 25), (int) (height * 1.8 / 20));
-			passwordLabel.setBounds((int) (width * 4.6875 / 25), (int) (height * 11.933333333333334 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			passwordField.setBounds((int) (width * 8.9375 / 25), (int) (height * 11.933333333333334 / 20),
+			passwordLabel.setBounds((int) (width * 4.6875 / 25),
+					(int) (height * 11.933333333333334 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			passwordField.setBounds((int) (width * 8.9375 / 25),
+					(int) (height * 11.933333333333334 / 20),
 					(int) (width * 11.5 / 25), (int) (height * 1.8 / 20));
-			signInButton.setBounds((int) (width * 6.625 / 25), (int) (height * 15.733333333333333 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			cancelButton.setBounds((int) (width * 14.1875 / 25), (int) (height * 15.733333333333333 / 20),
-					(int) (width * 3.875 / 25), (int) (height * 1.7333333333333334 / 20));
-			imageLabel.setBounds((int) (width * 9.125 / 25), (int) (height * 2.2666666666666666 / 20),
+			signInButton.setBounds((int) (width * 6.625 / 25),
+					(int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			cancelButton.setBounds((int) (width * 14.1875 / 25),
+					(int) (height * 15.733333333333333 / 20),
+					(int) (width * 3.875 / 25),
+					(int) (height * 1.7333333333333334 / 20));
+			imageLabel.setBounds((int) (width * 9.125 / 25),
+					(int) (height * 2.2666666666666666 / 20),
 					(int) (width * 6.6875 / 25), (int) (height * 5.6 / 20));
 
 		}
@@ -313,17 +397,19 @@ public class MainFrame extends JFrame {
 			names.setEditable(true);// 将JComboBox设成是可编辑的.
 			ComboBoxEditor editor = names.getEditor();
 			names.configureEditor(editor, "");
-			names.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
-				public void keyPressed(KeyEvent e) {
-					if (names.getItemCount() == 0)
-						return;
-					if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-						nameController.deleteName((String) names.getSelectedItem());
-						updateNames();
-						repaint();
-					}
-				}
-			});
+			names.getEditor().getEditorComponent()
+					.addKeyListener(new KeyAdapter() {
+						public void keyPressed(KeyEvent e) {
+							if (names.getItemCount() == 0)
+								return;
+							if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+								nameController.deleteName((String) names
+										.getSelectedItem());
+								updateNames();
+								repaint();
+							}
+						}
+					});
 
 		}
 
@@ -368,8 +454,7 @@ public class MainFrame extends JFrame {
 
 				(new Thread(new Runnable() {
 					public void run() {
-						
-						
+
 						frame.setVisible(false);
 						// 成功登录，生成界面
 						nameController.addNewName(userID);
@@ -381,7 +466,8 @@ public class MainFrame extends JFrame {
 						switch (type) {
 						case "KD":
 							// 快递员登录
-							ExpressMainController expressMainController = new ExpressMainController(userID);
+							ExpressMainController expressMainController = new ExpressMainController(
+									userID);
 							break;
 						case "ZZZX":
 							// 中转中心业务员登录
@@ -395,12 +481,14 @@ public class MainFrame extends JFrame {
 							break;
 						case "YYT":
 							// 营业厅业务员登录
-							BusinessMainController businessMainController = new BusinessMainController(userID);
+							BusinessMainController businessMainController = new BusinessMainController(
+									userID);
 							break;
 						// 来这里加吧，上面的 uservo通过 logvo.uservo得到
 						case "CW":
 							try {
-								FinanceMainController financeMainController = new FinanceMainController(userID);
+								FinanceMainController financeMainController = new FinanceMainController(
+										userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -408,7 +496,8 @@ public class MainFrame extends JFrame {
 							break;
 						case "admin":
 							try {
-								UserMainController userMainController = new UserMainController(userID);
+								UserMainController userMainController = new UserMainController(
+										userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -416,7 +505,8 @@ public class MainFrame extends JFrame {
 							break;
 						case "JL":
 							try {
-								ManageMainController manageMainController = new ManageMainController(userID);
+								ManageMainController manageMainController = new ManageMainController(
+										userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -424,7 +514,8 @@ public class MainFrame extends JFrame {
 							break;
 						case "CK":
 							try {
-								RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
+								RepertoryMainController repertoryMainController = new RepertoryMainController(
+										userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -532,13 +623,15 @@ public class MainFrame extends JFrame {
 					JLabel gap = new JLabel("|");
 					int len2 = getWidthByNum("|");
 
-					gap.setBounds(200 - len2 / 2, 130 + 105 * (i - 1) + 25, len2, 25);
+					gap.setBounds(200 - len2 / 2, 130 + 105 * (i - 1) + 25,
+							len2, 25);
 					add(gap);
 				}
 			}
 
 			int l3 = getWidthByNum("返回");
-			cancel.setBounds(200 - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
+			cancel.setBounds(200 - l3 / 2 - 15, 255 + 105 * (len - 1) - 50,
+					l3 + 30, 30);
 		}
 
 		public int getWidthByNum(String str) {
@@ -547,7 +640,8 @@ public class MainFrame extends JFrame {
 	}
 
 	private void warnning(String msg) {
-		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, msg, "订单信息错误",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }
