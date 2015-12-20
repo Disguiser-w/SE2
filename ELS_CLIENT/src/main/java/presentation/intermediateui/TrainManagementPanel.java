@@ -122,7 +122,7 @@ public class TrainManagementPanel extends OperationPanel {
 		addButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				Management_newPanel newPanel = new Management_newPanel(
-						controller, frame, messageTable,"train");
+						controller, frame, messageTable, "train");
 				frame.changePanel(newPanel);
 			}
 		});
@@ -138,13 +138,11 @@ public class TrainManagementPanel extends OperationPanel {
 					return;
 
 				selectedIndex = selectedIndexs.get(0);
-				TrainVO vo = trainList.get(selectedIndex);
 				messageTable.cancelSelected(selectedIndex);
-
 				Management_modifyPanel modifyPanel = new Management_modifyPanel(
-						controller, frame, vo);
+						controller, frame, messageTable, trainList
+								.get(selectedIndex));
 				frame.changePanel(modifyPanel);
-
 			}
 		});
 
@@ -185,7 +183,8 @@ public class TrainManagementPanel extends OperationPanel {
 
 				for (TrainVO vo : trainList) {
 					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel(controller, frame, vo));
+						frame.changePanel(new WatchPanel(controller, frame,
+								messageTable, vo));
 					}
 				}
 			}

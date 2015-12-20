@@ -45,13 +45,16 @@ public class Management_newPanel extends JPanel {
 	private String intermediateCenterID;
 	private String id;
 
+	private String type;
+
 	public Management_newPanel(IntermediateMainController c, UserFrame f,
 			MyTable m, String s) {
 		this.controller = c;
 		this.frame = f;
 		this.messageTable = m;
+		this.type = s;
 
-		switch (s) {
+		switch (type) {
 		case "plane":
 			if (controller.getPlaneList().size() == 0)
 				Num = 1;
@@ -74,7 +77,6 @@ public class Management_newPanel extends JPanel {
 			OKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
-						System.out.println("haha");
 						controller.getPlaneManagerBL().addPlane(
 								ID_input.getText(),
 								destination_input.getSelectedItem().toString());
@@ -89,6 +91,7 @@ public class Management_newPanel extends JPanel {
 					frame.toMainPanel();
 				}
 			});
+			break;
 		case "train":
 			if (controller.getTrainList().size() == 0)
 				Num = 1;
@@ -111,7 +114,6 @@ public class Management_newPanel extends JPanel {
 			OKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
-						System.out.println("haha");
 						controller.getTrainManagerBL().addTrain(
 								ID_input.getText(),
 								destination_input.getSelectedItem().toString());
@@ -126,6 +128,7 @@ public class Management_newPanel extends JPanel {
 					frame.toMainPanel();
 				}
 			});
+			break;
 		case "truck":
 			if (controller.getTruckList().size() == 0)
 				Num = 1;
@@ -162,6 +165,7 @@ public class Management_newPanel extends JPanel {
 					frame.toMainPanel();
 				}
 			});
+			break;
 		}
 
 		intermediateCenterID = controller.getIntermediateCentre().organizationID;

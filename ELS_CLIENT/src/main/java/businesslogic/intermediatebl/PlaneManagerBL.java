@@ -37,7 +37,6 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		PlaneVO plane_add = new PlaneVO(ID, destination);
-		System.out.println(planeList.size());
 		planeList.add(plane_add);
 		savePlaneList();
 		return OperationState.SUCCEED_OPERATION;
