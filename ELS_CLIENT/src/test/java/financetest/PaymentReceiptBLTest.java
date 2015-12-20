@@ -1,13 +1,15 @@
-//package financetest;
-//
-//
-//import businesslogic.financebl.PaymentReceiptBL;
-//import vo.MockFinanceCostVO;
-//import vo.MockFareVO;
-//import junit.framework.TestCase;
-//
-//public class PaymentReceiptBLTest extends TestCase{
-//	
+package financetest;
+
+
+import businesslogic.financebl.controller.PaymentReceiptBLController;
+import junit.framework.TestCase;
+
+public class PaymentReceiptBLTest extends TestCase{
+	PaymentReceiptBLController paymentReceiptBL;
+	public void setUp(){
+		paymentReceiptBL = new PaymentReceiptBLController();
+	}
+	
 //	public void testMoney(){
 //	MockFareVO mfvo=new MockFareVO("2015/10",3000);
 //	//租金
@@ -26,4 +28,4 @@
 //	assertEquals(3000.0,money2);
 //	assertEquals(1650.0,money3);
 //	}
-//}
+}

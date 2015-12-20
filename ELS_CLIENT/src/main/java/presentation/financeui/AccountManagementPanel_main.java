@@ -5,7 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import businesslogic.financebl.controller.AccountBLController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -27,14 +29,13 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private MyLabel refreshLabel;
 	
 	private MyTextField searchTextField;
-	private MyLabel function;
+	private JLabel function;
 	
 	private MyTable accountTable;
 
 	AccountBLController controller;
 	ArrayList<AccountVO> accountVOs;
 	FinanceFrame financeFrame;
-	int count;
 	private int selectedIndex;
 	
 
@@ -47,13 +48,10 @@ public class AccountManagementPanel_main extends OperationPanel {
 		searchLabel=new MyLabel("查询");
 		refreshLabel=new MyLabel("刷新");
 
-		function = new MyLabel("账户管理");
+		
+		function = new JLabel("账户管理");
 
 		searchTextField = new MyTextField();
-		
-		selectedIndex = -1;
-
-		accountVOs = controller.showAll();
 		
 		setLayout(null);
 
@@ -64,11 +62,48 @@ public class AccountManagementPanel_main extends OperationPanel {
 		add(refreshLabel);
 		add(searchTextField);
 		add(function);
-
+		accountVOs = controller.showAll();
+		
 		addListener();
 		setBaseInfo();
 	}
 
+	public void addListener(){
+		addLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				addui();
+			}
+		});
+
+		deleteLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				deleteui();
+			}
+		});
+		
+		modifyLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				modifyui();
+			}
+		});
+
+		
+		searchLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				searchui();
+			}
+		});
+
+		refreshLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				refreshui();
+			}
+		});
+	}
 
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -139,66 +174,30 @@ public class AccountManagementPanel_main extends OperationPanel {
 	}
 
 	
-	public void addListener(){
-		addLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				addui();
-			}
-		});
-
-		deleteLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				deleteui();
-			}
-		});
-		
-		modifyLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				modifyui();
-			}
-		});
-		
-		searchLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				searchui();
-			}
-		});
-
-		refreshLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				refreshui();
-			}
-		});
-	}
+	
 
 	public void addui() {
-		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame));
+		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this));
 	}
 
 	public void deleteui() {
 
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
-		if (size == 0)
+		if (size == 0){
+			JOptionPane.showMessageDialog(null, "选中某一个或某一些账户后再删除哦！", "没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
+		}
 		else {
+			if(JOptionPane.showConfirmDialog(null, "确认删除该用户信息？", "",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+				return;
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);
-				ArrayList<AccountVO> vos = controller.showAll();
-				accountTable.setInfos(newGetInfos(vos));
-			updateTable();
-			}
+				}
 		}
+		accountVOs = controller.showAll();
+		accountTable.setInfos(getInfos());
 	}
 	
 	public void modifyui(){
@@ -210,12 +209,10 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 		selectedIndex = selectedIndexs.get(0);
 		AccountVO  vo = accountVOs.get(selectedIndex);
-		accountTable.cancelSelected(selectedIndex);
-		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame));		
+		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this));		
 	}
 	
 	public void searchui(){
-	
 		String name = searchTextField.getText();
 		if(name.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入查找名称", "提示",
@@ -230,11 +227,15 @@ public class AccountManagementPanel_main extends OperationPanel {
 	}
 
 
-	
+	/**
+	 *这个方法导致了刷新时的错误 
+	 * */
 	//不能刷新的解决
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		updateTable();
+//		updateTable();
+//		accountTable.setInfos(getInfos());
+		
 	}
 	
 /*class AccountModel extends AbstractTableModel{

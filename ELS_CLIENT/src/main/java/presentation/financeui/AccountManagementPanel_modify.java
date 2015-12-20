@@ -28,6 +28,8 @@ public class AccountManagementPanel_modify extends OperationPanel{
 
 	private JTextField account_name_Input;
 	private JTextField account_money_Input;
+	
+	private AccountManagementPanel_main accountMainPanel;
 
 //	private LocationHelper helper;
 
@@ -40,12 +42,14 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
- public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent) {
+ public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent,AccountManagementPanel_main accountMainPanel) {
+	 
 		// TODO Auto-generated constructor stub
 		this.controller=controller;
 		this.money=money;
 		this.nameInit=nameInit;
 		this.financeFrame=parent;
+		this.accountMainPanel=accountMainPanel;
 		
 		infoOKButton = new JButton("确认");
 		cancelButton =new JButton("取消");
@@ -119,6 +123,7 @@ public class AccountManagementPanel_modify extends OperationPanel{
 				AccountVO accountVO=new AccountVO(nameInit, Double.parseDouble(money));
 				int result=controller.modifyAccount(accountVO, name);
 				if(result==0){
+					accountMainPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
 				financeFrame.toMainPanel();

@@ -28,6 +28,8 @@ public class AccountManagement_new extends OperationPanel {
 
 	private JTextField account_name_Input;
 	private JTextField account_money_Input;
+	
+	private AccountManagementPanel_main accountMainPanel;
 
 //	private LocationHelper helper;
 
@@ -40,9 +42,10 @@ public class AccountManagement_new extends OperationPanel {
 	
 	FinanceFrame financeFrame;
 
-	public AccountManagement_new(AccountBLController controller,FinanceFrame parent) {
+	public AccountManagement_new(AccountBLController controller,FinanceFrame parent,AccountManagementPanel_main accountMainPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;
+		this.accountMainPanel=accountMainPanel;
 		infoOKButton = new JButton("确认");
 		cancelButton =new JButton("返回");
 
@@ -66,6 +69,7 @@ public class AccountManagement_new extends OperationPanel {
 		add(account_name_Input);
 		add(account_money_Input);
 //		helper = new LocationHelper(this);
+		
 		
 		setLayout(null);
 		infoOKButton.addActionListener(new ActionListener() {
@@ -127,6 +131,7 @@ public class AccountManagement_new extends OperationPanel {
 				int result=controller.addAccount(accountVO);
 
 				if(result==0){
+					returnui();
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.DEFAULT_OPTION);
 					account_name_Input.setText("");
@@ -166,6 +171,13 @@ public class AccountManagement_new extends OperationPanel {
 		PANEL_HEIGHT = height;
 		setCmpLocation();
 		repaint();
+	}
+	
+	/**
+	 * 返回上一层界面
+	 * */
+	public void returnui(){
+		accountMainPanel.refreshui();
 	}
 	
 	
