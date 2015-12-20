@@ -39,10 +39,10 @@ public class TrainManagerBL implements TrainManagerBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState deleteTrain(TrainVO train_delete) throws Exception {
+	public OperationState deleteTrain(String s) throws Exception {
 		// TODO 自动生成的方法存根
 		for (TrainVO train : trainList) {
-			if (train.ID.equals(train_delete.ID)) {
+			if (train.ID.equals(s)) {
 				trainList.remove(train);
 				return OperationState.SUCCEED_OPERATION;
 			}

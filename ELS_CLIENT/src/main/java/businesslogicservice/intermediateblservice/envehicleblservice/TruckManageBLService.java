@@ -11,7 +11,7 @@ public interface TruckManageBLService {
 
 	public OperationState addTruck(String ID, String destination);
 
-	public OperationState deleteTruck(TruckVO truck_delete) throws Exception;
+	public OperationState deleteTruck(String truck_ID) throws Exception;
 
 	public OperationState modifyTruck(TruckVO truck_modify) throws Exception;
 

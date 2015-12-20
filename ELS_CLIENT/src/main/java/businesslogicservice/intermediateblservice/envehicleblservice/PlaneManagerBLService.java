@@ -11,7 +11,7 @@ public interface PlaneManagerBLService {
 
 	public OperationState addPlane(String ID, String destination) throws RemoteException;
 
-	public OperationState deletePlane(PlaneVO plane_delete) throws Exception;
+	public OperationState deletePlane(String s) throws Exception;
 
 	public OperationState modifyPlane(PlaneVO plane_modify) throws Exception;
 
