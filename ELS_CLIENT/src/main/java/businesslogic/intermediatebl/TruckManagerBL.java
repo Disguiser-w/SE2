@@ -39,10 +39,10 @@ public class TruckManagerBL implements TruckManageBLService {
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public OperationState deleteTruck(TruckVO truck_delete) throws Exception {
+	public OperationState deleteTruck(String s) throws Exception {
 		// TODO 自动生成的方法存根
 		for (TruckVO truck : truckList) {
-			if (truck.ID.equals(truck_delete.ID)) {
+			if (truck.ID.equals(s)) {
 				truckList.remove(truck);
 				return OperationState.SUCCEED_OPERATION;
 			}

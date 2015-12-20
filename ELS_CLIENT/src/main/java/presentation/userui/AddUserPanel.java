@@ -303,8 +303,8 @@ public class AddUserPanel extends OperationPanel {
     
     //返回上一级界面
 	public void returnui() {
-		userMainPanel.setInfos();
-		adminFrame.changePanel(userMainPanel);
+		adminFrame.toMainPanel();
+		userMainPanel.refreshui();
 	}
 
 	

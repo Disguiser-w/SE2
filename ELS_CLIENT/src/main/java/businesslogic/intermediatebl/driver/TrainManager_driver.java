@@ -18,12 +18,12 @@ public class TrainManager_driver {
 	public static void main(String[] args) {
 		OrganizationVO intermediateCentre = new OrganizationVO(
 				OrganizationType.intermediateCenter, "025001", "南京中转中心");
-		TrainVO traine1 = new TrainVO(
-				intermediateCentre.organizationID + "-001", "天国");
-		TrainVO traine2 = new TrainVO(
-				intermediateCentre.organizationID + "-002", "天国");
-		TrainVO traine3 = new TrainVO(
-				intermediateCentre.organizationID + "-003", "天国");
+		TrainVO traine1 = new TrainVO(intermediateCentre.organizationID
+				+ "-001", "天国");
+		TrainVO traine2 = new TrainVO(intermediateCentre.organizationID
+				+ "-002", "天国");
+		TrainVO traine3 = new TrainVO(intermediateCentre.organizationID
+				+ "-003", "天国");
 
 		ArrayList<TrainVO> traineList = new ArrayList<TrainVO>();
 		traineList.add(traine1);
@@ -43,15 +43,14 @@ public class TrainManager_driver {
 			e.printStackTrace();
 		}
 
-		TrainManagerBL pmbl = new TrainManagerBL(traineList, intermediateCentre,
-				intermediateData);
+		TrainManagerBL pmbl = new TrainManagerBL(traineList,
+				intermediateCentre, intermediateData);
 
 		System.out.println(intermediateCentre.name + "此时拥有 "
 				+ pmbl.showTrainList().size() + " 架火车");
 		try {
 			pmbl.addTrain(intermediateCentre.organizationID + "-004", "地狱");
-			pmbl.deleteTrain(new TrainVO(intermediateCentre.organizationID
-					+ "-003", null));
+			pmbl.deleteTrain(intermediateCentre.organizationID + "-003");
 			pmbl.modifyTrain(new TrainVO(intermediateCentre.organizationID
 					+ "-002", "仙林大道"));
 		} catch (Exception e) {

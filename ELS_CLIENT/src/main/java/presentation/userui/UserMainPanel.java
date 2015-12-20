@@ -1,34 +1,19 @@
 package presentation.userui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-//import javax.swing.JComboBox;
-//import javax.swing.JFrame;
-//import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
-//import javax.swing.ListSelectionModel;
-
-
-import presentation.commonui.OperationPanel;
 
 import java.util.ArrayList;
+
+import presentation.commonui.OperationPanel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyLabel;
 
 import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
@@ -47,28 +32,18 @@ public class UserMainPanel extends OperationPanel {
 	private UserBL userBL;
 	private OrganizationBL organizationBL;
 	
-	private JLabel addLabel;
-	private JLabel delLabel;
-	private JLabel modifyLabel;
-	private JLabel searchLabel;
-	private JTextField inputField;
+	private MyLabel addLabel;
+	private MyLabel deleteLabel;
+	private MyLabel modifyLabel;
+	private MyLabel searchLabel;
+	private MyTextField inputField;
 	private JButton searchButton;
 
-	private JTable messageTable;
-	
-	private JLabel previousPageLabel;
-	private JLabel nextPageLabel;
-	private JLabel numOfPage;
-	
-	private ArrayList<JCheckBox> selectUser;
+	private MyTable messageTable;
 	
 	private ArrayList<UserVO> users;
 	
-	private boolean isDel;
-	private boolean isModify;
-	private int num;
-	private int numOfChoose;
-	private boolean isFirstTime;
+	private int selectedIndex;
 	
 	public UserMainPanel(AdminFrame adminFrame) {
 		
@@ -77,80 +52,62 @@ public class UserMainPanel extends OperationPanel {
 		this.userBL = new UserBL();
 		this.organizationBL = new OrganizationBL();
 		
-		addLabel = new JLabel("增");
-		delLabel = new JLabel("删");
-		modifyLabel = new JLabel("改");
-		
-		addLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		delLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		modifyLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-        searchLabel = new JLabel();
-		inputField = new JTextField();
+		addLabel = new MyLabel("增");
+		deleteLabel = new MyLabel("删");
+		modifyLabel = new MyLabel("改");
+		searchLabel = new MyLabel();
+		inputField = new MyTextField();
 		searchButton = new JButton();
-		
-		MessageTableModel model = new MessageTableModel();
-		messageTable = new JTable(model);
-		
-		previousPageLabel = new JLabel(" < ");
-		nextPageLabel = new JLabel(" > ");
-		
-		selectUser = new ArrayList<JCheckBox>();
-		for (int i = 0; i < 8; i++) {
-			JCheckBox box = new JCheckBox();
-			selectUser.add(box);
-			add(box);
-		}
-        
-		numOfPage = new JLabel();
 
 		setLayout(null);
 		
 		add(addLabel);
-		add(delLabel);
+		add(deleteLabel);
 		add(modifyLabel);
 		add(searchLabel);
 		add(inputField);
 		add(searchButton);
-		add(messageTable);
-		add(previousPageLabel);
-		add(nextPageLabel);
-		add(messageTable.getTableHeader());
-		add(numOfPage);
-
-		messageTable.setBackground(getBackground());
-
-		num = 0;
-		numOfChoose = 0;
-		isModify = false;
-		isFirstTime = true;
 		
+		users = userBL.showAllUsers();
+
 		addListener();
-		
+		setBaseInfos();
 		// helper = new LocationHelper(this);
 	}
+	
 
+	public void addListener() {
+		addLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				addui();
+			}
+		});
+
+		deleteLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				deleteui();
+			}
+		});
+		
+		modifyLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				modifyui();
+			}
+		});
+		
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae){
+				searchui();
+			}
+		});
+	}
+	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		selectUser.get(0).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 5.625 / 20),
-				(int) (width * 0.6722151088348272 / 25), (int) (height * 0.8035714285714286 / 20));
-		selectUser.get(1).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 6.830357142857143 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(2).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 8.125 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(3).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 9.419642857142858 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(4).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 10.758928571428571 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(5).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 12.098214285714286 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(6).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 13.348214285714286 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		selectUser.get(7).setBounds((int) (width * 0.2560819462227913 / 25), (int) (height * 14.642857142857142 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
+
 		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		delLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
+		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
 		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.1607142857142858 / 20),
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
@@ -160,274 +117,26 @@ public class UserMainPanel extends OperationPanel {
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
 		searchButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setBounds((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
-		messageTable.getTableHeader().setBounds((int) (width * 1.0243277848911652 / 25),(int) (height * 5.401785714285714 / 20) - (int) (height * 1.435714285714286 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 1.435714285714286 / 20));
-		previousPageLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-		nextPageLabel.setBounds((int) (width * 13.380281690140846 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.0243277848911652 / 25), (int) (height * 1.4732142857142858 / 20));
-		numOfPage.setBounds((int) (width * 12.32394366197183 / 25), (int) (height * 17.321428571428573 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.4732142857142858 / 20));
-	}
-
-	public void paintComponent(Graphics g) {
-		if (isFirstTime) {
-			setInfos();
-			isFirstTime = false;
-		}
-		super.paintComponent(g);
-	}
-
-	// 设置载入动态的内容
-	public void setInfos() {
-		for (JCheckBox i : selectUser) {
-			i.setVisible(false);
-		}
-		
-		//不显示管理员相关信息
-		users = new ArrayList<UserVO>();
-		for (int i=0; i < userBL.showAllUsers().size(); i++){
-			UserVO tempUservo = userBL.showAllUsers().get(i);
-			if(!(tempUservo.profession.equals(ProfessionType.administrator)))
-				users.add(tempUservo);
-		}
-		
-		numOfPage.setText(num + 1 + "/" + ((users.size() - 1) / 8 + 1));
-
-		messageTable.setModel(new MessageTableModel());
-		setBaseInfos();
-		// repaint();
 	}
 	
-	public void addListener() {
-		
-		previousPageLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (num == 0)
-					return;
-				else {
-					num--;
-					setInfos();
-				}
-			}
-		});
 
-		nextPageLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (num >= (users.size() - 1) / 8)
-					return;
-				else {
-					num++;
-					setInfos();
-				}
-			}
-		});
-
-		addLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				addui();
-			}
-		});
-		
-		ItemListener listener = new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				JCheckBox button = ((JCheckBox) (e.getSource()));
-				if(button.isSelected()){
-					numOfChoose++;
-				} 
-				else{
-					numOfChoose--;
-				}
-
-				if(numOfChoose == 1){
-					isModify = true;
-					//modifyLabel.setEnabled(true);
-				} 
-				else
-					isModify = false;
-
-				if (numOfChoose >= 1)
-					isDel = true;
-					//modifyLabel.setEnabled(false);
-			}
-		};
-
-		for (JCheckBox i : selectUser) {
-			i.addItemListener(listener);
-		}
-
-		modifyLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (isModify) {
-					modifyui();
-				}
-			}
-		});
-
-		delLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (isDel) {
-					if (JOptionPane.showConfirmDialog(null, "确认删除该用户信息？", "",
-							JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
-						return;
-					}
-					int n = 0;
-					int m = 0;
-					for (JCheckBox i : selectUser) {
-						if (i.isSelected()) {
-							i.setSelected(false);
-							UserVO vo = users.get(num * 8 + n);
-							if(!vo.profession.equals(ProfessionType.administrator)){
-								userBL.deleteUser(vo.userID);
-								m++;
-							}
-						}
-						n++;
-						isDel = false;
-					}
-
-					if ((users.size() - m - 1) / 8 + 1 < num + 1) {
-						num--;
-					}
-					setInfos();
-				}
-			}
-		});
-		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae){
-				String keyword = inputField.getText();
-				for (JCheckBox i : selectUser) {
-					i.setVisible(false);
-				}
-				users = userBL.findUserByKeyword(keyword);
-				numOfPage.setText(num + 1 + "/" + ((users.size() - 1) / 8 + 1));
-
-				messageTable.setModel(new MessageTableModel());
-				setBaseInfos();
-			}
-		});
-		
-	}
-
-	// 设置table的基本内容，图片，什么的
 	private void setBaseInfos() {
-
-		// 设置成不可编辑不可改变位置，大小
-		// messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		messageTable.getTableHeader().setReorderingAllowed(false);
-		messageTable.getTableHeader().setResizingAllowed(false);
-
-		TableColumn column0 = messageTable.getColumnModel().getColumn(0);
-		TableColumn column1 = messageTable.getColumnModel().getColumn(1);
-		TableColumn column2 = messageTable.getColumnModel().getColumn(2);
-		TableColumn column3 = messageTable.getColumnModel().getColumn(3);
-		TableColumn column4 = messageTable.getColumnModel().getColumn(4);
-		TableColumn column5 = messageTable.getColumnModel().getColumn(5);
-
-		// 设置宽度
-		int tWidth = messageTable.getWidth();
-		column0.setPreferredWidth(tWidth * 5 / 32);
-		column1.setPreferredWidth(tWidth / 8);
-		column2.setPreferredWidth(tWidth * 9 / 32);
-		column3.setPreferredWidth(tWidth / 4);
-		column4.setPreferredWidth(tWidth * 3 / 32);
-		column5.setPreferredWidth(tWidth * 3 / 32);
-
-		messageTable.setRowHeight(messageTable.getHeight() / 8);
-
-		//
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			
-			private static final long serialVersionUID = 1L;
-
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-
-		tcr.setHorizontalAlignment(JLabel.CENTER);
-		column0.setCellRenderer(tcr);
-		column1.setCellRenderer(tcr);
-		column2.setCellRenderer(tcr);
-		column3.setCellRenderer(tcr);
-		column4.setCellRenderer(tcr);
-		column5.setCellRenderer(tcr);
+		String[] head = new String[]{"姓名","用户编号","职业类型","所属机构","薪水策略","权限类型"};
+		int[] widths = {60,90,120,120,90,120};
 		
+		messageTable = new MyTable(head, getInfos(), widths, true);
+		add(messageTable);
 	}
 
-	private class MessageTableModel extends AbstractTableModel {
-
-		private static final long serialVersionUID = 297L;
-
-		public int getRowCount() {
-			return 8;
+	private ArrayList<String[]> getInfos(){
+		ArrayList<String[]> infos = new ArrayList<String[]>();
+		for(UserVO uservo: users){
+			infos.add(new String[]{uservo.userName, uservo.userID, professionName(uservo.profession), 
+					organizationName(uservo.organization),salaryPlanName(uservo.salaryPlan), authorityName(uservo.authority)});
 		}
-
-		public int getColumnCount() {
-			return 6;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			int index = num * 8 + rowIndex;
-
-			if (index > users.size() - 1)
-				return null;
-
-			UserVO uservo = users.get(index);
-
-			switch (columnIndex) {
-			case 0:
-				selectUser.get(rowIndex).setVisible(true);
-				return uservo.userName;
-			case 1:
-				return uservo.userID;
-			case 2:
-				return professionName(uservo.profession);
-			case 3:
-				if(uservo.organization.equals("总部"))
-					return "总部";
-				else if(uservo.organization.equals(""))
-					return "";
-				else
-					return organizationName(uservo.organization);
-					//return uservo.organization;
-			case 4:
-				return salaryPlanName(uservo.salaryPlan);
-			case 5:
-				return authorityName(uservo.authority);
-			default:
-				return null;
-			}
-		}
-
-		public String getColumnName(int c) {
-			switch (c) {
-			case 0:
-				return "姓名";
-			case 1:
-				return "用户编号";
-			case 2:
-				return "职业类型";
-			case 3:
-				return "机构";
-			case 4:
-				return "薪水策略";
-			case 5:
-				return "权限类型";
-			default:
-				return null;
-			}
-		}
-
+		return infos;
 	}
 	
 	
@@ -436,24 +145,71 @@ public class UserMainPanel extends OperationPanel {
 		adminFrame.changePanel(new AddUserPanel(adminFrame, this));
 	}
 
+	//删除用户界面
+	public void deleteui(){
+		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+		int size = selectedIndexs.size();
+		
+		if(size == 0){
+			JOptionPane.showMessageDialog(null, "亲爱的管理员，选中某一个或某一些人员后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		else if(size == 1){
+			if(JOptionPane.showConfirmDialog(null, "确认删除该用户信息？", "",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+				return;
+			selectedIndex = selectedIndexs.get(0);
+			userBL.deleteUser(users.get(selectedIndex).userID);
+		}
+		else{
+			if(JOptionPane.showConfirmDialog(null, "确认删除这些用户信息？", "",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+				return;
+			for(int i: selectedIndexs){
+				userBL.deleteUser(users.get(i).userID);
+			}
+		}
+		users = userBL.showAllUsers();
+		messageTable.setInfos(getInfos());
+	}
+	
 	//修改用户权限界面
 	public void modifyui(){
-		int n = 0;
-		for(JCheckBox i : selectUser){
-			if(i.isSelected()){
-				i.setSelected(false);
-				break;
-			}
-			n++;
+		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+		int size = selectedIndexs.size();
+		
+		if(size == 0){
+			JOptionPane.showMessageDialog(null, "亲爱的管理员，选中某一个人员后再修改哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		else if(size > 1){
+			JOptionPane.showMessageDialog(null, "亲爱的管理员，只能选中某一个人员修改哦！", "选择用户过多", JOptionPane.WARNING_MESSAGE);
+			return;
 		}
 		
-		UserVO vo = users.get(num * 8 + n);
+		selectedIndex = selectedIndexs.get(0);
+		
+		UserVO vo = users.get(selectedIndex);
 		if(!vo.profession.equals(ProfessionType.financialStaff)){
 			warnning("该人员不是财务人员，没有修改权限的必要");
 		}
 		else{
-			adminFrame.changePanel(new ModifyUserAuthorityPanel(adminFrame, this, vo.userName, vo.userID, professionName(vo.profession), vo.organization, salaryPlanName(vo.salaryPlan)));
+			adminFrame.changePanel(new ModifyUserAuthorityPanel(adminFrame, this, vo.userName, vo.userID,
+					professionName(vo.profession), organizationName(vo.organization), salaryPlanName(vo.salaryPlan)));
 		}
+	}
+	
+	//查询界面
+	public void searchui(){
+		String keyword = inputField.getText();
+		users = userBL.findUserByKeyword(keyword);
+		messageTable.setInfos(getInfos());
+	}
+	
+	//刷新界面
+	public void refreshui(){
+		users = userBL.showAllUsers();
+		messageTable.setInfos(getInfos());
 	}
 	
 	
@@ -469,7 +225,11 @@ public class UserMainPanel extends OperationPanel {
 	
 	//根据不同的机构编号返回机构名，给表去显示
 	public String organizationName(String organizationID){
-		if(organizationID.endsWith("-CK")){
+		if(organizationID.equals("总部"))
+			return "总部";
+		else if(organizationID.equals(""))
+			return "/（待总经理分配）";
+		else if(organizationID.endsWith("-CK")){
 			organizationID = organizationID.substring(0,5);
 			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
 			return organizationvo.name+"仓库";
@@ -497,145 +257,11 @@ public class UserMainPanel extends OperationPanel {
 			return authorityNameList[n-1];
 	}
 	
+	
 	//出现错误时给用户的提示信息
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
 	
-	//全部用户信息对应的表的Model
-	/*public class AllMessageTableModel extends AbstractTableModel {
-		
-		private static final long serialVersionUID = 4L;
-		
-		Vector<UserVO> userVector;
-		
-		public int getRowCount() {
-			return 10;
-		}
-
-		public int getColumnCount() {
-			return 6;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			
-			userVector = new Vector<UserVO>();
-			for(int i=0;i<userBL.showAllUsers().size();i++){
-				UserVO userVO = userBL.showAllUsers().get(i);
-				if(!userVO.getProfession().equals(ProfessionType.administrator))
-					userVector.add(userVO);
-			}
-			
-			int index = pageNum * 10 + rowIndex;
-
-				if (index > userVector.size()-1)
-					return null;
-				UserVO uservo = (UserVO)userVector.get(index);
-	
-				if (uservo != null) {
-					if(columnIndex==0)
-						return uservo.getName();
-					else if(columnIndex==1)
-						return uservo.getID();
-					else if(columnIndex==2)
-						return professionName(uservo.getProfession());
-					else if(columnIndex==3)
-						return uservo.getOrganization();
-					else if(columnIndex==4)
-						return salaryPlanName(uservo.getSalaryPlan());
-					else if(columnIndex==5)
-						return authorityName(uservo.getAuthority());
-					else 
-						return null;
-				} 
-				else
-					return null;
-		}
-
-		public String getColumnName(int num) {
-			if (num == 0)
-				return "姓名";
-			else if(num==1)
-				return "编号";
-			else if(num==2)
-				return "职位";
-			else if(num==3)
-				return "所属机构";
-			else if(num==4)
-				return "薪水策略";
-			else 
-				return "权限";
-		}
-
-	}
-	
-	
-	//搜索用户信息对应的表的Model
-	public class FindMessageTableModel extends AbstractTableModel {
-		
-		private static final long serialVersionUID = -4L;
-		
-		Vector<UserVO> userVector;
-		
-		public int getRowCount() {
-			return 10;
-		}
-
-		public int getColumnCount() {
-			return 6;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			
-			String userID = searchTextField.getText();
-			userVector = new Vector<UserVO>();
-			UserVO userVO = userBL.findUser(userID);
-			if(!userVO.getProfession().equals(ProfessionType.administrator))
-				userVector.add(userVO);
-
-			int index = pageNum * 10 + rowIndex;
-			
-			if (index > userVector.size()-1)
-				return null;
-			UserVO uservo = (UserVO)userVector.get(index);
-	
-			if (uservo != null){
-				if(columnIndex==0)
-					return uservo.getName();
-				else if(columnIndex==1)
-					return uservo.getID();
-				else if(columnIndex==2)
-					return professionName(uservo.getProfession());
-				else if(columnIndex==3)
-					return uservo.getOrganization();
-				else if(columnIndex==4)
-					return salaryPlanName(uservo.getSalaryPlan());
-				else if(columnIndex==5)
-					return authorityName(uservo.getAuthority());
-				else 
-					return null;
-			}
-			else{
-				return null;
-			}
-		}
-
-		public String getColumnName(int num) {
-			if (num == 0)
-				return "姓名";
-			else if(num==1)
-				return "编号";
-			else if(num==2)
-				return "职位";
-			else if(num==3)
-				return "所属机构";
-			else if(num==4)
-				return "薪水策略";
-			else 
-				return "权限";
-		}
-
-	}*/
-	
-}
+}	

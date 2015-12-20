@@ -129,9 +129,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
 
-//		serialVersionUID.setBounds((int)(width * 2.5510204081632653/25),(int)(height * 5.205479452054795/20),(int)(width *  17.92091836734694 /25),(int)(height *  1.0176125244618395/20));
-//		dateChooseButton.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
-		dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
+	dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height * 3.5616438356164384/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
 		infoOKButton.setBounds((int)(width * 14.09438775510204/25),(int)(height * 3.5616438356164384/20),(int)(width *  0.9885204081632653 /25),(int)(height *  0.9784735812133072/20));
 		collectionOKButton.setBounds((int)(width * 20.535714285714285/25),(int)(height * 3.522504892367906/20),(int)(width *  1.6262755102040816 /25),(int)(height *  0.9393346379647749/20));
 		next.setBounds((int)(width * 21.1734693877551/25),(int)(height * 18.747553816046967/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.821917808219178/20));
@@ -317,8 +315,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 
 	public void totalui() {
-//		double money=controller.getTotalMoney(controller.getGathering(date_str));
-		double money=0;
+		double money=controller.getTotalMoney(controller.getGathering(date_str));
 		infoLine.setText("日期："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
 				.substring(6)+"    金额总和："+money);
 		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), user.userID, ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");

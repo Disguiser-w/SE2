@@ -17,12 +17,12 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 
 	private static final long serialVersionUID = 15L;
 
-	AdminFrame adminFrame;
-	UserMainPanel  userMainPanel;
+	private AdminFrame adminFrame;
+	private UserMainPanel userMainPanel;
 	
-	UserBL userBL;
+	private UserBL userBL;
 	
-    private int PANEL_WIDTH = 720;
+	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
     private JLabel function;
@@ -181,8 +181,8 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
     
     //返回上一级界面
 	public void returnui() {
-		adminFrame.changePanel(userMainPanel);
-		userMainPanel.setInfos();
+		adminFrame.toMainPanel();
+		userMainPanel.refreshui();
 	}
 
 	

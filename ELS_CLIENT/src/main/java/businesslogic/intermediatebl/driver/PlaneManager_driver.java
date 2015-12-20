@@ -50,8 +50,7 @@ public class PlaneManager_driver {
 				+ pmbl.showPlaneList().size() + " 架飞机");
 		try {
 			pmbl.addPlane(intermediateCentre.organizationID + "-004", "地狱");
-			pmbl.deletePlane(new PlaneVO(intermediateCentre.organizationID
-					+ "-003", null));
+			pmbl.deletePlane(intermediateCentre.organizationID + "-003");
 			pmbl.modifyPlane(new PlaneVO(intermediateCentre.organizationID
 					+ "-002", "仙林大道"));
 		} catch (Exception e) {

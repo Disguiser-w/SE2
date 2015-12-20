@@ -20,6 +20,7 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 	private static final long serialVersionUID = 16L;
 
 	private ManageFrame manageFrame;
+<<<<<<< HEAD
 
 	UserBL userBL;
 	OrganizationBL organizationBL;
@@ -63,6 +64,50 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 		organizationIDList = new String[50];
 
 		for (int i = 0; i < organizationArr.size(); i++) {
+=======
+	private StaffManagePanel staffManagePanel;
+	
+	private UserBL userBL;
+	private OrganizationBL organizationBL;
+	
+    private int PANEL_WIDTH = 720;
+    private int PANEL_HEIGHT = 480;
+    
+    private JLabel function;
+    private JLabel name;
+    private JTextField nameField;
+    private JLabel ID;
+    private String userIDStr;
+    private JTextField IDField;
+    private JLabel profession;
+    private JTextField professionField;
+    private JLabel organization;
+    private JComboBox<String> organizationChoose;
+    private JLabel salaryPlan;
+    private JTextField salaryPlanField;
+    private JLabel authority;
+    private JTextField authorityField;
+    private JLabel grade;
+    private JTextField gradeField;
+	
+    private JButton OKButton;
+    private JButton returnButton;
+	
+    public ModifyStaffOrganizationPanel(ManageFrame frame, StaffManagePanel staffManagePanel, String userName, String userID, String userProfession,
+    									String userOldOrganization, String userSalaryPlan, String userAuthority, String userGrade){
+    	
+    	this.manageFrame =frame;
+    	this.staffManagePanel = staffManagePanel; 
+    	
+    	this.userBL = new UserBL();
+    	this.organizationBL = new OrganizationBL();
+    	
+    	ArrayList<OrganizationVO> organizationArr = organizationBL.showAllOrganizations();
+		String[] organizationNameList = new String[50];
+		String[] organizationIDList = new String[50];
+		
+		for(int i=0;i<organizationArr.size();i++){
+>>>>>>> e4f3aaa7489c812b5f6d14e58a5725048d7ace96
 			organizationNameList[i] = (organizationArr.get(i).name);
 			organizationIDList[i] = (organizationArr.get(i).organizationID);
 		}
@@ -180,6 +225,7 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 		repaint();
 	}
 
+<<<<<<< HEAD
 	// 返回上一级界面
 	public void returnui() {
 		manageFrame.changePanel(new StaffManagePanel(manageFrame));
@@ -187,6 +233,17 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 
 	// 修改成功时返回上一级界面，同时给用户提示信息
 	public void successModify() {
+=======
+    //返回上一级界面
+    public void returnui(){
+    	manageFrame.toMainPanel();
+    	staffManagePanel.refreshui();
+    }
+    
+    
+    //修改成功时返回上一级界面，同时给用户提示信息
+	public void successModify(){
+>>>>>>> e4f3aaa7489c812b5f6d14e58a5725048d7ace96
 		returnui();
 		JOptionPane.showMessageDialog(null, "修改成功(●'◡'●)", "为用户选择机构成功", JOptionPane.INFORMATION_MESSAGE);
 

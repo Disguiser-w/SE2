@@ -18,12 +18,12 @@ public class TruckManager_driver {
 	public static void main(String[] args) {
 		OrganizationVO intermediateCentre = new OrganizationVO(
 				OrganizationType.intermediateCenter, "025001", "南京中转中心");
-		TruckVO trucke1 = new TruckVO(
-				intermediateCentre.organizationID + "-001", "天国");
-		TruckVO trucke2 = new TruckVO(
-				intermediateCentre.organizationID + "-002", "天国");
-		TruckVO trucke3 = new TruckVO(
-				intermediateCentre.organizationID + "-003", "天国");
+		TruckVO trucke1 = new TruckVO(intermediateCentre.organizationID
+				+ "-001", "天国");
+		TruckVO trucke2 = new TruckVO(intermediateCentre.organizationID
+				+ "-002", "天国");
+		TruckVO trucke3 = new TruckVO(intermediateCentre.organizationID
+				+ "-003", "天国");
 
 		ArrayList<TruckVO> truckeList = new ArrayList<TruckVO>();
 		truckeList.add(trucke1);
@@ -43,15 +43,14 @@ public class TruckManager_driver {
 			e.printStackTrace();
 		}
 
-		TruckManagerBL pmbl = new TruckManagerBL(truckeList, intermediateCentre,
-				intermediateData);
+		TruckManagerBL pmbl = new TruckManagerBL(truckeList,
+				intermediateCentre, intermediateData);
 
 		System.out.println(intermediateCentre.name + "此时拥有 "
 				+ pmbl.showTruckList().size() + " 架汽车");
 		try {
 			pmbl.addTruck(intermediateCentre.organizationID + "-004", "地狱");
-			pmbl.deleteTruck(new TruckVO(intermediateCentre.organizationID
-					+ "-003", null));
+			pmbl.deleteTruck(intermediateCentre.organizationID + "-003");
 			pmbl.modifyTruck(new TruckVO(intermediateCentre.organizationID
 					+ "-002", "仙林大道"));
 		} catch (Exception e) {

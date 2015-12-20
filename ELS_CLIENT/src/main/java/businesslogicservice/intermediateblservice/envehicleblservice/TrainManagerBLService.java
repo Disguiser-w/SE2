@@ -11,7 +11,7 @@ public interface TrainManagerBLService {
 
 	public OperationState addTrain(String ID, String destination);
 
-	public OperationState deleteTrain(TrainVO train_delete) throws Exception;
+	public OperationState deleteTrain(String train_ID) throws Exception;
 
 	public OperationState modifyTrain(TrainVO train_modify) throws Exception;
 

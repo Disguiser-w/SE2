@@ -59,10 +59,12 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		CollectionReceiptBLController controller=new CollectionReceiptBLController();
 //		CollectionReceiptVO vo=new CollectionReceiptVO("HJSKD-20151216", "CW-00001", null, null, 2000, "20151206", "CW");
 //		controller.creatCollection(vo);
-		ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
-		for(CollectionReceiptVO v:vos){
-			System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
-		}
+		ArrayList<GatheringReceiptVO> vos = controller.getGathering("20151220");
+		System.out.println(vos.size());
+//		ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
+//		for(CollectionReceiptVO v:vos){
+//			System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
+//		}
 	}
 	
 }
