@@ -42,7 +42,7 @@ public class EnVehicle {
 	}
 
 	// 从前一天的订单列表中找出待转运的订单(今天和昨天的)，按目的地分配给车辆
-	public ArrayList<String> autoTruckLoading() {
+	public ArrayList<String[]> autoTruckLoading() {
 		BusinessMainController.updateBusinessVO();
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
 
@@ -91,11 +91,10 @@ public class EnVehicle {
 
 		// 开始根据车辆目的地和订单目的地来分配订单
 
-		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		String nowTime = df.format(Calendar.getInstance().getTime());
 
 		ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = new ArrayList<EnVehicleReceiptPO>();
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String[]> result = new ArrayList<String[]>();
 
 		int j = 0;
 		for (VehiclePO i : vehiclePO) {
@@ -112,8 +111,8 @@ public class EnVehicle {
 			for (OrderPO o : distributingPo)
 				if (o.getRecipientAddress().split(" ")[1].equals(i.getDestinationCity())) {
 					orderIDs.add(o.getID());
-					result.add(i.getID() + " " + o.getSenderAddress().split(" ")[1] + " " + i.getDestinationCity() + " "
-							+ o.getID());
+					result.add(new String[] { i.getID(), o.getSenderAddress().split(" ")[1], i.getDestinationCity(),
+							o.getID() });
 					hasOrder = true;
 				}
 

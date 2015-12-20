@@ -8,7 +8,7 @@ public class ExpressVO {
 	public final String serviceTime;
 	public final ArrayList<String> chargeCollection;
 	public final OrganizationVO organization;
-	
+
 	public final ArrayList<String> pendingOrders;
 	public final ArrayList<String> finishedOrders;
 	public final ArrayList<String> submitedOrderID;
@@ -21,6 +21,8 @@ public class ExpressVO {
 		this.ID = ID;
 		this.serviceTime = serviceTime;
 		this.chargeCollection = chargeCollection;
+		if (chargeCollection.isEmpty())
+			chargeCollection.add("0.0");
 		this.organization = organization;
 		this.pendingOrders = pendingOrders;
 		this.finishedOrders = finishedOrders;

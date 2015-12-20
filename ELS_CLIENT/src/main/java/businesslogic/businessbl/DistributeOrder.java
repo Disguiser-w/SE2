@@ -43,7 +43,7 @@ public class DistributeOrder {
 
 	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
 	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
-	public ArrayList<String> distributeOrder() {
+	public ArrayList<String[]> distributeOrder() {
 		BusinessMainController.updateBusinessVO();
 
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
@@ -66,7 +66,8 @@ public class DistributeOrder {
 		String time1 = df.format(yestoday);
 		String time2 = df.format(today);
 
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String[]> result = new ArrayList<String[]>();
+		ArrayList<String> result1 = new ArrayList<String>();
 		ArrayList<OrderPO> distributingOrders = null;
 		try {
 			distributingOrders = expressData.getOrderInfosByTime(organizationVO.organizationID, time1);
@@ -86,9 +87,10 @@ public class DistributeOrder {
 					expressData.changeState(OrderState.DISTRIBUEING, i.getID());
 					expressData.addHistory("正在派件", null, i.getID());
 					expressData.addPendingOrder(organizationVO.organizationID, expressPOs.get(j).getID(), i.getID());
-
-					result.add(
-							expressPOs.get(j).getID() + " " + i.getRecipientAddress().split(" ")[2] + " " + i.getID());
+					String str = expressPOs.get(j).getID() + " " + i.getRecipientAddress().split(" ")[2] + " "
+							+ i.getID();
+					result.add(str.split(" "));
+					result1.add(str);
 					j++;
 					if (j == size)
 						j = 0;
@@ -101,8 +103,8 @@ public class DistributeOrder {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 		String nowTime = df.format(new Date());
 
-		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime, result,
-				nowTime, ReceiptState.SUBMIT);
+		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime,
+				result1, nowTime, ReceiptState.SUBMIT);
 		// 增加派件单，一天一个
 		try {
 			businessData.addDistributeReceipt(organizationVO.organizationID, po);

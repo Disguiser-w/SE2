@@ -37,7 +37,7 @@ public class Gathering {
 		}
 	}
 
-	public ArrayList<String> getChargeInfo() {
+	public ArrayList<String[]> getChargeInfo() {
 		// 获取收费信息
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
 
@@ -48,22 +48,21 @@ public class Gathering {
 			e.printStackTrace();
 		}
 		if (po == null) {
-			return null;
+			return new ArrayList<String[]>();
 		}
 
 		double total = 0;
 
-		ArrayList<String> chargeInfo = new ArrayList<String>();
+		ArrayList<String[]> chargeInfo = new ArrayList<String[]>();
 		for (ExpressPO i : po) {
 
 			double charge = 0;
 			if (!i.getChargeCollection().isEmpty())
 				charge = Double.parseDouble(i.getChargeCollection().get(0));
 			total += charge;
-			chargeInfo.add(i.getID() + " " + charge);
+			chargeInfo.add(new String[] { i.getID(), charge + "" });
 		}
-		if (total == 0)
-			return null;
+
 		return chargeInfo;
 	}
 
@@ -85,7 +84,9 @@ public class Gathering {
 		ArrayList<String> expressIDs = new ArrayList<String>();
 
 		for (ExpressPO i : po) {
-			double charge = Double.parseDouble(i.getChargeCollection().get(0));
+			double charge = 0.0;
+			if (!i.getChargeCollection().isEmpty())
+				charge = Double.parseDouble(i.getChargeCollection().get(0));
 			total += charge;
 
 			charges.add(charge);
@@ -106,7 +107,7 @@ public class Gathering {
 		Date d = new Date();
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		String time = fm.format(d);
-		
+
 		String receiptID = "SKD-" + organizationVO.organizationID + "-" + time;
 
 		GatheringReceiptPO grp = new GatheringReceiptPO(OrganizationBL.organizationVOToPO(organizationVO), time,

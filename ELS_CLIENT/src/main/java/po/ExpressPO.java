@@ -3,7 +3,7 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ExpressPO implements Serializable{
+public class ExpressPO implements Serializable {
 	private String name;
 	private String ID;
 	private String serviceTime;
@@ -14,18 +14,19 @@ public class ExpressPO implements Serializable{
 	private ArrayList<String> submitedOrderID;
 
 	public ExpressPO() {
-		
+
 	}
 
-	public ExpressPO(String name, String ID, String serviceTime,
-			ArrayList<String> chargeCollection, OrganizationPO organization,
-			ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
+	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
+			OrganizationPO organization, ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
 			ArrayList<String> submitedOrderID) {
 		super();
 		this.name = name;
 		this.ID = ID;
 		this.serviceTime = serviceTime;
 		this.chargeCollection = chargeCollection;
+		if (chargeCollection.isEmpty())
+			chargeCollection.add("0.0");
 		this.organization = organization;
 		this.pendingOrders = pendingOrders;
 		this.finishedOrders = finishedOrders;

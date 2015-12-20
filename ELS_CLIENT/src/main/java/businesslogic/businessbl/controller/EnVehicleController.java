@@ -15,7 +15,7 @@ public class EnVehicleController implements EnVehicleBLService {
 		enVehicle = new EnVehicle();
 	}
 
-	public ArrayList<String> autoTruckLoading() {
+	public ArrayList<String[]> autoTruckLoading() {
 		// TODO Auto-generated method stub
 		return enVehicle.autoTruckLoading();
 	}

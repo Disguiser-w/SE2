@@ -1,116 +1,66 @@
 package presentation.expressui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import vo.OrderVO;
 
 public class QueryPanel extends OperationPanel {
 
-	private JLabel timeInputLabel;
-	private JTextField timeField;
-	private JLabel timeSetLabel;
-	private JButton confirmButton;
-	private JLabel nextPageLabel;
-	private JLabel previousPageLabel;
-	private JTable messageTable;
-	private JLabel messageHeader;
-
-	private ArrayList<JLabel> queryLabels;
+	private MyLabel clearLabel;
+	private MyTextField timeField;
+	private MyLabel timeSetLabel;
+	private MyLabel confirmLabel;
+	private MyTable messageTable;
 
 	private ArrayList<OrderVO> submitOrders;
-	private ArrayList<String> queryOrders;
+	private ArrayList<String[]> queryOrders;
 	private LocationHelper help;
-	private int num;
 
 	private LogisticQueryController controller;
 
 	public QueryPanel(LogisticQueryController controller) {
-		num = 0;
+
 		this.controller = controller;
-		timeInputLabel = new JLabel("请输入时间");
-		timeField = new JTextField();
-		timeSetLabel = new JLabel();
-		confirmButton = new JButton();
-		nextPageLabel = new JLabel(">");
-		previousPageLabel = new JLabel("<");
-		messageTable = new JTable();
 
-		queryLabels = new ArrayList<JLabel>();
+		clearLabel = new MyLabel();
+		timeField = new MyTextField();
+		timeSetLabel = new MyLabel();
+		confirmLabel = new MyLabel();
 
-		queryOrders = new ArrayList<String>();
+		queryOrders = new ArrayList<String[]>();
 
 		timeField.setToolTipText("例:2001-12-12");
 
 		// 测试位置时使用
-		timeInputLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		timeSetLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		nextPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		previousPageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
-		// messageTable.setBorder(BorderFactory.createLineBorder(Color.black));
-		messageTable.setBackground(this.getBackground());
-
-		timeInputLabel.setHorizontalAlignment(JLabel.CENTER);
-		for (int i = 0; i < 8; i++) {
-			JLabel label = new JLabel("0");
-			label.setBorder(BorderFactory.createLineBorder(Color.black));
-			queryLabels.add(label);
-			add(label);
-		}
-
-		add(timeInputLabel);
+		add(clearLabel);
 		add(timeField);
 		add(timeSetLabel);
-		add(confirmButton);
-		add(nextPageLabel);
-		add(previousPageLabel);
-		add(messageTable);
-		add(messageTable.getTableHeader());
+		add(confirmLabel);
 
 		timeSetLabel.setLayout(new BorderLayout());
 		// timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
 
-		// help = new LocationHelper(this);
+//		help = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
-		messageTable.addMouseListener(new MouseAdapter() {
+		// help = new LocationHelper(this);
 
-			public void mouseClicked(MouseEvent e) {// 仅当鼠标单击时响应
-
-				// 得到选中的行列的索引值
-
-				int r = messageTable.getSelectedRow();
-				int c = messageTable.getSelectedColumn();
-				if (c == 1) {
-					queryOrder(r);
-				}
-
-			}
-		});
+		setBaseInfos();
 
 	}
 
@@ -123,7 +73,6 @@ public class QueryPanel extends OperationPanel {
 
 				}
 		}
-
 	}
 
 	private void showHistory(ArrayList<String> history) {
@@ -136,94 +85,42 @@ public class QueryPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		// setBounds
 		super.setBounds(x, y, width, height);
-		queryLabels.get(0).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 6.25 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(1).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 7.544642857142857 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(2).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 8.883928571428571 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(3).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 10.223214285714286 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(4).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 11.5625 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(5).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 12.901785714285714 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(6).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 14.241071428571429 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		queryLabels.get(7).setBounds((int) (width * 22.759282970550576 / 25), (int) (height * 15.580357142857142 / 20),
-				(int) (width * 0.6402048655569782 / 25), (int) (height * 0.8928571428571429 / 20));
-		timeInputLabel.setBounds((int) (width * 1.3764404609475032 / 25), (int) (height * 1.8303571428571428 / 20),
-				(int) (width * 3.8092189500640203 / 25), (int) (height * 1.1160714285714286 / 20));
-		timeField.setBounds((int) (width * 6.370038412291933 / 25), (int) (height * 1.8303571428571428 / 20),
-				(int) (width * 4.481434058898848 / 25), (int) (height * 1.1607142857142858 / 20));
-		timeSetLabel.setBounds((int) (width * 11.331626120358514 / 25), (int) (height * 1.8303571428571428 / 20),
-				(int) (width * 0.7682458386683739 / 25), (int) (height * 1.1160714285714286 / 20));
-		confirmButton.setBounds((int) (width * 13.316261203585148 / 25), (int) (height * 1.8303571428571428 / 20),
-				(int) (width * 1.5685019206145967 / 25), (int) (height * 1.1160714285714286 / 20));
-		nextPageLabel.setBounds((int) (width * 21.9910371318822 / 25), (int) (height * 17.589285714285715 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
-		previousPageLabel.setBounds((int) (width * 20.230473751600513 / 25), (int) (height * 17.589285714285715 / 20),
-				(int) (width * 1.088348271446863 / 25), (int) (height * 1.5178571428571428 / 20));
-		messageTable.setBounds((int) (width * 1.3764404609475032 / 25), (int) (height * 6.026785714285714 / 20),
-				(int) (width * 22.247119078104994 / 25), (int) (height * 10.714285714285714 / 20));
-		messageTable.getTableHeader().setBounds((int) (width * 1.3764404609475032 / 25),
-				(int) (height * 4.642857142857143 / 20), (int) (width * 22.151088348271447 / 25),
-				(int) (height * 1.4285714285714286 / 20));
 
-		setInfos();
-
+		clearLabel.setBounds((int) (width * 1.193724420190996 / 25), (int) (height * 0.967741935483871 / 20),
+				(int) (width * 1.5688949522510232 / 25), (int) (height * 0.967741935483871 / 20));
+		timeField.setBounds((int) (width * 15.82537517053206 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 4.843110504774898 / 25), (int) (height * 0.967741935483871 / 20));
+		timeSetLabel.setBounds((int) (width * 20.6343792633015 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 0.9890859481582538 / 25), (int) (height * 0.967741935483871 / 20));
+		confirmLabel.setBounds((int) (width * 22.339699863574353 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.534788540245566 / 25), (int) (height * 0.967741935483871 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.2278308321964528 / 25),
+				(int) (height * 2.8315412186379927 / 20), (int) (width * 22.68076398362892 / 25),
+				(int) (height * 15.878136200716845 / 20));
 	}
 
-	private void setInfos() {
+	private void setBaseInfos() {
+		String[] head = new String[] { "订单号", "订单状态" };
 
-		messageTable.setModel(new MessgeTableModel());
-		setTableInfos();
+		int[] widths = { 305, 310 };
+
+		messageTable = new MyTable(head, getInfos(), widths, false);
+		add(messageTable);
 	}
 
-	private void setTableInfos() {
-		// 设置成不可编辑不可改变位置，大小
-		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		messageTable.getTableHeader().setReorderingAllowed(false);
-		messageTable.getTableHeader().setResizingAllowed(false);
+	private ArrayList<String[]> getInfos() {
+		ArrayList<String[]> infos = new ArrayList<String[]>();
 
-		TableColumn column1 = messageTable.getColumnModel().getColumn(0);
-		TableColumn column2 = messageTable.getColumnModel().getColumn(1);
-		TableColumn column3 = messageTable.getColumnModel().getColumn(2);
+		for (String[] i : queryOrders)
+			infos.add(i);
 
-		// 设置宽度
-		column1.setPreferredWidth(messageTable.getWidth() * 3 / 4);
-		column2.setPreferredWidth(messageTable.getWidth() / 5);
-		column3.setPreferredWidth(messageTable.getWidth() / 20);
-
-		messageTable.setRowHeight(messageTable.getHeight() / 8);
-		// tablePanel.setSize(tablePanel.getWidth(), h * 8 +
-		// messageTable.getTableHeader().getHeight() + 4);
-
-		//
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer() {
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-
-		tcr.setHorizontalAlignment(JLabel.CENTER);
-		column1.setCellRenderer(tcr);
-		column2.setCellRenderer(tcr);
-		column3.setCellRenderer(tcr);
-
+		return infos;
 	}
 
 	private void addListener() {
 
-		confirmButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				num = 0;
+		confirmLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				submitOrders = controller.query();
 				String date = timeField.getText().trim();
 
@@ -239,12 +136,12 @@ public class QueryPanel extends OperationPanel {
 				try {
 					Date d = fmt.parse(date);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
+
 					warnning("日期格式不正确");
 					return;
 				}
 
-				queryOrders = new ArrayList<String>();
+				queryOrders = new ArrayList<String[]>();
 				for (OrderVO i : submitOrders) {
 					if (i.builtDate.equals(date)) {
 						String state = null;
@@ -267,7 +164,7 @@ public class QueryPanel extends OperationPanel {
 							break;
 						}
 
-						queryOrders.add(i.ID + " " + state);
+						queryOrders.add(new String[] { i.ID, state });
 
 					}
 
@@ -275,70 +172,21 @@ public class QueryPanel extends OperationPanel {
 
 				if (queryOrders.isEmpty()) {
 					warnning("该天添加的订单数为0");
+					return;
 				}
 
-				setInfos();
+				messageTable.setInfos(queryOrders);
 
 			}
-			
-			MouseListener listener = new MouseAdapter(){
-				public void mouseClicked(MouseEvent e){
-					
-				}
-			};
-			
-			
 		});
 
-		// messageTable.addMouseListener(new MouseAdapter() {
-		// public void mouseClicked(MouseEvent e) {
-		// System.out.println(e.getX() + " " + e.getY());
-		// }
-		// });
-
-	}
-
-	private class MessgeTableModel extends AbstractTableModel {
-
-		public int getRowCount() {
-			// TODO Auto-generated method stub
-			return 8;
-		}
-
-		@Override
-		public int getColumnCount() {
-			return 3;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-
-			int index = num * 8 + rowIndex;
-			if (index > queryOrders.size() - 1)
-				return null;
-			String infos = queryOrders.get(index);
-
-			if (infos != null) {
-				String[] info = infos.split(" ");
-				if (columnIndex == 0)
-					return info[0];
-				else if (columnIndex == 1)
-					return info[1];
-				else
-					return null;
-			} else
-				return null;
-
-		}
-
-		public String getColumnName(int c) {
-			if (c == 0)
-				return "订单号";
-			else if (c == 1)
-				return "运货状态";
-			else
-				return "";
-		}
+		clearLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				queryOrders = new ArrayList<String[]>();
+				messageTable.setInfos(queryOrders);
+				timeField.setText("");
+			}
+		});
 
 	}
 

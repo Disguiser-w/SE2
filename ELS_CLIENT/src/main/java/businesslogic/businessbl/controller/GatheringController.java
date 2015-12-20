@@ -12,7 +12,7 @@ public class GatheringController implements GatheringBLService {
 		gathering = new Gathering();
 	}
 
-	public ArrayList<String> getChargeInfo() {
+	public ArrayList<String[]> getChargeInfo() {
 		// TODO Auto-generated method stub
 		return gathering.getChargeInfo();
 	}

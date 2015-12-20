@@ -46,6 +46,8 @@ public class MyTable extends JPanel {
 
 	public MyTable(String[] head, ArrayList<String[]> infos, int[] widths, boolean multiChoose) {
 		scrollPanel = new JPanel();
+		
+		
 		scrollPanel.setBackground(new Color(235, 235, 235));
 		setBackground(new Color(235, 235, 235));
 		columnWidth = widths;

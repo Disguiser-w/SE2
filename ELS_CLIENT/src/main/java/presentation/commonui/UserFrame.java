@@ -1,23 +1,21 @@
 package presentation.commonui;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
+import java.awt.Cursor;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 
-import common.FileGetter;
+import presentation.image.ImageGetter;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
@@ -63,9 +61,12 @@ public class UserFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		// 不规则形状用这个
-		 setBackground(new Color(0, 0, 0, 0));
+		setBackground(new Color(0, 0, 0, 0));
 		setFocusable(false);
 		setResizable(false);
+
+		// setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageGetter.getImage("doge.png").getImage(),
+		// new Point(20,5), "stick"));
 
 	}
 
