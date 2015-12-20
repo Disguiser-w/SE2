@@ -149,8 +149,7 @@ public class ModifyPerWagePanel extends OperationPanel {
 	
 	//返回上一级界面
 	public void returnui(){
-		manageFrame.changePanel(basicDataManagePanel);
-		updateUI();
+		manageFrame.toMainPanel();
 	}
 	
 	

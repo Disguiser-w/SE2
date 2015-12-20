@@ -1,326 +1,125 @@
 package presentation.managerui;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Vector;
+import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+//import presentation.commonui.LocationHelper;
+
 import vo.OrganizationVO;
+import vo.RepertoryVO;
 import type.OrganizationType;
 import businesslogic.managebl.OrganizationBL;
 
-//import presentation.commonui.LocationHelper;
-
-public class OrganizationManagePanel extends OperationPanel implements ListSelectionListener{
+public class OrganizationManagePanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 20L;
 
 	private ManageFrame manageFrame;
 	
 	private OrganizationBL organizationBL;
-	
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
-	
-	private int num;
-	private boolean isFindPattern;
-	
-	private JLabel function;
 
-	private JButton addButton;
-	private JButton deleteButton;
-//	private JButton modifyButton;
+	private MyLabel addLabel;
+	private MyLabel deleteLabel;
+	private MyLabel searchLabel;
+	private MyTextField inputField;
 	private JButton searchButton;
-	private JTextField searchTextField;
-	private JButton refreshButton;
-	
-	private AllMessageTableModel allModel;
-	private FindMessageTableModel findModel;
-	private JTable allInfoTable;
-	private JTable findInfoTable;
-	private JLabel messageLabel;
-	private DefaultTableCellRenderer tcr;
-	
-	private JButton previousPage;
-	private JButton nextPage;
 
-	ListSelectionModel selectionMode;
+	private MyTable messageTable;
+	
+	private ArrayList<OrganizationVO> organizations;
 
+	private int selectedIndex;
+	
 	public OrganizationManagePanel(ManageFrame manageFrame) {
 		
 		this.manageFrame = manageFrame;
 		
 		organizationBL = new OrganizationBL();
 		
-		num = 0;
-		isFindPattern = false;
-		
-        function = new JLabel("机构管理 ");
+        addLabel = new MyLabel("新增机构");
+        deleteLabel = new MyLabel("删除机构");
+        searchLabel = new MyLabel();
+        searchLabel = new MyLabel("查找");
+        inputField = new MyTextField();
+        searchButton = new JButton();
         
-        addButton = new JButton("新增机构");
-        deleteButton = new JButton("删除机构");
-//      modifyButton = new JButton("修改机构信息");
-        searchTextField = new JTextField("机构编号");
-        searchButton = new JButton("查找");
-        refreshButton = new JButton("刷新");
-        
-        previousPage = new JButton("上一页");
-        nextPage = new JButton("下一页");
-        
-        allModel = new AllMessageTableModel();
-		allInfoTable = new JTable(allModel);
-		findModel = new FindMessageTableModel();
-		findInfoTable = new JTable(findModel);
-		messageLabel = new JLabel();
+		setLayout(null);
 
-		
-		//加监听
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+        add(addLabel);
+        add(deleteLabel);
+        add(searchLabel);
+        add(inputField);
+		add(searchButton);
+        
+        organizations = organizationBL.showAllOrganizations();
+        
+        addListener();
+        setBaseInfos();
+	}
+	
+	public void addListener(){
+		addLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				addui();
 			}
 		});
-		
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int chosenRow = -1; 
-				String ID = "";
-				if(isFindPattern){
-					 chosenRow = findInfoTable.getSelectedRow();
-					 ID = (String)(findModel.getValueAt(chosenRow, 2));
-				}
-				else{
-					chosenRow = allInfoTable.getSelectedRow();
-					ID = (String)(allModel.getValueAt(chosenRow,2));
-				}
-				
-				if(chosenRow != -1){
-					organizationBL.deleteOrganization(ID);
-					if(isFindPattern)
-						findInfoTable.updateUI();
-					allInfoTable.updateUI();//刷新
-				}
-				else{
-        			warnning("没有选择要删除的机构");
-        		}
-			}
-		});
-		
-/*		modifyButton.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent arg0){
-        		int chosenRow = -1; 
-				if(isFindPattern)
-					 chosenRow = findInfoTable.getSelectedRow();
-				else
-					chosenRow = allInfoTable.getSelectedRow();
-				
-        		if(chosenRow != -1){
-        			modifyui(chosenRow);
-        		}
-        		else{
-        			warnning("没有选择待修改的机构");
-        		}
-        	}
-        });*/
-        
-        searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String organizationID = searchTextField.getText();
-				if(organizationID.equals("机构编号") || organizationID.equals("")){
-					allui();
-				}
-				else
-					searchui();
-			}
-		});
-        
-        refreshButton.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent ae){
-        		findInfoTable.updateUI();
-				allInfoTable.updateUI();
-        	}
-        });
-        
-        previousPage.addMouseListener(new MouseAdapter() {
+
+		deleteLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (num == 0)
-					return;
-				else {
-					num--;
-					allInfoTable.setModel(new AllMessageTableModel());
-					setBaseInfo(allInfoTable);
-				}
-			}
-		});
-
-		nextPage.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (num >= (organizationBL.showAllOrganizations().size() - 2) / 12)
-					return;
-				else {
-					num++;
-					allInfoTable.setModel(new AllMessageTableModel());
-					setBaseInfo(allInfoTable);
-				}
+				deleteui();
 			}
 		});
 		
-		
-		//把组件加到Panel上
-		setLayout(null);
-
-        add(function);
-        add(addButton);
-        add(deleteButton);
-//      add(modifyButton);
-        add(searchTextField);
-        add(searchButton);
-        add(refreshButton);
-        add(allInfoTable.getTableHeader());
-        add(allInfoTable);
-        add(findInfoTable);
-        add(previousPage);
-        add(nextPage);
-        
-        setVisible(true);
-        
-        //颜色、边界、位置、JTable上信息显示设置
-        setTableColor();
-		setBorder();
-        setCmpLocation(allInfoTable);
-        setBaseInfo(allInfoTable);
-        setInfos();
-	}
-	
-	
-	//覆盖Selection事件被触发后原有的方法
-	public void valueChanged(ListSelectionEvent lse){
-     	//System.out.println("你选了第"+allInfoTable.getSelectedRow()+"行");
-	}
-	
-	//给表加颜色，隔一行一个颜色
-	public void setTableColor(){
-			
-		tcr = new DefaultTableCellRenderer(){
-		
-			private static final long serialVersionUID = 6L;
-
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
-	
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae){
+				searchui();
 			}
-		};
+		});
 	}
 	
-	//设置边界
-	public void setBorder(){
-		previousPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		nextPage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	}
-		
-	//因为有不同类型的JTable传进来，每次重新设置表的位置
-	public void setCmpLocation(JTable table){
-		
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		
-		addButton.setBounds(PANEL_WIDTH * 3 / 54, PANEL_HEIGHT * 2 / 16,
-				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
-		deleteButton.setBounds(PANEL_WIDTH * 13 / 54, PANEL_HEIGHT * 2 / 16,
-				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
-//		modifyButton.setBounds(PANEL_WIDTH * 23 / 54, PANEL_HEIGHT * 2 / 16,
-//				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
-		searchTextField.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 2 / 16,
-				PANEL_WIDTH * 4 / 27, PANEL_HEIGHT / 16);
-		searchButton.setBounds(PANEL_WIDTH * 22 / 27, PANEL_HEIGHT * 2 / 16,
-				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
-		refreshButton.setBounds(PANEL_WIDTH * 24 / 27, PANEL_HEIGHT * 1 / 24,
-				PANEL_WIDTH * 3 / 27, PANEL_HEIGHT / 16);
-		allInfoTable.getTableHeader().setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 13 / 60, 
-				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 1 / 20);
-		
-		previousPage.setBounds(PANEL_WIDTH * 52 / 72, PANEL_HEIGHT * 7 / 8,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		nextPage.setBounds(PANEL_WIDTH * 62 / 72, PANEL_HEIGHT * 7 / 8,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		
-		table.setBounds(PANEL_WIDTH / 18, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 66 / 72, PANEL_HEIGHT * 12 / 20);
-		
-		table.setBackground(getBackground());
-		table.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		table.setRowSelectionAllowed(true);
-        selectionMode = table.getSelectionModel();
-        selectionMode.addListSelectionListener(this);
-	}
-	
-	public void setBounds(int x, int y, int width, int height , JTable table) {
+	public void setBounds(int x, int y, int width, int height){
 		super.setBounds(x, y, width, height);
-		PANEL_WIDTH = width;
-		PANEL_HEIGHT = height;
-		setCmpLocation(table);
-		repaint();
+
+		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
+				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
+		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
+				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
+		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
+				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
+		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
+		searchButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
+				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
 	}
 	
-	//设置Table初始显示的信息
-	private void setBaseInfo(JTable table) {
-
-		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);
-
-		TableColumn column0 = table.getColumnModel().getColumn(0);
-		TableColumn column1 = table.getColumnModel().getColumn(1);
-		TableColumn column2 = table.getColumnModel().getColumn(2);
-		TableColumn column3 = table.getColumnModel().getColumn(3);
-		
-		// 设置宽度
-		column0.setPreferredWidth(table.getWidth() / 4);
-		column1.setPreferredWidth(table.getWidth() / 4);
-		column2.setPreferredWidth(table.getWidth() / 4);
-		column3.setPreferredWidth(table.getWidth() / 4);
 	
-		table.setRowHeight((table.getHeight() - table.getTableHeader().getHeight()) / 10);
-
-		tcr.setHorizontalAlignment(JLabel.CENTER);
+	private void setBaseInfos() {
+		String[] head = new String[]{"机构类型","机构名称","机构编号","下属仓库编号"};
+		int[] widths = {120,200,140,140};
 		
-		column0.setCellRenderer(tcr);
-		column1.setCellRenderer(tcr);
-		column2.setCellRenderer(tcr);
-		column3.setCellRenderer(tcr);
+		messageTable = new MyTable(head, getInfos(), widths, true);
+		add(messageTable);
 	}
 
-	// 设置载入动态的内容
-	private void setInfos() {
-		if (organizationBL.showAllOrganizations().size() != 0)
-			messageLabel.setText("姓名: "+"  机构编号 : "+"  职位 : ");
-		else
-			messageLabel.setText("姓名: 无"+"  机构编号 : 无"+"  职位 : 无");
-		
-		messageLabel.setHorizontalAlignment(JLabel.CENTER);
+	private ArrayList<String[]> getInfos(){
+		ArrayList<String[]> infos = new ArrayList<String[]>();
+		for(OrganizationVO organizationvo: organizations){
+			infos.add(new String[]{categoryName(organizationvo.category), organizationvo.name, organizationvo.organizationID, 
+					repertoryID(organizationvo.repertory)});
+		}
+		return infos;
 	}
 	
 	
@@ -329,50 +128,48 @@ public class OrganizationManagePanel extends OperationPanel implements ListSelec
 		manageFrame.changePanel(new AddOrganizationPanel(manageFrame, this));
 	}
 	
-	/*public void modifyui(int chosenRow){
-		String organizationCategory;
-		String organizationName;
-		String organizationID;
-		String organizationRepertory;
+	//删除机构界面
+	public void deleteui(){
+		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+		int size = selectedIndexs.size();
 		
-		if(isFindPattern){
-			organizationCategory = (String)findInfoTable.getModel().getValueAt(chosenRow, 0);
-			organizationName = (String)findInfoTable.getModel().getValueAt(chosenRow, 1);
-			organizationID = (String)findInfoTable.getModel().getValueAt(chosenRow, 2);
-			organizationRepertory = (String)findInfoTable.getModel().getValueAt(chosenRow, 3);
+		if(size == 0){
+			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些机构后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		else if(size == 1){
+			if(JOptionPane.showConfirmDialog(null, "确认删除该机构信息？", "",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+				return;
+			selectedIndex = selectedIndexs.get(0);
+			organizationBL.deleteOrganization(organizations.get(selectedIndex).organizationID);
 		}
 		else{
-			organizationCategory = (String)allInfoTable.getModel().getValueAt(chosenRow, 0);
-			organizationName = (String)allInfoTable.getModel().getValueAt(chosenRow, 1);
-			organizationID = (String)allInfoTable.getModel().getValueAt(chosenRow, 2);
-			organizationRepertory = (String)allInfoTable.getModel().getValueAt(chosenRow, 3);
+			if(JOptionPane.showConfirmDialog(null, "确认删除这些机构信息？", "",
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
+				return;
+			for(int i: selectedIndexs){
+				organizationBL.deleteOrganization(organizations.get(i).organizationID);
+			}
 		}
-		
-		manageFrame.changePanel(new ModifyOrganizationPanel(manageFrame, this, organizationCategory, organizationID, organizationName, organizationRepertory));
-	}*/
-	
-	
-	//显示全部机构页面
-	public void allui(){
-		this.remove(findInfoTable);
-		this.add(allInfoTable);
-		setCmpLocation(allInfoTable);
-        setBaseInfo(allInfoTable);
-        setInfos();
-        isFindPattern = false;
+		organizations = organizationBL.showAllOrganizations();
+		messageTable.setInfos(getInfos());
 	}
 	
-	//显示搜索机构页面
+	//查询界面
 	public void searchui(){
-		this.remove(allInfoTable);
-		this.add(findInfoTable);
-		setCmpLocation(findInfoTable);
-        setBaseInfo(findInfoTable);
-        setInfos();
-        isFindPattern = true;
+		String keyword = inputField.getText();
+		organizations = organizationBL.findOrganizationByKeyword(keyword);
+		messageTable.setInfos(getInfos());
 	}
 	
-
+	//刷新界面
+	public void refreshui(){
+		organizations = organizationBL.showAllOrganizations();
+		messageTable.setInfos(getInfos());
+	}
+		
+		
 	//根据不同的机构类型返回机构类型名，给表去显示
 	public String categoryName(OrganizationType organizationType){
 		if(organizationType.equals(OrganizationType.businessHall))
@@ -381,130 +178,19 @@ public class OrganizationManagePanel extends OperationPanel implements ListSelec
 			return "中转中心";
 	}
 	
+	public String repertoryID(RepertoryVO repertoryvo){
+		if(repertoryvo == null)
+			return "/";
+		else{
+			return repertoryvo.repertoryID;
+		}
+	}
+	
+	
 	//出现错误时给用户的提示信息
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "机构信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
 	
-	//全部机构信息对应的表的Model
-	public class AllMessageTableModel extends AbstractTableModel {
-		
-		private static final long serialVersionUID = 4L;
-		
-		Vector<OrganizationVO> organizationVector;
-		
-		public int getRowCount() {
-			return 10;
-		}
-
-		public int getColumnCount() {
-			return 4;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			
-			organizationVector = new Vector<OrganizationVO>();
-			for(int i=0;i<organizationBL.showAllOrganizations().size();i++){
-				organizationVector.add(organizationBL.showAllOrganizations().get(i));
-			}
-			
-			int index = num * 10 + rowIndex;
-
-				if (index > organizationVector.size()-1)
-					return null;
-				OrganizationVO organizationvo = (OrganizationVO)organizationVector.get(index);
-	
-				if (organizationvo != null) {
-					if(columnIndex==0)
-						return categoryName(organizationvo.category);
-					else if(columnIndex==1)
-						return organizationvo.name;
-					else if(columnIndex==2)
-						return organizationvo.organizationID;
-					else {
-						if(organizationvo.repertory != null)
-							return organizationvo.repertory.repertoryID;
-						else
-							return "/";
-					}
-				} 
-				else
-					return null;
-		}
-
-		public String getColumnName(int num) {
-			if (num == 0)
-				return "机构类别";
-			else if(num==1)
-				return "机构名称";
-			else if(num==2)
-				return "机构编号";
-			else 
-				return "下属仓库";
-		}
-
-	}
-	
-	
-	//搜索机构信息对应的表的Model
-	public class FindMessageTableModel extends AbstractTableModel {
-			
-		private static final long serialVersionUID = -4L;
-		
-		Vector<OrganizationVO> organizationVector;
-		
-		public int getRowCount() {
-			return 10;
-		}
-
-		public int getColumnCount() {
-			return 4;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			
-			String organizationID = searchTextField.getText();
-			organizationVector = new Vector<OrganizationVO>();
-			organizationVector.add(organizationBL.findOrganization(organizationID));
-
-			int index = num * 10 + rowIndex;
-			
-			if (index > organizationVector.size()-1)
-				return null;
-			OrganizationVO organizationvo = (OrganizationVO)organizationVector.get(index);
-	
-			if (organizationvo != null){
-				if(columnIndex==0)
-					return categoryName(organizationvo.category);
-				else if(columnIndex==1)
-					return organizationvo.name;
-				else if(columnIndex==2)
-					return organizationvo.organizationID;
-				else {
-					if(organizationvo.repertory != null)
-						return organizationvo.repertory.repertoryID;
-					else
-						return "/";
-				}
-			}
-			else{
-				return null;
-			}
-		}
-
-		public String getColumnName(int num) {
-			if (num == 0)
-				return "机构类别";
-			else if(num==1)
-				return "机构名称";
-			else if(num==2)
-				return "机构编号";
-			else 
-				return "下属仓库";
-		}
-	
-	}
-	
-
 }

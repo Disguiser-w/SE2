@@ -20,9 +20,10 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 	private static final long serialVersionUID = 16L;
 
 	private ManageFrame manageFrame;
+	private StaffManagePanel staffManagePanel;
 	
-	UserBL userBL;
-	OrganizationBL organizationBL;
+	private UserBL userBL;
+	private OrganizationBL organizationBL;
 	
     private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
@@ -47,10 +48,11 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
     private JButton OKButton;
     private JButton returnButton;
 	
-    public ModifyStaffOrganizationPanel(ManageFrame frame, String userName, String userID, String userProfession,
+    public ModifyStaffOrganizationPanel(ManageFrame frame, StaffManagePanel staffManagePanel, String userName, String userID, String userProfession,
     									String userOldOrganization, String userSalaryPlan, String userAuthority, String userGrade){
     	
     	this.manageFrame =frame;
+    	this.staffManagePanel = staffManagePanel; 
     	
     	this.userBL = new UserBL();
     	this.organizationBL = new OrganizationBL();
@@ -198,8 +200,10 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 
     //返回上一级界面
     public void returnui(){
-    	manageFrame.changePanel(new StaffManagePanel(manageFrame));
+    	manageFrame.toMainPanel();
+    	staffManagePanel.refreshui();
     }
+    
     
     //修改成功时返回上一级界面，同时给用户提示信息
 	public void successModify(){
