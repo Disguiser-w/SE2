@@ -29,8 +29,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 	private JButton collectionReceiptButton_new;
 	private JButton paymentReceiptButton_new;
 	
-	private JLabel next;
-	private JLabel previous;
 
 	private JLabel function;
 	private JLabel collectionReceiptInfo;
@@ -63,8 +61,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 		printButton = new JButton("导出");
 		collectionReceiptButton_new = new JButton("新建入款单");
 		paymentReceiptButton_new = new JButton("新建付款单");
-		next = new JLabel(">");
-		previous = new JLabel("<");
 		function = new JLabel("新建表单");
 		collectionReceiptInfo = new JLabel("入款单");
 		paymentReceiptInfo = new JLabel("付款单");
@@ -80,8 +76,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		add(collectionReceiptButton_new);
 		add(paymentReceiptButton_new);
 	
-		add(next);
-		add(previous);
+
 		add(function);
 		add(collectionReceiptInfo);
 		add(paymentReceiptInfo);
@@ -99,8 +94,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 		printButton.setBounds((int)(PANEL_WIDTH * 22.034438775510203/25),(int)(PANEL_HEIGHT * 0.9784735812133072/20),(int)(PANEL_WIDTH *  2.8364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
 		collectionReceiptButton_new.setBounds((int)(PANEL_WIDTH * 8.258928571428571/25),(int)(PANEL_HEIGHT * 1.0567514677103718/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
 		paymentReceiptButton_new.setBounds((int)(PANEL_WIDTH * 12.746173469387756/25),(int)(PANEL_HEIGHT * 1.0176125244618395/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
-		next.setBounds((int)(PANEL_WIDTH * 22.5765306122449/25),(int)(PANEL_HEIGHT * 16.96908023483366/20),(int)(PANEL_WIDTH *  1.2436224489795917 /25),(int)(PANEL_HEIGHT *  1.087279843444227/20));
-		previous.setBounds((int)(PANEL_WIDTH * 20.982142857142858/25),(int)(PANEL_HEIGHT * 16.969358121330725/20),(int)(PANEL_WIDTH *  1.2436224489795917 /25),(int)(PANEL_HEIGHT *  1.087279843444227/20));
 		function.setBounds((int)(PANEL_WIDTH * 1.2755102040816326/25),(int)(PANEL_HEIGHT * 0.7045009784735812/20),(int)(PANEL_WIDTH *  5.133928571428571 /25),(int)(PANEL_HEIGHT *  2.0743639921722115/20));
 		collectionReceiptInfo.setBounds((int)(PANEL_WIDTH * 1.371173469387755/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.858418367346939 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
 		paymentReceiptInfo.setBounds((int)(PANEL_WIDTH * 5.165816326530612/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.985969387755102 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
@@ -116,8 +109,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 		setCmpLocation(table);
 	}
 	
-	
-
 	/**
 	 * 设置收款单表格基础信息
 	 * */
@@ -158,7 +149,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 	public void setPaymentBaseInfo(){
 		String[] head = new String[]{"付款单编号","付款日期","金额","付款人","账户","单据状态"};
 		int[] widths = { 160, 100, 70, 120, 60,100 };
-		
 		paymentReceiptVOs = paymentReceiptBLController.getAllPaymentReceipt();
 		paymentTable = new MyTable(head, getPaymentInfos(paymentReceiptVOs), widths, false);		
 	}
@@ -189,24 +179,12 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 * 表格跳转
 	 * */
 	public void changeTable(MyTable table){
-		if(table == collectionTable){
 			remove(currentTable);
-			currentTable = collectionTable;
+			currentTable = table;
 			add(currentTable);
 			setCmpLocation(table);
 			currentTable.repaint();
-
-		}
-		else{
-			remove(currentTable);
-			currentTable = paymentTable;
-			add(currentTable);
-			setCmpLocation(table);
-			currentTable.repaint();
-		}
 	}
-
-	
 
 	public void addListener(){
 		/**

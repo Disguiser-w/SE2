@@ -1,17 +1,15 @@
 package presentation.financeui;
 
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import vo.AccountVO;
 
@@ -22,26 +20,17 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private static final long serialVersionUID = 1L;
 	
 
-	private JButton addButton;
-	private JButton deleteButton;
-	private JButton modifyButton;
-	private JButton searchButton;
-	private JButton refreshButton;
-//	private JButton next;
-	private JLabel next;
-//	private JButton previous;
-	private JLabel previous;
-
+	private MyLabel addLabel;
+	private MyLabel deleteLabel;
+	private MyLabel modifyLabel;
+	private MyLabel searchLabel;
+	private MyLabel refreshLabel;
 	
-	private JTextField searchTextField;
-	private JLabel function;
-//	private JTable table;
+	private MyTextField searchTextField;
+	private MyLabel function;
 	
 	private MyTable accountTable;
 
-//	private ArrayList<JCheckBox> selected;
-	AccountModel am;
-	ArrayList<ArrayList<String>> c=new ArrayList<ArrayList<String>>();
 	AccountBLController controller;
 	ArrayList<AccountVO> accountVOs;
 	FinanceFrame financeFrame;
@@ -52,17 +41,15 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		addButton = new JButton("添加");
-		deleteButton = new JButton("删除");
-		modifyButton=new JButton("修改");
-		searchButton=new JButton("查询");
-		refreshButton=new JButton("刷新");
-		next = new JLabel(">");
-		previous = new JLabel("<");
+		addLabel = new MyLabel("添加");
+		deleteLabel = new MyLabel("删除");
+		modifyLabel=new MyLabel("修改");
+		searchLabel=new MyLabel("查询");
+		refreshLabel=new MyLabel("刷新");
 
-		function = new JLabel("账户管理");
+		function = new MyLabel("账户管理");
 
-		searchTextField = new JTextField("");
+		searchTextField = new MyTextField();
 		
 		selectedIndex = -1;
 
@@ -70,13 +57,11 @@ public class AccountManagementPanel_main extends OperationPanel {
 		
 		setLayout(null);
 
-		add(addButton);
-		add(deleteButton);
-		add(modifyButton);
-		add(searchButton);
-		add(refreshButton);
-		add(next);
-		add(previous);
+		add(addLabel);
+		add(deleteLabel);
+		add(modifyLabel);
+		add(searchLabel);
+		add(refreshLabel);
 		add(searchTextField);
 		add(function);
 
@@ -89,13 +74,11 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addButton.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 2.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		deleteButton.setBounds((int)(width * 5.07015306122449/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		modifyButton.setBounds((int)(width * 7.940051020408164/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		searchButton.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		refreshButton.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
-		next.setBounds((int)(width * 13.544642857142858/25),(int)(height * 17.690802348336597/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.487279843444227/20));
-		previous.setBounds((int)(width * 11.354591836734695/25),(int)(height * 17.690802348336597/20),(int)(width *  1.3392857142857142 /25),(int)(height *  1.5264187866927592/20));
+		addLabel.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 2.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		deleteLabel.setBounds((int)(width * 5.07015306122449/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		modifyLabel.setBounds((int)(width * 7.940051020408164/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		searchLabel.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *2.4442270058708413/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
 
@@ -126,7 +109,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		return lineInfo;
 		}
 		else{
-			return null;
+			return new ArrayList<String[]>();
 		}
 		
 	}
@@ -152,38 +135,46 @@ public class AccountManagementPanel_main extends OperationPanel {
 	 * Mytable中信息更新
 	 * */
 	public void updateTable(){
-//		accountVOs = controller.showAll();
 		accountTable.setInfos(getInfos());
 	}
 
 	
 	public void addListener(){
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		addLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				addui();
 			}
 		});
 
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		deleteLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				deleteui();
 			}
 		});
 		
-		modifyButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		modifyLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				modifyui();
 			}
 		});
 		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			    searchui();
+		searchLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				searchui();
 			}
 		});
 
-		refreshButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+		refreshLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				refreshui();
 			}
@@ -205,7 +196,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 				controller.deleteAccount(accountVOs.get(i).name);
 				ArrayList<AccountVO> vos = controller.showAll();
 				accountTable.setInfos(newGetInfos(vos));
-//			updateTable();
+			updateTable();
 			}
 		}
 	}
@@ -246,7 +237,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		updateTable();
 	}
 	
-class AccountModel extends AbstractTableModel{
+/*class AccountModel extends AbstractTableModel{
 		private static final long serialVersionUID = 1L;
 		ArrayList<ArrayList<String>> c = new ArrayList<ArrayList<String>>();
 		//操作人还要吗
@@ -319,7 +310,9 @@ class AccountModel extends AbstractTableModel{
 		return accountTemp;
     	 }
      }
+     */
 }
+
      
      
  
