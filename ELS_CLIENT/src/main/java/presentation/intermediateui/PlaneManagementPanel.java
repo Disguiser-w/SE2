@@ -183,7 +183,8 @@ public class PlaneManagementPanel extends OperationPanel {
 
 				for (PlaneVO vo : planeList) {
 					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel(controller, frame, vo));
+						frame.changePanel(new WatchPanel(controller, frame,
+								messageTable, vo));
 					}
 				}
 			}
