@@ -76,9 +76,6 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 
 		add(confirmButton);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		add(panel);
 
 		setLayout(null);
 		addListener();

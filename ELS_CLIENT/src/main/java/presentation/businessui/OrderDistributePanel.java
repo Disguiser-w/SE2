@@ -36,7 +36,7 @@ public class OrderDistributePanel extends OperationPanel {
 		add(distributeLabel);
 		add(confirmLabel);
 
-		helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 

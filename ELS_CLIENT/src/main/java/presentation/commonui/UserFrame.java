@@ -21,6 +21,9 @@ import presentation.image.ImageGetter;
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
  */
 public class UserFrame extends JFrame {
+	public static final int TYPE_0 = 0;
+	public static final int TYPE_1 = 1;
+	public static int type = TYPE_0;
 	// private JLabel panel;
 
 	private ImageLabel imageLabel;

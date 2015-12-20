@@ -60,8 +60,10 @@ public class FunctionPanel extends JPanel {
 		g2d.setColor(new Color(0, 121, 255));
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// 圆角方法
-		g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
-		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		if (UserFrame.type == UserFrame.TYPE_0)
+			g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
+		else if (UserFrame.type == UserFrame.TYPE_1)
+			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
 		g2d.setColor(new Color(0, 82, 130));
 		for (int i = 0; i < numOfFunc; i++) {

@@ -46,7 +46,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 		add(totalMessageLabel);
 		add(collectionLabel);
-		helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
 		setLayout(null);
 
 		chargeInfos = controller.getChargeInfo();

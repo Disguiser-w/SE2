@@ -38,9 +38,10 @@ public class OperationPanel extends JPanel {
 
 		g2d.setColor(new Color(245, 245, 245));
 		// 圆角方法
-		g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
-
-		// g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		if (UserFrame.type == UserFrame.TYPE_0)
+			g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
+		else if (UserFrame.type == UserFrame.TYPE_1)
+			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 	}
 
 }

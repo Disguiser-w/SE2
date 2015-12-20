@@ -368,6 +368,9 @@ public class MainFrame extends JFrame {
 
 				(new Thread(new Runnable() {
 					public void run() {
+						
+						
+						frame.setVisible(false);
 						// 成功登录，生成界面
 						nameController.addNewName(userID);
 						updateNames();
@@ -430,7 +433,6 @@ public class MainFrame extends JFrame {
 						default:
 							System.out.println("该类人员不存在，请联系管理员");
 						}
-						frame.setVisible(false);
 
 					}
 				})).start();

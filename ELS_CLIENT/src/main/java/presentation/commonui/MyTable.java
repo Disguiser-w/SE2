@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MyTable extends JPanel {
+
 	private JPanel scrollPanel;
 
 	private int row;
@@ -46,10 +47,15 @@ public class MyTable extends JPanel {
 
 	public MyTable(String[] head, ArrayList<String[]> infos, int[] widths, boolean multiChoose) {
 		scrollPanel = new JPanel();
-		
-		
-		scrollPanel.setBackground(new Color(235, 235, 235));
-		setBackground(new Color(235, 235, 235));
+
+		if (UserFrame.type == 0) {
+			scrollPanel.setBackground(new Color(235, 235, 235));
+			setBackground(new Color(235, 235, 235));
+		} else if (UserFrame.type == 1) {
+			scrollPanel.setBackground(new Color(0, 0, 0, 0));
+			setBackground(new Color(0, 0, 0, 0));
+		}
+
 		columnWidth = widths;
 		width = 0;
 		for (int i : widths)
@@ -264,7 +270,11 @@ public class MyTable extends JPanel {
 
 		g2d.drawLine(widths, 0, widths, height);
 		int strWidth1 = fm.stringWidth("#");
-		g2d.setColor(Color.BLACK);
+		if (UserFrame.type == 0)
+			g2d.setColor(Color.BLACK);
+
+		else if (UserFrame.type == 1)
+			g2d.setColor(Color.WHITE);
 		g2d.drawString("#", 10 + (widths - strWidth1) / 2, 8 + (30 + ascent) / 2);
 
 		for (int i = 0; i < column; i++) {
@@ -324,6 +334,7 @@ public class MyTable extends JPanel {
 		}
 
 		public void paintComponent(Graphics g) {
+			int type = UserFrame.type;
 			String[] rowInfos = infos.get(index);
 			int widths = 30;
 			Graphics2D g2d = (Graphics2D) g;
@@ -332,7 +343,11 @@ public class MyTable extends JPanel {
 			g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 14));
 			FontMetrics fm = g2d.getFontMetrics();
 			int ascent = fm.getAscent();
-			g2d.setColor(Color.WHITE);
+
+			if (type == 0)
+				g2d.setColor(Color.WHITE);
+			else if (type == 1)
+				g2d.setColor(new Color(0, 0, 0, 0));
 			g2d.fillRect(0, 0, getWidth(), height);
 
 			g2d.setColor(new Color(235, 235, 235));
@@ -341,15 +356,25 @@ public class MyTable extends JPanel {
 
 			int strWidth1 = fm.stringWidth(index + 1 + "");
 			// g2d.setColor(new Color(102, 102, 102));
-			g2d.setColor(Color.BLACK);
+			if (type == 0)
+				g2d.setColor(Color.BLACK);
+			else if (type == 1)
+				g2d.setColor(Color.WHITE);
 			g2d.drawString(index + 1 + "", (widths - strWidth1) / 2, (height + ascent) / 2 - 2);
 
 			for (int i = 0; i < column; i++) {
 
 				int strWidth = fm.stringWidth(rowInfos[i]);
-				g2d.setColor(Color.BLACK);
+				if (type == 0)
+					g2d.setColor(Color.BLACK);
+				else if (type == 1)
+					g2d.setColor(Color.WHITE);
+
 				g2d.drawString(rowInfos[i], widths + (columnWidth[i] - strWidth) / 2, (height + ascent) / 2 - 2);
-				g2d.setColor(new Color(235, 235, 235));
+				if (type == 0)
+					g2d.setColor(new Color(235, 235, 235));
+				else if (type == 1)
+					g2d.setColor(Color.WHITE);
 				widths += columnWidth[i];
 				if (i != column - 1)
 					g2d.drawLine(widths, 0, widths, height);

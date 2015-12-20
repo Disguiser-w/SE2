@@ -50,16 +50,31 @@ public class MyLabel extends JLabel {
 
 		int width = getWidth();
 		int height = getHeight();
+		// if (isChoosed) {
+		// g2d.setColor(new Color(0, 82, 130));
+		// } else if (isMouseOn) {
+		// g2d.setColor(new Color(0, 111, 192));
+		// } else {
+		// g2d.setColor(new Color(0, 121, 255));
 
-		g.setColor(Color.BLACK);
-		if (isMouseOn)
-			g.drawRoundRect(0, 0, width - 1, height - 1, 10, 10);
+		if (isPressed) {
+			g.setColor(new Color(0, 82, 130));
+			g.fillRoundRect(0, 0, width, height, 8, 8);
+		} else if (isMouseOn) {
+			g.setColor(new Color(0, 82, 130));
+			g.fillRoundRect(0, height - 8, width, 8, 8, 8);
+			g.setColor(new Color(0, 151, 255));
+			g.fillRoundRect(0, 0, width, height - 3, 8, 8);
 
-		g.fillRoundRect(5, 5, width - 11, height - 11, 10, 10);
+		}
 
-		g.setColor(Color.WHITE);
-		if (isPressed)
+		else {
 
-			g.fillRoundRect(10, 10, width - 21, height - 21, 10, 10);
+			g.setColor(new Color(0, 82, 130));
+			g.fillRoundRect(0, height - 8, width, 8, 8, 8);
+			g.setColor(new Color(0, 111, 255));
+			g.fillRoundRect(0, 0, width, height - 3, 8, 8);
+		}
+
 	}
 }
