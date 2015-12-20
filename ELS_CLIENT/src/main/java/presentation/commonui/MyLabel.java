@@ -50,12 +50,6 @@ public class MyLabel extends JLabel {
 
 		int width = getWidth();
 		int height = getHeight();
-		// if (isChoosed) {
-		// g2d.setColor(new Color(0, 82, 130));
-		// } else if (isMouseOn) {
-		// g2d.setColor(new Color(0, 111, 192));
-		// } else {
-		// g2d.setColor(new Color(0, 121, 255));
 
 		if (isPressed) {
 			g.setColor(new Color(0, 82, 130));

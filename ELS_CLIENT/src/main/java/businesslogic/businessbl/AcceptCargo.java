@@ -9,6 +9,7 @@ import java.util.Date;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.datafactory.DataFactory;
+import businesslogic.managebl.OrganizationBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.expressdataservice.ExpressDataService;
 import po.OrderAcceptReceiptPO;
@@ -79,13 +80,7 @@ public class AcceptCargo {
 
 		boolean result = false;
 
-		OrganizationPO po = null;
-		try {
-			po = businessData.getBusinessInfo(organizationVO.organizationID, null).getOrganizationPO();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		OrganizationPO po = OrganizationBL.organizationVOToPO(BusinessMainController.businessVO.organizationVO);
 		try {
 			//
 			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd");

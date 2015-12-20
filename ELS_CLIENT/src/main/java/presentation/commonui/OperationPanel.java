@@ -25,6 +25,14 @@ public class OperationPanel extends JPanel {
 		remove(table.getScrollPanel());
 	}
 
+	public void add(MyTextField field) {
+		add(field.getLabel());
+	}
+
+	public void remove(MyTextField field) {
+		remove(field.getLabel());
+	}
+
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

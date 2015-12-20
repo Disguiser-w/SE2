@@ -52,6 +52,7 @@ public class ReceiptOrder {
 
 			//
 			ExpressVO expressVO = ExpressMainController.expressVO;
+			
 			result = expressData.receiptOrder(expressVO.organization.organizationID, expressVO.ID, po);
 		} catch (Exception e) {
 			e.printStackTrace();

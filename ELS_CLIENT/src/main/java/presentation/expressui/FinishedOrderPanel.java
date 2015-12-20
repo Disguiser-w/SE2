@@ -1,66 +1,63 @@
 package presentation.expressui;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.OrderVO;
 
 public class FinishedOrderPanel extends OperationPanel {
-	private JTextField orderIDField;
-	private JButton queryButton;
+	private MyTextField orderIDField;
+	private JLabel queryLabel;
 	private JTextArea messageArea;
 
 	private JLabel receiveTimeLabel;
 	private JLabel receiverNameLabel;
 	// private JLabel timeSetLabel;
 	private JLabel receiverPhoneNumLabel;
-	private JTextField timeField;
-	private JTextField receiverNameField;
-	private JTextField receiverPhoneNumField;
+	private MyTextField timeField;
+	private MyTextField receiverNameField;
+	private MyTextField receiverPhoneNumField;
 
-	private JButton confirmButton;
+	private JLabel confirmLabel;
 	private OrderVO vo;
 	// private LocationHelper helper;
 	private ReceiptOrderController controller;
 
 	public FinishedOrderPanel(ReceiptOrderController controller) {
 		this.controller = controller;
-		orderIDField = new JTextField();
-		queryButton = new JButton();
+		orderIDField = new MyTextField();
+		queryLabel = new MyLabel();
 		messageArea = new JTextArea();
 
-		receiveTimeLabel = new JLabel("收件时间");
-		receiverNameLabel = new JLabel("实际收件人");
-		receiverPhoneNumLabel = new JLabel("收件人号码");
-		timeField = new JTextField();
-		receiverNameField = new JTextField();
-		receiverPhoneNumField = new JTextField();
+		receiveTimeLabel = new MyTextLabel("收件时间");
+		receiverNameLabel = new MyTextLabel("实际收件人");
+		receiverPhoneNumLabel = new MyTextLabel("收件人号码");
+		timeField = new MyTextField();
+		receiverNameField = new MyTextField();
+		receiverPhoneNumField = new MyTextField();
 
-		confirmButton = new JButton();
+		confirmLabel = new MyLabel();
 
 		orderIDField.setToolTipText("例如:DD-20151204-2");
-		// timeSetLabel = new JLabel();
 
-		receiveTimeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		receiverNameLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		// timeSetLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		receiverPhoneNumLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		receiveTimeLabel.setVerticalAlignment(JLabel.CENTER);
+		receiverNameLabel.setVerticalAlignment(JLabel.CENTER);
+		receiverPhoneNumLabel.setVerticalAlignment(JLabel.CENTER);
 
 		add(orderIDField);
-		add(queryButton);
+		add(queryLabel);
 		add(messageArea);
 
 		add(receiveTimeLabel);
@@ -71,7 +68,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		add(receiverNameField);
 		add(receiverPhoneNumField);
 
-		add(confirmButton);
+		add(confirmLabel);
 
 		messageArea.setEditable(false);
 		timeField.setEditable(false);
@@ -86,7 +83,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		orderIDField.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 6.21859296482412 / 25), (int) (height * 1.0434782608695652 / 20));
-		queryButton.setBounds((int) (width * 7.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
+		queryLabel.setBounds((int) (width * 7.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 1.6017587939698492 / 25), (int) (height * 1.0 / 20));
 		messageArea.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 3.391304347826087 / 20),
 				(int) (width * 22.141959798994975 / 25), (int) (height * 9.478260869565217 / 20));
@@ -101,15 +98,15 @@ public class FinishedOrderPanel extends OperationPanel {
 		receiverPhoneNumLabel.setBounds((int) (width * 1.4133165829145728 / 25),
 				(int) (height * 17.869565217391305 / 20), (int) (width * 3.957286432160804 / 25),
 				(int) (height * 1.0434782608695652 / 20));
-		timeField.setBounds((int) (width * 5.778894472361809 / 25), (int) (height * 13.869565217391305 / 20),
+		timeField.setBounds((int) (width * 4.778894472361809 / 25), (int) (height * 13.869565217391305 / 20),
 				(int) (width * 3.5175879396984926 / 25), (int) (height * 1.0869565217391304 / 20));
-		receiverNameField.setBounds((int) (width * 5.778894472361809 / 25), (int) (height * 15.869565217391305 / 20),
+		receiverNameField.setBounds((int) (width * 4.778894472361809 / 25), (int) (height * 15.869565217391305 / 20),
 				(int) (width * 3.548994974874372 / 25), (int) (height * 1.0869565217391304 / 20));
-		receiverPhoneNumField.setBounds((int) (width * 5.778894472361809 / 25),
+		receiverPhoneNumField.setBounds((int) (width * 4.778894472361809 / 25),
 				(int) (height * 17.869565217391305 / 20), (int) (width * 3.548994974874372 / 25),
 				(int) (height * 1.0869565217391304 / 20));
-		confirmButton.setBounds((int) (width * 20.16331658291457 / 25), (int) (height * 14.869565217391305 / 20),
-				(int) (width * 3.3605527638190953 / 25), (int) (height * 2.869565217391304 / 20));
+		confirmLabel.setBounds((int) (width * 19.236016371077763 / 25), (int) (height * 16.523297491039425 / 20),
+				(int) (width * 4.297407912687586 / 25), (int) (height * 2.2222222222222223 / 20));
 
 	}
 
@@ -118,9 +115,8 @@ public class FinishedOrderPanel extends OperationPanel {
 	}
 
 	private void addListener() {
-		queryButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+		queryLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				String orderID = orderIDField.getText();
 				if (orderID.equals("")) {
 					warnning("请输入订单号");
@@ -163,8 +159,8 @@ public class FinishedOrderPanel extends OperationPanel {
 
 			}
 		});
-		confirmButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		confirmLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 
 				if (receiverNameField.getText().equals("")) {
 					warnning("实际收件人不可为空");

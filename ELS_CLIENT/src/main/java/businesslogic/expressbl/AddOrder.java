@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
 import dataservice.expressdataservice.ExpressDataService;
+import dataservice.managedataservice.CityDistanceDataService;
+import dataservice.managedataservice.OrganizationDataService;
 import po.OrderPO;
 import type.OrderState;
 import vo.ExpressVO;
@@ -14,10 +16,14 @@ import vo.OrderVO;
 public class AddOrder {
 
 	private ExpressDataService expressData;
+	private OrganizationDataService organizationData;
+	private CityDistanceDataService cityDistanceData;
 
 	public AddOrder() {
 		try {
 			expressData = DataFactory.getExpressData();
+			organizationData = DataFactory.getOrganizationData();
+			cityDistanceData = DataFactory.getCityDistanceData();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,14 +89,13 @@ public class AddOrder {
 		String city2 = vo.recipientAddress.split(" ")[0];
 
 		double distance = 0;
-		try {
-//			distance = DataFactory.getCityDistanceData().findCityDistanceByBoth(city1, city2).getDistance();
-			distance = 1000;
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (!city1.equals(city2))
+			try {
+				distance = DataFactory.getCityDistanceData().findCityDistanceByBoth(city1, city2).getDistance();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		double weight = Double.parseDouble(vo.weight);
 		double volumn = Double.parseDouble(vo.volume);
@@ -116,13 +121,14 @@ public class AddOrder {
 
 		float freight = 0;
 		if (city1.equals(city2))
-			freight = (float) (tWeight * 23);
+			freight = (float) (tWeight * 23)/1000;
 		else
-			freight = (float) (distance * tWeight * 23);
+			freight = (float) (distance * tWeight * 23)/1000;
 
 		vo.freight = ((int) (freight * 10)) / 10;
 		vo.packingExpense = ((int) (packExpense * 10)) / 10;
-
+		
+		
 	}
 
 	public boolean chargeCollection(String chargeInfo) {
@@ -149,6 +155,27 @@ public class AddOrder {
 		}
 
 		return result;
+	}
+
+	public ArrayList<String> getAllCitys() {
+		try {
+			return cityDistanceData.getAllCitys();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new ArrayList<String>();
+	}
+
+	public ArrayList<String> getBelongCitys(String city) {
+		try {
+			return organizationData.getBelongingPlaces(city);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
 	}
 
 }

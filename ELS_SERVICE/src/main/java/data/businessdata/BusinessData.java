@@ -378,6 +378,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		String time = getTime();
 		String path = "orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists())
+			return 0;
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			@SuppressWarnings("unchecked")
@@ -896,7 +898,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 				file.createNewFile();
 			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
+			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",
 					new RepertoryPO("pig", "wo"));
 			ArrayList<DriverPO> vpo = new ArrayList<DriverPO>();
 

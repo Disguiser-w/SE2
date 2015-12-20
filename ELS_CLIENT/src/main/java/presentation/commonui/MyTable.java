@@ -273,8 +273,10 @@ public class MyTable extends JPanel {
 		if (UserFrame.type == 0)
 			g2d.setColor(Color.BLACK);
 
-		else if (UserFrame.type == 1)
+		else if (UserFrame.type == 1) {
 			g2d.setColor(Color.WHITE);
+			
+		}
 		g2d.drawString("#", 10 + (widths - strWidth1) / 2, 8 + (30 + ascent) / 2);
 
 		for (int i = 0; i < column; i++) {

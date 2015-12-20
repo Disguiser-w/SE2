@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
+import presentation.commonui.MySearchField;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
@@ -21,9 +22,9 @@ import vo.OrderVO;
 public class QueryPanel extends OperationPanel {
 
 	private MyLabel clearLabel;
-	private MyTextField timeField;
+	private MySearchField timeField;
 	private MyLabel timeSetLabel;
-	private MyLabel confirmLabel;
+
 	private MyTable messageTable;
 
 	private ArrayList<OrderVO> submitOrders;
@@ -37,9 +38,9 @@ public class QueryPanel extends OperationPanel {
 		this.controller = controller;
 
 		clearLabel = new MyLabel();
-		timeField = new MyTextField();
+		timeField = new MySearchField();
 		timeSetLabel = new MyLabel();
-		confirmLabel = new MyLabel();
+
 
 		queryOrders = new ArrayList<String[]>();
 
@@ -49,12 +50,11 @@ public class QueryPanel extends OperationPanel {
 		add(clearLabel);
 		add(timeField);
 		add(timeSetLabel);
-		add(confirmLabel);
+	
 
 		timeSetLabel.setLayout(new BorderLayout());
 		// timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
 
-//		help = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
@@ -90,10 +90,9 @@ public class QueryPanel extends OperationPanel {
 				(int) (width * 1.5688949522510232 / 25), (int) (height * 0.967741935483871 / 20));
 		timeField.setBounds((int) (width * 15.82537517053206 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 4.843110504774898 / 25), (int) (height * 0.967741935483871 / 20));
-		timeSetLabel.setBounds((int) (width * 20.6343792633015 / 25), (int) (height * 1.039426523297491 / 20),
+		timeSetLabel.setBounds((int) (width * 21.804911323328785 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 0.9890859481582538 / 25), (int) (height * 0.967741935483871 / 20));
-		confirmLabel.setBounds((int) (width * 22.339699863574353 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.534788540245566 / 25), (int) (height * 0.967741935483871 / 20));
+
 		messageTable.setLocationAndSize((int) (width * 1.2278308321964528 / 25),
 				(int) (height * 2.8315412186379927 / 20), (int) (width * 22.68076398362892 / 25),
 				(int) (height * 15.878136200716845 / 20));
@@ -119,7 +118,7 @@ public class QueryPanel extends OperationPanel {
 
 	private void addListener() {
 
-		confirmLabel.addMouseListener(new MouseAdapter() {
+		timeField.getImageLabel().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				submitOrders = controller.query();
 				String date = timeField.getText().trim();

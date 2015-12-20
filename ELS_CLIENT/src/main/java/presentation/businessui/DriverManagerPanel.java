@@ -460,7 +460,7 @@ public class DriverManagerPanel extends OperationPanel {
 
 					int times = 0;
 					try {
-						ye = Integer.parseInt(registrationDeadlineField.getText());
+						times = Integer.parseInt(registrationDeadlineField.getText());
 					} catch (Exception ex) {
 						warnning("本月次数为应为整数");
 						return;

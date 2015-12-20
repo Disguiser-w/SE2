@@ -1,24 +1,23 @@
 package presentation.expressui;
 
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
-import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
-import dataservice.managedataservice.CityDistanceDataService;
-import dataservice.managedataservice.OrganizationDataService;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import type.ExpressType;
 import type.PackType;
@@ -54,26 +53,26 @@ public class AddOrderPanel extends OperationPanel {
 
 	private JLabel costLabel;
 	private JLabel timeLabel;
-	private JTextField cost;
-	private JTextField time;
+	private MyTextField cost;
+	private MyTextField time;
 
-	private JTextField senderNameField;
-	private JTextField senderOrganizationField;
-	private JTextField senderPhoneField;
-	private JTextField senderMobilePhoneField;
-	private JTextField senderAddressField;
+	private MyTextField senderNameField;
+	private MyTextField senderOrganizationField;
+	private MyTextField senderPhoneField;
+	private MyTextField senderMobilePhoneField;
+	private MyTextField senderAddressField;
 
-	private JTextField receiverNameField;
-	private JTextField receiverOrganizationField;
-	private JTextField receiverPhoneField;
-	private JTextField receiverMobilePhoneField;
-	private JTextField receiverAddressField;
+	private MyTextField receiverNameField;
+	private MyTextField receiverOrganizationField;
+	private MyTextField receiverPhoneField;
+	private MyTextField receiverMobilePhoneField;
+	private MyTextField receiverAddressField;
 
-	private JTextField goodsField;
-	private JTextField numberField;
-	private JTextField weightField;
-	private JTextField volumnField;
-	private JTextField goodNameField;
+	private MyTextField goodsField;
+	private MyTextField numberField;
+	private MyTextField weightField;
+	private MyTextField volumnField;
+	private MyTextField goodNameField;
 
 	private JComboBox<String> senderCountryList;
 	private JComboBox<String> senderCityField;
@@ -82,8 +81,8 @@ public class AddOrderPanel extends OperationPanel {
 	private JComboBox<String> expressTypeList;
 	private JComboBox<String> packageTypeList;
 
-	private JButton calcuButton;
-	private JButton confirmButton;
+	private JLabel calcuButton;
+	private JLabel confirmButton;
 
 	private AddOrderController controller;
 	private OrderVO newOrder;
@@ -95,47 +94,47 @@ public class AddOrderPanel extends OperationPanel {
 	public AddOrderPanel(AddOrderController controller) {
 		this.controller = controller;
 
-		senderLabel = new JLabel("寄件人信息");
-		senderNameLabel = new JLabel("姓名");
-		senderOrganizationLabel = new JLabel("单位");
-		senderPhoneLabel = new JLabel("电话");
-		senderMobilePhoneLabel = new JLabel("手机");
-		senderAddressLabel = new JLabel("住址");
+		senderLabel = new MyTextLabel("寄件人信息");
+		senderNameLabel = new MyTextLabel("姓名");
+		senderOrganizationLabel = new MyTextLabel("单位");
+		senderPhoneLabel = new MyTextLabel("电话");
+		senderMobilePhoneLabel = new MyTextLabel("手机");
+		senderAddressLabel = new MyTextLabel("住址");
 
-		receiverLabel = new JLabel("收件人信息");
-		receiverNameLabel = new JLabel("姓名");
-		receiverOrganizationLabel = new JLabel("单位");
-		receiverPhoneLabel = new JLabel("电话");
-		receiverMobilePhoneLabel = new JLabel("手机");
-		receiverAddressLabel = new JLabel("住址");
+		receiverLabel = new MyTextLabel("收件人信息");
+		receiverNameLabel = new MyTextLabel("姓名");
+		receiverOrganizationLabel = new MyTextLabel("单位");
+		receiverPhoneLabel = new MyTextLabel("电话");
+		receiverMobilePhoneLabel = new MyTextLabel("手机");
+		receiverAddressLabel = new MyTextLabel("住址");
 
-		goodsLabel = new JLabel("货物信息");
-		numberLabel = new JLabel("原件数");
-		weightLabel = new JLabel("实际重量");
-		volumnLabel = new JLabel("体积");
-		goodNameLabel = new JLabel("内件品名");
+		goodsLabel = new MyTextLabel("货物信息");
+		numberLabel = new MyTextLabel("原件数");
+		weightLabel = new MyTextLabel("实际重量");
+		volumnLabel = new MyTextLabel("体积");
+		goodNameLabel = new MyTextLabel("内件品名");
 
-		expressTypeLabel = new JLabel("快递类型");
-		packageTypeLabel = new JLabel("包装种类");
-		totalSumLabel = new JLabel("");
+		expressTypeLabel = new MyTextLabel("快递类型");
+		packageTypeLabel = new MyTextLabel("包装种类");
+		totalSumLabel = new MyTextLabel("");
 
-		senderNameField = new JTextField();
-		senderOrganizationField = new JTextField();
-		senderPhoneField = new JTextField();
-		senderMobilePhoneField = new JTextField();
-		senderAddressField = new JTextField();
+		senderNameField = new MyTextField();
+		senderOrganizationField = new MyTextField();
+		senderPhoneField = new MyTextField();
+		senderMobilePhoneField = new MyTextField();
+		senderAddressField = new MyTextField();
 
-		receiverNameField = new JTextField();
-		receiverOrganizationField = new JTextField();
-		receiverPhoneField = new JTextField();
-		receiverMobilePhoneField = new JTextField();
-		receiverAddressField = new JTextField();
+		receiverNameField = new MyTextField();
+		receiverOrganizationField = new MyTextField();
+		receiverPhoneField = new MyTextField();
+		receiverMobilePhoneField = new MyTextField();
+		receiverAddressField = new MyTextField();
 
-		goodsField = new JTextField();
-		numberField = new JTextField();
-		weightField = new JTextField();
-		volumnField = new JTextField();
-		goodNameField = new JTextField();
+		goodsField = new MyTextField();
+		numberField = new MyTextField();
+		weightField = new MyTextField();
+		volumnField = new MyTextField();
+		goodNameField = new MyTextField();
 
 		senderCountryList = new JComboBox<String>();
 		senderCityField = new JComboBox<String>();
@@ -145,13 +144,15 @@ public class AddOrderPanel extends OperationPanel {
 		expressTypeList = new JComboBox<String>();
 		packageTypeList = new JComboBox<String>();
 
-		calcuButton = new JButton("补全");
-		confirmButton = new JButton("确认");
+		calcuButton = new MyLabel("补全");
+		confirmButton = new MyLabel("确认");
 
-		costLabel = new JLabel("总费用");
-		timeLabel = new JLabel("预计时间");
-		cost = new JTextField("-");
-		time = new JTextField("-");
+		costLabel = new MyTextLabel("总费用");
+		timeLabel = new MyTextLabel("预计时间");
+		cost = new MyTextField();
+		cost.setText("-");
+		time = new MyTextField();
+		time.setText("-");
 
 		cost.setEditable(false);
 		time.setEditable(false);
@@ -283,20 +284,20 @@ public class AddOrderPanel extends OperationPanel {
 
 	private void setBaseInfo() {
 		// 获取城市信息，
-		CityDistanceDataService cityDistanceData = null;
+
 		ArrayList<String> citys = null;
 		places = new ArrayList<ArrayList<String>>();
 
 		try {
-			cityDistanceData = DataFactory.getCityDistanceData();
-			citys = cityDistanceData.getAllCitys();
-			OrganizationDataService organizationData = DataFactory.getOrganizationData();
+			;
+			citys = controller.getAllCitys();
+
 			for (String i : citys) {
-				// places.add(organizationData.getBelongingPlaces(i));
-				ArrayList<String> str = new ArrayList<String>();
-				str.add("这里");
-				str.add("那里");
-				places.add(str);
+				places.add(controller.getBelongCitys(i));
+				// ArrayList<String> str = new ArrayList<String>();
+				// str.add("这里");
+				// str.add("那里");
+				// places.add(str);
 			}
 
 			places.add(new ArrayList<String>());
@@ -336,8 +337,8 @@ public class AddOrderPanel extends OperationPanel {
 
 	private void addListener() {
 
-		confirmButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		confirmButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				if (cost.getText().equals("-")) {
 					warnning("订单价格尚未计算");
 					return;
@@ -352,9 +353,8 @@ public class AddOrderPanel extends OperationPanel {
 			}
 		});
 		// 费用计算
-		calcuButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+		calcuButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				String senderName = senderNameField.getText();
 
 				if (senderName.trim().equals("")) {
@@ -632,6 +632,5 @@ public class AddOrderPanel extends OperationPanel {
 		}
 		return true;
 	}
-
 
 }

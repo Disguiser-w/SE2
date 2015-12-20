@@ -1,5 +1,7 @@
 package businesslogic.expressbl.controller;
 
+import java.util.ArrayList;
+
 import businesslogic.expressbl.AddOrder;
 import businesslogicservice.expressblservice.AddOrderBLService;
 import vo.OrderVO;
@@ -24,6 +26,14 @@ public class AddOrderController implements AddOrderBLService {
 
 	public AddOrder getAddOrder() {
 		return addOrder;
+	}
+
+	public ArrayList<String> getAllCitys(){
+		return addOrder.getAllCitys();
+	}
+
+	public ArrayList<String> getBelongCitys(String city){
+		return addOrder.getBelongCitys(city);
 	}
 
 }
