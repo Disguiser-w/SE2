@@ -85,7 +85,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		orderIDField.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 6.21859296482412 / 25), (int) (height * 1.0434782608695652 / 20));
-		clearLabel.setBounds((int) (width * 7.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
+		clearLabel.setBounds((int) (width * 8.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 1.6017587939698492 / 25), (int) (height * 1.0 / 20));
 		messageArea.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 3.391304347826087 / 20),
 				(int) (width * 22.141959798994975 / 25), (int) (height * 9.478260869565217 / 20));

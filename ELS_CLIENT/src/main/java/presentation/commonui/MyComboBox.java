@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 
 public class MyComboBox<T> extends JComboBox<T> {
 	public MyComboBox() {
+		setMaximumRowCount(100);
 		if (UserFrame.type == UserFrame.TYPE_0)
 			setBackground(Color.WHITE);
 		else {
@@ -15,7 +16,7 @@ public class MyComboBox<T> extends JComboBox<T> {
 			setForeground(Color.WHITE);
 			setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		}
-		setFont(new Font("Microsoft YaHei", Font.PLAIN, 14));
+		setFont(new Font("Microsoft YaHei", Font.PLAIN, 12));
 
 	}
 

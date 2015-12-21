@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
+import common.ImageGetter;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.OrderPO;
@@ -46,10 +47,12 @@ public class ExpressMainController {
 		receiptOrderController = new ReceiptOrderController();
 
 		expressFrame = new ExpressFrame(expressVO);
-		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController), "添加订单");
-		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController), "收费汇总");
-		expressFrame.addFuncLabel(new QueryPanel(logisticQuery), "订单查询");
-		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController), "订单接收");
+		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController), "添加订单", ImageGetter.getImage("addOrder.png").getImage());
+		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController), "收费汇总",
+				ImageGetter.getImage("chargeCollection.png").getImage());
+		expressFrame.addFuncLabel(new QueryPanel(logisticQuery), "订单查询", ImageGetter.getImage("orderQuery.png").getImage());
+		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController), "订单接收",
+				ImageGetter.getImage("finishOrder.png").getImage());
 
 		expressFrame.showFrame();
 		expressFrame.setVisible(true);

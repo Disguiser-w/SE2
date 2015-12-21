@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 public class MyTable extends JPanel {
 
-	private JPanel scrollPanel;	
+	private JPanel scrollPanel;
 	private int row;
 	private int column;
 
@@ -335,14 +335,7 @@ public class MyTable extends JPanel {
 				add(box);
 			} else
 				setSize(30 + width, height);
-
-			// box.addMouseListener(new MouseAdapter() {
-			// public void mouseClicked(MouseEvent e) {
-			//
-			// repaint();
-			// }
-			// });
-
+ 
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					if (box.getSelected()) {

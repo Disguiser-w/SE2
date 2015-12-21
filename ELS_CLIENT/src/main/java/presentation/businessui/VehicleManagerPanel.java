@@ -257,8 +257,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			driversBox = new MyComboBox<String>();
 			// driversBox = new MyTextLabel();
 
-			confirmLabel = new MyTextLabel("确认");
-			cancelLabel = new MyTextLabel("取消");
+			confirmLabel = new MyLabel("确认");
+			cancelLabel = new MyLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -600,8 +600,8 @@ public class VehicleManagerPanel extends OperationPanel {
 			driversBox = new MyComboBox<String>();
 			// driversBox = new MyTextLabel();
 
-			confirmLabel = new MyTextLabel("确认");
-			cancelLabel = new MyTextLabel("取消");
+			confirmLabel = new MyLabel("确认");
+			cancelLabel = new MyLabel("取消");
 
 			add(idLabel);
 			add(idField);

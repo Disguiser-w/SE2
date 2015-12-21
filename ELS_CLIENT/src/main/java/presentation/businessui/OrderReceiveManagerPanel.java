@@ -96,7 +96,7 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 		localField.setBounds((int) (width * 5.525238744884038 / 25), (int) (height * 4.659498207885305 / 20),
 				(int) (width * 4.399727148703956 / 25), (int) (height * 1.3261648745519714 / 20));
 		inputLabel.setBounds((int) (width * 2.762619372442019 / 25), (int) (height * 1.7204301075268817 / 20),
-				(int) (width * 2.1145975443383356 / 25), (int) (height * 1.3261648745519714 / 20));
+				(int) (width * 2.6145975443383356 / 25), (int) (height * 1.3261648745519714 / 20));
 		orderNumField.setBounds((int) (width * 5.559345156889496 / 25), (int) (height * 1.7204301075268817 / 20),
 				(int) (width * 4.399727148703956 / 25), (int) (height * 1.3261648745519714 / 20));
 		inputConfirmButton.setBounds((int) (width * 11.493860845839018 / 25), (int) (height * 1.7204301075268817 / 20),
@@ -118,7 +118,7 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 
 		String[] head = new String[] { "订单号" };
 
-		int[] widths = { 100 };
+		int[] widths = { 200 };
 
 		messageTable = new MyTable(head, new ArrayList<String[]>(), widths, false);
 		add(messageTable);

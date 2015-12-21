@@ -91,7 +91,6 @@ public class MyCheckBox extends JPanel {
 		// else if (!isSelected)
 		// g2d.fillOval(width / 4, height / 4, width / 2, height / 2);
 
-		System.out.println(width + " " + height);
 		if (isSelected) {
 			if (UserFrame.type == UserFrame.TYPE_0) {
 				g2d.drawImage(select_day, 0, 0, width, height, null);

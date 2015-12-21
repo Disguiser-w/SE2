@@ -78,7 +78,7 @@ public class OrderDistributePanel extends OperationPanel {
 	private void setBaseInfos() {
 		String[] head = new String[] { "快递员", "当日收费" };
 
-		int[] widths = { 185, 245, 185 };
+		int[] widths = { 320, 295, };
 
 		messageTable = new MyTable(head, new ArrayList<String[]>(), widths, false);
 		add(messageTable);
