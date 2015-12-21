@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import presentation.image.ImageGetter;
+import common.ImageGetter;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
@@ -140,11 +140,11 @@ public class UserFrame extends JFrame {
 	// 设置人员信息
 
 	public void addFuncLabel(JPanel panel, String str) {
-		addFuncLabel(null, null, null, panel, str);
+		addFuncLabel(panel, str, null);
 	}
 
 	// 调用此函数来添加一个功能
-	public void addFuncLabel(Image image, Image pressImage, Image rolloverImage, JPanel newPanel, String str) {
+	public void addFuncLabel(JPanel newPanel, String str, Image image) {
 		int height = getHeight();
 		int width = getWidth();
 
@@ -152,7 +152,7 @@ public class UserFrame extends JFrame {
 				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
 		operationPanels.add(newPanel);
 
-		FuncLabel funcLabel = new FuncLabel(str);
+		FuncLabel funcLabel = new FuncLabel(str, image);
 		funcLabel.setPanel(newPanel);
 
 		functionPanel.addFuncLabel(funcLabel);

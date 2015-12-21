@@ -9,7 +9,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
-import presentation.image.ImageGetter;
+import common.ImageGetter;
 
 public class ImageLabel extends JLabel {
 

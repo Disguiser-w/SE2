@@ -22,9 +22,9 @@ public class FuncLabel extends JLabel {
 	private boolean isChoosed;
 	private boolean isMouseOn;
 
-	public FuncLabel(String str) {
+	public FuncLabel(String str, Image image) {
 		name = str;
-
+		this.image = image;
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				isChoosed = true;
@@ -83,8 +83,9 @@ public class FuncLabel extends JLabel {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		g2d.drawString(name, width * 2 / 5, height * 2 / 3 - 4);
+		if (image != null)
+			g2d.drawImage(image, height / 2 + 1, height / 4 + 1, height / 2 - 2, height / 2 - 2, null);
 
-		//
 		g2d.drawRoundRect(height / 2, height / 4, height / 2, height / 2, 6, 6);
 
 	}

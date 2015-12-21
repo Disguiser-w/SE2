@@ -36,10 +36,10 @@ import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
+import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyTextField;
-import presentation.image.ImageGetter;
 import vo.LogVO;
 import vo.OrderVO;
 

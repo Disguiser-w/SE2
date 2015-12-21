@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import presentation.image.ImageGetter;
+import common.ImageGetter;
 
 class TestPanel extends JPanel {
 	private ImageLabel imageLabel;

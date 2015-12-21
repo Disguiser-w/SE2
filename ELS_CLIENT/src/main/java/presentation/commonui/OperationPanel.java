@@ -11,26 +11,27 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JPanel;
 
-import presentation.image.ImageGetter;
+import common.ImageGetter;
 
 public class OperationPanel extends JPanel {
 	private Image background;
 
 	protected OperationPanel() {
 		background = ImageGetter.getImage("background4.png").getImage();
-		(new Thread(new Runnable() {
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(50);
-						repaint();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		if (UserFrame.type == UserFrame.TYPE_1)
+			(new Thread(new Runnable() {
+				public void run() {
+					while (true) {
+						try {
+							Thread.sleep(20);
+							repaint();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		})).start();
+			})).start();
 	}
 
 	public void add(MyTable table) {

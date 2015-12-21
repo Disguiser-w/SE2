@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import presentation.image.ImageGetter;
+import common.ImageGetter;
 
 public class FunctionPanel extends JPanel {
 	private ArrayList<FuncLabel> funcLabels;

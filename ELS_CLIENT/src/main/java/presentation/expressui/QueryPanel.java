@@ -13,10 +13,9 @@ import javax.swing.JOptionPane;
 import businesslogic.expressbl.controller.LogisticQueryController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
-import presentation.commonui.MySearchField;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.MySearchField;
 import vo.OrderVO;
 
 public class QueryPanel extends OperationPanel {

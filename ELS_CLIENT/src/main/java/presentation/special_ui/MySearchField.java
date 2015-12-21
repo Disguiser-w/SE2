@@ -7,8 +7,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import common.ImageGetter;
 import presentation.commonui.MyTextField;
-import presentation.image.ImageGetter;
 
 public class MySearchField extends MyTextField {
 	private JLabel imageLabel;

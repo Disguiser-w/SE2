@@ -30,7 +30,6 @@ import javax.xml.namespace.QName;
 
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyTextField;
-import presentation.image.ImageGetter;
 import vo.LogVO;
 import vo.OrderVO;
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -42,6 +41,7 @@ import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
+import common.ImageGetter;
 
 /**
  * 打开客户端的第一个界面

@@ -1,7 +1,10 @@
 package businesslogic.businessbl.controller;
 
+import java.awt.Image;
+
 import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
+import common.ImageGetter;
 import dataservice.businessdataservice.BusinessDataService;
 import po.BusinessPO;
 import po.DistributeReceiptPO;
@@ -17,7 +20,6 @@ import presentation.businessui.EnVehiclePanel;
 import presentation.businessui.OrderDistributePanel;
 import presentation.businessui.OrderReceiveManagerPanel;
 import presentation.businessui.VehicleManagerPanel;
-import presentation.commonui.TestOperationPanel;
 import vo.BusinessVO;
 import vo.DistributeReceiptVO;
 import vo.DriverVO;
@@ -70,7 +72,9 @@ public class BusinessMainController {
 		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController), "货物接收");
 		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController), "派件");
 		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController), "收款汇总");
-		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame), "司机管理");
+		Image driverManagerImage = ImageGetter.getImage("driverManager.png").getImage();
+		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame), "司机管理",
+				driverManagerImage);
 		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame), "车辆管理");
 
 		businessFrame.showFrame();
@@ -84,7 +88,7 @@ public class BusinessMainController {
 					businessData.getBusinessInfo(businessVO.organizationVO.organizationID, businessVO.ID));
 
 		} catch (Exception e) {
-//			 TODO Auto-generated catch block
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -2,8 +2,8 @@ package presentation.special_ui;
 
 import java.awt.Image;
 
+import common.ImageGetter;
 import presentation.commonui.MyLabel;
-import presentation.image.ImageGetter;
 
 public class DeleteLabel extends MyLabel {
 	public DeleteLabel() {

@@ -12,10 +12,10 @@ import javax.swing.JTextArea;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
 import presentation.commonui.MyLabel;
-import presentation.commonui.MySearchField;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.MySearchField;
 import vo.OrderVO;
 
 public class FinishedOrderPanel extends OperationPanel {

@@ -19,8 +19,7 @@ import javax.swing.JPanel;
 
 public class MyTable extends JPanel {
 
-	private JPanel scrollPanel;
-
+	private JPanel scrollPanel;	
 	private int row;
 	private int column;
 
