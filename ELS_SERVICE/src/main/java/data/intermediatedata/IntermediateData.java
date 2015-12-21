@@ -70,7 +70,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public ArrayList<PlanePO> getPlaneList(String organization_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/planeList" + organization_ID
+		String path = "intermediateCentreInfo/planeList/" + organization_ID
 				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
@@ -101,7 +101,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public ArrayList<TrainPO> getTrainList(String organization_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/trainList" + organization_ID
+		String path = "intermediateCentreInfo/trainList/" + organization_ID
 				+ "-train.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
@@ -132,7 +132,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public ArrayList<TruckPO> getTruckList(String organization_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/truckList" + organization_ID
+		String path = "intermediateCentreInfo/truckList/" + organization_ID
 				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
@@ -223,7 +223,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public OperationState saveTruckList(String organization_ID,
 			ArrayList<TruckPO> truckList) throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/truckList" + organization_ID
+		String path = "intermediateCentreInfo/truckList/" + organization_ID
 				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
@@ -283,7 +283,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
-		String path = "intermediateCentreInfo/transferingReceipt"
+		String path = "intermediateCentreInfo/transferingReceipt/"
 				+ organization_ID + "-" + date + "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
 
@@ -411,7 +411,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String date = getDate();
-		String path = "intermediateCentreInfo/fare" + organization_ID + "-"
+		String path = "intermediateCentreInfo/fare/" + organization_ID + "-"
 				+ date + "-fare.dat";
 		File file = FileGetter.getFile(path);
 
