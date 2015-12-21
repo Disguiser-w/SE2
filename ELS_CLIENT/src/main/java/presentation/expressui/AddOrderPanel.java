@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
@@ -136,13 +137,13 @@ public class AddOrderPanel extends OperationPanel {
 		volumnField = new MyTextField();
 		goodNameField = new MyTextField();
 
-		senderCountryList = new JComboBox<String>();
-		senderCityField = new JComboBox<String>();
+		senderCountryList = new MyComboBox<String>();
+		senderCityField = new MyComboBox<String>();
 
-		receiverCountryList = new JComboBox<String>();
-		receiverCityField = new JComboBox<String>();
-		expressTypeList = new JComboBox<String>();
-		packageTypeList = new JComboBox<String>();
+		receiverCountryList = new MyComboBox<String>();
+		receiverCityField = new MyComboBox<String>();
+		expressTypeList = new MyComboBox<String>();
+		packageTypeList = new MyComboBox<String>();
 
 		calcuButton = new MyLabel("补全");
 		confirmButton = new MyLabel("确认");
@@ -424,7 +425,7 @@ public class AddOrderPanel extends OperationPanel {
 							result = false;
 					}
 				if (!result) {
-					warnning("寄件人手机号码格式有误！");
+					warnning("收件人手机号码格式有误！");
 					return;
 				}
 

@@ -892,13 +892,13 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 	public static void main(String[] args) {
 		try {
-			File file = FileGetter.getFile("driverInfo/025000-driver.dat");
+			File file = FileGetter.getFile("driverInfo/025-0-driver.dat");
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
 				file.createNewFile();
 			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025000", "鼓楼营业厅",
+			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025-0", "鼓楼营业厅",
 					new RepertoryPO("pig", "wo"));
 			ArrayList<DriverPO> vpo = new ArrayList<DriverPO>();
 

@@ -1,28 +1,22 @@
 package presentation.businessui;
 
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.GatheringController;
-import businesslogic.expressbl.controller.ExpressMainController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 public class ChargeCollectionPanel extends OperationPanel {
@@ -40,13 +34,16 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 		this.controller = controller;
 
-		totalMessageLabel = new JLabel();
+		totalMessageLabel = new MyTextLabel();
+		totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
+		totalMessageLabel.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
+		totalMessageLabel.setForeground(Color.WHITE);
 		totalMessageLabel.setOpaque(true);
 		collectionLabel = new MyLabel();
 
 		add(totalMessageLabel);
 		add(collectionLabel);
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
 
 		chargeInfos = controller.getChargeInfo();
@@ -75,7 +72,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 	private void setBaseInfos() {
 		String[] head = new String[] { "快递员", "当日收费" };
 
-		int[] widths = { 305, 310 };
+		int[] widths = { 314, 310 };
 
 		messageTable = new MyTable(head, getInfos(), widths, false);
 		add(messageTable);

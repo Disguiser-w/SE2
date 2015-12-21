@@ -12,14 +12,15 @@ import javax.swing.JTextArea;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
 import presentation.commonui.MyLabel;
+import presentation.commonui.MySearchField;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.OrderVO;
 
 public class FinishedOrderPanel extends OperationPanel {
-	private MyTextField orderIDField;
-	private JLabel queryLabel;
+	private MySearchField orderIDField;
+	private JLabel clearLabel;
 	private JTextArea messageArea;
 
 	private JLabel receiveTimeLabel;
@@ -31,14 +32,15 @@ public class FinishedOrderPanel extends OperationPanel {
 	private MyTextField receiverPhoneNumField;
 
 	private JLabel confirmLabel;
+
 	private OrderVO vo;
 	// private LocationHelper helper;
 	private ReceiptOrderController controller;
 
 	public FinishedOrderPanel(ReceiptOrderController controller) {
 		this.controller = controller;
-		orderIDField = new MyTextField();
-		queryLabel = new MyLabel();
+		orderIDField = new MySearchField();
+		clearLabel = new MyLabel();
 		messageArea = new JTextArea();
 
 		receiveTimeLabel = new MyTextLabel("收件时间");
@@ -57,7 +59,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		receiverPhoneNumLabel.setVerticalAlignment(JLabel.CENTER);
 
 		add(orderIDField);
-		add(queryLabel);
+		add(clearLabel);
 		add(messageArea);
 
 		add(receiveTimeLabel);
@@ -83,7 +85,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		orderIDField.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 6.21859296482412 / 25), (int) (height * 1.0434782608695652 / 20));
-		queryLabel.setBounds((int) (width * 7.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
+		clearLabel.setBounds((int) (width * 7.8203517587939695 / 25), (int) (height * 1.2608695652173914 / 20),
 				(int) (width * 1.6017587939698492 / 25), (int) (height * 1.0 / 20));
 		messageArea.setBounds((int) (width * 1.3819095477386936 / 25), (int) (height * 3.391304347826087 / 20),
 				(int) (width * 22.141959798994975 / 25), (int) (height * 9.478260869565217 / 20));
@@ -115,7 +117,7 @@ public class FinishedOrderPanel extends OperationPanel {
 	}
 
 	private void addListener() {
-		queryLabel.addMouseListener(new MouseAdapter() {
+		orderIDField.getImageLabel().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String orderID = orderIDField.getText();
 				if (orderID.equals("")) {
@@ -199,6 +201,15 @@ public class FinishedOrderPanel extends OperationPanel {
 			}
 		});
 
+		clearLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				orderIDField.setText("");
+				messageArea.setText("");
+				// timeField.setText(null);
+				receiverNameField.setText("");
+				receiverPhoneNumField.setText("");
+			}
+		});
 	}
 
 	private void clear() {

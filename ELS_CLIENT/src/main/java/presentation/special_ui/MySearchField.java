@@ -1,4 +1,4 @@
-package presentation.commonui;
+package presentation.special_ui;
 
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import presentation.commonui.MyTextField;
 import presentation.image.ImageGetter;
 
 public class MySearchField extends MyTextField {
@@ -40,16 +41,19 @@ public class MySearchField extends MyTextField {
 
 			public void mouseExited(MouseEvent e) {
 				imageLabel.setIcon(normal);
+				imageLabel.setLocation(imageLabel.getX(), getY() - 1);
 			}
 
 			public void mousePressed(MouseEvent e) {
 				isPressed = true;
 				imageLabel.setIcon(press);
+				imageLabel.setLocation(imageLabel.getX(), getY() + 1);
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				isPressed = false;
 				imageLabel.setIcon(hover);
+				imageLabel.setLocation(imageLabel.getX(), getY() - 1);
 			}
 		});
 
@@ -78,8 +82,8 @@ public class MySearchField extends MyTextField {
 		hover = image2;
 		press = image3;
 	}
-	
-	public JLabel getImageLabel(){
+
+	public JLabel getImageLabel() {
 		return imageLabel;
 	}
 }

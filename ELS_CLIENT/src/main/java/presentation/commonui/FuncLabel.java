@@ -60,21 +60,23 @@ public class FuncLabel extends JLabel {
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//		if (isChoosed) {
-//			g2d.setColor(new Color(0, 82, 130));
-//		} else if (isMouseOn) {
-//			g2d.setColor(new Color(0, 111, 192));
-//		} else {
-//			g2d.setColor(new Color(0, 121, 255));
-//		}
+		if (UserFrame.type == UserFrame.TYPE_0)
+			if (isChoosed) {
+				g2d.setColor(new Color(0, 82, 130));
+			} else if (isMouseOn) {
+				g2d.setColor(new Color(0, 111, 192));
+			} else {
+				g2d.setColor(new Color(0, 121, 255));
+			}
+		else if (UserFrame.type == UserFrame.TYPE_1)
 
-		if (isChoosed) {
-			g2d.setColor(new Color(0, 0, 0, 150));
-		} else if (isMouseOn) {
-			g2d.setColor(new Color(0, 0, 0, 100));
-		} else {
-			g2d.setColor(new Color(0, 0, 0, 0));
-		}
+			if (isChoosed) {
+				g2d.setColor(new Color(0, 0, 0, 150));
+			} else if (isMouseOn) {
+				g2d.setColor(new Color(0, 0, 0, 100));
+			} else {
+				g2d.setColor(new Color(0, 0, 0, 0));
+			}
 
 		g2d.fillRect(0, 0, width, height);
 

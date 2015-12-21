@@ -49,8 +49,8 @@ public class MyTable extends JPanel {
 		scrollPanel = new JPanel();
 
 		if (UserFrame.type == 0) {
-			scrollPanel.setBackground(new Color(235, 235, 235));
-			setBackground(new Color(235, 235, 235));
+			scrollPanel.setBackground(new Color(250, 250, 250));
+			setBackground(new Color(250, 250, 250));
 		} else if (UserFrame.type == 1) {
 			scrollPanel.setBackground(new Color(0, 0, 0, 0));
 			setBackground(new Color(0, 0, 0, 0));
@@ -96,7 +96,7 @@ public class MyTable extends JPanel {
 		// 声明
 		loadPanels();
 
-		addMouseWheelListener(new MouseWheelListener() {
+		scrollPanel.addMouseWheelListener(new MouseWheelListener() {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				int dir = e.getWheelRotation();
@@ -179,7 +179,7 @@ public class MyTable extends JPanel {
 	}
 
 	public void addRow(String[] info) {
-		setSize(getWidth(), getHeight() + 38);
+		// setSize(getWidth(), getHeight() + 38);
 		infos.add(info);
 		MyRowPanel panel = new MyRowPanel(row++);
 		panel.setLocation(10, 38 * row + 8);
@@ -263,6 +263,13 @@ public class MyTable extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		int widths = 30;
+		int width = getWidth();
+
+		if (UserFrame.type == UserFrame.TYPE_0) {
+			g2d.setColor(new Color(0, 121, 255));
+			g2d.fillRoundRect(10, 8, width - 20, 20, 14, 14);
+			g2d.fillRect(10, 23, width - 20, 14);
+		}
 
 		g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
 		FontMetrics fm = g2d.getFontMetrics();
@@ -270,29 +277,45 @@ public class MyTable extends JPanel {
 
 		g2d.drawLine(widths, 0, widths, height);
 		int strWidth1 = fm.stringWidth("#");
-		if (UserFrame.type == 0)
-			g2d.setColor(Color.BLACK);
-
-		else if (UserFrame.type == 1) {
-			g2d.setColor(Color.WHITE);
-			
-		}
+		g2d.setColor(Color.WHITE);
 		g2d.drawString("#", 10 + (widths - strWidth1) / 2, 8 + (30 + ascent) / 2);
 
+		if (UserFrame.type == UserFrame.TYPE_1) {
+			g2d.drawLine(4, 42, getWidth() - 8, 42);
+			for (int i = 0; i < row; i++)
+				g2d.drawLine(4, 42 + 38 * (i + 1), width - 8, 42 + 38 * (i + 1));
+		}
 		for (int i = 0; i < column; i++) {
 
 			int strWidth = fm.stringWidth(head[i]);
 			g2d.drawString(head[i], 8 + widths + (columnWidth[i] - strWidth) / 2, 8 + (30 + ascent) / 2);
 			widths += columnWidth[i];
-			// if (i != column - 1)
-			// g2d.drawLine(widths, 0, widths, height);
 		}
 
-		// if (multiChoose) {
-		// widths += columnWidth[column - 1];
-		// g2d.drawLine(widths, 0, widths, height);
-		// }
+		// 补齐第一面,省得太丑
+		int h1 = scrollPanel.getHeight() / 38;
+		if (row <= h1)
+			setSize(getWidth(), h1 * 38);
 
+		for (int i = row; i < h1; i++) {
+			if (UserFrame.type == UserFrame.TYPE_0) {
+				g2d.setColor(new Color(204, 217, 240));
+				g2d.fillRect(10, 8 + 38 * (i + 1), width - 20, 30);
+
+				int w1 = 40;
+				g2d.setColor(Color.WHITE);
+				for (int j = 0; j < column + 1; j++) {
+					g2d.drawLine(w1, 8 + 38 * (i + 1), w1, 8 + 38 * (i + 1) + 30);
+					if (j != column)
+						w1 += columnWidth[j];
+				}
+
+			} else if (UserFrame.type == UserFrame.TYPE_1) {
+				g2d.setColor(Color.WHITE);
+				g2d.drawLine(4, 42 + 38 * (i + 1), width - 8, 42 + 38 * (i + 1));
+			}
+
+		}
 	}
 
 	class MyRowPanel extends JPanel {
@@ -347,22 +370,22 @@ public class MyTable extends JPanel {
 			int ascent = fm.getAscent();
 
 			if (type == 0)
-				g2d.setColor(Color.WHITE);
+				g2d.setColor(new Color(204, 217, 240));
 			else if (type == 1)
 				g2d.setColor(new Color(0, 0, 0, 0));
 			g2d.fillRect(0, 0, getWidth(), height);
 
-			g2d.setColor(new Color(235, 235, 235));
-			// g2d.setColor(Color.BLACK);
+			g2d.setColor(Color.WHITE);
 			g2d.drawLine(widths, 0, widths, height);
 
 			int strWidth1 = fm.stringWidth(index + 1 + "");
-			// g2d.setColor(new Color(102, 102, 102));
 			if (type == 0)
 				g2d.setColor(Color.BLACK);
 			else if (type == 1)
 				g2d.setColor(Color.WHITE);
 			g2d.drawString(index + 1 + "", (widths - strWidth1) / 2, (height + ascent) / 2 - 2);
+			// 前面一条
+			// g2d.drawLine(0, 0, 0, height);
 
 			for (int i = 0; i < column; i++) {
 
@@ -373,32 +396,25 @@ public class MyTable extends JPanel {
 					g2d.setColor(Color.WHITE);
 
 				g2d.drawString(rowInfos[i], widths + (columnWidth[i] - strWidth) / 2, (height + ascent) / 2 - 2);
-				if (type == 0)
-					g2d.setColor(new Color(235, 235, 235));
-				else if (type == 1)
-					g2d.setColor(Color.WHITE);
+
+				g2d.setColor(Color.WHITE);
 				widths += columnWidth[i];
-				if (i != column - 1)
+				if (i != column - 1 && UserFrame.type != UserFrame.TYPE_1)
 					g2d.drawLine(widths, 0, widths, height);
 			}
 			widths += columnWidth[column - 1];
+
+			// 后面一条
+			// g2d.drawLine(getWidth() - 4, 0, getWidth() - 4, height);
 			int width = getWidth();
 			if (multiChoose) {
-
-				g2d.setColor(new Color(235, 235, 235));
+				g2d.setColor(Color.WHITE);
 				g2d.drawLine(width - 31, 0, width - 31, height);
 			}
 
 			g2d.setColor(new Color(0, 134, 255));
 			if (isMouseOn)
 				g2d.drawRect(0, 0, widths - 1, height - 1);
-
-			// if (box.getSelected()) {
-			//
-			// g2d.drawRect(0, 0, width - 1, height - 1);
-			// g2d.drawRect(1, 1, width - 3, height - 3);
-			// g2d.drawRect(2, 2, width - 5, height - 5);
-			// }
 
 		}
 

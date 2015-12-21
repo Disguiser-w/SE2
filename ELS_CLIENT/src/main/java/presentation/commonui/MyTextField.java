@@ -1,6 +1,7 @@
 package presentation.commonui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -14,11 +15,12 @@ public class MyTextField extends JTextField {
 	protected JLabel label;
 
 	public MyTextField(String str) {
-		setText(str); // image =
-						// ImageGetter.getImage("textField.png").getImage();
+		setText(str);
 		label = new BackLabel();
-		// setOpaque(true);
 		setBorder(new EmptyBorder(0, 0, 0, 0));
+		setFont(new Font("Microsoft YaHei", Font.PLAIN, 14));
+		if (UserFrame.type == UserFrame.TYPE_1)
+			setForeground(Color.WHITE);
 	}
 
 	public MyTextField() {

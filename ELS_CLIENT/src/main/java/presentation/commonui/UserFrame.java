@@ -64,7 +64,7 @@ public class UserFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		// 不规则形状用这个
-		setBackground(new Color(0, 0, 0, 0));
+		// setBackground(new Color(0, 0, 0, 0));
 		setFocusable(false);
 		setResizable(false);
 

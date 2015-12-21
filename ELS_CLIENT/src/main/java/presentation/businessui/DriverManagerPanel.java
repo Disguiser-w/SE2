@@ -11,19 +11,23 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
+import presentation.special_ui.MySearchField;
 import type.Sexuality;
 import vo.DriverVO;
 
@@ -33,8 +37,7 @@ public class DriverManagerPanel extends OperationPanel {
 	private JLabel delLabel;
 	private JLabel modifyLabel;
 
-	private MyTextField inputField;
-	private JLabel confirmLabel;
+	private MySearchField inputField;
 
 	private MyTable messageTable;
 
@@ -49,12 +52,11 @@ public class DriverManagerPanel extends OperationPanel {
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
-		addLabel = new MyLabel("增");
-		delLabel = new MyLabel("删");
-		modifyLabel = new MyLabel("改");
+		addLabel = new AddLabel();
+		delLabel = new DeleteLabel();
+		modifyLabel = new ModifyLabel();
 
-		inputField = new MyTextField();
-		confirmLabel = new MyLabel();
+		inputField = new MySearchField();
 
 		selectedIndex = -1;
 
@@ -63,7 +65,6 @@ public class DriverManagerPanel extends OperationPanel {
 		add(modifyLabel);
 
 		add(inputField);
-		add(confirmLabel);
 
 		drivers = controller.getDriverInfo();
 
@@ -83,10 +84,8 @@ public class DriverManagerPanel extends OperationPanel {
 		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
 
-		inputField.setBounds((int) (width * 15.654843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
+		inputField.setBounds((int) (width * 17.154843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
 				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
-		confirmLabel.setBounds((int) (width * 21.350613915416098 / 25), (int) (height * 1.2186379928315412 / 20),
-				(int) (width * 1.6371077762619373 / 25), (int) (height * 1.039426523297491 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20), (int) (width * 22.98335467349552 / 25),
 				(int) (height * 15.412186379928315 / 20));
@@ -161,7 +160,7 @@ public class DriverManagerPanel extends OperationPanel {
 			}
 		});
 
-		confirmLabel.addMouseListener(new MouseAdapter() {
+		inputField.getImageLabel().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String id = inputField.getText();
 				if (id.equals(""))
@@ -176,7 +175,7 @@ public class DriverManagerPanel extends OperationPanel {
 		});
 	}
 
-	class ModifyPanel extends JPanel {
+	class ModifyPanel extends OperationPanel {
 		protected JLabel idLabel;
 		protected MyTextField idField;
 
@@ -184,11 +183,11 @@ public class DriverManagerPanel extends OperationPanel {
 		protected MyTextField nameField;
 
 		protected JLabel birthLabel;
-		protected JComboBox<Integer> year;
+		protected MyComboBox<Integer> year;
 		protected JLabel gap1;
-		protected JComboBox<Integer> month;
+		protected MyComboBox<Integer> month;
 		protected JLabel gap2;
-		protected JComboBox<Integer> day;
+		protected MyComboBox<Integer> day;
 
 		// protected JLabel year;
 		// protected JLabel gap1;
@@ -212,7 +211,7 @@ public class DriverManagerPanel extends OperationPanel {
 		protected MyLabel cancelButton;
 
 		protected JLabel sexLabel;
-		// protected JComboBox sexBox;
+		// protected MyComboBox sexBox;
 		protected JRadioButton male;
 		protected JRadioButton female;
 
@@ -220,38 +219,38 @@ public class DriverManagerPanel extends OperationPanel {
 
 		public ModifyPanel(DriverVO vo) {
 			this.oldVO = vo;
-			idLabel = new JLabel("ID");
+			idLabel = new MyTextLabel("ID");
 			idField = new MyTextField();
 
-			nameLabel = new JLabel("姓名");
+			nameLabel = new MyTextLabel("姓名");
 			nameField = new MyTextField();
 
-			birthLabel = new JLabel("出生日期");
+			birthLabel = new MyTextLabel("出生日期");
 
-			year = new JComboBox<Integer>();
-			gap1 = new JLabel("-");
-			month = new JComboBox<Integer>();
-			gap2 = new JLabel("-");
-			day = new JComboBox<Integer>();
-			// year = new JLabel();
-			// gap1 = new JLabel("-");
-			// month = new JLabel();
-			// gap2 = new JLabel("-");
-			// day = new JLabel();
+			year = new MyComboBox<Integer>();
+			gap1 = new MyTextLabel("-");
+			month = new MyComboBox<Integer>();
+			gap2 = new MyTextLabel("-");
+			day = new MyComboBox<Integer>();
+			// year = new MyTextLabel();
+			// gap1 = new MyTextLabel("-");
+			// month = new MyTextLabel();
+			// gap2 = new MyTextLabel("-");
+			// day = new MyTextLabel();
 
-			idCardNumLabel = new JLabel("身份证号码");
+			idCardNumLabel = new MyTextLabel("身份证号码");
 			idCardNumField = new MyTextField();
 
-			phoneNumberLabel = new JLabel("手机号");
+			phoneNumberLabel = new MyTextLabel("手机号");
 			phoneNumberField = new MyTextField();
 
-			registrationDeadlineLabel = new JLabel("行驶证期限");
+			registrationDeadlineLabel = new MyTextLabel("行驶证期限");
 			registrationDeadlineField = new MyTextField();
 
-			timeLabel = new JLabel("本月次数");
+			timeLabel = new MyTextLabel("本月次数");
 			timeField = new MyTextField();
 
-			sexLabel = new JLabel("性别");
+			sexLabel = new MyTextLabel("性别");
 			male = new JRadioButton("男");
 			female = new JRadioButton("女");
 			ButtonGroup group = new ButtonGroup();
@@ -521,7 +520,7 @@ public class DriverManagerPanel extends OperationPanel {
 	}
 
 	// 新增车辆JPanel,和Modify基本一样，但是不同也有点多所以
-	class AddPanel extends JPanel {
+	class AddPanel extends OperationPanel {
 		private JLabel idLabel;
 		private MyTextField idField;
 
@@ -529,11 +528,11 @@ public class DriverManagerPanel extends OperationPanel {
 		private MyTextField nameField;
 
 		private JLabel birthLabel;
-		private JComboBox<Integer> year;
+		private MyComboBox<Integer> year;
 		private JLabel gap1;
-		private JComboBox<Integer> month;
+		private MyComboBox<Integer> month;
 		private JLabel gap2;
-		private JComboBox<Integer> day;
+		private MyComboBox<Integer> day;
 
 		// private JLabel year;
 		// private JLabel gap1;
@@ -557,44 +556,44 @@ public class DriverManagerPanel extends OperationPanel {
 		private MyLabel cancelButton;
 
 		private JLabel sexLabel;
-		// private JComboBox sexBox;
+		// private MyComboBox sexBox;
 		private JRadioButton male;
 		private JRadioButton female;
 
 		public AddPanel() {
 
-			idLabel = new JLabel("ID");
+			idLabel = new MyTextLabel("ID");
 			idField = new MyTextField();
 
-			nameLabel = new JLabel("姓名");
+			nameLabel = new MyTextLabel("姓名");
 			nameField = new MyTextField();
 
-			birthLabel = new JLabel("出生日期");
+			birthLabel = new MyTextLabel("出生日期");
 
-			year = new JComboBox<Integer>();
-			gap1 = new JLabel("-");
-			month = new JComboBox<Integer>();
-			gap2 = new JLabel("-");
-			day = new JComboBox<Integer>();
-			// year = new JLabel();
-			// gap1 = new JLabel("-");
-			// month = new JLabel();
-			// gap2 = new JLabel("-");
-			// day = new JLabel();
+			year = new MyComboBox<Integer>();
+			gap1 = new MyTextLabel("-");
+			month = new MyComboBox<Integer>();
+			gap2 = new MyTextLabel("-");
+			day = new MyComboBox<Integer>();
+			// year = new MyTextLabel();
+			// gap1 = new MyTextLabel("-");
+			// month = new MyTextLabel();
+			// gap2 = new MyTextLabel("-");
+			// day = new MyTextLabel();
 
-			idCardNumLabel = new JLabel("身份证号码");
+			idCardNumLabel = new MyTextLabel("身份证号码");
 			idCardNumField = new MyTextField();
 
-			phoneNumberLabel = new JLabel("手机号");
+			phoneNumberLabel = new MyTextLabel("手机号");
 			phoneNumberField = new MyTextField();
 
-			registrationDeadlineLabel = new JLabel("行驶证期限");
+			registrationDeadlineLabel = new MyTextLabel("行驶证期限");
 			registrationDeadlineField = new MyTextField();
 
-			timeLabel = new JLabel("本月次数");
+			timeLabel = new MyTextLabel("本月次数");
 			timeField = new MyTextField();
 
-			sexLabel = new JLabel("性别");
+			sexLabel = new MyTextLabel("性别");
 			male = new JRadioButton("男");
 			female = new JRadioButton("女");
 			ButtonGroup group = new ButtonGroup();

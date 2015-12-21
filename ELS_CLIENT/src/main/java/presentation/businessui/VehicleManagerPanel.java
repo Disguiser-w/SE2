@@ -11,20 +11,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
+import presentation.special_ui.MySearchField;
 import vo.DriverVO;
 import vo.OrganizationVO;
 import vo.VehicleVO;
@@ -36,8 +39,7 @@ public class VehicleManagerPanel extends OperationPanel {
 	private MyLabel modifyLabel;
 	private MyTable messageTable;
 
-	private MyTextField inputField;
-	private MyLabel confirmLabel;
+	private MySearchField inputField;
 
 	private VehicleManagerController controller;
 
@@ -54,19 +56,16 @@ public class VehicleManagerPanel extends OperationPanel {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
 		selectedIndex = -1;
-		addLabel = new MyLabel("增");
-		delLabel = new MyLabel("删");
-		modifyLabel = new MyLabel("改");
+		addLabel = new AddLabel();
+		delLabel = new DeleteLabel();
+		modifyLabel = new ModifyLabel();
 
-		inputField = new MyTextField();
-		confirmLabel = new MyLabel();
+		inputField = new MySearchField();
 
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
 		add(inputField);
-		add(confirmLabel);
-
 		vehicles = controller.getVehicleInfo();
 
 		setLayout(null);
@@ -84,10 +83,9 @@ public class VehicleManagerPanel extends OperationPanel {
 		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
 
-		inputField.setBounds((int) (width * 15.654843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
+		inputField.setBounds((int) (width * 17.154843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
 				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
-		confirmLabel.setBounds((int) (width * 21.350613915416098 / 25), (int) (height * 1.2186379928315412 / 20),
-				(int) (width * 1.6371077762619373 / 25), (int) (height * 1.039426523297491 / 20));
+
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20), (int) (width * 22.98335467349552 / 25),
 				(int) (height * 15.412186379928315 / 20));
@@ -159,7 +157,7 @@ public class VehicleManagerPanel extends OperationPanel {
 			}
 		});
 
-		confirmLabel.addMouseListener(new MouseAdapter() {
+		inputField.getImageLabel().addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String id = inputField.getText();
 				if (id.equals(""))
@@ -174,26 +172,26 @@ public class VehicleManagerPanel extends OperationPanel {
 		});
 	}
 
-	class ModifyPanel extends JPanel {
+	class ModifyPanel extends OperationPanel {
 
 		protected JLabel idLabel;
-		protected JTextField idField;
+		protected MyTextField idField;
 
 		protected JLabel engineNumberLabel;
-		protected JTextField engineNumberField;
+		protected MyTextField engineNumberField;
 
 		protected JLabel licensePlateNumberLabel;
-		protected JTextField liscenPlateNumberField;
+		protected MyTextField liscenPlateNumberField;
 
 		protected JLabel lowNumberPlateLabel;
-		protected JTextField lowNumberPlateField;
+		protected MyTextField lowNumberPlateField;
 
 		protected JLabel buyTimeLabel;
-		protected JComboBox<Integer> year;
+		protected MyComboBox<Integer> year;
 		protected JLabel gap1;
-		protected JComboBox<Integer> month;
+		protected MyComboBox<Integer> month;
 		protected JLabel gap2;
-		protected JComboBox<Integer> day;
+		protected MyComboBox<Integer> day;
 
 		// protected JLabel year;
 		// protected JLabel gap1;
@@ -203,18 +201,18 @@ public class VehicleManagerPanel extends OperationPanel {
 
 		// 从购买到现在
 		protected JLabel serviceTimeLabel;
-		protected JTextField serviceTimeField;
+		protected MyTextField serviceTimeField;
 
 		// 所有机构
 		protected JLabel destinationLabel;
-		protected JComboBox<String> destinationBox;
+		protected MyComboBox<String> destinationBox;
 		// protected JLabel destinationBox;
 
 		// local和destinationcity自己设置
 
 		// 选一个司机,如果没司机就不行
 		protected JLabel driversLabel;
-		protected JComboBox<String> driversBox;
+		protected MyComboBox<String> driversBox;
 		// protected JLabel driversBox;
 
 		protected JLabel confirmLabel;
@@ -226,41 +224,41 @@ public class VehicleManagerPanel extends OperationPanel {
 
 		public ModifyPanel(VehicleVO vo) {
 			this.oldVO = vo;
-			idLabel = new JLabel("ID");
-			idField = new JTextField();
-			engineNumberLabel = new JLabel("发动机号");
-			engineNumberField = new JTextField();
+			idLabel = new MyTextLabel("ID");
+			idField = new MyTextField();
+			engineNumberLabel = new MyTextLabel("发动机号");
+			engineNumberField = new MyTextField();
 
-			licensePlateNumberLabel = new JLabel("车牌号");
-			liscenPlateNumberField = new JTextField();
+			licensePlateNumberLabel = new MyTextLabel("车牌号");
+			liscenPlateNumberField = new MyTextField();
 
-			lowNumberPlateLabel = new JLabel("底盘号");
-			lowNumberPlateField = new JTextField();
+			lowNumberPlateLabel = new MyTextLabel("底盘号");
+			lowNumberPlateField = new MyTextField();
 
-			buyTimeLabel = new JLabel("购买时间");
-			year = new JComboBox<Integer>();
-			gap1 = new JLabel("-");
-			month = new JComboBox<Integer>();
-			gap2 = new JLabel("-");
-			day = new JComboBox<Integer>();
-			// year = new JLabel();
-			// gap1 = new JLabel("-");
-			// month = new JLabel();
-			// gap2 = new JLabel("-");
-			// day = new JLabel();
-			serviceTimeLabel = new JLabel("服役时间");
-			serviceTimeField = new JTextField();
+			buyTimeLabel = new MyTextLabel("购买时间");
+			year = new MyComboBox<Integer>();
+			gap1 = new MyTextLabel("-");
+			month = new MyComboBox<Integer>();
+			gap2 = new MyTextLabel("-");
+			day = new MyComboBox<Integer>();
+			// year = new MyTextLabel();
+			// gap1 = new MyTextLabel("-");
+			// month = new MyTextLabel();
+			// gap2 = new MyTextLabel("-");
+			// day = new MyTextLabel();
+			serviceTimeLabel = new MyTextLabel("服役时间");
+			serviceTimeField = new MyTextField();
 
-			destinationLabel = new JLabel("目的地");
-			destinationBox = new JComboBox<String>();
-			// destinationBox = new JLabel();
+			destinationLabel = new MyTextLabel("目的地");
+			destinationBox = new MyComboBox<String>();
+			// destinationBox = new MyTextLabel();
 
-			driversLabel = new JLabel("司机");
-			driversBox = new JComboBox<String>();
-			// driversBox = new JLabel();
+			driversLabel = new MyTextLabel("司机");
+			driversBox = new MyComboBox<String>();
+			// driversBox = new MyTextLabel();
 
-			confirmLabel = new JLabel("确认");
-			cancelLabel = new JLabel("取消");
+			confirmLabel = new MyTextLabel("确认");
+			cancelLabel = new MyTextLabel("取消");
 
 			add(idLabel);
 			add(idField);
@@ -519,26 +517,26 @@ public class VehicleManagerPanel extends OperationPanel {
 		}
 	}
 
-	class AddPanel extends JPanel {
+	class AddPanel extends OperationPanel {
 
 		private JLabel idLabel;
-		private JTextField idField;
+		private MyTextField idField;
 
 		private JLabel engineNumberLabel;
-		private JTextField engineNumberField;
+		private MyTextField engineNumberField;
 
 		private JLabel licensePlateNumberLabel;
-		private JTextField liscenPlateNumberField;
+		private MyTextField liscenPlateNumberField;
 
 		private JLabel lowNumberPlateLabel;
-		private JTextField lowNumberPlateField;
+		private MyTextField lowNumberPlateField;
 
 		private JLabel buyTimeLabel;
-		private JComboBox<Integer> year;
+		private MyComboBox<Integer> year;
 		private JLabel gap1;
-		private JComboBox<Integer> month;
+		private MyComboBox<Integer> month;
 		private JLabel gap2;
-		private JComboBox<Integer> day;
+		private MyComboBox<Integer> day;
 
 		// private JLabel year;
 		// private JLabel gap1;
@@ -548,18 +546,18 @@ public class VehicleManagerPanel extends OperationPanel {
 
 		// 从购买到现在
 		private JLabel serviceTimeLabel;
-		private JTextField serviceTimeField;
+		private MyTextField serviceTimeField;
 
 		// 所有机构
 		private JLabel destinationLabel;
-		private JComboBox<String> destinationBox;
+		private MyComboBox<String> destinationBox;
 		// private JLabel destinationBox;
 
 		// local和destinationcity自己设置
 
 		// 选一个司机,如果没司机就不行
 		private JLabel driversLabel;
-		private JComboBox<String> driversBox;
+		private MyComboBox<String> driversBox;
 		// private JLabel driversBox;
 
 		private JLabel confirmLabel;
@@ -569,41 +567,41 @@ public class VehicleManagerPanel extends OperationPanel {
 		private LocationHelper helper;
 
 		public AddPanel() {
-			idLabel = new JLabel("ID");
-			idField = new JTextField();
-			engineNumberLabel = new JLabel("发动机号");
-			engineNumberField = new JTextField();
+			idLabel = new MyTextLabel("ID");
+			idField = new MyTextField();
+			engineNumberLabel = new MyTextLabel("发动机号");
+			engineNumberField = new MyTextField();
 
-			licensePlateNumberLabel = new JLabel("车牌号");
-			liscenPlateNumberField = new JTextField();
+			licensePlateNumberLabel = new MyTextLabel("车牌号");
+			liscenPlateNumberField = new MyTextField();
 
-			lowNumberPlateLabel = new JLabel("底盘号");
-			lowNumberPlateField = new JTextField();
+			lowNumberPlateLabel = new MyTextLabel("底盘号");
+			lowNumberPlateField = new MyTextField();
 
-			buyTimeLabel = new JLabel("购买时间");
-			year = new JComboBox<Integer>();
-			gap1 = new JLabel("-");
-			month = new JComboBox<Integer>();
-			gap2 = new JLabel("-");
-			day = new JComboBox<Integer>();
-			// year = new JLabel();
-			// gap1 = new JLabel("-");
-			// month = new JLabel();
-			// gap2 = new JLabel("-");
-			// day = new JLabel();
-			serviceTimeLabel = new JLabel("服役时间");
-			serviceTimeField = new JTextField();
+			buyTimeLabel = new MyTextLabel("购买时间");
+			year = new MyComboBox<Integer>();
+			gap1 = new MyTextLabel("-");
+			month = new MyComboBox<Integer>();
+			gap2 = new MyTextLabel("-");
+			day = new MyComboBox<Integer>();
+			// year = new MyTextLabel();
+			// gap1 = new MyTextLabel("-");
+			// month = new MyTextLabel();
+			// gap2 = new MyTextLabel("-");
+			// day = new MyTextLabel();
+			serviceTimeLabel = new MyTextLabel("服役时间");
+			serviceTimeField = new MyTextField();
 
-			destinationLabel = new JLabel("目的地");
-			destinationBox = new JComboBox<String>();
-			// destinationBox = new JLabel();
+			destinationLabel = new MyTextLabel("目的地");
+			destinationBox = new MyComboBox<String>();
+			// destinationBox = new MyTextLabel();
 
-			driversLabel = new JLabel("司机");
-			driversBox = new JComboBox<String>();
-			// driversBox = new JLabel();
+			driversLabel = new MyTextLabel("司机");
+			driversBox = new MyComboBox<String>();
+			// driversBox = new MyTextLabel();
 
-			confirmLabel = new JLabel("确认");
-			cancelLabel = new JLabel("取消");
+			confirmLabel = new MyTextLabel("确认");
+			cancelLabel = new MyTextLabel("取消");
 
 			add(idLabel);
 			add(idField);

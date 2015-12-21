@@ -66,7 +66,7 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
 		String[] head = new String[] { "订单号", "收费" };
 
-		int[] widths = { 330, 293 };
+		int[] widths = { 330, 292 };
 
 		messageTable = new MyTable(head, getInfos(), widths, false);
 		add(messageTable);

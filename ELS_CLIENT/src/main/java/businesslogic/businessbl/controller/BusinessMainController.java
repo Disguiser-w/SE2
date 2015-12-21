@@ -84,7 +84,7 @@ public class BusinessMainController {
 					businessData.getBusinessInfo(businessVO.organizationVO.organizationID, businessVO.ID));
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+//			 TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

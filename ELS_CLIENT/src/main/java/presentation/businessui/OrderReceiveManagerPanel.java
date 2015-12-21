@@ -1,16 +1,13 @@
 package presentation.businessui;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import businesslogic.businessbl.controller.AcceptCargoController;
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -18,6 +15,7 @@ import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 public class OrderReceiveManagerPanel extends OperationPanel {
@@ -46,16 +44,16 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 	public OrderReceiveManagerPanel(AcceptCargoController acceptCargoController) {
 		this.controller = acceptCargoController;
 
-		vehicleIDLabel = new JLabel("司机ID");
+		vehicleIDLabel = new MyTextLabel("司机ID");
 		vehicleIDField = new MyTextField();
 
-		timeLabel = new JLabel("时间");
+		timeLabel = new MyTextLabel("时间");
 		timeField = new MyTextField();
 
-		local = new JLabel("营业厅ID");
+		local = new MyTextLabel("营业厅ID");
 		localField = new MyTextField();
 
-		inputLabel = new JLabel("输入订单号");
+		inputLabel = new MyTextLabel("输入订单号");
 		orderNumField = new MyTextField();
 		inputConfirmButton = new MyLabel();
 
@@ -75,7 +73,6 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 		add(inputConfirmButton);
 
 		add(confirmButton);
-
 
 		setLayout(null);
 		addListener();
@@ -115,6 +112,7 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 	private void setBaseInfos() {
 		timeField.setText(getDate());
 		timeField.setEditable(false);
+		localField.setEditable(false);
 
 		localField.setText(BusinessMainController.businessVO.organizationVO.organizationID);
 
