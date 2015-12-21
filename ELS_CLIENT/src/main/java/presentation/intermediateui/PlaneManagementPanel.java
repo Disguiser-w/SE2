@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.SliderUI;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -66,7 +67,6 @@ public class PlaneManagementPanel extends OperationPanel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-
 		addButton.setBounds((int) (width * 1.2278308321964528 / 25),
 				(int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25),
@@ -138,10 +138,11 @@ public class PlaneManagementPanel extends OperationPanel {
 					return;
 
 				selectedIndex = selectedIndexs.get(0);
-				messageTable.cancelSelected(selectedIndex);
+				System.out.println(selectedIndex);
 				Management_modifyPanel modifyPanel = new Management_modifyPanel(
 						controller, frame, messageTable, planeList
-								.get(selectedIndex));
+								.get(selectedIndex), selectedIndex);
+				messageTable.cancelSelected(selectedIndex);
 				frame.changePanel(modifyPanel);
 			}
 		});
@@ -183,8 +184,8 @@ public class PlaneManagementPanel extends OperationPanel {
 
 				for (PlaneVO vo : planeList) {
 					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel(controller, frame,
-								messageTable, vo));
+						frame.changePanel(new WatchPanel_Management(controller,
+								frame, messageTable, vo, 0));
 					}
 				}
 			}

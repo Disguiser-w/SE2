@@ -1,218 +1,137 @@
 package presentation.intermediateui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.JOptionPane;
 
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
+import presentation.commonui.OperationPanel;
+import presentation.commonui.UserFrame;
 import vo.OrderVO;
+import vo.PlaneVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class EnvehiclePanel extends JPanel {
+public class EnvehiclePanel extends OperationPanel {
 	private IntermediateMainController controller;
 
-	private IntermediateFrame frame;
+	private UserFrame frame;
 
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+	private ArrayList<OrderVO> waitingOrderList;
 
-	private JButton envehicle;
-	private JButton next;
-	private JButton previous;
+	private MyLabel envehicle;
 
-	private JLabel function;
+	private MyTextField inputField;
+	private MyLabel confirmButton;
 
-	private EnvehicleInfoTable info;
-	private EnvehicleTableModel model;
+	private MyTable messageTable;
 
-	private int pageNum;
-	private int pageNum_max;
+	private int selectedIndex;
 
 	public EnvehiclePanel(IntermediateMainController c, IntermediateFrame f) {
 		this.controller = c;
 		this.frame = f;
 
-		envehicle = new JButton("do");
-		next = new JButton("next");
-		previous = new JButton("previous");
+		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
 
-		function = new JLabel("装车分配");
+		envehicle = new MyLabel("do");
 
-		model = new EnvehicleTableModel();
-		info = new EnvehicleInfoTable(model);
+		inputField = new MyTextField();
+		confirmButton = new MyLabel();
 
-		pageNum = 0;
-
-		setCmpLocation();
-
-		envehicle.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				try {
-					envehicleui();
-				} catch (Exception e) {
-					// TODO 自动生成的 catch 块
-					e.printStackTrace();
-				}
-			}
-		});
-
-		next.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				pageNum_max = (controller.getEnvehicleBL()
-						.getWaitingOrderList().size()) / 12;
-
-				if (pageNum >= pageNum_max)
-					return;
-				else {
-					pageNum++;
-					info.setModel(new EnvehicleTableModel());
-					info.setuiInfo();
-				}
-			}
-		});
-
-		previous.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO 自动生成的方法存根
-				pageNum_max = (controller.getEnvehicleBL()
-						.getWaitingOrderList().size()) / 12;
-
-				if (pageNum == 0)
-					return;
-				else {
-					pageNum--;
-					info.setModel(new EnvehicleTableModel());
-					info.setuiInfo();
-				}
-			}
-		});
-
-		info.setBackground(getBackground());
-		setLayout(null);
+		selectedIndex = -1;
 
 		add(envehicle);
-		add(next);
-		add(previous);
-		add(function);
-		add(info);
-		add(info.getTableHeader());
-	}
+		add(inputField);
+		add(confirmButton);
 
-	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		next.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		previous.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 45 / 48,
-				PANEL_WIDTH / 24, PANEL_HEIGHT / 24);
-		envehicle.setBounds(PANEL_WIDTH * 65 / 72, PANEL_HEIGHT * 3 / 16,
-				PANEL_WIDTH / 36, PANEL_HEIGHT / 24);
-
-		info.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15 + PANEL_HEIGHT
-				/ 20, PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 12 / 20);
-		info.getTableHeader().setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 4 / 15,
-				PANEL_WIDTH * 5 / 6, PANEL_HEIGHT / 20);
+		setLayout(null);
+		addListener();
+		setBaseInfo();
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		PANEL_WIDTH = width;
-		PANEL_HEIGHT = height;
-		setCmpLocation();
-		repaint();
+
+		envehicle.setBounds((int) (width * 1.2278308321964528 / 25),
+				(int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25),
+				(int) (height * 1.3978494623655915 / 20));
+		inputField.setBounds((int) (width * 15.654843110504775 / 25),
+				(int) (height * 1.2186379928315412 / 20),
+				(int) (width * 5.320600272851296 / 25),
+				(int) (height * 1.075268817204301 / 20));
+		confirmButton.setBounds((int) (width * 21.350613915416098 / 25),
+				(int) (height * 1.2186379928315412 / 20),
+				(int) (width * 1.6371077762619373 / 25),
+				(int) (height * 1.039426523297491 / 20));
+		messageTable.setLocationAndSize(
+				(int) (width * 1.0243277848911652 / 25),
+				(int) (height * 3.369175627240143 / 20),
+				(int) (width * 22.98335467349552 / 25),
+				(int) (height * 15.412186379928315 / 20));
 	}
 
-	public void envehicleui() throws Exception {
-		controller.getEnvehicleBL().envehicle();
+	private void setBaseInfo() {
+		String[] head = new String[] { "订单编号", "出发地", "到达地", "状态", "订单种类" };
+
+		int[] widths = { 240, 90, 90, 90, 90 };
+
+		messageTable = new MyTable(head, getInfos(), widths, true);
+		add(messageTable);
 	}
 
-	private class EnvehicleTableModel extends AbstractTableModel {
-		public int getRowCount() {
-			// TODO 自动生成的方法存根
-			return 12;
+	private ArrayList<String[]> getInfos() {
+		ArrayList<String[]> infos = new ArrayList<String[]>();
+		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
+		for (OrderVO vo : waitingOrderList) {
+			infos.add(new String[] { vo.ID, vo.senderAddress,
+					vo.recipientAddress, vo.order_state.toString(),
+					vo.expressType.toString() });
 		}
 
-		public int getColumnCount() {
-			// TODO 自动生成的方法存根
-			return 5;
-		}
+		return infos;
+	}
 
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO 自动生成的方法存根
-			int index = pageNum * 12 + rowIndex;
-			if (index > controller.getEnvehicleBL().getWaitingOrderList()
-					.size() - 1)
-				return null;
-			OrderVO order = controller.getEnvehicleBL()
-					.getAllocateWwaitingOrderBL().updateWaitingList()
-					.get(index);
-			if (order != null) {
-				switch (columnIndex) {
-				case 0:
-					return order.ID;
-				case 1:
-					String[] senderAddress = order.senderAddress.split(" ");
-					return senderAddress[0];
-				case 2:
-					String[] recipientAddress = order.recipientAddress
-							.split(" ");
-					return recipientAddress[0];
-				case 3:
-					switch (order.order_state) {
-					case DISTRIBUEING:
-						return "派件中";
-					case FINISHED:
-						return "已完成";
-					case TRANSFERING:
-						return "中转中";
-					case WAITING_DISTRIBUTE:
-						return "等待中转";
-					case WAITING_ENVEHICLE:
-						return "等待装车";
-					}
-				case 4:
-					switch (order.expressType) {
-					case ECONOMIC:
-						return "经济型";
-					case FAST:
-						return "特快型";
-					case STANDARD:
-						return "标准型";
+	private void addListener() {
+		envehicle.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					controller.getEnvehicleBL().envehicle();
+				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		confirmButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入飞机");
+
+				for (OrderVO vo : waitingOrderList) {
+					if (vo.ID.equals(id)) {
+						frame.changePanel(new WatchPanel_Order(controller,
+								frame, messageTable, vo.ID));
 					}
 				}
-			} else
-				return null;
-			return null;
-		}
-
-		public String getColumnName(int c) {
-			if (c == 0)
-				return "订单号";
-			if (c == 1)
-				return "出发地";
-			if (c == 2)
-				return "到达地";
-			if (c == 3)
-				return "状态";
-			if (c == 4)
-				return "订单种类";
-
-			return null;
-		}
+			}
+		});
 	}
 
-	// public static void main(String[] args) {
-	// JFrame frame = new JFrame();
-	// frame.setSize(800, 550);
-	// frame.add(new EnvehiclePanel(null));
-	// frame.setVisible(true);
-	// }
+	public void warnning(String message) {
+		// fix 放到底部信息栏
+		JOptionPane.showMessageDialog(null, message, "装车信息错误",
+				JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void successing(String message) {
+		JOptionPane.showMessageDialog(null, message, "装车成功",
+				JOptionPane.DEFAULT_OPTION);
+	}
 }

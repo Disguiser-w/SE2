@@ -3,38 +3,40 @@ package presentation.intermediateui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import businesslogic.datafactory.DataFactory;
+import presentation.commonui.MyTable;
+import presentation.commonui.OperationPanel;
+import presentation.commonui.UserFrame;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
-import dataservice.managedataservice.CityDistanceDataService;
 
-public class Transfering_newPanel extends JPanel {
-	private IntermediateMainController controller;
+public class Transfering_newPanel extends OperationPanel {
+	protected IntermediateMainController controller;
 
-	private IntermediateFrame frame;
+	protected UserFrame frame;
 
-	private JButton OKButton;
+	protected MyTable messageTable;
 
-	private JLabel function;
+	protected JButton OKButton;
 
-	private JLabel order_ID;
+	protected JLabel function;
 
-	private JTextField order_ID_input;
+	protected JLabel order_ID;
 
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
+	protected JTextField order_ID_input;
 
-	public Transfering_newPanel(IntermediateMainController c,
-			IntermediateFrame f) {
+	protected int PANEL_WIDTH = 720;
+	protected int PANEL_HEIGHT = 480;
+
+	public Transfering_newPanel(IntermediateMainController c, UserFrame f,
+			MyTable m) {
 		this.controller = c;
 		this.frame = f;
+		this.messageTable = m;
 
 		OKButton = new JButton("ok");
 
@@ -67,7 +69,7 @@ public class Transfering_newPanel extends JPanel {
 		setCmpLocation();
 	}
 
-	private void setCmpLocation() {
+	protected void setCmpLocation() {
 		// TODO 自动生成的方法存根
 		OKButton.setBounds((int) (PANEL_WIDTH * 21.37784090909091 / 25),
 				(int) (PANEL_HEIGHT * 1.8140589569160999 / 20),
