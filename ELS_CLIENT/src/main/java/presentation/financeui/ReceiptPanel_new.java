@@ -1,15 +1,14 @@
 package presentation.financeui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import type.ReceiptState;
@@ -24,15 +23,15 @@ public class ReceiptPanel_new extends  OperationPanel {
 	private static final long serialVersionUID = 1L;
 
 
-	private JButton sendButton;
-	private JButton printButton;
-	private JButton collectionReceiptButton_new;
-	private JButton paymentReceiptButton_new;
+	private MyLabel sendButton;
+	private MyLabel printButton;
+	private MyLabel collectionReceiptButton_new;
+	private MyLabel paymentReceiptButton_new;
 	
 
 	private JLabel function;
-	private JLabel collectionReceiptInfo;
-	private JLabel paymentReceiptInfo;
+	private MyLabel collectionReceiptInfo;
+	private MyLabel paymentReceiptInfo;
 	
 	private MyTable currentTable;
 	private MyTable collectionTable;
@@ -57,13 +56,13 @@ public class ReceiptPanel_new extends  OperationPanel {
 		this.financeFrame=parent;
 		this.user = user;
 		
-		sendButton = new JButton("发送");
-		printButton = new JButton("导出");
-		collectionReceiptButton_new = new JButton("新建入款单");
-		paymentReceiptButton_new = new JButton("新建付款单");
+		sendButton = new MyLabel("发送");
+		printButton = new MyLabel("导出");
+		collectionReceiptButton_new = new MyLabel("新建入款单");
+		paymentReceiptButton_new = new MyLabel("新建付款单");
 		function = new JLabel("新建表单");
-		collectionReceiptInfo = new JLabel("入款单");
-		paymentReceiptInfo = new JLabel("付款单");
+		collectionReceiptInfo = new MyLabel("入款单");
+		paymentReceiptInfo = new MyLabel("付款单");
 		
 
 		addListener();
@@ -83,6 +82,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		setCollectionBaseInfo();
 		currentTable = collectionTable;
 		add(currentTable);
+
 		setCmpLocation(currentTable);
 		setVisible(true);
 
@@ -98,7 +98,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 		collectionReceiptInfo.setBounds((int)(PANEL_WIDTH * 1.371173469387755/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.858418367346939 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
 		paymentReceiptInfo.setBounds((int)(PANEL_WIDTH * 5.165816326530612/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.985969387755102 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
 		 table.setLocationAndSize((int)(PANEL_WIDTH * 1.071173469387755/25),(int)(PANEL_HEIGHT * 4.083757338551859/20),(int)(PANEL_WIDTH *  23.651785714285715 /25),(int)(PANEL_HEIGHT *  19.819960861056751/22));
-		table.setBackground(getBackground());
 	}
 	
 	public void setBounds(int x, int y, int width, int height,MyTable table) {
@@ -108,6 +107,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		PANEL_HEIGHT = height;
 		setCmpLocation(table);
 	}
+	
 	
 	/**
 	 * 设置收款单表格基础信息
@@ -124,6 +124,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 * */
 	public ArrayList<String[]> getCollectionInfos(ArrayList<CollectionReceiptVO> cvos){
 		ArrayList<String[]> lineInfos = new ArrayList<String[]>();
+		if(cvos!=null){
 		for(CollectionReceiptVO v : cvos){
 			String state = null;
 			if(v.state == ReceiptState.APPROVE){
@@ -141,6 +142,10 @@ public class ReceiptPanel_new extends  OperationPanel {
 			lineInfos.add(new String[]{v.ID,v.date,v.totalMoney+"",v.userID,v.account,state});
 		}
 		return lineInfos;
+		}
+		else{
+			return new ArrayList<String[]>();
+		}
 	}
 	
 	/**
@@ -157,6 +162,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 * */
 	public ArrayList<String[]> getPaymentInfos(ArrayList<PaymentReceiptVO> pvos){
 		ArrayList<String[]> lineInfos = new ArrayList<String[]>();
+		if(pvos!=null){
 		for(PaymentReceiptVO v : pvos){
 			String state = null;
 			if(v.state == ReceiptState.APPROVE){
@@ -174,12 +180,18 @@ public class ReceiptPanel_new extends  OperationPanel {
 			lineInfos.add(new String[]{v.ID,v.date,v.cost+"",v.userID,v.account,state});
 		}
 		return lineInfos;
+		}
+		else{
+			return new ArrayList<String[]>();
+		}
 	}
 	/**
 	 * 表格跳转
 	 * */
 	public void changeTable(MyTable table){
+		if(currentTable!=null){
 			remove(currentTable);
+		}
 			currentTable = table;
 			add(currentTable);
 			setCmpLocation(table);
@@ -193,7 +205,6 @@ public class ReceiptPanel_new extends  OperationPanel {
 		collectionReceiptInfo.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
 				setCollectionBaseInfo();
 				changeTable(collectionTable);
 				collectionTable.repaint();
@@ -210,36 +221,28 @@ public class ReceiptPanel_new extends  OperationPanel {
 				paymentTable.repaint();
 			}
 		});
-		sendButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
+		sendButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
 				sendui();
 			}
 		});
 
-		printButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				printui();
+		printButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+			printui();
 			}
 		});
 
 
-		collectionReceiptButton_new.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				new1ui();
+		collectionReceiptButton_new.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+			new1ui();
 			}
 		});
 
-		paymentReceiptButton_new.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
-				new2ui();
+		paymentReceiptButton_new.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
+			new2ui();
 			}
 		});
 

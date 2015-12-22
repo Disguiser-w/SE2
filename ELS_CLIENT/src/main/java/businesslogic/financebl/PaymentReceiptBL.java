@@ -66,7 +66,6 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public int creatPaymentReceipt(PaymentReceiptVO vo){
 		// TODO Auto-generated method stub
 		PaymentReceiptPO po=FinanceMainController.pvoToPO(vo);
-		update(vo);
 		try {
 			return paymentData.creatPaymentReceipt(po);
 		} catch (RemoteException e) {
@@ -77,19 +76,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 		}
 	}
 	
-	
-	
-//	public PaymentReceiptPO pvoToPO(PaymentReceiptVO vo){
-//		PaymentReceiptPO ppo;
-//		if(vo==null){
-//			System.out.println("PaymentReceiptVO vo is null-----------PaymentReceiptBL");
-//			return null;
-//		}
-//		else{
-//			ppo=new PaymentReceiptPO(vo.getID(), vo.getUserID(), vo.getType(), vo.getState(),vo.getRent(), vo.getFare(),vo.getSalary(), vo.getDate(), vo.getAccount(), vo.getName());
-//			return ppo;
-//		}
-//	}
+
 	/**
 	 * 试运行
 	 * paymentItems怎么用还没想好-------这个怎么写啊23333
@@ -101,11 +88,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	 * */
 	public int excute(PaymentReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
 		AccountBL account=new AccountBL();
-//		ArrayList<PaymentReceiptVO> pvos=vo.ge
-//		ArrayList<PaymentItemVO> paymentItems=vo.getPaymentItems();
-//		for(PaymentItemVO v:paymentItems){
-//			account.delMoney(v.getAccount(), v.getMoney());
-//		}
+
 		account.delMoney(vo.account, vo.cost);
 		System.out.println("执行成功！");
 		return 0;
@@ -122,7 +105,12 @@ public class PaymentReceiptBL extends ReceiptBL {
 	public ArrayList<PaymentReceiptVO> getAllPaymentReceipt() {
 		// TODO Auto-generated method stub
 		try {
+			if(paymentData.getAllPaymentReceipt()!=null){
 			return FinanceMainController.pposToVOs(paymentData.getAllPaymentReceipt());
+			}
+			else{
+				return new ArrayList<PaymentReceiptVO>();
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

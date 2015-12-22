@@ -3,10 +3,15 @@ package businesslogic.financebl;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 import po.BusinessStatementReceiptPO;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import vo.BusinessStatementReceiptVO;
+import vo.CollectionReceiptVO;
+import vo.PaymentItemVO;
+import vo.PaymentReceiptVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 /**
@@ -42,9 +47,14 @@ public class BusinessStatementReceiptBL {
 			String endTime) {
 		// TODO Auto-generated method stub
 		try {
+			if(collectionData.getCollection_right(beginTime, endTime)!=null||paymentData.getPayment_right(beginTime, endTime)!=null){
 			BusinessStatementReceiptPO po=new BusinessStatementReceiptPO(beginTime, endTime, collectionData.getCollection_right(beginTime, endTime), paymentData.getPayment_right(beginTime, endTime));
 			BusinessStatementReceiptVO vo=FinanceMainController.bpoToVO(po);
 			return vo;
+			}
+			else{
+				return new BusinessStatementReceiptVO(beginTime, endTime, new ArrayList<CollectionReceiptVO>(), new ArrayList<PaymentReceiptVO>());
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

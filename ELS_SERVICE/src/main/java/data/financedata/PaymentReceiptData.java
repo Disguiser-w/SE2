@@ -197,10 +197,6 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
 		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
 		try {
-//			data.delete("FKD-20110101-00001");
-//			data.delete("FKD-20110101-00002");
-//			data.delete("FKD-20151126-00001");
-//			data.delete("FKD-20151127-00001");
 			data.creatPaymentReceipt(po1);
 			data.creatPaymentReceipt(po2);
 			data.creatPaymentReceipt(po3);
@@ -211,12 +207,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 							for(PaymentReceiptPO p:All){
 								System.out.println("ID: "+p.getID());
 							}
-//							System.out.println(data.getNum());
-//							System.out.println();
-//							ArrayList<PaymentReceiptPO> por=data.getPayment_right("20110101", "20151127");
-//							for(PaymentReceiptPO p:por){
-//								System.out.println("ID :"+p.getID());
-//							}
+
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
