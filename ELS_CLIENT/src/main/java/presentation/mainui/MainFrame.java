@@ -446,10 +446,12 @@ public class MainFrame extends JFrame {
 
 			LogVO logvo = userbl.login(userID, password);
 
-			if (logvo.logReply.equals("nouser")) {
-
-			} else if (logvo.logReply.equals("falsepassword")) {
-
+			if (logvo.logReply.equals("The user doesn't exist")) {
+				JOptionPane.showMessageDialog(null, "不存在该编号用户","错误", JOptionPane.ERROR_MESSAGE);
+				return;
+			} else if (logvo.logReply.equals("The userID and the password don't match")) {
+				JOptionPane.showMessageDialog(null, "用户密码错误，请重新输入","错误", JOptionPane.ERROR_MESSAGE);
+				return;
 			} else {
 
 				(new Thread(new Runnable() {
