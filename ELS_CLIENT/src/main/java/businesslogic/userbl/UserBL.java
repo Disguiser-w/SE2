@@ -238,7 +238,23 @@ public class UserBL implements UserBLService{
 		}
 	}
 	
-	
+	/**
+	 *给快递员、司机职业员工提供绩点清零功能
+	 * @return int 
+	 * 
+	 * */
+	public int clearGrades(){
+		try{
+			ArrayList<UserPO> userList = udService.showAllUsers();
+			for(UserPO userpo : userList){
+				udService.modifyUserGrades(userpo.getID(), 0);
+			}
+			return 0;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 1;
+		}
+	}
 	
 	/*-----------------------------------------------VO与PO的相互转换-----------------------------------------*/
 	/**

@@ -381,6 +381,8 @@ public class MyTable extends JPanel {
 
 			for (int i = 0; i < column; i++) {
 
+				if(rowInfos[i]==null)
+					rowInfos[i]="-";
 				int strWidth = fm.stringWidth(rowInfos[i]);
 				if (type == 0)
 					g2d.setColor(Color.BLACK);

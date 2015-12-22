@@ -150,11 +150,11 @@ public class CheckReceiptPanel extends OperationPanel {
 			break;
 		case 2:
 			for(CollectionReceiptVO collectionvo : collectionList)
-				infos.add(new String[]{collectionvo.ID, "合计收款单", collectionvo.userID, "财务人员", collectionvo.createTime, stateName(collectionvo.state)});
+				infos.add(new String[]{collectionvo.ID, "合计收款单", collectionvo.userID, "财务人员", collectionvo.date, stateName(collectionvo.state)});
 				break;
 		case 3:
 			for(PaymentReceiptVO paymentvo : paymentList)
-				infos.add(new String[]{paymentvo.ID, "付款单", paymentvo.userID, "财务人员", paymentvo.createTime, stateName(paymentvo.state)});
+				infos.add(new String[]{paymentvo.ID, "付款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
 				break;
 		case 4:
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)

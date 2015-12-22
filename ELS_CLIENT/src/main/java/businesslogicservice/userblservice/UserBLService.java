@@ -20,5 +20,5 @@ public interface UserBLService {
 	public UserVO findUser(String userID) throws RemoteException;
 	public ArrayList<UserVO> findUserByKeyword(String keyword) throws RemoteException;
 	public ArrayList<UserVO> showAllUsers() throws RemoteException;
-	
+	public int clearGrades() throws RemoteException;
 }
