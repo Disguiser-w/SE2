@@ -3,12 +3,12 @@ package presentation.repertoryui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 
 import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextArea;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import businesslogic.repertorybl.RepertoryBL;
@@ -21,19 +21,20 @@ public class EXwarehousePanel extends OperationPanel {
 	
 	private RepertoryBL repertoryBL;
 	
+	private MyTextLabel inputLabel;
 	private MyTextField inputField;
 	private MyLabel searchLabel;
 
-	private JLabel basicMessageLabel;
-	private JLabel intermediateMessageLabel;
-	private JTextArea basicMessageArea;
-	private JTextArea intermediateMessageArea;
+	private MyTextLabel basicMessageLabel;
+	private MyTextLabel intermediateMessageLabel;
+	private MyTextArea basicMessageArea;
+	private MyTextArea intermediateMessageArea;
 
-	private JLabel addressLabel;
-	private JLabel blockLabel;
-	private JLabel rowLabel;
-	private JLabel shelfLabel;
-	private JLabel digitLabel;
+	private MyTextLabel addressLabel;
+	private MyTextLabel blockLabel;
+	private MyTextLabel rowLabel;
+	private MyTextLabel shelfLabel;
+	private MyTextLabel digitLabel;
 	
 	private MyTextField blockField;
 	private MyTextField rowField;
@@ -50,34 +51,35 @@ public class EXwarehousePanel extends OperationPanel {
 		
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
+		inputLabel = new MyTextLabel("请输入订单号");
 		inputField = new MyTextField();
 		inputField.setText("订单号");
 		searchLabel = new MyLabel("确认");
 
-		basicMessageLabel = new JLabel("该订单基本信息");
-		intermediateMessageLabel = new JLabel("该订单物流中转信息");
-		basicMessageArea = new JTextArea();
+		basicMessageLabel = new MyTextLabel("该订单基本信息");
+		intermediateMessageLabel = new MyTextLabel("该订单物流中转信息");
+		basicMessageArea = new MyTextArea();
 		basicMessageArea.setEditable(false);
-		intermediateMessageArea = new JTextArea();
+		intermediateMessageArea = new MyTextArea();
 		intermediateMessageArea.setEditable(false);
 		
-		addressLabel = new JLabel("该商品在仓库中的地址为");
+		addressLabel = new MyTextLabel("该商品在仓库中的地址为");
 		
 		blockField = new MyTextField();
 		blockField.setEditable(false);
-		blockLabel = new JLabel("区");
+		blockLabel = new MyTextLabel("区");
 
 		rowField = new MyTextField();
 		rowField.setEditable(false);
-		rowLabel = new JLabel("排");
+		rowLabel = new MyTextLabel("排");
 
 		shelfField = new MyTextField();
 		shelfField.setEditable(false);
-		shelfLabel = new JLabel("架");
+		shelfLabel = new MyTextLabel("架");
 
 		digitField = new MyTextField();
 		digitField.setEditable(false);
-		digitLabel = new JLabel("位");
+		digitLabel = new MyTextLabel("位");
 		
 		OKLabel = new MyLabel("确认出库");
 
@@ -119,6 +121,7 @@ public class EXwarehousePanel extends OperationPanel {
 			}
 		});
 		
+		add(inputLabel);
 		add(inputField);
 		add(searchLabel);
 		add(basicMessageLabel);
@@ -144,7 +147,9 @@ public class EXwarehousePanel extends OperationPanel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		//
+		
+		inputLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 1.2035714285714284 / 20),
+				(int) (width * 5.649167733674776 / 25), (int) (height * 1.25 / 20));
 		inputField.setBounds((int) (width * 13.924455825864277 / 25), (int) (height * 1.2053571428571428 / 20),
 				(int) (width * 5.60179257362356 / 25), (int) (height * 1.25 / 20));
 		searchLabel.setBounds((int) (width * 20.070422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
@@ -157,26 +162,26 @@ public class EXwarehousePanel extends OperationPanel {
 				(int) (width * 9.85403329065301 / 25), (int) (height * 5.151785714285714 / 20));
 		intermediateMessageArea.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 5.223214285714286 / 20),
 				(int) (width * 9.85403329065301 / 25), (int) (height * 5.151785714285714 / 20));
-		addressLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 11.892857142857142 / 20),
-				(int) (width * 4.673495518565941 / 25), (int) (height * 1.3839285714285714 / 20));
-		blockField.setBounds((int) (width * 7.5864276568501925 / 25), (int) (height * 12.392857142857142 / 20),
-				(int) (width * 1.9846350832266326 / 25), (int) (height * 1.4285714285714286 / 20));
-		blockLabel.setBounds((int) (width * 9.571062740076824 / 25), (int) (height * 12.392857142857142 / 20),
+		addressLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 10.892857142857142 / 20),
+				(int) (width * 6.673495518565941 / 25), (int) (height * 1.3839285714285714 / 20));
+		blockField.setBounds((int) (width * 8.5864276568501925 / 25), (int) (height * 11.392857142857142 / 20),
+				(int) (width * 2.9846350832266326 / 25), (int) (height * 1.4285714285714286 / 20));
+		blockLabel.setBounds((int) (width * 10.571062740076824 / 25), (int) (height * 11.392857142857142 / 20),
 				(int) (width * 0.9923175416133163 / 25), (int) (height * 1.3839285714285714 / 20));
-		rowField.setBounds((int) (width * 10.947503201024327 / 25), (int) (height * 12.392857142857142 / 20),
-				(int) (width * 1.2163892445582587 / 25), (int) (height * 1.4285714285714286 / 20));
-		rowLabel.setBounds((int) (width * 12.163892445582587 / 25), (int) (height * 12.392857142857142 / 20),
+		rowField.setBounds((int) (width * 11.947503201024327 / 25), (int) (height * 11.392857142857142 / 20),
+				(int) (width * 2.2163892445582587 / 25), (int) (height * 1.4285714285714286 / 20));
+		rowLabel.setBounds((int) (width * 13.163892445582587 / 25), (int) (height * 11.392857142857142 / 20),
 				(int) (width * 0.9923175416133163 / 25), (int) (height * 1.3839285714285714 / 20));
-		shelfField.setBounds((int) (width * 13.54033290653009 / 25), (int) (height * 12.392857142857142 / 20),
-				(int) (width * 1.1843790012804096 / 25), (int) (height * 1.4285714285714286 / 20));
-		shelfLabel.setBounds((int) (width * 14.7247119078105 / 25), (int) (height * 12.392857142857142 / 20),
+		shelfField.setBounds((int) (width * 14.54033290653009 / 25), (int) (height * 11.392857142857142 / 20),
+				(int) (width * 2.2163892445582587 / 25), (int) (height * 1.4285714285714286 / 20));
+		shelfLabel.setBounds((int) (width * 15.7247119078105 / 25), (int) (height * 11.392857142857142 / 20),
 				(int) (width * 0.9923175416133163 / 25), (int) (height * 1.3839285714285714 / 20));
-		digitField.setBounds((int) (width * 16.101152368758 / 25), (int) (height * 12.392857142857142 / 20),
-				(int) (width * 1.1523687580025608 / 25), (int) (height * 1.4285714285714286 / 20));
-		digitLabel.setBounds((int) (width * 17.253521126760564 / 25), (int) (height * 12.3375 / 20),
+		digitField.setBounds((int) (width * 17.101152368758 / 25), (int) (height * 11.392857142857142 / 20),
+				(int) (width * 2.2163892445582587 / 25), (int) (height * 1.4285714285714286 / 20));
+		digitLabel.setBounds((int) (width * 18.253521126760564 / 25), (int) (height * 11.3375 / 20),
 				(int) (width * 0.9603072983354674 / 25), (int) (height * 1.3392857142857142 / 20));
 
-		OKLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),
+		OKLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 15.410714285714285 / 20),
 				(int) (width * 2.592829705505762 / 25), (int) (height * 1.4285714285714286 / 20));
 	}
 

@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 import presentation.commonui.OperationPanel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
-import presentation.commonui.MyLabel;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
+import presentation.special_ui.MySearchField;
 
 import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
@@ -29,11 +31,10 @@ public class UserMainPanel extends OperationPanel {
 	private UserBL userBL;
 	private OrganizationBL organizationBL;
 	
-	private MyLabel addLabel;
-	private MyLabel deleteLabel;
-	private MyLabel modifyLabel;
-	private MyTextField inputField;
-	private MyLabel searchLabel;
+	private AddLabel addLabel;
+	private DeleteLabel deleteLabel;
+	private ModifyLabel modifyLabel;
+	private MySearchField searchField;
 
 	private MyTable messageTable;
 	
@@ -48,19 +49,17 @@ public class UserMainPanel extends OperationPanel {
 		this.userBL = new UserBL();
 		this.organizationBL = new OrganizationBL();
 		
-		addLabel = new MyLabel("新增用户");
-		deleteLabel = new MyLabel("删除用户");
-		modifyLabel = new MyLabel("修改用户权限");
-		inputField = new MyTextField();
-		searchLabel = new MyLabel("查询");
+		addLabel = new AddLabel("新增用户");
+		deleteLabel = new DeleteLabel("删除用户");
+		modifyLabel = new ModifyLabel("修改用户权限");
+		searchField = new MySearchField();
 		
 		setLayout(null);
 		
 		add(addLabel);
 		add(deleteLabel);
 		add(modifyLabel);
-		add(inputField);
-		add(searchLabel);
+		add(searchField);
 		
 		users = userBL.showAllUsers();
 
@@ -89,7 +88,7 @@ public class UserMainPanel extends OperationPanel {
 			}
 		});
 		
-		searchLabel.addMouseListener(new MouseAdapter() {
+		searchField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				searchui();
 			}
@@ -99,16 +98,14 @@ public class UserMainPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		inputField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchLabel.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
+		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 15.035714285714286 / 20));
 	}
@@ -151,6 +148,10 @@ public class UserMainPanel extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			selectedIndex = selectedIndexs.get(0);
+			if(users.get(selectedIndex).profession.equals(ProfessionType.administrator)){
+				JOptionPane.showMessageDialog(null, "亲爱的管理员，不可以删除你自己哦！", "删除出错", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			userBL.deleteUser(users.get(selectedIndex).userID);
 		}
 		else{
@@ -193,7 +194,7 @@ public class UserMainPanel extends OperationPanel {
 	
 	//查询界面
 	public void searchui(){
-		String keyword = inputField.getText();
+		String keyword = searchField.getText();
 		users = userBL.findUserByKeyword(keyword);
 		messageTable.setInfos(getInfos());
 	}
@@ -208,11 +209,8 @@ public class UserMainPanel extends OperationPanel {
 	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
 		int n = profession.ordinal();
-		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","财务人员","总经理"};
-		if(n<5)
-			return professionNameList[n];
-		else
-			return professionNameList[n-1];
+		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员", "财务人员","总经理"};
+		return professionNameList[n];
 	}
 	
 	//根据不同的机构编号返回机构名，给表去显示
@@ -220,7 +218,7 @@ public class UserMainPanel extends OperationPanel {
 		if(organizationID.equals("总部"))
 			return "总部";
 		else if(organizationID.equals(""))
-			return "/（待总经理分配）";
+			return "（待总经理分配）";
 		else if(organizationID.endsWith("-CK")){
 			organizationID = organizationID.substring(0,5);
 			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
@@ -242,11 +240,8 @@ public class UserMainPanel extends OperationPanel {
 	//根据不同的权限类型返回权限名，给表去显示
 	public String authorityName(AuthorityType authority){
 		int n = authority.ordinal();
-		String[] authorityNameList = {"最低权限", "普通财务人员权限", "最高权限"};
-		if(n<1)
-			return authorityNameList[n];
-		else
-			return authorityNameList[n-1];
+		String[] authorityNameList = {"最低权限", "管理员权限", "普通财务人员权限", "最高权限"};
+		return authorityNameList[n];
 	}
 	
 	

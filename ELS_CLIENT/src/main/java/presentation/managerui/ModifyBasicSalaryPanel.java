@@ -1,6 +1,5 @@
 package presentation.managerui;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
@@ -8,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import vo.BasicSalaryVO;
@@ -26,9 +26,9 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private JLabel function;
-    private JLabel professionLabel;
-    private JLabel basicSalaryLabel;
+    private MyTextLabel function;
+    private MyTextLabel professionLabel;
+    private MyTextLabel basicSalaryLabel;
     
     private MyTextField professionField;
     private MyTextField basicSalaryInput;
@@ -46,10 +46,10 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
 		
 		basicSalaryBL = new BasicSalaryBL();
 		
-		function = new JLabel("基础数据管理——修改基础月薪");
+		function = new MyTextLabel("基础数据管理——修改基础月薪");
 		
-		professionLabel = new JLabel("职业");
-		basicSalaryLabel = new JLabel("基础月薪");
+		professionLabel = new MyTextLabel("职业");
+		basicSalaryLabel = new MyTextLabel("基础月薪");
 		
 		professionField = new MyTextField();
 		professionField.setText(profession);
@@ -122,21 +122,21 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
 		function.setBounds(PANEL_WIDTH / 24, PANEL_HEIGHT / 10,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
     	
-    	professionLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 20 / 48,
+    	professionLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	basicSalaryLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 30 / 48,
+    	basicSalaryLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 
-		professionField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
+		professionField.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		basicSalaryInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
+		basicSalaryInput.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		basicSalaryPost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
+		basicSalaryPost.setBounds(PANEL_WIDTH * 17 / 30, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 35 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

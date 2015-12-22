@@ -1,6 +1,5 @@
 package presentation.managerui;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
@@ -8,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import vo.CostVO;
@@ -26,9 +26,9 @@ public class ModifyBaseFreightPanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private JLabel function;
-    private JLabel expressLabel;
-    private JLabel baseFreightLabel;
+    private MyTextLabel function;
+    private MyTextLabel expressLabel;
+    private MyTextLabel baseFreightLabel;
     
     private MyTextField expressField;
     private MyTextField baseFreightInput;
@@ -46,17 +46,17 @@ public class ModifyBaseFreightPanel extends OperationPanel {
 		
 		costBL = new CostBL();
 		
-		function = new JLabel("基础数据管理——修改运费系数");
+		function = new MyTextLabel("基础数据管理——修改运费系数");
 		
-		expressLabel = new JLabel("快递种类");
-		baseFreightLabel = new JLabel("运费系数");
+		expressLabel = new MyTextLabel("快递种类");
+		baseFreightLabel = new MyTextLabel("运费系数");
 		
 		expressField = new MyTextField();
 		expressField.setText(express);
 		expressField.setEditable(false);
 	    baseFreightInput = new MyTextField();
 	    baseFreightPost = new MyTextField();
-	    baseFreightPost.setText("元/(公里*公斤)");
+	    baseFreightPost.setText("元/(KM*KG)");
 	    baseFreightPost.setEditable(false);
 	    
 	    expressStr = express;
@@ -121,21 +121,21 @@ public class ModifyBaseFreightPanel extends OperationPanel {
 		function.setBounds(PANEL_WIDTH / 24, PANEL_HEIGHT / 10,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
     	
-    	expressLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 20 / 48,
+    	expressLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	baseFreightLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 30 / 48,
+    	baseFreightLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 
-		expressField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
+		expressField.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		baseFreightInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
+		baseFreightInput.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		baseFreightPost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
+		baseFreightPost.setBounds(PANEL_WIDTH * 17 / 30, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 35 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

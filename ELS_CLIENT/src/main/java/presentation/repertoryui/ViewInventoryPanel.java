@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import vo.InventoryCheckVO;
@@ -24,23 +25,24 @@ public class ViewInventoryPanel extends OperationPanel {
 	
 	private JLabel dateRange;
 	
-	private JLabel startDateLabel;
+	private MyTextLabel startDateLabel;
+	private MyTextLabel startDateChooseLabel;
+	private MyTextLabel endDateLabel;
+	private MyTextLabel endDateChooseLabel;
+	
 	private MyTextField startDateField;
-	private JLabel startDateChooseLabel;
-	private JLabel endDateLabel;
 	private MyTextField endDateField;
-	private JLabel endDateChooseLabel;
 	
 	private MyLabel OKLabel;
 	
-	private JLabel enterNumTotalLabel;
-	private JLabel enterFeeTotalLabel;
-	private JLabel leaveNumTotalLabel;
-	private JLabel leaveFeeTotalLabel;
-	private JLabel planeBlockNumLabel;
-	private JLabel trainBlockNumLabel;
-	private JLabel truckBlockNumLabel;
-	private JLabel defaultBlockNumLabel;
+	private MyTextLabel enterNumTotalLabel;
+	private MyTextLabel enterFeeTotalLabel;
+	private MyTextLabel leaveNumTotalLabel;
+	private MyTextLabel leaveFeeTotalLabel;
+	private MyTextLabel planeBlockNumLabel;
+	private MyTextLabel trainBlockNumLabel;
+	private MyTextLabel truckBlockNumLabel;
+	private MyTextLabel defaultBlockNumLabel;
 	
 	private MyTextField enterNumTotalField;
 	private MyTextField enterFeeTotalField;
@@ -57,16 +59,16 @@ public class ViewInventoryPanel extends OperationPanel {
 		
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
-		dateRange = new JLabel("日期范围");
+		dateRange = new MyTextLabel("日期范围");
 		
-		startDateLabel = new JLabel();
+		startDateLabel = new MyTextLabel();
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-10-01");
-		startDateChooseLabel = new JLabel("开始日期");
-		endDateLabel = new JLabel();
+		startDateChooseLabel = new MyTextLabel("开始日期");
+		endDateLabel = new MyTextLabel();
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-10-01");
-		endDateChooseLabel = new JLabel("结束日期");
+		endDateChooseLabel = new MyTextLabel("结束日期");
 
 		startDateLabel.setLayout(new BorderLayout());
 		startDateLabel.add(new DateChooser(startDateField),BorderLayout.CENTER);
@@ -75,14 +77,14 @@ public class ViewInventoryPanel extends OperationPanel {
 		
 		OKLabel = new MyLabel("确认");
 		
-		enterNumTotalLabel = new JLabel("入库数量总计");
-		enterFeeTotalLabel = new JLabel("入库金额总计");
-		leaveNumTotalLabel = new JLabel("出库数量总计");
-		leaveFeeTotalLabel = new JLabel("出库金额总计");
-		planeBlockNumLabel = new JLabel("飞机区数量");
-		trainBlockNumLabel = new JLabel("火车区数量");
-		truckBlockNumLabel = new JLabel("汽车区数量");
-		defaultBlockNumLabel = new JLabel("机动区数量");
+		enterNumTotalLabel = new MyTextLabel("入库数量总计");
+		enterFeeTotalLabel = new MyTextLabel("入库金额总计");
+		leaveNumTotalLabel = new MyTextLabel("出库数量总计");
+		leaveFeeTotalLabel = new MyTextLabel("出库金额总计");
+		planeBlockNumLabel = new MyTextLabel("飞机区数量");
+		trainBlockNumLabel = new MyTextLabel("火车区数量");
+		truckBlockNumLabel = new MyTextLabel("汽车区数量");
+		defaultBlockNumLabel = new MyTextLabel("机动区数量");
 		
 		enterNumTotalField = new MyTextField();
 		enterFeeTotalField = new MyTextField();
@@ -134,48 +136,48 @@ public class ViewInventoryPanel extends OperationPanel {
 
 		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),
 				(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
-		startDateLabel.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),
-				(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
-        endDateLabel.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),
-        		(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
+		startDateLabel.setBounds((int)(width * 9.296683673469388/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  2.4047448979591837 /25),(int)(height *  1.1741682974559686/20));
+        endDateLabel.setBounds((int)(width * 17.072704081632653/25),(int)(height * 2.5048923679060664/20),
+        		(int)(width *  2.4047448979591837 /25),(int)(height *  1.1741682974559686/20));
         startDateField.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),
-				(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
-		endDateField.setBounds((int)(width * 10.809948979591837/25),(int)(height * 2.5048923679060664/20),
-				(int)(width *  3.2206632653061225 /25),(int)(height *  1.2915851272015655/20));
-		OKLabel.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  4.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
+		endDateField.setBounds((int)(width * 12.809948979591837/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  4.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
+		OKLabel.setBounds((int)(width * 19.9109693877551/25),(int)(height * 2.5048923679060664/20),
 				(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
-		enterNumTotalLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 6/20),
+		enterNumTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 6/20),
 				(int)(width *  3.5683673469387754 /25),(int)(height *  1/20));
-		enterFeeTotalLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 7.5/20),
+		enterFeeTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 7.5/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		leaveNumTotalLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 9/20),
+		leaveNumTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 9/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		leaveFeeTotalLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 10.5/20),
+		leaveFeeTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 10.5/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		planeBlockNumLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 12/20),
+		planeBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 12/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		trainBlockNumLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 13.5/20),
+		trainBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 13.5/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		truckBlockNumLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 15/20),
+		truckBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 15/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
-		defaultBlockNumLabel.setBounds((int)(width * 5.6109693877551/25),(int)(height * 16.5/20),
+		defaultBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 16.5/20),
 				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
 		enterNumTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 6/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		enterFeeTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 7.5/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		leaveNumTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 9/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		leaveFeeTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 10.5/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		planeBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 12/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		trainBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 13.5/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		truckBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 15/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 		defaultBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 16.5/20),
-				(int)(width *  2.1683673469387754 /25),(int)(height *  1/20));
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
 	}
 	
 	

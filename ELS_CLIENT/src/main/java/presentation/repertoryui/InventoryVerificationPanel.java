@@ -2,9 +2,8 @@ package presentation.repertoryui;
 
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
-
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import businesslogic.repertorybl.RepertoryBL;
@@ -17,8 +16,8 @@ public class InventoryVerificationPanel extends OperationPanel {
 	
 	private RepertoryBL repertoryBL;
 	
-	private JLabel endTimeLabel;
-	private JLabel timeLabel;
+	private MyTextLabel endTimeLabel;
+	private MyTextLabel timeLabel;
 
 	private MyTable messageTable;
 
@@ -29,8 +28,8 @@ public class InventoryVerificationPanel extends OperationPanel {
 		repertoryBL = new RepertoryBL(uservo.userID);
 		
 		String time = RepertoryBL.getTimeNow();
-		endTimeLabel = new JLabel("截止到");
-		timeLabel = new JLabel(time);
+		endTimeLabel = new MyTextLabel("截止到");
+		timeLabel = new MyTextLabel(time);
 
 		setLayout(null);
 		

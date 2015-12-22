@@ -1,7 +1,5 @@
 package presentation.managerui;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionEvent;
@@ -11,12 +9,13 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import businesslogic.managebl.OrganizationBL;
+
 import type.OrganizationType;
 import vo.OrganizationVO;
 
@@ -34,15 +33,15 @@ public class AddOrganizationPanel extends OperationPanel {
     
     private String[] organizationCategoryStr = {"中转中心","营业厅"};
 
-    private JLabel function;
-    private JLabel organizationCategory;
-    private JLabel organizationID;
-    private JLabel organizationIDPrompt;
-    private JLabel organizationName;
-    private JLabel organizationNamePrompt;
-    private JLabel repertoryID;
+    private MyTextLabel function;
+    private MyTextLabel organizationCategory;
+    private MyTextLabel organizationID;
+    private MyTextLabel organizationIDPrompt;
+    private MyTextLabel organizationName;
+    private MyTextLabel organizationNamePrompt;
+    private MyTextLabel repertoryID;
     
-    private JComboBox<String> categoryChoose;
+    private MyComboBox<String> categoryChoose;
     
     private MyTextField organizationNameInput;
     private MyTextField organizationIDInput;
@@ -64,14 +63,16 @@ public class AddOrganizationPanel extends OperationPanel {
 		
 		organizationBL = new OrganizationBL();
 		
-		function = new JLabel("机构管理——新增机构");
+		function = new MyTextLabel("机构管理——新增机构");
 		
-		organizationCategory = new JLabel("机构类别");
-		organizationID = new JLabel("机构编号");
-		organizationName = new JLabel("机构名称");
-		repertoryID = new JLabel("下属仓库编号");
+		organizationCategory = new MyTextLabel("机构类别");
+		organizationID = new MyTextLabel("机构编号");
+		organizationName = new MyTextLabel("机构名称");
+		repertoryID = new MyTextLabel("下属仓库编号");
 		
-		categoryChoose = new JComboBox<String>(organizationCategoryStr);
+		categoryChoose = new MyComboBox<String>();
+		categoryChoose.addItem(organizationCategoryStr[0]);
+		categoryChoose.addItem(organizationCategoryStr[1]);
 		
 	    organizationIDInput = new MyTextField();
 	   
@@ -83,8 +84,8 @@ public class AddOrganizationPanel extends OperationPanel {
 	    repertoryIDPost.setText("-CK");
 	    repertoryIDPost.setEditable(false);
 	    
-	    organizationIDPrompt = new JLabel("格式：XXX（三位区号）-X（从0开始编号）");
-	    organizationNamePrompt = new JLabel("请填入城市名+中转中心，如：南京中转中心");
+	    organizationIDPrompt = new MyTextLabel("格式：XXX（三位区号）-X（从0开始编号）");
+	    organizationNamePrompt = new MyTextLabel("请填入城市名+中转中心，如：南京中转中心");
 	    
 	    OKLabel = new MyLabel("确认");
     	returnLabel = new MyLabel("返回");

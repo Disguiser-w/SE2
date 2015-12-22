@@ -4,14 +4,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import vo.OrganizationVO;
 import businesslogic.managebl.OrganizationBL;
 import businesslogic.userbl.UserBL;
@@ -31,13 +31,13 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
     
     private JLabel function;
    
-    private JLabel name;
-    private JLabel ID;
-    private JLabel profession;
-    private JLabel organization;
-    private JLabel salaryPlan;
-    private JLabel authority;
-    private JLabel grade;
+    private MyTextLabel name;
+    private MyTextLabel ID;
+    private MyTextLabel profession;
+    private MyTextLabel organization;
+    private MyTextLabel salaryPlan;
+    private MyTextLabel authority;
+    private MyTextLabel grade;
     
     private MyTextField nameField;
     private MyTextField IDField;
@@ -46,7 +46,7 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
     private MyTextField authorityField;
     private MyTextField gradeField;
 
-    private JComboBox<String> organizationChoose;
+    private MyComboBox<String> organizationChoose;
     
     private MyLabel OKButton;
     private MyLabel returnButton;
@@ -71,38 +71,41 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 			organizationIDList[i] = (organizationArr.get(i).organizationID);
 		}
 		
-    	function = new JLabel("用户管理——修改用户机构");
+    	function = new MyTextLabel("用户管理——修改用户机构");
     	
-    	name = new JLabel("用户姓名");
+    	name = new MyTextLabel("用户姓名");
 		nameField = new MyTextField();
 		nameField.setText(userName);
 		nameField.setEditable(false);
 		
-		ID = new JLabel("用户编号");
+		ID = new MyTextLabel("用户编号");
 		IDField = new MyTextField();
 		IDField.setText(userID);
 		IDField.setEditable(false);
 		userIDStr = userID;
 		
-		profession = new JLabel("职位");
+		profession = new MyTextLabel("职位");
 		professionField = new MyTextField();
 		professionField.setText(userProfession);
 		professionField.setEditable(false);
 		
-		organization = new JLabel("机构");
-		organizationChoose = new JComboBox<String>(organizationNameList);
+		organization = new MyTextLabel("机构");
+		organizationChoose = new MyComboBox<String>();
+		for(int i=0, size = organizationNameList.length; i<size; i++){
+			organizationChoose.addItem(organizationNameList[i]);
+		}
 		
-		salaryPlan = new JLabel("薪水策略");
+		salaryPlan = new MyTextLabel("薪水策略");
 		salaryPlanField = new MyTextField();
 		salaryPlanField.setText(userSalaryPlan);
 		salaryPlanField.setEditable(false);
 		
-		authority = new JLabel("权限");
+		authority = new MyTextLabel("权限");
 		authorityField = new MyTextField();
 		authorityField.setText(userAuthority);
 		authorityField.setEditable(false);
 
-		grade = new JLabel("绩点");
+		grade = new MyTextLabel("绩点");
 		gradeField = new MyTextField();
 		gradeField.setText(userGrade);
 		gradeField.setEditable(false);

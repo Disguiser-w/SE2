@@ -8,8 +8,11 @@ import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
+import presentation.special_ui.MySearchField;
 //import presentation.commonui.LocationHelper;
 
 import vo.PerWageVO;
@@ -41,11 +44,10 @@ public class BasicDataManagePanel extends OperationPanel {
 	private MyLabel distancesLabel;
 	private MyLabel baseFreightLabel;
 
-	private MyLabel addLabel;
-	private MyLabel delLabel;
-	private MyLabel modifyLabel;
-	private MyTextField inputField;
-	private MyLabel searchLabel;
+	private AddLabel addLabel;
+	private DeleteLabel delLabel;
+	private ModifyLabel modifyLabel;
+	private MySearchField searchField;
 
 	private MyTable messageTable;
 	private MyTable currentTable;
@@ -75,11 +77,10 @@ public class BasicDataManagePanel extends OperationPanel {
 		distancesLabel = new MyLabel("城市间距离");
 		baseFreightLabel = new MyLabel("运费系数");
 
-		addLabel = new MyLabel("新增城市间距离");
-		delLabel = new MyLabel("删除城市间距离");
-		modifyLabel = new MyLabel("修改城市间距离");
-		inputField = new MyTextField();
-		searchLabel = new MyLabel("");
+		addLabel = new AddLabel("新增城市间距离");
+		delLabel = new DeleteLabel("删除城市间距离");
+		modifyLabel = new ModifyLabel("修改城市间距离");
+		searchField = new MySearchField();
 		
 		setLayout(null);
 		
@@ -91,8 +92,7 @@ public class BasicDataManagePanel extends OperationPanel {
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
-		add(inputField);
-		add(searchLabel);
+		add(searchField);
 		
 		perWages = perWageBL.showAllPerWages();
 		basicSalarys = basicSalaryBL.showAllBasicSalarys();
@@ -146,6 +146,8 @@ public class BasicDataManagePanel extends OperationPanel {
 		//由于只有城市间距离有新增功能，所以跳转到新增城市间距离界面
 		addLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				if(patternNum == 1 || patternNum == 2 || patternNum == 4)
+					return;
 				addui();
 			}
 		});
@@ -153,6 +155,8 @@ public class BasicDataManagePanel extends OperationPanel {
 		//由于只有城市间距离有删除功能，所以删除被选中的城市间距离
 		delLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				if(patternNum == 1 || patternNum == 2 || patternNum == 4)
+					return;
 				deleteui();
 			}
 		});
@@ -170,9 +174,9 @@ public class BasicDataManagePanel extends OperationPanel {
 			}
 		});
 		
-		searchLabel.addMouseListener(new MouseAdapter() {
+		searchField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				String queryStr = inputField.getText();
+				String queryStr = searchField.getText();
 				if(queryStr.equals("") || queryStr.equals("城市名称"))
 					allDistanceUI();
 				else if(isSingleSearch(queryStr))	//单城市的城市距离搜索
@@ -199,19 +203,16 @@ public class BasicDataManagePanel extends OperationPanel {
 				(int) (width * 3.1370038412291934 / 25), (int) (height * 1.4285714285714286 / 20));
 		baseFreightLabel.setBounds((int) (width * 18.405889884763123 / 25), (int) (height * 1.5625 / 20),
 				(int) (width * 3.1370038412291934 / 25), (int) (height * 1.4285714285714286 / 20));
-		addLabel.setBounds((int) (width * 3.12932138284251 / 25), (int) (height * 4.419642857142857 / 20),
-				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
-		delLabel.setBounds((int) (width * 6.482714468629961 / 25), (int) (height * 4.419642857142857 / 20),
-				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
-		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.419642857142857 / 20),
-				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
-		inputField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 4.821428571428571 / 20),
-				(int) (width * 4.3854033290653005 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchLabel.setBounds((int) (width * 21.286811779769526 / 25), (int) (height * 4.821428571428571 / 20),
-				(int) (width * 1.6005121638924455 / 25), (int) (height * 1.2946428571428572 / 20));
-		
-		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 7.321428571428571 / 20),
-				(int) (width * 21.862996158770805 / 25), (int) (height * 9.821428571428571 / 20));
+		addLabel.setBounds((int) (width * 3.12932138284251 / 25), (int) (height * 4.019642857142857 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		delLabel.setBounds((int) (width * 6.482714468629961 / 25), (int) (height * 4.019642857142857 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.019642857142857 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		searchField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 4.219642857142857 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
+		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 6.521428571428571 / 20),
+				(int) (width * 21.862996158770805 / 25), (int) (height * 11.821428571428571 / 20));
 	}
 	
 	
@@ -270,16 +271,14 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(patternNum == 1 || patternNum == 2 || patternNum == 4){
 			addLabel.setEnabled(false);
 			delLabel.setEnabled(false);
-			inputField.setText("");
-			inputField.setEnabled(false);
-			searchLabel.setEnabled(false);
+			searchField.setText("");
+			searchField.setEnabled(false);
 		}
 		else if(patternNum == 3){
 			addLabel.setEnabled(true);
 			delLabel.setEnabled(true);
-			inputField.setText("查询城市间距离");
-			inputField.setEnabled(true);
-			searchLabel.setEnabled(true);
+			searchField.setText("城市名");
+			searchField.setEnabled(true);
 		}
 	}
 	
@@ -368,17 +367,23 @@ public class BasicDataManagePanel extends OperationPanel {
 	
 	//显示全部城市间距离页面
 	public void allDistanceUI(){
-		System.out.println("全部城市间距离");
+		distances = distancesBL.showAllCityDistances();
+		setBaseInfos(3);
 	}
 	
 	//单城市搜索下的城市间距离页面
 	public void singleCityDistanceUI(){
-		System.out.println("单城市搜索下的城市间距离");
+		String keyCity = searchField.getText();
+		distances = distancesBL.findCityDistanceBySingle(keyCity);
+		setBaseInfos(3);
 	}
 	
 	//双城市搜索下的城市间距离页面
 	public void bothCityDistanceUI(){
-		System.out.println("双城市搜索下的城市间距离");
+		String keyCitys = searchField.getText();
+		String[] parts = keyCitys.split("-");
+		distances = distancesBL.findCityDistanceByBoth(parts[0], parts[1]);
+		setBaseInfos(3);
 	}
 	
 	public void changeTable(MyTable currentTable){

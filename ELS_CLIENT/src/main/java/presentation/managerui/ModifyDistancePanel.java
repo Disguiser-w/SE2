@@ -1,6 +1,5 @@
 package presentation.managerui;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
@@ -8,8 +7,8 @@ import java.awt.event.MouseEvent;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
 
@@ -25,10 +24,10 @@ public class ModifyDistancePanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private JLabel function;
-    private JLabel cityALabel;
-    private JLabel cityBLabel;
-    private JLabel distanceLabel;
+    private MyTextLabel function;
+    private MyTextLabel cityALabel;
+    private MyTextLabel cityBLabel;
+    private MyTextLabel distanceLabel;
     
     private MyTextField cityAField;
     private MyTextField cityBField;
@@ -48,11 +47,11 @@ public class ModifyDistancePanel extends OperationPanel {
 		
 		cityDistanceBL = new CityDistanceBL();
 		
-		function = new JLabel("基础数据管理——修改城市间距离");
+		function = new MyTextLabel("基础数据管理——修改城市间距离");
 		
-		cityALabel = new JLabel("城市A名称");
-		cityBLabel = new JLabel("城市B名称");
-		distanceLabel = new JLabel("城市间距离");
+		cityALabel = new MyTextLabel("城市A名称");
+		cityBLabel = new MyTextLabel("城市B名称");
+		distanceLabel = new MyTextLabel("城市间距离");
 		
 		cityAField = new MyTextField();
 		cityAField.setText(cityA);
@@ -115,25 +114,25 @@ public class ModifyDistancePanel extends OperationPanel {
 		function.setBounds(PANEL_WIDTH / 24, PANEL_HEIGHT / 10,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
     	
-    	cityALabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 20 / 48,
+    	cityALabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	cityBLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 25 / 48,
+    	cityBLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	distanceLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 30 / 48,
+    	distanceLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 29 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 
-		cityAField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
+		cityAField.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		cityBField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 25 / 48,
+		cityBField.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		distanceInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
+		distanceInput.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 29 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		distancePost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
+		distancePost.setBounds(PANEL_WIDTH * 17 / 30, PANEL_HEIGHT * 29 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 36 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 35 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 36 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

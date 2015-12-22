@@ -1,8 +1,7 @@
 package presentation.managerui;
 
-import javax.swing.JLabel;
-
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
@@ -17,14 +16,14 @@ public class CheckIncomePanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 	
-	private JLabel function;
+	private MyTextLabel function;
 	
-	private JLabel costIncomeReceipt_ID;
-	private JLabel startDate;
-	private JLabel endDate;
-	private JLabel totalIncome;
-	private JLabel totalCost;
-	private JLabel totalProfit;
+	private MyTextLabel costIncomeReceipt_ID;
+	private MyTextLabel startDate;
+	private MyTextLabel endDate;
+	private MyTextLabel totalIncome;
+	private MyTextLabel totalCost;
+	private MyTextLabel totalProfit;
 	
 	private MyTextField costIncomeReceipt_ID_Input;
 	private MyTextField startDate_Input;
@@ -41,17 +40,17 @@ public class CheckIncomePanel extends OperationPanel {
 		
 		this.costIncomeReceiptController = new CostIncomeReceiptBLController();
 		
-		function = new JLabel("查看成本收益表");
-		costIncomeReceipt_ID = new JLabel("成本收益表编号");
+		function = new MyTextLabel("查看成本收益表");
+		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		beginTime = "2010-01-01";
 		endTime = getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
 		ID = costIncomeReceiptController.getCostIncomeListID();
 		
-		startDate = new JLabel("开始时间");
-		endDate = new JLabel("结束时间");
-		totalCost = new JLabel("总收入");
-		totalIncome = new JLabel("总支出");
-		totalProfit = new JLabel("总利润");
+		startDate = new MyTextLabel("开始时间");
+		endDate = new MyTextLabel("结束时间");
+		totalCost = new MyTextLabel("总收入");
+		totalIncome = new MyTextLabel("总支出");
+		totalProfit = new MyTextLabel("总利润");
 
 		costIncomeReceipt_ID_Input = new MyTextField();
 		costIncomeReceipt_ID_Input.setText(ID);

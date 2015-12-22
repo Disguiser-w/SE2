@@ -3,16 +3,18 @@ package presentation.managerui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
@@ -28,13 +30,15 @@ public class CheckOperatingPanel extends OperationPanel {
 	private int tableWidth;
 	private int tableHeight;
 	
-	private JLabel dateRange;
-	private JLabel startDateLabel;
+	private MyTextLabel dateRange;
+	private MyTextLabel startDateLabel;
+	private MyTextLabel startDateChooseLabel;
+	private MyTextLabel endDateLabel;
+	private MyTextLabel endDateChooseLabel;
+	
 	private MyTextField startDateField;
-	private JLabel startDateChooseLabel;
-	private JLabel endDateLabel;
 	private MyTextField endDateField;
-	private JLabel endDateChooseLabel;
+	
 	private MyLabel confirmDateLabel;
 	
 	private ArrayList<CollectionReceiptVO> collectionReceiptVOs;
@@ -50,15 +54,15 @@ public class CheckOperatingPanel extends OperationPanel {
 		
 		businessController = new BusinessStatementReceiptBLController();
 		
-		dateRange = new JLabel("日期范围");
-		startDateLabel = new JLabel();
+		dateRange = new MyTextLabel("日期范围");
+		startDateLabel = new MyTextLabel();
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-12-08");
-		startDateChooseLabel = new JLabel("开始日期");
-		endDateLabel = new JLabel();
+		startDateChooseLabel = new MyTextLabel("开始日期");
+		endDateLabel = new MyTextLabel();
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-12-08");
-		endDateChooseLabel = new JLabel("结束日期");
+		endDateChooseLabel = new MyTextLabel("结束日期");
 		
 		startDateLabel.setLayout(new BorderLayout());
 		startDateLabel.add(new DateChooser(startDateField),BorderLayout.CENTER);
