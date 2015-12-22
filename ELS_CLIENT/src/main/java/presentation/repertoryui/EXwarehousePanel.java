@@ -1,21 +1,19 @@
 package presentation.repertoryui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+
 import businesslogic.repertorybl.RepertoryBL;
 import vo.InventoryVO;
 import vo.UserVO;
-
-//import presentation.commonui.LocationHelper;
-
 
 public class EXwarehousePanel extends OperationPanel {
 	
@@ -23,10 +21,8 @@ public class EXwarehousePanel extends OperationPanel {
 	
 	private RepertoryBL repertoryBL;
 	
-	private JLabel inputLabel;
-	private JLabel searchLabel;
-	private JTextField inputField;
-	private JButton confirmButton;
+	private MyTextField inputField;
+	private MyLabel searchLabel;
 
 	private JLabel basicMessageLabel;
 	private JLabel intermediateMessageLabel;
@@ -34,20 +30,17 @@ public class EXwarehousePanel extends OperationPanel {
 	private JTextArea intermediateMessageArea;
 
 	private JLabel addressLabel;
-	
-	private JTextField blockField;
 	private JLabel blockLabel;
-
-	private JTextField rowField;
 	private JLabel rowLabel;
-
-	private JTextField shelfField;
 	private JLabel shelfLabel;
-
-	private JTextField digitField;
 	private JLabel digitLabel;
 	
-	private JButton confirmExwarehouseButton;
+	private MyTextField blockField;
+	private MyTextField rowField;
+	private MyTextField shelfField;
+	private MyTextField digitField;
+
+	private MyLabel OKLabel;
 	
 	private String goodsID;
 	
@@ -57,10 +50,9 @@ public class EXwarehousePanel extends OperationPanel {
 		
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
-		inputLabel = new JLabel("请输入订单号");
-		searchLabel = new JLabel();
-		inputField = new JTextField();
-		confirmButton = new JButton("确认");
+		inputField = new MyTextField();
+		inputField.setText("订单号");
+		searchLabel = new MyLabel("确认");
 
 		basicMessageLabel = new JLabel("该订单基本信息");
 		intermediateMessageLabel = new JLabel("该订单物流中转信息");
@@ -71,27 +63,27 @@ public class EXwarehousePanel extends OperationPanel {
 		
 		addressLabel = new JLabel("该商品在仓库中的地址为");
 		
-		blockField = new JTextField();
+		blockField = new MyTextField();
 		blockField.setEditable(false);
 		blockLabel = new JLabel("区");
 
-		rowField = new JTextField();
+		rowField = new MyTextField();
 		rowField.setEditable(false);
 		rowLabel = new JLabel("排");
 
-		shelfField = new JTextField();
+		shelfField = new MyTextField();
 		shelfField.setEditable(false);
 		shelfLabel = new JLabel("架");
 
-		digitField = new JTextField();
+		digitField = new MyTextField();
 		digitField.setEditable(false);
 		digitLabel = new JLabel("位");
 		
-		confirmExwarehouseButton = new JButton("确认出库");
+		OKLabel = new MyLabel("确认出库");
 
 		
-		confirmButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
+		searchLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				goodsID = inputField.getText();
 				if(goodsID != "" && goodsID != "订单号"){
 					String basicMessageStr = repertoryBL.showGoodBasicMessage(goodsID);
@@ -107,8 +99,8 @@ public class EXwarehousePanel extends OperationPanel {
 			}
 		});
 		
-		confirmExwarehouseButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
+		OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				
 				int returnNum = repertoryBL.leaveRepertory(goodsID);
 				
@@ -127,10 +119,8 @@ public class EXwarehousePanel extends OperationPanel {
 			}
 		});
 		
-		add(inputLabel);
-		add(searchLabel);
 		add(inputField);
-		add(confirmButton);
+		add(searchLabel);
 		add(basicMessageLabel);
 		add(intermediateMessageLabel);
 		add(basicMessageArea);
@@ -144,7 +134,7 @@ public class EXwarehousePanel extends OperationPanel {
 		add(shelfLabel);
 		add(digitField);
 		add(digitLabel);
-		add(confirmExwarehouseButton);
+		add(OKLabel);
 
 		setLayout(null);
 		
@@ -155,13 +145,9 @@ public class EXwarehousePanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		//
-		inputLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 1.2053571428571428 / 20),
-				(int) (width * 3.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		searchLabel.setBounds((int) (width * 13.092189500640204 / 25), (int) (height * 1.2053571428571428 / 20),
-				(int) (width * 0.8642765685019206 / 25), (int) (height * 1.2053571428571428 / 20));
 		inputField.setBounds((int) (width * 13.924455825864277 / 25), (int) (height * 1.2053571428571428 / 20),
 				(int) (width * 5.60179257362356 / 25), (int) (height * 1.25 / 20));
-		confirmButton.setBounds((int) (width * 20.070422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
+		searchLabel.setBounds((int) (width * 20.070422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
 				(int) (width * 1.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		basicMessageLabel.setBounds((int) (width * 2.880921895006402 / 25), (int) (height * 3.3035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
@@ -190,7 +176,7 @@ public class EXwarehousePanel extends OperationPanel {
 		digitLabel.setBounds((int) (width * 17.253521126760564 / 25), (int) (height * 12.3375 / 20),
 				(int) (width * 0.9603072983354674 / 25), (int) (height * 1.3392857142857142 / 20));
 
-		confirmExwarehouseButton.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),
+		OKLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),
 				(int) (width * 2.592829705505762 / 25), (int) (height * 1.4285714285714286 / 20));
 	}
 

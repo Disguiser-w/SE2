@@ -1,12 +1,9 @@
 package presentation.managerui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
@@ -30,9 +27,8 @@ public class OrganizationManagePanel extends OperationPanel {
 
 	private MyLabel addLabel;
 	private MyLabel deleteLabel;
-	private MyLabel searchLabel;
 	private MyTextField inputField;
-	private JButton searchButton;
+	private MyLabel searchLabel;
 
 	private MyTable messageTable;
 	
@@ -48,18 +44,15 @@ public class OrganizationManagePanel extends OperationPanel {
 		
         addLabel = new MyLabel("新增机构");
         deleteLabel = new MyLabel("删除机构");
-        searchLabel = new MyLabel();
-        searchLabel = new MyLabel("查找");
         inputField = new MyTextField();
-        searchButton = new JButton();
+        searchLabel = new MyLabel("查找机构");
         
 		setLayout(null);
 
         add(addLabel);
         add(deleteLabel);
-        add(searchLabel);
         add(inputField);
-		add(searchButton);
+        add(searchLabel);
         
         organizations = organizationBL.showAllOrganizations();
         
@@ -80,8 +73,8 @@ public class OrganizationManagePanel extends OperationPanel {
 			}
 		});
 		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae){
+		searchLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				searchui();
 			}
 		});
@@ -94,20 +87,18 @@ public class OrganizationManagePanel extends OperationPanel {
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
 		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
 		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
+		searchLabel.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 15.535714285714286 / 20));
 	}
 	
 	
 	private void setBaseInfos() {
-		String[] head = new String[]{"机构类型","机构名称","机构编号","下属仓库编号"};
-		int[] widths = {120,200,140,140};
+		String[] head = new String[]{"机构类型", "机构名称", "机构编号", "下属仓库编号"};
+		int[] widths = {120, 200, 140, 140};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);

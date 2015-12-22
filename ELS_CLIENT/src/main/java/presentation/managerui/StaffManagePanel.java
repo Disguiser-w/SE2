@@ -1,12 +1,9 @@
 package presentation.managerui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
@@ -34,9 +31,8 @@ public class StaffManagePanel extends OperationPanel {
 	
 	private MyLabel deleteLabel;
 	private MyLabel modifyLabel;
-	private MyLabel searchLabel;
 	private MyTextField inputField;
-	private JButton searchButton;
+	private MyLabel searchLabel;
 
 	private MyTable messageTable;
 	
@@ -51,19 +47,17 @@ public class StaffManagePanel extends OperationPanel {
 		this.userBL = new UserBL();
 		this.organizationBL = new OrganizationBL();
 		
-		deleteLabel = new MyLabel("删");
-		modifyLabel = new MyLabel("改");
-		searchLabel = new MyLabel();
+		deleteLabel = new MyLabel("删除用户");
+		modifyLabel = new MyLabel("分配机构");
 		inputField = new MyTextField();
-		searchButton = new JButton();
+		searchLabel = new MyLabel("查询");
 
 		setLayout(null);
 		
 		add(deleteLabel);
 		add(modifyLabel);
-		add(searchLabel);
 		add(inputField);
-		add(searchButton);
+		add(searchLabel);
 		
 		users = userBL.showAllUsers();
 
@@ -87,8 +81,8 @@ public class StaffManagePanel extends OperationPanel {
 			}
 		});
 		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae){
+		searchLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				searchui();
 			}
 		});
@@ -101,20 +95,18 @@ public class StaffManagePanel extends OperationPanel {
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
 		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.1607142857142858 / 20),
 				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
 		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
+		searchLabel.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
 				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 15.535714285714286 / 20));
 	}
 	
 
 	private void setBaseInfos() {
-		String[] head = new String[]{"姓名","用户编号","职业类型","所属机构","薪水策略","权限类型"};
-		int[] widths = {60,80,100,100,80,80,100};
+		String[] head = new String[]{"姓名","用户编号","职业类型","所属机构","薪水策略","权限类型", "绩点"};
+		int[] widths = {60, 80, 100, 100, 80, 80, 100};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -124,7 +116,7 @@ public class StaffManagePanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		for(UserVO uservo: users){
 			infos.add(new String[]{uservo.userName, uservo.userID, professionName(uservo.profession), 
-					organizationName(uservo.organization),salaryPlanName(uservo.salaryPlan), authorityName(uservo.authority)});
+					organizationName(uservo.organization),salaryPlanName(uservo.salaryPlan), authorityName(uservo.authority), uservo.grades+""});
 		}
 		return infos;
 	}

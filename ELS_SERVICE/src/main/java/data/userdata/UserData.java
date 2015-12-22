@@ -427,7 +427,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				}
 
 				tempUserPO.setOrganization(newOrganizationID);
-				System.out.println(tempUserPO.getOrganization());
+				//System.out.println(tempUserPO.getOrganization());
 				break;
 			}
 		}
@@ -439,13 +439,11 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 修改用户绩点
 	 * 
-	 * @param String
-	 *            userID, int newGrade
+	 * @param String userID, int newGrade
 	 * @return 0(modify succeed), 1(modify failed)
 	 * 
 	 * */
-	public int modifyUserGrades(String userID, int newGrade)
-			throws RemoteException {
+	public int modifyUserGrades(String userID, int newGrade)throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
 		if (objectList == null)
@@ -491,8 +489,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 根据关键字查找用户（模糊搜索）
 	 * 
-	 * @param String
-	 *            keyword
+	 * @param String keyword
 	 * @return ArrayList<UserPO>
 	 * 
 	 * */
@@ -541,6 +538,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 获得某职业用户编号后缀
 	 * 
+	 * @param ProfessionType profession
 	 * @return String
 	 * 
 	 * */
@@ -551,17 +549,19 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		if (objectList == null)
 			return "00001";
 
-		int professionCount = 0; // 记录该职业的用户有多少人
+		int professionMaxPost = 0; // 记录该职业的用户编号目前拥有的最大后缀数
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getProfession().equals(profession)) {
-				professionCount += 1;
+				int tempPost = Integer.parseInt(tempUserPO.getUserID().split("-")[1]);
+				if(tempPost > professionMaxPost)
+				professionMaxPost = tempPost;
 			}
 		}
 
-		boolean exist[] = new boolean[professionCount + 1];
-		for (int i = 0; i <= professionCount; i++) {
-			exist[professionCount] = false;
+		boolean exist[] = new boolean[professionMaxPost + 1];
+		for (int i = 0; i <= professionMaxPost; i++) {
+			exist[i] = false;
 		}
 
 		int currentCount = 0;
@@ -570,17 +570,17 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 			if (tempUserPO.getProfession().equals(profession)) {
 				String[] parts = tempUserPO.getUserID().split("-");
 				currentCount = Integer.parseInt(parts[1]); // 该用户目前的编号后缀
-				exist[currentCount] = true;
+					exist[currentCount] = true;
 			}
 		}
 
-		for (int i = 1; i <= professionCount; i++) {
+		for (int i = 1; i <= professionMaxPost; i++) {
 			if (exist[i] == false) {
 				return formatPostString(i);
 			}
 		}
 
-		return formatPostString(professionCount + 1);
+		return formatPostString(professionMaxPost + 1);
 	}
 
 	public String formatPostString(int post) {

@@ -1,14 +1,14 @@
 package presentation.repertoryui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import businesslogic.repertorybl.RepertoryBL;
 import vo.UserVO;
@@ -27,14 +27,14 @@ public class InitializeInformationPanel extends OperationPanel {
 	private JLabel maxBitLabel;
 	private JLabel maxRatioLabel;
 	
-	private JTextField maxRowField;
-	private JTextField maxShelfField;
-	private JTextField maxBitField;
-	private JTextField maxRatioField;
+	private MyTextField maxRowField;
+	private MyTextField maxShelfField;
+	private MyTextField maxBitField;
+	private MyTextField maxRatioField;
 	
 	private JLabel maxRatioTip;
 	
-	private JButton confirmButton;
+	private MyLabel OKLabel;
 	
 	private JLabel suggestLabel;
 
@@ -43,27 +43,27 @@ public class InitializeInformationPanel extends OperationPanel {
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
 		maxRowLabel = new JLabel("请输入最大排数");
-		maxRowField = new JTextField();
+		maxRowField = new MyTextField();
 
 		maxShelfLabel = new JLabel("请输入最大架数");
-		maxShelfField = new JTextField();
+		maxShelfField = new MyTextField();
 
 		maxBitLabel = new JLabel("请输入最大位数");
-		maxBitField = new JTextField();
+		maxBitField = new MyTextField();
 		
 		maxRatioLabel = new JLabel("请输入警戒比例");
-		maxRatioField = new JTextField();
+		maxRatioField = new MyTextField();
 		
 		maxRatioTip = new JLabel("100以内的正整数");
 		
 		suggestLabel = new JLabel("Row:"+repertoryBL.getMaxRow()+"  Shelf:"+repertoryBL.getMaxShelf()+"  Digit:"+repertoryBL.getMaxDigit()+"  WarningRatio:"+repertoryBL.getMaxRatio());
 
-		confirmButton = new JButton("ok");
+		OKLabel = new MyLabel("确认");
 
 		
 		//加监听
-		confirmButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
+		OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				int maxRow = Integer.parseInt(maxRowField.getText());
 				int maxShelf = Integer.parseInt(maxShelfField.getText());
 				int maxDigit = Integer.parseInt(maxBitField.getText());
@@ -99,7 +99,7 @@ public class InitializeInformationPanel extends OperationPanel {
 		add(maxRatioLabel);
 		add(maxRatioField);
 		add(maxRatioTip);
-		add(confirmButton);
+		add(OKLabel);
 		add(suggestLabel);
 		
 		setVisible(true);
@@ -133,7 +133,7 @@ public class InitializeInformationPanel extends OperationPanel {
 		maxRatioTip.setBounds((int) (PANEL_WIDTH * 17.509603072983353 / 25), (int) (PANEL_HEIGHT * 8.705357142857142 / 20),
 				(int) (PANEL_WIDTH * 4.801536491677337 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
 		
-		confirmButton.setBounds((int) (PANEL_WIDTH * 11.107554417413573 / 25), (int) (PANEL_HEIGHT * 13.125 / 20),
+		OKLabel.setBounds((int) (PANEL_WIDTH * 11.107554417413573 / 25), (int) (PANEL_HEIGHT * 13.125 / 20),
 				(int) (PANEL_WIDTH * 2.272727272727273 / 25), (int) (PANEL_HEIGHT * 1.8303571428571428 / 20));
 		
 		suggestLabel.setBounds((int) (PANEL_WIDTH * 9.107554417413573 / 25), (int) (PANEL_HEIGHT * 15.125 / 20),

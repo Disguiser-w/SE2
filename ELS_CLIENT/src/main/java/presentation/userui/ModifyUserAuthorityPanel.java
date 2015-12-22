@@ -1,15 +1,16 @@
 package presentation.userui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+
 import type.AuthorityType;
 import businesslogic.userbl.UserBL;
 
@@ -27,22 +28,25 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
     
     private JLabel function;
     private JLabel name;
-    private JTextField nameField;
     private JLabel ID;
-    private String userIDStr;
-    private JTextField IDField;
     private JLabel profession;
-    private JTextField professionField;
     private JLabel organization;
-    private JTextField organizationField;
     private JLabel salaryPlan;
-    private JTextField salaryPlanField;
     private JLabel authority;
+    
+    private MyTextField nameField;
+    private MyTextField IDField;
+    private MyTextField professionField;
+    private MyTextField organizationField;
+    private MyTextField salaryPlanField;
+    
     private JComboBox<String> userAuthority;
+    
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
 	
-    private JButton OKButton;
-    private JButton returnButton;
-	
+    private String userIDStr;
+    
     public ModifyUserAuthorityPanel(AdminFrame frame, UserMainPanel userMainPanel, String userName, String userID, String userProfession, String userOrganization, String userSalaryPlan){
     	
     	this.adminFrame = frame;
@@ -53,24 +57,29 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
     	function = new JLabel("用户管理——修改用户权限");
     	
     	name = new JLabel("用户姓名");
-		nameField = new JTextField(userName);
+		nameField = new MyTextField();
+		nameField.setText(userName);
 		nameField.setEditable(false);
 		
 		ID = new JLabel("用户编号");
-		userIDStr = userID;
-		IDField = new JTextField(userID);
+		IDField = new MyTextField();
+		IDField.setText(userID);
 		IDField.setEditable(false);
+		userIDStr = userID;
 		
 		profession = new JLabel("职位");
-		professionField = new JTextField(userProfession);
+		professionField = new MyTextField();
+		professionField.setText(userProfession);
 		professionField.setEditable(false);
 		
 		organization = new JLabel("机构");
-		organizationField = new JTextField(userOrganization);
+		organizationField = new MyTextField();
+		organizationField.setText(userOrganization);
 		organizationField.setEditable(false);
 		
 		salaryPlan = new JLabel("薪水策略");
-		salaryPlanField = new JTextField(userSalaryPlan);
+		salaryPlanField = new MyTextField();
+		salaryPlanField.setText(userSalaryPlan);
 		salaryPlanField.setEditable(false);
 		
 		authority = new JLabel("权限");
@@ -78,13 +87,13 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 		userAuthority.addItem("普通财务人员权限");
 		userAuthority.addItem("最高权限");
 
-		OKButton = new JButton("确认");
-		returnButton = new JButton("返回");
+		OKLabel = new MyLabel("确认");
+		returnLabel = new MyLabel("返回");
 		
 		
 		//加监听
-		OKButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				int authorityInt = userAuthority.getSelectedIndex();
 				AuthorityType[] authorityList = {AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
@@ -100,8 +109,8 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 			}
 		});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -122,8 +131,8 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 		add(salaryPlanField);
 		add(authority);
 		add(userAuthority);
-		add(OKButton);
-		add(returnButton);
+		add(OKLabel);
+		add(returnLabel);
 		
 		setVisible(true);
 		
@@ -164,9 +173,9 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 		userAuthority.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		
-		OKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
     }
     

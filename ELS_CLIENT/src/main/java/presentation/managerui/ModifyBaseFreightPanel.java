@@ -1,14 +1,14 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import vo.CostVO;
 import type.ExpressType;
@@ -30,15 +30,15 @@ public class ModifyBaseFreightPanel extends OperationPanel {
     private JLabel expressLabel;
     private JLabel baseFreightLabel;
     
-    private JTextField professionField;
-    private JTextField baseFreightInput;
-    private JTextField baseFreightPost;
+    private MyTextField expressField;
+    private MyTextField baseFreightInput;
+    private MyTextField baseFreightPost;
+    
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     private String expressStr;
 	
-    private JButton infoOKButton;
-    private JButton returnButton;
-    
 	public ModifyBaseFreightPanel(ManageFrame manageFrame, BasicDataManagePanel managePanel, String express){
 		
 		this.manageFrame = manageFrame;
@@ -51,20 +51,22 @@ public class ModifyBaseFreightPanel extends OperationPanel {
 		expressLabel = new JLabel("快递种类");
 		baseFreightLabel = new JLabel("运费系数");
 		
-		professionField = new JTextField(express);
-		professionField.setEditable(false);
-	    baseFreightInput = new JTextField();
-	    baseFreightPost = new JTextField("元/(公里*公斤)");
+		expressField = new MyTextField();
+		expressField.setText(express);
+		expressField.setEditable(false);
+	    baseFreightInput = new MyTextField();
+	    baseFreightPost = new MyTextField();
+	    baseFreightPost.setText("元/(公里*公斤)");
 	    baseFreightPost.setEditable(false);
 	    
 	    expressStr = express;
 		
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
     	//加监听
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			
     			Double baseFreightDouble = Double.parseDouble(baseFreightInput.getText());
     			ExpressType expressType = ExpressType.ECONOMIC;
@@ -88,8 +90,8 @@ public class ModifyBaseFreightPanel extends OperationPanel {
     		}
     	});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -101,11 +103,11 @@ public class ModifyBaseFreightPanel extends OperationPanel {
     	add(function);
     	add(expressLabel);
     	add(baseFreightLabel);
-    	add(professionField);
+    	add(expressField);
     	add(baseFreightInput);
     	add(baseFreightPost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
 
     	setVisible(true);
     	
@@ -124,16 +126,16 @@ public class ModifyBaseFreightPanel extends OperationPanel {
     	baseFreightLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 
-		professionField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
+		expressField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		baseFreightInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		baseFreightPost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

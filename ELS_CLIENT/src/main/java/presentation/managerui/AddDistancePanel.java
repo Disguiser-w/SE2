@@ -1,19 +1,17 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+
 import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-//import java.awt.event.FocusListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class AddDistancePanel extends OperationPanel {
 
@@ -32,15 +30,13 @@ public class AddDistancePanel extends OperationPanel {
     private JLabel cityB;
     private JLabel distance;
     
-    private JTextField cityAInput;
-    private JTextField cityBInput;
-    private JTextField distanceInput;
-    private JTextField distancePost;
+    private MyTextField cityAInput;
+    private MyTextField cityBInput;
+    private MyTextField distanceInput;
+    private MyTextField distancePost;
     
-    private JButton infoOKButton;
-    private JButton returnButton;
-    
-    boolean validCityInput;
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
 	public AddDistancePanel(ManageFrame manageFrame, BasicDataManagePanel managePanel){
 		
@@ -55,50 +51,43 @@ public class AddDistancePanel extends OperationPanel {
 		cityB = new JLabel("城市B名称");
 		distance = new JLabel("城市间距离");
 		
-		cityAInput = new JTextField();
-	    cityBInput = new JTextField();
-	    distanceInput = new JTextField();
-	    distancePost = new JTextField("KM");
+		cityAInput = new MyTextField();
+	    cityBInput = new MyTextField();
+	    distanceInput = new MyTextField();
+	    distancePost = new MyTextField();
+	    distancePost.setText("KM");
 	    distancePost.setEditable(false);
 		
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
     	
     	//加监听
-    	cityBInput.addFocusListener(new FocusAdapter(){
-    		public void focusLost(FocusEvent event){
+    	
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
     			String cityAStr = cityAInput.getText();
     			String cityBStr = cityBInput.getText();
     			if(cityAStr.equals(cityBStr)){
     				warnning("城市A和城市B名称相同");
-    				validCityInput = false;
+    				return;
     			}
-    			else
-    				validCityInput = true;
-    		}
-    	});
-    	
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
-    			String cityAStr = cityAInput.getText();
-    			String cityBStr = cityBInput.getText();
     			Double distanceDouble = Double.parseDouble(distanceInput.getText());
     			
-    			if(validCityInput){
-    				int returnNum = cityDistanceBL.addCityDistance(new CityDistanceVO(cityAStr, cityBStr, distanceDouble));
-    				if(returnNum==0)
-    					successAdd();
-    				else
-    					failedAdd();
+    			if(distanceDouble < 0){
+    				warnning("城市间距离应为正数");
+    				return;
     			}
-    			else
-    				warnning("城市A和城市B名称相同");
-    		}
-    	});
+				int returnNum = cityDistanceBL.addCityDistance(new CityDistanceVO(cityAStr, cityBStr, distanceDouble));
+				if(returnNum==0)
+					successAdd();
+				else
+					failedAdd();
+			}
+		});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
     			returnui();
     		}
     	});
@@ -115,8 +104,8 @@ public class AddDistancePanel extends OperationPanel {
     	add(cityBInput);
     	add(distanceInput);
     	add(distancePost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
 
     	setVisible(true);
     	
@@ -144,11 +133,11 @@ public class AddDistancePanel extends OperationPanel {
 		distanceInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		distancePost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
+				PANEL_WIDTH / 12, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 36 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 36 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

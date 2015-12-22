@@ -1,16 +1,14 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-//import java.awt.event.FocusListener;
-
 
 import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
@@ -32,17 +30,17 @@ public class ModifyDistancePanel extends OperationPanel {
     private JLabel cityBLabel;
     private JLabel distanceLabel;
     
-    private JTextField cityAField;
-    private JTextField cityBField;
-    private JTextField distanceInput;
-    private JTextField distancePost;
+    private MyTextField cityAField;
+    private MyTextField cityBField;
+    private MyTextField distanceInput;
+    private MyTextField distancePost;
+    
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     private String cityAStr;
-	private String cityBStr;
-	
-    private JButton infoOKButton;
-    private JButton returnButton;
-    
+   	private String cityBStr;
+   	
 	public ModifyDistancePanel(ManageFrame manageFrame, BasicDataManagePanel managePanel, String cityA, String cityB){
 		
 		this.manageFrame = manageFrame;
@@ -56,22 +54,25 @@ public class ModifyDistancePanel extends OperationPanel {
 		cityBLabel = new JLabel("城市B名称");
 		distanceLabel = new JLabel("城市间距离");
 		
-		cityAField = new JTextField(cityA);
+		cityAField = new MyTextField();
+		cityAField.setText(cityA);
 		cityAField.setEditable(false);
-	    cityBField = new JTextField(cityB);
+	    cityBField = new MyTextField();
+	    cityBField.setText(cityB);
 	    cityBField.setEditable(false);
-	    distanceInput = new JTextField();
-	    distancePost = new JTextField("KM");
+	    distanceInput = new MyTextField();
+	    distancePost = new MyTextField();
+	    distancePost.setText("KM");
 	    
 	    cityAStr = cityA;
 		cityBStr = cityB;
 		
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
     	//加监听
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			Double distanceDouble = Double.parseDouble(distanceInput.getText());
 				int returnNum = cityDistanceBL.modifyCityDistance(new CityDistanceVO(cityAStr, cityBStr, distanceDouble));
 				if(returnNum==0)
@@ -81,8 +82,8 @@ public class ModifyDistancePanel extends OperationPanel {
     		}
     	});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -99,8 +100,8 @@ public class ModifyDistancePanel extends OperationPanel {
     	add(cityBField);
     	add(distanceInput);
     	add(distancePost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
 
     	setVisible(true);
     	
@@ -130,9 +131,9 @@ public class ModifyDistancePanel extends OperationPanel {
 		distancePost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 36 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 36 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

@@ -1,8 +1,6 @@
 ﻿package data.managedata;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -167,7 +165,6 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 	public static void main(String[] args) {
 		CityDistanceData cityDistanceData;
 		try {
-
 			cityDistanceData = new CityDistanceData();
 			//cityDistanceData.deleteCityDistance("南京", "上海");
 			//cityDistanceData.deleteCityDistance("北京", "上海");
@@ -178,8 +175,8 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 			cityDistanceData.addCityDistance(new CityDistancePO("上海", "广州", 1213));
 			cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 266));
 			cityDistanceData.addCityDistance(new CityDistancePO("广州", "南京", 1132));
-		} catch (Exception e) {
-
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 

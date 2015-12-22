@@ -5,6 +5,7 @@ import vo.LogVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
 import type.AuthorityType;
 
 public interface UserBLService {
@@ -15,7 +16,9 @@ public interface UserBLService {
 	public int modifyUserPassword(String userID, String newPassword) throws RemoteException;
 	public int modifyUserAuthority(String userID, AuthorityType authority) throws RemoteException;
 	public int modifyUserOrganization(String userID, String newOrganization) throws RemoteException;
+	public int modifyUserGrades(String userID, int newGrade) throws RemoteException;
 	public UserVO findUser(String userID) throws RemoteException;
+	public ArrayList<UserVO> findUserByKeyword(String keyword) throws RemoteException;
 	public ArrayList<UserVO> showAllUsers() throws RemoteException;
 	
 }

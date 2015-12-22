@@ -1,51 +1,21 @@
 package presentation.managerui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.ListSelectionModel;
-
-//import presentation.commonui.LocationHelper;
-
-
-
-
-
-
-
-
-
-
-
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-import presentation.userui.ModifyUserAuthorityPanel;
+//import presentation.commonui.LocationHelper;
+
 import vo.PerWageVO;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
-import vo.UserVO;
 import type.ProfessionType;
 import type.ExpressType;
 import businesslogic.managebl.PerWageBL;
@@ -74,9 +44,8 @@ public class BasicDataManagePanel extends OperationPanel {
 	private MyLabel addLabel;
 	private MyLabel delLabel;
 	private MyLabel modifyLabel;
-	private MyLabel searchLabel;
 	private MyTextField inputField;
-	private JButton searchButton;
+	private MyLabel searchLabel;
 
 	private MyTable messageTable;
 	private MyTable currentTable;
@@ -106,12 +75,11 @@ public class BasicDataManagePanel extends OperationPanel {
 		distancesLabel = new MyLabel("城市间距离");
 		baseFreightLabel = new MyLabel("运费系数");
 
-		addLabel = new MyLabel("新增");
-		delLabel = new MyLabel("删除");
-		modifyLabel = new MyLabel("修改");
-		searchLabel = new MyLabel("查询");
+		addLabel = new MyLabel("新增城市间距离");
+		delLabel = new MyLabel("删除城市间距离");
+		modifyLabel = new MyLabel("修改城市间距离");
 		inputField = new MyTextField();
-		searchButton = new JButton("查找");
+		searchLabel = new MyLabel("");
 		
 		setLayout(null);
 		
@@ -123,7 +91,6 @@ public class BasicDataManagePanel extends OperationPanel {
 		add(addLabel);
 		add(delLabel);
 		add(modifyLabel);
-		add(searchButton);
 		add(inputField);
 		add(searchLabel);
 		
@@ -203,8 +170,8 @@ public class BasicDataManagePanel extends OperationPanel {
 			}
 		});
 		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		searchLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				String queryStr = inputField.getText();
 				if(queryStr.equals("") || queryStr.equals("城市名称"))
 					allDistanceUI();
@@ -238,11 +205,9 @@ public class BasicDataManagePanel extends OperationPanel {
 				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
 		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.419642857142857 / 20),
 				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
-		searchLabel.setBounds((int) (width * 12.836107554417413 / 25), (int) (height * 4.419642857142857 / 20),
-				(int) (width * 1.5364916773367479 / 25), (int) (height * 2.142857142857143 / 20));
 		inputField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 4.821428571428571 / 20),
 				(int) (width * 4.3854033290653005 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchButton.setBounds((int) (width * 21.286811779769526 / 25), (int) (height * 4.821428571428571 / 20),
+		searchLabel.setBounds((int) (width * 21.286811779769526 / 25), (int) (height * 4.821428571428571 / 20),
 				(int) (width * 1.6005121638924455 / 25), (int) (height * 1.2946428571428572 / 20));
 		
 		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 7.321428571428571 / 20),
@@ -256,20 +221,20 @@ public class BasicDataManagePanel extends OperationPanel {
 		
 		switch(patternNum){
 			case 1:	head = new String[]{"职业类型", "每次工资（元）"};
-					widths = new int[]{300, 300};
+					widths = new int[]{275, 275};
 					currentTable = new MyTable(head, getInfos(1), widths, true);
 					break;
 			case 2: head = new String[]{"职业类型", "基础月薪（元）"};
-					widths = new int[]{100, 100};
-					messageTable = new MyTable(head, getInfos(2), widths, true);
+					widths = new int[]{275, 275};
+					currentTable = new MyTable(head, getInfos(2), widths, true);
 					break;
 			case 3: head = new String[]{"城市A", "城市B", "城市间距离（公里）"};
-					widths = new int[]{100, 100, 100};
-					messageTable = new MyTable(head, getInfos(3), widths, true);
+					widths = new int[]{200, 200, 150};
+					currentTable = new MyTable(head, getInfos(3), widths, true);
 					break;
 			case 4: head = new String[]{"快递类型", "运费系数（元/（千克*公里））"};
-			 		widths = new int[]{100, 100};
-			 		messageTable = new MyTable(head, getInfos(4), widths, true);
+			 		widths = new int[]{275, 275};
+			 		currentTable = new MyTable(head, getInfos(4), widths, true);
 			 		break;
 		}
 		
@@ -305,14 +270,16 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(patternNum == 1 || patternNum == 2 || patternNum == 4){
 			addLabel.setEnabled(false);
 			delLabel.setEnabled(false);
+			inputField.setText("");
 			inputField.setEnabled(false);
-			searchButton.setEnabled(false);
+			searchLabel.setEnabled(false);
 		}
 		else if(patternNum == 3){
 			addLabel.setEnabled(true);
 			delLabel.setEnabled(true);
+			inputField.setText("查询城市间距离");
 			inputField.setEnabled(true);
-			searchButton.setEnabled(true);
+			searchLabel.setEnabled(true);
 		}
 	}
 	
@@ -415,7 +382,6 @@ public class BasicDataManagePanel extends OperationPanel {
 	}
 	
 	public void changeTable(MyTable currentTable){
-		System.out.println(messageTable == null);
 		if(messageTable != null){
 			remove(messageTable);
 		}

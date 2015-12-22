@@ -1,14 +1,14 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import vo.BasicSalaryVO;
 import type.ProfessionType;
@@ -30,15 +30,15 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
     private JLabel professionLabel;
     private JLabel basicSalaryLabel;
     
-    private JTextField professionField;
-    private JTextField basicSalaryInput;
-    private JTextField basicSalaryPost;
+    private MyTextField professionField;
+    private MyTextField basicSalaryInput;
+    private MyTextField basicSalaryPost;
+    
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     private String professionStr;
 	
-    private JButton infoOKButton;
-    private JButton returnButton;
-    
 	public ModifyBasicSalaryPanel(ManageFrame manageFrame, BasicDataManagePanel managePanel, String profession){
 		
 		this.manageFrame = manageFrame;
@@ -51,19 +51,21 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
 		professionLabel = new JLabel("职业");
 		basicSalaryLabel = new JLabel("基础月薪");
 		
-		professionField = new JTextField(profession);
+		professionField = new MyTextField();
+		professionField.setText(profession);
 		professionField.setEditable(false);
-	    basicSalaryInput = new JTextField();
-	    basicSalaryPost = new JTextField("元");
+	    basicSalaryInput = new MyTextField();
+	    basicSalaryPost = new MyTextField();
+	    basicSalaryPost.setText("元");
 	    
 	    professionStr = profession;
 		
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
     	//加监听
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			
     			ProfessionType professionType = ProfessionType.courier; 
     			Double basicSalaryDouble = Double.parseDouble(basicSalaryInput.getText());
@@ -89,8 +91,8 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
     		}
     	});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -105,8 +107,8 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
     	add(professionField);
     	add(basicSalaryInput);
     	add(basicSalaryPost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
 
     	setVisible(true);
     	
@@ -132,9 +134,9 @@ public class ModifyBasicSalaryPanel extends OperationPanel {
 		basicSalaryPost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	
