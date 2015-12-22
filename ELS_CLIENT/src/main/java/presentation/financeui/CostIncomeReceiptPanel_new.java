@@ -1,5 +1,7 @@
 package presentation.financeui;
 
+import java.awt.Graphics;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -113,14 +115,20 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		repaint();
 	}
 
+	public void refresh(){
+		double income = controller.getIncome();
+		double cost = controller.getCost();
+		double profit = income-cost;
+		totalCost_Input = new JTextField(income + "");
+		totalCost_Input.setEditable(false);
+		totalIncome_Input = new JTextField(cost + "");
+		totalIncome_Input.setEditable(false);
+		totalProfit_Input = new JTextField(profit + "");
+		totalProfit_Input.setEditable(false);
+	}
 	
-	/*
-	 * public static void main(String[] args) throws MalformedURLException,
-	 * RemoteException, NotBoundException { CostIncomeReceiptBLController
-	 * controller=new CostIncomeReceiptBLController(); FinanceFrame
-	 * financeFrame=new FinanceFrame(); JFrame frame = new JFrame();
-	 * frame.setSize(800, 550); frame.add(new
-	 * CostIncomeReceiptPanel_new(controller,financeFrame));
-	 * frame.setVisible(true); }
-	 */
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		refresh();
+	}
 }

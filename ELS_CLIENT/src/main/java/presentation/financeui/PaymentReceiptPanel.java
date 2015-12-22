@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.PaymentReceiptBLController;
@@ -31,9 +32,9 @@ public class PaymentReceiptPanel extends OperationPanel {
 	
 
 	private JLabel dateChooseLabel;
-	private JButton dateOKButton;
-	private JButton cancelButton;
-	private MyLabel totalLabel;
+	private MyLabel dateOKButton;
+	private MyLabel cancelButton;
+	private MyLabel totalButton;
 
 	private JLabel function;
 	private JLabel clauseLabel;
@@ -60,9 +61,9 @@ public class PaymentReceiptPanel extends OperationPanel {
 		this.financeFrame=parent;
 		this.user = user;
 		dateChooseLabel = new JLabel("日期");
-		dateOKButton = new JButton("确认");
-		totalLabel = new MyLabel("合计");
-		cancelButton =new JButton("取消");
+		dateOKButton = new MyLabel("确认");
+		totalButton = new MyLabel("合计");
+		cancelButton =new MyLabel("取消");
 	
 
 		function = new JLabel("新建付款单");
@@ -85,7 +86,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 
 		add(dateChooseLabel);
 		add(dateOKButton);
-		add(totalLabel);
+		add(totalButton);
 		add(cancelButton);
 		add(function);
 		add(clauseLabel);
@@ -124,15 +125,16 @@ public class PaymentReceiptPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		dateChooseLabel.setBounds((int)(width * 13.174744897959184/25),(int)(height * 2.7268101761252447/20),(int)(width *  1.0204081632653061 /25),(int)(height *   1.1741682974559686/20));
 		dateOKButton.setBounds((int)(width * 18.752551020408163/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.1364795918367347 /25),(int)(height *  1.1741682974559686/20));
-		totalLabel.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *   1.1741682974559686/20));
-		cancelButton.setBounds((int)(width *  21.739795918367346/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.1364795918367347 /25),(int)(height *  1.1741682974559686/20));
 		function.setBounds((int)(width * 1.913265306122449/25),(int)(height * 0.6653620352250489/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
 		clauseLabel.setBounds((int)(width * 2.74234693877551/25),(int)(height *  2.7268101761252447/20),(int)(width *  1.594387755102041 /25),(int)(height *   1.1741682974559686/20));
 		date.setBounds((int)(width * 7.844387755102041/25),(int)(height * 2.7268101761252447/20),(int)(width *  1.4349489795918366 /25),(int)(height *   1.1741682974559686/20));
 		date_Input.setBounds((int)(width * 9.948979591836734/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.1741682974559686/20));
 		clause_choose.setBounds((int)(width * 4.878826530612245/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.072704081632653 /25),(int)(height * 1.1741682974559686/20));
 		paymentTable.setLocationAndSize((int)(width * 1.1510204081632653/25),(int)(height * 4.04481409001957/20),(int)(width *  22.92091836734694 /25),(int)(height *  13.95890410958904/20));
-		}
+		totalButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
+		cancelButton.setBounds((int)(width * 20.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
+		
+	}
 	
 
 	/**
@@ -141,22 +143,19 @@ public class PaymentReceiptPanel extends OperationPanel {
 	
 	public void addListener(){
 
-		dateOKButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
+		dateOKButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
 				ok();
 			}
 		});
 		
-		totalLabel.addMouseListener(new MouseAdapter() {
+		totalButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				totalui();
 			}
 		});
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		cancelButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e){
 				cancelui();
 			}
 		});
@@ -193,15 +192,51 @@ public class PaymentReceiptPanel extends OperationPanel {
 		String time =date_Input.getText();
 		if(clause == "运费"){
 			PaymentItemVO vo = new PaymentItemVO(time, clause, "总账", controller.getFare(time), user.userID);
+			boolean isExsit=false;
+			for(PaymentItemVO v :paymentItemVOs){
+				if(v.clause.equals(vo.clause)){
+					isExsit=true;
+				}
+			}
+			if(isExsit == false){
 			paymentItemVOs.add(vo);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "该月的运费已经被添加了！", "提示",
+						JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		if(clause == "租金"){
 			PaymentItemVO vo = new PaymentItemVO(time, clause, "总账", controller.getRent(time), user.userID);
+			boolean isExsit=false;
+			for(PaymentItemVO v :paymentItemVOs){
+				if(v.clause.equals(vo.clause)){
+					isExsit=true;
+				}
+			}
+			if(isExsit == false){
 			paymentItemVOs.add(vo);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "该月的租金已经被添加了！", "提示",
+						JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		if(clause == "工资"){
 			PaymentItemVO vo = new PaymentItemVO(time, clause, "总账", controller.getSalary(time), user.userID);
+			boolean isExsit=false;
+			for(PaymentItemVO v :paymentItemVOs){
+				if(v.clause.equals(vo.clause)){
+					isExsit=true;
+				}
+			}
+			if(isExsit == false){
 			paymentItemVOs.add(vo);
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "该月的租金已经被添加了！", "提示",
+						JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		paymentTable.setInfos(getInfos(paymentItemVOs));
 	}
@@ -225,7 +260,15 @@ public class PaymentReceiptPanel extends OperationPanel {
 		}
 		PaymentReceiptVO vo = new PaymentReceiptVO(controller.getPaymentReceiptListID(), user.userID, ReceiptType.PAYMENTRECEIPT,
 				ReceiptState.DRAFT, rent, fare, salary, time, "总账", user.userName);
-		controller.creatPaymentReceipt(vo);
+		int temp=controller.creatPaymentReceipt(vo);
+		if(temp==0){
+			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
+					JOptionPane.DEFAULT_OPTION);
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "该月的付款单已经被创建了！", "提示",
+					JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 	public void cancelui(){

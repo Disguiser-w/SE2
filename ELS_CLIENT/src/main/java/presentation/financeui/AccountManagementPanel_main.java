@@ -11,8 +11,8 @@ import javax.swing.JOptionPane;
 import businesslogic.financebl.controller.AccountBLController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.MySearchField;
 import vo.AccountVO;
 
 public class AccountManagementPanel_main extends OperationPanel {
@@ -28,7 +28,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private MyLabel searchLabel;
 	private MyLabel refreshLabel;
 	
-	private MyTextField searchTextField;
+	private MySearchField searchTextField;
 	private JLabel function;
 	
 	private MyTable accountTable;
@@ -51,7 +51,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		
 		function = new JLabel("账户管理");
 
-		searchTextField = new MyTextField();
+		searchTextField = new MySearchField();
 		
 		setLayout(null);
 
@@ -87,9 +87,13 @@ public class AccountManagementPanel_main extends OperationPanel {
 			}
 		});
 
+		searchTextField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				searchui();
+			}
+		});
 		
 		searchLabel.addMouseListener(new MouseAdapter() {
-			
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				searchui();
@@ -185,7 +189,8 @@ public class AccountManagementPanel_main extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		if (size == 0){
-			JOptionPane.showMessageDialog(null, "选中某一个或某一些账户后再删除哦！", "没有选择账户", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "选中某一个或某一些账户后再删除哦！",
+					"没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}
 		else {
@@ -205,6 +210,8 @@ public class AccountManagementPanel_main extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		if(size!= 1){
+			JOptionPane.showMessageDialog(null, "选中某个账户后再删除哦！", 
+					"没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}
 		selectedIndex = selectedIndexs.get(0);

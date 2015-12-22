@@ -19,19 +19,30 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 */
 	private static final long serialVersionUID = 1L;
 	JXCFile file;
-	int num;
 	public PaymentReceiptData() throws RemoteException{
 		super();
 		file=new JXCFile("info/paymentInfo/payment.ser");
 	}
 
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
-		// TODO Auto-generated method stub
 		file=new JXCFile("info/paymentInfo/payment.ser");
 		po.setState(ReceiptState.SUBMIT);
+		ArrayList<PaymentReceiptPO> ppos = getAllPaymentReceipt();
+		boolean isExsit = false;
+		if(ppos!=null){
+		for(PaymentReceiptPO p : ppos){
+			if(po.getDate().substring(0,6).equals(p.getDate().substring(0,6))){
+				isExsit = true;
+			}
+		}
+		}
+		if(isExsit == true){
+			return -1;
+		}
+		else{
 		file.write(po);
-		num++;
 		return 0;
+		}
 	}
 
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt()
@@ -56,7 +67,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	
 	public int getNum()  throws RemoteException{
 		file=new JXCFile("info/paymentInfo/payment.ser");
-		return num;
+		return 0;
 	}
 	
 
@@ -193,14 +204,14 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		
 		PaymentReceiptData data=new PaymentReceiptData();
 		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151201", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151201", "boss", "本宝宝");
-		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151211", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151211", "boss", "本宝宝");
-		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
-		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
+//		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151211", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151211", "boss", "本宝宝");
+//		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
+//		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
 		try {
 			data.creatPaymentReceipt(po1);
-			data.creatPaymentReceipt(po2);
-			data.creatPaymentReceipt(po3);
-			data.creatPaymentReceipt(po4);
+//			data.creatPaymentReceipt(po2);
+//			data.creatPaymentReceipt(po3);
+//			data.creatPaymentReceipt(po4);
 			
 			ArrayList<PaymentReceiptPO> All;
 							All = data.getAllPaymentReceipt();
