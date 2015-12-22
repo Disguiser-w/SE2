@@ -601,8 +601,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		try {
 			userData = new UserData();
 			try {
-				userData.deleteUser("ZZZX-00001");
-				userData.deleteUser("KD-00001");
 
 				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
 						ProfessionType.manager, "总部",
@@ -626,7 +624,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						AuthorityType.administrator, 0));
 
 				userData.addUser(new UserPO("张家盛", "ZZZX-00001", "123456",
-						ProfessionType.intermediateCenterCounterman, "",
+						ProfessionType.intermediateCenterCounterman, "025-0",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.lowest, 0));
 				userData.addUser(new UserPO("张方浩", "ZZZX-00002", "123456",
@@ -693,9 +691,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						AuthorityType.lowest, 0));
 
 				userData.addUser(new UserPO("张词校", "KD-00001", "123456",
-						ProfessionType.courier, "",
+						ProfessionType.courier, "025000",
 						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
-						0));
+						50));
 				userData.addUser(new UserPO("徐朱峰", "KD-00002", "123456",
 						ProfessionType.courier, "025001",
 						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
@@ -766,12 +764,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						System.out.println(tempUserpo.getName() + "  "
 								+ tempUserpo.getUserID() + "  "
 								+ tempUserpo.getOrganization() + "  "
-								+ tempUserpo.getProfession());
+								+ tempUserpo.getProfession() + " "
+								+ tempUserpo.getGrades()+"");
 					}
 				}
 
-				String now = userData.getUserIDPost(ProfessionType.courier);
-				System.out.println(now);
+				/*String postNow = userData.getUserIDPost(ProfessionType.courier);
+				System.out.println(postNow);
 
 				UserPO userpo1 = userData.findUserByID("KD-00001");
 				if (userpo1 != null)
@@ -782,8 +781,8 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				else
 					System.out.println("Cannot find the user");
 
-				userData.modifyUserOrganization("张Doge", "025001");
-				System.out.println("修改后:");
+				userData.modifyUserOrganization("张Doge", "025000");
+				System.out.println("修改机构后:");
 				ArrayList<UserPO> userpoList3 = userData.showAllUsers();
 				if (userpoList3 != null) {
 					for (int i = 0; i < userpoList3.size(); i++) {
@@ -795,6 +794,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					}
 				} else
 					System.out.println("Cannot find the user");
+				
+				userData.modifyUserGrades("KD-00001", 50);
+				System.out.println("修改绩点后:");
 
 				System.out.println("没有删除前:");
 				ArrayList<UserPO> userpoList1 = userData.showAllUsers();
@@ -820,7 +822,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 								+ tempUserpo.getProfession());
 					}
 				} else
-					System.out.println("Cannot find the user");
+					System.out.println("Cannot find the user");*/
 
 			} catch (RemoteException exception) {
 				exception.printStackTrace();

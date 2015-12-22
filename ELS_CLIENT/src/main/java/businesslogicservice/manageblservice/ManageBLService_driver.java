@@ -64,7 +64,6 @@ public class ManageBLService_driver {
 
 	public void driveReceipt(ReviewReceiptBLService rrs) throws RemoteException{
 		rrs.getAllReceiptList();
-		rrs.refresh();
 	}
 	
 	

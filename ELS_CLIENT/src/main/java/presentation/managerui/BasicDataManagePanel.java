@@ -100,7 +100,7 @@ public class BasicDataManagePanel extends OperationPanel {
 		baseFreights = baseFreightBL.showAllCosts();
 		
 		addListener();
-		//给setBaseInfos加上参数，不同的int值表示MyTable加载不同内容， 1代表PerWage， 2代表BasicSalary，3代表CityDistance，4代表Cost，
+		//给setBaseInfos加上参数，不同的int值表示MyTable加载不同内容， 1代表PerWage， 2代表BasicSalary，3代表CityDistance，4代表Cost
 		patternNum = 1;
 		changeLabelsEnabled(patternNum);
 		setBaseInfos(patternNum);

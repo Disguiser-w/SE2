@@ -6,19 +6,14 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import type.OperationState;
 import type.ReceiptState;
 import vo.AllReceiptShowVO;
 import vo.ReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
 import vo.EnIntermediateReceiptVO;
-import vo.EnplaningReceiptVO;
-import vo.EntrainingReceiptVO;
-import vo.EntruckingReceiptVO;
 import vo.EnVehicleReceiptVO;
 import vo.GatheringReceiptVO;
-import vo.OrderVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
@@ -36,8 +31,6 @@ import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.manageblservice.ReviewReceiptBLService;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
-import dataservice.financedataservice.CollectionReceiptDataService;
-import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class ReviewReceiptBL implements ReviewReceiptBLService{
 
@@ -185,7 +178,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		return collectionReceiptVOList;
 	}
 	
-	//审批一个合计收款单(BL层的方法呢？？？)
+	//审批一个合计收款单
 	public int approveCollectionReceipt(CollectionReceiptVO crVO){
 		return collectionBL.saveSubmittedCollectionReceiptInfo(crVO);
 	}
@@ -196,7 +189,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		return paymentReceiptVOList;
 	}
 	
-	//审批一个付款单(BL层的方法呢？？？)
+	//审批一个付款单
 	public int approvePaymentReceipt(PaymentReceiptVO prVO){
 		return paymentBL.saveSubmittedPaymentReceiptInfo(prVO);
 	}
@@ -236,17 +229,18 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//获取全部提交的中转中心到达单
 	public ArrayList<TransferingReceiptVO> getAllSubmittedTransferingReceipt(){
+		transferingReceiptVOList = new ArrayList<TransferingReceiptVO>();
 		try{
 			transferingReceiptPOList = itmdService.getSubmittedTransferingReceiptInfo();
-			transferingReceiptVOList = new ArrayList<TransferingReceiptVO>();
-			
-			for(int i=0;i<transferingReceiptPOList.size();i++){
-				transferingReceiptVOList.add(IntermediateMainController.poToVO(transferingReceiptPOList.get(i))); 
+			if(transferingReceiptPOList != null){
+				for(int i=0;i<transferingReceiptPOList.size();i++){
+					transferingReceiptVOList.add(IntermediateMainController.poToVO(transferingReceiptPOList.get(i))); 
+				}
 			}
 			return transferingReceiptVOList;
 		}catch (RemoteException e) {
 			e.printStackTrace();
-			return null;
+			return transferingReceiptVOList;
 		}
 	}
 	
