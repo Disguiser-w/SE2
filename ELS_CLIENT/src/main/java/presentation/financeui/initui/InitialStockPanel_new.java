@@ -1,14 +1,12 @@
 package presentation.financeui.initui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
@@ -36,18 +34,18 @@ public class InitialStockPanel_new extends OperationPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel completeLabel;
-	private JButton InfoOKButton;
-	private JButton cancelButton;
+	private MyLabel completeLabel;
+	private MyLabel InfoOKButton;
+	private MyLabel cancelButton;
 
 	
 
-	private JLabel function;
-	private JLabel humanInfo;
-	private JLabel organizationInfo;
-	private JLabel vehicleInfo;
-	private JLabel stockInfo;
-	private JLabel accountInfo;
+	private MyLabel function;
+	private MyLabel humanInfo;
+	private MyLabel organizationInfo;
+	private MyLabel vehicleInfo;
+	private MyLabel stockInfo;
+	private MyLabel accountInfo;
 	
 	
 	private MyTable currentTable;
@@ -83,12 +81,16 @@ public class InitialStockPanel_new extends OperationPanel{
 	 VehicleManagerController vehicleController;
 	 RepertoryBL repertoryController;
 	 AccountBLController accountController;
+	 
+	 public UserVO userVO;
 	//财务主界面
 	public FinanceFrame financeFrame;
+	private InitialStockPanel_main initMainPanel;
 	
 
 	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
-			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent) {
+			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent,
+			 InitialStockPanel_main initMainPanel,UserVO userVO) {
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
@@ -96,16 +98,18 @@ public class InitialStockPanel_new extends OperationPanel{
 		this.vehicleController=vehicleController;
 		this.repertoryController=repertoryController;
 		this.accountController= accountBLController;
+		this.initMainPanel = initMainPanel;
+		this.userVO=userVO;
 		
-		completeLabel  = new JLabel("建账完成");
-		InfoOKButton = new JButton("确认添加");
-		cancelButton = new JButton("返回");
-		function = new JLabel("期初建账");
-		humanInfo = new JLabel("人员信息");
-		organizationInfo = new JLabel("机构信息");
-		vehicleInfo = new JLabel("车辆信息");
-		stockInfo = new JLabel("库存信息");
-		accountInfo = new JLabel("银行账户");
+		completeLabel  = new MyLabel("建账完成");
+		InfoOKButton = new MyLabel("确认添加");
+		cancelButton = new MyLabel("返回");
+		function = new MyLabel("期初建账");
+		humanInfo = new MyLabel("人员信息");
+		organizationInfo = new MyLabel("机构信息");
+		vehicleInfo = new MyLabel("车辆信息");
+		stockInfo = new MyLabel("库存信息");
+		accountInfo = new MyLabel("银行账户");
 	
 		addListener();
 
@@ -315,18 +319,17 @@ public class InitialStockPanel_new extends OperationPanel{
 			}
 		});
 		 //添加信息（支持复选）
-		 InfoOKButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO 自动生成的方法存根
-					addInfo(currentTable);
+		 InfoOKButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					addInfo(currentTable);			
 				}
 			});
-		
+			
 			
 		 //返回
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
+			cancelButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					initMainPanel.refresh();
 					financeFrame.toMainPanel();
 				}
 			});
@@ -334,7 +337,7 @@ public class InitialStockPanel_new extends OperationPanel{
 			//期初建账完成(存储期初信息)
 			completeLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					initVO=new InitInfoVO(getDate.getdate(), init_user, init_organization, init_vehicle, init_repertory, init_account);
+					initVO=new InitInfoVO(getDate.getdate(), userVO.userID,init_user, init_organization, init_vehicle, init_repertory, init_account);
 					if(init_account.size()==0||init_organization.size()==0||init_repertory.size()==0
 							||init_user.size()==0||init_vehicle.size()==0){
 						JOptionPane.showMessageDialog(null,"输入的期初信息不完整（一共有五项哟）！", "提示",

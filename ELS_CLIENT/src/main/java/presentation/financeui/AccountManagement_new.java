@@ -68,7 +68,6 @@ public class AccountManagement_new extends OperationPanel {
 		add(account_money);
 		add(account_name_Input);
 		add(account_money_Input);
-//		helper = new LocationHelper(this);
 		
 		
 		setLayout(null);

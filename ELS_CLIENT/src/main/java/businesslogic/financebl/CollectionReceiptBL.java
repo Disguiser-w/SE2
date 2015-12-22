@@ -90,7 +90,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 			 return FinanceMainController.gposToVOs(businessData.getGatheringReceipt(Time));
 			}
 			else{
-				return null;
+				return new ArrayList<GatheringReceiptVO>();
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

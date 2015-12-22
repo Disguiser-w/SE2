@@ -9,11 +9,12 @@ public class InitInfoPO  implements Serializable{
 	private static final long serialVersionUID = 660222571968038789L;
 
 	String date;
-	public  ArrayList<AccountPO>  accountPOs;
-	public  ArrayList<OrganizationPO> organizationPOs;
-	public ArrayList<VehiclePO> vehiclePOs;
-	public ArrayList<RepertoryPO> repertoryPOs;
-	public ArrayList<UserPO> userPOs;
+	String userID;
+	private  ArrayList<AccountPO>  accountPOs;
+	private  ArrayList<OrganizationPO> organizationPOs;
+	private ArrayList<VehiclePO> vehiclePOs;
+	private ArrayList<RepertoryPO> repertoryPOs;
+	private ArrayList<UserPO> userPOs;
 	
 	
 	public InitInfoPO() throws RemoteException{
@@ -24,9 +25,10 @@ public class InitInfoPO  implements Serializable{
 		accountPOs=null;
 	}
 	
-	public InitInfoPO(String date,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs) throws RemoteException{
+	public InitInfoPO(String date,String userID,ArrayList<UserPO> userPOs,ArrayList<OrganizationPO> organizationPOs,ArrayList<VehiclePO> vehiclePOs,ArrayList<RepertoryPO> repertoryPOs,ArrayList<AccountPO>  accoutPOs) throws RemoteException{
 		super();
 		this.date=date;
+		this.userID=userID;
 		this.userPOs=userPOs;
 		this.organizationPOs=organizationPOs;
 		this.vehiclePOs=vehiclePOs;
@@ -55,11 +57,14 @@ public class InitInfoPO  implements Serializable{
 		public ArrayList<AccountPO> getAccountPOs(){
 			return accountPOs ;
 		}
-		
+		//获取建账日期
 		public String getDate(){
 			return date;
 		}
-		
+		//获取建账人编号
+		public String getUserID(){
+			return userID;
+		}
 }
 
 

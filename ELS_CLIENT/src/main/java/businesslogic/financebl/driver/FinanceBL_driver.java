@@ -100,7 +100,7 @@ public class FinanceBL_driver {
 		repertoryPOs.add(repertory);
 		accountPOs.add(account);
 		
-		InitInfoVO ivo = new InitInfoVO("20151221", userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+		InitInfoVO ivo = new InitInfoVO("20151221", "CW-00001",userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 		
 		initController.initInfo(ivo, "20151221");
 		

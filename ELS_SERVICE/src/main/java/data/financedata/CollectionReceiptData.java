@@ -18,7 +18,6 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	private static final long serialVersionUID = 1L;
 	JXCFile file;
 	//计次数
-	int num;
 	public CollectionReceiptData() throws RemoteException{
 		super();
 		file=new JXCFile("info/collectionInfo/collection.ser");
@@ -32,10 +31,13 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		// TODO Auto-generated method stub
 		file=new JXCFile("info/collectionInfo/collection.ser");
 		po.setState(ReceiptState.SUBMIT);
+		if(findByID(po.getID())!=null){
+			return -1;
+		}
+		else{
 		file.write(po);
-		//每创建一个对象num+1
-		num++;
 		return 0;
+		}
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
 		file=new JXCFile("info/collectionInfo/collection.ser");
-		return num;
+		return 0;
 	}
 
 	/**
