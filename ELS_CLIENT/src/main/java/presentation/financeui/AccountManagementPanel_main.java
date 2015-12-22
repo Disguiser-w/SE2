@@ -12,6 +12,9 @@ import businesslogic.financebl.controller.AccountBLController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 import vo.AccountVO;
 
@@ -22,10 +25,10 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private static final long serialVersionUID = 1L;
 	
 
-	private MyLabel addLabel;
-	private MyLabel deleteLabel;
-	private MyLabel modifyLabel;
-	private MyLabel searchLabel;
+	private AddLabel addLabel;
+	private DeleteLabel deleteLabel;
+	private ModifyLabel modifyLabel;
+//	private MyLabel searchLabel;
 	private MyLabel refreshLabel;
 	
 	private MySearchField searchTextField;
@@ -42,10 +45,9 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		addLabel = new MyLabel("添加");
-		deleteLabel = new MyLabel("删除");
-		modifyLabel=new MyLabel("修改");
-		searchLabel=new MyLabel("查询");
+		addLabel = new AddLabel("添加");
+		deleteLabel = new DeleteLabel("删除");
+		modifyLabel=new ModifyLabel("修改");
 		refreshLabel=new MyLabel("刷新");
 
 		
@@ -58,7 +60,6 @@ public class AccountManagementPanel_main extends OperationPanel {
 		add(addLabel);
 		add(deleteLabel);
 		add(modifyLabel);
-		add(searchLabel);
 		add(refreshLabel);
 		add(searchTextField);
 		add(function);
@@ -93,12 +94,12 @@ public class AccountManagementPanel_main extends OperationPanel {
 			}
 		});
 		
-		searchLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				searchui();
-			}
-		});
+//		searchLabel.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				searchui();
+//			}
+//		});
 
 		refreshLabel.addMouseListener(new MouseAdapter() {
 			
@@ -116,7 +117,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		addLabel.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 2.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		deleteLabel.setBounds((int)(width * 5.07015306122449/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		modifyLabel.setBounds((int)(width * 7.940051020408164/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		searchLabel.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+//		searchLabel.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *2.4442270058708413/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));

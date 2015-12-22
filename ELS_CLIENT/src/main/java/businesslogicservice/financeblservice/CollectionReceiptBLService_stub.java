@@ -59,6 +59,12 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return 0;
 	}
 
+	@Override
+	public int excute(CollectionReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 //	public String getHallID() {
 //		// TODO Auto-generated method stub

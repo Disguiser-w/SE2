@@ -31,7 +31,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		boolean isExsit = false;
 		if(ppos!=null){
 		for(PaymentReceiptPO p : ppos){
-			if(po.getDate().substring(0,6).equals(p.getDate().substring(0,6))){
+			if(po.getDate().substring(0,7).equals(p.getDate().substring(0,7))){
 				isExsit = true;
 			}
 		}

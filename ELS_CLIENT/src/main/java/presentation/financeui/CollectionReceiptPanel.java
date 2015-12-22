@@ -234,6 +234,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), user.userID, ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");
 		int temp=controller.creatCollection(vo);
 		if(temp==0){
+			controller.excute(vo);
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

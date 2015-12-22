@@ -86,7 +86,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	 * @throws RemoteException 
 	 * @throws MalformedURLException 
 	 * */
-	public int excute(PaymentReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
+	public int excute(PaymentReceiptVO vo) {
 		AccountBL account=new AccountBL();
 
 		account.delMoney(vo.account, vo.cost);
@@ -129,7 +129,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	 * */
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
-		return "RKD-"+getDate.getdate();
+		return "FKD-"+getDate.getdate();
 	}
 
 	/**

@@ -27,6 +27,8 @@ public interface CollectionReceiptBLService {
 	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt();
 	//保存审批后的结果
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo);
+	//账户金额的增减
+	public int excute(CollectionReceiptVO vo);
 	
 //	//获取营业厅编号
 //	public String getHallID();

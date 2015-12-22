@@ -258,10 +258,11 @@ public class PaymentReceiptPanel extends OperationPanel {
 				salary = v.money;
 			}
 		}
-		PaymentReceiptVO vo = new PaymentReceiptVO(controller.getPaymentReceiptListID(), user.userID, ReceiptType.PAYMENTRECEIPT,
+		PaymentReceiptVO vo = new PaymentReceiptVO("FKD"+time, user.userID, ReceiptType.PAYMENTRECEIPT,
 				ReceiptState.DRAFT, rent, fare, salary, time, "总账", user.userName);
 		int temp=controller.creatPaymentReceipt(vo);
 		if(temp==0){
+			controller.excute(vo);
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

@@ -70,7 +70,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * @throws RemoteException 
 	 * @throws MalformedURLException 
 	 * */
-	public int excute(CollectionReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
+	public int excute(CollectionReceiptVO vo) {
 		AccountBL a=new AccountBL();
 		a.addMoney(vo.account, vo.totalMoney);
 			System.out.println("执行成功！");
