@@ -427,7 +427,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				}
 
 				tempUserPO.setOrganization(newOrganizationID);
-				System.out.println(tempUserPO.getOrganization());
+				//System.out.println(tempUserPO.getOrganization());
 				break;
 			}
 		}
@@ -439,13 +439,11 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 修改用户绩点
 	 * 
-	 * @param String
-	 *            userID, int newGrade
+	 * @param String userID, int newGrade
 	 * @return 0(modify succeed), 1(modify failed)
 	 * 
 	 * */
-	public int modifyUserGrades(String userID, int newGrade)
-			throws RemoteException {
+	public int modifyUserGrades(String userID, int newGrade)throws RemoteException {
 		ArrayList<Object> objectList = userFile.read();
 
 		if (objectList == null)
@@ -491,8 +489,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 根据关键字查找用户（模糊搜索）
 	 * 
-	 * @param String
-	 *            keyword
+	 * @param String keyword
 	 * @return ArrayList<UserPO>
 	 * 
 	 * */
@@ -541,6 +538,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 获得某职业用户编号后缀
 	 * 
+	 * @param ProfessionType profession
 	 * @return String
 	 * 
 	 * */
@@ -551,17 +549,19 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		if (objectList == null)
 			return "00001";
 
-		int professionCount = 0; // 记录该职业的用户有多少人
+		int professionMaxPost = 0; // 记录该职业的用户编号目前拥有的最大后缀数
 		for (int i = 0; i < objectList.size(); i++) {
 			UserPO tempUserPO = (UserPO) (objectList.get(i));
 			if (tempUserPO.getProfession().equals(profession)) {
-				professionCount += 1;
+				int tempPost = Integer.parseInt(tempUserPO.getUserID().split("-")[1]);
+				if(tempPost > professionMaxPost)
+				professionMaxPost = tempPost;
 			}
 		}
 
-		boolean exist[] = new boolean[professionCount + 1];
-		for (int i = 0; i <= professionCount; i++) {
-			exist[professionCount] = false;
+		boolean exist[] = new boolean[professionMaxPost + 1];
+		for (int i = 0; i <= professionMaxPost; i++) {
+			exist[i] = false;
 		}
 
 		int currentCount = 0;
@@ -570,17 +570,17 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 			if (tempUserPO.getProfession().equals(profession)) {
 				String[] parts = tempUserPO.getUserID().split("-");
 				currentCount = Integer.parseInt(parts[1]); // 该用户目前的编号后缀
-				exist[currentCount] = true;
+					exist[currentCount] = true;
 			}
 		}
 
-		for (int i = 1; i <= professionCount; i++) {
+		for (int i = 1; i <= professionMaxPost; i++) {
 			if (exist[i] == false) {
 				return formatPostString(i);
 			}
 		}
 
-		return formatPostString(professionCount + 1);
+		return formatPostString(professionMaxPost + 1);
 	}
 
 	public String formatPostString(int post) {
@@ -601,8 +601,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		try {
 			userData = new UserData();
 			try {
-				userData.deleteUser("ZZZX-00001");
-				userData.deleteUser("KD-00001");
 
 				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
 						ProfessionType.manager, "总部",
@@ -626,7 +624,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						AuthorityType.administrator, 0));
 
 				userData.addUser(new UserPO("张家盛", "ZZZX-00001", "123456",
-						ProfessionType.intermediateCenterCounterman, "",
+						ProfessionType.intermediateCenterCounterman, "025-0",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.lowest, 0));
 				userData.addUser(new UserPO("张方浩", "ZZZX-00002", "123456",
@@ -693,9 +691,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						AuthorityType.lowest, 0));
 
 				userData.addUser(new UserPO("张词校", "KD-00001", "123456",
-						ProfessionType.courier, "",
+						ProfessionType.courier, "025000",
 						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
-						0));
+						50));
 				userData.addUser(new UserPO("徐朱峰", "KD-00002", "123456",
 						ProfessionType.courier, "025001",
 						SalaryPlanType.courierSalaryPlan, AuthorityType.lowest,
@@ -766,12 +764,13 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 						System.out.println(tempUserpo.getName() + "  "
 								+ tempUserpo.getUserID() + "  "
 								+ tempUserpo.getOrganization() + "  "
-								+ tempUserpo.getProfession());
+								+ tempUserpo.getProfession() + " "
+								+ tempUserpo.getGrades()+"");
 					}
 				}
 
-				String now = userData.getUserIDPost(ProfessionType.courier);
-				System.out.println(now);
+				/*String postNow = userData.getUserIDPost(ProfessionType.courier);
+				System.out.println(postNow);
 
 				UserPO userpo1 = userData.findUserByID("KD-00001");
 				if (userpo1 != null)
@@ -782,8 +781,8 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				else
 					System.out.println("Cannot find the user");
 
-				userData.modifyUserOrganization("张Doge", "025001");
-				System.out.println("修改后:");
+				userData.modifyUserOrganization("张Doge", "025000");
+				System.out.println("修改机构后:");
 				ArrayList<UserPO> userpoList3 = userData.showAllUsers();
 				if (userpoList3 != null) {
 					for (int i = 0; i < userpoList3.size(); i++) {
@@ -795,6 +794,9 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					}
 				} else
 					System.out.println("Cannot find the user");
+				
+				userData.modifyUserGrades("KD-00001", 50);
+				System.out.println("修改绩点后:");
 
 				System.out.println("没有删除前:");
 				ArrayList<UserPO> userpoList1 = userData.showAllUsers();
@@ -820,7 +822,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 								+ tempUserpo.getProfession());
 					}
 				} else
-					System.out.println("Cannot find the user");
+					System.out.println("Cannot find the user");*/
 
 			} catch (RemoteException exception) {
 				exception.printStackTrace();

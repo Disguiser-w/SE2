@@ -9,7 +9,7 @@ import vo.TruckVO;
 public interface TruckManageBLService {
 	public ArrayList<TruckVO> showTruckList();
 
-	public OperationState addTruck(String ID, String destination);
+	public OperationState addTruck(String ID, String destination) throws RemoteException;
 
 	public OperationState deleteTruck(String truck_ID) throws Exception;
 

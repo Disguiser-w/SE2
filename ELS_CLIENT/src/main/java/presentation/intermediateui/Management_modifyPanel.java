@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.PlaneVO;
 import vo.TrainVO;
@@ -19,7 +20,7 @@ import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
-public class Management_modifyPanel extends JPanel {
+public class Management_modifyPanel extends OperationPanel {
 	public UserFrame frame;
 
 	protected MyLabel OKButton;
@@ -47,12 +48,15 @@ public class Management_modifyPanel extends JPanel {
 	protected int PANEL_WIDTH = 720;
 	protected int PANEL_HEIGHT = 480;
 
+	protected int selectedNum;
+
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
-			MyTable m, PlaneVO p) {
+			MyTable m, PlaneVO p, int n) {
 		this.controller = c;
 		this.frame = f;
 		this.messageTable = m;
 		this.plane = p;
+		this.selectedNum = n;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
@@ -95,7 +99,7 @@ public class Management_modifyPanel extends JPanel {
 									destination_input.getSelectedItem()
 											.toString(),
 									farePrice_input.getText(), "工作中" },
-							messageTable.getSelectedNum() + 1);
+							selectedNum);
 				} catch (Exception e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
@@ -108,11 +112,12 @@ public class Management_modifyPanel extends JPanel {
 	}
 
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
-			MyTable m, TrainVO t) {
+			MyTable m, TrainVO t, int n) {
 		this.controller = c;
 		this.frame = f;
 		this.messageTable = m;
 		this.train = t;
+		this.selectedNum = n;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
@@ -149,6 +154,7 @@ public class Management_modifyPanel extends JPanel {
 							new TrainVO(ID_input.getText(),
 									(String) destination_input
 											.getSelectedItem()));
+					System.out.println(selectedNum);
 					messageTable.setRowValueAt(
 							new String[] {
 									ID_input.getText(),
@@ -156,7 +162,7 @@ public class Management_modifyPanel extends JPanel {
 									destination_input.getSelectedItem()
 											.toString(),
 									farePrice_input.getText(), "工作中" },
-							messageTable.getSelectedNum() + 1);
+							selectedNum);
 				} catch (Exception e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
@@ -169,11 +175,12 @@ public class Management_modifyPanel extends JPanel {
 	}
 
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
-			MyTable m, TruckVO p) {
+			MyTable m, TruckVO p, int n) {
 		this.controller = c;
 		this.messageTable = m;
 		this.frame = f;
 		this.truck = p;
+		this.selectedNum = n;
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();
@@ -217,7 +224,7 @@ public class Management_modifyPanel extends JPanel {
 									destination_input.getSelectedItem()
 											.toString(),
 									farePrice_input.getText(), "工作中" },
-							messageTable.getSelectedNum() + 1);
+							selectedNum);
 				} catch (Exception e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();

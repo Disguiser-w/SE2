@@ -72,19 +72,23 @@ public class IntermediateMainController {
 	public IntermediateMainController(String intermediate_ID)
 			throws MalformedURLException, RemoteException, NotBoundException {
 		try {
-			if(DataFactory.getUserData().findUserByID(intermediate_ID) != null){
-				System.out.println("cunzaizhege");
-			}
 			intermediateData = DataFactory.getIntermediateData();
 			intermediate = poToVO((IntermediatePO) (intermediateData
 					.getIntermediateInfo(intermediate_ID)));
 			// System.out.println(intermediate.organization.planeList.size());
+			intermediateCentre = intermediate.organization;
+			intermediateCentre.planeList = poToVO_PlaneList((ArrayList<PlanePO>) (intermediateData
+					.getPlaneList(intermediate_ID)));
+			intermediateCentre.trainList = poToVO_TrainList((ArrayList<TrainPO>) (intermediateData
+					.getTrainList(intermediate_ID)));
+			intermediateCentre.truckList = poToVO_TruckList((ArrayList<TruckPO>) (intermediateData
+					.getTruckList(intermediate_ID)));
+			System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		intermediateCentre = intermediate.organization;
 		// System.out.println(intermediateCentre.getName());
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
@@ -165,6 +169,54 @@ public class IntermediateMainController {
 
 	public static TruckVO poToVO(TruckPO truck) {
 		return new TruckVO(truck.getID(), truck.getDestination());
+	}
+
+	public static ArrayList<PlanePO> voToPO_PlaneList(
+			ArrayList<PlaneVO> planeList) {
+		ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
+		for (PlaneVO plane : planeList)
+			planeList_temp.add(IntermediateMainController.voToPO(plane));
+		return planeList_temp;
+	}
+
+	public static ArrayList<PlaneVO> poToVO_PlaneList(
+			ArrayList<PlanePO> planeList) {
+		ArrayList<PlaneVO> planeList_temp = new ArrayList<PlaneVO>();
+		for (PlanePO plane : planeList)
+			planeList_temp.add(IntermediateMainController.poToVO(plane));
+		return planeList_temp;
+	}
+
+	public static ArrayList<TrainPO> voToPO_TrainList(
+			ArrayList<TrainVO> trainList) {
+		ArrayList<TrainPO> trainList_temp = new ArrayList<TrainPO>();
+		for (TrainVO train : trainList)
+			trainList_temp.add(IntermediateMainController.voToPO(train));
+		return trainList_temp;
+	}
+
+	public static ArrayList<TrainVO> poToVO_TrainList(
+			ArrayList<TrainPO> trainList) {
+		ArrayList<TrainVO> trainList_temp = new ArrayList<TrainVO>();
+		for (TrainPO train : trainList)
+			trainList_temp.add(IntermediateMainController.poToVO(train));
+		return trainList_temp;
+	}
+
+	public static ArrayList<TruckPO> voToPO_TruckList(
+			ArrayList<TruckVO> truckList) {
+		ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
+		for (TruckVO truck : truckList)
+			truckList_temp.add(IntermediateMainController.voToPO(truck));
+		return truckList_temp;
+	}
+
+	public static ArrayList<TruckVO> poToVO_TruckList(
+			ArrayList<TruckPO> truckList) {
+		ArrayList<TruckVO> truckList_temp = new ArrayList<TruckVO>();
+		for (TruckPO truck : truckList)
+			truckList_temp.add(IntermediateMainController.poToVO(truck));
+		return truckList_temp;
 	}
 
 	public static OrganizationPO voToPO(OrganizationVO intermediate) {

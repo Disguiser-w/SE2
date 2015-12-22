@@ -403,25 +403,20 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				else 
 					System.out.println("Cannot find the inventory");
 				
-				/*System.out.println("出库：");
-				repertoryData.deleteInventory("025-0-CK", "20151002-00003");*/
+				System.out.println("出库：");
+				repertoryData.deleteInventory("025-0-CK", "20151011-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151011-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151011-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151011-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151011-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151111-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151111-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151111-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151111-00001");
+				repertoryData.deleteInventory("025-0-CK", "20151111-00001");
 				
-				System.out.println("库存盘点");
-				String time2 = getTimeNow();
-				ArrayList<InventoryPO> inventoryList2 = repertoryData.findInventorybyTime("030-0-CK", time2);
-				if(inventoryList2 != null){
-					System.out.println(inventoryList2.size());
-					for(int i=0;i<inventoryList2.size();i++){
-						InventoryPO tempInventory = inventoryList2.get(i);
-						System.out.println(tempInventory.getGood().getOrder_ID()+" "+tempInventory.getGood().getFee()+" "+tempInventory.getGood().getDeparturePlace()+" "
-								+tempInventory.getGood().getDestination()+" "+tempInventory.getBlockNum()+" "+tempInventory.getRowNum()+" "+tempInventory.getShelfNum()+" "
-								+tempInventory.getDigitNum());
-					}
-				}
-				else 
-					System.out.println("Cannot find the inventory");
 				
-				InventoryCheckPO inventoryCheck = repertoryData.findInventorybyDate("030-0-CK", "2015-11-01", "2015-12-01");
+				InventoryCheckPO inventoryCheck = repertoryData.findInventorybyDate("025-0-CK", "2015-11-01", "2015-12-01");
 				if(inventoryCheck != null){
 					int stockNum[] = inventoryCheck.getStockNumArray();
 					System.out.println("入库数量："+inventoryCheck.getEnterTotal()+"  出库数量："+inventoryCheck.getLeaveTotal()+

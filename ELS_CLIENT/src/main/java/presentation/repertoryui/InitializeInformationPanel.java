@@ -1,15 +1,15 @@
 package presentation.repertoryui;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import businesslogic.repertorybl.RepertoryBL;
 import vo.UserVO;
 
@@ -22,52 +22,73 @@ public class InitializeInformationPanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 	
-	private JLabel maxRowLabel;
-	private JLabel maxShelfLabel;
-	private JLabel maxBitLabel;
-	private JLabel maxRatioLabel;
+	private MyTextLabel maxRowLabel;
+	private MyTextLabel maxShelfLabel;
+	private MyTextLabel maxBitLabel;
+	private MyTextLabel maxRatioLabel;
 	
-	private JTextField maxRowField;
-	private JTextField maxShelfField;
-	private JTextField maxBitField;
-	private JTextField maxRatioField;
+	private MyTextField maxRowField;
+	private MyTextField maxShelfField;
+	private MyTextField maxBitField;
+	private MyTextField maxRatioField;
 	
-	private JLabel maxRatioTip;
+	private MyTextLabel maxRatioTip;
 	
-	private JButton confirmButton;
+	private MyLabel OKLabel;
 	
-	private JLabel suggestLabel;
+	private MyTextLabel suggestLabel;
 
 	public InitializeInformationPanel(UserVO userVO) {
 		
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
-		maxRowLabel = new JLabel("请输入最大排数");
-		maxRowField = new JTextField();
+		maxRowLabel = new MyTextLabel("请输入最大排数");
+		maxRowField = new MyTextField();
 
-		maxShelfLabel = new JLabel("请输入最大架数");
-		maxShelfField = new JTextField();
+		maxShelfLabel = new MyTextLabel("请输入最大架数");
+		maxShelfField = new MyTextField();
 
-		maxBitLabel = new JLabel("请输入最大位数");
-		maxBitField = new JTextField();
+		maxBitLabel = new MyTextLabel("请输入最大位数");
+		maxBitField = new MyTextField();
 		
-		maxRatioLabel = new JLabel("请输入警戒比例");
-		maxRatioField = new JTextField();
+		maxRatioLabel = new MyTextLabel("请输入警戒比例");
+		maxRatioField = new MyTextField();
 		
-		maxRatioTip = new JLabel("100以内的正整数");
+		maxRatioTip = new MyTextLabel("100以内的正整数");
 		
-		suggestLabel = new JLabel("Row:"+repertoryBL.getMaxRow()+"  Shelf:"+repertoryBL.getMaxShelf()+"  Digit:"+repertoryBL.getMaxDigit()+"  WarningRatio:"+repertoryBL.getMaxRatio());
+		suggestLabel = new MyTextLabel("默认值：最大排数:"+repertoryBL.getMaxRow()+"，最大架数:"+repertoryBL.getMaxShelf()+"，最大位数:"+repertoryBL.getMaxDigit()+"，警戒比例:"+repertoryBL.getMaxRatio());
 
-		confirmButton = new JButton("ok");
+		OKLabel = new MyLabel("确认");
 
 		
 		//加监听
-		confirmButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
-				int maxRow = Integer.parseInt(maxRowField.getText());
-				int maxShelf = Integer.parseInt(maxShelfField.getText());
-				int maxDigit = Integer.parseInt(maxBitField.getText());
-				int warningRatio = Integer.parseInt(maxRatioField.getText());
+		OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int maxRow;
+				int maxShelf;
+				int maxDigit;
+				int warningRatio;
+				
+				if(maxRowField.getText().equals(""))
+					maxRow = 10;
+				else
+					maxRow = Integer.parseInt(maxRowField.getText());
+				
+				if(maxShelfField.getText().equals(""))
+					maxShelf = 10;
+				else
+					maxShelf = Integer.parseInt(maxShelfField.getText());
+				
+				if(maxBitField.getText().equals(""))
+					maxDigit = 10;
+				else
+					maxDigit = Integer.parseInt(maxBitField.getText());
+				
+				if(maxRatioField.getText().equals(""))
+					warningRatio = 80;
+				else
+					warningRatio = Integer.parseInt(maxRatioField.getText());
+				
 				int returnNum = repertoryBL.inventoryInitialization(maxRow, maxShelf, maxDigit, warningRatio);
 				maxRowField.setText("");
 				maxShelfField.setText("");
@@ -99,7 +120,7 @@ public class InitializeInformationPanel extends OperationPanel {
 		add(maxRatioLabel);
 		add(maxRatioField);
 		add(maxRatioTip);
-		add(confirmButton);
+		add(OKLabel);
 		add(suggestLabel);
 		
 		setVisible(true);
@@ -112,32 +133,32 @@ public class InitializeInformationPanel extends OperationPanel {
 	//设置位置
 	public void setCmpLocation(){
 		
-		maxRowLabel.setBounds((int) (PANEL_WIDTH * 2.848911651728553 / 25), (int) (PANEL_HEIGHT * 2.544642857142857 / 20),
-				(int) (PANEL_WIDTH * 5.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
-		maxShelfLabel.setBounds((int) (PANEL_WIDTH * 2.848911651728553 / 25), (int) (PANEL_HEIGHT * 4.642857142857143 / 20),
-				(int) (PANEL_WIDTH * 5.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
-		maxBitLabel.setBounds((int) (PANEL_WIDTH * 2.848911651728553 / 25), (int) (PANEL_HEIGHT * 6.651785714285714 / 20),
-				(int) (PANEL_WIDTH * 5.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
-		maxRatioLabel.setBounds((int) (PANEL_WIDTH * 2.848911651728553 / 25), (int) (PANEL_HEIGHT * 8.705357142857142 / 20),
-				(int) (PANEL_WIDTH * 5.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
+		maxRowLabel.setBounds((int) (PANEL_WIDTH * 4.848911651728553 / 25), (int) (PANEL_HEIGHT * 3.544642857142857 / 20),
+				(int) (PANEL_WIDTH * 4.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
+		maxShelfLabel.setBounds((int) (PANEL_WIDTH * 4.848911651728553 / 25), (int) (PANEL_HEIGHT * 5.642857142857143 / 20),
+				(int) (PANEL_WIDTH * 4.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
+		maxBitLabel.setBounds((int) (PANEL_WIDTH * 4.848911651728553 / 25), (int) (PANEL_HEIGHT * 7.651785714285714 / 20),
+				(int) (PANEL_WIDTH * 4.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
+		maxRatioLabel.setBounds((int) (PANEL_WIDTH * 4.848911651728553 / 25), (int) (PANEL_HEIGHT * 9.705357142857142 / 20),
+				(int) (PANEL_WIDTH * 4.60179257362356 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
 		
-		maxRowField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 2.544642857142857 / 20),
+		maxRowField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 3.544642857142857 / 20),
 				(int) (PANEL_WIDTH * 5.857874519846351 / 25), (int) (PANEL_HEIGHT * 1.5625 / 20));
-		maxShelfField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 4.642857142857143 / 20),
+		maxShelfField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 5.642857142857143 / 20),
 				(int) (PANEL_WIDTH * 5.857874519846351 / 25), (int) (PANEL_HEIGHT * 1.5625 / 20));
-		maxBitField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 6.651785714285714 / 20),
+		maxBitField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 7.651785714285714 / 20),
 				(int) (PANEL_WIDTH * 5.857874519846351 / 25), (int) (PANEL_HEIGHT * 1.5625 / 20));
-		maxRatioField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 8.705357142857142 / 20),
+		maxRatioField.setBounds((int) (PANEL_WIDTH * 9.891165172855313 / 25), (int) (PANEL_HEIGHT * 9.705357142857142 / 20),
 				(int) (PANEL_WIDTH * 5.857874519846351 / 25), (int) (PANEL_HEIGHT * 1.5625 / 20));
 		
-		maxRatioTip.setBounds((int) (PANEL_WIDTH * 17.509603072983353 / 25), (int) (PANEL_HEIGHT * 8.705357142857142 / 20),
-				(int) (PANEL_WIDTH * 4.801536491677337 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
+		maxRatioTip.setBounds((int) (PANEL_WIDTH * 15.909603072983353 / 25), (int) (PANEL_HEIGHT * 9.705357142857142 / 20),
+				(int) (PANEL_WIDTH * 6.751536491677337 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
 		
-		confirmButton.setBounds((int) (PANEL_WIDTH * 11.107554417413573 / 25), (int) (PANEL_HEIGHT * 13.125 / 20),
-				(int) (PANEL_WIDTH * 2.272727272727273 / 25), (int) (PANEL_HEIGHT * 1.8303571428571428 / 20));
+		OKLabel.setBounds((int) (PANEL_WIDTH * 11.107554417413573 / 25), (int) (PANEL_HEIGHT * 13.725 / 20),
+				(int) (PANEL_WIDTH * 2.801536491677337 / 25), (int) (PANEL_HEIGHT * 1.5303571428571428 / 20));
 		
-		suggestLabel.setBounds((int) (PANEL_WIDTH * 9.107554417413573 / 25), (int) (PANEL_HEIGHT * 15.125 / 20),
-				(int) (PANEL_WIDTH * 9.272727272727273 / 25), (int) (PANEL_HEIGHT * 1.8303571428571428 / 20));
+		suggestLabel.setBounds((int) (PANEL_WIDTH * 5.607554417413573 / 25), (int) (PANEL_HEIGHT * 15.725 / 20),
+				(int) (PANEL_WIDTH * 15.272727272727273 / 25), (int) (PANEL_HEIGHT * 1.8303571428571428 / 20));
 	}
 
 	public void setBounds(int x, int y, int width, int height) {

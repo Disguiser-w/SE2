@@ -2,8 +2,6 @@ package data.financedata;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,7 +10,6 @@ import java.util.ArrayList;
 import common.FileGetter;
 import po.AccountPO;
 import po.DriverPO;
-import po.ExpressPO;
 import po.InitInfoPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
@@ -180,7 +177,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 			repertoryPOs.add(repertory);
 			accountPOs.add(account);
 			
-			InitInfoPO po=new InitInfoPO("20151214", userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+			InitInfoPO po=new InitInfoPO("20151214", "CW-00001",userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 			data.initInfo(po, "20151214");
 //			InitInfoPO po1=data.getInitInfo("20151214");
 //			ArrayList<InitInfoPO> infoPOs = data.getAllInitInfo();

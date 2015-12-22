@@ -25,7 +25,7 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
     		return 0;
     	}
     	else {
-    		System.out.println("chongfule");
+    		System.out.println("已经存在相同ID的货物");
     		return 1;
     		}
     }
@@ -188,6 +188,10 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 				goodsData.addGoods(new GoodsPO("20151002-00003", 15, "北京", "上海"));
 				goodsData.addGoods(new GoodsPO("20151101-00012", 120, "洛杉矶", "北京"));
 				goodsData.addGoods(new GoodsPO("20151024-00007", 250, "南京", "北极"));
+				goodsData.addGoods(new GoodsPO("20151011-00001", 15, "南京","广州"));
+				goodsData.addGoods(new GoodsPO("20151021-00001", 18, "北京","上海"));
+				goodsData.addGoods(new GoodsPO("20151101-00001", 21, "北京","广州"));
+				goodsData.addGoods(new GoodsPO("20151111-00001", 24, "南京","广州"));
 				
 				System.out.println("添加后:");
 				ArrayList<GoodsPO> goodspoList0 = goodsData.showAllGoods();

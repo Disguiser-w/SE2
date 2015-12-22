@@ -1,27 +1,23 @@
 package presentation.userui;
 
 import java.awt.event.ActionListener;
-//import java.awt.event.FocusListener;
-//import java.awt.event.FocusAdapter;
 import java.awt.event.ActionEvent;
-//import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-//import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import presentation.commonui.MyComboBox;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
+import presentation.commonui.OperationPanel;
+import presentation.userui.UserMainPanel;	
 import businesslogic.userbl.UserBL;
 import vo.UserVO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import presentation.commonui.OperationPanel;
-import presentation.userui.UserMainPanel;
 
 public class AddUserPanel extends OperationPanel {
 	
@@ -40,24 +36,24 @@ public class AddUserPanel extends OperationPanel {
     private String[] user_authority_type = {"最低权限（普通人员权限）", "普通财务人员权限", "最高权限（最高财务人员和总经理）"};
     private String[] user_authority_type_for_financialStaff = {"普通财务人员权限", "最高权限（最高财务人员和总经理）"};
     
-    private JLabel function;
-    private JLabel user_profession;
-    private JLabel user_salaryPlan;
-    private JLabel user_authority;
-    private JLabel user_name;
-    private JLabel user_ID;
-    private JLabel user_password;
+    private MyTextLabel function;
+    private MyTextLabel user_profession;
+    private MyTextLabel user_salaryPlan;
+    private MyTextLabel user_authority;
+    private MyTextLabel user_name;
+    private MyTextLabel user_ID;
+    private MyTextLabel user_password;
     
-    private JComboBox<String> user_profession_choose;
-    private JComboBox<String> user_salaryPlan_choose;
-    private JComboBox<String> user_authority_choose;
+    private MyComboBox<String> user_profession_choose;
+    private MyComboBox<String> user_salaryPlan_choose;
+    private MyComboBox<String> user_authority_choose;
     
-    private JTextField user_name_Input;
-    private JTextField user_ID_Input;
-    private JTextField user_password_Input;
+    private MyTextField user_name_Input;
+    private MyTextField user_ID_Input;
+    private MyTextField user_password_Input;
     
-    private JButton infoOKButton;
-    private JButton returnButton;
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     int proInt;
 	int professionInt;
@@ -77,25 +73,40 @@ public class AddUserPanel extends OperationPanel {
     	
     	this.userBL = new UserBL();
     	
-    	function = new JLabel("用户管理——新增用户");
+    	function = new MyTextLabel("用户管理——新增用户");
     	
-    	user_profession = new JLabel("用户职位");
-    	user_salaryPlan = new JLabel("薪水策略");
-    	user_authority = new JLabel("权限");
-    	user_name = new JLabel("姓名");
-    	user_ID = new JLabel("用户编号");
-    	user_password = new JLabel("初始密码");
+    	user_profession = new MyTextLabel("用户职位");
+    	user_salaryPlan = new MyTextLabel("薪水策略");
+    	user_authority = new MyTextLabel("权限");
+    	user_name = new MyTextLabel("姓名");
+    	user_ID = new MyTextLabel("用户编号");
+    	user_password = new MyTextLabel("初始密码");
     	
-    	infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+    	OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
-    	user_profession_choose = new JComboBox<String>(user_profession_type);
-    	user_salaryPlan_choose = new JComboBox<String>(user_salaryPlan_type);
-    	user_authority_choose = new JComboBox<String>(user_authority_type);
+    	user_profession_choose = new MyComboBox<String>();
+    	user_profession_choose.addItem(user_profession_type[0]);
+    	user_profession_choose.addItem(user_profession_type[1]);
+    	user_profession_choose.addItem(user_profession_type[2]);
+    	user_profession_choose.addItem(user_profession_type[3]);
+    	user_profession_choose.addItem(user_profession_type[4]);
+    	user_profession_choose.addItem(user_profession_type[5]);
+    	user_profession_choose.addItem(user_profession_type[6]);
+    	
+    	user_salaryPlan_choose = new MyComboBox<String>();
+    	user_salaryPlan_choose.addItem(user_salaryPlan_type[0]);
+    	user_salaryPlan_choose.addItem(user_salaryPlan_type[1]);
+    	user_salaryPlan_choose.addItem(user_salaryPlan_type[2]);
+    	
+    	user_authority_choose = new MyComboBox<String>();
+    	user_authority_choose.addItem(user_authority_type[0]);
+    	user_authority_choose.addItem(user_authority_type[1]);
+    	user_authority_choose.addItem(user_authority_type[2]);
 
-    	user_name_Input = new JTextField("");
-    	user_ID_Input = new JTextField("");
-    	user_password_Input = new JTextField("123456");
+    	user_name_Input = new MyTextField();
+    	user_ID_Input = new MyTextField();
+    	user_password_Input = new MyTextField();
     
     	proInt = 0;
 		professionInt = 0;
@@ -116,7 +127,8 @@ public class AddUserPanel extends OperationPanel {
 		String IDPost = userBL.getUserIDPost(ProfessionType.courier);
 		user_ID_Input.setText(IDPre+"-"+IDPost);
 		user_ID_Input.setEditable(false);
-		
+		user_password_Input.setText("123456");
+		user_password_Input.setEditable(false);
 		
     	//加监听
     	user_profession_choose.addActionListener(new ActionListener(){
@@ -149,12 +161,13 @@ public class AddUserPanel extends OperationPanel {
     			else{
     				//如果是财务人员，权限只有2种
     				remove(user_authority_choose);
-    				user_authority_choose = new JComboBox<String>(user_authority_type_for_financialStaff);
+    				user_authority_choose = new MyComboBox<String>();
+    				user_authority_choose.addItem(user_authority_type_for_financialStaff[0]);
+    				user_authority_choose.addItem(user_authority_type_for_financialStaff[1]);
     				user_authority_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
     						PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
     				add(user_authority_choose);
     				user_authority_choose.setEnabled(true);
-    				authorityInt = user_authority_choose.getSelectedIndex() + 1;
     			}
     			
     			String[] IDPreList = {"KD","SJ","CK","YYT","ZZZX","CW","JL"};
@@ -183,8 +196,8 @@ public class AddUserPanel extends OperationPanel {
     		}
     	});*/
     	
-    	infoOKButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				
 				userName = user_name_Input.getText();
 				if(userName.equals("")){
@@ -201,8 +214,13 @@ public class AddUserPanel extends OperationPanel {
 				salaryPlanInt = user_salaryPlan_choose.getSelectedIndex();
 				SalaryPlanType[] salaryPlanList = {SalaryPlanType.courierSalaryPlan,SalaryPlanType.driverSalaryPlan,SalaryPlanType.basicStaffSalaryPlan};
 				SalaryPlanType salaryPlan = salaryPlanList[salaryPlanInt];
-				
-				authorityInt = user_authority_choose.getSelectedIndex();
+				if(professionInt != 5){
+					authorityInt = user_authority_choose.getSelectedIndex();
+				}
+				else{
+					authorityInt = user_authority_choose.getSelectedIndex() + 1;
+    				System.out.println(authorityInt);
+				}
 				AuthorityType[] authorityList = {AuthorityType.lowest,AuthorityType.commonFianacialStaff, AuthorityType.highest};
 				AuthorityType authority = authorityList[authorityInt];
 			
@@ -222,8 +240,8 @@ public class AddUserPanel extends OperationPanel {
 			}
 		});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
     			returnui();
     		}
     	});
@@ -245,8 +263,8 @@ public class AddUserPanel extends OperationPanel {
     	add(user_ID_Input);
     	add(user_password);
     	add(user_password_Input);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
     	
     	setVisible(true);
     	
@@ -260,17 +278,17 @@ public class AddUserPanel extends OperationPanel {
     	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
     	
-    	user_profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 8 / 48,
+    	user_profession.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 8 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 13 / 48,
+		user_salaryPlan.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 13 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 18 / 48,
+		user_authority.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 18 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		user_name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 23 / 48,
+		user_name.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
-		user_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 28 / 48,
+		user_ID.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 28 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		user_password.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 33 / 48,
+		user_password.setBounds(PANEL_WIDTH / 5, PANEL_HEIGHT * 33 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
 		user_profession_choose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 8 / 48,
@@ -286,9 +304,9 @@ public class AddUserPanel extends OperationPanel {
 		user_password_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
     }
     

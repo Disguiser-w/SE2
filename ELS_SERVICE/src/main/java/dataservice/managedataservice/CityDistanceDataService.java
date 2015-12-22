@@ -12,7 +12,7 @@ public interface CityDistanceDataService extends Remote {
     public int deleteCityDistance(String cityA, String cityB) throws RemoteException;
     public int modifyCityDistance(CityDistancePO cityDistancepo) throws RemoteException;
     public ArrayList<CityDistancePO> findCityDistanceBySingle(String city) throws RemoteException;
-	public CityDistancePO findCityDistanceByBoth(String cityA, String cityB) throws RemoteException;
+	public ArrayList<CityDistancePO> findCityDistanceByBoth(String cityA, String cityB) throws RemoteException;
     public ArrayList<CityDistancePO> showAllCityDistances() throws RemoteException;
     public ArrayList<String> getAllCitys() throws RemoteException;
 

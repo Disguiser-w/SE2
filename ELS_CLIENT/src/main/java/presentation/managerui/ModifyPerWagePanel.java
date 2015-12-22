@@ -1,14 +1,14 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import vo.PerWageVO;
 import type.ProfessionType;
@@ -26,18 +26,18 @@ public class ModifyPerWagePanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private JLabel function;
-    private JLabel professionLabel;
-    private JLabel perWageLabel;
+    private MyTextLabel function;
+    private MyTextLabel professionLabel;
+    private MyTextLabel perWageLabel;
     
-    private JTextField professionField;
-    private JTextField perWageInput;
-    private JTextField perWagePost;
+    private MyTextField professionField;
+    private MyTextField perWageInput;
+    private MyTextField perWagePost;
+    
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     private String professionStr;
-	
-    private JButton infoOKButton;
-    private JButton returnButton;
     
 	public ModifyPerWagePanel(ManageFrame manageFrame, BasicDataManagePanel managePanel, String profession){
 		
@@ -46,24 +46,26 @@ public class ModifyPerWagePanel extends OperationPanel {
 		
 		perWageBL = new PerWageBL();
 		
-		function = new JLabel("基础数据管理——修改每次工资");
+		function = new MyTextLabel("基础数据管理——修改每次工资");
 		
-		professionLabel = new JLabel("职业");
-		perWageLabel = new JLabel("每次工资");
+		professionLabel = new MyTextLabel("职业");
+		perWageLabel = new MyTextLabel("每次工资");
 		
-		professionField = new JTextField(profession);
+		professionField = new MyTextField();
+		professionField.setText(profession);
 		professionField.setEditable(false);
-	    perWageInput = new JTextField();
-	    perWagePost = new JTextField("元");
+	    perWageInput = new MyTextField();
+	    perWagePost = new MyTextField();
+	    perWagePost.setText("元");
 	    
 	    professionStr = profession;
 		
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
     	//加监听
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 
     			ProfessionType professionType = ProfessionType.courier; 
     			Double perWageDouble = Double.parseDouble(perWageInput.getText());
@@ -89,8 +91,8 @@ public class ModifyPerWagePanel extends OperationPanel {
     		}
     	});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -105,8 +107,8 @@ public class ModifyPerWagePanel extends OperationPanel {
     	add(professionField);
     	add(perWageInput);
     	add(perWagePost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
 
     	setVisible(true);
     	
@@ -119,22 +121,22 @@ public class ModifyPerWagePanel extends OperationPanel {
 	public void setCmpLocation(){
 		function.setBounds(PANEL_WIDTH / 24, PANEL_HEIGHT / 10,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-    	
-    	professionLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 20 / 48,
+
+    	professionLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	perWageLabel.setBounds(PANEL_WIDTH / 6, PANEL_HEIGHT * 30 / 48,
+    	perWageLabel.setBounds(PANEL_WIDTH / 4, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 
-		professionField.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 20 / 48,
+		professionField.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 17 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		perWageInput.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 30 / 48,
+		perWageInput.setBounds(PANEL_WIDTH * 2 / 5, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		perWagePost.setBounds(PANEL_WIDTH * 5 / 6, PANEL_HEIGHT * 30 / 48,
+		perWagePost.setBounds(PANEL_WIDTH * 17 / 30, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		infoOKButton.setBounds(PANEL_WIDTH * 30 / 48, PANEL_HEIGHT * 35 / 48,
+		OKLabel.setBounds(PANEL_WIDTH * 35 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 6 / 48, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

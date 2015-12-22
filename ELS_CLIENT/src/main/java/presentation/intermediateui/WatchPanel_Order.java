@@ -3,53 +3,32 @@ package presentation.intermediateui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.UserFrame;
-import vo.PlaneVO;
-import vo.TrainVO;
-import vo.TruckVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
-public class WatchPanel extends Management_modifyPanel {
+public class WatchPanel_Order extends Transfering_newPanel {
 	private MyLabel confirmButton;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	public WatchPanel(IntermediateMainController c, UserFrame f, MyTable m,
-			PlaneVO p) {
-		super(c, f, m, p);
-		remove(function);
-		function = new JLabel("飞机信息");
-		add(function);
-		setBaseInfo();
-	}
+	private String id;
 
-	public WatchPanel(IntermediateMainController c, UserFrame f, MyTable m,
-			TrainVO t) {
-		super(c, f, m, t);
+	public WatchPanel_Order(IntermediateMainController c, UserFrame f,
+			MyTable m, String id) {
+		super(c, f, m);
+		this.id = id;
 		remove(function);
-		function = new JLabel("火车信息");
-		add(function);
-		setBaseInfo();
-	}
-
-	public WatchPanel(IntermediateMainController c, UserFrame f, MyTable m,
-			TruckVO t) {
-		super(c, f, m, t);
-		remove(function);
-		function = new JLabel("汽车信息");
-		add(function);
+		remove(OKButton);
 		setBaseInfo();
 	}
 
 	private void setBaseInfo() {
-		destination_input.setEnabled(false);
-		farePrice_input.setEditable(false);
+		order_ID_input.setEditable(false);
 
 		confirmButton = new MyLabel("ok");
 		confirmButton.setBounds((int) (PANEL_WIDTH * 21.37784090909091 / 25),

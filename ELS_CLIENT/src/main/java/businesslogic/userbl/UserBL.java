@@ -38,7 +38,7 @@ public class UserBL implements UserBLService{
 	public LogVO login(String userID, String password){
 		try{
 			UserPO userpo = udService.findUserByID(userID);
-			if(userpo.equals(null))   //找不到该用户，返回2
+			if(userpo == null )   //找不到该用户，返回2
 				return new LogVO("The user doesn't exist", null);
 			else if(!(userpo.getPassword().equals(password)))	//用户密码错误，返回1
 				return new LogVO("The userID and the password don't match", null);
@@ -238,7 +238,23 @@ public class UserBL implements UserBLService{
 		}
 	}
 	
-	
+	/**
+	 *给快递员、司机职业员工提供绩点清零功能
+	 * @return int 
+	 * 
+	 * */
+	public int clearGrades(){
+		try{
+			ArrayList<UserPO> userList = udService.showAllUsers();
+			for(UserPO userpo : userList){
+				udService.modifyUserGrades(userpo.getID(), 0);
+			}
+			return 0;
+		}catch(RemoteException exception){
+			exception.printStackTrace();
+			return 1;
+		}
+	}
 	
 	/*-----------------------------------------------VO与PO的相互转换-----------------------------------------*/
 	/**

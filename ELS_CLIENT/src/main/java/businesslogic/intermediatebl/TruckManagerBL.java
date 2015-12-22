@@ -32,10 +32,12 @@ public class TruckManagerBL implements TruckManageBLService {
 		return truckList;
 	}
 
-	public OperationState addTruck(String ID, String destination) {
+	public OperationState addTruck(String ID, String destination)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		TruckVO truck_add = new TruckVO(ID, destination);
 		truckList.add(truck_add);
+		saveTruckList();
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -44,6 +46,7 @@ public class TruckManagerBL implements TruckManageBLService {
 		for (TruckVO truck : truckList) {
 			if (truck.ID.equals(s)) {
 				truckList.remove(truck);
+				saveTruckList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -55,6 +58,7 @@ public class TruckManagerBL implements TruckManageBLService {
 		for (TruckVO truck : truckList) {
 			if (truck.ID.equals(truck_modify.ID)) {
 				truckList.set(truckList.indexOf(truck), truck_modify);
+				saveTruckList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}

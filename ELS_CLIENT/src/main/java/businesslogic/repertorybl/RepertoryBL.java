@@ -202,7 +202,7 @@ public class RepertoryBL implements RepertoryBLService{
 	}
 	
 	public GoodsVO GoodsPOToVO(GoodsPO goodspo){
-		return new GoodsVO(goodspo.getOrder_ID(), goodspo.getDeparturePlace(), goodspo.getDestination(), goodspo.getEnterDate(), goodspo.getLeaveDate());
+		return new GoodsVO(goodspo.getOrder_ID(), goodspo.getFee(), goodspo.getDeparturePlace(), goodspo.getDestination(), goodspo.getEnterDate(), goodspo.getLeaveDate());
 	}
 
 	public InventoryVO inventoryPOToVO(InventoryPO inventorypo){

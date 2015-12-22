@@ -134,12 +134,9 @@ public class FinanceMainController {
 					"成本收益表");
 			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController), "经营情况表");
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
-					organizationController, vehicleController, repertoryController, accountBLController, financeFrame),
+					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
 					"期初建账");
-			// financeFrame.addFuncLabel(new
-			// InitialStockPanel_main(initialStockBLController,
-			// userController,organizationController,vehicleController,accountBLController,
-			// financeFrame));
+		
 			financeFrame.showFrame();
 		} else {
 			financeFrame.addFuncLabel(
@@ -149,12 +146,9 @@ public class FinanceMainController {
 					"成本收益表");
 			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController), "经营情况表");
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
-					organizationController, vehicleController, repertoryController, accountBLController, financeFrame),
+					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
 					"期初建账");
-			// financeFrame.addFuncLabel(new
-			// InitialStockPanel_main(initialStockBLController,
-			// userController,organizationController,vehicleController,accountBLController,
-			// financeFrame));
+		
 			financeFrame.showFrame();
 		}
 
@@ -444,7 +438,7 @@ public class FinanceMainController {
 				accountVOs.add(vo);
 			}
 		}
-		InitInfoVO initInfoVO = new InitInfoVO(po.getDate(), userVOs, organizationVOs, vehicleVOs, repertoryVOs,
+		InitInfoVO initInfoVO = new InitInfoVO(po.getDate(), po.getUserID(),userVOs, organizationVOs, vehicleVOs, repertoryVOs,
 				accountVOs);
 		return initInfoVO;
 	}
@@ -545,7 +539,7 @@ public class FinanceMainController {
 		InitInfoPO initPO;
 
 		try {
-			initPO = new InitInfoPO(vo.time, userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+			initPO = new InitInfoPO(vo.time, vo.userID,userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 			return initPO;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

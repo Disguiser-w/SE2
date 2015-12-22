@@ -70,9 +70,17 @@ public class CityDistanceBL implements CityDistanceBLService{
 		}
 	}
 	
-	public CityDistanceVO findCityDistanceByBoth(String cityA, String cityB){
+	public ArrayList<CityDistanceVO> findCityDistanceByBoth(String cityA, String cityB){
 		try{
-			return cityDistancePOToVO(cddService.findCityDistanceByBoth(cityA, cityB));
+			ArrayList<CityDistancePO> cityDistancePOList =  cddService.findCityDistanceByBoth(cityA, cityB);
+			ArrayList<CityDistanceVO> cityDistanceVOList =  new ArrayList<CityDistanceVO>();
+			if(cityDistancePOList != null){
+				for(CityDistancePO cityDistance: cityDistancePOList)
+					cityDistanceVOList.add(cityDistancePOToVO(cityDistance));
+				return cityDistanceVOList;
+			}
+			else
+				return null;
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 			return null;
@@ -119,7 +127,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 			for(CityDistancePO cityDistance:cityDistanceList0)
 				System.out.println("CityA: "+cityDistance.getCityA()+"CityB: "+cityDistance.getCityB()+", CityDistance: "+cityDistance.getDistance());
 
-			cityDistanceData.addCityDistance(new CityDistancePO("南极", "北极", 40000));
+			//cityDistanceData.addCityDistance(new CityDistancePO("南极", "北极", 40000));
 			
 			ArrayList<CityDistancePO> cityDistanceList1 = cityDistanceData.showAllCityDistances();
 			for(CityDistancePO cityDistance:cityDistanceList1)

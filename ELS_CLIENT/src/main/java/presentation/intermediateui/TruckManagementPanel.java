@@ -138,10 +138,10 @@ public class TruckManagementPanel extends OperationPanel {
 					return;
 
 				selectedIndex = selectedIndexs.get(0);
-				messageTable.cancelSelected(selectedIndex);
 				Management_modifyPanel modifyPanel = new Management_modifyPanel(
 						controller, frame, messageTable, truckList
-								.get(selectedIndex));
+								.get(selectedIndex), selectedIndex);
+				messageTable.cancelSelected(selectedIndex);
 				frame.changePanel(modifyPanel);
 			}
 		});
@@ -183,8 +183,8 @@ public class TruckManagementPanel extends OperationPanel {
 
 				for (TruckVO vo : truckList) {
 					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel(controller, frame,
-								messageTable, vo));
+						frame.changePanel(new WatchPanel_Management(controller,
+								frame, messageTable, vo, 0));
 					}
 				}
 			}

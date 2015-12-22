@@ -32,10 +32,12 @@ public class TrainManagerBL implements TrainManagerBLService {
 		return trainList;
 	}
 
-	public OperationState addTrain(String ID, String destination) {
+	public OperationState addTrain(String ID, String destination)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		TrainVO train_add = new TrainVO(ID, destination);
 		trainList.add(train_add);
+		saveTrainList();
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -44,6 +46,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 		for (TrainVO train : trainList) {
 			if (train.ID.equals(s)) {
 				trainList.remove(train);
+				saveTrainList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -55,6 +58,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 		for (TrainVO train : trainList) {
 			if (train.ID.equals(train_modify.ID)) {
 				trainList.set(trainList.indexOf(train), train_modify);
+				saveTrainList();
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}

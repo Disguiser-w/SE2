@@ -1,18 +1,16 @@
 package presentation.managerui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.MySearchField;
 //import presentation.commonui.LocationHelper;
 
 import vo.OrganizationVO;
@@ -28,11 +26,9 @@ public class OrganizationManagePanel extends OperationPanel {
 	
 	private OrganizationBL organizationBL;
 
-	private MyLabel addLabel;
-	private MyLabel deleteLabel;
-	private MyLabel searchLabel;
-	private MyTextField inputField;
-	private JButton searchButton;
+	private AddLabel addLabel;
+	private DeleteLabel deleteLabel;
+	private MySearchField searchField;
 
 	private MyTable messageTable;
 	
@@ -46,20 +42,15 @@ public class OrganizationManagePanel extends OperationPanel {
 		
 		organizationBL = new OrganizationBL();
 		
-        addLabel = new MyLabel("新增机构");
-        deleteLabel = new MyLabel("删除机构");
-        searchLabel = new MyLabel();
-        searchLabel = new MyLabel("查找");
-        inputField = new MyTextField();
-        searchButton = new JButton();
+        addLabel = new AddLabel("新增机构");
+        deleteLabel = new DeleteLabel("删除机构");
+        searchField = new MySearchField();
         
 		setLayout(null);
 
         add(addLabel);
         add(deleteLabel);
-        add(searchLabel);
-        add(inputField);
-		add(searchButton);
+        add(searchField);
         
         organizations = organizationBL.showAllOrganizations();
         
@@ -80,8 +71,8 @@ public class OrganizationManagePanel extends OperationPanel {
 			}
 		});
 		
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae){
+		searchField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				searchui();
 			}
 		});
@@ -90,24 +81,20 @@ public class OrganizationManagePanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height){
 		super.setBounds(x, y, width, height);
 
-		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.1607142857142858 / 20),
-				(int) (width * 1.3124199743918055 / 25), (int) (height * 1.8303571428571428 / 20));
-		searchLabel.setBounds((int) (width * 15.781049935979514 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 0.9282970550576184 / 25), (int) (height * 1.2946428571428572 / 20));
-		inputField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3392857142857142 / 20));
-		searchButton.setBounds((int) (width * 22.247119078104994 / 25), (int) (height * 1.3392857142857142 / 20),
-				(int) (width * 1.7285531370038412 / 25), (int) (height * 1.2946428571428572 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 5.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 10.535714285714286 / 20));
+		addLabel.setBounds((int) (width * 2.624839948783611 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		searchField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 15.535714285714286 / 20));
 	}
 	
 	
 	private void setBaseInfos() {
-		String[] head = new String[]{"机构类型","机构名称","机构编号","下属仓库编号"};
-		int[] widths = {120,200,140,140};
+		String[] head = new String[]{"机构类型", "机构名称", "机构编号", "下属仓库编号"};
+		int[] widths = {120, 200, 140, 140};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -158,7 +145,7 @@ public class OrganizationManagePanel extends OperationPanel {
 	
 	//查询界面
 	public void searchui(){
-		String keyword = inputField.getText();
+		String keyword = searchField.getText();
 		organizations = organizationBL.findOrganizationByKeyword(keyword);
 		messageTable.setInfos(getInfos());
 	}

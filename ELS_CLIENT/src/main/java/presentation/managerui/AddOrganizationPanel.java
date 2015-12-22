@@ -1,20 +1,21 @@
 package presentation.managerui;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import presentation.commonui.OperationPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.event.FocusListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import presentation.commonui.MyComboBox;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
+import presentation.commonui.OperationPanel;
 import businesslogic.managebl.OrganizationBL;
+
 import type.OrganizationType;
 import vo.OrganizationVO;
 
@@ -30,28 +31,30 @@ public class AddOrganizationPanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
     private int PANEL_HEIGHT = 480;
     
-    private String[] organizationCategoryStr = {"营业厅","中转中心"};
+    private String[] organizationCategoryStr = {"中转中心","营业厅"};
 
-    private JLabel function;
-    private JLabel organizationCategory;
-    private JLabel organizationID;
-    private JLabel organizationIDPrompt;
-    private JLabel organizationName;
-    private JLabel repertoryID;
+    private MyTextLabel function;
+    private MyTextLabel organizationCategory;
+    private MyTextLabel organizationID;
+    private MyTextLabel organizationIDPrompt;
+    private MyTextLabel organizationName;
+    private MyTextLabel organizationNamePrompt;
+    private MyTextLabel repertoryID;
     
-    private JComboBox<String> categoryChoose;
+    private MyComboBox<String> categoryChoose;
     
-    private JTextField organizationNameInput;
-    private JTextField organizationNamePost;
-    private JTextField organizationIDInput;
-    private JTextField repertoryIDInput;
-    private JTextField repertoryIDPost;
+    private MyTextField organizationNameInput;
+    private MyTextField organizationIDInput;
+    private MyTextField repertoryIDInput;
+    private MyTextField repertoryIDPost;
     
-    private JButton infoOKButton;
-    private JButton returnButton;
+    private MyLabel OKLabel;
+    private MyLabel returnLabel;
     
     int categoryChooseInt = 0;
+    
     boolean validID;
+    boolean validName;
     
 	public AddOrganizationPanel(ManageFrame manageFrame, OrganizationManagePanel managePanel){
 		
@@ -60,37 +63,49 @@ public class AddOrganizationPanel extends OperationPanel {
 		
 		organizationBL = new OrganizationBL();
 		
-		function = new JLabel("机构管理——新增机构");
+		function = new MyTextLabel("机构管理——新增机构");
 		
-		organizationCategory = new JLabel("机构类别");
-		organizationID = new JLabel("机构编号");
-		organizationName = new JLabel("机构名称");
-		repertoryID = new JLabel("下属仓库编号");
+		organizationCategory = new MyTextLabel("机构类别");
+		organizationID = new MyTextLabel("机构编号");
+		organizationName = new MyTextLabel("机构名称");
+		repertoryID = new MyTextLabel("下属仓库编号");
 		
-		categoryChoose = new JComboBox<String>(organizationCategoryStr);
-	    organizationIDInput = new JTextField();
-	    organizationIDPrompt = new JLabel("格式：XXX000");
-		organizationNameInput = new JTextField();
-	    organizationNamePost = new JTextField("营业厅");
-	    organizationNamePost.setEditable(false);
-	    repertoryIDInput = new JTextField("/");
+		categoryChoose = new MyComboBox<String>();
+		categoryChoose.addItem(organizationCategoryStr[0]);
+		categoryChoose.addItem(organizationCategoryStr[1]);
+		
+	    organizationIDInput = new MyTextField();
+	   
+		organizationNameInput = new MyTextField();
+	    repertoryIDInput = new MyTextField();
+	    repertoryIDInput.setText("");
 	    repertoryIDInput.setEditable(false);
-	    repertoryIDPost = new JTextField(); 
+	    repertoryIDPost = new MyTextField(); 
+	    repertoryIDPost.setText("-CK");
 	    repertoryIDPost.setEditable(false);
 	    
-	    infoOKButton = new JButton("确认");
-    	returnButton = new JButton("返回");
+	    organizationIDPrompt = new MyTextLabel("格式：XXX（三位区号）-X（从0开始编号）");
+	    organizationNamePrompt = new MyTextLabel("请填入城市名+中转中心，如：南京中转中心");
+	    
+	    OKLabel = new MyLabel("确认");
+    	returnLabel = new MyLabel("返回");
     	
 
     	//加监听
     	categoryChoose.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent ae){
     			categoryChooseInt = categoryChoose.getSelectedIndex();
-    			if(categoryChooseInt==1){
-    				organizationNamePost.setText("中转中心");
-    				organizationIDPrompt.setText("格式：XXX-0");
+    			if(categoryChooseInt == 0){
+    				organizationIDPrompt.setText("格式：XXX（三位区号）-X（从0开始编号）");
+    				organizationNamePrompt.setText("请填入城市名，如：南京");
     				repertoryIDInput.setText("");
     				repertoryIDPost.setText("-CK");
+    			}
+    			else{
+    				organizationIDPrompt.setText("格式：XXX（三位区号）XXX（从001开始编号）");
+    				organizationNamePrompt.setText("请填入所在城市名+营业厅名，如：南京市鼓楼营业厅");
+    				repertoryIDInput.setText("/");
+    				repertoryIDPost.setText("");
     			}
     		}
     	});
@@ -98,49 +113,56 @@ public class AddOrganizationPanel extends OperationPanel {
     	organizationIDInput.addFocusListener(new FocusAdapter(){
     		public void focusLost(FocusEvent event){
     			String name = organizationIDInput.getText();
-    			if(categoryChooseInt==1){
+    			if(categoryChooseInt == 0){
     				repertoryIDInput.setText(name);
     				repertoryIDPost.setText("-CK");
     			}
     		}
     	});
     	
-    	infoOKButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			
     			OrganizationType type; 
-    			String name = organizationNameInput.getText()+organizationNamePost.getText();
+    			String name = organizationNameInput.getText();
     			String ID = organizationIDInput.getText();
     			categoryChooseInt = categoryChoose.getSelectedIndex();
     			
-    			if(categoryChooseInt==0){
-    				type = OrganizationType.businessHall;
-    				if(ID.length()==6 && ID.endsWith("000")){
+    			if(categoryChooseInt == 0){
+    				type = OrganizationType.intermediateCenter;
+    				if(ID.length() == 5 && ID.contains("-"))
     					validID = true;
-    				}
+    				if(name.contains("市") && name.endsWith("中转中心"))
+    					validName = true;
     			}
     			else{
-    				type = OrganizationType.intermediateCenter;
-    				if(ID.length()==5 && ID.endsWith("-0")){
+    				type = OrganizationType.businessHall;
+    				if(ID.length() == 6)
     					validID = true;
-    				}
+    				if(name.endsWith("营业厅"))
+    					validName = true;
     			}
     			
-    			if(validID){
-	    			int returnNum = organizationBL.addOrganization(new OrganizationVO(type, ID, name));
+    			if(!validID){
+    				warnning("错误的机构编号");
+    				return;
+	    		}
+    			else if(!validName){
+    				warnning("错误的机构名称");
+    				return;
+    			}
+    			else{
+    				int returnNum = organizationBL.addOrganization(new OrganizationVO(type, ID, name));
 	    			if(returnNum==0)
 	    				successAdd();
 	    			else
 	    				failedAdd();
-	    		}
-    			else{
-    				warnning("错误的机构编号");
     			}
     		}
     	});
     	
-    	returnButton.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent ae){
+    	returnLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
     			returnui();
     		}
     	});
@@ -158,11 +180,11 @@ public class AddOrganizationPanel extends OperationPanel {
     	add(organizationIDInput);
     	add(organizationIDPrompt);
     	add(organizationNameInput);
-    	add(organizationNamePost);
+    	add(organizationNamePrompt);
     	add(repertoryIDInput);
     	add(repertoryIDPost);
-    	add(infoOKButton);
-    	add(returnButton);
+    	add(OKLabel);
+    	add(returnLabel);
     	
     	setVisible(true);
     	
@@ -182,30 +204,27 @@ public class AddOrganizationPanel extends OperationPanel {
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 		organizationName.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 23 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		
 		repertoryID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 28 / 48,
-				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
-		
-		
-		categoryChoose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 13/ 48,
-				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		organizationIDInput.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		organizationIDPrompt.setBounds(PANEL_WIDTH *2 / 3, PANEL_HEIGHT * 18 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		organizationNameInput.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		organizationNamePost.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 23 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		
-		repertoryIDInput.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		repertoryIDPost.setBounds(PANEL_WIDTH * 2 / 3, PANEL_HEIGHT * 28 / 48,
-				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		
-		infoOKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 35 / 48,
+		
+		categoryChoose.setBounds(PANEL_WIDTH / 3, PANEL_HEIGHT * 13/ 48,
+				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
+		organizationIDInput.setBounds(PANEL_WIDTH / 3, PANEL_HEIGHT * 18 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		organizationIDPrompt.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
+				PANEL_WIDTH * 3 / 8, PANEL_HEIGHT / 16);
+		organizationNameInput.setBounds(PANEL_WIDTH / 3, PANEL_HEIGHT * 23 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		organizationNamePrompt.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
+				PANEL_WIDTH * 3 / 8, PANEL_HEIGHT / 16);
+		repertoryIDInput.setBounds(PANEL_WIDTH / 3, PANEL_HEIGHT * 28 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		repertoryIDPost.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		
+		OKLabel.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 35 / 48,
+				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
+		returnLabel.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

@@ -1,23 +1,18 @@
 package presentation.repertoryui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import presentation.commonui.DateChooser;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+
 import vo.InventoryCheckVO;
 import vo.UserVO;
 import businesslogic.repertorybl.RepertoryBL;
@@ -28,53 +23,80 @@ public class ViewInventoryPanel extends OperationPanel {
 	
 	private RepertoryBL repertoryBL;
 	
-	private int PANEL_WIDTH = 720;
-	private int PANEL_HEIGHT = 480;
-	
 	private JLabel dateRange;
 	
-	private JLabel startDateLabel;
-	private JTextField startDateField;
-	private JLabel startDateChooseLabel;
-
-	private JLabel endDateLabel;
-	private JTextField endDateField;
-	private JLabel endDateChooseLabel;
+	private MyTextLabel startDateLabel;
+	private MyTextLabel startDateChooseLabel;
+	private MyTextLabel endDateLabel;
+	private MyTextLabel endDateChooseLabel;
 	
-	private JButton confirmDateButton;
+	private MyTextField startDateField;
+	private MyTextField endDateField;
 	
-	private JTable messageTable;
-
+	private MyLabel OKLabel;
+	
+	private MyTextLabel enterNumTotalLabel;
+	private MyTextLabel enterFeeTotalLabel;
+	private MyTextLabel leaveNumTotalLabel;
+	private MyTextLabel leaveFeeTotalLabel;
+	private MyTextLabel planeBlockNumLabel;
+	private MyTextLabel trainBlockNumLabel;
+	private MyTextLabel truckBlockNumLabel;
+	private MyTextLabel defaultBlockNumLabel;
+	
+	private MyTextField enterNumTotalField;
+	private MyTextField enterFeeTotalField;
+	private MyTextField leaveNumTotalField;
+	private MyTextField leaveFeeTotalField;
+	private MyTextField planeBlockNumField;
+	private MyTextField trainBlockNumField;
+	private MyTextField truckBlockNumField;
+	private MyTextField defaultBlockNumField;
+	
 	private InventoryCheckVO inventoryCheckVO;
 	
-	private DefaultTableCellRenderer tcr;
-
-// private LocationHelper helper;
-
 	public ViewInventoryPanel(UserVO userVO) {
 		
 		repertoryBL = new RepertoryBL(userVO.userID);
 		
-		dateRange = new JLabel("日期范围");
+		dateRange = new MyTextLabel("日期范围");
 		
-		startDateLabel = new JLabel();
-		startDateField = new JTextField("", 11);
+		startDateLabel = new MyTextLabel();
+		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-10-01");
-		startDateChooseLabel = new JLabel("开始日期");
-
-		endDateLabel = new JLabel();
-		endDateField = new JTextField("", 11);
+		startDateChooseLabel = new MyTextLabel("开始日期");
+		endDateLabel = new MyTextLabel();
+		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-10-01");
-		endDateChooseLabel = new JLabel("结束日期");
+		endDateChooseLabel = new MyTextLabel("结束日期");
 
-		confirmDateButton = new JButton("确认");
+		startDateLabel.setLayout(new BorderLayout());
+		startDateLabel.add(new DateChooser(startDateField),BorderLayout.CENTER);
+		endDateLabel.setLayout(new BorderLayout());
+		endDateLabel.add(new DateChooser(endDateField),BorderLayout.CENTER);
 		
-		MessageTableModel model = new MessageTableModel();
-		messageTable = new JTable(model);
+		OKLabel = new MyLabel("确认");
 		
+		enterNumTotalLabel = new MyTextLabel("入库数量总计");
+		enterFeeTotalLabel = new MyTextLabel("入库金额总计");
+		leaveNumTotalLabel = new MyTextLabel("出库数量总计");
+		leaveFeeTotalLabel = new MyTextLabel("出库金额总计");
+		planeBlockNumLabel = new MyTextLabel("飞机区数量");
+		trainBlockNumLabel = new MyTextLabel("火车区数量");
+		truckBlockNumLabel = new MyTextLabel("汽车区数量");
+		defaultBlockNumLabel = new MyTextLabel("机动区数量");
 		
-		confirmDateButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ae){
+		enterNumTotalField = new MyTextField();
+		enterFeeTotalField = new MyTextField();
+		leaveNumTotalField = new MyTextField();
+		leaveFeeTotalField = new MyTextField();
+		planeBlockNumField = new MyTextField();
+		trainBlockNumField = new MyTextField();
+		truckBlockNumField = new MyTextField();
+		defaultBlockNumField = new MyTextField();
+		
+		OKLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				checkUI();
 			}
 		});
@@ -89,109 +111,75 @@ public class ViewInventoryPanel extends OperationPanel {
 		add(endDateLabel);
 		add(endDateField);
 		add(endDateChooseLabel);
-		add(confirmDateButton);
-		add(messageTable.getTableHeader());
-		add(messageTable);
+		add(OKLabel);
+		add(enterNumTotalLabel);
+		add(enterFeeTotalLabel);
+		add(leaveNumTotalLabel);
+		add(leaveFeeTotalLabel);
+		add(planeBlockNumLabel);
+		add(trainBlockNumLabel);
+		add(truckBlockNumLabel);
+		add(defaultBlockNumLabel);
 		
-		// helper = new LocationHelper(this);
-		
-		setTableColor();
-		setBorder();
-        setCmpLocation();
-        setBaseInfo();
+		add(enterNumTotalField);
+		add(enterFeeTotalField);
+		add(leaveNumTotalField);
+		add(leaveFeeTotalField);
+		add(planeBlockNumField);
+		add(trainBlockNumField);
+		add(truckBlockNumField);
+		add(defaultBlockNumField);
 	}
 
-	public void setTableColor(){
-		
-		tcr = new DefaultTableCellRenderer(){
-		
-			private static final long serialVersionUID = 6L;
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
 
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				if (row % 2 == 0)
-					setBackground(Color.cyan);
-				else
-					setBackground(Color.white);
+		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),
+				(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
+		startDateLabel.setBounds((int)(width * 9.296683673469388/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  2.4047448979591837 /25),(int)(height *  1.1741682974559686/20));
+        endDateLabel.setBounds((int)(width * 17.072704081632653/25),(int)(height * 2.5048923679060664/20),
+        		(int)(width *  2.4047448979591837 /25),(int)(height *  1.1741682974559686/20));
+        startDateField.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),
+				(int)(width *  4.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
+		endDateField.setBounds((int)(width * 12.809948979591837/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  4.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
+		OKLabel.setBounds((int)(width * 19.9109693877551/25),(int)(height * 2.5048923679060664/20),
+				(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		enterNumTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 6/20),
+				(int)(width *  3.5683673469387754 /25),(int)(height *  1/20));
+		enterFeeTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 7.5/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		leaveNumTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 9/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		leaveFeeTotalLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 10.5/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		planeBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 12/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		trainBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 13.5/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		truckBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 15/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		defaultBlockNumLabel.setBounds((int)(width * 7.6109693877551/25),(int)(height * 16.5/20),
+				(int)(width *  3.1683673469387754 /25),(int)(height *  1/20));
+		enterNumTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 6/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		enterFeeTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 7.5/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		leaveNumTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 9/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		leaveFeeTotalField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 10.5/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		planeBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 12/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		trainBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 13.5/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		truckBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 15/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+		defaultBlockNumField.setBounds((int)(width * 12.6109693877551/25),(int)(height * 16.5/20),
+				(int)(width *  4.1683673469387754 /25),(int)(height *  1/20));
+	}
 	
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			}
-		};
-	}
-	
-	//设置边界
-	public void setBorder(){
-		messageTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		messageTable.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		startDateLabel.setLayout(new BorderLayout());
-		startDateLabel.add(new DateChooser(startDateField),BorderLayout.CENTER);
-		endDateLabel.setLayout(new BorderLayout());
-		endDateLabel.add(new DateChooser(endDateField),BorderLayout.CENTER);
-	}
-	
-	public void setCmpLocation() {
-
-		dateRange.setBounds((int)(PANEL_WIDTH * 1.4987244897959184/25),(int)(PANEL_HEIGHT * 2.544031311154599/20),
-				(int)(PANEL_WIDTH *  3.1568877551020407 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
-		
-		startDateLabel.setBounds((int)(PANEL_WIDTH * 8.896683673469388/25),(int)(PANEL_HEIGHT * 2.5048923679060664/20),
-				(int)(PANEL_WIDTH *  0.9247448979591837 /25),(int)(PANEL_HEIGHT *  1.1741682974559686/20));
-        endDateLabel.setBounds((int)(PANEL_WIDTH * 14.572704081632653/25),(int)(PANEL_HEIGHT * 2.5048923679060664/20),
-        		(int)(PANEL_WIDTH *  1.052295918367347 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
-        startDateField.setBounds((int)(PANEL_WIDTH * 5.0063775510204085/25),(int)(PANEL_HEIGHT * 2.544031311154599/20),
-				(int)(PANEL_WIDTH *  3.1568877551020407 /25),(int)(PANEL_HEIGHT *  1.1741682974559686/20));
-		endDateField.setBounds((int)(PANEL_WIDTH * 10.809948979591837/25),(int)(PANEL_HEIGHT * 2.5048923679060664/20),
-				(int)(PANEL_WIDTH *  3.2206632653061225 /25),(int)(PANEL_HEIGHT *  1.2915851272015655/20));
-		
-		confirmDateButton.setBounds((int)(PANEL_WIDTH * 19.6109693877551/25),(int)(PANEL_HEIGHT * 2.5048923679060664/20),
-				(int)(PANEL_WIDTH *  2.1683673469387754 /25),(int)(PANEL_HEIGHT *  1.1350293542074363/20));
-		
-		messageTable.getTableHeader().setBounds((int)(PANEL_WIDTH * 1.4987244897959184/25),(int)(PANEL_HEIGHT * 4.148727984344423/20),
-				(int)(PANEL_WIDTH *  21.0140306122449 /25),(int)(PANEL_HEIGHT *  1.3424657534246576/20));
-		messageTable.setBounds((int)(PANEL_WIDTH * 1.4987244897959184/25),(int)(PANEL_HEIGHT * 4.148727984344423/20)+(int)(PANEL_HEIGHT *  1.3424657534246576/20),
-				(int)(PANEL_WIDTH *  21.0140306122449 /25),(int)(PANEL_HEIGHT *  13.424657534246576/20)-(int)(PANEL_HEIGHT *  1.3424657534246576/20));
-	}
-	
-	private void setBaseInfo(){
-
-		// 设置成不可编辑不可改变位置，大小
-		messageTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		messageTable.getTableHeader().setReorderingAllowed(false);
-		messageTable.getTableHeader().setResizingAllowed(false);
-
-		TableColumn column0 = messageTable.getColumnModel().getColumn(0);
-		TableColumn column1 = messageTable.getColumnModel().getColumn(1);
-		TableColumn column2 = messageTable.getColumnModel().getColumn(2);
-		TableColumn column3 = messageTable.getColumnModel().getColumn(3);
-		TableColumn column4 = messageTable.getColumnModel().getColumn(4);
-		TableColumn column5 = messageTable.getColumnModel().getColumn(5);
-		TableColumn column6 = messageTable.getColumnModel().getColumn(6);
-		TableColumn column7 = messageTable.getColumnModel().getColumn(7);
-		
-		// 设置宽度
-		column0.setPreferredWidth(messageTable.getWidth() / 8);
-		column1.setPreferredWidth(messageTable.getWidth() / 8);
-		column2.setPreferredWidth(messageTable.getWidth() / 8);
-		column3.setPreferredWidth(messageTable.getWidth() / 8);
-		column4.setPreferredWidth(messageTable.getWidth() / 8);
-		column5.setPreferredWidth(messageTable.getWidth() / 8);
-		column6.setPreferredWidth(messageTable.getWidth() / 8);
-		column7.setPreferredWidth(messageTable.getWidth() / 8);
-		
-
-		messageTable.setRowHeight((messageTable.getHeight() - messageTable.getTableHeader().getHeight()) / 10);
-
-		tcr.setHorizontalAlignment(JLabel.CENTER);
-		
-		column0.setCellRenderer(tcr);
-		column1.setCellRenderer(tcr);
-		column2.setCellRenderer(tcr);
-		column3.setCellRenderer(tcr);
-		column4.setCellRenderer(tcr);
-		column5.setCellRenderer(tcr);
-		column6.setCellRenderer(tcr);
-		column7.setCellRenderer(tcr);
-	}
 	
 	public void checkUI(){
 		
@@ -205,70 +193,15 @@ public class ViewInventoryPanel extends OperationPanel {
 		}
 		else{
 			inventoryCheckVO = repertoryBL.inventoryCheck(startDateStr, endDateStr);
-			repaint();
+			enterNumTotalField.setText(inventoryCheckVO.enterTotal+"");
+			enterFeeTotalField.setText(inventoryCheckVO.enterFeeTotal+"");
+			leaveNumTotalField.setText(inventoryCheckVO.leaveTotal+"");
+			leaveFeeTotalField.setText(inventoryCheckVO.leaveFeeTotal+"");
+			planeBlockNumField.setText(inventoryCheckVO.stockNum[0]+"");
+			trainBlockNumField.setText(inventoryCheckVO.stockNum[1]+"");
+			truckBlockNumField.setText(inventoryCheckVO.stockNum[2]+"");
+			defaultBlockNumField.setText(inventoryCheckVO.stockNum[3]+"");
 		}
-	}
-	
-	private class MessageTableModel extends AbstractTableModel {
-
-		private static final long serialVersionUID = 4945586293640191297L;
-
-		public int getRowCount() {
-			return 1;
-		}
-
-		public int getColumnCount() {
-			return 8;
-		}
-
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			
-			String startDateStr = startDateField.getText();
-			String endDateStr = endDateField.getText();
-			
-			inventoryCheckVO = repertoryBL.inventoryCheck(startDateStr, endDateStr);
-
-			switch (columnIndex) {
-			case 0:
-				return inventoryCheckVO.enterTotal;
-			case 1:
-				return inventoryCheckVO.enterFeeTotal;
-			case 2:
-				return inventoryCheckVO.leaveTotal;
-			case 3:
-				return inventoryCheckVO.leaveFeeTotal;
-			case 4:
-				return inventoryCheckVO.stockNum[0];
-			case 5:
-				return inventoryCheckVO.stockNum[1];
-			case 6:
-				return inventoryCheckVO.stockNum[2];
-			default:
-				return inventoryCheckVO.stockNum[3];
-			}
-		}
-
-		public String getColumnName(int c) {
-			switch (c) {
-			case 0:
-				return "入库数量总计";
-			case 1:
-				return "入库金额总计";
-			case 2:
-				return "出库数量总计";
-			case 3:
-				return "出库金额总计";
-			case 4:
-				return "飞机区数量";
-			case 5:
-				return "火车区数量";
-			case 6:
-				return "汽车区数量";
-			default:
-				return "机动区数量";
-			}
-		}
-
 	}
 	
 }

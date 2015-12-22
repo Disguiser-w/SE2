@@ -9,7 +9,7 @@ import vo.TrainVO;
 public interface TrainManagerBLService {
 	public ArrayList<TrainVO> showTrainList();
 
-	public OperationState addTrain(String ID, String destination);
+	public OperationState addTrain(String ID, String destination) throws RemoteException;
 
 	public OperationState deleteTrain(String train_ID) throws Exception;
 

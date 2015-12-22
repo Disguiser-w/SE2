@@ -11,13 +11,14 @@ import javax.swing.JPanel;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.TruckVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;
 
-public class Management_newPanel extends JPanel {
+public class Management_newPanel extends OperationPanel {
 	private UserFrame frame;
 
 	private MyTable messageTable;

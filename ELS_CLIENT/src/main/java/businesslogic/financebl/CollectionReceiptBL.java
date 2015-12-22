@@ -52,7 +52,6 @@ public class CollectionReceiptBL extends ReceiptBL {
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CollectionReceiptPO po=FinanceMainController.cvoToPO(vo);
-		update(vo);
 		try {
 			return collectionData.createCollection(po);
 		} catch (RemoteException e) {
@@ -90,7 +89,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 			 return FinanceMainController.gposToVOs(businessData.getGatheringReceipt(Time));
 			}
 			else{
-				return null;
+				return new ArrayList<GatheringReceiptVO>();
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

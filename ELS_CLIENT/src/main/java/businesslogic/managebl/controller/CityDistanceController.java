@@ -25,12 +25,17 @@ public class CityDistanceController {
 		return cityDistance.modifyCityDistance(cityDistancevo);
 	}
 	
-	public CityDistanceVO findCityDistanceByBoth(String cityA, String cityB){
+	public ArrayList<CityDistanceVO> findCityDistanceBySingle(String city){
+		return cityDistance.findCityDistanceBySingle(city);
+	}
+	
+	public ArrayList<CityDistanceVO> findCityDistanceByBoth(String cityA, String cityB){
 		return cityDistance.findCityDistanceByBoth(cityA, cityB);
 	}
 	
 	public ArrayList<CityDistanceVO> showAllCityDistances(){
 		return cityDistance.showAllCityDistances();
 	}
+	
 	
 }

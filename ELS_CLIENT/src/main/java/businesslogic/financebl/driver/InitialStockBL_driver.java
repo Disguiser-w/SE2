@@ -1,6 +1,5 @@
 package businesslogic.financebl.driver;
 
-import java.awt.Container;
 import java.util.ArrayList;
 
 import type.AuthorityType;
@@ -37,7 +36,7 @@ public class InitialStockBL_driver {
 		repertoryPOs.add(repertory);
 		accountPOs.add(account);
 		
-		InitInfoVO vo = new InitInfoVO("20151221", userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
+		InitInfoVO vo = new InitInfoVO("20151221","CW-00001", userPOs, organizationPOs, vehiclePOs, repertoryPOs, accountPOs);
 		
 		initController.initInfo(vo, "20151221");
 		
