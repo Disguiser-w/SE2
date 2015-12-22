@@ -1,12 +1,12 @@
 package businesslogic.userbl;
 
 //import java.net.MalformedURLException;
-import java.rmi.Naming;
 //import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.UserPO;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.userblservice.UserBLService;
 import dataservice.userdataservice.UserDataService;
 import type.AuthorityType;
@@ -21,7 +21,7 @@ public class UserBL implements UserBLService{
 	
 	public UserBL(){
 		try{
-			udService = (UserDataService)Naming.lookup("rmi://localhost:8888/UserDataService");
+			udService = DataFactory.getUserData();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

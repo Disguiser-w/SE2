@@ -25,6 +25,7 @@ import po.EnVehicleReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.DistributeReceiptPO;
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.CollectionReceiptBL;
 import businesslogic.financebl.PaymentReceiptBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
@@ -58,8 +59,8 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	public ReviewReceiptBL(){
 		try{
-			bdService = (BusinessDataService)Naming.lookup("rmi://localhost:8888/BusinessDataService");
-			itmdService = (IntermediateDataService)Naming.lookup("rmi://localhost:8888/IntermediateDataService");
+			bdService =  DataFactory.getBusinessData();
+			itmdService =  DataFactory.getIntermediateData();
 			
 			collectionBL = new CollectionReceiptBL();
 			paymentBL = new PaymentReceiptBL();

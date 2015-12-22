@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import po.CityDistancePO;
 import vo.CityDistanceVO;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.CityDistanceBLService;
 import dataservice.managedataservice.CityDistanceDataService;
 
@@ -17,7 +18,7 @@ public class CityDistanceBL implements CityDistanceBLService{
 	
 	public CityDistanceBL(){
 		try{
-			cddService = (CityDistanceDataService)Naming.lookup("rmi://localhost:8888/CityDistanceDataService");
+			cddService = DataFactory.getCityDistanceData();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

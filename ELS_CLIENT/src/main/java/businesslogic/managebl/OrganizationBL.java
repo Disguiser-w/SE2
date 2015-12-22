@@ -26,8 +26,8 @@ public class OrganizationBL implements OrganizationBLService {
 
 	public OrganizationBL() {
 		try {
-			odService = (OrganizationDataService) Naming.lookup("rmi://localhost:8888/OrganizationDataService");
-			udService = (UserDataService) Naming.lookup("rmi://localhost:8888/UserDataService");
+			odService = DataFactory.getOrganizationData();
+			udService = DataFactory.getUserData();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

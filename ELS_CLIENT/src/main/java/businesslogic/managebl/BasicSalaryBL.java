@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import po.BasicSalaryPO;
 import vo.BasicSalaryVO;
 import type.ProfessionType;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.BasicSalaryBLService;
 import dataservice.managedataservice.BasicSalaryDataService;
 
@@ -18,7 +19,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 	
 	public BasicSalaryBL(){
 		try{
-			bsdService = (BasicSalaryDataService)Naming.lookup("rmi://localhost:8888/BasicSalaryDataService");
+			bsdService = DataFactory.getBasicSalaryData();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

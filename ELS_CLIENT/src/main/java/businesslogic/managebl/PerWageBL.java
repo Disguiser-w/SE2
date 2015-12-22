@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import po.PerWagePO;
 import vo.PerWageVO;
 import type.ProfessionType;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.PerWageBLService;
 import dataservice.managedataservice.PerWageDataService;
 
@@ -18,7 +19,7 @@ public class PerWageBL implements PerWageBLService{
 	
 	public PerWageBL(){
 		try{
-			pwdService = (PerWageDataService)Naming.lookup("rmi://localhost:8888/PerWageDataService");
+			pwdService = DataFactory.getPerWageData();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

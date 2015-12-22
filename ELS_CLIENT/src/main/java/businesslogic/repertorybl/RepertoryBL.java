@@ -13,6 +13,7 @@ import po.InventoryPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
 import po.InventoryCheckPO;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.repertoryblservice.RepertoryBLService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.GoodsDataService;
@@ -31,9 +32,9 @@ public class RepertoryBL implements RepertoryBLService{
 	
 	public RepertoryBL(String stockManID){
 		try{
-			odService = (OrganizationDataService)Naming.lookup("rmi://localhost:8888/OrganizationDataService");
-			rdService = (RepertoryDataService)Naming.lookup("rmi://localhost:8888/RepertoryDataService");
-			gdService = (GoodsDataService)Naming.lookup("rmi://localhost:8888/GoodsDataService");
+			odService = DataFactory.getOrganizationData();
+			rdService = DataFactory.getRepertoryData();
+			gdService = DataFactory.getGoodsData();
 			this.repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
 			ex.printStackTrace();

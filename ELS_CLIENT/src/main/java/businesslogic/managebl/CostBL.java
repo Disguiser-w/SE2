@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.CostPO;
+import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.CostBLService;
 import dataservice.managedataservice.CostDataService;
 import type.ExpressType;
@@ -18,7 +19,7 @@ public class CostBL implements CostBLService{
 	
 	public CostBL(){
 		try{
-			codService = (CostDataService)Naming.lookup("rmi://localhost:8888/CostDataService");
+			codService = DataFactory.getCostData();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
