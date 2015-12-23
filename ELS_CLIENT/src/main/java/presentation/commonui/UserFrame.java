@@ -50,7 +50,7 @@ public class UserFrame extends JFrame {
 
 		}
 
-		imageLabel = new ImageLabel(new String[] { name, ID }, type);
+		imageLabel = new ImageLabel(new String[] { name, ID }, this);
 		messagePanel = new MessagePanel(this);
 		functionPanel = new FunctionPanel();
 		operationPanel = new JPanel();
@@ -210,6 +210,16 @@ public class UserFrame extends JFrame {
 		operationPanel = operationPanels.get(num);
 		add(operationPanel);
 		repaint();
+	}
+
+	public void review() {
+		imageLabel.repaint();
+		messagePanel.repaint();
+		functionPanel.repaint();
+		for (JPanel i : operationPanels)
+			i.repaint();
+		setVisible(true);
+
 	}
 
 }

@@ -19,8 +19,7 @@ public class MyTextField extends JTextField {
 		label = new BackLabel();
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setFont(new Font("Microsoft YaHei", Font.PLAIN, 14));
-		if (UserFrame.type == UserFrame.TYPE_1)
-			setForeground(Color.WHITE);
+
 	}
 
 	public MyTextField() {
@@ -39,17 +38,25 @@ public class MyTextField extends JTextField {
 	}
 
 	public void paintComponent(Graphics g) {
-
+		if (!getText().equals("") && !isEditable())
+			setToolTipText(getText());
 		int width = getWidth();
 		int height = getHeight();
+		if (UserFrame.type == UserFrame.TYPE_1)
+			setForeground(Color.WHITE);
+		else
+			setForeground(Color.BLACK);
 
 		if (UserFrame.type == UserFrame.TYPE_0) {
-			g.setColor(Color.WHITE);
+			if (isEditable()) {
+				g.setColor(Color.WHITE);
+			} else
+				g.setColor(new Color(238, 238, 238));
+
 			g.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1) {
 			setBackground(new Color(0, 0, 0, 0));
 			setForeground(Color.WHITE);
-			// g.fillRect(0, 0, getWidth(), getHeight());
 		}
 		super.paintComponent(g);
 	}
@@ -72,10 +79,10 @@ public class MyTextField extends JTextField {
 			}
 
 			if (UserFrame.type == UserFrame.TYPE_0) {
-				if (isEditable())
+				if (isEditable()) {
 					g2d.setColor(Color.WHITE);
-				else
-					g2d.setColor(getBackground());
+				} else
+					g2d.setColor(new Color(238, 238, 238));
 				g2d.fillRoundRect(2, 2, width - 5, height - 5, height - 4, height - 4);
 
 			}

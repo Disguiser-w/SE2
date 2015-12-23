@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
 import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextArea;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
@@ -41,7 +42,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		this.controller = controller;
 		orderIDField = new MySearchField();
 		clearLabel = new MyLabel();
-		messageArea = new JTextArea();
+		messageArea = new MyTextArea();
 
 		receiveTimeLabel = new MyTextLabel("收件时间");
 		receiverNameLabel = new MyTextLabel("实际收件人");

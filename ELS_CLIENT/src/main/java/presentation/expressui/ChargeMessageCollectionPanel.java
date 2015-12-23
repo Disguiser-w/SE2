@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import businesslogic.expressbl.controller.ChargeCollectionController;
@@ -14,6 +15,7 @@ import presentation.commonui.LocationHelper;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import presentation.commonui.UserFrame;
 
 public class ChargeMessageCollectionPanel extends OperationPanel {
 
@@ -27,7 +29,8 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 		this.controller = controller;
 
 		totalMessageLabel = new MyTextLabel();
-		totalMessageLabel.setBackground(new Color(235, 235, 235));
+		totalMessageLabel.setBackground(new Color(200, 200, 200, 0));
+		totalMessageLabel.setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190, 125)));
 		totalMessageLabel.setOpaque(true);
 
 		add(totalMessageLabel);
@@ -41,8 +44,9 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
-		totalMessageLabel.setBounds((int) (width * 1.0572987721691678 / 25), (int) (height * 17.56272401433692 / 20),
-				(int) (width * 22.919508867667123 / 25), (int) (height * 1.7921146953405018 / 20));
+		totalMessageLabel.setBounds((int) (width * 1.0572987721691678 / 25) + 10,
+				(int) (height * 17.56272401433692 / 20)-8, (int) (width * 22.919508867667123 / 25) - 20,
+				(int) (height * 1.7921146953405018 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0572987721691678 / 25),
 				(int) (height * 1.146953405017921 / 20), (int) (width * 22.919508867667123 / 25),
 				(int) (height * 15.770609318996415 / 20));
@@ -84,8 +88,14 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+
 		super.paintComponent(g);
 		ExpressMainController.updateExpressInfo();
 		messageTable.setInfos(getInfos());
+		if (UserFrame.type == UserFrame.TYPE_0)
+			totalMessageLabel.setForeground(Color.BLACK);
+		else if (UserFrame.type == UserFrame.TYPE_1)
+			totalMessageLabel.setForeground(Color.WHITE);
+
 	}
 }

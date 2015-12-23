@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,9 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import common.ImageGetter;
+import presentation.special_ui.DayLabel;
+import presentation.special_ui.LogOutLabel;
+import presentation.special_ui.NightLabel;
 
 class MessagePanel extends JPanel {
 
+	private JLabel logoutLabel;
 	private JLabel exitLabel;
 	private JLabel timeLabel;
 
@@ -31,18 +36,21 @@ class MessagePanel extends JPanel {
 	private int oldY;
 	private boolean isMoving;
 	private Image background;
-	private Image close_1;
-	private Image close_2;
 
 	public MessagePanel(JFrame f) {
 		this.frame = f;
 
+	
+		logoutLabel = new LogOutLabel(f);
 		exitLabel = new ExitLabel();
 		timeLabel = new JLabel();
 		oldX = 0;
 		oldY = 0;
 		isMoving = false;
 		background = ImageGetter.getImage("background2.png").getImage();
+
+
+		add(logoutLabel);
 		add(exitLabel);
 		add(timeLabel);
 
@@ -50,6 +58,7 @@ class MessagePanel extends JPanel {
 		timeLabel.setForeground(Color.WHITE);
 		timeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
 
+//		 helper = new LocationHelper(this);
 		setLayout(null);
 		(new Thread(new Runnable() {
 			public void run() {
@@ -91,6 +100,8 @@ class MessagePanel extends JPanel {
 			}
 
 		});
+
+		
 	}
 
 	public void refreshTime() {
@@ -104,20 +115,8 @@ class MessagePanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-		// changePasswordLabel.setBounds(width / 2, height / 5, width * 1 / 12,
-		// height * 3 / 5);
-		// messageLabel.setBounds(width * 3 / 5, height / 5, width / 15, height
-		// * 3 / 5);
-		// timeLabel.setBounds(width * 7 / 10, height / 5, width * 11 / 50,
-		// height * 3 / 5);
-		// changePasswordLabel.setBounds((int) (width * 2.2851296043656206 /
-		// 25), (int) (height * 9.024390243902438 / 20),
-		// (int) (width * 2.387448840381992 / 25), (int) (height *
-		// 8.536585365853659 / 20));
-		// messageLabel.setBounds((int) (width * 7.5375170532060025 / 25), (int)
-		// (height * 9.024390243902438 / 20),
-		// (int) (width * 2.387448840381992 / 25), (int) (height *
-		// 8.536585365853659 / 20));
+		logoutLabel.setBounds((int) (width * 20.83901773533424 / 25), (int) (height * 5.121951219512195 / 20),
+				(int) (width * 1.398362892223738 / 25), (int) (height * 9.512195121951219 / 20));
 		exitLabel.setBounds((int) (width * 22.78308321964529 / 25), (int) (height * 5.121951219512195 / 20),
 				(int) (width * 1.398362892223738 / 25), (int) (height * 9.512195121951219 / 20));
 		timeLabel.setBounds((int) (width * 1.5688949522510232 / 25), (int) (height * 5.121951219512195 / 20),

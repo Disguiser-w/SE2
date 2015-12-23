@@ -35,13 +35,13 @@ public class DataFactory {
 		try {
 
 			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
-<<<<<<< HEAD
+
 			address = in.next();
 			System.out.println(address);
-=======
+
 			//address = in.next();
 			address = "localhost:8888";
->>>>>>> 4e9aa0d6da7f6e20353b2e4bf80dc3552b5d6cf8
+
 			in.close();
 
 		} catch (FileNotFoundException e) {

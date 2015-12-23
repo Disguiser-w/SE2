@@ -46,15 +46,8 @@ public class MyTable extends JPanel {
 
 	public MyTable(String[] head, ArrayList<String[]> infos, int[] widths, boolean multiChoose) {
 		scrollPanel = new JPanel();
-
-		if (UserFrame.type == 0) {
-			scrollPanel.setBackground(new Color(250, 250, 250));
-			setBackground(new Color(250, 250, 250));
-		} else if (UserFrame.type == 1) {
-			scrollPanel.setBackground(new Color(0, 0, 0, 0));
-			setBackground(new Color(0, 0, 0, 0));
-		}
-
+		scrollPanel.setBackground(new Color(0, 0, 0, 0));
+		setBackground(new Color(0, 0, 0, 0));
 		columnWidth = widths;
 		width = 0;
 		for (int i : widths)
@@ -257,7 +250,16 @@ public class MyTable extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+
+//		super.paintComponent(g);
+
+//		if (UserFrame.type == 0) {
+//			scrollPanel.setBackground(new Color(250, 250, 250));
+//			setBackground(new Color(250, 250, 250));
+//		} else if (UserFrame.type == 1) {
+
+//		}
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -335,7 +337,7 @@ public class MyTable extends JPanel {
 				add(box);
 			} else
 				setSize(30 + width, height);
- 
+
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					if (box.getSelected()) {
@@ -381,8 +383,8 @@ public class MyTable extends JPanel {
 
 			for (int i = 0; i < column; i++) {
 
-				if(rowInfos[i]==null)
-					rowInfos[i]="-";
+				if (rowInfos[i] == null)
+					rowInfos[i] = "-";
 				int strWidth = fm.stringWidth(rowInfos[i]);
 				if (type == 0)
 					g2d.setColor(Color.BLACK);

@@ -6,31 +6,71 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
 import common.ImageGetter;
+import presentation.special_ui.DayLabel;
+import presentation.special_ui.NightLabel;
 
 public class ImageLabel extends JLabel {
+
+	private JLabel day;
+	private JLabel night;
 
 	private String[] nameAndId;
 	private Image background;
 	private Image image;
 
-	public ImageLabel(String[] str, int type) {
+	public ImageLabel(String[] str, UserFrame f) {
 		background = ImageGetter.getImage("background1.png").getImage();
+
+		day = new DayLabel();
+		night = new NightLabel();
 		this.nameAndId = str;
-		System.out.println(type);
-		switch (type) {
-		case 0:
-			image = ImageGetter.getImage("doge.png").getImage();
-		case 1:
+		String head = str[1].split("-")[0];
+		switch (head) {
+		case "ZZZX":
+			image = ImageGetter.getImage("ZZZX.gif").getImage();
+			break;
 		default:
+			image = ImageGetter.getImage(head + ".png").getImage();
 		}
+		MouseListener l = new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (UserFrame.type == UserFrame.TYPE_0) {
+					UserFrame.type = UserFrame.TYPE_1;
+					remove(night);
+					add(day);
+					f.review();
+				} else {
+					UserFrame.type = UserFrame.TYPE_0;
+					remove(day);
+					add(night);
+					f.review();
+				}
+			}
+		};
+
+		day.addMouseListener(l);
+		night.addMouseListener(l);
+		add(night);
+
+		int width = getWidth();
+		int height = getHeight();
+
 	}
 
-	public ImageLabel(String[] str) {
-		this(str, -1);
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+		day.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
+				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
+
+		night.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
+				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
 	}
 
 	public void paintComponent(Graphics g) {
