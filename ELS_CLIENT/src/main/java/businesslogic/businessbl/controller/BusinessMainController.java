@@ -70,17 +70,18 @@ public class BusinessMainController {
 
 		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController), "装车管理",
 				ImageGetter.getImage("装车管理.png").getImage());
-		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController), "货物接收",
-				ImageGetter.getImage("acceptCargo.png").getImage());
 		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController), "派件",
 				ImageGetter.getImage("distribute.png").getImage());
-		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController), "收款汇总",
-				ImageGetter.getImage("gathering.png").getImage());
+
+		businessFrame.addFuncLabel(new OrderReceiveManagerPanel(acceptCargoController), "货物接收",
+				ImageGetter.getImage("acceptCargo.png").getImage());
 
 		businessFrame.addFuncLabel(new DriverManagerPanel(driverManagerController, businessFrame), "司机管理",
 				ImageGetter.getImage("driverManager.png").getImage());
 		businessFrame.addFuncLabel(new VehicleManagerPanel(vehicleManagerController, businessFrame), "车辆管理",
 				ImageGetter.getImage("vehicleManager.png").getImage());
+		businessFrame.addFuncLabel(new ChargeCollectionPanel(gatheringController), "收款汇总",
+				ImageGetter.getImage("gathering.png").getImage());
 
 		businessFrame.showFrame();
 

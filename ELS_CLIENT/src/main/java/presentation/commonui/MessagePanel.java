@@ -19,8 +19,7 @@ import javax.swing.JPanel;
 import common.ImageGetter;
 
 class MessagePanel extends JPanel {
-	// private JLabel changePasswordLabel;
-	// private JLabel messageLabel;
+
 	private JLabel exitLabel;
 	private JLabel timeLabel;
 
@@ -32,31 +31,20 @@ class MessagePanel extends JPanel {
 	private int oldY;
 	private boolean isMoving;
 	private Image background;
+	private Image close_1;
+	private Image close_2;
 
 	public MessagePanel(JFrame f) {
 		this.frame = f;
-		// changePasswordLabel = new JLabel("修改密码");
-		// messageLabel = new JLabel("消息");
+
 		exitLabel = new ExitLabel();
 		timeLabel = new JLabel();
 		oldX = 0;
 		oldY = 0;
 		isMoving = false;
 		background = ImageGetter.getImage("background2.png").getImage();
-		// add(changePasswordLabel);
-		// add(messageLabel);
 		add(exitLabel);
 		add(timeLabel);
-
-		// changePasswordLabel.setHorizontalAlignment(JLabel.CENTER);
-		// changePasswordLabel.setForeground(Color.WHITE);
-		// changePasswordLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN,
-		// 15));
-		// changePasswordLabel.setBorder(BorderFactory.createSoftBevelBorder(Color.WHITE));
-
-		// messageLabel.setHorizontalAlignment(JLabel.CENTER);
-		// messageLabel.setForeground(Color.WHITE);
-		// messageLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
 
 		timeLabel.setHorizontalAlignment(JLabel.CENTER);
 		timeLabel.setForeground(Color.WHITE);

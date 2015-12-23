@@ -351,7 +351,7 @@ public class DriverManagerPanel extends OperationPanel {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y; i++) {
+			for (int i = 1980; i <= y; i++) {
 				year.addItem(i);
 			}
 
@@ -699,7 +699,7 @@ public class DriverManagerPanel extends OperationPanel {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y; i++) {
+			for (int i = 1980; i <= y; i++) {
 				year.addItem(i);
 			}
 

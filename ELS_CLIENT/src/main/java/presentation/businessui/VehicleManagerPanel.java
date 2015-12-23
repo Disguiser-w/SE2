@@ -353,7 +353,7 @@ public class VehicleManagerPanel extends OperationPanel {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y; i++) {
+			for (int i = 1980; i <= y; i++) {
 				year.addItem(i);
 			}
 
@@ -698,7 +698,7 @@ public class VehicleManagerPanel extends OperationPanel {
 			Calendar c = new GregorianCalendar();// 新建日期对象
 			int y = c.get(Calendar.YEAR);
 
-			for (int i = 1960; i <= y; i++) {
+			for (int i = 1980; i <= y; i++) {
 				year.addItem(i);
 			}
 
@@ -774,7 +774,12 @@ public class VehicleManagerPanel extends OperationPanel {
 					String destinationCity = destination.name.substring(0, name.length() - 3);
 					OrganizationVO local = BusinessMainController.businessVO.organizationVO;
 
-					DriverVO vo = driverVOs.get(driversBox.getSelectedIndex());
+					int driverIndex = driversBox.getSelectedIndex();
+					if(driverIndex == -1) {
+						warnning("请选择司机");
+						return;
+					}
+					DriverVO vo = driverVOs.get(driverIndex);
 					vo.isUsing = true;
 
 					VehicleVO newVO = new VehicleVO(id, engineNumber, licensePlateNumber, lowNumberPlate, buyTime,

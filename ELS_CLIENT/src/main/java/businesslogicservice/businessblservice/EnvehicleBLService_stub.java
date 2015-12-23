@@ -8,7 +8,7 @@ import vo.VehicleVO;
 public class EnvehicleBLService_stub implements EnVehicleBLService{
 
 	@Override
-	public ArrayList<String> autoTruckLoading() {
+	public ArrayList<String[]> autoTruckLoading() {
 		// TODO Auto-generated method stub
 		return null;
 	}

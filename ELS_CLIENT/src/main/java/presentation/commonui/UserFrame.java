@@ -23,7 +23,7 @@ import common.ImageGetter;
 public class UserFrame extends JFrame {
 	public static final int TYPE_0 = 0;
 	public static final int TYPE_1 = 1;
-	public static int type = TYPE_1;
+	public static int type = TYPE_0;
 	// private JLabel panel;
 
 	private ImageLabel imageLabel;
@@ -40,7 +40,17 @@ public class UserFrame extends JFrame {
 
 		num = 0;
 		operationPanels = new ArrayList<JPanel>();
-		imageLabel = new ImageLabel(new String[] { name, ID });
+		int type = -1;
+
+		switch (ID.split("-")[0]) {
+		case "KD":
+			type = 0;
+			break;
+		default:
+
+		}
+
+		imageLabel = new ImageLabel(new String[] { name, ID }, type);
 		messagePanel = new MessagePanel(this);
 		functionPanel = new FunctionPanel();
 		operationPanel = new JPanel();

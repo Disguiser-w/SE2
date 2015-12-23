@@ -1,7 +1,9 @@
 package common;
 
+import java.io.FileNotFoundException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.util.Scanner;
 
 import data.businessdata.BusinessData;
 import data.expressdata.ExpressData;
@@ -37,15 +39,18 @@ import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 
 public class TestService {
+	private static String address;
+
 	public static void main(String[] args) {
 
 		try {
 
-			// LocateRegistry.createRegistry(7777);
-			// Naming.rebind("rmi://172.25.133.95:7777/BusinessDataService",
-			// businessData);
+			Scanner in = new Scanner(FileGetter.getFile("../address.txt"));
+			address = in.next();
+			in.close();
 
-			// System.setProperty("java.rmi.server.hostname", "172.25.133.95");
+			System.setProperty("java.rmi.server.hostname", address);
+			
 			ExpressDataService expressData = new ExpressData();
 			BusinessDataService businessData = new BusinessData();
 			AccountDataService accountData = new AccountData();
@@ -65,23 +70,23 @@ public class TestService {
 
 			LocateRegistry.createRegistry(8888);
 
-			Naming.rebind("rmi://localhost:8888/ExpressDataService", expressData);
-			Naming.rebind("rmi://localhost:8888/BusinessDataService", businessData);
-			Naming.rebind("rmi://localhost:8888/AccountDataService", accountData);
-			Naming.rebind("rmi://localhost:8888/CollectionReceiptDataService", collectionData);
-			Naming.rebind("rmi://localhost:8888/PaymentReceiptDataService", paymentData);
-			Naming.rebind("rmi://localhost:8888/CostIncomeReceiptDataService", costincomeData);
-			Naming.rebind("rmi://localhost:8888/InitialStockDataService", initialData);
-			Naming.rebind("rmi://localhost:8888/IntermediateDataService", intermediateData);
-			Naming.rebind("rmi://localhost:8888/UserDataService", userData);
-			Naming.rebind("rmi://localhost:8888/OrganizationDataService", organizationData);
-			Naming.rebind("rmi://localhost:8888/RepertoryDataService", repertoryData);
-			Naming.rebind("rmi://localhost:8888/GoodsDataService", goodsData);
-			Naming.rebind("rmi://localhost:8888/PerWageDataService", perWageData);
-			Naming.rebind("rmi://localhost:8888/BasicSalaryDataService", basicSalaryData);
-			Naming.rebind("rmi://localhost:8888/CityDistanceDataService", cityDistanceData);
-			Naming.rebind("rmi://localhost:8888/CostDataService", costData);
-			Naming.rebind("rmi://localhost:8888/RepertoryDataService", repertoryData);
+			Naming.rebind("rmi://"+address+":8888/ExpressDataService", expressData);
+			Naming.rebind("rmi://"+address+":8888/BusinessDataService", businessData);
+			Naming.rebind("rmi://"+address+":8888/AccountDataService", accountData);
+			Naming.rebind("rmi://"+address+":8888/CollectionReceiptDataService", collectionData);
+			Naming.rebind("rmi://"+address+":8888/PaymentReceiptDataService", paymentData);
+			Naming.rebind("rmi://"+address+":8888/CostIncomeReceiptDataService", costincomeData);
+			Naming.rebind("rmi://"+address+":8888/InitialStockDataService", initialData);
+			Naming.rebind("rmi://"+address+":8888/IntermediateDataService", intermediateData);
+			Naming.rebind("rmi://"+address+":8888/UserDataService", userData);
+			Naming.rebind("rmi://"+address+":8888/OrganizationDataService", organizationData);
+			Naming.rebind("rmi://"+address+":8888/RepertoryDataService", repertoryData);
+			Naming.rebind("rmi://"+address+":8888/GoodsDataService", goodsData);
+			Naming.rebind("rmi://"+address+":8888/PerWageDataService", perWageData);
+			Naming.rebind("rmi://"+address+":8888/BasicSalaryDataService", basicSalaryData);
+			Naming.rebind("rmi://"+address+":8888/CityDistanceDataService", cityDistanceData);
+			Naming.rebind("rmi://"+address+":8888/CostDataService", costData);
+			Naming.rebind("rmi://"+address+":8888/RepertoryDataService", repertoryData);
 
 			System.out.println("Service start");
 

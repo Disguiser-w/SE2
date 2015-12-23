@@ -36,7 +36,7 @@ public class EnVehiclePanel extends OperationPanel {
 		add(distributeLabel);
 		add(confirmLabel);
 
-//		helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
@@ -50,10 +50,12 @@ public class EnVehiclePanel extends OperationPanel {
 		messageTable.setLocationAndSize((int) (width * 1.159618008185539 / 25),
 				(int) (height * 1.2903225806451613 / 20), (int) (width * 22.646657571623464 / 25),
 				(int) (height * 15.878136200716845 / 20));
-		distributeLabel.setBounds((int) (width * 19.37244201909959 / 25), (int) (height * 18.06451612903226 / 20),
-				(int) (width * 1.8417462482946794 / 25), (int) (height * 1.003584229390681 / 20));
-		confirmLabel.setBounds((int) (width * 22.032742155525238 / 25), (int) (height * 18.06451612903226 / 20),
-				(int) (width * 1.7735334242837653 / 25), (int) (height * 1.003584229390681 / 20));
+		distributeLabel.setBounds((int) (width * 19.37244201909959 / 25) - 8,
+				(int) (height * 18.06451612903226 / 20) - 10, (int) (width * 1.8417462482946794 / 25),
+				(int) (height * 1.003584229390681 / 20));
+		confirmLabel.setBounds((int) (width * 22.032742155525238 / 25) - 8,
+				(int) (height * 18.06451612903226 / 20) - 10, (int) (width * 1.7735334242837653 / 25),
+				(int) (height * 1.003584229390681 / 20));
 	}
 
 	public void addListener() {

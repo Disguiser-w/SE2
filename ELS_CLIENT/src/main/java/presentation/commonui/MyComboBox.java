@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 
 public class MyComboBox<T> extends JComboBox<T> {
 	public MyComboBox() {
+		
+		
 		setMaximumRowCount(100);
 		if (UserFrame.type == UserFrame.TYPE_0)
 			setBackground(Color.WHITE);

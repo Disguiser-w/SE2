@@ -395,6 +395,59 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		return 0;
 	}
 
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByHallID(String organizationID) throws RemoteException {
+
+		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
+
+		File dir = FileGetter.getFile("gatheringInfo/" + organizationID);
+
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		try {
+			for (File i : dir.listFiles()) {
+
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
+				GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
+				in.close();
+				pos.add(po);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("读取收款汇总文件失败");
+			return null;
+		}
+
+		return pos;
+	}
+
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByBoth(String organizationID, String time)
+			throws RemoteException {
+		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
+
+		File dir = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");
+
+		try {
+			if (!dir.exists()) {
+				dir.getParentFile().mkdirs();
+				dir.createNewFile();
+			}
+
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(dir));
+			GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
+			in.close();
+			pos.add(po);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("读取收款汇总文件失败");
+			return null;
+		}
+		return pos;
+	}
+
 	/**
 	 * Lili在这！！日期格式 yyyy-MM-dd
 	 */

@@ -25,7 +25,7 @@ import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 
-//暂时使用 localhost:8888
+
 public class DataFactory {
 	public static String address;
 
@@ -34,6 +34,7 @@ public class DataFactory {
 
 			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
 			address = in.next();
+			System.out.println(address);
 			in.close();
 
 		} catch (FileNotFoundException e) {

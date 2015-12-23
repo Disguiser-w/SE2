@@ -53,6 +53,9 @@ public interface BusinessDataService extends Remote {
 	// 返回规定日期的所有GatheringReceipt,time格式 2015-11-23
 	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) throws RemoteException;
 
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByHallID(String organization) throws RemoteException;
+	
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByBoth(String organization,String time) throws RemoteException;
 	// 增加一个DistributeOrder到本营业厅今日的文件中，一天也就一个
 	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException;
 

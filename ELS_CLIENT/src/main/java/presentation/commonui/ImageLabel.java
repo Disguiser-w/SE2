@@ -17,14 +17,20 @@ public class ImageLabel extends JLabel {
 	private Image background;
 	private Image image;
 
-	public ImageLabel(String[] str) {
+	public ImageLabel(String[] str, int type) {
 		background = ImageGetter.getImage("background1.png").getImage();
 		this.nameAndId = str;
+		System.out.println(type);
+		switch (type) {
+		case 0:
+			image = ImageGetter.getImage("doge.png").getImage();
+		case 1:
+		default:
+		}
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
-		repaint();
+	public ImageLabel(String[] str) {
+		this(str, -1);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -42,7 +48,10 @@ public class ImageLabel extends JLabel {
 
 		int width = getWidth();
 		int height = getHeight();
-		g2d.drawRoundRect(height / 4, height / 4, height / 2, height / 2, 6, 6);
+		g2d.drawRect(height / 4, height / 4, height / 2, height / 2);
+		if (image != null)
+			g2d.drawImage(image, height / 4 + 1, height / 4 + 1, height / 2 - 2, height / 2 - 2, null);
+
 		g2d.drawString("姓名: " + nameAndId[0], width * 2 / 7 + width / 10, height * 1 / 3 + 4);
 		g2d.drawString("编号: " + nameAndId[1], width * 2 / 7 + width / 10, height * 2 / 3 + 4);
 
