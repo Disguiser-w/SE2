@@ -10,13 +10,12 @@ import dataservice.repertorydataservice.GoodsDataService;
 
 public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 
-	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250149L;
 		
 	JXCFile goodsFile;
 	
 	public GoodsData() throws RemoteException{
-		goodsFile = new JXCFile("src/goods.ser");
+		goodsFile = new JXCFile("info/goodInfo/goods.ser");
 	}
 	
 	public int addGoods(GoodsPO goodspo) throws RemoteException{

@@ -21,6 +21,5 @@ public class ReceiptVO {
 		this.createTime = time;
 		this.type = type;
 		this.state = state;
-	
 	}
 }

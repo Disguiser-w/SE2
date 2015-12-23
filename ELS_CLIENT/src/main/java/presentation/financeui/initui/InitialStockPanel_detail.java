@@ -269,6 +269,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *2 / 24);
 		table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 3 / 14,
 				PANEL_WIDTH *47 /50 , PANEL_HEIGHT *73/ 100);
+		table.setBackground(getBackground());
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package presentation.commonui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -12,6 +13,8 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MyTable extends JPanel {
@@ -256,23 +259,18 @@ public class MyTable extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		int widths = 30;
 		int width = getWidth();
 
-		g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
 		if (UserFrame.type == UserFrame.TYPE_0) {
 			g2d.setColor(new Color(0, 121, 255));
-			RenderingHints r = g2d.getRenderingHints();
-
 			g2d.fillRoundRect(10, 8, width - 20, 20, 14, 14);
 			g2d.fillRect(10, 23, width - 20, 14);
-			g2d.setRenderingHints(r);
 		}
 
+		g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
 		FontMetrics fm = g2d.getFontMetrics();
 		int ascent = fm.getAscent();
 
@@ -337,7 +335,7 @@ public class MyTable extends JPanel {
 				add(box);
 			} else
 				setSize(30 + width, height);
-
+ 
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					if (box.getSelected()) {
@@ -358,7 +356,7 @@ public class MyTable extends JPanel {
 			int widths = 30;
 			Graphics2D g2d = (Graphics2D) g;
 
-			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2d.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 14));
 			FontMetrics fm = g2d.getFontMetrics();
 			int ascent = fm.getAscent();

@@ -36,7 +36,7 @@ public class OrderDistributePanel extends OperationPanel {
 		add(distributeLabel);
 		add(confirmLabel);
 
-		// helper = new LocationHelper(this);
+//		helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
 
@@ -47,6 +47,7 @@ public class OrderDistributePanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		// 设置组件位置
 
+<<<<<<< HEAD
 		messageTable.setLocationAndSize((int) (width * 1.159618008185539 / 25),
 				(int) (height * 1.2903225806451613 / 20), (int) (width * 22.646657571623464 / 25),
 				(int) (height * 15.878136200716845 / 20));
@@ -56,6 +57,14 @@ public class OrderDistributePanel extends OperationPanel {
 		confirmLabel.setBounds((int) (width * 22.032742155525238 / 25) - 8,
 				(int) (height * 18.06451612903226 / 20) - 10, (int) (width * 1.7735334242837653 / 25),
 				(int) (height * 1.003584229390681 / 20));
+=======
+		messageTable.setLocationAndSize((int) (width * 1.159618008185539 / 25), (int) (height * 1.2903225806451613 / 20),
+				(int) (width * 22.646657571623464 / 25), (int) (height * 15.878136200716845 / 20));
+		distributeLabel.setBounds((int) (width * 19.37244201909959 / 25), (int) (height * 18.06451612903226 / 20),
+				(int) (width * 1.8417462482946794 / 25), (int) (height * 1.003584229390681 / 20));
+		confirmLabel.setBounds((int) (width * 22.032742155525238 / 25), (int) (height * 18.06451612903226 / 20),
+				(int) (width * 1.7735334242837653 / 25), (int) (height * 1.003584229390681 / 20));
+>>>>>>> 4e9aa0d6da7f6e20353b2e4bf80dc3552b5d6cf8
 	}
 
 	public void addListener() {
@@ -81,7 +90,7 @@ public class OrderDistributePanel extends OperationPanel {
 	private void setBaseInfos() {
 		String[] head = new String[] { "快递员", "当日收费" };
 
-		int[] widths = { 314, 310 };
+		int[] widths = { 320, 295, };
 
 		messageTable = new MyTable(head, new ArrayList<String[]>(), widths, false);
 		add(messageTable);

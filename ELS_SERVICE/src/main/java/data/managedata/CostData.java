@@ -19,7 +19,7 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
 	JXCFile costFile;
     
     public CostData() throws RemoteException {
-		costFile = new JXCFile("src/cost.ser");
+		costFile = new JXCFile("info/basicDataInfo/cost.ser");
 	}
     
     public int addCost(CostPO costpo) throws RemoteException{

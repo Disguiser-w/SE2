@@ -35,7 +35,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	JXCFile userFile;
 
 	public UserData() throws RemoteException {
-		userFile = new JXCFile("src/user.ser");
+		userFile = new JXCFile("info/userInfo/user.ser");
 	}
 
 	/**

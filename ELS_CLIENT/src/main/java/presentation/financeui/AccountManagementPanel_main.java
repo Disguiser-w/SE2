@@ -11,11 +11,8 @@ import javax.swing.JOptionPane;
 import businesslogic.financebl.controller.AccountBLController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-import presentation.special_ui.AddLabel;
-import presentation.special_ui.DeleteLabel;
-import presentation.special_ui.ModifyLabel;
-import presentation.special_ui.MySearchField;
 import vo.AccountVO;
 
 public class AccountManagementPanel_main extends OperationPanel {
@@ -25,13 +22,13 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private static final long serialVersionUID = 1L;
 	
 
-	private AddLabel addLabel;
-	private DeleteLabel deleteLabel;
-	private ModifyLabel modifyLabel;
-//	private MyLabel searchLabel;
+	private MyLabel addLabel;
+	private MyLabel deleteLabel;
+	private MyLabel modifyLabel;
+	private MyLabel searchLabel;
 	private MyLabel refreshLabel;
 	
-	private MySearchField searchTextField;
+	private MyTextField searchTextField;
 	private JLabel function;
 	
 	private MyTable accountTable;
@@ -45,21 +42,23 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
 		this.controller=controller;
 		this.financeFrame=parent;
-		addLabel = new AddLabel("添加");
-		deleteLabel = new DeleteLabel("删除");
-		modifyLabel=new ModifyLabel("修改");
+		addLabel = new MyLabel("添加");
+		deleteLabel = new MyLabel("删除");
+		modifyLabel=new MyLabel("修改");
+		searchLabel=new MyLabel("查询");
 		refreshLabel=new MyLabel("刷新");
 
 		
 		function = new JLabel("账户管理");
 
-		searchTextField = new MySearchField();
+		searchTextField = new MyTextField();
 		
 		setLayout(null);
 
 		add(addLabel);
 		add(deleteLabel);
 		add(modifyLabel);
+		add(searchLabel);
 		add(refreshLabel);
 		add(searchTextField);
 		add(function);
@@ -88,18 +87,14 @@ public class AccountManagementPanel_main extends OperationPanel {
 			}
 		});
 
-		searchTextField.addMouseListener(new MouseAdapter() {
+		
+		searchLabel.addMouseListener(new MouseAdapter() {
+			
 			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				searchui();
 			}
 		});
-		
-//		searchLabel.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				searchui();
-//			}
-//		});
 
 		refreshLabel.addMouseListener(new MouseAdapter() {
 			
@@ -117,7 +112,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		addLabel.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 2.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		deleteLabel.setBounds((int)(width * 5.07015306122449/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		modifyLabel.setBounds((int)(width * 7.940051020408164/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-//		searchLabel.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		searchLabel.setBounds((int)(width * 20.918367346938776/25),(int)(height * 2.4442491193737767/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
 		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *2.4442270058708413/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
@@ -190,8 +185,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		if (size == 0){
-			JOptionPane.showMessageDialog(null, "选中某一个或某一些账户后再删除哦！",
-					"没有选择账户", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "选中某一个或某一些账户后再删除哦！", "没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}
 		else {
@@ -211,8 +205,6 @@ public class AccountManagementPanel_main extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		if(size!= 1){
-			JOptionPane.showMessageDialog(null, "选中某个账户后再删除哦！", 
-					"没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}
 		selectedIndex = selectedIndexs.get(0);

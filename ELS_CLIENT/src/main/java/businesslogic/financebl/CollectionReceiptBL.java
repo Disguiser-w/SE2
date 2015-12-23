@@ -52,6 +52,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CollectionReceiptPO po=FinanceMainController.cvoToPO(vo);
+		update(vo);
 		try {
 			return collectionData.createCollection(po);
 		} catch (RemoteException e) {
@@ -70,7 +71,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * @throws RemoteException 
 	 * @throws MalformedURLException 
 	 * */
-	public int excute(CollectionReceiptVO vo) {
+	public int excute(CollectionReceiptVO vo) throws MalformedURLException, RemoteException, NotBoundException{
 		AccountBL a=new AccountBL();
 		a.addMoney(vo.account, vo.totalMoney);
 			System.out.println("执行成功！");

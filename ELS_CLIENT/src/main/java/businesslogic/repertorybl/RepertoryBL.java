@@ -16,7 +16,9 @@ import po.InventoryCheckPO;
 import businesslogic.datafactory.DataFactory;
 import businesslogicservice.repertoryblservice.RepertoryBLService;
 import dataservice.managedataservice.OrganizationDataService;
+import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
 import dataservice.repertorydataservice.GoodsDataService;
+import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import vo.GoodsVO;
 import vo.InventoryVO;
@@ -27,6 +29,8 @@ public class RepertoryBL implements RepertoryBLService{
 
 	public static OrganizationDataService odService;
 	public static RepertoryDataService rdService;
+	public static EnterRepertoryReceiptDataService errdService;
+	public static LeaveRepertoryReceiptDataService lrrdService;
 	public static GoodsDataService gdService;
 	private String repertoryID;
 	

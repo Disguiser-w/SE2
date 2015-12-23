@@ -19,30 +19,19 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 */
 	private static final long serialVersionUID = 1L;
 	JXCFile file;
+	int num;
 	public PaymentReceiptData() throws RemoteException{
 		super();
 		file=new JXCFile("info/paymentInfo/payment.ser");
 	}
 
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
+		// TODO Auto-generated method stub
 		file=new JXCFile("info/paymentInfo/payment.ser");
 		po.setState(ReceiptState.SUBMIT);
-		ArrayList<PaymentReceiptPO> ppos = getAllPaymentReceipt();
-		boolean isExsit = false;
-		if(ppos!=null){
-		for(PaymentReceiptPO p : ppos){
-			if(po.getDate().substring(0,7).equals(p.getDate().substring(0,7))){
-				isExsit = true;
-			}
-		}
-		}
-		if(isExsit == true){
-			return -1;
-		}
-		else{
 		file.write(po);
+		num++;
 		return 0;
-		}
 	}
 
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt()
@@ -67,7 +56,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	
 	public int getNum()  throws RemoteException{
 		file=new JXCFile("info/paymentInfo/payment.ser");
-		return 0;
+		return num;
 	}
 	
 
@@ -204,21 +193,30 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		
 		PaymentReceiptData data=new PaymentReceiptData();
 		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151201", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151201", "boss", "本宝宝");
-//		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151211", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151211", "boss", "本宝宝");
-//		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
-//		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
+		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151211", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151211", "boss", "本宝宝");
+		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
+		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
 		try {
+//			data.delete("FKD-20110101-00001");
+//			data.delete("FKD-20110101-00002");
+//			data.delete("FKD-20151126-00001");
+//			data.delete("FKD-20151127-00001");
 			data.creatPaymentReceipt(po1);
-//			data.creatPaymentReceipt(po2);
-//			data.creatPaymentReceipt(po3);
-//			data.creatPaymentReceipt(po4);
+			data.creatPaymentReceipt(po2);
+			data.creatPaymentReceipt(po3);
+			data.creatPaymentReceipt(po4);
 			
 			ArrayList<PaymentReceiptPO> All;
 							All = data.getAllPaymentReceipt();
 							for(PaymentReceiptPO p:All){
 								System.out.println("ID: "+p.getID());
 							}
-
+//							System.out.println(data.getNum());
+//							System.out.println();
+//							ArrayList<PaymentReceiptPO> por=data.getPayment_right("20110101", "20151127");
+//							for(PaymentReceiptPO p:por){
+//								System.out.println("ID :"+p.getID());
+//							}
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

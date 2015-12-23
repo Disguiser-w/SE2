@@ -1,15 +1,10 @@
 package presentation.financeui;
 
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.getDate;
-import presentation.commonui.MyLabel;
 import presentation.commonui.OperationPanel;
 
 public class CostIncomeReceiptPanel_new extends OperationPanel {
@@ -28,8 +23,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 	private JLabel totalIncome;
 	private JLabel totalCost;
 	private JLabel totalProfit;
-	
-	private MyLabel refreshLabel;
 
 	private JTextField costIncomeReceipt_ID_Input;
 	private JTextField startDate_Input;
@@ -59,8 +52,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalCost = new JLabel("总收入");
 		totalIncome = new JLabel("总支出");
 		totalProfit = new JLabel("总利润");
-		
-		refreshLabel = new MyLabel("刷新");
 
 		costIncomeReceipt_ID_Input = new JTextField(ID);
 		costIncomeReceipt_ID_Input.setEditable(false);
@@ -95,16 +86,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		add(totalCost_Input);
 		add(totalIncome_Input);
 		add(totalProfit_Input);
-		add(refreshLabel);
-
-		
-             refreshLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				refresh();
-			}
-		});
 	}
 
 	public void setCmpLocation() {
@@ -121,7 +102,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 14 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT  * 17 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 20 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		refreshLabel.setBounds(PANEL_WIDTH *20/ 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -132,22 +112,15 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		setCmpLocation();
 		repaint();
 	}
-	
 
-	public void refresh(){
-		double income = controller.getIncome();
-		double cost = controller.getCost();
-		double profit = income-cost;
-		totalCost_Input = new JTextField(income + "");
-		totalCost_Input.setEditable(false);
-		totalIncome_Input = new JTextField(cost + "");
-		totalIncome_Input.setEditable(false);
-		totalProfit_Input = new JTextField(profit + "");
-		totalProfit_Input.setEditable(false);
-	}
 	
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		refresh();
-	}
+	/*
+	 * public static void main(String[] args) throws MalformedURLException,
+	 * RemoteException, NotBoundException { CostIncomeReceiptBLController
+	 * controller=new CostIncomeReceiptBLController(); FinanceFrame
+	 * financeFrame=new FinanceFrame(); JFrame frame = new JFrame();
+	 * frame.setSize(800, 550); frame.add(new
+	 * CostIncomeReceiptPanel_new(controller,financeFrame));
+	 * frame.setVisible(true); }
+	 */
 }

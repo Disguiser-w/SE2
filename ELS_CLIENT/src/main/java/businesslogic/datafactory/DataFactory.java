@@ -21,7 +21,9 @@ import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
+import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
 import dataservice.repertorydataservice.GoodsDataService;
+import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 
@@ -33,8 +35,13 @@ public class DataFactory {
 		try {
 
 			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
+<<<<<<< HEAD
 			address = in.next();
 			System.out.println(address);
+=======
+			//address = in.next();
+			address = "localhost:8888";
+>>>>>>> 4e9aa0d6da7f6e20353b2e4bf80dc3552b5d6cf8
 			in.close();
 
 		} catch (FileNotFoundException e) {
@@ -154,6 +161,19 @@ public class DataFactory {
 		return repertoryData;
 	}
 	
+	public static EnterRepertoryReceiptDataService getEnterRepertoryReceiptData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		EnterRepertoryReceiptDataService enterRepertoryReceiptData = (EnterRepertoryReceiptDataService) Naming
+				.lookup("//" + address + "/EnterRepertoryReceiptDataService");
+		return enterRepertoryReceiptData;
+	}
+	
+	public static LeaveRepertoryReceiptDataService getLeaveRepertoryReceiptData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		LeaveRepertoryReceiptDataService leaveRepertoryReceiptData = (LeaveRepertoryReceiptDataService) Naming
+				.lookup("//" + address + "/LeaveRepertoryReceiptDataService");
+		return leaveRepertoryReceiptData;
+	}
 
 
 }
