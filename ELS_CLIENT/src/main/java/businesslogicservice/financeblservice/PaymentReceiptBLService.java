@@ -34,6 +34,9 @@ public interface PaymentReceiptBLService {
 	//获取总经理审批后的结果
 	public int saveSubmittedPaymentReceiptInfo(PaymentReceiptVO vo);
 	
+	//账户金额的增减
+	public int excute(PaymentReceiptVO vo);
+	
 	
 //	//获取日期
 //	public String getDate();

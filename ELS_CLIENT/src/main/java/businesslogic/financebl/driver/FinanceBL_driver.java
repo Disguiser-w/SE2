@@ -63,7 +63,7 @@ public class FinanceBL_driver {
 		ArrayList<CollectionReceiptVO> cvos=controller.getAllCollection();
 		System.out.println(cvos.size());
 		controller.getCollectionListID();
-		ArrayList<GatheringReceiptVO> gvos=controller.getGathering("20151220");
+		ArrayList<GatheringReceiptVO> gvos=controller.getGatheringByTime("20151220");
 		controller.getUnapprovedCollectionReceipt();
 		controller.getCollection("HJSKD-20151220");
 		double money=controller.getTotalMoney(gvos);

@@ -57,6 +57,11 @@ public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {
 		return 0;
 	}
 
+	public int excute(PaymentReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 

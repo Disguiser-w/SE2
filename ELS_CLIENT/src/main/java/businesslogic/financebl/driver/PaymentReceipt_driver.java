@@ -40,7 +40,7 @@ public class PaymentReceipt_driver {
 	ArrayList<CollectionReceiptVO> cvos=collectionController.getAllCollection();
 	System.out.println(cvos.size());
 	collectionController.getCollectionListID();
-	ArrayList<GatheringReceiptVO> gvos=collectionController.getGathering("20151220");
+	ArrayList<GatheringReceiptVO> gvos=collectionController.getGatheringByTime("20151220");
 	collectionController.getUnapprovedCollectionReceipt();
 	collectionController.getCollection("HJSKD-20151220");
 	double income=collectionController.getTotalMoney(gvos);

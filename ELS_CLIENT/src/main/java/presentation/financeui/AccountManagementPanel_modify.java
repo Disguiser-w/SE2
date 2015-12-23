@@ -31,7 +31,6 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	
 	private AccountManagementPanel_main accountMainPanel;
 
-//	private LocationHelper helper;
 
 	public String name;
 	public String money;
@@ -43,8 +42,6 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	private int PANEL_HEIGHT = 480;
 
  public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent,AccountManagementPanel_main accountMainPanel) {
-	 
-		// TODO Auto-generated constructor stub
 		this.controller=controller;
 		this.money=money;
 		this.nameInit=nameInit;
@@ -74,19 +71,16 @@ public class AccountManagementPanel_modify extends OperationPanel{
 		add(account_money);
 		add(account_name_Input);
 		add(account_money_Input);
-//		helper = new LocationHelper(this);
 		
 		setLayout(null);
 		infoOKButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
 				okui();
 			}
 		});
 		
 		cancelButton.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				cancelui();
@@ -140,27 +134,12 @@ public class AccountManagementPanel_modify extends OperationPanel{
 		financeFrame.toMainPanel();
 	}
 		
-	
-	
-
-
 	public void setBounds(int x, int y, int width, int height) {
-
 		super.setBounds(x, y, width, height);
 		PANEL_WIDTH = width;
 		PANEL_HEIGHT = height;
 		setCmpLocation();
 		repaint();
 	}
-	
-/*	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-		AccountBLController controller=new AccountBLController();
-	JFrame frame = new JFrame();
-//	frame.setSize(600, 400);
-	frame.setBounds(300, 200, 600, 400);
-	frame.add(new AccountManagementPanel_modify(controller,null,null,null));
-	frame.setVisible(true);
-}
-*/
 
 }

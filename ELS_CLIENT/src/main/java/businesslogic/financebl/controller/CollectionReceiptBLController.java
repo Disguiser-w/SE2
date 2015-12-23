@@ -29,9 +29,20 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		return collectionReceiptBL.getAllCollection();
 	}
 
-	public ArrayList<GatheringReceiptVO> getGathering(String Time) {
+	public ArrayList<GatheringReceiptVO> getGatheringByTime(String Time) {
 		// TODO Auto-generated method stub
-		return collectionReceiptBL.getGathering(Time);
+		return collectionReceiptBL.getGatheringByTime(Time);
+	}
+	
+	public ArrayList<GatheringReceiptVO> getGatheingByBoth(String time,
+			String hallID) {
+		// TODO Auto-generated method stub
+		return collectionReceiptBL.getGatheringByBoth(time, hallID);
+	}
+	
+	public ArrayList<GatheringReceiptVO> getGatheringByHall(String hallID) {
+		// TODO Auto-generated method stub
+		return collectionReceiptBL.getGatheringByHall(hallID);
 	}
 
 	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo) {
@@ -54,17 +65,24 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		return collectionReceiptBL.saveSubmittedCollectionReceiptInfo(vo);
 	}
 
-	
-	public static void main(String[] args) throws Exception{
-		CollectionReceiptBLController controller=new CollectionReceiptBLController();
-//		CollectionReceiptVO vo=new CollectionReceiptVO("HJSKD-20151216", "CW-00001", null, null, 2000, "20151206", "CW");
-//		controller.creatCollection(vo);
-		ArrayList<GatheringReceiptVO> vos = controller.getGathering("20151220");
-		System.out.println(vos.size());
-//		ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
-//		for(CollectionReceiptVO v:vos){
-//			System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
-//		}
+
+	public int excute(CollectionReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return collectionReceiptBL.excute(vo);
 	}
 	
+	
+	
+//	public static void main(String[] args) throws Exception{
+//	CollectionReceiptBLController controller=new CollectionReceiptBLController();
+////	CollectionReceiptVO vo=new CollectionReceiptVO("HJSKD-20151216", "CW-00001", null, null, 2000, "20151206", "CW");
+////	controller.creatCollection(vo);
+//	ArrayList<GatheringReceiptVO> vos = controller.getGathering("20151220");
+//	System.out.println(vos.size());
+////	ArrayList<CollectionReceiptVO> vos=controller.getAllCollection();
+////	for(CollectionReceiptVO v:vos){
+////		System.out.println(v.ID+" "+v.userID+" "+v.date+" "+v.totalMoney);
+////	}
+//}
+//@Override
 }

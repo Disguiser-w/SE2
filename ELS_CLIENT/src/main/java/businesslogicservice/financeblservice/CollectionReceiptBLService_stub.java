@@ -25,7 +25,7 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 		return null;
 	}
 
-	public ArrayList<GatheringReceiptVO> getGathering(String Time) {
+	public ArrayList<GatheringReceiptVO> getGatheringByTime(String Time) {
 		// TODO Auto-generated method stub
 		System.out.println("Get Gathering successfully!");
 		return null;
@@ -57,6 +57,22 @@ public class CollectionReceiptBLService_stub implements CollectionReceiptBLServi
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public int excute(CollectionReceiptVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public ArrayList<GatheringReceiptVO> getGatheringByHall(String hallID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<GatheringReceiptVO> getGatheingByBoth(String time,
+			String hallID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

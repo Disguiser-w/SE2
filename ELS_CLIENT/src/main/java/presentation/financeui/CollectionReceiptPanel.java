@@ -1,24 +1,29 @@
 package presentation.financeui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.CollectionReceiptBLController;
+import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
+import type.OrganizationType;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.OrganizationVO;
 import vo.UserVO;
 /**
  * 暂时先把根据营业厅筛选的去掉了，以后有时间再说吧
@@ -28,7 +33,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel dateChooseLabel;
-	private MyLabel hallChooseLabel;
 	private MyLabel collectionOKButton;
 	private MyLabel totalButton;
 	private MyLabel cancelButton;
@@ -39,12 +43,16 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private JLabel infoLine;
 
 	private MyTextField date_Input;
-	private MyTextField businessHall_ID_Input;
+	private String hallID;
+//	private MyTextField businessHall_ID_Input;
+	
+	private MyComboBox<String> businessHallID_Input;;
 	
 	private MyTable collectionTable;
 	
-
+	private int businesshallInt;
 	public CollectionReceiptBLController controller;
+	public OrganizationController organizationController;
 	public FinanceFrame financeFrame;
 	public UserVO user;
 
@@ -53,12 +61,14 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	String hallID_str;
 	String date_str;
-	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,UserVO user) {
+	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
+			UserVO user,OrganizationController organizationController) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
+		this.organizationController = organizationController;
 		dateChooseLabel =new JLabel("日期");
-		hallChooseLabel = new MyLabel("营业厅");
+//		hallChooseLabel = new MyLabel("营业厅");
 		collectionOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
 		cancelButton = new MyLabel("返回");
@@ -70,12 +80,22 @@ public class CollectionReceiptPanel extends OperationPanel {
 				.substring(6)+ " 合计金额：0");
 
 		date_Input = new MyTextField("");
-		businessHall_ID_Input = new MyTextField("");
+		businessHallID_Input = new MyComboBox<String>();
+		ArrayList<OrganizationVO> organizationVOs = organizationController.showAllOrganizations();
+		businessHallID_Input.addItem("");
+		for(OrganizationVO v : organizationVOs){
+			if(v.category == OrganizationType.businessHall){
+			businessHallID_Input.addItem(v.name);
+			}
+		}
+		
+		businesshallInt = -1;
+		hallID="";
 
 		setLayout(null);
 
 		add(dateChooseLabel);
-		add(hallChooseLabel);
+//		add(hallChooseLabel);
 		add(collectionOKButton);
 		add(totalButton);
 		add(cancelButton);
@@ -87,7 +107,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		add(infoLine);
 
 		add(date_Input);
-		add(businessHall_ID_Input);
+		add(businessHallID_Input);
 		dateChooseLabel.setLayout(new BorderLayout());
 		dateChooseLabel.add(new DateChooser(date_Input),BorderLayout.CENTER);
 
@@ -122,9 +142,8 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-
-	dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height *  2.522504892367906/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
-		hallChooseLabel.setBounds((int)(width * 14.09438775510204/25),(int)(height * 2.522504892367906/20),(int)(width *  0.9885204081632653 /25),(int)(height *  0.9784735812133072/20));
+	   dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height *  2.522504892367906/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
+//		hallChooseLabel.setBounds((int)(width * 14.09438775510204/25),(int)(height * 2.522504892367906/20),(int)(width *  0.9885204081632653 /25),(int)(height *  0.9784735812133072/20));
 		collectionOKButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 2.522504892367906/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
 		totalButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
 		cancelButton.setBounds((int)(width * 20.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
@@ -133,40 +152,49 @@ public class CollectionReceiptPanel extends OperationPanel {
 		businessHall.setBounds((int)(width * 9.056122448979592/25),(int)(height * 2.522504892367906/20),(int)(width *  1.6581632653061225 /25),(int)(height *  0.8610567514677103/20));
 		infoLine.setBounds((int)(width * 2.5191326530612246/25),(int)(height * 18.12133072407045/20),(int)(width *  13.424744897959183 /25),(int)(height *  1.2915851272015655/20));
 		date_Input.setBounds((int)(width * 3.877295918367347/25),(int)(height * 2.522504892367906/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
-		businessHall_ID_Input.setBounds((int)(width * 11.033163265306122/25),(int)(height * 2.522504892367906/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
+		businessHallID_Input.setBounds((int)(width * 11.033163265306122/25),(int)(height * 2.522504892367906/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
 		collectionTable.setLocationAndSize((int)(width * 1.1510204081632653/25),(int)(height * 4.04481409001957/20),(int)(width *  22.92091836734694 /25),(int)(height *  13.95890410958904/20));
 	}
 	
 
 		
 		private void addListener(){
-			/**
-			 * 监听
-			 * */
-	                  /**
-	                    * 选择日期
-	                   * */
+		
 			/**
 			 * 确认日期输入
 			 * */
-			hallChooseLabel.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e){
-					infookui();
-				}
-			});
+//			hallChooseLabel.addMouseListener(new MouseAdapter() {
+//				public void mouseClicked(MouseEvent e){
+//					infookui();
+//				}
+//			});
+			businessHallID_Input.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				infookui();
+			}
+		});
 
+			/**
+			 * 确认搜索按钮
+			 * */
 			collectionOKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e){
 					okui();
 				}
 			});
 
+			/**
+			 * 合计按钮
+			 * */
 			totalButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e){
 					totalui();
 				}
 			});
 			
+			/**
+			 * 取消按钮
+			 * */
 			cancelButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e){
 					cancelui();
@@ -183,39 +211,53 @@ public class CollectionReceiptPanel extends OperationPanel {
 	}
 
 	/**
-	 * 输入（选择）日期的方法,这个怎么写
+	 * 输入营业厅信息的方法
 	 * */
 	public void infookui() {
+		ArrayList<OrganizationVO> businessHallVOs = new ArrayList<OrganizationVO>();
+		for(OrganizationVO v : organizationController.showAllOrganizations()){
+			if(v.category == OrganizationType.businessHall){
+				businessHallVOs.add(v);
+			}
+		}
+		businesshallInt = businessHallID_Input.getSelectedIndex();
+		 hallID = businessHallVOs.get(businesshallInt).organizationID;
+//		gatheringReceiptVOs = controller.getGatheringByHall(hallID);
 	}
 
 	/**
-	 * 确定
+	 * 确定(只有仅输入日期查询时才可以合计)
 	 * */
 	public void okui() {
 		date_str=date_Input.getText();
 
-			if(date_str.equals("")){
-			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示",
+			if(date_str.equals("")&&hallID.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入至少一项信息哟！", "提示",
 					JOptionPane.CLOSED_OPTION);
-		}
+		 }
+			//仅依据时间筛选
+			else if(hallID.equals("")){
+				//因为是采用日历格式所以不会有时间的错误（除非选择的时间已经超过当前时间）
+				if(date_str.compareTo(getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4,6)+"-"
+                                                       +getDate.getdate().substring(6,8))>0){
+					JOptionPane.showMessageDialog(null, "您输入的日期还没到呢，请重新输入！", "提示",
+					         JOptionPane.CLOSED_OPTION);
+				}
+		         else{
+			         gatheringReceiptVOs = controller.getGatheringByTime(date_str);
+			         collectionTable.setInfos(getInfos(gatheringReceiptVOs));
+		          }
+		  }
+			//仅依据营业厅编号筛选
+			else if(date_str.equals("")){
+				gatheringReceiptVOs = controller.getGatheringByHall(hallID);
+				collectionTable.setInfos(getInfos(gatheringReceiptVOs));
+				totalButton.setEnabled(false);
+			}
 			else{
-				String time=date_str.substring(0, 4)+date_str.substring(5, 7)+date_str.substring(8);
-
-		 if(time.length()!=8){
-			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
-					JOptionPane.CLOSED_OPTION);
-			date_Input.setText("");
-		}
-		else if(time.substring(0,4).compareTo("2015")>0||time.substring(4,6).compareTo("12")>0||time.substring(6,8).compareTo("31")>0){
-			JOptionPane.showMessageDialog(null, "请输入正确的日期！", "提示",
-					JOptionPane.CLOSED_OPTION);
-			date_Input.setText("");
-		}
-		else{
-			gatheringReceiptVOs = controller.getGathering(date_str);
-			collectionTable.setInfos(getInfos(gatheringReceiptVOs));
-		}
-
+				gatheringReceiptVOs = controller.getGatheingByBoth(date_str, hallID);
+				collectionTable.setInfos(getInfos(gatheringReceiptVOs));
+				totalButton.setEnabled(false);
 			}
 	}
 	
@@ -228,12 +270,13 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 
 	public void totalui() {
-		double money=controller.getTotalMoney(controller.getGathering(date_str));
+		double money=controller.getTotalMoney(controller.getGatheringByTime(date_str));
 		infoLine.setText("日期："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
 				.substring(6)+"    金额总和："+money);
 		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), user.userID, ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, getDate.getdate(), "boss");
 		int temp=controller.creatCollection(vo);
 		if(temp==0){
+			controller.excute(vo);
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

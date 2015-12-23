@@ -33,8 +33,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	JXCFile file;
 	public InitialStockData() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
-//		file=new JXCFile("initial.ser");
+
 	}
 
 	/**
@@ -56,21 +55,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	 * */
 	public InitInfoPO getInitInfo(String time) throws RemoteException {
 		// TODO Auto-generated method stub
-//		 file=new JXCFile("initial.ser");
-//		ArrayList<Object> os=file.read();
-//		if(os==null){
-//			System.out.println("读取InitInfo.ser失败或为空");
-//			return null;
-//		}
-//		else{
-//			for(Object ob:os){
-//				InitInfoPO p=(InitInfoPO) ob;
-//				if(p.getDate().equals(time)){
-//					return p;
-//				}
-//			}
-//		}
-//		return null;
+
 		String path ="initInfo/"+time+"-initInfo.ser";
 		File file = FileGetter.getFile(path);
 		try{
@@ -86,7 +71,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("快递员信息读写失败");
+			System.out.println("期初信息读写失败");
 			return null;
 		}
 		
@@ -99,41 +84,7 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	 * */
 	public ArrayList<InitInfoPO> getAllInitInfo() throws RemoteException {
 		// TODO Auto-generated method stub
-//		try {
-//			ObjectInputStream in = new ObjectInputStream(new FileInputStream("initial.ser"));
-//			ArrayList<InitInfoPO> pos = (ArrayList<InitInfoPO>) in.readObject();
-//			in.close();
-//			return pos;
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		}
-		
-		
-//		JXCFile file=new JXCFile("initial.ser");
-//		ArrayList<Object> o=file.read();
-//	
-//		if(o==null){
-//			System.out.println("读取InitInfo.ser失败 或 为空");
-//			return null;
-//		}
-//		ArrayList<InitInfoPO> initInfoPOs=new ArrayList<InitInfoPO>();	
-//			for(Object obj:o){
-//				InitInfoPO initInfoPO=(InitInfoPO) obj;
-//				initInfoPOs.add(initInfoPO);
-//			
-//		}		
-//		return initInfoPOs;
-		
+
 		File dir =FileGetter.getFile("initInfo");
 		File[] files = dir.listFiles();
 		if(files.length == 0){

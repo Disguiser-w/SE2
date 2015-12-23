@@ -10,7 +10,7 @@ public class CollectionReceiptBLService_driver {
 		String s="HJSKD-20151010-00001";
 		cbs.getCollection(s);
 		cbs.getAllCollection();
-		cbs.getGathering(time);
+		cbs.getGatheringByTime(time);
 		cbs.getTotalMoney(null);
 	}
 	

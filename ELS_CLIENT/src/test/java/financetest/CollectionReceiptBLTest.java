@@ -23,7 +23,7 @@ public class CollectionReceiptBLTest extends TestCase{
 //		collectionReceiptBL.add(vo1);
 //		collectionReceiptBL.add(vo2);
 		
-		ArrayList<GatheringReceiptVO> gathering = collectionReceiptBL.getGathering("20151220");
+		ArrayList<GatheringReceiptVO> gathering = collectionReceiptBL.getGatheringByTime("20151220");
 		assertEquals(1, gathering.size());
 		ArrayList<CollectionReceiptVO> cvo = collectionReceiptBL.getAllCollection();
 		assertEquals(4, cvo.size());

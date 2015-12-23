@@ -1,14 +1,14 @@
 package presentation.financeui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.AccountBLController;
+import presentation.commonui.MyLabel;
 import presentation.commonui.OperationPanel;
 import vo.AccountVO;
 
@@ -19,8 +19,8 @@ public class AccountManagement_new extends OperationPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton infoOKButton;
-	private JButton cancelButton;
+	private MyLabel infoOKButton;
+	private MyLabel cancelButton;
 
 	private JLabel function;
 	private JLabel account_name;
@@ -31,7 +31,6 @@ public class AccountManagement_new extends OperationPanel {
 	
 	private AccountManagementPanel_main accountMainPanel;
 
-//	private LocationHelper helper;
 
 	public String name;
 	public String money;
@@ -46,8 +45,8 @@ public class AccountManagement_new extends OperationPanel {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.accountMainPanel=accountMainPanel;
-		infoOKButton = new JButton("确认");
-		cancelButton =new JButton("返回");
+		infoOKButton = new MyLabel("确认");
+		cancelButton =new MyLabel("返回");
 
 		function = new JLabel("新增账户");
 		account_name = new JLabel("账户名");
@@ -71,22 +70,17 @@ public class AccountManagement_new extends OperationPanel {
 		
 		
 		setLayout(null);
-		infoOKButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO 自动生成的方法存根
+		infoOKButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				okui();
 			}
 		});
 		
-		cancelButton.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		cancelButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				cancelui();
 			}
 		});
-
 
 	}
 

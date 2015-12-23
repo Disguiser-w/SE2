@@ -15,10 +15,15 @@ public interface CollectionReceiptBLService {
 	//获取所有入款单
 	public ArrayList<CollectionReceiptVO> getAllCollection();
 	
-	//获取收款单
-	public ArrayList<GatheringReceiptVO> getGathering(String Time);
-//	//获取金额
-//	public ArrayList<Double>  getMoney(ArrayList<GatheringReceiptVO> vo);
+	//依据时间获取收款单
+	public ArrayList<GatheringReceiptVO> getGatheringByTime(String Time);
+	
+	//依据营业厅编号获取收款单
+	public ArrayList<GatheringReceiptVO> getGatheringByHall(String hallID);
+	
+	//依据时间和营业厅编号获取收款单
+	public ArrayList<GatheringReceiptVO> getGatheingByBoth(String time,String hallID);
+
 	//获取合计数值
 	public double getTotalMoney(ArrayList<GatheringReceiptVO> vo);
 	//自动生成入款单编号
@@ -27,6 +32,8 @@ public interface CollectionReceiptBLService {
 	public ArrayList<CollectionReceiptVO> getUnapprovedCollectionReceipt();
 	//保存审批后的结果
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptVO vo);
+	//账户金额的增减
+	public int excute(CollectionReceiptVO vo);
 	
 //	//获取营业厅编号
 //	public String getHallID();
