@@ -15,7 +15,7 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 	JXCFile cityDistanceFile;
 
 	public CityDistanceData() throws RemoteException {
-		cityDistanceFile = new JXCFile("src/cityDistance.ser");
+		cityDistanceFile = new JXCFile("info/basicDataInfo/cityDistance.ser");
 	}
 
 	public int addCityDistance(CityDistancePO cityDistancepo) throws RemoteException {

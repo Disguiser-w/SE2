@@ -1,8 +1,6 @@
 package data.repertorydata;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import file.JXCFile;
 
 public class RepertoryData extends UnicastRemoteObject implements RepertoryDataService{
 
-	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250148L;
 	
 	JXCFile organizationFile;
@@ -28,8 +25,8 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	GoodsData goodsData;
 	
 	public RepertoryData() throws RemoteException{
-		organizationFile = new JXCFile("src/organization.ser");
-		goodsFile = new JXCFile("src/goods.ser");
+		organizationFile = new JXCFile("info/organizationInfo/organization.ser");
+		goodsFile = new JXCFile("info/goodInfo/goods.ser");
 		goodsData = new GoodsData();
 	}
 	

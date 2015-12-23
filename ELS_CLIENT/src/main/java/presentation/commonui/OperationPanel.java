@@ -21,15 +21,15 @@ public class OperationPanel extends JPanel {
 		if (UserFrame.type == UserFrame.TYPE_1)
 			(new Thread(new Runnable() {
 				public void run() {
-					while (true) {
-						try {
-							Thread.sleep(20);
-							repaint();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+//					while (true) {
+//						try {
+//							Thread.sleep(20);
+//							repaint();
+//						} catch (InterruptedException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//					}
 				}
 			})).start();
 	}

@@ -52,6 +52,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	public int creatCollection(CollectionReceiptVO vo) {
 		// TODO Auto-generated method stub
 		CollectionReceiptPO po=FinanceMainController.cvoToPO(vo);
+		update(vo);
 		try {
 			return collectionData.createCollection(po);
 		} catch (RemoteException e) {

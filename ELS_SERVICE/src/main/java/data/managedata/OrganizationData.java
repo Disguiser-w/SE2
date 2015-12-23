@@ -24,8 +24,8 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	JXCFile userFile;
 
 	public OrganizationData() throws RemoteException {
-		organizationFile = new JXCFile("src/organization.ser");
-		userFile = new JXCFile("src/user.ser");
+		organizationFile = new JXCFile("info/organizationInfo/organization.ser");
+		userFile = new JXCFile("info/userInfo/user.ser");
 	}
 
 	/**

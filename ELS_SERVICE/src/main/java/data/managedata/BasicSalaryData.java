@@ -19,7 +19,7 @@ public class BasicSalaryData extends UnicastRemoteObject implements BasicSalaryD
 	JXCFile basicSalaryFile;
     
     public BasicSalaryData() throws RemoteException {
-		basicSalaryFile = new JXCFile("src/basicSalary.ser");
+		basicSalaryFile = new JXCFile("info/basicDataInfo/basicSalary.ser");
 	} 
     
     public int addBasicSalary(BasicSalaryPO basicSalarypo) throws RemoteException{

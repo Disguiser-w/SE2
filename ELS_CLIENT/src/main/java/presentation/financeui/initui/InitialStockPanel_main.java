@@ -127,6 +127,10 @@ public class InitialStockPanel_main extends OperationPanel {
 			}
 		});
 	}
+	
+
+	
+	
 
 	public void startui() {
 
@@ -157,6 +161,7 @@ public class InitialStockPanel_main extends OperationPanel {
 			selectedIndex = selectedIndexs.get(0);
 			InitInfoVO vo = initInfoVOs.get(selectedIndex);
 			financeFrame.changePanel(new InitialStockPanel_detail(controller, financeFrame,vo.time));
+
 		}
 		
 	/*	int row =table.getSelectedRow();

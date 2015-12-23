@@ -103,8 +103,8 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				(int) (width * 1.9781718963165076 / 25), (int) (height * 1.3261648745519714 / 20));
 		confirmButton.setBounds((int) (width * 5.38881309686221 / 25), (int) (height * 15.161290322580646 / 20),
 				(int) (width * 2.796725784447476 / 25), (int) (height * 1.6487455197132617 / 20));
-		messageTable.setLocationAndSize((int) (width * 14.972714870395635 / 25) + 10,
-				(int) (height * 1.7562724014336917 / 20) - 10, (int) (width * 8.526603001364256 / 25),
+		messageTable.setLocationAndSize((int) (width * 14.972714870395635 / 25),
+				(int) (height * 1.7562724014336917 / 20), (int) (width * 8.526603001364256 / 25),
 				(int) (height * 16.666666666666668 / 20));
 
 	}

@@ -19,7 +19,7 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
 	JXCFile perWageFile;
     
     public PerWageData() throws RemoteException {
-		perWageFile = new JXCFile("src/perWage.ser");
+		perWageFile = new JXCFile("info/basicDataInfo/perWage.ser");
 	}
     
     public int addPerWage(PerWagePO perWagepo) throws RemoteException{

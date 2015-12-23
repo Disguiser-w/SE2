@@ -14,8 +14,10 @@ import java.util.Date;
 
 import common.AVLTree;
 import common.FileGetter;
+import data.repertorydata.GoodsData;
 import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
+import po.GoodsPO;
 import po.OrderPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
@@ -23,8 +25,12 @@ import type.OrderState;
 import type.OrganizationType;
 
 public class ExpressData extends UnicastRemoteObject implements ExpressDataService {
+	
+	private GoodsData goodsData;
+	
 	public ExpressData() throws RemoteException {
 		super();
+		goodsData = new GoodsData();
 	}
 
 	// 清空当日收费信息
@@ -83,6 +89,14 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			}
 
 		}
+		
+		//新建一个Goods记录以便仓库管理员使用
+		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight()+po.getPackingExpense(),
+				po.getRecipientOrganization(), po.getSenderOrganization());
+		goodsData.addGoods(newGood);
+		System.out.println(po.getSenderAddress());
+		
+		
 		// 获取今日时间
 		String time = getTime();
 

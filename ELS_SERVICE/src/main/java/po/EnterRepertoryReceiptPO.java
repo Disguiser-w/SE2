@@ -2,26 +2,25 @@ package po;
 
 import java.io.Serializable;
 
-import po.ReceiptPO;
 import type.ReceiptState;
 import type.ReceiptType;
 
-public class LeaveRepertoryReceiptPO extends ReceiptPO implements Serializable{
+public class EnterRepertoryReceiptPO extends ReceiptPO  implements Serializable{
 
-	private static final long serialVersionUID = 141250190L;
+	private static final long serialVersionUID = 141250191L;
 
 	private String repertoryID;		//本仓库编号
 	private String[] expressIDList; //离开仓库的货物ID
 	private String[] timeList;		//货物离开仓库的时间
 	
-	public LeaveRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state){
+	public EnterRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state){
 		this.ID = receiptID;
 		this.userID = userID;
 		this.type = type;
 		this.state = state;
 	}
 	
-	public LeaveRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state,
+	public EnterRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state,
 			String repertoryID, String[] expressIDList, String[] timeList){
 		this(receiptID, userID, type, state);
 		this.setRepertoryID(repertoryID);
@@ -68,6 +67,5 @@ public class LeaveRepertoryReceiptPO extends ReceiptPO implements Serializable{
 	public void setTimeList(String[] timeList){
 		this.timeList = timeList;
 	}
-	
 	
 }
