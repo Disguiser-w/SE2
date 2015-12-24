@@ -15,7 +15,7 @@ public interface LogDiaryBLService {
 	/**
 	 * 查找特定时间的日志信息
 	 * */
-	public LogDiaryVO getLogDiaryVO(String time);
+	public ArrayList<LogDiaryVO> getLogDiaryVO(String time);
 	
 	/**
 	 * 获取所有的日志信息

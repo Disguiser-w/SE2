@@ -1,13 +1,9 @@
 package data.logdiarydata;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import common.FileGetter;
 import po.LogDiaryPO;
 import dataservice.logdiarydataservice.LogDiaryDataService;
 import file.JXCFile;
@@ -19,60 +15,48 @@ public class LogDiaryData extends UnicastRemoteObject implements LogDiaryDataSer
 	JXCFile file;
 	public LogDiaryData() throws RemoteException {
 		super();
+		file=new JXCFile("info/logDiaryInfo/logDiary.ser");
+
 	}
 	
 	public int addLogDiary(LogDiaryPO po,String time) {
 		// TODO Auto-generated method stub
-		String path = "info/"+"logDiaryInfo/"+time+"-logDiaryInfo.ser";
-		JXCFile file = new JXCFile(path);
 		file.write(po);
 		return 0;
 	}
 	
-	public LogDiaryPO getLogDiaryPO(String time) {
+	public ArrayList<LogDiaryPO> getLogDiaryPO(String time) {
 		// TODO Auto-generated method stub
-		String path ="logDiaryInfo/"+time+"-logDiaryInfo.ser";
-		File file = FileGetter.getFile(path);
-		try{
-			if(!file.exists()){
-				System.out.println("file is not exsit");
-				return null;
-			}
-			else{
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-				LogDiaryPO logDiaryPO = (LogDiaryPO) in.readObject();
-				in.close();
-				return logDiaryPO;
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("日志信息读写失败");
+		file=new JXCFile("info/logDiaryInfo/logDiary.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("读取文件logDiary.ser失败");
 			return null;
 		}
+		ArrayList<LogDiaryPO> right=new ArrayList<LogDiaryPO>();
+		for(Object o:os){
+			LogDiaryPO po=(LogDiaryPO) o;
+			if(po.getDate().equals(time)){
+				right.add(po);
+			}
+		}
+		return right; 
 	}
 	
-	public ArrayList<LogDiaryPO> getAllLogDiaryPOs() {
+	public ArrayList<LogDiaryPO> getAllLogDiaryPOs(){
 		// TODO Auto-generated method stub
-		File dir =FileGetter.getFile("logDiaryInfo");
-		File[] files = dir.listFiles();
-		if(files.length == 0){
+		file=new JXCFile("info/logDiaryInfo/logDiary.ser");
+		ArrayList<Object> os=file.read();
+		if(os==null){
+			System.out.println("读取文件logDiary.ser失败");
 			return null;
 		}
-		else{
-			ArrayList<LogDiaryPO> logDiaryPOs = new ArrayList<LogDiaryPO>();
-		for(File i:files){
-			try{
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
-				LogDiaryPO logDiaryPO = (LogDiaryPO) in.readObject();
-				in.close();
-				logDiaryPOs.add(logDiaryPO);
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("日志信息读取失败");
-			}
+		ArrayList<LogDiaryPO> pos=new ArrayList<LogDiaryPO>();
+		for(Object o:os){
+			LogDiaryPO po=(LogDiaryPO) o;
+			pos.add(po);
 		}
-		return logDiaryPOs;
-		}
+		return pos;
 	}
 	
 	

@@ -44,16 +44,16 @@ public class LogDiaryBL implements LogDiaryBLService{
 		}
 	}
 
-	public LogDiaryVO getLogDiaryVO(String time) {
+	public ArrayList<LogDiaryVO> getLogDiaryVO(String time) {
 		// TODO Auto-generated method stub
-		LogDiaryVO vo;
+		ArrayList<LogDiaryVO> vos;
 		try {
 			if(logDiaryData.getLogDiaryPO(time)==null){
 				System.out.println("不存在该时间的日志信息");
 				return null;
 			}
-			vo = LogDiaryMainController.logDiaryPOToVO(logDiaryData.getLogDiaryPO(time));
-			return vo;
+			vos = LogDiaryMainController.logDiaryPOsToVOs(logDiaryData.getLogDiaryPO(time));
+			return vos;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

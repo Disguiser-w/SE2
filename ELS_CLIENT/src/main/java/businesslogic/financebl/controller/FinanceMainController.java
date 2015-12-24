@@ -6,13 +6,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import common.ImageGetter;
-
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.InitialStockDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
+import dataservice.logdiarydataservice.LogDiaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
@@ -20,6 +20,7 @@ import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.repertorybl.RepertoryBL;
@@ -41,6 +42,7 @@ import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
 import presentation.financeui.ReceiptPanel_new;
 import presentation.financeui.initui.InitialStockPanel_main;
+import presentation.logdiaryui.LogDiaryPanel;
 import type.AuthorityType;
 import type.ReceiptType;
 import vo.AccountVO;
@@ -66,6 +68,8 @@ public class FinanceMainController {
 	public static PaymentReceiptDataService paymentData;
 	public static CostIncomeReceiptDataService costincomeData;
 	public static InitialStockDataService initData;
+	
+	public static LogDiaryDataService logDiaryDate;
 
 	public static ArrayList<CollectionReceiptVO> collectionReceiptVOs;
 	public static ArrayList<PaymentReceiptVO> paymentReceiptVOs;
@@ -83,6 +87,8 @@ public class FinanceMainController {
 	private OrganizationController organizationController;
 	private VehicleManagerController vehicleController;
 	private RepertoryBL repertoryController;
+	
+	private LogDiaryBLController logDiaryController;
 
 	private UserVO user;
 
@@ -101,6 +107,7 @@ public class FinanceMainController {
 			initData = DataFactory.getInitialStockData();
 			accountData = DataFactory.getAccountData();
 			userData = DataFactory.getUserData();
+			logDiaryDate = DataFactory.getLogDiaryData();
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -123,6 +130,7 @@ public class FinanceMainController {
 		organizationController = new OrganizationController();
 		vehicleController = new VehicleManagerController();
 		repertoryController = new RepertoryBL("CK-00001");
+		logDiaryController = new LogDiaryBLController();
 
 		// 初始化界面
 		user = ManageMainController.userPOToVO(userData.findUserByID(financeID));
@@ -140,6 +148,7 @@ public class FinanceMainController {
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
 					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
 					"期初建账",ImageGetter.getImage("initInfo.png").getImage());
+			financeFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志");
 		
 			financeFrame.showFrame();
 		} else {

@@ -16,7 +16,7 @@ public interface LogDiaryDataService extends Remote{
 	/**
 	 * 依据时间获取日志信息
 	 * */
-	public LogDiaryPO getLogDiaryPO(String time) throws RemoteException;
+	public ArrayList<LogDiaryPO> getLogDiaryPO(String time) throws RemoteException;
 	
 	/**
 	 * 读取所有日志信息
