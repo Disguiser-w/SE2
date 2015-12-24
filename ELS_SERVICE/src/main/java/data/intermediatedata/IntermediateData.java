@@ -559,26 +559,8 @@ public class IntermediateData extends UnicastRemoteObject implements
 					"痛苦的业务员", "141250185");
 
 			RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
-			PlanePO plane0 = new PlanePO("001", "2-404");
-			PlanePO plane1 = new PlanePO("002", "2-404");
-			PlanePO plane2 = new PlanePO("003", "2-404");
-			TrainPO train0 = new TrainPO("001", "3-404");
-			TrainPO train1 = new TrainPO("002", "3-404");
-			TrainPO train2 = new TrainPO("003", "3-404");
-			TruckPO truck0 = new TruckPO("001", "4-404");
-			TruckPO truck1 = new TruckPO("002", "4-404");
-			TruckPO truck2 = new TruckPO("003", "4-404");
 
 			organization.setRepertory(repertory);
-			organization.getPlaneList().add(plane0);
-			organization.getPlaneList().add(plane1);
-			organization.getPlaneList().add(plane2);
-			organization.getTrainList().add(train0);
-			organization.getTrainList().add(train1);
-			organization.getTrainList().add(train2);
-			organization.getTruckList().add(truck0);
-			organization.getTruckList().add(truck1);
-			organization.getTruckList().add(truck2);
 
 			ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
 			list.add(intermediate);
