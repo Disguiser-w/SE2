@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import presentation.commonui.DateChooser;
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
@@ -23,7 +24,7 @@ public class LogDiaryPanel extends OperationPanel{
 	private static final long serialVersionUID = -1217858217226372209L;
 	
 	private JLabel startDateLabel;
-	private JLabel dateOKLabel;
+	private MyLabel dateOKLabel;
 
 	private JLabel function;
 
@@ -42,7 +43,7 @@ public class LogDiaryPanel extends OperationPanel{
 		this.controller=controller;
 		
 		startDateLabel = new JLabel("日期");
-		dateOKLabel = new JLabel("确认");
+		dateOKLabel = new MyLabel("确认");
 
 		function = new JLabel("系统日志");
 
@@ -81,7 +82,7 @@ public class LogDiaryPanel extends OperationPanel{
 
 		
         startDateLabel.setBounds((int)(width * 7.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
-        dateOKLabel.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
+        dateOKLabel.setBounds((int)(width * 10.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
 		startDate_Input.setBounds((int)(width * 2.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  5.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
 		logDiaryTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.0140306122449 /25),(int)(height *  14.424657534246576/20));		

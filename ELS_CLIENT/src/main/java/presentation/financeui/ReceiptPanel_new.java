@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
+import common.FileExporter;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import businesslogic.managebl.controller.OrganizationController;
@@ -252,11 +253,91 @@ public class ReceiptPanel_new extends  OperationPanel {
 		
 	}
 
+	/**
+	 * 不需要了，因为一旦生成单据就自动提交给总经理
+	 * */
 	public void sendui() {
 
 	}
 
+	/**
+	 * 导出入款单和付款单的方法
+	 * */
 	public void printui() {
+		//导出入款单
+		if(currentTable == collectionTable){
+			collectionReceiptVOs = collectionController.getAllCollection();
+			String[][] collectionExcel= new String[collectionReceiptVOs.size()][6];
+			int temp =0;
+			for(CollectionReceiptVO v : collectionReceiptVOs){
+				String state = null;
+				if(v.state == ReceiptState.APPROVE){
+					state = "审批通过";
+				}
+				else if(v.state == ReceiptState.DISAPPROVE){
+					state = "审批未通过";
+				}
+				else if(v.state == ReceiptState.DRAFT){
+					state = "草稿状态";
+				}
+				else{
+					state = "提交状态";
+				}
+				collectionExcel[temp][0] = v.ID;
+				collectionExcel[temp][1] = v.date;
+				collectionExcel[temp][2] = v.totalMoney+"";
+				collectionExcel[temp][3] = v.userID;
+				collectionExcel[temp][4] = v.account;
+				collectionExcel[temp][5] = state;
+				
+				temp++;
+			}
+			String[] head = new String[]{"收款单编号","收款日期","收款金额","收款人","账户","单据状态"};
+			try {
+				FileExporter.exportExcel("collection.xls", head, collectionExcel);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("导出excel失败了");
+			}
+		}
+		//导出付款单
+		else{
+			paymentReceiptVOs = paymentReceiptBLController.getAllPaymentReceipt();
+			String[][] paymentExcel= new String[paymentReceiptVOs.size()][6];
+			int temp =0;
+			for(PaymentReceiptVO v : paymentReceiptVOs){
+				String state = null;
+				if(v.state == ReceiptState.APPROVE){
+					state = "审批通过";
+				}
+				else if(v.state == ReceiptState.DISAPPROVE){
+					state = "审批未通过";
+				}
+				else if(v.state == ReceiptState.DRAFT){
+					state = "草稿状态";
+				}
+				else{
+					state = "提交状态";
+				}
+				paymentExcel[temp][0] = v.ID;
+				paymentExcel[temp][1] = v.date;
+				paymentExcel[temp][2] = v.cost+"";
+				paymentExcel[temp][3] = v.userID;
+				paymentExcel[temp][4] = v.account;
+				paymentExcel[temp][5] = state;
+				temp++;
+			}
+			String[] head = new String[]{"付款单编号","付款日期","付款金额","付款人","账户","单据状态"};
+			try {
+				FileExporter.exportExcel("payment.xls", head, paymentExcel);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("导出excel失败了");
+			}
+			
+		}
 
 	}
 

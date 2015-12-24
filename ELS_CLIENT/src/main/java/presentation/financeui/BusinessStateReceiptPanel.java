@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import common.FileExporter;
+
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
@@ -24,9 +27,9 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel startDateLabel;
 	private JLabel endDateLabel;
-	private JLabel dateOKLabel;
-	private JLabel printLabel;
-	private JLabel sendLabel;
+	private MyLabel dateOKLabel;
+	private MyLabel printLabel;
+//	private JLabel sendLabel;
 
 	private JLabel function;
 	private JLabel dateRange;
@@ -48,9 +51,9 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		
 		startDateLabel = new JLabel("开始日期");
 		endDateLabel =new JLabel("结束日期");
-		dateOKLabel = new JLabel("确认");
-		printLabel = new JLabel("打印");
-		sendLabel = new JLabel("发送");
+		dateOKLabel = new MyLabel("确认");
+		printLabel = new MyLabel("打印");
+//		sendLabel = new JLabel("发送");
 
 		function = new JLabel("经营情况表");
 		dateRange = new JLabel("日期范围");
@@ -85,11 +88,11 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 			}
 		});
 
-		sendLabel.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e){
-				sendui();
-			}
-		});
+//		sendLabel.addMouseListener(new MouseAdapter() {
+//			public void mouseClicked(MouseEvent e){
+//				sendui();
+//			}
+//		});
 		collectionReceiptVOs = controller.showBSList("20110101", getDate.getdate()).cvos;
 		paymentReceiptVOs = controller.showBSList("20100101", getDate.getdate()).pvos;
 		setBaseInfo();
@@ -99,7 +102,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		add(endDateLabel);
 		add(dateOKLabel);
 		add(printLabel);
-		add(sendLabel);
+//		add(sendLabel);
 		add(function);
 		add(dateRange);
 		add(startDate_Input);
@@ -122,9 +125,9 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		
         startDateLabel.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
         endDateLabel.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
-        dateOKLabel.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
-		printLabel.setBounds((int)(width * 19.54719387755102/25),(int)(height * 0.43052837573385516/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.5264187866927592/20));
-		sendLabel.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
+        dateOKLabel.setBounds((int)(width * 21.0109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		printLabel.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.43052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
+//		sendLabel.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
 		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
 		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
 		startDate_Input.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
@@ -189,7 +192,48 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	}
 
 	public void printui() {
-
+		String beginTime=startDate_Input.getText();
+		String endTime=endDate_Input.getText();
+		if(beginTime!=""&&endTime!=""){
+		beginTime=beginTime.substring(0, 4)+beginTime.substring(5,7)+beginTime.substring(8);
+		endTime=endTime.substring(0, 4)+endTime.substring(5, 7)+endTime.substring(8);
+	    BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
+	    collectionReceiptVOs=vo.cvos;
+	    paymentReceiptVOs=vo.pvos;
+		}
+		else{
+			collectionReceiptVOs = controller.showBSList("20110101", getDate.getdate()).cvos;
+			paymentReceiptVOs = controller.showBSList("20100101", getDate.getdate()).pvos;
+			}
+	    String[][] BSRExcel = new String[collectionReceiptVOs.size()+paymentReceiptVOs.size()][4];
+	    int temp = 0;
+	    if(collectionReceiptVOs!=null){
+	    for(CollectionReceiptVO v1 : collectionReceiptVOs){
+			BSRExcel[temp][0] = v1.ID;
+			BSRExcel[temp][1] = v1.date;
+			BSRExcel[temp][2] = v1.totalMoney+"";
+			BSRExcel[temp][3] = v1.userID;
+			temp++;
+	    }
+	    }
+	    if(paymentReceiptVOs!=null){
+	    	for(PaymentReceiptVO v2 : paymentReceiptVOs){
+	    		BSRExcel[temp][0] = v2.ID;
+				BSRExcel[temp][1] = v2.date;
+				BSRExcel[temp][2] = v2.cost+"";
+				BSRExcel[temp][3] = v2.userID;
+				temp++;
+	    	}
+	    }
+		String[] head = new String[]{"单据编号","日期","金额","操作人"};
+		try {
+			FileExporter.exportExcel("businessstatement.xls", head, BSRExcel);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("导出excel失败了");
+		}
+	
 	}
 
 	public void sendui() {

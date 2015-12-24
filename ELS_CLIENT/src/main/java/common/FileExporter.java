@@ -59,15 +59,15 @@ public class FileExporter {
 
 	}
 
-	// public static void main(String[] args) {
-	// String name = "test.xls";
-	// String[] head = { "第一列", "第二列", "第三列" };
-	// String[][] content = { { "1x1", "1x2", "1x3" }, { "2x1", "2x2", "3x2" }
-	// };
-	// try {
-	// FileExporter.exportExcel(name, head, content);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
+//	 public static void main(String[] args) {
+//	 String name = "test.xls";
+//	 String[] head = { "第一列", "第二列", "第三列" };
+//	 String[][] content = { { "1x1", "1x2", "1x3" }, { "2x1", "2x2", "3x2" }
+//	 };
+//	 try {
+//	 FileExporter.exportExcel(name, head, content);
+//	 } catch (Exception e) {
+//	 e.printStackTrace();
+//	 }
+//	 }
 }
