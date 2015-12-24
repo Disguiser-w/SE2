@@ -211,6 +211,7 @@ public class UserFrame extends JFrame {
 		functionPanel.repaint();
 		for (JPanel i : operationPanels)
 			i.repaint();
+		operationPanel.repaint();
 		setVisible(true);
 
 	}

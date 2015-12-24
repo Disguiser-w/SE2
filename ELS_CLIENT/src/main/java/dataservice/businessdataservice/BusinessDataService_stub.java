@@ -190,4 +190,17 @@ public class BusinessDataService_stub implements BusinessDataService {
 		return 0;
 	}
 
+	@Override
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByHallID(String organization) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByBoth(String organization, String time)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -18,20 +18,7 @@ public class OperationPanel extends JPanel implements Observer {
 	protected OperationPanel() {
 		// setOpaque(false);
 		background = ImageGetter.getImage("background4.png").getImage();
-		if (UserFrame.type == UserFrame.TYPE_1)
-			(new Thread(new Runnable() {
-				public void run() {
-					// while (true) {
-					// try {
-					// Thread.sleep(20);
-					// repaint();
-					// } catch (InterruptedException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
-					// }
-				}
-			})).start();
+
 	}
 
 	public void add(MyTable table) {
@@ -40,7 +27,7 @@ public class OperationPanel extends JPanel implements Observer {
 	}
 
 	public void remove(MyTable table) {
-	
+
 		remove(table.getScrollPanel());
 	}
 

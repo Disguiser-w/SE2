@@ -256,13 +256,13 @@ public class MyTable extends JPanel {
 
 		tableObservable.setData();
 
-		if (UserFrame.type == 0) {
-			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, getWidth(), getHeight());
-		} else if (UserFrame.type == 1) {
+//		if (UserFrame.type == 0) {
+//			g.setColor(Color.WHITE);
+//			g.fillRect(0, 0, getWidth(), getHeight());
+//		} else if (UserFrame.type == 1) {
 			// g.setColor(new Color(200, 200, 200));
 			// g.fillRect(0, 0, getWidth(), getHeight());
-		}
+//		}
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

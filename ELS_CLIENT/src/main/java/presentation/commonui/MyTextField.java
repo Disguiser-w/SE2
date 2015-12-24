@@ -38,6 +38,8 @@ public class MyTextField extends JTextField {
 	}
 
 	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if (!getText().equals("") && !isEditable())
 			setToolTipText(getText());
 		int width = getWidth();
@@ -51,16 +53,16 @@ public class MyTextField extends JTextField {
 		}
 		if (UserFrame.type == UserFrame.TYPE_0) {
 			if (isEditable()) {
-				g.setColor(Color.WHITE);
+				g2d.setColor(Color.WHITE);
 			} else
-				g.setColor(new Color(238, 238, 238));
+				g2d.setColor(new Color(238, 238, 238));
 
-			g.fillRect(0, 0, getWidth(), getHeight());
+			g2d.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1) {
 			setBackground(new Color(0, 0, 0, 0));
 			setForeground(Color.WHITE);
 		}
-		super.paintComponent(g);
+		super.paintComponent(g2d);
 	}
 
 	class BackLabel extends JLabel {

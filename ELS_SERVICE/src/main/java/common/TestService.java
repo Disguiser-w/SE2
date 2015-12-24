@@ -1,6 +1,5 @@
 package common;
 
-import java.io.FileNotFoundException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;
@@ -19,8 +18,8 @@ import data.managedata.CityDistanceData;
 import data.managedata.CostData;
 import data.managedata.OrganizationData;
 import data.managedata.PerWageData;
-import data.repertorydata.GoodsData;
 import data.repertorydata.EnterRepertoryReceiptData;
+import data.repertorydata.GoodsData;
 import data.repertorydata.LeaveRepertoryReceiptData;
 import data.repertorydata.RepertoryData;
 import data.userdata.UserData;
@@ -37,8 +36,8 @@ import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
-import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
+import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;

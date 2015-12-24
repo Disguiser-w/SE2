@@ -10,13 +10,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
+import presentation.commonui.LocationHelper;
+import presentation.commonui.MyCheckBox;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -25,6 +25,7 @@ import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import presentation.special_ui.AddLabel;
+import presentation.special_ui.BoxGroup;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
@@ -77,12 +78,9 @@ public class DriverManagerPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addLabel.setBounds((int) (width * 1.2278308321964528 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
-		delLabel.setBounds((int) (width * 6.207366984993179 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
-		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
+		addLabel.setBounds(35, 34, 30, 30);
+		delLabel.setBounds(160, 34, 30, 30);
+		modifyLabel.setBounds(285, 34, 30, 30);
 
 		inputField.setBounds((int) (width * 17.154843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
 				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
@@ -212,10 +210,14 @@ public class DriverManagerPanel extends OperationPanel {
 
 		protected JLabel sexLabel;
 		// protected MyComboBox sexBox;
-		protected JRadioButton male;
-		protected JRadioButton female;
+		protected MyTextLabel maleLabel;
+		protected MyCheckBox male;
+		protected MyTextLabel femaleLabel;
+		protected MyCheckBox female;
 
 		protected DriverVO oldVO;
+		protected LocationHelper helper;
+		protected BoxGroup bg;
 
 		public ModifyPanel(DriverVO vo) {
 			this.oldVO = vo;
@@ -251,11 +253,14 @@ public class DriverManagerPanel extends OperationPanel {
 			timeField = new MyTextField();
 
 			sexLabel = new MyTextLabel("性别");
-			male = new JRadioButton("男");
-			female = new JRadioButton("女");
-			ButtonGroup group = new ButtonGroup();
-			group.add(male);
-			group.add(female);
+			maleLabel = new MyTextLabel("男");
+			male = new MyCheckBox();
+			femaleLabel = new MyTextLabel("女");
+			female = new MyCheckBox();
+			bg = new BoxGroup();
+			bg.add(male);
+			bg.add(female);
+
 			confirmButton = new MyLabel("确认");
 			cancelButton = new MyLabel("取消");
 
@@ -289,7 +294,7 @@ public class DriverManagerPanel extends OperationPanel {
 			setInfo1();
 			addListener1();
 
-			// helper = new LocationHelper(this);
+			helper = new LocationHelper(this);
 
 		}
 
@@ -340,10 +345,14 @@ public class DriverManagerPanel extends OperationPanel {
 					(int) (width * 2.4007682458386683 / 25), (int) (height * 1.25 / 20));
 			sexLabel.setBounds((int) (width * 6.850192061459667 / 25), (int) (height * 13.080357142857142 / 20),
 					(int) (width * 3.329065300896287 / 25), (int) (height * 1.2053571428571428 / 20));
-			male.setBounds((int) (width * 13.284250960307299 / 25), (int) (height * 13.035714285714286 / 20),
-					(int) (width * 1.3764404609475032 / 25), (int) (height * 1.3392857142857142 / 20));
-			female.setBounds((int) (width * 15.685019206145967 / 25), (int) (height * 13.035714285714286 / 20),
-					(int) (width * 2.848911651728553 / 25), (int) (height * 1.3392857142857142 / 20));
+			maleLabel.setBounds((int) (width * 12.789904502046385 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.8185538881309686 / 25), (int) (height * 0.967741935483871 / 20));
+			male.setBounds((int) (width * 13.574351978171896 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.9549795361527967 / 25), (int) (height * 1.003584229390681 / 20));
+			femaleLabel.setBounds((int) (width * 15.723055934515688 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.8185538881309686 / 25), (int) (height * 0.967741935483871 / 20));
+			female.setBounds((int) (width * 16.473396998635742 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.9549795361527967 / 25), (int) (height * 1.003584229390681 / 20));
 		}
 
 		protected void setInfo1() {
@@ -466,7 +475,7 @@ public class DriverManagerPanel extends OperationPanel {
 					}
 
 					Sexuality s = null;
-					if (male.isSelected())
+					if (male.getSelected())
 						s = Sexuality.MALE;
 					else
 						s = Sexuality.FEMALE;
@@ -557,8 +566,13 @@ public class DriverManagerPanel extends OperationPanel {
 
 		private JLabel sexLabel;
 		// private MyComboBox sexBox;
-		private JRadioButton male;
-		private JRadioButton female;
+		private JLabel maleLabel;
+		private MyCheckBox male;
+		private JLabel femaleLabel;
+		private MyCheckBox female;
+		private BoxGroup bg;
+
+		private LocationHelper helper;
 
 		public AddPanel() {
 
@@ -594,11 +608,14 @@ public class DriverManagerPanel extends OperationPanel {
 			timeField = new MyTextField();
 
 			sexLabel = new MyTextLabel("性别");
-			male = new JRadioButton("男");
-			female = new JRadioButton("女");
-			ButtonGroup group = new ButtonGroup();
-			group.add(male);
-			group.add(female);
+			maleLabel = new MyTextLabel("男");
+			male = new MyCheckBox();
+			femaleLabel = new MyTextLabel("女");
+			female = new MyCheckBox();
+			bg = new BoxGroup();
+			bg.add(male);
+			bg.add(female);
+
 			confirmButton = new MyLabel("确认");
 			cancelButton = new MyLabel("取消");
 
@@ -625,14 +642,16 @@ public class DriverManagerPanel extends OperationPanel {
 			add(cancelButton);
 
 			add(sexLabel);
+			add(maleLabel);
 			add(male);
+			add(femaleLabel);
 			add(female);
 			setLayout(null);
 
 			setInfo1();
 			addListener2();
 
-			// helper = new LocationHelper(this);
+			helper = new LocationHelper(this);
 
 		}
 
@@ -683,10 +702,18 @@ public class DriverManagerPanel extends OperationPanel {
 					(int) (width * 2.4007682458386683 / 25), (int) (height * 1.25 / 20));
 			sexLabel.setBounds((int) (width * 6.850192061459667 / 25), (int) (height * 13.080357142857142 / 20),
 					(int) (width * 3.329065300896287 / 25), (int) (height * 1.2053571428571428 / 20));
-			male.setBounds((int) (width * 13.284250960307299 / 25), (int) (height * 13.035714285714286 / 20),
-					(int) (width * 1.3764404609475032 / 25), (int) (height * 1.3392857142857142 / 20));
-			female.setBounds((int) (width * 15.685019206145967 / 25), (int) (height * 13.035714285714286 / 20),
-					(int) (width * 2.848911651728553 / 25), (int) (height * 1.3392857142857142 / 20));
+			maleLabel.setBounds((int) (width * 12.517053206002728 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.8185538881309686 / 25), (int) (height * 0.967741935483871 / 20));
+			male.setBounds((int) (width * 13.335607094133698 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.9549795361527967 / 25), (int) (height * 1.003584229390681 / 20));
+			maleLabel.setBounds((int) (width * 12.789904502046385 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.8185538881309686 / 25), (int) (height * 0.967741935483871 / 20));
+			male.setBounds((int) (width * 13.574351978171896 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.9549795361527967 / 25), (int) (height * 1.003584229390681 / 20));
+			femaleLabel.setBounds((int) (width * 15.723055934515688 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.8185538881309686 / 25), (int) (height * 0.967741935483871 / 20));
+			female.setBounds((int) (width * 16.473396998635742 / 25), (int) (height * 13.082437275985663 / 20),
+					(int) (width * 0.9549795361527967 / 25), (int) (height * 1.003584229390681 / 20));
 		}
 
 		private void setInfo1() {
@@ -794,7 +821,7 @@ public class DriverManagerPanel extends OperationPanel {
 					}
 
 					Sexuality s = null;
-					if (male.isSelected())
+					if (male.getSelected())
 						s = Sexuality.MALE;
 					else
 						s = Sexuality.FEMALE;

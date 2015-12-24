@@ -76,13 +76,9 @@ public class VehicleManagerPanel extends OperationPanel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		addLabel.setBounds((int) (width * 1.2278308321964528 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
-		delLabel.setBounds((int) (width * 6.207366984993179 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
-		modifyLabel.setBounds((int) (width * 11.084583901773533 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25), (int) (height * 1.3978494623655915 / 20));
-
+		addLabel.setBounds(35, 34, 30, 30);
+		delLabel.setBounds(160, 34, 30, 30);
+		modifyLabel.setBounds(285, 34, 30, 30);
 		inputField.setBounds((int) (width * 17.154843110504775 / 25), (int) (height * 1.2186379928315412 / 20),
 				(int) (width * 5.320600272851296 / 25), (int) (height * 1.075268817204301 / 20));
 
@@ -775,7 +771,7 @@ public class VehicleManagerPanel extends OperationPanel {
 					OrganizationVO local = BusinessMainController.businessVO.organizationVO;
 
 					int driverIndex = driversBox.getSelectedIndex();
-					if(driverIndex == -1) {
+					if (driverIndex == -1) {
 						warnning("请选择司机");
 						return;
 					}

@@ -24,8 +24,10 @@ public class ImageLabel extends JLabel {
 	private String[] nameAndId;
 	private Image background;
 	private Image image;
+	private UserFrame frame;
 
 	public ImageLabel(String[] str, UserFrame f) {
+		frame = f;
 		background = ImageGetter.getImage("background1.png").getImage();
 
 		day = new DayLabel();
@@ -45,12 +47,12 @@ public class ImageLabel extends JLabel {
 					UserFrame.type = UserFrame.TYPE_1;
 					remove(night);
 					add(day);
-					f.review();
+					frame.review();
 				} else {
 					UserFrame.type = UserFrame.TYPE_0;
 					remove(day);
 					add(night);
-					f.review();
+					frame.review();
 				}
 			}
 		};
@@ -90,7 +92,7 @@ public class ImageLabel extends JLabel {
 		int height = getHeight();
 		g2d.drawRect(height / 4, height / 4, height / 2, height / 2);
 		if (image != null)
-			g2d.drawImage(image, height / 4 + 1, height / 4 + 1, height / 2 - 2, height / 2 - 2, null);
+			g2d.drawImage(image, height / 4 + 1, height / 4 + 1, height / 2 - 1, height / 2 - 1, null);
 
 		g2d.drawString("姓名: " + nameAndId[0], width * 2 / 7 + width / 10, height * 1 / 3 + 4);
 		g2d.drawString("编号: " + nameAndId[1], width * 2 / 7 + width / 10, height * 2 / 3 + 4);
