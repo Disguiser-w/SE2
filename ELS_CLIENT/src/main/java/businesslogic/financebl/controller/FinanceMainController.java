@@ -162,6 +162,7 @@ public class FinanceMainController {
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
 					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
 					"期初建账",ImageGetter.getImage("initInfo.png").getImage());
+			financeFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志");
 		
 			financeFrame.showFrame();
 		}

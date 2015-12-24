@@ -117,7 +117,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 * */
 	public void setCollectionBaseInfo(){
 		String[] head = new String[]{"收款单编号","收款日期","收款金额","收款人","账户","单据状态"};
-		int[] widths = { 160, 100, 70, 120, 60,100  };
+		int[] widths = { 160, 100, 70, 120, 81,100  };
 		
 		collectionReceiptVOs = collectionController.getAllCollection();
 		collectionTable = new MyTable(head, getCollectionInfos(collectionReceiptVOs), widths,false);		
@@ -156,7 +156,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 * */
 	public void setPaymentBaseInfo(){
 		String[] head = new String[]{"付款单编号","付款日期","金额","付款人","账户","单据状态"};
-		int[] widths = { 160, 100, 70, 120, 60,100 };
+		int[] widths = { 160, 100, 70, 120, 81,100 };
 		paymentReceiptVOs = paymentReceiptBLController.getAllPaymentReceipt();
 		paymentTable = new MyTable(head, getPaymentInfos(paymentReceiptVOs), widths, false);		
 	}

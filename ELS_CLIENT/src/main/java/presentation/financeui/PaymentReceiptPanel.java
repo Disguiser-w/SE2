@@ -104,7 +104,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 	
 	public void setBaseInfo(){
 		String[] head = new String[]{"日期","条目","金额","付款账户","操作人"};
-		int[] widths = new int[]{150,100,70,70,70,70,60};
+		int[] widths = new int[]{150,120,120,120,111};
 		paymentTable = new MyTable(head, getInfos(paymentItemVOs), widths, false);
 		add(paymentTable);
 	}

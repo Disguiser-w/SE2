@@ -126,11 +126,11 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
 		startDate_Input.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
 		endDate_Input.setBounds((int)(width * 10.809948979591837/25),(int)(height * 2.5048923679060664/20),(int)(width *  3.2206632653061225 /25),(int)(height *  1.2915851272015655/20));
-		BSLTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.0140306122449 /25),(int)(height *  13.424657534246576/20));		
+		BSLTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.007397959183675 /25),(int)(height *  13.424657534246576/20));		
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"编号","日期","金额","操作人"};
-		int[] widths = new int[]{150,150,150,150};
+		int[] widths = new int[]{160,152,152,160};
 		
 		BSLTable = new MyTable(head, getInfos(collectionReceiptVOs,paymentReceiptVOs), widths, false);
 		add(BSLTable);

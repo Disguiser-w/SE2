@@ -90,7 +90,7 @@ public class LogDiaryPanel extends OperationPanel{
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"日期","操作人","操作"};
-		int[] widths = new int[]{100,100,400};
+		int[] widths = new int[]{110,110,404};
 		
 		logDiaryPanel = new MyTable(head, getInfos(logDiaryVOs), widths, false);
 		add(logDiaryPanel);
@@ -126,10 +126,10 @@ public class LogDiaryPanel extends OperationPanel{
 		}
 	}
 	
-	public static void main(String[] args){
-		LogDiaryBLController controller = new LogDiaryBLController();
-		new LogDiaryPanel(controller);
-	}
+//	public static void main(String[] args){
+//		LogDiaryBLController controller = new LogDiaryBLController();
+//		new LogDiaryPanel(controller);
+//	}
 
 
 }

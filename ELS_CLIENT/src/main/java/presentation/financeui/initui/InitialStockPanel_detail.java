@@ -114,14 +114,14 @@ public class InitialStockPanel_detail extends OperationPanel{
 	  * */
 	 public void setUserBaseInfo(){
 		 String head[]={"姓名","编号","职业类型","所属机构","权限","绩点"};
-		 int[] widths = new int[]{ 80, 100, 120, 120, 120,80};
+		 int[] widths = new int[]{ 80, 100, 120, 120, 120,86};
 		 init_user = controller.getInitInfo(time).userVOs;
 		 userTable = new MyTable(head, getUserInfos(init_user), widths, false);
 	 }
 	 
 	 public void setOrganizationBaseInfo(){
 		 String head[]={"机构名称","编号","类别"};
-		 int[] widths = new int[]{200,200,220};
+		 int[] widths = new int[]{200,200,226};
 		 
 		 init_organization = controller.getInitInfo(time).organizationVOs;
 		 organizationTable = new MyTable(head, getOrganizationInfos(init_organization), widths, false);
@@ -130,7 +130,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	 
 	 public void setVehicleBaseInfo(){
 		 String head[]={"编号","所属机构","司机编号","目的机构"};
-		 int[] widths = new int[]{180, 130,180, 130};
+		 int[] widths = new int[]{180, 130,180, 136};
 		 
 		 init_vehicle = controller.getInitInfo(time).vehicleVOs;
 		 vehicleTable = new MyTable(head, getVehicleInfos(init_vehicle), widths, false);
@@ -138,7 +138,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	 
 	 public void setRepertoryBaseInfo(){
 		  String head[]={"仓库编号","仓库管理员编号","排数","架数","位数","警戒比例"};
-		  int[] widths = new int[]{ 140, 100, 70, 120, 80,100};
+		  int[] widths = new int[]{ 140, 110, 70, 120, 86,100};
 		  
 		  init_repertory = controller.getInitInfo(time).repertoryVOs;
 		  repertoryTable = new MyTable(head, getRepertoryInfos(init_repertory), widths, false);
@@ -146,7 +146,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	 
 	 public void setAccountBaseInfo(){
 		 String head[]={"账户名称","金额"};
-		 int[] widths = new int[]{310,310};
+		 int[] widths = new int[]{313,313};
 		 
 		 init_account = controller.getInitInfo(time).accoutVOs;
 		 accountTable = new MyTable(head, getAccountInfos(init_account), widths, false);

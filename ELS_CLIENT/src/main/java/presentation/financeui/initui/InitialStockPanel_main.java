@@ -90,7 +90,7 @@ public class InitialStockPanel_main extends OperationPanel {
 	 * */
 	public void  setBaseInfo(){
 		String[] head = new String[]{"建账日期","操作员"};
-		int[] width ={290,290};
+		int[] width ={297,297};
 		initTable = new MyTable(head,getInfos(), width, true);
 		add(initTable);
 	}

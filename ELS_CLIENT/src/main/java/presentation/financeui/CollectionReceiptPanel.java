@@ -44,7 +44,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	private MyTextField date_Input;
 	private String hallID;
-//	private MyTextField businessHall_ID_Input;
 	
 	private MyComboBox<String> businessHallID_Input;;
 	
@@ -68,7 +67,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 		this.user = user;
 		this.organizationController = organizationController;
 		dateChooseLabel =new JLabel("日期");
-//		hallChooseLabel = new MyLabel("营业厅");
 		collectionOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
 		cancelButton = new MyLabel("返回");
@@ -120,7 +118,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 	public void setBaseInfo(){
 		String[] head = new String[]{"收款单编号","营业厅编号","收款金额"};
-		int[] widths = new int[]{200,190,190};
+		int[] widths = new int[]{221,200,200};
 		collectionTable = new MyTable(head, getInfos(gatheringReceiptVOs), widths, false);
 		add(collectionTable);
 	}
