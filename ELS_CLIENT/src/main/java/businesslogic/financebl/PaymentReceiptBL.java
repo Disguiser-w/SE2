@@ -109,7 +109,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 			return FinanceMainController.pposToVOs(paymentData.getAllPaymentReceipt());
 			}
 			else{
-				return new ArrayList<PaymentReceiptVO>();
+				return null;
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

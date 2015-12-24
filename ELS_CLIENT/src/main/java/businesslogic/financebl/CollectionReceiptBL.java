@@ -166,8 +166,13 @@ public class CollectionReceiptBL extends ReceiptBL {
 		// TODO Auto-generated method stub
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs;
 		try {
+			if(collectionData.getAllCollection()!=null){
 			collectionReceiptPOs = collectionData.getAllCollection();
 			return FinanceMainController.cposToVOs(collectionReceiptPOs);
+			}
+			else{
+				return null;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

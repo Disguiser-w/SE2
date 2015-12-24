@@ -16,6 +16,7 @@ import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.InitialStockDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
+import dataservice.logdiarydataservice.LogDiaryDataService;
 import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
@@ -173,6 +174,14 @@ public class DataFactory {
 		LeaveRepertoryReceiptDataService leaveRepertoryReceiptData = (LeaveRepertoryReceiptDataService) Naming
 				.lookup("//" + address + "/LeaveRepertoryReceiptDataService");
 		return leaveRepertoryReceiptData;
+	}
+	
+	//系统日志
+	public static LogDiaryDataService getLogDiaryData() 
+			throws MalformedURLException, RemoteException, NotBoundException{
+		LogDiaryDataService logDiaryData = (LogDiaryDataService) Naming
+				.lookup("//" + address + "/LogDiaryDataService");
+		return logDiaryData;
 	}
 
 
