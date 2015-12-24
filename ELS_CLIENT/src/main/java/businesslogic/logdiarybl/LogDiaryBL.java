@@ -2,24 +2,32 @@ package businesslogic.logdiarybl;
 
 import java.util.ArrayList;
 
+import businesslogic.logdiarybl.controller.LogDiaryMainController;
+import businesslogicservice.logdiaryblservice.LogDiaryBLService;
 import po.LogDiaryPO;
+import vo.LogDiaryVO;
 import dataservice.logdiarydataservice.LogDiaryDataService;
 
-public class LogDiaryBL implements LogDiaryDataService{
+public class LogDiaryBL implements LogDiaryBLService{
+	
+	private LogDiaryDataService logDiaryData;
 
-	public int addLogDiary(LogDiaryPO po, String time) {
+	public int addLogDiary(LogDiaryVO vo, String time) {
 		// TODO Auto-generated method stub
-		return 0;
+		LogDiaryPO po = LogDiaryMainController.logDiaryVOToPO(vo);
+		return logDiaryData.addLogDiary(po, time);
 	}
 
-	public LogDiaryPO getLogDiaryPO(String time) {
+	public LogDiaryVO getLogDiaryVO(String time) {
 		// TODO Auto-generated method stub
-		return null;
+		LogDiaryVO vo = LogDiaryMainController.logDiaryPOToVO(logDiaryData.getLogDiaryPO(time));
+		return vo;
 	}
 
-	public ArrayList<LogDiaryPO> getAllLogDiaryPOs() {
+	public ArrayList<LogDiaryVO> getAllLogDiaryVOs() {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<LogDiaryVO> vos = LogDiaryMainController.logDiaryPOsToVOs(logDiaryData.getAllLogDiaryPOs());
+		return vos;
 	}
 
 }
