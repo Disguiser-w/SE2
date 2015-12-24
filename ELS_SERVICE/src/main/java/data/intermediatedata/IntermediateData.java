@@ -74,14 +74,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-				return new ArrayList<PlanePO>();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			return new ArrayList<PlanePO>();
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
@@ -106,14 +99,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-train.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-				return new ArrayList<TrainPO>();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			return new ArrayList<TrainPO>();
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
@@ -137,14 +123,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-				return new ArrayList<TruckPO>();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			return new ArrayList<TruckPO>();
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(

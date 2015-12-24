@@ -93,12 +93,13 @@ public class PlaneManagementPanel extends OperationPanel {
 				(int) (height * 3.369175627240143 / 20),
 				(int) (width * 22.98335467349552 / 25),
 				(int) (height * 15.412186379928315 / 20));
+		System.out.println((int) (width * 22.98335467349552 / 25));
 	}
 
 	private void setBaseInfos() {
 		String[] head = new String[] { "飞机编号", "所属机构", "目的地", "运送费用", "工作状态" };
 
-		int[] widths = { 80, 200, 60, 200, 60 };
+		int[] widths = { 80, 196, 60, 197, 60 };
 
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);

@@ -83,7 +83,6 @@ public class IntermediateMainController {
 					.getTrainList(intermediateCentre.organizationID)));
 			intermediateCentre.truckList = poToVO_TruckList((ArrayList<TruckPO>) (intermediateData
 					.getTruckList(intermediateCentre.organizationID)));
-			System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

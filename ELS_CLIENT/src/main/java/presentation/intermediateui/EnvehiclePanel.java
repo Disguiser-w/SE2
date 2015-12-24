@@ -78,7 +78,7 @@ public class EnvehiclePanel extends OperationPanel {
 	private void setBaseInfo() {
 		String[] head = new String[] { "订单编号", "出发地", "到达地", "状态", "订单种类" };
 
-		int[] widths = { 240, 90, 90, 90, 90 };
+		int[] widths = { 233, 90, 90, 90, 90 };
 
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);

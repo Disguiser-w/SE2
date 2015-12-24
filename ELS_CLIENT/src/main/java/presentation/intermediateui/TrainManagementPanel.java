@@ -98,8 +98,8 @@ public class TrainManagementPanel extends OperationPanel {
 	private void setBaseInfos() {
 		String[] head = new String[] { "火车编号", "所属机构", "目的地", "运送费用", "工作状态" };
 
-		int[] widths = { 80, 200, 60, 200, 60 };
-
+		int[] widths = { 80, 196, 60, 197, 60 };
+		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
 	}
