@@ -1,8 +1,6 @@
 package data.financedata;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -21,12 +19,12 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	
 	public CostIncomeReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("costincome.ser");
+		file=new JXCFile("info/costincomeInfo/costincome.ser");
 	}
 	public int creatCostIncomeList(CostIncomeReceiptPO po)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("costincome.ser");
+		file=new JXCFile("info/costincomeInfo/costincome.ser");
 		file.write(po);
 		num++;
 		return 0;
@@ -35,28 +33,21 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	public ArrayList<CostIncomeReceiptPO> getAllCostIncomeList()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("costincome.ser");
+		file=new JXCFile("info/costincomeInfo/costincome.ser");
 		ArrayList<Object> os=file.read();
+		if(os == null){
+			return null;
+		}
+		else{
 		ArrayList<CostIncomeReceiptPO> costIncomeReceiptPOs=new ArrayList<CostIncomeReceiptPO>();
 		for(Object o:os){
 			CostIncomeReceiptPO costIncomeReceiptPO=(CostIncomeReceiptPO) o;
 			costIncomeReceiptPOs.add(costIncomeReceiptPO);
 		}
 		return costIncomeReceiptPOs;
+		}
 	}
 
-/*	public ArrayList<CollectionReceiptPO> getCollection()
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
-	public ArrayList<PaymentReceiptPO> getPayment() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	*/
 
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -96,7 +87,7 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	public CostIncomeReceiptPO getCostIncomeReceipt(String time)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("costincome.ser");
+		file=new JXCFile("info/costincomeInfo/costincome.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取经营情况表失败");
@@ -111,7 +102,7 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 		return null;
 	}
 	
-	public static void main(String[] args){
+	/*	public static void main(String[] args){
 		try{
 			System.setProperty("java.rmi.server.hostname", "172.26.209.182");
 			CostIncomeReceiptDataService data=new CostIncomeReceiptData();
@@ -124,7 +115,7 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-/*		CostIncomeReceiptData data=new CostIncomeReceiptData();
+		CostIncomeReceiptData data=new CostIncomeReceiptData();
 		CostIncomeReceiptPO po1=new CostIncomeReceiptPO("CBSYB-20151126-00001", "本宝宝", ReceiptType.COSTINCOMERECEPTION, ReceiptState.DRAFT, 200, 1222, 1022);
 		try {
 			data.creatCostIncomeList(po1);
@@ -138,7 +129,7 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 		}
 		
 	}
-	*/
-}
 
+}
+	*/
 }

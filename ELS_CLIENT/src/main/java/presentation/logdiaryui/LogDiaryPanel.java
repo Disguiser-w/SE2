@@ -29,7 +29,7 @@ public class LogDiaryPanel extends OperationPanel{
 
 	private MyTextField startDate_Input;
 
-	private MyTable logDiaryPanel;
+	private MyTable logDiaryTable;
 	
 	public ArrayList<LogDiaryVO> logDiaryVOs;
 	
@@ -75,25 +75,23 @@ public class LogDiaryPanel extends OperationPanel{
 	
 	}
 
-
-
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
 
 		
-        startDateLabel.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
+        startDateLabel.setBounds((int)(width * 7.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
         dateOKLabel.setBounds((int)(width * 19.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
-		startDate_Input.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
-		logDiaryPanel.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.0140306122449 /25),(int)(height *  13.424657534246576/20));		
+		startDate_Input.setBounds((int)(width * 2.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  5.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
+		logDiaryTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.0140306122449 /25),(int)(height *  14.424657534246576/20));		
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"日期","操作人","操作"};
 		int[] widths = new int[]{110,110,404};
 		
-		logDiaryPanel = new MyTable(head, getInfos(logDiaryVOs), widths, false);
-		add(logDiaryPanel);
+		logDiaryTable = new MyTable(head, getInfos(logDiaryVOs), widths, false);
+		add(logDiaryTable);
 	}
 	
 	private ArrayList<String[]> getInfos(ArrayList<LogDiaryVO> vos){
@@ -122,7 +120,7 @@ public class LogDiaryPanel extends OperationPanel{
 		}
 		else{
 			ArrayList<LogDiaryVO> vos = controller.getLogDiaryVO(beginTime);
-			logDiaryPanel.setInfos(getInfos(vos));
+			logDiaryTable.setInfos(getInfos(vos));
 		}
 	}
 	

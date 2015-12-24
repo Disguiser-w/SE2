@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
@@ -16,6 +17,7 @@ import presentation.commonui.OperationPanel;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
+import vo.UserVO;
 
 public class BusinessStateReceiptPanel extends OperationPanel {
 
@@ -38,10 +40,11 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	private ArrayList<PaymentReceiptVO> paymentReceiptVOs;
 
 	public BusinessStatementReceiptBLController controller;
+	public UserVO userVO;
 
-
-	public BusinessStateReceiptPanel(BusinessStatementReceiptBLController controller) {
+	public BusinessStateReceiptPanel(BusinessStatementReceiptBLController controller,UserVO userVO) {
 		this.controller=controller;
+		this.userVO=userVO;
 		
 		startDateLabel = new JLabel("开始日期");
 		endDateLabel =new JLabel("结束日期");
@@ -173,6 +176,9 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 					JOptionPane.WARNING_MESSAGE);
 		}
 		else{
+//			LogDiaryBL bl = new LogDiaryBL();
+//			LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), userVO, "查看了经营情况表");
+//			bl.addLogDiary(logvo, getDate.getdate());
 			beginTime=beginTime.substring(0, 4)+beginTime.substring(5,7)+beginTime.substring(8);
 			endTime=endTime.substring(0, 4)+endTime.substring(5, 7)+endTime.substring(8);
 		BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);

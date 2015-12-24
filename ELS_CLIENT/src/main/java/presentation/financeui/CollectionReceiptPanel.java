@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.CollectionReceiptBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
@@ -23,6 +25,7 @@ import type.ReceiptState;
 import type.ReceiptType;
 import vo.CollectionReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.UserVO;
 /**
@@ -141,7 +144,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 	   dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height *  2.522504892367906/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
-//		hallChooseLabel.setBounds((int)(width * 14.09438775510204/25),(int)(height * 2.522504892367906/20),(int)(width *  0.9885204081632653 /25),(int)(height *  0.9784735812133072/20));
 		collectionOKButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 2.522504892367906/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
 		totalButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
 		cancelButton.setBounds((int)(width * 20.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
@@ -161,11 +163,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			/**
 			 * 确认日期输入
 			 * */
-//			hallChooseLabel.addMouseListener(new MouseAdapter() {
-//				public void mouseClicked(MouseEvent e){
-//					infookui();
-//				}
-//			});
+
 			businessHallID_Input.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 				infookui();
@@ -220,7 +218,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 		}
 		businesshallInt = businessHallID_Input.getSelectedIndex();
 		 hallID = businessHallVOs.get(businesshallInt).organizationID;
-//		gatheringReceiptVOs = controller.getGatheringByHall(hallID);
 	}
 
 	/**
@@ -242,6 +239,9 @@ public class CollectionReceiptPanel extends OperationPanel {
 					         JOptionPane.CLOSED_OPTION);
 				}
 		         else{
+		        	 LogDiaryBL bl = new LogDiaryBL();
+		        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), user, "创建了一张合计收款单");
+		        	 bl.addLogDiary(logvo, getDate.getdate());
 			         gatheringReceiptVOs = controller.getGatheringByTime(date_str);
 			         collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 		          }

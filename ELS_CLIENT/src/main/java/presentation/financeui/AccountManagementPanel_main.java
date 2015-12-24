@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.getDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -17,6 +19,8 @@ import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 import vo.AccountVO;
+import vo.LogDiaryVO;
+import vo.UserVO;
 
 public class AccountManagementPanel_main extends OperationPanel {
 	/**
@@ -28,7 +32,6 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private AddLabel addLabel;
 	private DeleteLabel deleteLabel;
 	private ModifyLabel modifyLabel;
-//	private MyLabel searchLabel;
 	private MyLabel refreshLabel;
 	
 	private MySearchField searchTextField;
@@ -39,12 +42,14 @@ public class AccountManagementPanel_main extends OperationPanel {
 	AccountBLController controller;
 	ArrayList<AccountVO> accountVOs;
 	FinanceFrame financeFrame;
+	UserVO userVO;
 	private int selectedIndex;
 	
 
-	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent) {
+	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent,UserVO userVO) {
 		this.controller=controller;
 		this.financeFrame=parent;
+		this.userVO = userVO;
 		addLabel = new AddLabel("添加");
 		deleteLabel = new DeleteLabel("删除");
 		modifyLabel=new ModifyLabel("修改");
@@ -107,14 +112,14 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addLabel.setBounds((int)(width * 2.3278061224489797/25),(int)(height * 2.4442270058708413/20),(int)(width *   2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		deleteLabel.setBounds((int)(width * 5.07015306122449/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
-		modifyLabel.setBounds((int)(width * 7.940051020408164/25),(int)(height * 2.4442270058708413/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.087279843444227/20));
+		addLabel.setBounds(70, 70, 30, 30);
+		deleteLabel.setBounds(185, 70, 30, 30);
+		modifyLabel.setBounds(300,70, 30, 30);
 		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
 		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *2.4442270058708413/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
 		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
 
-		accountTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 4.205479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  13.421154598825832/20));
+		accountTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 3.605479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  14.921154598825832/20));
 	}
 	
 	 /**
@@ -174,7 +179,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	
 
 	public void addui() {
-		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this));
+		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this,userVO));
 	}
 
 	public void deleteui() {
@@ -190,6 +195,9 @@ public class AccountManagementPanel_main extends OperationPanel {
 			if(JOptionPane.showConfirmDialog(null, "确认删除该用户信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
+			LogDiaryBL log = new LogDiaryBL();
+			LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "删除了一个账户");
+			log.addLogDiary(vo, getDate.getdate());
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);
 				}
@@ -209,7 +217,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 		selectedIndex = selectedIndexs.get(0);
 		AccountVO  vo = accountVOs.get(selectedIndex);
-		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this));		
+		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this,userVO));		
 	}
 	
 	public void searchui(){

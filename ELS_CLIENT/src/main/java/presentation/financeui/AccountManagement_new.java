@@ -8,9 +8,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.getDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.OperationPanel;
 import vo.AccountVO;
+import vo.LogDiaryVO;
+import vo.UserVO;
 
 public class AccountManagement_new extends OperationPanel {
 	
@@ -40,11 +44,14 @@ public class AccountManagement_new extends OperationPanel {
 	private int PANEL_HEIGHT = 480;
 	
 	FinanceFrame financeFrame;
+	public UserVO userVO;
 
-	public AccountManagement_new(AccountBLController controller,FinanceFrame parent,AccountManagementPanel_main accountMainPanel) {
+	public AccountManagement_new(AccountBLController controller,FinanceFrame parent,AccountManagementPanel_main accountMainPanel,
+			UserVO userVO) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.accountMainPanel=accountMainPanel;
+		this.userVO=userVO;
 		infoOKButton = new MyLabel("确认");
 		cancelButton =new MyLabel("返回");
 
@@ -125,6 +132,9 @@ public class AccountManagement_new extends OperationPanel {
 
 				if(result==0){
 					returnui();
+					LogDiaryBL log = new LogDiaryBL();
+					LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "新增了一个账户");
+					log.addLogDiary(vo, getDate.getdate());
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.DEFAULT_OPTION);
 					account_name_Input.setText("");

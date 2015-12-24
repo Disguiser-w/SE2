@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.PaymentReceiptBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
@@ -19,6 +21,7 @@ import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import type.ReceiptState;
 import type.ReceiptType;
+import vo.LogDiaryVO;
 import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import vo.UserVO;
@@ -233,7 +236,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 			paymentItemVOs.add(vo);
 			}
 			else{
-				JOptionPane.showMessageDialog(null, "该月的租金已经被添加了！", "提示",
+				JOptionPane.showMessageDialog(null, "该月的工资已经被添加了！", "提示",
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}
@@ -261,6 +264,9 @@ public class PaymentReceiptPanel extends OperationPanel {
 				ReceiptState.DRAFT, rent, fare, salary, time, "总账", user.userName);
 		int temp=controller.creatPaymentReceipt(vo);
 		if(temp==0){
+			 LogDiaryBL bl = new LogDiaryBL();
+        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), user, "创建了一张付款单");
+        	 bl.addLogDiary(logvo, getDate.getdate());
 			controller.excute(vo);
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);

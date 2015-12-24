@@ -15,6 +15,7 @@ import type.OrganizationType;
 import type.ProfessionType;
 import vo.AccountVO;
 import vo.InitInfoVO;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
@@ -22,6 +23,7 @@ import vo.VehicleVO;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.managebl.controller.OrganizationController;
 import businesslogic.receiptbl.getDate;
 import businesslogic.repertorybl.RepertoryBL;
@@ -229,23 +231,23 @@ public class InitialStockPanel_new extends OperationPanel{
 			
 			function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 					PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-			humanInfo.setBounds(PANEL_WIDTH* 6/ 60, PANEL_HEIGHT * 5 / 32,
-					PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-			organizationInfo.setBounds(PANEL_WIDTH * 40 / 180, PANEL_HEIGHT *5 / 32,
-					PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-			vehicleInfo.setBounds(PANEL_WIDTH * 60 / 180, PANEL_HEIGHT *5 / 32,
-					PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-			stockInfo.setBounds(PANEL_WIDTH *80 / 180, PANEL_HEIGHT * 5 / 32,
-					PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-			accountInfo.setBounds(PANEL_WIDTH * 100 / 180, PANEL_HEIGHT * 5 / 32,
-					PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+			humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 5 / 32,
+					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+			organizationInfo.setBounds(PANEL_WIDTH * 12 / 60, PANEL_HEIGHT *5 / 32,
+					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+			vehicleInfo.setBounds(PANEL_WIDTH * 20 / 60, PANEL_HEIGHT *5 / 32,
+					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+			stockInfo.setBounds(PANEL_WIDTH *28 / 60, PANEL_HEIGHT * 5 / 32,
+					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+			accountInfo.setBounds(PANEL_WIDTH * 36 / 60, PANEL_HEIGHT * 5 / 32,
+					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 			completeLabel.setBounds(PANEL_WIDTH *31/ 36, PANEL_HEIGHT / 24,
-					PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-			InfoOKButton.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *46 / 48,
-					PANEL_WIDTH *5 / 36, PANEL_HEIGHT *2 / 24);
-			cancelButton.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 46 / 48,
-					PANEL_WIDTH * 5 / 36, PANEL_HEIGHT *2 / 24);
-			table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 3 / 14,
+					PANEL_WIDTH * 2 / 18, PANEL_HEIGHT / 12);
+			InfoOKButton.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *95 / 96,
+					PANEL_WIDTH *5 / 36, PANEL_HEIGHT *1 / 16);
+			cancelButton.setBounds(PANEL_WIDTH * 12 / 18, PANEL_HEIGHT * 95 / 96,
+					PANEL_WIDTH * 5 / 36, PANEL_HEIGHT *1 / 16);
+			table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 7 / 28,
 					PANEL_WIDTH *47 /50 , PANEL_HEIGHT *73/ 100);
 		}
 		
@@ -345,7 +347,9 @@ public class InitialStockPanel_new extends OperationPanel{
 								JOptionPane.CLOSED_OPTION);
 					}
 					else{
-					
+					LogDiaryBL bl = new LogDiaryBL();
+					LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "新建了一套账");
+					bl.addLogDiary(vo, getDate.getdate());
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){
 						controller.initInfo(initVO,getDate.getdate());

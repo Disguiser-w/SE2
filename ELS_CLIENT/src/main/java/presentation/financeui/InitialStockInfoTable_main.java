@@ -9,6 +9,10 @@ import javax.swing.table.TableColumn;
 import vo.InitInfoVO;
 
 public class InitialStockInfoTable_main extends JTable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6925560804172162467L;
 	private int width;
 	private int height;
 	private TableColumn tc;

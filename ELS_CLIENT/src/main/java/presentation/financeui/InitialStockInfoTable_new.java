@@ -6,6 +6,10 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
 public class InitialStockInfoTable_new extends JTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3718287905034739322L;
 	private int width;
 	private int height;
 	private TableColumn tc;

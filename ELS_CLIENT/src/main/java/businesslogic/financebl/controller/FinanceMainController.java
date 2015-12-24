@@ -136,14 +136,14 @@ public class FinanceMainController {
 		user = ManageMainController.userPOToVO(userData.findUserByID(financeID));
 		financeFrame = new FinanceFrame(user);
 		if (user.authority.equals(AuthorityType.highest)) {
-			financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController, financeFrame), "账户管理",
+			financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController, financeFrame,user), "账户管理",
 					ImageGetter.getImage("account.png").getImage());
 			financeFrame.addFuncLabel(
 					new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user,
 							organizationController),"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
 			financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame),
 					"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
-			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController), "经营情况表",
+			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController,user), "经营情况表",
 					ImageGetter.getImage("businessStatement.png").getImage());
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
 					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
@@ -157,7 +157,7 @@ public class FinanceMainController {
 							organizationController),"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
 			financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame),
 					"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
-			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController), "经营情况表",
+			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController,user), "经营情况表",
 					ImageGetter.getImage("businessStatement.png").getImage());
 			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
 					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),

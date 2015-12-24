@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
@@ -32,14 +33,14 @@ public class InitialStockPanel_detail extends OperationPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel cancelLabel;
+	private MyLabel cancelLabel;
 
 	private JLabel function;
-	private JLabel humanInfo;
-	private JLabel organizationInfo;
-	private JLabel vehicleInfo;
-	private JLabel stockInfo;
-	private JLabel accountInfo;
+	private MyLabel humanInfo;
+	private MyLabel organizationInfo;
+	private MyLabel vehicleInfo;
+	private MyLabel stockInfo;
+	private MyLabel accountInfo;
 	
 	
 	private MyTable currentTable;
@@ -78,19 +79,16 @@ public class InitialStockPanel_detail extends OperationPanel{
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.time=time;
-		cancelLabel = new JLabel("返回");
+		cancelLabel = new MyLabel("返回");
 		function = new JLabel("期初建账");
-		humanInfo = new JLabel("人员信息");
-		organizationInfo = new JLabel("机构信息");
-		vehicleInfo = new JLabel("车辆信息");
-		stockInfo = new JLabel("库存信息");
-		accountInfo = new JLabel("银行账户");
+		humanInfo = new MyLabel("人员信息");
+		organizationInfo = new MyLabel("机构信息");
+		vehicleInfo = new MyLabel("车辆信息");
+		stockInfo = new MyLabel("库存信息");
+		accountInfo = new MyLabel("银行账户");
 		
-	
 		addListener();
-		
 		setLayout(null);
-
 		add(cancelLabel);
 		add(function);
 		add(humanInfo);
@@ -255,18 +253,18 @@ public class InitialStockPanel_detail extends OperationPanel{
 	public void setCmpLocation(MyTable table){
 		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		humanInfo.setBounds(PANEL_WIDTH* 6/ 60, PANEL_HEIGHT * 5 / 32,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		organizationInfo.setBounds(PANEL_WIDTH * 40 / 180, PANEL_HEIGHT *5 / 32,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		vehicleInfo.setBounds(PANEL_WIDTH * 60 / 180, PANEL_HEIGHT *5 / 32,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		stockInfo.setBounds(PANEL_WIDTH *80 / 180, PANEL_HEIGHT * 5 / 32,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
-		accountInfo.setBounds(PANEL_WIDTH * 100 / 180, PANEL_HEIGHT * 5 / 32,
-				PANEL_WIDTH / 9, PANEL_HEIGHT / 24);
+		humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 5 / 32,
+				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+		organizationInfo.setBounds(PANEL_WIDTH * 12/60, PANEL_HEIGHT *5 / 32,
+				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+		vehicleInfo.setBounds(PANEL_WIDTH *20/60, PANEL_HEIGHT *5 / 32,
+				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+		stockInfo.setBounds(PANEL_WIDTH *28/60, PANEL_HEIGHT * 5 / 32,
+				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
+		accountInfo.setBounds(PANEL_WIDTH *36/60, PANEL_HEIGHT * 5 / 32,
+				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 		cancelLabel.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *46 / 48,
-				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *2 / 24);
+				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *1 / 16);
 		table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 3 / 14,
 				PANEL_WIDTH *47 /50 , PANEL_HEIGHT *73/ 100);
 	}

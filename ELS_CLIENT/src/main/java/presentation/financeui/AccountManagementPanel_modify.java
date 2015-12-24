@@ -9,8 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.getDate;
 import presentation.commonui.OperationPanel;
 import vo.AccountVO;
+import vo.LogDiaryVO;
+import vo.UserVO;
 
 public class AccountManagementPanel_modify extends OperationPanel{
 
@@ -38,15 +42,18 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	
 	  AccountBLController controller;
 	  FinanceFrame financeFrame;
+	  public UserVO userVO;
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
- public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent,AccountManagementPanel_main accountMainPanel) {
+ public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent,AccountManagementPanel_main accountMainPanel,
+		 UserVO userVO) {
 		this.controller=controller;
 		this.money=money;
 		this.nameInit=nameInit;
 		this.financeFrame=parent;
 		this.accountMainPanel=accountMainPanel;
+		this.userVO = userVO;
 		
 		infoOKButton = new JButton("确认");
 		cancelButton =new JButton("取消");
@@ -118,6 +125,9 @@ public class AccountManagementPanel_modify extends OperationPanel{
 				int result=controller.modifyAccount(accountVO, name);
 				if(result==0){
 					accountMainPanel.refreshui();
+					LogDiaryBL log = new LogDiaryBL();
+					LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "修改了一个账户");
+					log.addLogDiary(vo, getDate.getdate());
 					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
 				financeFrame.toMainPanel();
