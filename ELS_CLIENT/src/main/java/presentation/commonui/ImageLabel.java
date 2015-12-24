@@ -34,13 +34,9 @@ public class ImageLabel extends JLabel {
 		night = new NightLabel();
 		this.nameAndId = str;
 		String head = str[1].split("-")[0];
-		switch (head) {
-		case "ZZZX":
-			image = ImageGetter.getImage("ZZZX.gif").getImage();
-			break;
-		default:
-			image = ImageGetter.getImage(head + ".png").getImage();
-		}
+
+		image = ImageGetter.getImage(head + ".png").getImage();
+
 		MouseListener l = new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (UserFrame.type == UserFrame.TYPE_0) {
@@ -68,17 +64,22 @@ public class ImageLabel extends JLabel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		day.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
-				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
+		day.setBounds((int) (width * 21.475770925110133 / 25),
+				(int) (height * 2.4390243902439024 / 20),
+				(int) (width * 2.4229074889867843 / 25),
+				(int) (height * 5.121951219512195 / 20));
 
-		night.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
-				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
+		night.setBounds((int) (width * 21.475770925110133 / 25),
+				(int) (height * 2.4390243902439024 / 20),
+				(int) (width * 2.4229074889867843 / 25),
+				(int) (height * 5.121951219512195 / 20));
 	}
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(new Color(50, 50, 50));
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		// 这句是圆角效果
 		if (UserFrame.type == UserFrame.TYPE_0)
 			g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
@@ -92,10 +93,13 @@ public class ImageLabel extends JLabel {
 		int height = getHeight();
 		g2d.drawRect(height / 4, height / 4, height / 2, height / 2);
 		if (image != null)
-			g2d.drawImage(image, height / 4 + 1, height / 4 + 1, height / 2 - 1, height / 2 - 1, null);
+			g2d.drawImage(image, height / 4 + 1, height / 4 + 1,
+					height / 2 - 1, height / 2 - 1, null);
 
-		g2d.drawString("姓名: " + nameAndId[0], width * 2 / 7 + width / 10, height * 1 / 3 + 4);
-		g2d.drawString("编号: " + nameAndId[1], width * 2 / 7 + width / 10, height * 2 / 3 + 4);
+		g2d.drawString("姓名: " + nameAndId[0], width * 2 / 7 + width / 10,
+				height * 1 / 3 + 4);
+		g2d.drawString("编号: " + nameAndId[1], width * 2 / 7 + width / 10,
+				height * 2 / 3 + 4);
 
 	}
 

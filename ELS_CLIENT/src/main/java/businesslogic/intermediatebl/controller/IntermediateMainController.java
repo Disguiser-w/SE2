@@ -78,11 +78,11 @@ public class IntermediateMainController {
 			// System.out.println(intermediate.organization.planeList.size());
 			intermediateCentre = intermediate.organization;
 			intermediateCentre.planeList = poToVO_PlaneList((ArrayList<PlanePO>) (intermediateData
-					.getPlaneList(intermediate_ID)));
+					.getPlaneList(intermediateCentre.organizationID)));
 			intermediateCentre.trainList = poToVO_TrainList((ArrayList<TrainPO>) (intermediateData
-					.getTrainList(intermediate_ID)));
+					.getTrainList(intermediateCentre.organizationID)));
 			intermediateCentre.truckList = poToVO_TruckList((ArrayList<TruckPO>) (intermediateData
-					.getTruckList(intermediate_ID)));
+					.getTruckList(intermediateCentre.organizationID)));
 			System.out.println(intermediate.organization.planeList.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -173,6 +173,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<PlanePO> voToPO_PlaneList(
 			ArrayList<PlaneVO> planeList) {
+		if (planeList == null)
+			return new ArrayList<PlanePO>();
+
 		ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
 		for (PlaneVO plane : planeList)
 			planeList_temp.add(IntermediateMainController.voToPO(plane));
@@ -181,6 +184,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<PlaneVO> poToVO_PlaneList(
 			ArrayList<PlanePO> planeList) {
+		if (planeList == null)
+			return new ArrayList<PlaneVO>();
+
 		ArrayList<PlaneVO> planeList_temp = new ArrayList<PlaneVO>();
 		for (PlanePO plane : planeList)
 			planeList_temp.add(IntermediateMainController.poToVO(plane));
@@ -189,6 +195,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<TrainPO> voToPO_TrainList(
 			ArrayList<TrainVO> trainList) {
+		if (trainList == null)
+			return new ArrayList<TrainPO>();
+
 		ArrayList<TrainPO> trainList_temp = new ArrayList<TrainPO>();
 		for (TrainVO train : trainList)
 			trainList_temp.add(IntermediateMainController.voToPO(train));
@@ -197,6 +206,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<TrainVO> poToVO_TrainList(
 			ArrayList<TrainPO> trainList) {
+		if (trainList == null)
+			return new ArrayList<TrainVO>();
+
 		ArrayList<TrainVO> trainList_temp = new ArrayList<TrainVO>();
 		for (TrainPO train : trainList)
 			trainList_temp.add(IntermediateMainController.poToVO(train));
@@ -205,6 +217,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<TruckPO> voToPO_TruckList(
 			ArrayList<TruckVO> truckList) {
+		if (truckList == null)
+			return new ArrayList<TruckPO>();
+
 		ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
 		for (TruckVO truck : truckList)
 			truckList_temp.add(IntermediateMainController.voToPO(truck));
@@ -213,6 +228,9 @@ public class IntermediateMainController {
 
 	public static ArrayList<TruckVO> poToVO_TruckList(
 			ArrayList<TruckPO> truckList) {
+		if (truckList == null)
+			return new ArrayList<TruckVO>();
+
 		ArrayList<TruckVO> truckList_temp = new ArrayList<TruckVO>();
 		for (TruckPO truck : truckList)
 			truckList_temp.add(IntermediateMainController.poToVO(truck));
@@ -518,6 +536,6 @@ public class IntermediateMainController {
 	public static void main(String[] args) throws MalformedURLException,
 			RemoteException, NotBoundException {
 		IntermediateMainController controller = new IntermediateMainController(
-				"141250185");
+				"ZZZX-00185");
 	}
 }

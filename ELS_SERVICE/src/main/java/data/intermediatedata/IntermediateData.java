@@ -545,7 +545,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public static void main(String[] args) {
 		// File file = FileGetter.getFile("intermediateInfo");
 		File file = new File(
-				"info/intermediateCentreInfo/intermediate/141250185-intermediate.dat");
+				"info/intermediateCentreInfo/intermediate/ZZZX-00185-intermediate.dat");
 		try {
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
@@ -556,7 +556,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			OrganizationPO organization = new OrganizationPO(
 					OrganizationType.intermediateCenter, "141250", "软攻打作业");
 			IntermediatePO intermediate = new IntermediatePO(organization,
-					"痛苦的业务员", "141250185");
+					"痛苦的业务员", "ZZZX-00185");
 
 			RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
 

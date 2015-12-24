@@ -10,23 +10,27 @@ import common.ImageGetter;
 import init.Client;
 import presentation.commonui.MyLabel;
 
-public class LogOutLabel extends MyLabel{
-	public LogOutLabel(JFrame frame) {
-		this("",frame);
+public class LogOutLabel extends MyLabel {
+	private JFrame frame;
+
+	public LogOutLabel(JFrame f) {
+		this("", f);
 	}
 
-	public LogOutLabel(String str,JFrame frame) {
+	public LogOutLabel(String str, JFrame f) {
 		setText(str);
+		frame = f;
+
 		Image normal = ImageGetter.getImage("logout_0.png").getImage();
 		Image hover = ImageGetter.getImage("logout_1.png").getImage();
 		Image press = ImageGetter.getImage("logout_2.png").getImage();
 
 		setImages(normal, hover, press);
-		
+
 		addMoveListener();
-		
-		addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
+
+		addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);
 				new Client();
 			}

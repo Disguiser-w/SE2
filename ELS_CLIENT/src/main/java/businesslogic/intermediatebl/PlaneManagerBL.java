@@ -79,6 +79,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		// TODO 自动生成的方法存根
 		for (PlaneVO plane : planeList)
 			planeList_temp.add(IntermediateMainController.voToPO(plane));
+		System.out.println(intermediateCenter.organizationID);
 		intermediateData.savePlaneList(intermediateCenter.organizationID,
 				planeList_temp);
 		return OperationState.SUCCEED_OPERATION;
