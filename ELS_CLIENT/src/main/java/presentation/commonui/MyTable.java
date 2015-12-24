@@ -1,6 +1,5 @@
 package presentation.commonui;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -12,12 +11,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MyTable extends JPanel {
+
+	private MyObservable tableObservable;
 
 	private JPanel scrollPanel;
 	private int row;
@@ -45,6 +47,7 @@ public class MyTable extends JPanel {
 	private MyCheckBox myBox;
 
 	public MyTable(String[] head, ArrayList<String[]> infos, int[] widths, boolean multiChoose) {
+		tableObservable = new MyObservable();
 		scrollPanel = new JPanel();
 		scrollPanel.setBackground(new Color(0, 0, 0, 0));
 		setBackground(new Color(0, 0, 0, 0));
@@ -251,14 +254,15 @@ public class MyTable extends JPanel {
 
 	public void paintComponent(Graphics g) {
 
-//		super.paintComponent(g);
+		tableObservable.setData();
 
-//		if (UserFrame.type == 0) {
-//			scrollPanel.setBackground(new Color(250, 250, 250));
-//			setBackground(new Color(250, 250, 250));
-//		} else if (UserFrame.type == 1) {
-
-//		}
+		if (UserFrame.type == 0) {
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, getWidth(), getHeight());
+		} else if (UserFrame.type == 1) {
+			// g.setColor(new Color(200, 200, 200));
+			// g.fillRect(0, 0, getWidth(), getHeight());
+		}
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -432,45 +436,68 @@ public class MyTable extends JPanel {
 		return scrollPanel;
 	}
 
-	// public static void main(String[] args) {
-	// JFrame frame = new JFrame();
-	// frame.setSize(400, 300);
-	// frame.setVisible(true);
-	// // frame.addMouseListener(new MouseAdapter() {
-	// // public void mouseClicked(MouseEvent e) {
-	// // System.out.println(e.getY());
-	// // }
-	// // });
-	//
-	// // MyCheckBox box = new MyCheckBox();
-	// // box.setBounds(40, 40, 24, 24);
-	// // frame.add(box);
-	//
-	// String[] head = { "第一列", "第二列", "第三列" };
-	// ArrayList<String[]> infos = new ArrayList<String[]>();
-	// infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-	// infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-	// infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
-	//
-	// int[] width = { 100, 100, 100 };
-	// MyTable table = new MyTable(head, infos, width, true);
-	// table.setLocationAndSize(0, 0, 380, 200);
-	// frame.setLayout(null);
-	// frame.add(table.getScrollPanel());
-	//
-	// try {
-	// Thread.sleep(5000);
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// }
-	// // frame.repaint();
-	//
-	// // ArrayList<String[]> infos1 = new ArrayList<String[]>();
-	// // infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-	// // infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
-	//
-	// table.setRowValueAt(new String[] { "asdf", "asdfa", "asdfasdf" }, 2);
-	// }
+	public static void main(String[] args) {
+		UserFrame.type = UserFrame.TYPE_1;
+		JFrame frame = new JFrame();
+		frame.setSize(400, 300);
+		frame.setVisible(true);
+		// frame.addMouseListener(new MouseAdapter() {
+		// public void mouseClicked(MouseEvent e) {
+		// System.out.println(e.getY());
+		// }
+		// });
+
+		// MyCheckBox box = new MyCheckBox();
+		// box.setBounds(40, 40, 24, 24);
+		// frame.add(box);
+
+		String[] head = { "第一列", "第二列", "第三列" };
+		ArrayList<String[]> infos = new ArrayList<String[]>();
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		infos.add(new String[] { "as222f", "asdfa", "asdfasdf" });
+
+		int[] width = { 100, 100, 100 };
+		MyTable table = new MyTable(head, infos, width, true);
+		table.setLocationAndSize(0, 0, 380, 200);
+		frame.setLayout(null);
+		frame.add(table.getScrollPanel());
+
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		frame.repaint();
+
+		// ArrayList<String[]> infos1 = new ArrayList<String[]>();
+		// infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+		// infos1.add(new String[] { "asdf", "asdfa", "asdfasdf" });
+
+		table.setRowValueAt(new String[] { "asdf", "asdfa", "asdfasdf" }, 2);
+	}
 
 	public int getSelectedNum() {
 		return selectedNum;
@@ -482,6 +509,17 @@ public class MyTable extends JPanel {
 
 	public void setAllSelected(boolean b) {
 		myBox.setSelected(b);
+	}
+
+	public void addObervable(Object o) {
+		tableObservable.addObserver((Observer) o);
+	}
+
+	class MyObservable extends Observable {
+		public void setData() {
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 }

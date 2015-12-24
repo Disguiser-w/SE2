@@ -42,11 +42,13 @@ public class MyTextField extends JTextField {
 			setToolTipText(getText());
 		int width = getWidth();
 		int height = getHeight();
-		if (UserFrame.type == UserFrame.TYPE_1)
+		if (UserFrame.type == UserFrame.TYPE_1) {
 			setForeground(Color.WHITE);
-		else
+			setCaretColor(Color.WHITE);
+		} else {
 			setForeground(Color.BLACK);
-
+			setCaretColor(Color.BLACK);
+		}
 		if (UserFrame.type == UserFrame.TYPE_0) {
 			if (isEditable()) {
 				g.setColor(Color.WHITE);

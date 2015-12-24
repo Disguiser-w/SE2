@@ -951,7 +951,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 				file.createNewFile();
 			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025-0", "鼓楼营业厅",
+			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
 					new RepertoryPO("pig", "wo"));
 			ArrayList<DriverPO> vpo = new ArrayList<DriverPO>();
 
