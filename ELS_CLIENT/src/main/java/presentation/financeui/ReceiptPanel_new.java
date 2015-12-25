@@ -51,14 +51,22 @@ public class ReceiptPanel_new extends  OperationPanel {
 	 public OrganizationController organizationController;
 	 public FinanceFrame financeFrame;
 	 public UserVO user;
+	 
+	 public AccountManagementPanel_main accountManagementPanel_main;
+		public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
+
 
 	public ReceiptPanel_new(CollectionReceiptBLController collectionController, PaymentReceiptBLController paymentReceiptBLController
-			            ,FinanceFrame parent,UserVO user,OrganizationController organizationController) {
+			            ,FinanceFrame parent,UserVO user,OrganizationController organizationController,AccountManagementPanel_main accountManagementPanel_main,
+						CostIncomeReceiptPanel_new costIncomeReceiptPanel_new) {
 		this.collectionController=collectionController;
 		this.paymentReceiptBLController=paymentReceiptBLController;
 		this.financeFrame=parent;
 		this.user = user;
 		this.organizationController = organizationController;
+		
+		this.accountManagementPanel_main = accountManagementPanel_main;
+		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
 		
 		sendButton = new MyLabel("发送");
 		printButton = new MyLabel("导出");
@@ -342,11 +350,11 @@ public class ReceiptPanel_new extends  OperationPanel {
 	}
 
 	public void new1ui() {
-		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame,user,organizationController));
+		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame,user,organizationController,accountManagementPanel_main,costIncomeReceiptPanel_new));
 	}
 
 	public void new2ui() {
-		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame,user));
+		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame,user,accountManagementPanel_main,costIncomeReceiptPanel_new));
 	}
 
 }

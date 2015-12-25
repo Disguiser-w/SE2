@@ -348,8 +348,8 @@ public class InitialStockPanel_new extends OperationPanel{
 					}
 					else{
 					LogDiaryBL bl = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "新建了一套账");
-					bl.addLogDiary(vo, getDate.getdate());
+					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "新建了一套账");
+					bl.addLogDiary(vo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){
 						controller.initInfo(initVO,getDate.getdate());

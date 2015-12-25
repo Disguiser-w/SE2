@@ -11,6 +11,7 @@ import data.financedata.CostIncomeReceiptData;
 import data.financedata.InitialStockData;
 import data.financedata.PaymentReceiptData;
 import data.intermediatedata.IntermediateData;
+import data.logdiarydata.LogDiaryData;
 import data.managedata.BasicSalaryData;
 import data.managedata.CityDistanceData;
 import data.managedata.CostData;
@@ -29,6 +30,7 @@ import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.InitialStockDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
+import dataservice.logdiarydataservice.LogDiaryDataService;
 import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.CostDataService;
@@ -71,6 +73,7 @@ public class TestService {
 			BasicSalaryDataService basicSalaryData = new BasicSalaryData();
 			CityDistanceDataService cityDistanceData = new CityDistanceData();
 			CostDataService costData = new CostData();
+			LogDiaryDataService logDiaryData = new LogDiaryData();
 
 			LocateRegistry.createRegistry(8888);
 
@@ -93,6 +96,7 @@ public class TestService {
 			Naming.rebind("rmi://"+address+":8888/CityDistanceDataService", cityDistanceData);
 			Naming.rebind("rmi://"+address+":8888/CostDataService", costData);
 			Naming.rebind("rmi://"+address+":8888/RepertoryDataService", repertoryData);
+			Naming.rebind("rmi://"+address+":8888/LogDiaryDataService", logDiaryData);
 
 			System.out.println("Service start");
 

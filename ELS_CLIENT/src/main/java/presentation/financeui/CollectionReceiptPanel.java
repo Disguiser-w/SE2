@@ -1,6 +1,8 @@
 package presentation.financeui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,6 +21,7 @@ import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import type.OrganizationType;
 import type.ReceiptState;
@@ -43,7 +46,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private JLabel function;
 	private JLabel date;
 	private JLabel businessHall;
-	private JLabel infoLine;
+	private MyTextLabel infoLine;
 
 	private MyTextField date_Input;
 	private String hallID;
@@ -59,16 +62,23 @@ public class CollectionReceiptPanel extends OperationPanel {
 	public UserVO user;
 
 	private ArrayList<GatheringReceiptVO> gatheringReceiptVOs;
-
+	
+	public AccountManagementPanel_main accountManagementPanel_main;
+	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
 
 	String hallID_str;
 	String date_str;
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
-			UserVO user,OrganizationController organizationController) {
+			UserVO user,OrganizationController organizationController,AccountManagementPanel_main accountManagementPanel_main,
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
 		this.organizationController = organizationController;
+		
+		this.accountManagementPanel_main = accountManagementPanel_main;
+		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
+		
 		dateChooseLabel =new JLabel("日期");
 		collectionOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -77,9 +87,11 @@ public class CollectionReceiptPanel extends OperationPanel {
 		function = new JLabel("新建入款单");
 		date = new JLabel("日期");
 		businessHall = new JLabel("营业厅");
-		infoLine = new JLabel("时间："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
+		infoLine = new MyTextLabel();
+		infoLine.setText("时间："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
 				.substring(6)+ " 合计金额：0");
-
+		
+		
 		date_Input = new MyTextField("");
 		businessHallID_Input = new MyComboBox<String>();
 		ArrayList<OrganizationVO> organizationVOs = organizationController.showAllOrganizations();
@@ -96,7 +108,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 		setLayout(null);
 
 		add(dateChooseLabel);
-//		add(hallChooseLabel);
 		add(collectionOKButton);
 		add(totalButton);
 		add(cancelButton);
@@ -240,8 +251,8 @@ public class CollectionReceiptPanel extends OperationPanel {
 				}
 		         else{
 		        	 LogDiaryBL bl = new LogDiaryBL();
-		        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), user, "创建了一张合计收款单");
-		        	 bl.addLogDiary(logvo, getDate.getdate());
+		        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), user, "创建了一张合计收款单");
+		        	 bl.addLogDiary(logvo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
 			         gatheringReceiptVOs = controller.getGatheringByTime(date_str);
 			         collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 		          }
@@ -275,6 +286,9 @@ public class CollectionReceiptPanel extends OperationPanel {
 		int temp=controller.creatCollection(vo);
 		if(temp==0){
 			controller.excute(vo);
+			accountManagementPanel_main.refreshui();
+			//这个refresh好像暂时没有什么用
+			costIncomeReceiptPanel_new.refresh();
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

@@ -135,34 +135,28 @@ public class FinanceMainController {
 		// 初始化界面
 		user = ManageMainController.userPOToVO(userData.findUserByID(financeID));
 		financeFrame = new FinanceFrame(user);
+		
+		AccountManagementPanel_main accountManagementPanel_main = new AccountManagementPanel_main(accountBLController, financeFrame, user);
+		CostIncomeReceiptPanel_new costIncomeReceiptPanel_new = new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame);
+		ReceiptPanel_new receiptPanel_new = new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user, organizationController,accountManagementPanel_main,costIncomeReceiptPanel_new);
+		BusinessStateReceiptPanel businessStateReceiptPanel = new BusinessStateReceiptPanel(businessStatementReceiptBLController, user);
+		InitialStockPanel_main initialStockPanel_main = new InitialStockPanel_main(initialStockBLController, userController, organizationController, vehicleController, repertoryController, accountBLController, financeFrame, user);
+		LogDiaryPanel logDiaryPanel = new LogDiaryPanel(logDiaryController);
 		if (user.authority.equals(AuthorityType.highest)) {
-			financeFrame.addFuncLabel(new AccountManagementPanel_main(accountBLController, financeFrame,user), "账户管理",
-					ImageGetter.getImage("account.png").getImage());
-			financeFrame.addFuncLabel(
-					new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user,
-							organizationController),"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
-			financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame),
-					"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
-			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController,user), "经营情况表",
-					ImageGetter.getImage("businessStatement.png").getImage());
-			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
-					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
-					"期初建账",ImageGetter.getImage("initInfo.png").getImage());
-			financeFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志");
+			financeFrame.addFuncLabel(accountManagementPanel_main, "账户管理",ImageGetter.getImage("account.png").getImage());
+			financeFrame.addFuncLabel(receiptPanel_new,"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
+			financeFrame.addFuncLabel(costIncomeReceiptPanel_new,"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
+			financeFrame.addFuncLabel(businessStateReceiptPanel, "经营情况表",ImageGetter.getImage("businessStatement.png").getImage());
+			financeFrame.addFuncLabel(initialStockPanel_main,"期初建账",ImageGetter.getImage("initInfo.png").getImage());
+			financeFrame.addFuncLabel(logDiaryPanel, "系统日志");
 		
 			financeFrame.showFrame();
 		} else {
-			financeFrame.addFuncLabel(
-					new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user,
-							organizationController),"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
-			financeFrame.addFuncLabel(new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame),
-					"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
-			financeFrame.addFuncLabel(new BusinessStateReceiptPanel(businessStatementReceiptBLController,user), "经营情况表",
-					ImageGetter.getImage("businessStatement.png").getImage());
-			financeFrame.addFuncLabel(new InitialStockPanel_main(initialStockBLController, userController,
-					organizationController, vehicleController, repertoryController, accountBLController, financeFrame,user),
-					"期初建账",ImageGetter.getImage("initInfo.png").getImage());
-			financeFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志");
+			financeFrame.addFuncLabel(receiptPanel_new,"新建表单",ImageGetter.getImage("newReceipt.png").getImage());
+			financeFrame.addFuncLabel(costIncomeReceiptPanel_new,"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
+			financeFrame.addFuncLabel(businessStateReceiptPanel, "经营情况表",ImageGetter.getImage("businessStatement.png").getImage());
+			financeFrame.addFuncLabel(initialStockPanel_main,"期初建账",ImageGetter.getImage("initInfo.png").getImage());
+			financeFrame.addFuncLabel(logDiaryPanel, "系统日志");
 		
 			financeFrame.showFrame();
 		}

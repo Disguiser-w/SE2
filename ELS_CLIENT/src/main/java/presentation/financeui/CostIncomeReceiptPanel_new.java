@@ -61,6 +61,8 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalProfit = new JLabel("总利润");
 		
 		refreshLabel = new MyLabel("刷新");
+		
+		
 
 		costIncomeReceipt_ID_Input = new MyTextField(ID);
 		costIncomeReceipt_ID_Input.setEditable(false);

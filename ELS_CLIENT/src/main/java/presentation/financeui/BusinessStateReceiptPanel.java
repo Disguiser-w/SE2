@@ -88,11 +88,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 			}
 		});
 
-//		sendLabel.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent e){
-//				sendui();
-//			}
-//		});
+
 		collectionReceiptVOs = controller.showBSList("20110101", getDate.getdate()).cvos;
 		paymentReceiptVOs = controller.showBSList("20100101", getDate.getdate()).pvos;
 		setBaseInfo();
@@ -102,7 +98,6 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		add(endDateLabel);
 		add(dateOKLabel);
 		add(printLabel);
-//		add(sendLabel);
 		add(function);
 		add(dateRange);
 		add(startDate_Input);

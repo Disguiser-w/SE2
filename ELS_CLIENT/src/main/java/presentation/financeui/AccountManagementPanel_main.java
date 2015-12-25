@@ -45,7 +45,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	UserVO userVO;
 	private int selectedIndex;
 	
-
+	
 	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent,UserVO userVO) {
 		this.controller=controller;
 		this.financeFrame=parent;
@@ -196,8 +196,8 @@ public class AccountManagementPanel_main extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			LogDiaryBL log = new LogDiaryBL();
-			LogDiaryVO vo = new LogDiaryVO(getDate.getdate(), userVO, "删除了一个账户");
-			log.addLogDiary(vo, getDate.getdate());
+			LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "删除了一个账户");
+			log.addLogDiary(vo,getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);
 				}

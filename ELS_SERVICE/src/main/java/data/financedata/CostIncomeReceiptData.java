@@ -51,13 +51,13 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("costincome.ser");
-		return num;
+//		file=new JXCFile("costincome.ser");
+		return 0;
 	}
 
 	public CostIncomeReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("costincome.ser");file=new JXCFile("costincome.ser");
+		file=new JXCFile("info/costincomeInfo/costincome.ser");
 		ArrayList<Object> os=file.read();
 		if(os==null){
 			System.out.println("读取经营情况表失败");

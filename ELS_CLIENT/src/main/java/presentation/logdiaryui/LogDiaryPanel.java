@@ -25,6 +25,8 @@ public class LogDiaryPanel extends OperationPanel{
 	
 	private JLabel startDateLabel;
 	private MyLabel dateOKLabel;
+	private MyLabel refreshLabel;
+
 
 	private JLabel function;
 
@@ -44,10 +46,11 @@ public class LogDiaryPanel extends OperationPanel{
 		
 		startDateLabel = new JLabel("日期");
 		dateOKLabel = new MyLabel("确认");
-
+		refreshLabel=new MyLabel("刷新");
 		function = new JLabel("系统日志");
 
 		startDate_Input = new MyTextField();
+		
 
 		startDateLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
@@ -60,14 +63,24 @@ public class LogDiaryPanel extends OperationPanel{
 				dateOK();
 			}
 		});
+		
+         refreshLabel.addMouseListener(new MouseAdapter() {
+			
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				refreshui();
+			}
+		});
 
 		logDiaryVOs = controller.getAllLogDiaryVOs();
 		setBaseInfo();
+
 		setLayout(null);
 
 		add(startDateLabel);
 		add(dateOKLabel);
 		add(function);
+		add(refreshLabel);
 		add(startDate_Input);
 		
 		startDateLabel.setLayout(new BorderLayout());
@@ -80,7 +93,7 @@ public class LogDiaryPanel extends OperationPanel{
 
 		super.setBounds(x, y, width, height);
 
-		
+		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
         startDateLabel.setBounds((int)(width * 7.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
         dateOKLabel.setBounds((int)(width * 10.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
@@ -125,10 +138,11 @@ public class LogDiaryPanel extends OperationPanel{
 		}
 	}
 	
-//	public static void main(String[] args){
-//		LogDiaryBLController controller = new LogDiaryBLController();
-//		new LogDiaryPanel(controller);
-//	}
+	public void refreshui(){
+		ArrayList<LogDiaryVO> logDiaryVOs = controller.getAllLogDiaryVOs();
+		logDiaryTable.setInfos(getInfos(logDiaryVOs));
+	}
+	
 
 
 }

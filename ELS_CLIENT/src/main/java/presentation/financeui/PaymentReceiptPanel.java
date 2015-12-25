@@ -57,11 +57,20 @@ public class PaymentReceiptPanel extends OperationPanel {
 	public PaymentReceiptBLController controller;
 	public FinanceFrame financeFrame;
 	public UserVO user;
+	
+	public AccountManagementPanel_main accountManagementPanel_main;
+	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
 
-	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent,UserVO user) {
+
+	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent,UserVO user,AccountManagementPanel_main accountManagementPanel_main,
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
+		
+		this.accountManagementPanel_main = accountManagementPanel_main;
+		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
+		
 		dateChooseLabel = new JLabel("日期");
 		dateOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -265,9 +274,11 @@ public class PaymentReceiptPanel extends OperationPanel {
 		int temp=controller.creatPaymentReceipt(vo);
 		if(temp==0){
 			 LogDiaryBL bl = new LogDiaryBL();
-        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), user, "创建了一张付款单");
-        	 bl.addLogDiary(logvo, getDate.getdate());
+        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), user, "创建了一张付款单");
+        	 bl.addLogDiary(logvo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
 			controller.excute(vo);
+			accountManagementPanel_main.refreshui();
+			costIncomeReceiptPanel_new.refresh();
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}
