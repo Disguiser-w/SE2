@@ -10,6 +10,7 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
+import presentation.logdiaryui.LogDiaryPanel;
 import type.AuthorityType;
 import type.OrganizationType;
 import type.ProfessionType;
@@ -88,11 +89,11 @@ public class InitialStockPanel_new extends OperationPanel{
 	//财务主界面
 	public FinanceFrame financeFrame;
 	private InitialStockPanel_main initMainPanel;
-	
+	public LogDiaryPanel logDiaryPanel;
 
 	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent,
-			 InitialStockPanel_main initMainPanel,UserVO userVO) {
+			 InitialStockPanel_main initMainPanel,UserVO userVO,LogDiaryPanel logDiaryPanel) {
 	    this.controller=controller;
 		this.financeFrame=parent;
 		this.userController=userController;
@@ -102,6 +103,7 @@ public class InitialStockPanel_new extends OperationPanel{
 		this.accountController= accountBLController;
 		this.initMainPanel = initMainPanel;
 		this.userVO=userVO;
+		this.logDiaryPanel=logDiaryPanel;
 		
 		completeLabel  = new MyLabel("建账完成");
 		InfoOKButton = new MyLabel("确认添加");
@@ -350,6 +352,7 @@ public class InitialStockPanel_new extends OperationPanel{
 					LogDiaryBL bl = new LogDiaryBL();
 					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "新建了一套账");
 					bl.addLogDiary(vo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+					logDiaryPanel.refreshui();
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){
 						controller.initInfo(initVO,getDate.getdate());

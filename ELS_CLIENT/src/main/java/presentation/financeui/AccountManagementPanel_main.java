@@ -14,6 +14,7 @@ import businesslogic.receiptbl.getDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
+import presentation.logdiaryui.LogDiaryPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
@@ -45,11 +46,13 @@ public class AccountManagementPanel_main extends OperationPanel {
 	UserVO userVO;
 	private int selectedIndex;
 	
+	public LogDiaryPanel logDiaryPanel;
 	
-	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent,UserVO userVO) {
+	public AccountManagementPanel_main(AccountBLController controller,FinanceFrame parent,UserVO userVO,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.userVO = userVO;
+		this.logDiaryPanel = logDiaryPanel;
 		addLabel = new AddLabel("添加");
 		deleteLabel = new DeleteLabel("删除");
 		modifyLabel=new ModifyLabel("修改");
@@ -179,7 +182,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	
 
 	public void addui() {
-		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this,userVO));
+		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this,userVO,logDiaryPanel));
 	}
 
 	public void deleteui() {
@@ -198,6 +201,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 			LogDiaryBL log = new LogDiaryBL();
 			LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "删除了一个账户");
 			log.addLogDiary(vo,getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+			logDiaryPanel.refreshui();
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);
 				}
@@ -217,7 +221,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 		selectedIndex = selectedIndexs.get(0);
 		AccountVO  vo = accountVOs.get(selectedIndex);
-		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this,userVO));		
+		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this,userVO,logDiaryPanel));		
 	}
 	
 	public void searchui(){

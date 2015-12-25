@@ -140,13 +140,18 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	private ArrayList<String[]> getInfos(ArrayList<CollectionReceiptVO> cvos,ArrayList<PaymentReceiptVO> pvos){
 		ArrayList<String[]> lineInfo = new ArrayList<String[]>();
 		if(cvos!=null||pvos!=null){
-		for(CollectionReceiptVO v : cvos){
-			lineInfo.add(new String[]{v.ID,v.date,v.totalMoney+"",v.userID});
-		}
-		for(PaymentReceiptVO v : pvos){
-			lineInfo.add(new String[]{v.ID,v.date,v.cost+"",v.userID});
-		}
-		return lineInfo;
+			if(cvos!=null){
+		        for(CollectionReceiptVO v : cvos){
+			        lineInfo.add(new String[]{v.ID,v.date,v.totalMoney+"",v.userID});
+	              	}
+			     }
+			if(pvos!=null){
+		       for(PaymentReceiptVO v : pvos){
+			       lineInfo.add(new String[]{v.ID,v.date,v.cost+"",v.userID});
+		        }
+		          return lineInfo;
+		          }
+			return new ArrayList<String[]>();
 		}
 		else{
 			return new ArrayList<String[]>();

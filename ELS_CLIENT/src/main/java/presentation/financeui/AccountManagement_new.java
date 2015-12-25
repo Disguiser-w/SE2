@@ -12,6 +12,7 @@ import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.OperationPanel;
+import presentation.logdiaryui.LogDiaryPanel;
 import vo.AccountVO;
 import vo.LogDiaryVO;
 import vo.UserVO;
@@ -45,12 +46,14 @@ public class AccountManagement_new extends OperationPanel {
 	
 	FinanceFrame financeFrame;
 	public UserVO userVO;
+	public LogDiaryPanel logDiaryPanel;
 
 	public AccountManagement_new(AccountBLController controller,FinanceFrame parent,AccountManagementPanel_main accountMainPanel,
-			UserVO userVO) {
+			UserVO userVO,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.accountMainPanel=accountMainPanel;
+		this.logDiaryPanel = logDiaryPanel;
 		this.userVO=userVO;
 		infoOKButton = new MyLabel("确认");
 		cancelButton =new MyLabel("返回");
@@ -135,6 +138,7 @@ public class AccountManagement_new extends OperationPanel {
 					LogDiaryBL log = new LogDiaryBL();
 					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "新增了一个账户");
 					log.addLogDiary(vo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+					logDiaryPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.DEFAULT_OPTION);
 					account_name_Input.setText("");

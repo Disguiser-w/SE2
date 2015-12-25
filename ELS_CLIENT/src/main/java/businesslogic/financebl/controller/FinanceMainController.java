@@ -135,13 +135,12 @@ public class FinanceMainController {
 		// 初始化界面
 		user = ManageMainController.userPOToVO(userData.findUserByID(financeID));
 		financeFrame = new FinanceFrame(user);
-		
-		AccountManagementPanel_main accountManagementPanel_main = new AccountManagementPanel_main(accountBLController, financeFrame, user);
-		CostIncomeReceiptPanel_new costIncomeReceiptPanel_new = new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame);
-		ReceiptPanel_new receiptPanel_new = new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user, organizationController,accountManagementPanel_main,costIncomeReceiptPanel_new);
-		BusinessStateReceiptPanel businessStateReceiptPanel = new BusinessStateReceiptPanel(businessStatementReceiptBLController, user);
-		InitialStockPanel_main initialStockPanel_main = new InitialStockPanel_main(initialStockBLController, userController, organizationController, vehicleController, repertoryController, accountBLController, financeFrame, user);
 		LogDiaryPanel logDiaryPanel = new LogDiaryPanel(logDiaryController);
+		AccountManagementPanel_main accountManagementPanel_main = new AccountManagementPanel_main(accountBLController, financeFrame, user,logDiaryPanel);
+		CostIncomeReceiptPanel_new costIncomeReceiptPanel_new = new CostIncomeReceiptPanel_new(costIncomeReceiptBLController, financeFrame);
+		ReceiptPanel_new receiptPanel_new = new ReceiptPanel_new(collectionReceiptBLController, paymentReceiptBLController, financeFrame, user, organizationController,accountManagementPanel_main,costIncomeReceiptPanel_new,logDiaryPanel);
+		BusinessStateReceiptPanel businessStateReceiptPanel = new BusinessStateReceiptPanel(businessStatementReceiptBLController, user);
+		InitialStockPanel_main initialStockPanel_main = new InitialStockPanel_main(initialStockBLController, userController, organizationController, vehicleController, repertoryController, accountBLController, financeFrame, user,logDiaryPanel);
 		if (user.authority.equals(AuthorityType.highest)) {
 			financeFrame.addFuncLabel(accountManagementPanel_main, "账户管理",ImageGetter.getImage("account.png").getImage());
 			financeFrame.addFuncLabel(receiptPanel_new,"新建表单",ImageGetter.getImage("newReceipt.png").getImage());

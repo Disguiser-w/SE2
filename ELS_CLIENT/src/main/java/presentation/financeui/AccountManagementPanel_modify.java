@@ -1,9 +1,8 @@
 package presentation.financeui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -11,7 +10,9 @@ import javax.swing.JTextField;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.getDate;
+import presentation.commonui.MyLabel;
 import presentation.commonui.OperationPanel;
+import presentation.logdiaryui.LogDiaryPanel;
 import vo.AccountVO;
 import vo.LogDiaryVO;
 import vo.UserVO;
@@ -23,8 +24,8 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton infoOKButton;
-	private JButton cancelButton;
+	private MyLabel infoOKButton;
+	private MyLabel cancelButton;
 
 	private JLabel function;
 	private JLabel account_name;
@@ -34,6 +35,7 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	private JTextField account_money_Input;
 	
 	private AccountManagementPanel_main accountMainPanel;
+	public LogDiaryPanel logDiaryPanel;
 
 
 	public String name;
@@ -47,16 +49,16 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	private int PANEL_HEIGHT = 480;
 
  public AccountManagementPanel_modify(AccountBLController controller,String money,String nameInit,FinanceFrame parent,AccountManagementPanel_main accountMainPanel,
-		 UserVO userVO) {
+		 UserVO userVO,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.money=money;
 		this.nameInit=nameInit;
 		this.financeFrame=parent;
 		this.accountMainPanel=accountMainPanel;
 		this.userVO = userVO;
-		
-		infoOKButton = new JButton("确认");
-		cancelButton =new JButton("取消");
+		this.logDiaryPanel = logDiaryPanel;
+		infoOKButton = new MyLabel("确认");
+		cancelButton =new MyLabel("取消");
 
 		function = new JLabel("修改账户");
 		account_name = new JLabel("账户名");
@@ -80,18 +82,16 @@ public class AccountManagementPanel_modify extends OperationPanel{
 		add(account_money_Input);
 		
 		setLayout(null);
-		infoOKButton.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
+		infoOKButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				okui();
-			}
+				}
 		});
 		
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		cancelButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
 				cancelui();
-			}
+				}
 		});
 
 
@@ -128,6 +128,7 @@ public class AccountManagementPanel_modify extends OperationPanel{
 					LogDiaryBL log = new LogDiaryBL();
 					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "修改了一个账户");
 					log.addLogDiary(vo,getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+					logDiaryPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);
 				financeFrame.toMainPanel();

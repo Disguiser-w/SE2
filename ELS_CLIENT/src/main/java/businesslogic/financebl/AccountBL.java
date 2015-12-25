@@ -9,10 +9,7 @@ import po.AccountPO;
 import dataservice.financedataservice.AccountDataService;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import vo.AccountVO;
-import vo.LogDiaryVO;
 
 public class AccountBL {
 

@@ -1,8 +1,6 @@
 package presentation.financeui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,6 +21,7 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import presentation.logdiaryui.LogDiaryPanel;
 import type.OrganizationType;
 import type.ReceiptState;
 import type.ReceiptType;
@@ -65,12 +64,12 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 	public AccountManagementPanel_main accountManagementPanel_main;
 	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
-
+	public LogDiaryPanel logDiaryPanel;
 	String hallID_str;
 	String date_str;
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
 			UserVO user,OrganizationController organizationController,AccountManagementPanel_main accountManagementPanel_main,
-			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new) {
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
@@ -78,6 +77,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		
 		this.accountManagementPanel_main = accountManagementPanel_main;
 		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
+		this.logDiaryPanel=logDiaryPanel;
 		
 		dateChooseLabel =new JLabel("日期");
 		collectionOKButton = new MyLabel("确认");
@@ -250,10 +250,8 @@ public class CollectionReceiptPanel extends OperationPanel {
 					         JOptionPane.CLOSED_OPTION);
 				}
 		         else{
-		        	 LogDiaryBL bl = new LogDiaryBL();
-		        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), user, "创建了一张合计收款单");
-		        	 bl.addLogDiary(logvo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
-			         gatheringReceiptVOs = controller.getGatheringByTime(date_str);
+		        	 
+		        	 gatheringReceiptVOs = controller.getGatheringByTime(date_str);
 			         collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 		          }
 		  }
@@ -289,6 +287,10 @@ public class CollectionReceiptPanel extends OperationPanel {
 			accountManagementPanel_main.refreshui();
 			//这个refresh好像暂时没有什么用
 			costIncomeReceiptPanel_new.refresh();
+			LogDiaryBL bl = new LogDiaryBL();
+       	    LogDiaryVO logvo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), user, "创建了一张合计收款单");
+       	   bl.addLogDiary(logvo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+	         logDiaryPanel.refreshui();
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

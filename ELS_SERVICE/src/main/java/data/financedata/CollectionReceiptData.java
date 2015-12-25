@@ -140,14 +140,20 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 			return null;
 		}
 		else{
-		for(Object o:os){
-			CollectionReceiptPO po=(CollectionReceiptPO) o;
-			if((po.getDate().compareTo(beginTime)>=0)&&(po.getDate().compareTo(endTime)<=0)){
-			pos.add(po);
+			if(os!=null){
+		      for(Object o:os){
+			          CollectionReceiptPO po=(CollectionReceiptPO) o;
+			          if((po.getDate().compareTo(beginTime)>=0)&&(po.getDate().compareTo(endTime)<=0)){
+			         pos.add(po);
+			         }
+		         }
+		             return pos;
+		          }
+			else{
+				return null;
 			}
 		}
-		}
-		return pos;
+		
 	}
 	
 

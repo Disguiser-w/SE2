@@ -19,6 +19,7 @@ import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
+import presentation.logdiaryui.LogDiaryPanel;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.LogDiaryVO;
@@ -60,17 +61,17 @@ public class PaymentReceiptPanel extends OperationPanel {
 	
 	public AccountManagementPanel_main accountManagementPanel_main;
 	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
-
+	public LogDiaryPanel logDiaryPanel;
 
 	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent,UserVO user,AccountManagementPanel_main accountManagementPanel_main,
-			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new) {
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
 		
 		this.accountManagementPanel_main = accountManagementPanel_main;
 		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
-		
+		this.logDiaryPanel = logDiaryPanel;
 		dateChooseLabel = new JLabel("日期");
 		dateOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -279,6 +280,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 			controller.excute(vo);
 			accountManagementPanel_main.refreshui();
 			costIncomeReceiptPanel_new.refresh();
+			logDiaryPanel.refreshui();
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

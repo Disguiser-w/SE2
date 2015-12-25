@@ -76,7 +76,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 			double income=0;
 			if(collectionReceiptPOs==null){
 				System.out.println("collectionReceiptPOs is null");
-				return -1;
+				return 0;
 			}
 			else{
 			for(CollectionReceiptPO p:collectionReceiptPOs){

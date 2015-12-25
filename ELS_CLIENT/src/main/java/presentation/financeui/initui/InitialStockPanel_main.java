@@ -11,6 +11,7 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
+import presentation.logdiaryui.LogDiaryPanel;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
@@ -45,10 +46,11 @@ public class InitialStockPanel_main extends OperationPanel {
 	 public UserVO userVO;
 	 private ArrayList<InitInfoVO> initInfoVOs;
 	
+	 public LogDiaryPanel logDiaryPanel;
 	
 	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
 			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
-			FinanceFrame parent,UserVO userVO){
+			FinanceFrame parent,UserVO userVO,LogDiaryPanel logDiaryPanel){
 		this.controller=controller;
 		this.userController=userController;
 		this.organizationController=organizationController;
@@ -56,6 +58,7 @@ public class InitialStockPanel_main extends OperationPanel {
 		this.repertoryController=repertoryController;
 		this.accountController=accountController;
 		this.financeFrame=parent;
+		this.logDiaryPanel = logDiaryPanel;
 		this.userVO=userVO;
 		newButton = new MyLabel("新建");
 		detailButton =new MyLabel("详情");
@@ -142,7 +145,7 @@ public class InitialStockPanel_main extends OperationPanel {
 
 	public void newInitInfoui() {
 		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
-				vehicleController,repertoryController,accountController, financeFrame,this,userVO));
+				vehicleController,repertoryController,accountController, financeFrame,this,userVO,logDiaryPanel));
 		}
 	
 	public void detailui(){

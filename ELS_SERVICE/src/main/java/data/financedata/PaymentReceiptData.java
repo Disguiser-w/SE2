@@ -131,6 +131,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 			return null;
 		}
 		else{
+			if(os!=null){
 			for(Object o:os){
 				PaymentReceiptPO p=(PaymentReceiptPO) o;
 				if((p.getDate().compareTo(beginTime)>=0)&&(p.getDate().compareTo(endTime)<=0)){
@@ -138,6 +139,10 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 				}
 			}
 			return pos;
+			}
+			else{
+				return null;
+			}
 		}
 	}
 

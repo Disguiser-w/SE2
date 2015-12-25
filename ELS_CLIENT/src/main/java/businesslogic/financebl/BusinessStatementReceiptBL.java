@@ -10,7 +10,6 @@ import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
-import vo.PaymentItemVO;
 import vo.PaymentReceiptVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
