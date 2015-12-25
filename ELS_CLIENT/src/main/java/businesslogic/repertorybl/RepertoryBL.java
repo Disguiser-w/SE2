@@ -8,8 +8,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat; 
 
+import po.EnterRepertoryReceiptPO;
 import po.GoodsPO;
 import po.InventoryPO;
+import po.LeaveRepertoryReceiptPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
 import po.InventoryCheckPO;
@@ -20,9 +22,12 @@ import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
 import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
+import type.ReceiptState;
+import vo.EnterRepertoryReceiptVO;
 import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.InventoryCheckVO;
+import vo.LeaveRepertoryReceiptVO;
 import vo.RepertoryVO;
 
 public class RepertoryBL implements RepertoryBLService{
@@ -32,6 +37,8 @@ public class RepertoryBL implements RepertoryBLService{
 	public static EnterRepertoryReceiptDataService errdService;
 	public static LeaveRepertoryReceiptDataService lrrdService;
 	public static GoodsDataService gdService;
+	
+	private String userID;
 	private String repertoryID;
 	
 	public RepertoryBL(String stockManID){
@@ -41,7 +48,9 @@ public class RepertoryBL implements RepertoryBLService{
 			errdService = DataFactory.getEnterRepertoryReceiptData();
 			lrrdService = DataFactory.getLeaveRepertoryReceiptData();
 			gdService = DataFactory.getGoodsData();
-			this.repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
+			
+			this.userID = stockManID;
+			repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
 			ex.printStackTrace();
 			repertoryID = "";
@@ -229,6 +238,22 @@ public class RepertoryBL implements RepertoryBLService{
 				repertorypo.getWarningRatio(), repertorypo.getStockNumArray());
 	}
 	
+	public static EnterRepertoryReceiptPO enterRepertoryReceiptVOToPO(EnterRepertoryReceiptVO errvo){
+		return new EnterRepertoryReceiptPO(errvo.receiptID, errvo.userID, errvo.createTime, errvo.state, errvo.repertoryID, errvo.expressIDList, errvo.timeList);
+	}
+	
+	public static EnterRepertoryReceiptVO enterRepertoryReceiptPOToVO(EnterRepertoryReceiptPO errpo){
+		return new EnterRepertoryReceiptVO(errpo.getReceiptID(), errpo.getUserID(), errpo.getCreateTime(), errpo.getState(), errpo.getReceiptID(), errpo.getExpressIDList(), errpo.getTimeList());
+	}
+	
+	public static LeaveRepertoryReceiptPO leaveRepertoryReceiptVOToPO(LeaveRepertoryReceiptVO lrrvo){
+		return new LeaveRepertoryReceiptPO(lrrvo.receiptID, lrrvo.userID, lrrvo.createTime, lrrvo.state, lrrvo.repertoryID, lrrvo.expressIDList, lrrvo.timeList);
+	}
+	
+	public static LeaveRepertoryReceiptVO leaveRepertoryReceiptPOToVO(LeaveRepertoryReceiptPO lrrpo){
+		return new LeaveRepertoryReceiptVO(lrrpo.getReceiptID(), lrrpo.getUserID(), lrrpo.getCreateTime(), lrrpo.getState(), lrrpo.getReceiptID(), lrrpo.getExpressIDList(), lrrpo.getTimeList());
+	}
+	
 	public ArrayList<RepertoryVO> showAllRepertorys(){
 		try{
 			ArrayList<RepertoryPO> repertoryPOList = rdService.showAllRepertorys();
@@ -254,6 +279,117 @@ public class RepertoryBL implements RepertoryBLService{
 		}
 	}
 	
+	
+	/**
+	 * 获取从上次制定入库单之后进入过仓库的货物记录
+	 * 
+	 * @param String repertoryID
+	 * @return ArrayList<GoodsVO>
+	 * 
+	 * */
+	public ArrayList<GoodsVO> getEnterRepertoryGoods(){
+		ArrayList<GoodsVO> enterRepertoryGoodsVOList = new ArrayList<GoodsVO>();
+		try{
+			
+			ArrayList<GoodsPO> enterRepertoryGoodsPOList = rdService.getEnterRepertoryGoods(repertoryID);
+			
+			if(enterRepertoryGoodsPOList != null){
+				for(GoodsPO goodspo : enterRepertoryGoodsPOList){
+					enterRepertoryGoodsVOList.add(goodsPOToVO(goodspo));
+				}
+			}
+			return enterRepertoryGoodsVOList;
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return enterRepertoryGoodsVOList;
+		}
+	}
+	
+	
+	/**
+	 * 获取从上次制定出库单之后离开过仓库的货物记录
+	 * 
+	 * @param String repertoryID
+	 * @return ArrayList<GoodsVO>
+	 * 
+	 * */
+	public ArrayList<GoodsVO> getLeaveRepertoryGoods(){
+		ArrayList<GoodsVO> leaveRepertoryGoodsVOList = new ArrayList<GoodsVO>();
+		try{
+			
+			ArrayList<GoodsPO> leaveRepertoryGoodsPOList = rdService.getLeaveRepertoryGoods(repertoryID);
+			
+			if(leaveRepertoryGoodsPOList != null){
+				for(GoodsPO goodspo : leaveRepertoryGoodsPOList){
+					leaveRepertoryGoodsVOList.add(goodsPOToVO(goodspo));
+				}
+			}
+			return leaveRepertoryGoodsVOList;
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return leaveRepertoryGoodsVOList;
+		}
+	}
+	
+	
+	public String getLastEnterRepertoryTime(){
+		try{
+			return rdService.getLastCreateEnterReceiptTime(repertoryID);
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return "wrong";
+		}
+	}
+	
+	
+	public String getLastLeaveRepertoryTime(){
+		try{
+			return rdService.getLastCreateLeaveReceiptTime(repertoryID);
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return "wrong";
+		}
+	}
+	
+	
+	public int AddEnterRepertoryReceipt(String[] goodsIDList, String[] timeList){
+		String now = getTimeNow();
+		try{
+			String receiptPost = errdService.getEnterReceiptPost();
+			EnterRepertoryReceiptVO errvo = new EnterRepertoryReceiptVO("RKD-"+receiptPost, userID, now, ReceiptState.DRAFT, repertoryID, goodsIDList, timeList);
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptVOToPO(errvo);
+			
+			//更新仓库的最近一次生成入库单的时间
+			int returnNum1 = rdService.setLastCreateEnterReceiptTime(repertoryID, now);
+			//添加入库单
+			int returnNum2 = errdService.addEnterRepertoryReceipt(errpo);
+			
+			return returnNum1+returnNum2;
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return 2;
+		}
+	}
+	
+	
+	public int AddLeaveRepertoryReceipt(String[] goodsIDList, String[] timeList){
+		String now = getTimeNow();
+		try{
+			String receiptPost = lrrdService.getLeaveReceiptPost();
+			LeaveRepertoryReceiptVO errvo = new LeaveRepertoryReceiptVO("CKD-"+receiptPost, userID, now, ReceiptState.DRAFT, repertoryID, goodsIDList, timeList);
+			LeaveRepertoryReceiptPO errpo = leaveRepertoryReceiptVOToPO(errvo);
+			
+			//更新仓库的最近一次生成出库单的时间
+			int returnNum1 = rdService.setLastCreateLeaveReceiptTime(repertoryID, now);
+			//添加出库单
+			int returnNum2 = lrrdService.addLeaveRepertoryReceipt(errpo);
+			
+			return returnNum1+returnNum2;
+		}catch(RemoteException ex){
+			ex.printStackTrace();
+			return 2;
+		}
+	}
 	
 	public int getMaxRow(){
 		try{

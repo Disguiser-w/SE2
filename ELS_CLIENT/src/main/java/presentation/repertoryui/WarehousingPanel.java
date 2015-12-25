@@ -25,8 +25,10 @@ public class WarehousingPanel extends OperationPanel {
 	private RepertoryBL repertoryBL;
 	private GoodsBL goodsBL;
 	
-	private MyTable messageTable;
 	private MyTextLabel promptLabel;
+	
+	private MyTable messageTable;
+	
 	private MyLabel returnLabel;
 	
 	private ArrayList<GoodsVO> goods;
@@ -65,11 +67,11 @@ public class WarehousingPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		promptLabel.setBounds((int) (width * 8.979513444302176 / 25),(int) (height * 2.814285714285715 / 20), 
+		promptLabel.setBounds((int) (width * 6.979513444302176 / 25),(int) (height * 2.814285714285715 / 20), 
 				(int) (width * 10.23303457106274 / 25),(int) (height * 1.3839285714285714 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 4.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 12.035714285714286 / 20));
-		returnLabel.setBounds((int) (width * 4.979513444302176 / 25),(int) (height * 17.814285714285715 / 20), 
+		returnLabel.setBounds((int) (width * 10.979513444302176 / 25),(int) (height * 17.814285714285715 / 20), 
 				(int) (width * 2.23303457106274 / 25),(int) (height * 1.3839285714285714 / 20));
 	}
 	

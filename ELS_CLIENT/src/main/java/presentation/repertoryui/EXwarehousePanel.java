@@ -35,8 +35,6 @@ public class EXwarehousePanel extends OperationPanel {
 	private String goodsID;
 	private String repertoryID;
 	
-	private int selectedIndex;
-	
 	public EXwarehousePanel(RepertoryFrame repertoryFrame, UserVO userVO) {
 		
 		this.repertoryFrame = repertoryFrame;
@@ -78,12 +76,12 @@ public class EXwarehousePanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		
-		searchField.setBounds((int) (width * 20.070422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
-				(int) (width * 1.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		exwarehouseMessageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.8053571428571428 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 12.53571428571428 / 20));
-		leaveRepertoryLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 15.410714285714285 / 20),
-				(int) (width * 2.592829705505762 / 25), (int) (height * 1.4285714285714286 / 20));
+		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.0007142857142858 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5003571428571428 / 22));
+		exwarehouseMessageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.401785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 14.535714285714286 / 20));
+		leaveRepertoryLabel.setBounds((int) (width * 11.224839948783611 / 25), (int) (height * 17.7607142857142858 / 20),
+				(int) (width * 2.8303571428571428 / 25), (int) (height * 1.503571428571428 / 22));
 	}
 
 	private void setBaseInfos(){
@@ -146,7 +144,6 @@ public class EXwarehousePanel extends OperationPanel {
 	public void successLeave(){
 		updateui(1);
 		JOptionPane.showMessageDialog(null, "出库成功(●'◡'●)", "出库成功", JOptionPane.INFORMATION_MESSAGE);
-		
 	}
 	
 	public void failedLeave(){

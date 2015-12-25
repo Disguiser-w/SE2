@@ -345,9 +345,9 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 			goodsData = new GoodsData();
 			try{
 				
-				//goodsData.addGoods(new GoodsPO("DD-20151224-1", 11.0, "南京鼓楼", "南京仙林"));
-				//goodsData.addGoods(new GoodsPO("DD-20151224-2", 12.0, "南京仙林", "上海静安"));
-				//goodsData.addGoods(new GoodsPO("DD-20151224-3", 13.0, "上海浦东", "上海静安"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-1", 11.0, "南京鼓楼", "南京仙林"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-2", 12.0, "南京仙林", "上海静安"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-3", 13.0, "上海浦东", "上海静安"));
 				//goodsData.addGoods(new GoodsPO("DD-20151224-4", 14.0, "北京朝阳", "广州白云"));
 				//goodsData.addGoods(new GoodsPO("DD-20151224-5", 15.0, "上海静安", "广州白云"));
 				//goodsData.addGoods(new GoodsPO("DD-20151224-6", 16.0, "南京仙林", "南京仙林"));

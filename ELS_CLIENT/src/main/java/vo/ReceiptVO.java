@@ -5,9 +5,9 @@ import type.ReceiptType;
 
 
 public class ReceiptVO {
+	
 	public String receiptID;
 	public String userID;
-	public String createTime;
 	public ReceiptType type;
 	public ReceiptState state;
 
@@ -15,11 +15,11 @@ public class ReceiptVO {
 		
 	}
 	
-	public ReceiptVO(String ID, String userID, String time, ReceiptType type, ReceiptState state) {
+	public ReceiptVO(String ID, String userID, ReceiptType type, ReceiptState state) {
 		this.receiptID = ID;
 		this.userID = userID;
-		this.createTime = time;
 		this.type = type;
 		this.state = state;
 	}
+	
 }

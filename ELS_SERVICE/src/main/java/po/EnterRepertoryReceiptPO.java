@@ -9,31 +9,30 @@ public class EnterRepertoryReceiptPO extends ReceiptPO  implements Serializable{
 
 	private static final long serialVersionUID = 141250191L;
 
+	private String createTime; 		//单据创建时间
 	private String repertoryID;		//本仓库编号
 	private String[] expressIDList; //离开仓库的货物ID
 	private String[] timeList;		//货物离开仓库的时间
 	
-	public EnterRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state){
-		this.ID = receiptID;
-		this.userID = userID;
-		this.type = type;
-		this.state = state;
+	public EnterRepertoryReceiptPO(String ID, String userID,ReceiptState state){
+		super(ID, userID, ReceiptType.ENTERREPERTORYRECEIPT, state);
 	}
 	
-	public EnterRepertoryReceiptPO(String receiptID, String userID, ReceiptType type, ReceiptState state,
+	public EnterRepertoryReceiptPO(String receiptID, String userID, String time, ReceiptState state,
 			String repertoryID, String[] expressIDList, String[] timeList){
-		this(receiptID, userID, type, state);
+		this(receiptID, userID, state);
+		this.setCreateTime(time);
 		this.setRepertoryID(repertoryID);
 		this.setExpressIDList(expressIDList);
 		this.timeList = timeList;
 	}
 	
 	public String getReceiptID(){
-		return this.ID;
+		return this.receiptID;
 	}
 	
 	public void setReceiptID(String receiptID){
-		this.ID = receiptID;
+		this.receiptID = receiptID;
 	}
 	
 	public String getUserID(){
@@ -44,6 +43,14 @@ public class EnterRepertoryReceiptPO extends ReceiptPO  implements Serializable{
 		this.userID = userID;
 	}
 
+	public String getCreateTime(){
+		return this.createTime;
+	}
+	
+	public void setCreateTime(String time){
+		this.createTime = time;
+	}
+	
 	public String getRepertoryID() {
 		return repertoryID;
 	}

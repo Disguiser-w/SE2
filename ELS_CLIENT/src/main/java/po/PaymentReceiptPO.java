@@ -88,7 +88,7 @@ public class PaymentReceiptPO extends ReceiptPO implements Serializable{
 	}
 	
 	public String getID(){
-		return ID;
+		return receiptID;
 	}
 	
 	public String getUserID(){

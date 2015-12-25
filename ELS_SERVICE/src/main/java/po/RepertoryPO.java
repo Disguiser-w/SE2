@@ -11,7 +11,7 @@ public class RepertoryPO implements Serializable{
 	private int maxRow,  maxShelf, maxDigit, warningRadio;
 	private int stockNum[];
 	private ArrayList<InventoryPO> inventoryList; //记录仓库中库存的列表（只包括目前在仓库里的库存信息）
-	private ArrayList<GoodsPO> inventoryHistoryList;//记录仓库中历史库存的列表，包括曾经入库出库的货物信息
+	private ArrayList<String> inventoryHistoryList;//记录仓库中历史库存的列表，包括曾经入库出库的货物的订单号
 	private String lastCreateEnterReceiptTime;
 	private String lastCreateLeaveReceiptTime;
 	
@@ -24,7 +24,7 @@ public class RepertoryPO implements Serializable{
 		this.warningRadio = 80;
 		stockNum = new int [4];
 		inventoryList = new ArrayList<InventoryPO>(); 
-		inventoryHistoryList = new ArrayList<GoodsPO>();
+		inventoryHistoryList = new ArrayList<String>();
 		lastCreateEnterReceiptTime = "";
 		lastCreateLeaveReceiptTime = "";
 	}
@@ -113,7 +113,7 @@ public class RepertoryPO implements Serializable{
 		return this.inventoryList;
 	}
 	
-	public ArrayList<GoodsPO> getInventoryHistoryList(){
+	public ArrayList<String> getInventoryHistoryList(){
 		return this.inventoryHistoryList;
 	}
 	
@@ -129,7 +129,7 @@ public class RepertoryPO implements Serializable{
 		return this.lastCreateLeaveReceiptTime;
 	}
 	
-	public void getLastCreateLeaveReceiptTime(String newTime){
+	public void setLastCreateLeaveReceiptTime(String newTime){
 		this.lastCreateLeaveReceiptTime = newTime;
 	}
 	

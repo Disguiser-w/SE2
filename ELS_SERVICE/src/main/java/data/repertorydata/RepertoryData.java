@@ -172,16 +172,15 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
+			
 			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
-				//gdService.modifyGoodsEnterTime(orderID, time);
-				//gdService.modifyGoodsEnterRepertoryID(orderID, repertoryID);
 				
 				ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
 				inventoryList.add(inventorypo);
 				repertory.stockNumPlus(inventorypo.getBlockNum());
 				
-				ArrayList<GoodsPO> inventoryHistoryList = repertory.getInventoryHistoryList();
-				inventoryHistoryList.add(inventorypo.getGood());
+				ArrayList<String> inventoryHistoryList = repertory.getInventoryHistoryList();
+				inventoryHistoryList.add(inventorypo.getGood().getOrder_ID());
 				
 				returnNum = 0;
 				break;
@@ -207,8 +206,10 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 loop1:		for(int i=0;i<organizationList.size();i++){
 				OrganizationPO organization = (OrganizationPO)organizationList.get(i);
 				RepertoryPO repertory = organization.getRepertory();
+				
 				if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
 					ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
+					
 	loop2:				for(int j=0;j<inventoryList.size();j++){
 							InventoryPO tempInventory = (InventoryPO)inventoryList.get(j);
 							if(tempInventory.getGood().getOrder_ID().equals(orderID)){
@@ -385,11 +386,12 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * */
 	public ArrayList<GoodsPO> getEnterRepertoryGoods(String repertoryID) throws RemoteException{
 		RepertoryPO repertory = findRepertory(repertoryID);
-		ArrayList<GoodsPO> inventoryHistoryList = repertory.getInventoryHistoryList();
+		ArrayList<String> inventoryHistoryList = repertory.getInventoryHistoryList();
 		ArrayList<GoodsPO> enterRepertoryGoodsList = new ArrayList<GoodsPO> ();
 		
 		if(inventoryHistoryList != null){
-			for(GoodsPO goodspo : inventoryHistoryList){
+			for(String IDStr : inventoryHistoryList){
+				GoodsPO goodspo = goodsData.findGoodsByID(IDStr);
 				if(goodspo.getThisRepertoryEnterTime(repertoryID).compareTo(repertory.getLastCreateEnterReceiptTime()) > 0)
 					enterRepertoryGoodsList.add(goodspo);
 			}
@@ -407,16 +409,98 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * */
 	public ArrayList<GoodsPO> getLeaveRepertoryGoods(String repertoryID) throws RemoteException{
 		RepertoryPO repertory = findRepertory(repertoryID);
-		ArrayList<GoodsPO> inventoryHistoryList = repertory.getInventoryHistoryList();
+		ArrayList<String> inventoryHistoryList = repertory.getInventoryHistoryList();
 		ArrayList<GoodsPO> leaveRepertoryGoodsList = new ArrayList<GoodsPO> ();
 		
 		if(inventoryHistoryList != null){
-			for(GoodsPO goodspo : inventoryHistoryList){
-				if(goodspo.getThisRepertoryLeaveTime(repertoryID).compareTo(repertory.getLastCreateLeaveReceiptTime()) > 0)
-					leaveRepertoryGoodsList.add(goodspo);
+			for(String IDStr : inventoryHistoryList){
+				GoodsPO goodspo = goodsData.findGoodsByID(IDStr);
+				if(!goodspo.getThisRepertoryLeaveTime(repertoryID).equals("has not left this repertory")){
+					if(goodspo.getThisRepertoryLeaveTime(repertoryID).compareTo(repertory.getLastCreateLeaveReceiptTime()) > 0)
+						leaveRepertoryGoodsList.add(goodspo);
+				}
 			}
 		}
 		return leaveRepertoryGoodsList;
+	}
+	
+	
+	
+	/**
+	 * 获取编号为repertoryID的仓库上一次制定入库单的时间
+	 * 
+	 * @param String repertoryID
+	 * @return String
+	 * 
+	 * */
+	public String getLastCreateEnterReceiptTime(String repertoryID) throws RemoteException{
+		RepertoryPO repertory = findRepertory(repertoryID);
+		return repertory.getLastCreateEnterReceiptTime();
+	}
+	
+	
+	/**
+	 * 获取编号为repertoryID的仓库上一次制定出库单的时间
+	 * 
+	 * @param String repertoryID
+	 * @return String
+	 * 
+	 * */
+	public String getLastCreateLeaveReceiptTime(String repertoryID) throws RemoteException{
+		RepertoryPO repertory = findRepertory(repertoryID);
+		return repertory.getLastCreateLeaveReceiptTime();
+	}
+	
+	
+	/**
+	 * 更改编号为repertoryID的仓库上一次制定入库单的时间
+	 * 
+	 * @param String repertoryID, String newEnterTime
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+	public int setLastCreateEnterReceiptTime(String repertoryID, String newEnterTime) throws RemoteException{
+		ArrayList<Object> organizationList = organizationFile.read();
+		
+		int returnNum = 1;
+		for(int i=0;i<organizationList.size();i++){
+			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			RepertoryPO repertory = organization.getRepertory();
+			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
+				repertory.setLastCreateEnterReceiptTime(newEnterTime);
+				returnNum = 0;
+				break;
+			}
+		}
+		
+		organizationFile.writeM(organizationList);
+		return returnNum;
+	}
+	
+	
+	/**
+	 * 更改编号为repertoryID的仓库上一次制定出库单的时间
+	 * 
+	 * @param String repertoryID, String newLeaveTime
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+	public int setLastCreateLeaveReceiptTime(String repertoryID, String newLeaveTime) throws RemoteException{
+		ArrayList<Object> organizationList = organizationFile.read();
+		
+		int returnNum = 1;
+		for(int i=0;i<organizationList.size();i++){
+			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			RepertoryPO repertory = organization.getRepertory();
+			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
+				repertory.setLastCreateLeaveReceiptTime(newLeaveTime);
+				returnNum = 0;
+				break;
+			}
+		}
+		
+		organizationFile.writeM(organizationList);
+		return returnNum;
 	}
 	
 	
@@ -424,7 +508,6 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * 获取现在的时间，便于出入库登记操作
 	 * 
 	 * */
-	//
 	public static String getTimeNow(){
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -462,16 +545,17 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 							+repertoryByOwner.getWarningRatio()+" "+repertoryByOwner.getStockNum(0)+" "+repertoryByOwner.getStockNum(1)
 							+" "+repertoryByOwner.getStockNum(2)+" "+repertoryByOwner.getStockNum(3));
 				else
-					System.out.println("Cannot find the repertoryByOwner");
+					System.out.println("Cannot find the repertoryByOwner");*/
 				
 				RepertoryPO repertory = repertoryData.findRepertory("025-0-CK");
 				if(repertory != null)
 					System.out.println("Find the repertory: "+repertory.getRepertoryID()+" "+repertory.getOwnerID()+" "+repertory.getMaxRow()
 							+" "+repertory.getMaxShelf()+" "+repertory.getMaxDigit()+" "
 							+repertory.getWarningRatio()+" "+repertory.getStockNum(0)+" "+repertory.getStockNum(1)
-							+" "+repertory.getStockNum(2)+" "+repertory.getStockNum(3));
+							+" "+repertory.getStockNum(2)+" "+repertory.getStockNum(3)
+							+"上次生成入库单时间："+repertory.getLastCreateEnterReceiptTime()+" 上次生成出库单时间："+repertory.getLastCreateLeaveReceiptTime());
 				else
-					System.out.println("Cannot find the repertory");*/
+					System.out.println("Cannot find the repertory");
 				
 				/*repertoryData.modifyRepertory(new RepertoryPO("030-CK", "CK-01", 100,10,10,50,new int[4]));
 				System.out.println("修改后:");
@@ -525,6 +609,22 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 			    				+tempGoodspo.getLeaveRepertoryID()[0]+" " +tempGoodspo.getLeaveRepertoryID()[1]+" "+tempGoodspo.getLeaveRepertoryID()[2]+" "+tempGoodspo.getLeaveRepertoryID()[3]+" "
 			    				+tempGoodspo.isInRepertory());
 						System.out.println("进入本仓库的时间为"+tempGoodspo.getThisRepertoryEnterTime("025-0-CK"));
+					}
+				}
+				
+				System.out.println("查看从上次制定出库单到现在出库货物");
+				ArrayList<GoodsPO> leaveRepertoryGoodsList = repertoryData.getLeaveRepertoryGoods("025-0-CK");
+				if(leaveRepertoryGoodsList != null){
+					int size = leaveRepertoryGoodsList.size();
+					for(int i=0; i<size;i++){
+						GoodsPO tempGoodspo = leaveRepertoryGoodsList.get(i);
+						System.out.println(tempGoodspo.getOrder_ID()+" "+tempGoodspo.getFee()+" "+tempGoodspo.getDeparturePlace()+" "+tempGoodspo.getDestination()+" "
+			    				+tempGoodspo.getLeaveTime()[0]+" "+tempGoodspo.getLeaveTime()[1]+" "+tempGoodspo.getLeaveTime()[2]+" "+tempGoodspo.getLeaveTime()[3]+" "
+			    				+tempGoodspo.getLeaveRepertoryID()[0]+" "+tempGoodspo.getLeaveRepertoryID()[1]+" "+tempGoodspo.getLeaveRepertoryID()[2]+" "+tempGoodspo.getLeaveRepertoryID()[3]+" "
+			    				+tempGoodspo.getLeaveTime()[0]+" " +tempGoodspo.getLeaveTime()[1]+" "+tempGoodspo.getLeaveTime()[2]+" "+tempGoodspo.getLeaveTime()[3]+ " "
+			    				+tempGoodspo.getLeaveRepertoryID()[0]+" " +tempGoodspo.getLeaveRepertoryID()[1]+" "+tempGoodspo.getLeaveRepertoryID()[2]+" "+tempGoodspo.getLeaveRepertoryID()[3]+" "
+			    				+tempGoodspo.isInRepertory());
+						System.out.println("离开本仓库的时间为"+tempGoodspo.getThisRepertoryLeaveTime("025-0-CK"));
 					}
 				}
 				

@@ -6,9 +6,11 @@ import java.rmi.RemoteException;
 
 import businesslogic.datafactory.DataFactory;
 import po.UserPO;
+import presentation.repertoryui.CreateReceiptPanel;
 import presentation.repertoryui.EXwarehousePanel;
 import presentation.repertoryui.InitializeInformationPanel;
 import presentation.repertoryui.InventoryVerificationPanel;
+import presentation.repertoryui.LookReceiptPanel;
 import presentation.repertoryui.RepertoryFrame;
 import presentation.repertoryui.ViewInventoryPanel;
 import presentation.repertoryui.WarehousingMainPanel;
@@ -47,6 +49,8 @@ public class RepertoryMainController {
 			repertoryFrame.exwarehousePanel = exwareHousePanel;
 			repertoryFrame.addFuncLabel(new ViewInventoryPanel(stockManVO),"库存盘点");
 			repertoryFrame.addFuncLabel(new InventoryVerificationPanel(stockManVO), "库存查看");
+			repertoryFrame.addFuncLabel(new CreateReceiptPanel(stockManVO), "生成单据");
+			repertoryFrame.addFuncLabel(new LookReceiptPanel(repertoryFrame, stockManVO), "查看单据");
 			repertoryFrame.showFrame();
 		}catch(RemoteException exception){
 			exception.printStackTrace();
