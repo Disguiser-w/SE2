@@ -15,7 +15,11 @@ public interface GoodsDataService extends Remote {
     public int modifyGoodsEnterRepertoryID(String goodsID, String enterRepertoryID) throws RemoteException;
     public int modifyGoodsLeaveTime(String goodsID, String leaveTime) throws RemoteException;
     public int modifyGoodsLeaveRepertoryID(String goodsID, String leaveRepertoryID) throws RemoteException;
-    public GoodsPO findGoods(String JJD_ID) throws RemoteException;
+    public int modifyGoodsState(String goodsID, boolean isInRepertory) throws RemoteException;
+    public GoodsPO findGoodsByID(String JJD_ID) throws RemoteException;
+    public ArrayList<GoodsPO> findGoodsByKeyword(String JJD_ID) throws RemoteException;
     public ArrayList<GoodsPO> showAllGoods() throws RemoteException;
+    public ArrayList<GoodsPO> getAllFreeGoods() throws RemoteException;
+    public ArrayList<GoodsPO> findFreeGoodsByKeyword(String keyword) throws RemoteException;
     
 }

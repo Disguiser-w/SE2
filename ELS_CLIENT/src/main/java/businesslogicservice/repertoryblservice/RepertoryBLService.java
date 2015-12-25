@@ -20,8 +20,6 @@ public interface RepertoryBLService {
 	public int getMaxShelf() throws RemoteException;
 	public int getMaxDigit() throws RemoteException;
 	public int getMaxRatio() throws RemoteException;
-	public String showGoodBasicMessage(String goodID) throws RemoteException;
-	public String showGoodIntermidiateMessage(String goodID) throws RemoteException;
 	public String repertoryName(String repertoryID) throws RemoteException;
 	
 }

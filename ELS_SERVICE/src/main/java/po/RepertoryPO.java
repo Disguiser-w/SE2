@@ -9,9 +9,11 @@ public class RepertoryPO implements Serializable{
 	
 	private String repertoryID, ownerID;
 	private int maxRow,  maxShelf, maxDigit, warningRadio;
-	//private int planeBlockStockNum, trainBlockStockNum, truckBlockStockNum, defaultBlockStockNum;
 	private int stockNum[];
-	private ArrayList<InventoryPO> inventoryList;
+	private ArrayList<InventoryPO> inventoryList; //记录仓库中库存的列表（只包括目前在仓库里的库存信息）
+	private ArrayList<GoodsPO> inventoryHistoryList;//记录仓库中历史库存的列表，包括曾经入库出库的货物信息
+	private String lastCreateEnterReceiptTime;
+	private String lastCreateLeaveReceiptTime;
 	
 	public RepertoryPO(String repertoryID, String ownerID){
 		this.repertoryID = repertoryID;
@@ -22,14 +24,12 @@ public class RepertoryPO implements Serializable{
 		this.warningRadio = 80;
 		stockNum = new int [4];
 		inventoryList = new ArrayList<InventoryPO>(); 
-		/*this.planeBlockStockNum = 0;
-		this.trainBlockStockNum = 0;
-		this.truckBlockStockNum = 0;
-		this.defaultBlockStockNum = 0; */
+		inventoryHistoryList = new ArrayList<GoodsPO>();
+		lastCreateEnterReceiptTime = "";
+		lastCreateLeaveReceiptTime = "";
 	}
 	
 	public RepertoryPO(String repertoryID, String ownerID, int maxRow, int maxShelf, int maxDigit, int warningRatio, int stockNum[]) {
-		// 仓库编号 对应仓库管理员编号 最多多少排 最多多少架 最多多少位 警戒比例
 		// 025-0-CK CK-00001
 		this.repertoryID = repertoryID;
 		this.ownerID = ownerID;
@@ -113,52 +113,24 @@ public class RepertoryPO implements Serializable{
 		return this.inventoryList;
 	}
 	
-	/*public int getPlaneBlockStockNum(){
-		return this.planeBlockStockNum;
+	public ArrayList<GoodsPO> getInventoryHistoryList(){
+		return this.inventoryHistoryList;
 	}
 	
-	public void planeBlockStockNumPlus(){
-		this.planeBlockStockNum++;
+	public String getLastCreateEnterReceiptTime(){
+		return this.lastCreateEnterReceiptTime;
 	}
-	
-	public void planeBlockStockNumSub(){
-		this.planeBlockStockNum--;
-	}
-	
-	public int getTrainBlockStockNum(){
-		return this.trainBlockStockNum;
-	}
-	
-	public void trainBlockStockNumPlus(){
-		this.trainBlockStockNum++;
-	}
-	
-	public void trainBlockStockNumSub(){
-		this.trainBlockStockNum--;
-	}
-	
-	public int getTruckBlockStockNum(){
-		return this.truckBlockStockNum;
-	}
-	
-	public void truckBlockStockNumPlus(){
-		this.truckBlockStockNum++;
-	}
-	
-	public void truckBlockStockNumSub(){
-		this.truckBlockStockNum--;
-	}
-	
-	public int getDefaultBlockStockNum(){
-		return this.defaultBlockStockNum;
-	}
-	
-	public void defaultBlockStockNumPlus(){
-		this.defaultBlockStockNum++;
-	}
-	
-	public void defaultBlockStockNumSub(){
-		this.defaultBlockStockNum--;
-	}*/
 
+	public void setLastCreateEnterReceiptTime(String newTime){
+		this.lastCreateEnterReceiptTime = newTime;
+	}
+	
+	public String getLastCreateLeaveReceiptTime(){
+		return this.lastCreateLeaveReceiptTime;
+	}
+	
+	public void getLastCreateLeaveReceiptTime(String newTime){
+		this.lastCreateLeaveReceiptTime = newTime;
+	}
+	
 }

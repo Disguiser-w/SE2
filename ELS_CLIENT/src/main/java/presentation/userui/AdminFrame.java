@@ -14,8 +14,8 @@ public class AdminFrame extends UserFrame{
 		super(vo.userName, vo.userID);
 	}
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		new AdminFrame(new UserVO("魏彦淑", "admin", "admin", ProfessionType.administrator,
 				"", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.administrator, 0));
-	}
+	}*/
 }

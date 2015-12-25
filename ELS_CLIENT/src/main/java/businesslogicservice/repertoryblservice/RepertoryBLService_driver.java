@@ -17,8 +17,6 @@ public class RepertoryBLService_driver {
         repertoryBLService.getMaxShelf();
         repertoryBLService.getMaxDigit();
         repertoryBLService.getMaxRatio();
-        repertoryBLService.showGoodBasicMessage("20151001-00001");
-        repertoryBLService.showGoodIntermidiateMessage("20151001-00001");
         repertoryBLService.repertoryName("025-0");
     }
  

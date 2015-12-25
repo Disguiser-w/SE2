@@ -38,6 +38,8 @@ public class RepertoryBL implements RepertoryBLService{
 		try{
 			odService = DataFactory.getOrganizationData();
 			rdService = DataFactory.getRepertoryData();
+			errdService = DataFactory.getEnterRepertoryReceiptData();
+			lrrdService = DataFactory.getLeaveRepertoryReceiptData();
 			gdService = DataFactory.getGoodsData();
 			this.repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
@@ -73,21 +75,20 @@ public class RepertoryBL implements RepertoryBLService{
 	 * */
 	public int enterRepertory(String JJD_ID, int blockNum, int rowNum, int shelfNum, int digitNum){
 		try{
-			/*String warningStr = inventoryWarning();
-			if((warningStr.contains("0")) || (warningStr.contains("1")) || (warningStr.contains("2")))
-				blockNum = 3;
-			String vacantLocation = searchVacantLocation(blockNum);
-			String locationParts[] = vacantLocation.split(" ");
-			int rowNum = Integer.parseInt(locationParts[0]);
-			int shelfNum = Integer.parseInt(locationParts[1]);
-			int digitNum = Integer.parseInt(locationParts[2]);*/
 			
-			GoodsPO goodspo = rdService.findGoodsbyID(JJD_ID);
+			GoodsPO goodspo = gdService.findGoodsByID(JJD_ID);
 			
 			//把GoodsPO的一个未填写的enterTime补充为现在的时间，进入的仓库编号中增加该仓库编号
 			String time = getTimeNow();
 			gdService.modifyGoodsEnterTime(JJD_ID, time);
 			gdService.modifyGoodsEnterRepertoryID(JJD_ID, repertoryID);
+			gdService.modifyGoodsState(JJD_ID, true);
+			
+			//上两句改的是数据层的数据，goodspo里的入库记录没有被修改，直接以此新建inventorypo的话入库记录全是空的
+			//所以增加以下三句
+			goodspo.setEnterTime(time);
+			goodspo.setEnterRepertoryID(repertoryID);
+			goodspo.setInRepertory(true);
 			
 			//把InventoryPO加入仓库库存列表中
 			InventoryPO inventorypo = new InventoryPO(goodspo, blockNum, rowNum, shelfNum, digitNum);
@@ -112,6 +113,7 @@ public class RepertoryBL implements RepertoryBLService{
 			String time = getTimeNow();
 			gdService.modifyGoodsLeaveTime(JJD_ID, time);
 			gdService.modifyGoodsLeaveRepertoryID(JJD_ID, repertoryID);
+			gdService.modifyGoodsState(JJD_ID, false);
 			
 			//把InventoryPO从仓库库存列表中删除
 			return(rdService.deleteInventory(repertoryID, JJD_ID));
@@ -206,21 +208,22 @@ public class RepertoryBL implements RepertoryBLService{
 		return timeNow;
 	}
 	
-	public GoodsVO GoodsPOToVO(GoodsPO goodspo){
+	
+	public static GoodsVO goodsPOToVO(GoodsPO goodspo){
 		return new GoodsVO(goodspo.getOrder_ID(), goodspo.getFee(), goodspo.getDeparturePlace(), goodspo.getDestination(), goodspo.getEnterDate(), goodspo.getLeaveDate());
 	}
 
-	public InventoryVO inventoryPOToVO(InventoryPO inventorypo){
+	public static InventoryVO inventoryPOToVO(InventoryPO inventorypo){
 		GoodsPO goodpo = inventorypo.getGood();
-		GoodsVO goodvo = GoodsPOToVO(goodpo);
+		GoodsVO goodvo = goodsPOToVO(goodpo);
 		return new InventoryVO(goodvo, inventorypo.getBlockNum(), inventorypo.getRowNum(), inventorypo.getShelfNum(), inventorypo.getDigitNum());
 	}
 	
-	public InventoryCheckVO inventoryCheckPOToVO(InventoryCheckPO inventorycheckpo){
+	public static InventoryCheckVO inventoryCheckPOToVO(InventoryCheckPO inventorycheckpo){
 		return new InventoryCheckVO(inventorycheckpo.getEnterTotal(), inventorycheckpo.getLeaveTotal(), inventorycheckpo.getEnterFeeTotal(),inventorycheckpo.getLeaveFeeTotal(), inventorycheckpo.getStockNumArray());
 	}
 	
-	public RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
+	public static RepertoryVO repertoryPOToVO(RepertoryPO repertorypo){
 		return new RepertoryVO(repertorypo.getRepertoryID(), repertorypo.getOwnerID(), 
 				repertorypo.getMaxRow(), repertorypo.getMaxShelf(), repertorypo.getMaxDigit(), 
 				repertorypo.getWarningRatio(), repertorypo.getStockNumArray());
@@ -284,52 +287,6 @@ public class RepertoryBL implements RepertoryBLService{
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return -1;
-		}
-	}
-	
-	public String showGoodBasicMessage(String goodID){
-		try{
-			String basicMessageStr = "";
-			GoodsPO goods = rdService.findGoodsbyID(goodID);
-			if(goods != null){
-				basicMessageStr += "订单号：" + goods.getOrder_ID() + "\n";
-				basicMessageStr += "费用：" + goods.getFee() + "\n";
-				basicMessageStr += "出发地：" + goods.getDeparturePlace() + "          目的地：" + goods.getDestination() + "\n";
-				return basicMessageStr;
-			}
-			else
-				return "该订单号不存在";
-		}catch(RemoteException ex){
-			ex.printStackTrace();
-			return "服务器崩了，爽不爽！！！";
-		}
-	}
-	
-	public String showGoodIntermidiateMessage(String goodID){
-		try{
-			String intermediateMessageStr = "";
-			GoodsPO goods = rdService.findGoodsbyID(goodID);
-			if(goods != null){
-				for(int i=0; i<4 ;i++){
-					if(!goods.getEnterTime()[i].equals("无")){
-						intermediateMessageStr += goods.getEnterTime()[i] + "进入" + repertoryName(goods.getEnterRepertoryID()[i]) + "\n";
-					}
-				}
-				for(int i=0;i<4 ;i++){
-					if(!goods.getLeaveTime()[i].equals("无")){
-						intermediateMessageStr += goods.getLeaveTime()[i] + "离开" + repertoryName(goods.getLeaveRepertoryID()[i]) + "\n";
-					}
-				}
-				if(intermediateMessageStr != "")
-					return intermediateMessageStr;
-				else
-					return "暂无该订单号对应的物流中转信息";
-			}
-			else
-				return "该订单号不存在";
-		}catch(RemoteException ex){
-			ex.printStackTrace();
-			return "服务器崩了，爽不爽！！！";
 		}
 	}
 	

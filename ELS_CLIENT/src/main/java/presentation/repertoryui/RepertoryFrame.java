@@ -9,6 +9,11 @@ public class RepertoryFrame extends UserFrame{
 
 	public UserVO uservo;
 	
+	public WarehousingMainPanel warehousingMainPanel;
+	public EXwarehousePanel exwarehousePanel;
+	
+	
+	
 	public RepertoryFrame(UserVO vo) {
 		super(vo.userName, vo.userID);
 		
@@ -16,3 +21,4 @@ public class RepertoryFrame extends UserFrame{
 	}
 	
 }
+

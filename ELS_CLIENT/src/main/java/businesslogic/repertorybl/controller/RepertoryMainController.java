@@ -11,7 +11,7 @@ import presentation.repertoryui.InitializeInformationPanel;
 import presentation.repertoryui.InventoryVerificationPanel;
 import presentation.repertoryui.RepertoryFrame;
 import presentation.repertoryui.ViewInventoryPanel;
-import presentation.repertoryui.WarehousingPanel;
+import presentation.repertoryui.WarehousingMainPanel;
 import vo.UserVO;
 import dataservice.userdataservice.UserDataService;
 
@@ -39,8 +39,12 @@ public class RepertoryMainController {
 			stockManVO = userPOToVO(userData.findUserByID(stockManID));
 			repertoryFrame = new RepertoryFrame(stockManVO);
 			repertoryFrame.addFuncLabel(new InitializeInformationPanel(stockManVO), "库存信息初始化");
-			repertoryFrame.addFuncLabel(new WarehousingPanel(stockManVO), "入库");
-			repertoryFrame.addFuncLabel(new EXwarehousePanel(stockManVO), "出库");
+			WarehousingMainPanel wareHousingMainPanel = new WarehousingMainPanel(repertoryFrame, stockManVO);
+			repertoryFrame.addFuncLabel(wareHousingMainPanel, "入库");
+			repertoryFrame.warehousingMainPanel = wareHousingMainPanel;
+			EXwarehousePanel exwareHousePanel = new EXwarehousePanel(repertoryFrame, stockManVO);
+			repertoryFrame.addFuncLabel(exwareHousePanel, "出库");
+			repertoryFrame.exwarehousePanel = exwareHousePanel;
 			repertoryFrame.addFuncLabel(new ViewInventoryPanel(stockManVO),"库存盘点");
 			repertoryFrame.addFuncLabel(new InventoryVerificationPanel(stockManVO), "库存查看");
 			repertoryFrame.showFrame();

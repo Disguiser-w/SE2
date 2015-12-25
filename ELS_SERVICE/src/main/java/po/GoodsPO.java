@@ -10,28 +10,30 @@ public class GoodsPO implements Serializable{
 	private double fee;
 	private String departurePlace, destination;
 	private String enterTime[], leaveTime[], enterRepertoryID[], leaveRepertoryID[];
+	private boolean inRepertory;
 	
 	public GoodsPO(String Order_ID, double fee, String departurePlace, String destination){
 		this.Order_ID = Order_ID;
 		this.fee = fee;
 		this.departurePlace = departurePlace;
 		this.destination = destination;
-		enterTime = new String[4];
+		enterTime = new String[5];
 		for(int i=0;i<4;i++){
 			enterTime[i] = "无";
 		}
-		leaveTime = new String[4];
+		leaveTime = new String[5];
 		for(int i=0;i<4;i++){
 			leaveTime[i] = "无";
 		}
-		enterRepertoryID = new String[4];
+		enterRepertoryID = new String[5];
 		for(int i=0;i<4;i++){
 			enterRepertoryID[i] = "无";
 		}
-		leaveRepertoryID = new String[4];
+		leaveRepertoryID = new String[5];
 		for(int i=0;i<4;i++){
 			leaveRepertoryID[i] = "无";
 		}
+		setInRepertory(false);
 	}
 	
 	public GoodsPO(String Order_ID, double fee, String departurePlace, String destination, String[] enterTime, String[] leaveTime,
@@ -44,6 +46,19 @@ public class GoodsPO implements Serializable{
 		this.leaveTime = leaveTime;
 		this.enterRepertoryID = enterRepertoryID;
 		this.leaveRepertoryID = leaveRepertoryID;
+	}
+	
+	public GoodsPO(String Order_ID, double fee, String departurePlace, String destination, String[] enterTime, String[] leaveTime,
+			String[] enterRepertoryID, String[] leaveRepertoryID, boolean b){
+		this.Order_ID = Order_ID;
+		this.fee = fee;
+		this.departurePlace = departurePlace;
+		this.destination = destination;
+		this.enterTime = enterTime;
+		this.leaveTime = leaveTime;
+		this.enterRepertoryID = enterRepertoryID;
+		this.leaveRepertoryID = leaveRepertoryID;
+		this.inRepertory = b;
 	}
 	
 	public String getOrder_ID(){
@@ -96,6 +111,14 @@ public class GoodsPO implements Serializable{
 		return "无";
 	}
 	
+	public String getThisRepertoryEnterTime(String repertoryID){
+		for(int i=0;i<4;i++){
+			if(this.enterRepertoryID[i].equals(repertoryID))
+				return enterTime[i];
+		}
+		return "has not entered this repertory";
+	}
+	
 	public void setEnterTime(String enterTime){
 		for(int i=0;i<4;i++){
 			if(this.enterTime[i].equals("无")){
@@ -110,11 +133,10 @@ public class GoodsPO implements Serializable{
 	}
 	
 	public String[] getLeaveDate(){
-		String[] leaveDate = new String[4];
+		String[] leaveDate = new String[5];
 		for(int i=0;i<4;i++){
 			leaveDate[i] = "无";
 		}
-		
 		for(int i=0;i<4;i++){
 			if(!leaveTime[i].equals("无")){
 				String[] parts = leaveTime[i].split(" ");
@@ -130,6 +152,14 @@ public class GoodsPO implements Serializable{
 				return this.leaveTime[i];	
 		}
 		return "无";
+	}
+	
+	public String getThisRepertoryLeaveTime(String repertoryID){
+		for(int i=0;i<4;i++){
+			if(this.leaveRepertoryID[i].equals(repertoryID))
+				return leaveTime[i];
+		}
+		return "has not left this repertory";
 	}
 	
 	public void setLeaveTime(String leaveTime){
@@ -182,6 +212,14 @@ public class GoodsPO implements Serializable{
 				break;
 			}
 		}
+	}
+
+	public boolean isInRepertory() {
+		return this.inRepertory;
+	}
+
+	public void setInRepertory(boolean b) {
+		this.inRepertory = b;
 	}
 	
 }

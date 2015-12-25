@@ -41,8 +41,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 新增用户
 	 * 
-	 * @param UserPO
-	 *            userpo
+	 * @param UserPO userpo
 	 * @return int : 0(add succeed), 1(user with the ID has already existed)
 	 * 
 	 * */
@@ -73,8 +72,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 删除用户
 	 * 
-	 * @param String
-	 *            userID
+	 * @param String userID
 	 * @return int : 0(delete succeed), 1(delete failed)
 	 * 
 	 * */
@@ -224,8 +222,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 修改用户密码
 	 * 
-	 * @param String
-	 *            userID, String newPassword
+	 * @param String userID, String newPassword
 	 * @return 0(modify succeed), 1(modify failed)
 	 * 
 	 * */
@@ -251,8 +248,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 修改用户权限
 	 * 
-	 * @param String
-	 *            userID, AuthorityType authority
+	 * @param String userID, AuthorityType authority
 	 * @return 0(modify succeed), 1(modify failed)
 	 * 
 	 * */
@@ -278,8 +274,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 修改用户机构
 	 * 
-	 * @param String
-	 *            userID, String newOrganizationID
+	 * @param String userID, String newOrganizationID
 	 * @return 0(modify succeed), 1(modify failed)
 	 * 
 	 * */
@@ -464,8 +459,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	/**
 	 * 根据编号查找用户（精确搜索）
 	 * 
-	 * @param String
-	 *            userID
+	 * @param String userID
 	 * @return UserPO
 	 * 
 	 * */
@@ -602,7 +596,8 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 			userData = new UserData();
 			try {
 
-				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
+				userData.modifyUserOrganization("ZZZX-00001", "025-0");
+				/*userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
 						ProfessionType.manager, "总部",
 						SalaryPlanType.basicStaffSalaryPlan,
 						AuthorityType.highest, 0));
@@ -754,7 +749,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 				userData.addUser(new UserPO("王嘉琛", "SJ-00008", "123456",
 						ProfessionType.driver, "020001",
 						SalaryPlanType.driverSalaryPlan, AuthorityType.lowest,
-						0));
+						0));*/
 
 				System.out.println("添加后:");
 				ArrayList<UserPO> userpoList0 = userData.showAllUsers();

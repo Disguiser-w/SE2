@@ -5,7 +5,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import businesslogic.datafactory.DataFactory;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import po.BasicSalaryPO;
 import po.CityDistancePO;
 import po.CostPO;
@@ -13,7 +12,6 @@ import po.OrganizationPO;
 import po.PerWagePO;
 import po.RepertoryPO;
 import po.UserPO;
-import presentation.logdiaryui.LogDiaryPanel;
 import presentation.managerui.BasicDataManagePanel;
 import presentation.managerui.CheckIncomePanel;
 import presentation.managerui.CheckOperatingPanel;
@@ -28,7 +26,6 @@ import vo.OrganizationVO;
 import vo.PerWageVO;
 import vo.RepertoryVO;
 import vo.UserVO;
-import dataservice.logdiarydataservice.LogDiaryDataService;
 import dataservice.managedataservice.*;
 import dataservice.userdataservice.*;
 
@@ -42,9 +39,6 @@ public class ManageMainController {
 	public static PerWageDataService perWageData;
 	public static OrganizationDataService organizationData;
 	public static UserDataService userData;
-	public static LogDiaryDataService logDiaryDate;
-	private static LogDiaryBLController logDiaryController;
-
 	
 	public static BasicSalaryController basicSalaryController;
 	public static CityDistanceController cityDistanceController;
@@ -65,8 +59,6 @@ public class ManageMainController {
 			perWageData = DataFactory.getPerWageData();
 			organizationData = DataFactory.getOrganizationData();
 			userData  = DataFactory.getUserData();
-			logDiaryDate = DataFactory.getLogDiaryData();
-
 		}catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (RemoteException e1) {
@@ -84,19 +76,16 @@ public class ManageMainController {
 			checkBusinessStatementReceiptController = new CheckBusinessStatementReceiptController();
 			checkCostIncomeReceiptController = new CheckCostIncomeReceiptController();
 			reviewReceiptController = new ReviewReceiptController();
-			logDiaryController = new LogDiaryBLController();
-
 			
 			try{
 				manageVO = userPOToVO(userData.findUserByID(managerID));
 				manageFrame = new ManageFrame(manageVO);
 				manageFrame.addFuncLabel(new StaffManagePanel(manageFrame), "用户管理");
 				manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame), "机构管理");
-//				manageFrame.addFuncLabel(new CheckReceiptPanel(), "单据审批");
+				manageFrame.addFuncLabel(new CheckReceiptPanel(), "单据审批");
 				manageFrame.addFuncLabel(new CheckOperatingPanel(), "查看经营情况表");
 				manageFrame.addFuncLabel(new CheckIncomePanel(),"查看成本收益表");
 				manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame),"基础数据设置");
-				manageFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志");
 				
 				manageFrame.showFrame();
 			}catch(RemoteException exception){
