@@ -57,8 +57,11 @@ public class VehicleManagerPanel extends OperationPanel {
 		this.controller = controller;
 		selectedIndex = -1;
 		addLabel = new AddLabel();
+		addLabel.setToolTipText("新增车辆");
 		delLabel = new DeleteLabel();
+		delLabel.setToolTipText("删除车辆");
 		modifyLabel = new ModifyLabel();
+		modifyLabel.setToolTipText(" 修改车辆信息");
 
 		inputField = new MySearchField();
 

@@ -16,8 +16,13 @@ public class OperationPanel extends JPanel implements Observer {
 	private Image background;
 
 	protected OperationPanel() {
-		// setOpaque(false);
 		background = ImageGetter.getImage("background4.png").getImage();
+		// (new Thread(new Runnable() {
+		// public void run() {
+		// while (true)
+		// repaint();
+		// }
+		// })).start();
 
 	}
 
@@ -32,7 +37,7 @@ public class OperationPanel extends JPanel implements Observer {
 	}
 
 	public void add(MyTextField field) {
-
+		field.addObservable(this);
 		add(field.getLabel());
 	}
 
@@ -48,16 +53,17 @@ public class OperationPanel extends JPanel implements Observer {
 		// 圆角方法
 		if (UserFrame.type == UserFrame.TYPE_0) {
 			g2d.setColor(new Color(250, 250, 250));
-			g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
+//			g2d.fillRoundRect(0, -7, getWidth(), getHeight() + 7, 14, 14);
+			g2d.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1)
-			g2d.drawImage(background, 0, 0,
-
-					getWidth(), getHeight(), null);
+			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 	}
 
+
+	
 	@Override
 	public void update(Observable o, Object arg) {
-		repaint();
+			repaint();
 	}
 
 }

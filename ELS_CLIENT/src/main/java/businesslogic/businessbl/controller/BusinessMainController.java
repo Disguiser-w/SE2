@@ -1,7 +1,5 @@
 package businesslogic.businessbl.controller;
 
-import java.awt.Image;
-
 import businesslogic.datafactory.DataFactory;
 import businesslogic.managebl.OrganizationBL;
 import common.ImageGetter;
@@ -57,15 +55,6 @@ public class BusinessMainController {
 		driverManagerController = new DriverManagerController();
 		vehicleManagerController = new VehicleManagerController();
 
-		// expressFrame = new ExpressFrame(expressVO);
-		// expressFrame.addFuncLabel(new AddOrderPanel(addOrderController));
-		// expressFrame.addFuncLabel(new
-		// ChargeMessageCollectionPanel(chargeCollectionController));
-		// expressFrame.addFuncLabel(new QueryPanel(logisticQuery));
-		// expressFrame.addFuncLabel(new
-		// FinishedOrderPanel(receiptOrderController));
-		//
-		// expressFrame.showFrame();
 		businessFrame = new BusinessFrame(businessVO);
 
 		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController), "装车管理",

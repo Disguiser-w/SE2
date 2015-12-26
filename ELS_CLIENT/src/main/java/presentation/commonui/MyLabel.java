@@ -55,6 +55,9 @@ public class MyLabel extends JLabel {
 	public MyLabel() {
 		this("");
 	}
+	
+	public void setEnable(boolean b){
+	}
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
@@ -93,7 +96,7 @@ public class MyLabel extends JLabel {
 				g2d.fillRoundRect(0, 0, width, height - 3, radio, radio);
 			}
 		}
-
+		
 	}
 
 	public void setImages(Image image1, Image image2, Image image3) {

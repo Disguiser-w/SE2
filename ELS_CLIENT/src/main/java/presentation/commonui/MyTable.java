@@ -104,9 +104,8 @@ public class MyTable extends JPanel {
 				if (dir == -1) {
 					if (panel.getY() < 0)
 						panel.setLocation(0, panel.getY() + 10);
-
 				}
-
+				tableObservable.setData();
 			}
 
 		});
@@ -150,6 +149,7 @@ public class MyTable extends JPanel {
 
 		this.infos = infos;
 		loadPanels();
+		setLocation(0, 0);
 	}
 
 	public ArrayList<Integer> getSelectedIndex() {
@@ -165,12 +165,14 @@ public class MyTable extends JPanel {
 		infos.set(index, info);
 		rowPanel.get(index).repaint();
 		scrollPanel.repaint();
+		tableObservable.setData();
 	}
 
 	public void setValueAt(String info, int row, int column) {
 		infos.get(row)[column] = info;
 		rowPanel.get(row).repaint();
 		scrollPanel.repaint();
+		tableObservable.setData();
 	}
 
 	public void addRow(String[] info) {
@@ -183,6 +185,7 @@ public class MyTable extends JPanel {
 		setSize(getWidth(), (row + 1) * 38 + 8);
 
 		scrollPanel.repaint();
+		tableObservable.setData();
 	}
 
 	public void delRow(int r) {
@@ -200,6 +203,7 @@ public class MyTable extends JPanel {
 
 		setSize(getWidth(), (row + 1) * 38 + 8);
 		scrollPanel.repaint();
+		tableObservable.setData();
 	}
 
 	public void setSelectedNum(int index) {
@@ -254,15 +258,13 @@ public class MyTable extends JPanel {
 
 	public void paintComponent(Graphics g) {
 
-		tableObservable.setData();
-
-//		if (UserFrame.type == 0) {
-//			g.setColor(Color.WHITE);
-//			g.fillRect(0, 0, getWidth(), getHeight());
-//		} else if (UserFrame.type == 1) {
-			// g.setColor(new Color(200, 200, 200));
-			// g.fillRect(0, 0, getWidth(), getHeight());
-//		}
+		// if (UserFrame.type == 0) {
+		// g.setColor(Color.WHITE);
+		// g.fillRect(0, 0, getWidth(), getHeight());
+		// } else if (UserFrame.type == 1) {
+		// g.setColor(new Color(200, 200, 200));
+		// g.fillRect(0, 0, getWidth(), getHeight());
+		// }
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -321,6 +323,12 @@ public class MyTable extends JPanel {
 			}
 
 		}
+
+		// 滚动条边线
+		if (UserFrame.type == UserFrame.TYPE_0)
+			g2d.setColor(Color.BLACK);
+		else
+			g2d.setColor(Color.WHITE);
 	}
 
 	class MyRowPanel extends JPanel {
@@ -350,7 +358,7 @@ public class MyTable extends JPanel {
 						setSelectedNum(index);
 						box.setSelected(true);
 					}
-					// repaint();
+
 				}
 			});
 
@@ -422,12 +430,14 @@ public class MyTable extends JPanel {
 		public void updateContent(int index) {
 			this.index = index;
 			repaint();
+			tableObservable.setData();
 		}
 
 		// 取消选中
 		public void cancelChoosed() {
 			box.setSelected(false);
 			repaint();
+			tableObservable.setData();
 		}
 
 	}

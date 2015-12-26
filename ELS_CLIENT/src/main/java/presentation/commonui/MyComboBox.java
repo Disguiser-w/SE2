@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
+import javax.swing.plaf.metal.MetalComboBoxButton;
 
 public class MyComboBox<T> extends JComboBox<T> {
 	public MyComboBox() {
@@ -14,19 +14,21 @@ public class MyComboBox<T> extends JComboBox<T> {
 	}
 
 	public void paintComponent(Graphics g) {
-		
-//		if (UserFrame.type == UserFrame.TYPE_0) {
-			super.paintComponent(g);
+
+
+		super.paintComponent(g);
+		if (UserFrame.type == UserFrame.TYPE_0) {
 			setBackground(Color.WHITE);
 			setForeground(Color.BLACK);
+			
+		} else {
+			setBackground(Color.BLACK);
+			setForeground(Color.WHITE);
+			
+		}
 
-//		} else {
-//			setBackground(new Color(0, 0, 0, 0));
-//			setForeground(Color.WHITE);
-//			setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//		}
-		
-		
 	}
+	
+
 
 }

@@ -61,7 +61,8 @@ public class FunctionPanel extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// 圆角方法
 		if (UserFrame.type == UserFrame.TYPE_0)
-			g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
+//			g2d.fillRoundRect(0, -7, width, height + 7, 14, 14);
+			g2d.fillRect(0, 0, getWidth(), getHeight());
 		else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 

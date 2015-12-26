@@ -87,6 +87,6 @@ public class MySearchField extends MyTextField {
 		else {
 			imageLabel.setIcon(normal_night);
 		}
-
+		super.paintComponent(g);
 	}
 }
