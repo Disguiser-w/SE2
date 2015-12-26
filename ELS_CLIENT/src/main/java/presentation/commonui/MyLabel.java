@@ -27,7 +27,6 @@ public class MyLabel extends JLabel {
 		setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 			}
 
 			public void mousePressed(MouseEvent e) {
@@ -126,5 +125,9 @@ public class MyLabel extends JLabel {
 			}
 
 		});
+	}
+	public void reSet(){
+		isPressed = false;
+		isMouseOn = false;
 	}
 }

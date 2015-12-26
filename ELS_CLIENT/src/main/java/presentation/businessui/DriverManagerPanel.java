@@ -34,9 +34,9 @@ import vo.DriverVO;
 
 public class DriverManagerPanel extends OperationPanel {
 
-	private JLabel addLabel;
-	private JLabel delLabel;
-	private JLabel modifyLabel;
+	private MyLabel addLabel;
+	private MyLabel delLabel;
+	private MyLabel modifyLabel;
 
 	private MySearchField inputField;
 
@@ -120,6 +120,7 @@ public class DriverManagerPanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				AddPanel addPanel = new AddPanel();
 				mainFrame.changePanel(addPanel);
+				addLabel.reSet();
 			}
 		});
 
@@ -138,6 +139,7 @@ public class DriverManagerPanel extends OperationPanel {
 
 				ModifyPanel panel = new ModifyPanel(vo);
 				mainFrame.changePanel(panel);
+				modifyLabel.reSet();
 
 			}
 		});

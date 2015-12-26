@@ -115,6 +115,7 @@ public class VehicleManagerPanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				AddPanel addPanel = new AddPanel();
 				mainFrame.changePanel(addPanel);
+				addLabel.reSet();
 			}
 		});
 
@@ -133,6 +134,7 @@ public class VehicleManagerPanel extends OperationPanel {
 
 				ModifyPanel panel = new ModifyPanel(vo);
 				mainFrame.changePanel(panel);
+				modifyLabel.reSet();
 
 			}
 		});
@@ -626,6 +628,7 @@ public class VehicleManagerPanel extends OperationPanel {
 			add(cancelLabel);
 
 			organizationVOs = controller.getOrganizationInfos();
+
 			for (OrganizationVO i : organizationVOs)
 				destinationBox.addItem(i.name);
 
@@ -767,7 +770,12 @@ public class VehicleManagerPanel extends OperationPanel {
 						return;
 					}
 
-					OrganizationVO destination = organizationVOs.get(destinationBox.getSelectedIndex());
+					int index = destinationBox.getSelectedIndex();
+					if (index == -1) {
+						warnning("请选择目的地");
+						return;
+					}
+					OrganizationVO destination = organizationVOs.get(index);
 					String name = destination.name;
 
 					String destinationCity = destination.name.substring(0, name.length() - 3);

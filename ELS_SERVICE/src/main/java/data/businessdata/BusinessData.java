@@ -921,10 +921,12 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
-		File file = FileGetter.getFile("../src/organization.ser");
+		File file = FileGetter.getFile("organizationInfo/organization.ser");
 
-		if (!file.exists())
+		if (!file.exists()){System.out.println("notfind");
 			return new ArrayList<OrganizationPO>();
+			
+		}
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
