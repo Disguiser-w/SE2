@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyComboBox;
@@ -56,7 +56,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 	private int businesshallInt;
 	public CollectionReceiptBLController controller;
-	public OrganizationController organizationController;
+	public OrganizationManageController organizationController;
 	public FinanceFrame financeFrame;
 	public UserVO user;
 
@@ -68,7 +68,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	String hallID_str;
 	String date_str;
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
-			UserVO user,OrganizationController organizationController,AccountManagementPanel_main accountManagementPanel_main,
+			UserVO user,OrganizationManageController organizationController,AccountManagementPanel_main accountManagementPanel_main,
 			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
 		this.controller=controller;
 		this.financeFrame=parent;

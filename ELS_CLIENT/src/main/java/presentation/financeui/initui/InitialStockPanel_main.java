@@ -14,7 +14,7 @@ import presentation.logdiaryui.LogDiaryPanel;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
 import vo.InitInfoVO;
@@ -37,7 +37,7 @@ public class InitialStockPanel_main extends OperationPanel {
 
 	 InitialStockBLController controller;
 	 UserBL userController;
-	 OrganizationController organizationController;
+	 OrganizationManageController organizationController;
 	 VehicleManagerController vehicleController;
 	 RepertoryBL repertoryController;
 	 AccountBLController accountController;
@@ -47,7 +47,7 @@ public class InitialStockPanel_main extends OperationPanel {
 	
 	 public LogDiaryPanel logDiaryPanel;
 	
-	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+	public InitialStockPanel_main(InitialStockBLController controller,UserBL userController,OrganizationManageController organizationController,
 			VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountController,
 			FinanceFrame parent,UserVO userVO,LogDiaryPanel logDiaryPanel){
 		this.controller=controller;

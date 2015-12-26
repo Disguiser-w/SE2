@@ -20,7 +20,7 @@ import vo.VehicleVO;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
 
@@ -65,7 +65,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	//表格中数据从各个data中取出来
 	 InitialStockBLController controller;
 	 UserBL userController;
-	 OrganizationController organizationController;
+	 OrganizationManageController organizationController;
 	 VehicleManagerController vehicleController;
 	 RepertoryBL repertoryController;
 	 AccountBLController accountController;

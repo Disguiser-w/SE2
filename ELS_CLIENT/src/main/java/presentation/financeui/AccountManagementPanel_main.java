@@ -180,6 +180,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	
 
 	public void addui() {
+		addLabel.reSet();
 		financeFrame.changePanel(new AccountManagement_new(controller,financeFrame,this,userVO,logDiaryPanel));
 	}
 
@@ -206,6 +207,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 		accountVOs = controller.showAll();
 		accountTable.setInfos(getInfos());
+		deleteLabel.reSet();
 	}
 	
 	public void modifyui(){
@@ -219,6 +221,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		}
 		selectedIndex = selectedIndexs.get(0);
 		AccountVO  vo = accountVOs.get(selectedIndex);
+		modifyLabel.reSet();
 		financeFrame.changePanel(new AccountManagementPanel_modify(controller, vo.money+"", vo.name, financeFrame,this,userVO,logDiaryPanel));		
 	}
 	

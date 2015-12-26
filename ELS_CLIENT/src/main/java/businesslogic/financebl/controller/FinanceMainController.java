@@ -22,7 +22,7 @@ import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.ManageMainController;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
 import po.AccountPO;
@@ -84,7 +84,7 @@ public class FinanceMainController {
 	private BusinessStatementReceiptBLController businessStatementReceiptBLController;
 	private InitialStockBLController initialStockBLController;
 	private UserBL userController;
-	private OrganizationController organizationController;
+	private OrganizationManageController organizationController;
 	private VehicleManagerController vehicleController;
 	private RepertoryBL repertoryController;
 	
@@ -127,7 +127,7 @@ public class FinanceMainController {
 		businessStatementReceiptBLController = new BusinessStatementReceiptBLController();
 		initialStockBLController = new InitialStockBLController();
 		userController = new UserBL();
-		organizationController = new OrganizationController();
+		organizationController = new OrganizationManageController();
 		vehicleController = new VehicleManagerController();
 		repertoryController = new RepertoryBL("CK-00001");
 		logDiaryController = new LogDiaryBLController();

@@ -25,7 +25,7 @@ import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.receiptbl.getDate;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
@@ -80,7 +80,7 @@ public class InitialStockPanel_new extends OperationPanel{
 	//表格中数据从各个data中取出来
 	 InitialStockBLController controller;
 	 UserBL userController;
-	 OrganizationController organizationController;
+	 OrganizationManageController organizationController;
 	 VehicleManagerController vehicleController;
 	 RepertoryBL repertoryController;
 	 AccountBLController accountController;
@@ -91,7 +91,7 @@ public class InitialStockPanel_new extends OperationPanel{
 	private InitialStockPanel_main initMainPanel;
 	public LogDiaryPanel logDiaryPanel;
 
-	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationController organizationController,
+	 public InitialStockPanel_new(InitialStockBLController controller,UserBL userController,OrganizationManageController organizationController,
 			 VehicleManagerController vehicleController,RepertoryBL repertoryController,AccountBLController accountBLController,FinanceFrame parent,
 			 InitialStockPanel_main initMainPanel,UserVO userVO,LogDiaryPanel logDiaryPanel) {
 	    this.controller=controller;

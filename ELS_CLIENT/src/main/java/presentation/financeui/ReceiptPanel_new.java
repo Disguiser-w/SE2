@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import common.FileExporter;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
-import businesslogic.managebl.controller.OrganizationController;
+import businesslogic.managebl.controller.OrganizationManageController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -49,7 +49,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	
 	 public CollectionReceiptBLController collectionController;
 	 public PaymentReceiptBLController paymentReceiptBLController;
-	 public OrganizationController organizationController;
+	 public OrganizationManageController organizationController;
 	 public FinanceFrame financeFrame;
 	 public UserVO user;
 	 
@@ -58,7 +58,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		public LogDiaryPanel logDiaryPanel;
 
 	public ReceiptPanel_new(CollectionReceiptBLController collectionController, PaymentReceiptBLController paymentReceiptBLController
-			            ,FinanceFrame parent,UserVO user,OrganizationController organizationController,AccountManagementPanel_main accountManagementPanel_main,
+			            ,FinanceFrame parent,UserVO user,OrganizationManageController organizationController,AccountManagementPanel_main accountManagementPanel_main,
 						CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
 		this.collectionController=collectionController;
 		this.paymentReceiptBLController=paymentReceiptBLController;
