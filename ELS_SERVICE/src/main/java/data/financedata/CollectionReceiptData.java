@@ -225,9 +225,9 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151202", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "20151222", "鼓楼");
 		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151204", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "20151224", "鼓楼");
 		collectionData.createCollection(po3);
-		collectionData.createCollection(po1);
-		collectionData.createCollection(po2);
-		collectionData.createCollection(po4);
+//		collectionData.createCollection(po1);
+//		collectionData.createCollection(po2);
+//		collectionData.createCollection(po4);
 		ArrayList<CollectionReceiptPO> pos=collectionData.getAllCollection();
 		for(CollectionReceiptPO p:pos){
 			System.out.println("ID: "+p.getID()+" "+p.getState().toString());

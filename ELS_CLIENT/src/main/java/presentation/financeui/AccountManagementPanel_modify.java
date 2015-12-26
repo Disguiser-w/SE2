@@ -3,14 +3,13 @@ package presentation.financeui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.getDate;
 import presentation.commonui.MyLabel;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.logdiaryui.LogDiaryPanel;
 import vo.AccountVO;
@@ -27,12 +26,12 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	private MyLabel infoOKButton;
 	private MyLabel cancelButton;
 
-	private JLabel function;
-	private JLabel account_name;
-	private JLabel account_money;
+//	private JLabel function;
+	private MyTextLabel account_name;
+	private MyTextLabel account_money;
 
-	private JTextField account_name_Input;
-	private JTextField account_money_Input;
+	private MyTextField account_name_Input;
+	private MyTextField account_money_Input;
 	
 	private AccountManagementPanel_main accountMainPanel;
 	public LogDiaryPanel logDiaryPanel;
@@ -60,12 +59,11 @@ public class AccountManagementPanel_modify extends OperationPanel{
 		infoOKButton = new MyLabel("确认");
 		cancelButton =new MyLabel("取消");
 
-		function = new JLabel("修改账户");
-		account_name = new JLabel("账户名");
-		account_money = new JLabel("账户金额");
+		account_name = new MyTextLabel("账户名");
+		account_money = new MyTextLabel("账户金额");
 
-		account_name_Input = new JTextField("");
-		account_money_Input = new JTextField(money);
+		account_name_Input = new MyTextField("");
+		account_money_Input = new MyTextField(money);
 		account_money_Input.setEditable(false);
 		
 		setCmpLocation();
@@ -75,7 +73,6 @@ public class AccountManagementPanel_modify extends OperationPanel{
 
 		add(infoOKButton);
 		add(cancelButton);
-		add(function);
 		add(account_name);
 		add(account_money);
 		add(account_name_Input);
@@ -98,12 +95,11 @@ public class AccountManagementPanel_modify extends OperationPanel{
 	}
 
 	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		infoOKButton.setBounds(PANEL_WIDTH * 61 / 72, PANEL_HEIGHT * 25 / 48,
-				PANEL_WIDTH / 16, PANEL_HEIGHT / 16);
-		cancelButton.setBounds(PANEL_WIDTH * 54 / 72, PANEL_HEIGHT * 25 / 48,
-				PANEL_WIDTH / 16, PANEL_HEIGHT / 16);
+		
+		infoOKButton.setBounds(PANEL_WIDTH * 53 / 72, PANEL_HEIGHT * 25 / 48,
+				PANEL_WIDTH / 10, PANEL_HEIGHT / 18);
+		cancelButton.setBounds(PANEL_WIDTH *45/ 72,  PANEL_HEIGHT * 25 / 48, 
+				PANEL_WIDTH / 10, PANEL_HEIGHT / 18);
 		account_name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
 				PANEL_WIDTH * 7 / 24, PANEL_HEIGHT / 16);
 		account_money.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
