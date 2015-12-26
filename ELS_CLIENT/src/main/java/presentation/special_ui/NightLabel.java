@@ -23,7 +23,5 @@ public class NightLabel extends MyLabel {
 
 		setImages(normal, hover, press);
 
-		addMoveListener();
-
 	}
 }

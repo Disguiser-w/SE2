@@ -27,8 +27,6 @@ public class LogOutLabel extends MyLabel {
 
 		setImages(normal, hover, press);
 
-		addMoveListener();
-
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);

@@ -1,10 +1,11 @@
-package presentation.commonui;
+package presentation.special_ui;
 
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import common.ImageGetter;
+import presentation.commonui.MyLabel;
 
 public class ExitLabel extends MyLabel {
 	public ExitLabel() {
@@ -19,7 +20,6 @@ public class ExitLabel extends MyLabel {
 
 		setImages(normal, hover, press);
 		
-		addMoveListener();
 		
 		addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){

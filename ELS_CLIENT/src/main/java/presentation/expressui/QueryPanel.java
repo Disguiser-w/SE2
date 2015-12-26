@@ -88,7 +88,7 @@ public class QueryPanel extends OperationPanel {
 		clearLabel.setBounds((int) (width * 1.593724420190996 / 25), (int) (height * 0.967741935483871 / 20),
 				(int) (width * 1.5688949522510232 / 25), (int) (height * 0.967741935483871 / 20));
 		timeField.setBounds((int) (width * 15.82537517053206 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 4.843110504774898 / 25), (int) (height * 0.967741935483871 / 20));
+				(int) (width * 4.843110504774898 / 25), 30);
 		timeSetLabel.setBounds((int) (width * 22.504911323328785 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 0.9890859481582538 / 25), (int) (height * 0.967741935483871 / 20));
 

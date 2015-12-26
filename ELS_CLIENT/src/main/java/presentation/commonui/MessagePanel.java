@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import common.ImageGetter;
 import presentation.special_ui.DayLabel;
+import presentation.special_ui.ExitLabel;
 import presentation.special_ui.LogOutLabel;
 import presentation.special_ui.NightLabel;
 
@@ -40,7 +41,6 @@ class MessagePanel extends JPanel {
 	public MessagePanel(JFrame f) {
 		this.frame = f;
 
-	
 		logoutLabel = new LogOutLabel(f);
 		exitLabel = new ExitLabel();
 		timeLabel = new JLabel();
@@ -48,7 +48,6 @@ class MessagePanel extends JPanel {
 		oldY = 0;
 		isMoving = false;
 		background = ImageGetter.getImage("background2.png").getImage();
-
 
 		add(logoutLabel);
 		add(exitLabel);
@@ -58,7 +57,7 @@ class MessagePanel extends JPanel {
 		timeLabel.setForeground(Color.WHITE);
 		timeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
 
-//		 helper = new LocationHelper(this);
+		// helper = new LocationHelper(this);
 		setLayout(null);
 		(new Thread(new Runnable() {
 			public void run() {
@@ -101,7 +100,6 @@ class MessagePanel extends JPanel {
 
 		});
 
-		
 	}
 
 	public void refreshTime() {
@@ -115,10 +113,8 @@ class MessagePanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-		logoutLabel.setBounds((int) (width * 20.83901773533424 / 25), (int) (height * 5.121951219512195 / 20),
-				(int) (width * 1.398362892223738 / 25), (int) (height * 9.512195121951219 / 20));
-		exitLabel.setBounds((int) (width * 22.78308321964529 / 25), (int) (height * 5.121951219512195 / 20),
-				(int) (width * 1.398362892223738 / 25), (int) (height * 9.512195121951219 / 20));
+		logoutLabel.setBounds((int) (width * 20.83901773533424 / 25), (int) (height * 5.121951219512195 / 20), 30, 30);
+		exitLabel.setBounds((int) (width * 22.78308321964529 / 25), (int) (height * 5.121951219512195 / 20), 30, 30);
 		timeLabel.setBounds((int) (width * 1.5688949522510232 / 25), (int) (height * 5.121951219512195 / 20),
 				(int) (width * 8.526603001364256 / 25), (int) (height * 9.75609756097561 / 20));
 	}
@@ -129,7 +125,7 @@ class MessagePanel extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// 圆角
 		if (UserFrame.type == UserFrame.TYPE_0)
-//			g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
+			// g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);

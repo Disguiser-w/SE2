@@ -20,7 +20,6 @@ public class DayLabel extends MyLabel{
 
 		setImages(normal, hover, press);
 		
-		addMoveListener();
 
 	}
 }
