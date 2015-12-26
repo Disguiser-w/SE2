@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import common.FileExporter;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
@@ -32,7 +32,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 	private MyLabel paymentReceiptButton_new;
 	
 
-	private JLabel function;
+//	private JLabel function;
 	private MyLabel collectionReceiptInfo;
 	private MyLabel paymentReceiptInfo;
 	
@@ -75,7 +75,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		printButton = new MyLabel("导出");
 		collectionReceiptButton_new = new MyLabel("新建入款单");
 		paymentReceiptButton_new = new MyLabel("新建付款单");
-		function = new JLabel("新建表单");
+//		function = new JLabel("新建表单");
 		collectionReceiptInfo = new MyLabel("入款单");
 		paymentReceiptInfo = new MyLabel("付款单");
 		
@@ -91,7 +91,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		add(paymentReceiptButton_new);
 	
 
-		add(function);
+//		add(function);
 		add(collectionReceiptInfo);
 		add(paymentReceiptInfo);
 		setCollectionBaseInfo();
@@ -106,13 +106,13 @@ public class ReceiptPanel_new extends  OperationPanel {
 	
 
 	public void setCmpLocation(MyTable table){
-		printButton.setBounds((int)(PANEL_WIDTH * 22.034438775510203/25),(int)(PANEL_HEIGHT * 0.9784735812133072/20),(int)(PANEL_WIDTH *  2.8364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
-		collectionReceiptButton_new.setBounds((int)(PANEL_WIDTH * 8.258928571428571/25),(int)(PANEL_HEIGHT * 1.0567514677103718/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
-		paymentReceiptButton_new.setBounds((int)(PANEL_WIDTH * 12.746173469387756/25),(int)(PANEL_HEIGHT * 1.0176125244618395/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
-		function.setBounds((int)(PANEL_WIDTH * 1.2755102040816326/25),(int)(PANEL_HEIGHT * 0.7045009784735812/20),(int)(PANEL_WIDTH *  5.133928571428571 /25),(int)(PANEL_HEIGHT *  2.0743639921722115/20));
-		collectionReceiptInfo.setBounds((int)(PANEL_WIDTH * 1.371173469387755/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.858418367346939 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
-		paymentReceiptInfo.setBounds((int)(PANEL_WIDTH * 6.165816326530612/25),(int)(PANEL_HEIGHT * 3.031311154598826/22),(int)(PANEL_WIDTH *  3.985969387755102 /25),(int)(PANEL_HEIGHT *  1.2524461839530332/20));
-		 table.setLocationAndSize((int)(PANEL_WIDTH * 1.071173469387755/25),(int)(PANEL_HEIGHT * 4.083757338551859/20),(int)(PANEL_WIDTH *  23.651785714285715 /25),(int)(PANEL_HEIGHT *  19.819960861056751/22));
+		printButton.setBounds((int)(PANEL_WIDTH * 21.01019387755102/25),(int)(PANEL_HEIGHT *  0.93052837573385516/20),(int)(PANEL_WIDTH * 2.7683673469387754 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
+		collectionReceiptButton_new.setBounds((int)(PANEL_WIDTH * 12.258928571428571/25),(int)(PANEL_HEIGHT *  0.93052837573385516/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
+		paymentReceiptButton_new.setBounds((int)(PANEL_WIDTH * 15.746173469387756/25),(int)(PANEL_HEIGHT *  0.93052837573385516/20),(int)(PANEL_WIDTH *  3.1364795918367347 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
+//		function.setBounds((int)(PANEL_WIDTH * 1.2755102040816326/25),(int)(PANEL_HEIGHT * 0.7045009784735812/20),(int)(PANEL_WIDTH *  5.133928571428571 /25),(int)(PANEL_HEIGHT *  2.0743639921722115/20));
+		collectionReceiptInfo.setBounds((int)(PANEL_WIDTH * 1.371173469387755/25),(int)(PANEL_HEIGHT * 0.93052837573385516/20),(int)(PANEL_WIDTH * 2.7683673469387754 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
+		paymentReceiptInfo.setBounds((int)(PANEL_WIDTH * 4.865816326530612/25),(int)(PANEL_HEIGHT *  0.93052837573385516/20),(int)(PANEL_WIDTH *  2.7683673469387754 /25),(int)(PANEL_HEIGHT *  1.4090019569471623/20));
+		 table.setLocationAndSize((int)(PANEL_WIDTH * 1.071173469387755/25),(int)(PANEL_HEIGHT * 2.683757338551859/20),(int)(PANEL_WIDTH *  23.651785714285715 /25),(int)(PANEL_HEIGHT *  19.819960861056751/22));
 	}
 	
 	public void setBounds(int x, int y, int width, int height,MyTable table) {
@@ -306,9 +306,13 @@ public class ReceiptPanel_new extends  OperationPanel {
 			String[] head = new String[]{"收款单编号","收款日期","收款金额","收款人","账户","单据状态"};
 			try {
 				FileExporter.exportExcel("collection.xls", head, collectionExcel);
+				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
+						JOptionPane.CLOSED_OPTION);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
+						JOptionPane.WARNING_MESSAGE);
 				System.out.println("导出excel失败了");
 			}
 		}
@@ -342,9 +346,13 @@ public class ReceiptPanel_new extends  OperationPanel {
 			String[] head = new String[]{"付款单编号","付款日期","付款金额","付款人","账户","单据状态"};
 			try {
 				FileExporter.exportExcel("payment.xls", head, paymentExcel);
+				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
+						JOptionPane.CLOSED_OPTION);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
+						JOptionPane.WARNING_MESSAGE);
 				System.out.println("导出excel失败了");
 			}
 			

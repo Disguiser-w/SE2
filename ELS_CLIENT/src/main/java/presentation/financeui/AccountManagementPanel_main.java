@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.AccountBLController;
@@ -36,7 +35,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 	private MyLabel refreshLabel;
 	
 	private MySearchField searchTextField;
-	private JLabel function;
+//	private JLabel function;
 	
 	private MyTable accountTable;
 
@@ -59,7 +58,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		refreshLabel=new MyLabel("刷新");
 
 		
-		function = new JLabel("账户管理");
+//		function = new JLabel("账户管理");
 
 		searchTextField = new MySearchField();
 		
@@ -70,7 +69,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		add(modifyLabel);
 		add(refreshLabel);
 		add(searchTextField);
-		add(function);
+//		add(function);
 		accountVOs = controller.showAll();
 		
 		addListener();
@@ -115,14 +114,13 @@ public class AccountManagementPanel_main extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		addLabel.setBounds(70, 70, 30, 30);
-		deleteLabel.setBounds(185, 70, 30, 30);
-		modifyLabel.setBounds(300,70, 30, 30);
-		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
-		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *2.4442270058708413/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
-		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  5.548469387755102 /25),(int)(height *  1.643835616438356/20));
+		addLabel.setBounds(70, 30, 30, 30);
+		deleteLabel.setBounds(185, 30, 30, 30);
+		modifyLabel.setBounds(300,30, 30, 30);
+		refreshLabel.setBounds((int)(width * 21.557653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
+		searchTextField.setBounds((int)(width * 14.85969387755102/25),(int)(height *0.9001956947162426/20),(int)(width *   4.232142857142857 /25),(int)(height *  1.08986301369863/20));
 
-		accountTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 3.605479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  14.921154598825832/20));
+		accountTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));
 	}
 	
 	 /**

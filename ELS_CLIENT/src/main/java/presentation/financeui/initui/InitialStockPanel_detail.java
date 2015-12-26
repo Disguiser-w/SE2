@@ -4,8 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
-
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -35,7 +33,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 	
 	private MyLabel cancelLabel;
 
-	private JLabel function;
+//	private JLabel function;
 	private MyLabel humanInfo;
 	private MyLabel organizationInfo;
 	private MyLabel vehicleInfo;
@@ -80,7 +78,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 		this.financeFrame=parent;
 		this.time=time;
 		cancelLabel = new MyLabel("返回");
-		function = new JLabel("期初建账");
+//		function = new JLabel("期初建账");
 		humanInfo = new MyLabel("人员信息");
 		organizationInfo = new MyLabel("机构信息");
 		vehicleInfo = new MyLabel("车辆信息");
@@ -90,7 +88,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 		addListener();
 		setLayout(null);
 		add(cancelLabel);
-		add(function);
+//		add(function);
 		add(humanInfo);
 		add(organizationInfo);
 		add(vehicleInfo);
@@ -251,8 +249,8 @@ public class InitialStockPanel_detail extends OperationPanel{
 	
 	
 	public void setCmpLocation(MyTable table){
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+//		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
+//				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 5 / 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 		organizationInfo.setBounds(PANEL_WIDTH * 12/60, PANEL_HEIGHT *5 / 32,

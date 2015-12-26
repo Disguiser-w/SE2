@@ -43,7 +43,7 @@ public class InitialStockPanel_new extends OperationPanel{
 
 	
 
-	private MyLabel function;
+//	private MyLabel function;
 	private MyLabel humanInfo;
 	private MyLabel organizationInfo;
 	private MyLabel vehicleInfo;
@@ -108,7 +108,7 @@ public class InitialStockPanel_new extends OperationPanel{
 		completeLabel  = new MyLabel("建账完成");
 		InfoOKButton = new MyLabel("确认添加");
 		cancelButton = new MyLabel("返回");
-		function = new MyLabel("期初建账");
+//		function = new MyLabel("期初建账");
 		humanInfo = new MyLabel("人员信息");
 		organizationInfo = new MyLabel("机构信息");
 		vehicleInfo = new MyLabel("车辆信息");
@@ -122,7 +122,7 @@ public class InitialStockPanel_new extends OperationPanel{
 		add(completeLabel);
 		add(InfoOKButton);
 		add(cancelButton);
-		add(function);
+//		add(function);
 		add(humanInfo);
 		add(organizationInfo);
 		add(vehicleInfo);
@@ -231,8 +231,8 @@ public class InitialStockPanel_new extends OperationPanel{
 	 
 		public void setCmpLocation(MyTable table){
 			
-			function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-					PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+//			function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
+//					PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 			humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 5 / 32,
 					PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 			organizationInfo.setBounds(PANEL_WIDTH * 12 / 60, PANEL_HEIGHT *5 / 32,

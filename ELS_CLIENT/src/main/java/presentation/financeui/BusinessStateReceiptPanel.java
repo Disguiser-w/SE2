@@ -31,7 +31,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	private MyLabel printLabel;
 //	private JLabel sendLabel;
 
-	private JLabel function;
+//	private JLabel function;
 	private JLabel dateRange;
 
 	private MyTextField startDate_Input;
@@ -55,7 +55,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		printLabel = new MyLabel("打印");
 //		sendLabel = new JLabel("发送");
 
-		function = new JLabel("经营情况表");
+//		function = new JLabel("经营情况表");
 		dateRange = new JLabel("日期范围");
 
 		startDate_Input = new MyTextField();
@@ -98,7 +98,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		add(endDateLabel);
 		add(dateOKLabel);
 		add(printLabel);
-		add(function);
+//		add(function);
 		add(dateRange);
 		add(startDate_Input);
 		add(endDate_Input);
@@ -118,16 +118,16 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 
 		
-        startDateLabel.setBounds((int)(width * 8.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
-        endDateLabel.setBounds((int)(width * 14.572704081632653/25),(int)(height * 2.5048923679060664/20),(int)(width *  1.052295918367347 /25),(int)(height *  1.2524461839530332/20));
-        dateOKLabel.setBounds((int)(width * 21.0109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
-		printLabel.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.43052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
+        startDateLabel.setBounds((int)(width * 6.896683673469388/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.6247448979591837 /25),(int)(height *   1.1350293542074363/20));
+        endDateLabel.setBounds((int)(width * 13.472704081632653/25),(int)(height *  0.93052837573385516/20),(int)(width *   2.6247448979591837 /25),(int)(height *   1.1350293542074363/20));
+        dateOKLabel.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
+		printLabel.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
 //		sendLabel.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
-		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
-		dateRange.setBounds((int)(width * 1.4987244897959184/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.2524461839530332/20));
-		startDate_Input.setBounds((int)(width * 5.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  3.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
-		endDate_Input.setBounds((int)(width * 10.809948979591837/25),(int)(height * 2.5048923679060664/20),(int)(width *  3.2206632653061225 /25),(int)(height *  1.2915851272015655/20));
-		BSLTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.007397959183675 /25),(int)(height *  13.424657534246576/20));		
+//		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
+		dateRange.setBounds((int)(width * 1.2987244897959184/25),(int)(height * 0.930528375733855169/20),(int)(width *  3.1568877551020407 /25),(int)(height *   1.1350293542074363/20));
+		startDate_Input.setBounds((int)(width * 3.2063775510204085/25),(int)(height * 0.93052837573385516/20),(int)(width *  3.5568877551020407 /25),(int)(height *   1.1350293542074363/20));
+		endDate_Input.setBounds((int)(width * 9.809948979591837/25),(int)(height * 0.93052837573385516/20),(int)(width *  3.5566632653061225 /25),(int)(height *   1.1350293542074363/20));
+		BSLTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));		
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"编号","日期","金额","操作人"};
@@ -231,6 +231,8 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
+					JOptionPane.WARNING_MESSAGE);
 			System.out.println("导出excel失败了");
 		}
 	

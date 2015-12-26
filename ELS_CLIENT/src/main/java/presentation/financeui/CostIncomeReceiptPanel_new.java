@@ -1,15 +1,10 @@
 package presentation.financeui;
 
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JLabel;
-
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.getDate;
-import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 public class CostIncomeReceiptPanel_new extends OperationPanel {
@@ -21,15 +16,15 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 	private int PANEL_HEIGHT = 480;
 
 
-	private JLabel function;
-	private JLabel costIncomeReceipt_ID;
-	private JLabel startDate;
-	private JLabel endDate;
-	private JLabel totalIncome;
-	private JLabel totalCost;
-	private JLabel totalProfit;
+//	private JLabel function;
+	private MyTextLabel costIncomeReceipt_ID;
+	private MyTextLabel startDate;
+	private MyTextLabel endDate;
+	private MyTextLabel totalIncome;
+	private MyTextLabel totalCost;
+	private MyTextLabel totalProfit;
 	
-	private MyLabel refreshLabel;
+//	private MyLabel refreshLabel;
 
 	private MyTextField costIncomeReceipt_ID_Input;
 	private MyTextField startDate_Input;
@@ -52,15 +47,15 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		endTime = getDate.getdate().substring(0, 4) + "-" + getDate.getdate().substring(4, 6) + "-"
 				+ getDate.getdate().substring(6);
 		ID = controller.getCostIncomeListID();
-		function = new JLabel("成本收益表");
-		costIncomeReceipt_ID = new JLabel("成本收益表编号");
-		startDate = new JLabel("开始时间");
-		endDate = new JLabel("结束时间");
-		totalCost = new JLabel("总收入");
-		totalIncome = new JLabel("总支出");
-		totalProfit = new JLabel("总利润");
+//		function = new JLabel("成本收益表");
+		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
+		startDate = new MyTextLabel("开始时间");
+		endDate = new MyTextLabel("结束时间");
+		totalCost = new MyTextLabel("总收入");
+		totalIncome = new MyTextLabel("总支出");
+		totalProfit = new MyTextLabel("总利润");
 		
-		refreshLabel = new MyLabel("刷新");
+//		refreshLabel = new MyLabel("刷新");
 		
 		
 
@@ -84,7 +79,7 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 
 		setLayout(null);
 
-		add(function);
+//		add(function);
 		add(costIncomeReceipt_ID);
 		add(startDate);
 		add(endDate);
@@ -97,20 +92,20 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		add(totalCost_Input);
 		add(totalIncome_Input);
 		add(totalProfit_Input);
-		add(refreshLabel);
+//		add(refreshLabel);
 
-		
-             refreshLabel.addMouseListener(new MouseAdapter() {
-			
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				refresh();
-			}
-		});
+//		
+//             refreshLabel.addMouseListener(new MouseAdapter() {
+//			
+//			public void mouseClicked(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				refresh();
+//			}
+//		});
 	}
 
 	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+//		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		costIncomeReceipt_ID.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT *5/ 32, PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
 		startDate.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT * 8/ 32, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		endDate.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT * 11 / 32, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
@@ -123,7 +118,7 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 14 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT  * 17 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 20 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		refreshLabel.setBounds(PANEL_WIDTH *20/ 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+//		refreshLabel.setBounds(PANEL_WIDTH *20/ 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {

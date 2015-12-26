@@ -42,9 +42,9 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private MyLabel totalButton;
 	private MyLabel cancelButton;
 
-	private JLabel function;
-	private JLabel date;
-	private JLabel businessHall;
+//	private JLabel function;
+	private MyTextLabel date;
+	private MyTextLabel businessHall;
 	private MyTextLabel infoLine;
 
 	private MyTextField date_Input;
@@ -84,9 +84,9 @@ public class CollectionReceiptPanel extends OperationPanel {
 		totalButton = new MyLabel("合计");
 		cancelButton = new MyLabel("返回");
 
-		function = new JLabel("新建入款单");
-		date = new JLabel("日期");
-		businessHall = new JLabel("营业厅");
+//		function = new JLabel("新建入款单");
+		date = new MyTextLabel("日期");
+		businessHall = new MyTextLabel("营业厅");
 		infoLine = new MyTextLabel();
 		infoLine.setText("时间："+getDate.getdate().substring(0,4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate()
 				.substring(6)+ " 合计金额：0");
@@ -113,7 +113,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		add(cancelButton);
 	
 		
-		add(function);
+//		add(function);
 		add(date);
 		add(businessHall);
 		add(infoLine);
@@ -154,17 +154,17 @@ public class CollectionReceiptPanel extends OperationPanel {
 	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-	   dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height *  2.522504892367906/20),(int)(width *  1.0204081632653061 /25),(int)(height *  0.9001956947162426/20));
-		collectionOKButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 2.522504892367906/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
-		totalButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
-		cancelButton.setBounds((int)(width * 20.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
-		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
-		date.setBounds((int)(width * 2.391581632653061/25),(int)(height * 2.522504892367906/20),(int)(width *  1.594387755102041 /25),(int)(height *  0.9001956947162426/20));
-		businessHall.setBounds((int)(width * 9.056122448979592/25),(int)(height * 2.522504892367906/20),(int)(width *  1.6581632653061225 /25),(int)(height *  0.8610567514677103/20));
+	   dateChooseLabel.setBounds((int)(width * 7.174744897959184/25),(int)(height * 0.93052837573385516/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		collectionOKButton.setBounds((int)(width *  21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		totalButton.setBounds((int)(width *  21.01019387755102/25),(int)(height * 18.434442270058707/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		cancelButton.setBounds((int)(width * 20.139795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+//		function.setBounds((int)(width * 0.6696428571428571/25),(int)(height * 0.821917808219178/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
+		date.setBounds((int)(width * 2.391581632653061/25),(int)(height * 0.93052837573385516/20),(int)(width *  1.594387755102041 /25),(int)(height *  0.9001956947162426/20));
+		businessHall.setBounds((int)(width * 10.356122448979592/25),(int)(height * 0.93052837573385516/20),(int)(width *  1.6581632653061225 /25),(int)(height *  0.8610567514677103/20));
 		infoLine.setBounds((int)(width * 2.5191326530612246/25),(int)(height * 18.12133072407045/20),(int)(width *  13.424744897959183 /25),(int)(height *  1.2915851272015655/20));
-		date_Input.setBounds((int)(width * 3.877295918367347/25),(int)(height * 2.522504892367906/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
-		businessHallID_Input.setBounds((int)(width * 11.033163265306122/25),(int)(height * 2.522504892367906/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
-		collectionTable.setLocationAndSize((int)(width * 1.1510204081632653/25),(int)(height * 4.04481409001957/20),(int)(width *  22.92091836734694 /25),(int)(height *  13.95890410958904/20));
+		date_Input.setBounds((int)(width * 3.877295918367347/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
+		businessHallID_Input.setBounds((int)(width * 12.333163265306122/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.874234693877551 /25),(int)(height *  1.0/20));
+		collectionTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  22.92091836734694 /25),(int)(height *  15.921154598825832/20));
 	}
 	
 

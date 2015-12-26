@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
@@ -30,7 +29,7 @@ public class InitialStockPanel_main extends OperationPanel {
 	private MyLabel newButton;
 	private MyLabel detailButton;
 	
-	private JLabel function;
+//	private JLabel function;
 
 	private MyTable initTable;
 	
@@ -63,13 +62,13 @@ public class InitialStockPanel_main extends OperationPanel {
 		newButton = new MyLabel("新建");
 		detailButton =new MyLabel("详情");
 
-		function = new JLabel("期初建账");
+//		function = new JLabel("期初建账");
 
 		setLayout(null);
 		
 		add(newButton);
 		add(detailButton);
-		add(function);
+//		add(function);
 		
 		initInfoVOs = controller.getAllInitInfo();
 		addListener();
@@ -80,10 +79,10 @@ public class InitialStockPanel_main extends OperationPanel {
 	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		detailButton.setBounds((int)(width * 21.269132653061224/25),(int)(height * 0.7436399217221135/20),(int)(width *  2.391581632653061 /25),(int)(height *  1.643835616438356/20));
-		newButton.setBounds((int)(width * 21.269132653061224/30),(int)(height * 0.7436399217221135/20),(int)(width *  2.391581632653061 /25),(int)(height *  1.643835616438356/20));
-		function.setBounds((int)(width * 0.44642857142857145/25),(int)(height * 0.46966731898238745/20),(int)(width *  6.026785714285714 /25),(int)(height *  2.0743639921722115/20));
-		initTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.705479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.421154598825832/20));
+		detailButton.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
+		newButton.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
+//		function.setBounds((int)(width * 0.44642857142857145/25),(int)(height * 0.46966731898238745/20),(int)(width *  6.026785714285714 /25),(int)(height *  2.0743639921722115/20));
+		initTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));
 
 	}
 	

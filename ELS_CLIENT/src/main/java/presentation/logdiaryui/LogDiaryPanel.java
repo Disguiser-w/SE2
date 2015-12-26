@@ -27,9 +27,6 @@ public class LogDiaryPanel extends OperationPanel{
 	private MyLabel dateOKLabel;
 	private MyLabel refreshLabel;
 
-
-	private JLabel function;
-
 	private MyTextField startDate_Input;
 
 	private MyTable logDiaryTable;
@@ -47,7 +44,6 @@ public class LogDiaryPanel extends OperationPanel{
 		startDateLabel = new JLabel("日期");
 		dateOKLabel = new MyLabel("确认");
 		refreshLabel=new MyLabel("刷新");
-		function = new JLabel("系统日志");
 
 		startDate_Input = new MyTextField();
 		
@@ -79,7 +75,7 @@ public class LogDiaryPanel extends OperationPanel{
 
 		add(startDateLabel);
 		add(dateOKLabel);
-		add(function);
+//		add(function);
 		add(refreshLabel);
 		add(startDate_Input);
 		
@@ -93,12 +89,12 @@ public class LogDiaryPanel extends OperationPanel{
 
 		super.setBounds(x, y, width, height);
 
-		refreshLabel.setBounds((int)(width * 22.257653061224488/25),(int)(height * 0.9001956947162426/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.0890019569471623/20));
-        startDateLabel.setBounds((int)(width * 7.896683673469388/25),(int)(height * 2.5048923679060664/20),(int)(width *  0.9247448979591837 /25),(int)(height *  1.1741682974559686/20));
-        dateOKLabel.setBounds((int)(width * 10.6109693877551/25),(int)(height * 2.5048923679060664/20),(int)(width *  2.1683673469387754 /25),(int)(height *  1.1350293542074363/20));
-		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
-		startDate_Input.setBounds((int)(width * 2.0063775510204085/25),(int)(height * 2.544031311154599/20),(int)(width *  5.1568877551020407 /25),(int)(height *  1.1741682974559686/20));
-		logDiaryTable.setLocationAndSize((int)(width * 1.0987244897959184/25),(int)(height * 4.048727984344423/20),(int)(width *  23.0140306122449 /25),(int)(height *  14.424657534246576/20));		
+		refreshLabel.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+        startDateLabel.setBounds((int)(width * 6.896683673469388/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.6247448979591837 /25),(int)(height *   1.1350293542074363/20));
+        dateOKLabel.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
+//		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
+		startDate_Input.setBounds((int)(width * 2.2063775510204085/25),(int)(height * 0.93052837573385516/20),(int)(width *  4.0568877551020407 /25),(int)(height *   1.1350293542074363/20));
+		logDiaryTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));		
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"日期","操作人","操作"};

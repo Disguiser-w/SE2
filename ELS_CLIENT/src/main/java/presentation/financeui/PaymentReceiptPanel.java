@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.getDate;
@@ -18,6 +16,8 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.logdiaryui.LogDiaryPanel;
 import type.ReceiptState;
@@ -39,11 +39,11 @@ public class PaymentReceiptPanel extends OperationPanel {
 	private MyLabel cancelButton;
 	private MyLabel totalButton;
 
-	private JLabel function;
-	private JLabel clauseLabel;
-	private JLabel date;
+//	private JLabel function;
+	private MyTextLabel clauseLabel;
+	private MyTextLabel date;
 
-	private JTextField date_Input;
+	private MyTextField date_Input;
 	
 	private MyTable paymentTable;
 	
@@ -78,11 +78,11 @@ public class PaymentReceiptPanel extends OperationPanel {
 		cancelButton =new MyLabel("取消");
 	
 
-		function = new JLabel("新建付款单");
-		clauseLabel = new JLabel("条目");
-		date = new JLabel("日期");
+//		function = new JLabel("新建付款单");
+		clauseLabel = new MyTextLabel("条目");
+		date = new MyTextLabel("日期");
 
-		date_Input = new JTextField("2015/11", 8);
+		date_Input = new MyTextField();
 
 		clause_choose = new MyComboBox<String>();
 		clause_choose.addItem("运费");
@@ -100,7 +100,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		add(dateOKButton);
 		add(totalButton);
 		add(cancelButton);
-		add(function);
+//		add(function);
 		add(clauseLabel);
 		add(date);
 		add(date_Input);
@@ -135,16 +135,16 @@ public class PaymentReceiptPanel extends OperationPanel {
 	
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		dateChooseLabel.setBounds((int)(width * 13.174744897959184/25),(int)(height * 2.7268101761252447/20),(int)(width *  1.0204081632653061 /25),(int)(height *   1.1741682974559686/20));
-		dateOKButton.setBounds((int)(width * 18.752551020408163/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.1364795918367347 /25),(int)(height *  1.1741682974559686/20));
-		function.setBounds((int)(width * 1.913265306122449/25),(int)(height * 0.6653620352250489/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
-		clauseLabel.setBounds((int)(width * 2.74234693877551/25),(int)(height *  2.7268101761252447/20),(int)(width *  1.594387755102041 /25),(int)(height *   1.1741682974559686/20));
-		date.setBounds((int)(width * 7.844387755102041/25),(int)(height * 2.7268101761252447/20),(int)(width *  1.4349489795918366 /25),(int)(height *   1.1741682974559686/20));
-		date_Input.setBounds((int)(width * 9.948979591836734/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.2002551020408165 /25),(int)(height *  1.1741682974559686/20));
-		clause_choose.setBounds((int)(width * 4.878826530612245/25),(int)(height * 2.7268101761252447/20),(int)(width *  2.072704081632653 /25),(int)(height * 1.1741682974559686/20));
-		paymentTable.setLocationAndSize((int)(width * 1.1510204081632653/25),(int)(height * 4.04481409001957/20),(int)(width *  22.92091836734694 /25),(int)(height *  13.95890410958904/20));
-		totalButton.setBounds((int)(width * 21.739795918367346/25),(int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
-		cancelButton.setBounds((int)(width * 20.239795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *  2.072704081632653 /25),(int)(height *  0.9784735812133072/20));
+		dateChooseLabel.setBounds((int)(width * 13.174744897959184/25),(int)(height * 0.93052837573385516/20),(int)(width *    2.7683673469387754 /25),(int)(height *   1.1741682974559686/20));
+		dateOKButton.setBounds((int)(width *  21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+//		function.setBounds((int)(width * 1.913265306122449/25),(int)(height * 0.6653620352250489/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.643835616438356/20));
+		clauseLabel.setBounds((int)(width * 2.74234693877551/25),(int)(height * 0.93052837573385516/20),(int)(width *  1.594387755102041 /25),(int)(height *   1.1741682974559686/20));
+		date.setBounds((int)(width * 7.844387755102041/25),(int)(height * 0.93052837573385516/20),(int)(width *  1.4349489795918366 /25),(int)(height *   1.1741682974559686/20));
+		date_Input.setBounds((int)(width * 9.948979591836734/25),(int)(height * 0.93052837573385516/20),(int)(width *   2.874234693877551 /25),(int)(height *  1.1741682974559686/20));
+		clause_choose.setBounds((int)(width * 4.878826530612245/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.072704081632653 /25),(int)(height * 1.1741682974559686/20));
+		paymentTable.setLocationAndSize((int)(width *1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  22.92091836734694 /25),(int)(height *  15.921154598825832/20));
+		totalButton.setBounds((int)(width *  21.01019387755102/25),(int)(height * 18.434442270058707/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
+		cancelButton.setBounds((int)(width * 20.139795918367346/28), (int)(height * 18.434442270058707/20),(int)(width *   2.7683673469387754 /25),(int)(height *  1.1350293542074363/20));
 		
 	}
 	
