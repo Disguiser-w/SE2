@@ -15,4 +15,5 @@ public interface OrganizationDataService extends Remote{
 	public ArrayList<OrganizationPO> findOrganizationByKeyword(String keyword) throws RemoteException;
 	public ArrayList<OrganizationPO> showAllOrganizations() throws RemoteException;
 	public ArrayList<String> getBelongingPlaces (String city) throws RemoteException;
+	
 }

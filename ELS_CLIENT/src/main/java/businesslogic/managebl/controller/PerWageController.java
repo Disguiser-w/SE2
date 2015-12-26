@@ -5,33 +5,34 @@ import java.util.ArrayList;
 import type.ProfessionType;
 import vo.PerWageVO;
 import businesslogic.managebl.PerWageBL;
+import businesslogicservice.manageblservice.PerWageBLService;
 
-public class PerWageController {
+public class PerWageController implements PerWageBLService{
 	
-	private PerWageBL perWage;
+	private PerWageBL perWageBL;
 	
 	public PerWageController(){
-		perWage = new PerWageBL();
+		perWageBL = new PerWageBL();
 	}
 	
 	public int addPerWage(PerWageVO perWagevo){
-		return perWage.addPerWage(perWagevo);
+		return perWageBL.addPerWage(perWagevo);
 	}
 	
 	public int deletePerWage(PerWageVO perWagevo){
-		return perWage.deletePerWage(perWagevo);
+		return perWageBL.deletePerWage(perWagevo);
 	}
 	
 	public int modifyPerWage(PerWageVO perWagevo){
-		return perWage.modifyPerWage(perWagevo);
+		return perWageBL.modifyPerWage(perWagevo);
 	}
 	
 	public double findPerWage(ProfessionType profession){
-		return perWage.findPerWage(profession);
+		return perWageBL.findPerWage(profession);
 	}
 	
 	public ArrayList<PerWageVO> showAllPerWages(){
-		return perWage.showAllPerWages();
+		return perWageBL.showAllPerWages();
 	}
 	
 }

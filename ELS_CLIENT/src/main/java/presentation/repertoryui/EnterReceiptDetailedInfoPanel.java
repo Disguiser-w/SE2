@@ -9,9 +9,10 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+
 import type.ReceiptState;
 import vo.EnterRepertoryReceiptVO;
-import businesslogic.repertorybl.EnterRepertoryReceiptBL;
+import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
 
 public class EnterReceiptDetailedInfoPanel extends OperationPanel{
 
@@ -19,7 +20,7 @@ public class EnterReceiptDetailedInfoPanel extends OperationPanel{
 	
 	private RepertoryFrame repertoryFrame;
 
-	private EnterRepertoryReceiptBL errBL;
+	private EnterRepertoryReceiptController enterRepertoryReceiptControl;
 	
 	private String receiptID;
 	
@@ -41,15 +42,15 @@ public class EnterReceiptDetailedInfoPanel extends OperationPanel{
 	
 	private EnterRepertoryReceiptVO errvo;
 	
-	public EnterReceiptDetailedInfoPanel(RepertoryFrame repertoryFrame, String enterReceiptID){
+	public EnterReceiptDetailedInfoPanel(RepertoryFrame repertoryFrame, EnterRepertoryReceiptController enterRepertoryReceiptController, String enterReceiptID){
 		
 		this.repertoryFrame = repertoryFrame;
 		
-		errBL = new EnterRepertoryReceiptBL();
+		enterRepertoryReceiptControl = enterRepertoryReceiptController;
 		
 		this.receiptID = enterReceiptID;
 		
-		errvo = errBL.findEnterReceiptByReceiptID(receiptID);
+		errvo = enterRepertoryReceiptControl.findEnterReceiptByReceiptID(receiptID);
 		
 		categoryLabel = new MyTextLabel("入库单");
 		receiptIDLabel = new MyTextLabel("单据编号");

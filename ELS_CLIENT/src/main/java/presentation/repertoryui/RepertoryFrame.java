@@ -9,10 +9,13 @@ public class RepertoryFrame extends UserFrame{
 
 	public UserVO uservo;
 	
+	public InitializeInformationPanel initializeInformationPanel;
 	public WarehousingMainPanel warehousingMainPanel;
 	public EXwarehousePanel exwarehousePanel;
-	
-	
+	public ViewInventoryPanel viewInventoryPanel;
+	public InventoryVerificationPanel inventoryVertificationPanel;
+	public CreateReceiptPanel createReceiptPanel;
+	public LookReceiptPanel lookReceiptPanel;
 	
 	public RepertoryFrame(UserVO vo) {
 		super(vo.userName, vo.userID);

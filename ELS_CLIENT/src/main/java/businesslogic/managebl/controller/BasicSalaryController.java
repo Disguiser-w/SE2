@@ -5,33 +5,34 @@ import java.util.ArrayList;
 import type.ProfessionType;
 import vo.BasicSalaryVO;
 import businesslogic.managebl.BasicSalaryBL;
+import businesslogicservice.manageblservice.BasicSalaryBLService;
 
-public class BasicSalaryController {
+public class BasicSalaryController implements BasicSalaryBLService{
 	
-	private BasicSalaryBL basicSalary;
+	private BasicSalaryBL basicSalaryBL;
 	
 	public BasicSalaryController(){
-		basicSalary = new BasicSalaryBL();
+		basicSalaryBL = new BasicSalaryBL();
 	}
 	
 	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
-		return basicSalary.addBasicSalary(basicSalaryvo);
+		return basicSalaryBL.addBasicSalary(basicSalaryvo);
 	}
 	
 	public int deleteBasicSalary(BasicSalaryVO basicSalaryvo){
-		return basicSalary.deleteBasicSalary(basicSalaryvo);
+		return basicSalaryBL.deleteBasicSalary(basicSalaryvo);
 	}
 	
 	public int modifyBasicSalary(BasicSalaryVO basicSalaryvo){
-		return basicSalary.modifyBasicSalary(basicSalaryvo);
+		return basicSalaryBL.modifyBasicSalary(basicSalaryvo);
 	}
 	
 	public double findBasicSalary(ProfessionType profession){
-		return basicSalary.findBasicSalary(profession);
+		return basicSalaryBL.findBasicSalary(profession);
 	}
 	
 	public ArrayList<BasicSalaryVO> showAllBasicSalarys(){
-		return basicSalary.showAllBasicSalarys();
+		return basicSalaryBL.showAllBasicSalarys();
 	}
 	
 }

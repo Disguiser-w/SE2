@@ -4,7 +4,11 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import common.ImageGetter;
 import businesslogic.datafactory.DataFactory;
+import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.userbl.controller.UserManageController;
 import po.BasicSalaryPO;
 import po.CityDistancePO;
 import po.CostPO;
@@ -14,7 +18,7 @@ import po.RepertoryPO;
 import po.UserPO;
 import presentation.managerui.BasicDataManagePanel;
 import presentation.managerui.CheckIncomePanel;
-import presentation.managerui.CheckOperatingPanel;
+import presentation.managerui.CheckBusinessPanel;
 import presentation.managerui.CheckReceiptPanel;
 import presentation.managerui.ManageFrame;
 import presentation.managerui.OrganizationManagePanel;
@@ -40,14 +44,15 @@ public class ManageMainController {
 	public static OrganizationDataService organizationData;
 	public static UserDataService userData;
 	
-	public static BasicSalaryController basicSalaryController;
-	public static CityDistanceController cityDistanceController;
-	public static CostController costController;
-	public static PerWageController perWageController;
-	public static OrganizationController organizationController;
-	public static CheckBusinessStatementReceiptController checkBusinessStatementReceiptController;
-	public static CheckCostIncomeReceiptController checkCostIncomeReceiptController;
-	public static ReviewReceiptController reviewReceiptController;
+	private BasicSalaryController basicSalaryController;
+	private CityDistanceController cityDistanceController;
+	private CostController costController;
+	private PerWageController perWageController;
+	private OrganizationManageController organizationManageController;
+	private BusinessStatementReceiptBLController businessStatementReceiptController;
+	private CostIncomeReceiptBLController costIncomeReceiptController;
+	private ReviewReceiptController reviewReceiptController;
+	private UserManageController userManageController;
 	
 	private ManageFrame manageFrame;
 	public ManageMainController(String managerID){
@@ -59,6 +64,8 @@ public class ManageMainController {
 			perWageData = DataFactory.getPerWageData();
 			organizationData = DataFactory.getOrganizationData();
 			userData  = DataFactory.getUserData();
+			
+			manageVO = userPOToVO(userData.findUserByID(managerID));
 		}catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (RemoteException e1) {
@@ -67,35 +74,30 @@ public class ManageMainController {
 			e1.printStackTrace();
 		}
 			
-			//初始化8个controller
-			basicSalaryController = new BasicSalaryController();
-			cityDistanceController = new CityDistanceController();
-			costController = new CostController();
-			perWageController = new PerWageController();
-			organizationController = new OrganizationController();
-			checkBusinessStatementReceiptController = new CheckBusinessStatementReceiptController();
-			checkCostIncomeReceiptController = new CheckCostIncomeReceiptController();
-			reviewReceiptController = new ReviewReceiptController();
+		//初始化8个controller
+		basicSalaryController = new BasicSalaryController();
+		cityDistanceController = new CityDistanceController();
+		costController = new CostController();
+		perWageController = new PerWageController();
+		organizationManageController = new OrganizationManageController();
+		businessStatementReceiptController = new BusinessStatementReceiptBLController();
+		costIncomeReceiptController = new CostIncomeReceiptBLController();
+		reviewReceiptController = new ReviewReceiptController();
+		userManageController = new UserManageController();
 			
-			try{
-				manageVO = userPOToVO(userData.findUserByID(managerID));
-				manageFrame = new ManageFrame(manageVO);
-				manageFrame.addFuncLabel(new StaffManagePanel(manageFrame), "用户管理");
-				manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame), "机构管理");
-				manageFrame.addFuncLabel(new CheckReceiptPanel(), "单据审批");
-				manageFrame.addFuncLabel(new CheckOperatingPanel(), "查看经营情况表");
-				manageFrame.addFuncLabel(new CheckIncomePanel(),"查看成本收益表");
-				manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame),"基础数据设置");
-				
-				manageFrame.showFrame();
-			}catch(RemoteException exception){
-				exception.printStackTrace();
-			}
+		manageFrame = new ManageFrame(manageVO);
+		manageFrame.addFuncLabel(new StaffManagePanel(manageFrame, userManageController, organizationManageController), "用户管理", ImageGetter.getImage("userManager.png").getImage());
+		manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame, organizationManageController), "机构管理", ImageGetter.getImage("organizationManager.png").getImage());
+		//manageFrame.addFuncLabel(new CheckReceiptPanel(reviewReceiptController), "单据审批", ImageGetter.getImage("reviewReceipt.png").getImage());
+		manageFrame.addFuncLabel(new CheckBusinessPanel(businessStatementReceiptController), "查看经营情况表", ImageGetter.getImage("businessStatement.png").getImage());
+		manageFrame.addFuncLabel(new CheckIncomePanel(costIncomeReceiptController), "查看成本收益表", ImageGetter.getImage("costIncome.png").getImage());
+		manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame, perWageController, basicSalaryController, cityDistanceController, costController),"基础数据设置", ImageGetter.getImage("basicDataManager.png").getImage());
+		manageFrame.showFrame();
 		
 	}
 	
 	
-	// vo和po的转化,static
+	//vo和po的转化,static
 	public static UserPO userVOToPO(UserVO uservo){
 		UserPO userpo = new UserPO(uservo.userName,uservo.userID,uservo.password,uservo.profession,
 					uservo.organization,uservo.salaryPlan,uservo.authority,uservo.grades);

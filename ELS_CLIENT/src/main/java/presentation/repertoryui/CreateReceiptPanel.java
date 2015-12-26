@@ -6,12 +6,16 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.repertorybl.GoodsBL;
-import businesslogic.repertorybl.RepertoryBL;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
+import businesslogic.repertorybl.controller.GoodsController;
+import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
+import businesslogic.repertorybl.controller.RepertoryController;
 import vo.GoodsVO;
 import vo.UserVO;
 
@@ -19,10 +23,12 @@ public class CreateReceiptPanel extends OperationPanel{
 
 	private static final long serialVersionUID = 4635802896951041367L;
 	
-	private RepertoryBL repertoryBL;
-	private GoodsBL goodsBL;
+	private RepertoryFrame repertoryFrame;
 	
-	private String repertoryID;
+	private RepertoryController repertoryControl;
+	private GoodsController goodsControl;
+	private EnterRepertoryReceiptController enterRepertoryReceiptControl;
+	private LeaveRepertoryReceiptController leaveRepertoryReceiptControl;
 	
 	private MyTextLabel promptLabel;
 	private MyLabel createEnterReceiptLabel;
@@ -42,15 +48,28 @@ public class CreateReceiptPanel extends OperationPanel{
 	private String[] goodsIDList;
 	private String[] timeList;
 	
-	public CreateReceiptPanel(UserVO userVO){
+	private String nowTime;
+	private String lastTime;
+	
+	private String repertoryID;
+	private String userID;
+	
+	public CreateReceiptPanel(RepertoryFrame repertoryFrame, RepertoryController repertoryController, GoodsController goodsController, EnterRepertoryReceiptController enterRepertoryReceiptController, LeaveRepertoryReceiptController leaveRepertoryReceiptController, UserVO userVO){
 		
-		repertoryBL = new RepertoryBL(userVO.userID);
-		goodsBL = new GoodsBL();
+		this.repertoryFrame = repertoryFrame;
+		
+		repertoryControl = repertoryController;
+		goodsControl = goodsController;
+		enterRepertoryReceiptControl = enterRepertoryReceiptController;
+		leaveRepertoryReceiptControl = leaveRepertoryReceiptController;
 		
 		repertoryID = userVO.organization;
+		userID = userVO.userID;
 		
-		String nowTime = RepertoryBL.getTimeNow();
-		promptLabel = new MyTextLabel("从上次生成出/入库单据的时间到现在: "+nowTime);
+		nowTime = RepertoryBL.getTimeNow();
+		lastTime = repertoryControl.getLastEnterRepertoryTime();
+		
+		promptLabel = new MyTextLabel("上次生成入库单据的时间: "+lastTime+"     当前时间: "+nowTime);
 		createEnterReceiptLabel = new MyLabel("入库货物");
 		createLeaveReceiptLabel = new MyLabel("出库货物");
 		createReceiptLabel = new MyLabel("生成单据");
@@ -62,8 +81,9 @@ public class CreateReceiptPanel extends OperationPanel{
 		add(createLeaveReceiptLabel);
 		add(createReceiptLabel);
 		
+		patternNum = 1;
 		addListener();
-		setBaseInfos(1);
+		setBaseInfos(patternNum);
 		
 	}
 
@@ -85,12 +105,12 @@ public class CreateReceiptPanel extends OperationPanel{
 		createReceiptLabel.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				if(patternNum == 1){	//生成入库单
-					int returnNum = repertoryBL.AddEnterRepertoryReceipt(goodsIDList, timeList);
+					int returnNum = enterRepertoryReceiptControl.addEnterRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 					if(returnNum == 0)
 						successCreateReceipt(1);
 				}
 				else{		//生成出库单
-					int returnNum = repertoryBL.AddLeaveRepertoryReceipt(goodsIDList, timeList);
+					int returnNum = leaveRepertoryReceiptControl.addLeaveRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 					if(returnNum == 0)
 						successCreateReceipt(2);
 				}
@@ -106,8 +126,8 @@ public class CreateReceiptPanel extends OperationPanel{
 		tableWidth = width;
 		tableHeight = height;
 		
-		promptLabel.setBounds((int) (width * 6.370422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
-				(int) (width * 12.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		promptLabel.setBounds((int) (width * 2.370422535211268 / 25), (int) (height * 1.2053571428571428 / 20),
+				(int) (width * 20.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		createEnterReceiptLabel.setBounds((int) (width * 6.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
 				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		createLeaveReceiptLabel.setBounds((int) (width * 13.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
@@ -125,11 +145,9 @@ public class CreateReceiptPanel extends OperationPanel{
 		else
 			head = new String[]{"订单号","离开本仓库时间"};
 		
-		int[] widths = {296, 297};
+		int[] widths = {296, 325};
 		
-		currentTable = new MyTable(head, getInfos(patternNum), widths, true);
-		currentTable.setAllSelected(true);
-		currentTable.setEnabled(false);
+		currentTable = new MyTable(head, getInfos(patternNum), widths, false);
 		changeTable(currentTable);
 	}
 	
@@ -137,7 +155,10 @@ public class CreateReceiptPanel extends OperationPanel{
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		
 		if(patternNum == 1){
-			goods = repertoryBL.getEnterRepertoryGoods();
+			lastTime = repertoryControl.getLastEnterRepertoryTime();
+			promptLabel.setText("上次生成入库单据的时间: "+lastTime+"      当前时间: "+nowTime);
+			
+			goods = repertoryControl.getEnterRepertoryGoods();
 			
 			int size = goods.size();
 			goodsIDList = new String[size];
@@ -146,13 +167,16 @@ public class CreateReceiptPanel extends OperationPanel{
 			int i = 0;			
 			for(GoodsVO goodsvo: goods){
 				goodsIDList[i] = goodsvo.Order_ID;
-				timeList[i] = goodsBL.getEnterSpecificRepertoryDate(goodsvo.Order_ID, repertoryID);
+				timeList[i] = goodsControl.getEnterSpecificRepertoryDate(goodsvo.Order_ID, repertoryID);
 				i++;
-				infos.add(new String[]{goodsvo.Order_ID, goodsBL.getEnterSpecificRepertoryDate(goodsvo.Order_ID, repertoryID)});
+				infos.add(new String[]{goodsvo.Order_ID, goodsControl.getEnterSpecificRepertoryDate(goodsvo.Order_ID, repertoryID)});
 			}
 		}
 		else{
-			goods = repertoryBL.getLeaveRepertoryGoods();
+			lastTime = repertoryControl.getLastLeaveRepertoryTime();
+			promptLabel.setText("上次生成出库单据的时间: "+lastTime+"     当前时间: "+nowTime);
+			
+			goods = repertoryControl.getLeaveRepertoryGoods();
 			System.out.println(goods.size());
 			
 			int size = goods.size();
@@ -162,9 +186,9 @@ public class CreateReceiptPanel extends OperationPanel{
 			int i = 0;	
 			for(GoodsVO goodsvo: goods){
 				goodsIDList[i] = goodsvo.Order_ID;
-				timeList[i] = goodsBL.getLeaveSpecificRepertoryDate(goodsvo.Order_ID, repertoryID);
+				timeList[i] = goodsControl.getLeaveSpecificRepertoryDate(goodsvo.Order_ID, repertoryID);
 				i++;
-				infos.add(new String[]{goodsvo.Order_ID, goodsBL.getLeaveSpecificRepertoryDate(goodsvo.Order_ID, repertoryID)});
+				infos.add(new String[]{goodsvo.Order_ID, goodsControl.getLeaveSpecificRepertoryDate(goodsvo.Order_ID, repertoryID)});
 			}
 		}
 		
@@ -182,6 +206,18 @@ public class CreateReceiptPanel extends OperationPanel{
 		add(messageTable);
 		repaint();
 		updateUI();
+	}
+	
+	public void updateui(boolean updateOthers){
+		messageTable.setInfos(getInfos(1));
+		messageTable.setInfos(getInfos(2));
+		messageTable.setInfos(getInfos(patternNum));
+		if(updateOthers == true){
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.inventoryVertificationPanel.updateui(false);
+			repertoryFrame.lookReceiptPanel.updateui(false);
+		}
 	}
 	
 	public void successCreateReceipt(int patternNum){

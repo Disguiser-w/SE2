@@ -13,7 +13,6 @@ import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-//import presentation.commonui.LocationHelper;
 
 import vo.PerWageVO;
 import vo.BasicSalaryVO;
@@ -21,10 +20,10 @@ import vo.CityDistanceVO;
 import vo.CostVO;
 import type.ProfessionType;
 import type.ExpressType;
-import businesslogic.managebl.PerWageBL;
-import businesslogic.managebl.BasicSalaryBL;
-import businesslogic.managebl.CityDistanceBL;
-import businesslogic.managebl.CostBL;
+import businesslogic.managebl.controller.BasicSalaryController;
+import businesslogic.managebl.controller.CityDistanceController;
+import businesslogic.managebl.controller.CostController;
+import businesslogic.managebl.controller.PerWageController;
 
 public class BasicDataManagePanel extends OperationPanel {
 
@@ -34,10 +33,10 @@ public class BasicDataManagePanel extends OperationPanel {
 	
 	private ManageFrame manageFrame;
 	
-	private PerWageBL perWageBL;
-	private BasicSalaryBL basicSalaryBL;
-	private CityDistanceBL distancesBL;
-	private CostBL baseFreightBL;
+	private PerWageController perWageControl;
+	private BasicSalaryController basicSalaryControl;
+	private CityDistanceController distancesControl;
+	private CostController baseFreightControl;
 	
 	private MyLabel perWageLabel;
 	private MyLabel basicSalaryLabel;
@@ -63,14 +62,15 @@ public class BasicDataManagePanel extends OperationPanel {
 	private int tableWidth;
 	private int tableHeight;
 	
-	public BasicDataManagePanel(ManageFrame manageFrame) {
+	public BasicDataManagePanel(ManageFrame manageFrame, PerWageController perWageController, BasicSalaryController basicSalaryController, 
+														CityDistanceController cityDistanceController, CostController costController){
 		
 		this.manageFrame = manageFrame;
 		
-		perWageBL = new PerWageBL();
-		basicSalaryBL = new BasicSalaryBL();
-		distancesBL = new CityDistanceBL();
-		baseFreightBL = new CostBL();
+		perWageControl = perWageController;
+		basicSalaryControl = basicSalaryController;
+		distancesControl = cityDistanceController;
+		baseFreightControl = costController;
 		
 		perWageLabel = new MyLabel("每次工资");
 		basicSalaryLabel = new MyLabel("基础月薪");
@@ -94,10 +94,10 @@ public class BasicDataManagePanel extends OperationPanel {
 		add(modifyLabel);
 		add(searchField);
 		
-		perWages = perWageBL.showAllPerWages();
-		basicSalarys = basicSalaryBL.showAllBasicSalarys();
-		distances = distancesBL.showAllCityDistances();
-		baseFreights = baseFreightBL.showAllCosts();
+		perWages = perWageControl.showAllPerWages();
+		basicSalarys = basicSalaryControl.showAllBasicSalarys();
+		distances = distancesControl.showAllCityDistances();
+		baseFreights = baseFreightControl.showAllCosts();
 		
 		addListener();
 		//给setBaseInfos加上参数，不同的int值表示MyTable加载不同内容， 1代表PerWage， 2代表BasicSalary，3代表CityDistance，4代表Cost
@@ -222,19 +222,19 @@ public class BasicDataManagePanel extends OperationPanel {
 		
 		switch(patternNum){
 			case 1:	head = new String[]{"职业类型", "每次工资（元）"};
-					widths = new int[]{275, 275};
+					widths = new int[]{275, 285};
 					currentTable = new MyTable(head, getInfos(1), widths, true);
 					break;
 			case 2: head = new String[]{"职业类型", "基础月薪（元）"};
-					widths = new int[]{275, 275};
+					widths = new int[]{275, 285};
 					currentTable = new MyTable(head, getInfos(2), widths, true);
 					break;
 			case 3: head = new String[]{"城市A", "城市B", "城市间距离（公里）"};
-					widths = new int[]{200, 200, 150};
+					widths = new int[]{200, 200, 160};
 					currentTable = new MyTable(head, getInfos(3), widths, true);
 					break;
 			case 4: head = new String[]{"快递类型", "运费系数（元/（千克*公里））"};
-			 		widths = new int[]{275, 275};
+			 		widths = new int[]{275, 285};
 			 		currentTable = new MyTable(head, getInfos(4), widths, true);
 			 		break;
 		}
@@ -318,18 +318,18 @@ public class BasicDataManagePanel extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			selectedIndex = selectedIndexs.get(0);
-			distancesBL.deleteCityDistance(distances.get(selectedIndex));
+			distancesControl.deleteCityDistance(distances.get(selectedIndex));
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			for(int i: selectedIndexs){
-				distancesBL.deleteCityDistance(distances.get(i));
+				distancesControl.deleteCityDistance(distances.get(i));
 			}
 		}
 		
-		distances = distancesBL.showAllCityDistances();
+		distances = distancesControl.showAllCityDistances();
 		messageTable.setInfos(getInfos(3));
 	}
 	
@@ -367,14 +367,14 @@ public class BasicDataManagePanel extends OperationPanel {
 	
 	//显示全部城市间距离页面
 	public void allDistanceUI(){
-		distances = distancesBL.showAllCityDistances();
+		distances = distancesControl.showAllCityDistances();
 		setBaseInfos(3);
 	}
 	
 	//单城市搜索下的城市间距离页面
 	public void singleCityDistanceUI(){
 		String keyCity = searchField.getText();
-		distances = distancesBL.findCityDistanceBySingle(keyCity);
+		distances = distancesControl.findCityDistanceBySingle(keyCity);
 		setBaseInfos(3);
 	}
 	
@@ -382,7 +382,7 @@ public class BasicDataManagePanel extends OperationPanel {
 	public void bothCityDistanceUI(){
 		String keyCitys = searchField.getText();
 		String[] parts = keyCitys.split("-");
-		distances = distancesBL.findCityDistanceByBoth(parts[0], parts[1]);
+		distances = distancesControl.findCityDistanceByBoth(parts[0], parts[1]);
 		setBaseInfos(3);
 	}
 	

@@ -10,8 +10,8 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
-import businesslogic.repertorybl.GoodsBL;
-import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.GoodsController;
+import businesslogic.repertorybl.controller.RepertoryController;
 import vo.InventoryVO;
 import vo.UserVO;
 
@@ -21,8 +21,8 @@ public class EXwarehousePanel extends OperationPanel {
 	
 	private RepertoryFrame repertoryFrame;
 	
-	private RepertoryBL repertoryBL;
-	private GoodsBL goodsBL;
+	private RepertoryController repertoryControl;
+	private GoodsController goodsControl;
 	
 	private MySearchField searchField;
 
@@ -35,12 +35,12 @@ public class EXwarehousePanel extends OperationPanel {
 	private String goodsID;
 	private String repertoryID;
 	
-	public EXwarehousePanel(RepertoryFrame repertoryFrame, UserVO userVO) {
+	public EXwarehousePanel(RepertoryFrame repertoryFrame, RepertoryController repertoryController, GoodsController goodsController, UserVO userVO) {
 		
 		this.repertoryFrame = repertoryFrame;
 		
-		repertoryBL = new RepertoryBL(userVO.userID);
-		goodsBL = new GoodsBL();
+		repertoryControl = repertoryController;
+		goodsControl = goodsController;
 		
 		repertoryID = userVO.organization;
 		
@@ -48,7 +48,7 @@ public class EXwarehousePanel extends OperationPanel {
 
 		leaveRepertoryLabel = new MyLabel("出库");
 
-		inventorys = repertoryBL.inventoryStockTaking();
+		inventorys = repertoryControl.inventoryStockTaking();
 		
 		setLayout(null);
 		add(searchField);
@@ -93,12 +93,12 @@ public class EXwarehousePanel extends OperationPanel {
 	}
 	
 	private ArrayList<String[]> getInfos(){
-		inventorys = repertoryBL.inventoryStockTaking();
+		inventorys = repertoryControl.inventoryStockTaking();
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		
 		for(InventoryVO inventoryvo : inventorys){
 			goodsID = inventoryvo.good.Order_ID;
-			String time = goodsBL.getEnterSpecificRepertoryDate(goodsID, repertoryID);
+			String time = goodsControl.getEnterSpecificRepertoryDate(goodsID, repertoryID);
 			infos.add(new String[]{inventoryvo.good.Order_ID, blockName(inventoryvo.blockNum), inventoryvo.rowNum+"", inventoryvo.shelfNum+"", inventoryvo.digitNum+"", time});
 		}
 		return infos;
@@ -125,7 +125,7 @@ public class EXwarehousePanel extends OperationPanel {
 			int returnNum = 0;
 			for(int i : selectedIndexs){
 				String orderID = inventorys.get(i).good.Order_ID;
-				returnNum += repertoryBL.leaveRepertory(orderID);
+				returnNum += repertoryControl.leaveRepertory(orderID);
 			}
 			if(returnNum == 0)
 				successLeave();
@@ -134,20 +134,23 @@ public class EXwarehousePanel extends OperationPanel {
 		}
 	}
 	
-	public void updateui(int i){//i用来说明调用完WarehousingMainPanel的updateui方法后，自己就不需要再update自己了
+	public void updateui(boolean updateOthers){
 		exwarehouseMessageTable.setInfos(getInfos());
-		if(i == 1){
-			repertoryFrame.warehousingMainPanel.updateui(2);
+		if(updateOthers == true){
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.inventoryVertificationPanel.updateui(false);
+			repertoryFrame.createReceiptPanel.updateui(false);
+			repertoryFrame.lookReceiptPanel.updateui(false);
 		}
 	}
 	
 	public void successLeave(){
-		updateui(1);
+		updateui(true);
 		JOptionPane.showMessageDialog(null, "出库成功(●'◡'●)", "出库成功", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void failedLeave(){
-		updateui(1);
+		updateui(true);
 		JOptionPane.showMessageDialog(null, "出库失败(T_T)", "出库失败", JOptionPane.INFORMATION_MESSAGE);
 	}
 	

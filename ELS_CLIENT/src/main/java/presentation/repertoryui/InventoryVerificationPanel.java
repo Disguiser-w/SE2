@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.RepertoryController;
 import vo.InventoryVO;
 import vo.UserVO;
 
@@ -14,7 +14,9 @@ public class InventoryVerificationPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 38L;
 	
-	private RepertoryBL repertoryBL;
+	private RepertoryFrame repertoryFrame;
+	
+	private RepertoryController repertoryControl;
 	
 	private MyTextLabel endTimeLabel;
 	private MyTextLabel timeLabel;
@@ -23,9 +25,11 @@ public class InventoryVerificationPanel extends OperationPanel {
 
 	ArrayList<InventoryVO> inventoryList;
 
-	public InventoryVerificationPanel(UserVO uservo){
+	public InventoryVerificationPanel(RepertoryFrame repertoryFrame, RepertoryController repertoryController, UserVO uservo){
 		
-		repertoryBL = new RepertoryBL(uservo.userID);
+		this.repertoryFrame = repertoryFrame;
+		
+		repertoryControl = repertoryController;
 		
 		String time = RepertoryBL.getTimeNow();
 		endTimeLabel = new MyTextLabel("截止到");
@@ -36,8 +40,6 @@ public class InventoryVerificationPanel extends OperationPanel {
 		add(endTimeLabel);
 		add(timeLabel);
 
-		inventoryList = repertoryBL.inventoryStockTaking();
-		
 		setBaseInfos();
 	}
 
@@ -56,13 +58,15 @@ public class InventoryVerificationPanel extends OperationPanel {
 	
 	private void setBaseInfos(){
 		String[] head = {"订单号", "入库日期", "目的地", "区名", "排号", "架号", "位号"};
-		int[] widths = {120, 120, 90, 80, 60, 60, 60};
+		int[] widths = {120, 120, 90, 109, 60, 60, 60};
 		
-		messageTable = new MyTable(head, getInfos(), widths, true);
+		messageTable = new MyTable(head, getInfos(), widths, false);
 		add(messageTable);
 	}
 	
 	private ArrayList<String[]> getInfos(){
+		inventoryList = repertoryControl.inventoryStockTaking();
+		
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		for(InventoryVO inventoryvo : inventoryList)
 			infos.add(new String[]{inventoryvo.good.Order_ID, inventoryvo.good.enterDate[0], inventoryvo.good.destination, blockName(inventoryvo.blockNum),
@@ -76,7 +80,15 @@ public class InventoryVerificationPanel extends OperationPanel {
 		return blockNameList[blockNum];
 	}
 	
-	
+	public void updateui(boolean updateOthers){
+		messageTable.setInfos(getInfos());
+		if(updateOthers == true){
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.createReceiptPanel.updateui(false);
+			repertoryFrame.lookReceiptPanel.updateui(false);
+		}
+	}
 }
 
 

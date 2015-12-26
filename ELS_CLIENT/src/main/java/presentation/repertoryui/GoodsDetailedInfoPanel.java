@@ -2,6 +2,7 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 
 import presentation.commonui.MyLabel;
@@ -11,7 +12,7 @@ import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 
 import vo.GoodsVO;
-import businesslogic.repertorybl.GoodsBL;
+import businesslogic.repertorybl.controller.GoodsController;
 
 public class GoodsDetailedInfoPanel extends OperationPanel{
 
@@ -19,7 +20,7 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 	
 	private RepertoryFrame repertoryFrame;
 
-	private GoodsBL goodsBL;
+	private GoodsController goodsControl;
 	
 	private String goodsID;
 	
@@ -39,15 +40,15 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 	
 	private MyLabel returnLabel;
 	
-	public GoodsDetailedInfoPanel(RepertoryFrame repertoryFrame, String orderID){
+	public GoodsDetailedInfoPanel(RepertoryFrame repertoryFrame,  GoodsController goodsController, String orderID){
 		
 		this.repertoryFrame = repertoryFrame;
 		
-		goodsBL = new GoodsBL();
+		goodsControl = goodsController;
 		
 		this.goodsID = orderID;
 		
-		GoodsVO goodsvo = goodsBL.findGoodsByID(orderID);
+		GoodsVO goodsvo = goodsControl.findGoodsByID(orderID);
 		
 		basicMessageLabel = new MyTextLabel("该订单基本信息");
 		IDLabel = new MyTextLabel("订单号");
@@ -138,7 +139,7 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 	
 	private ArrayList<String[]> getInfos(){
 		ArrayList<String[]> infos = new ArrayList<String[]> ();
-		String messageStr = goodsBL.showGoodIntermidiateMessage(goodsID);
+		String messageStr = goodsControl.showGoodIntermidiateMessage(goodsID);
 		if(messageStr.equals("暂无该订单号对应的物流中转信息")){
 			infos.add(new String[]{messageStr});
 			return infos;

@@ -139,6 +139,7 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
     	//把组件加到Panel上
 		setLayout(null);
 		
+		add(function);
 		add(name);
 		add(nameField);
 		add(ID);
@@ -164,42 +165,42 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
     
     //设置位置
     public void setCmpLocation(){
-    	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
+    	function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 38,
+				PANEL_WIDTH * 6 / 18, PANEL_HEIGHT / 12);
     	
-    	name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 8 / 48,
+    	name.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 6 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 13/ 48,
+		ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11/ 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 18 / 48,
+    	profession.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 16 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-    	organization.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 23 / 48,
+    	organization.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 21 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 28 / 48,
+		salaryPlan.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 26 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 33 / 48,
+		authority.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 31 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		grade.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 38 / 48,
+		grade.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		
-		nameField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 8 / 48,
+		nameField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 6 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		IDField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 13/ 48,
+		IDField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		professionField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 18 / 48,
+		professionField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 16 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		organizationChoose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 23 / 48,
+		organizationChoose.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 21 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		salaryPlanField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 28 / 48,
+		salaryPlanField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 26 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		authorityField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 33 / 48,
+		authorityField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 31 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		gradeField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 38 / 48,
+		gradeField.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 36 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		
-		OKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 44 / 48,
+		OKButton.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 41 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnButton.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 44 / 48,
+		returnButton.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 41 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
     }
     

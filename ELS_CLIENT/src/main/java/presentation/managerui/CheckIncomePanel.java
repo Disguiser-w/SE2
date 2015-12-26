@@ -3,7 +3,6 @@ package presentation.managerui;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.getDate;
 
@@ -11,7 +10,7 @@ public class CheckIncomePanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private CostIncomeReceiptBLController costIncomeReceiptController;
+	private CostIncomeReceiptBLController costIncomeReceiptControl;
 	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -36,15 +35,15 @@ public class CheckIncomePanel extends OperationPanel {
 	private String endTime;
 	private String ID;
 
-	public CheckIncomePanel(){
+	public CheckIncomePanel(CostIncomeReceiptBLController costIncomeControl){
 		
-		this.costIncomeReceiptController = new CostIncomeReceiptBLController();
+		this.costIncomeReceiptControl = costIncomeControl;
 		
 		function = new MyTextLabel("查看成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		beginTime = "2010-01-01";
 		endTime = getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
-		ID = costIncomeReceiptController.getCostIncomeListID();
+		ID = costIncomeReceiptControl.getCostIncomeListID();
 		
 		startDate = new MyTextLabel("开始时间");
 		endDate = new MyTextLabel("结束时间");
@@ -61,15 +60,15 @@ public class CheckIncomePanel extends OperationPanel {
 		endDate_Input = new MyTextField();
 		endDate_Input.setText(endTime);
 		endDate_Input.setEditable(false);
-		double income = costIncomeReceiptController.getIncome();
+		double income = costIncomeReceiptControl.getIncome();
 		totalCost_Input = new MyTextField();
 		totalCost_Input.setText(income+"");
 		totalCost_Input.setEditable(false);
-		double cost = costIncomeReceiptController.getCost();
+		double cost = costIncomeReceiptControl.getCost();
 		totalIncome_Input = new MyTextField();
 		totalIncome_Input.setText(cost+"");
 		totalIncome_Input.setEditable(false);
-		double profit = costIncomeReceiptController.getProfit(income, cost);
+		double profit = costIncomeReceiptControl.getProfit(income, cost);
 		totalProfit_Input = new MyTextField();
 		totalProfit_Input.setText(profit+"");
 		totalProfit_Input.setEditable(false);

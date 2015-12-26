@@ -10,12 +10,13 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
+
 import type.ReceiptState;
 import vo.EnterRepertoryReceiptVO;
 import vo.LeaveRepertoryReceiptVO;
 import vo.UserVO;
-import businesslogic.repertorybl.EnterRepertoryReceiptBL;
-import businesslogic.repertorybl.LeaveRepertoryReceiptBL;
+import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
+import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
 
 public class LookReceiptPanel extends OperationPanel {
 	
@@ -23,8 +24,8 @@ public class LookReceiptPanel extends OperationPanel {
 
 	private RepertoryFrame repertoryFrame;
 	
-	private EnterRepertoryReceiptBL errBL;
-	private LeaveRepertoryReceiptBL lrrBL;
+	private EnterRepertoryReceiptController enterRepertoryReceiptControl;
+	private LeaveRepertoryReceiptController leaveRepertoryReceiptControl;
 	
 	private String userID;
 	
@@ -48,14 +49,16 @@ public class LookReceiptPanel extends OperationPanel {
 	
 	private int selectedIndex;
 	
-	public LookReceiptPanel(RepertoryFrame repertoryFrame, UserVO userVO) {
+	public LookReceiptPanel(RepertoryFrame repertoryFrame, EnterRepertoryReceiptController enterRepertoryReceiptController,
+							LeaveRepertoryReceiptController leaveRepertoryReceiptController, UserVO userVO) {
 		
 		this.repertoryFrame = repertoryFrame;
 		
 		userID = userVO.userID;
 		
-		errBL = new EnterRepertoryReceiptBL();
-		lrrBL = new LeaveRepertoryReceiptBL();
+		enterRepertoryReceiptControl = enterRepertoryReceiptController;
+		leaveRepertoryReceiptControl = leaveRepertoryReceiptController;
+		
 		lookEnterReceiptLabel = new MyLabel("入库单");
 		lookLeaveReceiptLabel = new MyLabel("出库单");
 		
@@ -72,8 +75,9 @@ public class LookReceiptPanel extends OperationPanel {
 		add(searchField);
 		add(sendLabel);
 		
+		patternNum = 1;
 		addListener();
-		setBaseInfos(1);
+		setBaseInfos(patternNum);
 		
 	}
 
@@ -158,8 +162,8 @@ public class LookReceiptPanel extends OperationPanel {
 	
 	private ArrayList<String[]> getInfos(int patterNum){
 		
-		errvos = errBL.findEnterReceiptByCreatorID(userID);
-		lrrvos = lrrBL.findLeaveReceiptByCreatorID(userID);
+		errvos = enterRepertoryReceiptControl.findEnterReceiptByCreatorID(userID);
+		lrrvos = leaveRepertoryReceiptControl.findLeaveReceiptByCreatorID(userID);
 		
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		if(patternNum == 1){
@@ -204,11 +208,11 @@ public class LookReceiptPanel extends OperationPanel {
 		if(patternNum == 1){
 			String enterReceiptID = errvos.get(selectedIndex).receiptID;
 			System.out.println(enterReceiptID);
-			repertoryFrame.changePanel(new EnterReceiptDetailedInfoPanel(repertoryFrame, enterReceiptID));
+			repertoryFrame.changePanel(new EnterReceiptDetailedInfoPanel(repertoryFrame, enterRepertoryReceiptControl, enterReceiptID));
 		}
 		else{
 			String leaveReceiptID = lrrvos.get(selectedIndex).receiptID;
-			repertoryFrame.changePanel(new LeaveReceiptDetailedInfoPanel(repertoryFrame, leaveReceiptID));
+			repertoryFrame.changePanel(new LeaveReceiptDetailedInfoPanel(repertoryFrame, leaveRepertoryReceiptControl, leaveReceiptID));
 		}
 	}
 	
@@ -217,11 +221,11 @@ public class LookReceiptPanel extends OperationPanel {
 		if(keyword.equals(""))
 			return; 
 		if(patternNum == 1){
-			errvos = errBL.findEnterReceiptByCreatorAndKeyword(userID, keyword);
+			errvos = enterRepertoryReceiptControl.findEnterReceiptByCreatorAndKeyword(userID, keyword);
 			setBaseInfos(1);
 		}
 		else{
-			lrrvos = lrrBL.findLeaveReceiptByCreatorAndKeyword(userID, keyword);
+			lrrvos = leaveRepertoryReceiptControl.findLeaveReceiptByCreatorAndKeyword(userID, keyword);
 			setBaseInfos(2);
 		}
 	}
@@ -237,13 +241,13 @@ public class LookReceiptPanel extends OperationPanel {
 		if(patternNum == 1){
 			for(int i: selectedIndexs){
 				String receiptID = errvos.get(i).receiptID;
-				 returnNum += errBL.sendEnterReceipt(receiptID);
+				 returnNum += enterRepertoryReceiptControl.sendEnterReceipt(receiptID);
 			}
 		}
 		else{
 			for(int i: selectedIndexs){
 				String receiptID = lrrvos.get(i).receiptID;
-				returnNum += lrrBL.sendLeaveReceipt(receiptID);
+				returnNum += leaveRepertoryReceiptControl.sendLeaveReceipt(receiptID);
 			}
 		}
 		if(returnNum == 0)
@@ -256,6 +260,18 @@ public class LookReceiptPanel extends OperationPanel {
 		String[] receiptStateNameList = {"草稿", "待审批", "审批通过", "审批未通过"};
 		int stateInt = receiptState.ordinal();
 		return receiptStateNameList[stateInt];
+	}
+	
+	public void updateui(boolean updateOthers){
+		messageTable.setInfos(getInfos(1));
+		messageTable.setInfos(getInfos(2));
+		messageTable.setInfos(getInfos(patternNum));
+		if(updateOthers == true){
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.warehousingMainPanel.updateui(false);
+			repertoryFrame.inventoryVertificationPanel.updateui(false);
+			repertoryFrame.createReceiptPanel.updateui(false);
+		}
 	}
 	
 	public void successSend(int patternNum){

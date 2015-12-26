@@ -3,28 +3,44 @@ package businesslogic.repertorybl;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import po.LeaveRepertoryReceiptPO;
+import type.ReceiptState;
 import vo.LeaveRepertoryReceiptVO;
 import businesslogic.datafactory.DataFactory;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
+import dataservice.repertorydataservice.RepertoryDataService;
 
 public class LeaveRepertoryReceiptBL {
 
-public static LeaveRepertoryReceiptDataService errdService;
+	public static RepertoryDataService rdService;
+	public static LeaveRepertoryReceiptDataService lrrdService;
 	
 	public LeaveRepertoryReceiptBL(){
 		try {
-			errdService = DataFactory.getLeaveRepertoryReceiptData();
+			rdService = DataFactory.getRepertoryData();
+			lrrdService = DataFactory.getLeaveRepertoryReceiptData();
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public int addLeaveRepertoryReceipt(LeaveRepertoryReceiptVO errvo){
+	public int addLeaveRepertoryReceipt(String repertoryID, String userID, String[] goodsIDList, String[] timeList){
+		String now = getTimeNow();
 		try{
-			return errdService.addLeaveRepertoryReceipt(leaveRepertoryReceiptVOToPO(errvo));
+			String receiptPost = lrrdService.getLeaveReceiptPost();
+			LeaveRepertoryReceiptVO lrrvo = new LeaveRepertoryReceiptVO("CKD-"+receiptPost, userID, now, ReceiptState.DRAFT, repertoryID, goodsIDList, timeList);
+			LeaveRepertoryReceiptPO lrrpo = leaveRepertoryReceiptVOToPO(lrrvo);
+			
+			//更新仓库的最近一次生成入库单的时间
+			int returnNum1 = rdService.setLastCreateLeaveReceiptTime(repertoryID, now);
+			//添加入库单
+			int returnNum2 = lrrdService.addLeaveRepertoryReceipt(lrrpo);
+			
+			return returnNum1+returnNum2;
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -33,7 +49,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 	
 	public int deleteLeaveReceipt(String receiptID){
 		try{
-			return errdService.deleteLeaveReceipt(receiptID);
+			return lrrdService.deleteLeaveReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -42,7 +58,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 
 	public int sendLeaveReceipt(String receiptID){
 		try{
-			return errdService.sendLeaveReceipt(receiptID);
+			return lrrdService.sendLeaveReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -51,7 +67,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 	
 	public int approveLeaveReceipt(String receiptID){
 		try{
-			return errdService.approveLeaveReceipt(receiptID);
+			return lrrdService.approveLeaveReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -60,7 +76,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 	
 	public int disapproveLeaveReceipt(String receiptID){
 		try{
-			return errdService.disapproveLeaveReceipt(receiptID);
+			return lrrdService.disapproveLeaveReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -69,7 +85,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 	
 	public LeaveRepertoryReceiptVO findLeaveReceiptByReceiptID(String receiptID){
 		try{
-			return leaveRepertoryReceiptPOToVO(errdService.findLeaveReceiptByReceiptID(receiptID));
+			return leaveRepertoryReceiptPOToVO(lrrdService.findLeaveReceiptByReceiptID(receiptID));
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return null;
@@ -80,7 +96,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = errdService.findLeaveReceiptByCreatorID(creatorID);
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveReceiptByCreatorID(creatorID);
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -97,7 +113,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = errdService.findLeaveReceiptByCreatorAndKeyword(creator, keyword);
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveReceiptByCreatorAndKeyword(creator, keyword);
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -114,7 +130,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = errdService.getAllSubmitedLeaveReceipts();
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllSubmitedLeaveReceipts();
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -132,7 +148,7 @@ public static LeaveRepertoryReceiptDataService errdService;
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = errdService.getAllLeaveReceipts();
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllLeaveReceipts();
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -147,19 +163,26 @@ public static LeaveRepertoryReceiptDataService errdService;
 	
 	public String getLeaveReceiptPost(){
 		try{
-			return errdService.getLeaveReceiptPost();
+			return lrrdService.getLeaveReceiptPost();
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return "wrong";
 		}
 	}
 	
-	public static LeaveRepertoryReceiptPO leaveRepertoryReceiptVOToPO(LeaveRepertoryReceiptVO errvo){
-		return new LeaveRepertoryReceiptPO(errvo.receiptID, errvo.userID, errvo.createTime, errvo.state, errvo.repertoryID, errvo.expressIDList, errvo.timeList);
+	public static LeaveRepertoryReceiptPO leaveRepertoryReceiptVOToPO(LeaveRepertoryReceiptVO lrrvo){
+		return new LeaveRepertoryReceiptPO(lrrvo.receiptID, lrrvo.userID, lrrvo.createTime, lrrvo.state, lrrvo.repertoryID, lrrvo.expressIDList, lrrvo.timeList);
 	}
 	
-	public static LeaveRepertoryReceiptVO leaveRepertoryReceiptPOToVO(LeaveRepertoryReceiptPO errpo){
-		return new LeaveRepertoryReceiptVO(errpo.getReceiptID(), errpo.getUserID(), errpo.getCreateTime(), errpo.getState(), errpo.getReceiptID(), errpo.getExpressIDList(), errpo.getTimeList());
+	public static LeaveRepertoryReceiptVO leaveRepertoryReceiptPOToVO(LeaveRepertoryReceiptPO lrrpo){
+		return new LeaveRepertoryReceiptVO(lrrpo.getReceiptID(), lrrpo.getUserID(), lrrpo.getCreateTime(), lrrpo.getState(), lrrpo.getReceiptID(), lrrpo.getExpressIDList(), lrrpo.getTimeList());
+	}
+	
+	public static String getTimeNow(){
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String timeNow = dateFormat.format(now); 
+		return timeNow;
 	}
 	
 }

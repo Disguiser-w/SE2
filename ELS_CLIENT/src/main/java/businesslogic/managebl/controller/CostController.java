@@ -5,33 +5,34 @@ import java.util.ArrayList;
 import type.ExpressType;
 import vo.CostVO;
 import businesslogic.managebl.CostBL;
+import businesslogicservice.manageblservice.CostBLService;
 
-public class CostController {
+public class CostController implements CostBLService{
 	
-	private CostBL cost;
+	private CostBL costBL;
 	
 	public CostController(){
-		cost = new CostBL();
+		costBL = new CostBL();
 	}
 	
 	public int addCost(CostVO costvo){
-		return cost.addCost(costvo);
+		return costBL.addCost(costvo);
 	}
 	
 	public int deleteCost(CostVO costvo){
-		return cost.deleteCost(costvo);
+		return costBL.deleteCost(costvo);
 	}
 	
 	public int modifyCost(CostVO costvo){
-		return cost.modifyCost(costvo);
+		return costBL.modifyCost(costvo);
 	}
 	
 	public double findCost(ExpressType profession){
-		return cost.findCost(profession);
+		return costBL.findCost(profession);
 	}
 	
 	public ArrayList<CostVO> showAllCosts(){
-		return cost.showAllCosts();
+		return costBL.showAllCosts();
 	}
 	
 }

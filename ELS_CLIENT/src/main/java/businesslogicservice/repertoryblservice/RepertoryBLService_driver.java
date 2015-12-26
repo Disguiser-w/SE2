@@ -10,13 +10,8 @@ public class RepertoryBLService_driver {
     	repertoryBLService.inventoryInitialization(100, 10, 10, 90);
         repertoryBLService.enterRepertory("20151001-00001", 0, 0, 0, 0);
         repertoryBLService.leaveRepertory("20151001-00001");
-        repertoryBLService.inventoryWarning(); 
         repertoryBLService.inventoryCheck("20151001", "20151003");
         repertoryBLService.inventoryStockTaking();
-        repertoryBLService.getMaxRow();
-        repertoryBLService.getMaxShelf();
-        repertoryBLService.getMaxDigit();
-        repertoryBLService.getMaxRatio();
         repertoryBLService.repertoryName("025-0");
     }
  

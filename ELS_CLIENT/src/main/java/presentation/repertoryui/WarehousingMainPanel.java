@@ -2,6 +2,7 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -14,8 +15,8 @@ import presentation.special_ui.MySearchField;
 
 import vo.GoodsVO;
 import vo.UserVO;
-import businesslogic.repertorybl.GoodsBL;
-import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.GoodsController;
+import businesslogic.repertorybl.controller.RepertoryController;
 
 public class WarehousingMainPanel extends OperationPanel {
 	
@@ -25,8 +26,8 @@ public class WarehousingMainPanel extends OperationPanel {
 	
 	private UserVO uservo;
 	
-	private RepertoryBL repertoryBL;
-	private GoodsBL goodsBL;
+	private RepertoryController repertoryControl;
+	private GoodsController goodsControl;
 	
 	private MyTextLabel chooseLabel;
 	private MyLabel planeLabel;
@@ -45,12 +46,15 @@ public class WarehousingMainPanel extends OperationPanel {
 	
 	private int selectedIndex;
 	
-	public WarehousingMainPanel(RepertoryFrame repertoryFrame, UserVO uservo) {
+	private boolean isSearchPattern;
+	private String keyword;
+	
+	public WarehousingMainPanel(RepertoryFrame repertoryFrame, RepertoryController repertoryController, GoodsController goodsController, UserVO uservo) {
 		
 		this.repertoryFrame = repertoryFrame;
 		
-		this.repertoryBL = new RepertoryBL(uservo.userID);
-		this.goodsBL = new GoodsBL();
+		this.repertoryControl = repertoryController;
+		this.goodsControl = goodsController;
 		
 		this.uservo = uservo;
 		
@@ -64,7 +68,7 @@ public class WarehousingMainPanel extends OperationPanel {
 		motorLabel = new MyLabel("机动区");
 		blockNum = 0;
 		
-		String warningStr = repertoryBL.inventoryWarning();
+		String warningStr = repertoryControl.inventoryWarning();
 		if(warningStr.contains("0"))
 			planeLabel.setEnabled(false);
 		if(warningStr.contains("1"))
@@ -84,12 +88,10 @@ public class WarehousingMainPanel extends OperationPanel {
 		add(enterRepertoryLabel);
 		add(detailedInfoLabel);
 		add(searchField);
-		
-		goods = goodsBL.getAllFreeGoods();
 
+		isSearchPattern = false;
 		addListener();
 		setBaseInfos();
-		// helper = new LocationHelper(this);
 	}
 	
 
@@ -103,7 +105,13 @@ public class WarehousingMainPanel extends OperationPanel {
 		
 		searchField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				searchui();
+				keyword = searchField.getText();
+				if(keyword.equals("")){
+					isSearchPattern = false;
+					return;
+				}
+				isSearchPattern = true;
+				warehousingMessageTable.setInfos(getInfos());
 			}
 		});
 		
@@ -172,8 +180,13 @@ public class WarehousingMainPanel extends OperationPanel {
 	}
 
 	private ArrayList<String[]> getInfos(){
+		if(!isSearchPattern)
+			goods = goodsControl.getAllFreeGoods();
+		else{
+			goods = goodsControl.findFreeGoodsByKeyword(keyword);
+		}
 		ArrayList<String[]> infos = new ArrayList<String[]>();
-		goods = goodsBL.getAllFreeGoods();
+		
 		for(GoodsVO goodsvo: goods){
 			infos.add(new String[]{goodsvo.Order_ID, goodsvo.fee+"", goodsvo.departurePlace, goodsvo.destination});
 		}
@@ -198,10 +211,11 @@ public class WarehousingMainPanel extends OperationPanel {
 				IDStr[count] = orderID;
 				count++;
 			}
-			repertoryFrame.changePanel(new WarehousingPanel(repertoryFrame, this, this.uservo, IDStr, blockNum));
+			repertoryFrame.changePanel(new WarehousingPanel(repertoryFrame, this, repertoryControl, goodsControl, this.uservo, IDStr, blockNum));
 		}
 	}
 	
+	//详细信息界面
 	public void detailedInfoui(){
 		ArrayList<Integer> selectedIndexs = warehousingMessageTable.getSelectedIndex();
 		int size = selectedIndexs.size();
@@ -217,25 +231,19 @@ public class WarehousingMainPanel extends OperationPanel {
 			selectedIndex = selectedIndexs.get(0);
 			GoodsVO goodsvo = goods.get(selectedIndex);
 			String orderID = goodsvo.Order_ID;
-			repertoryFrame.changePanel(new GoodsDetailedInfoPanel(repertoryFrame, orderID));
+			repertoryFrame.changePanel(new GoodsDetailedInfoPanel(repertoryFrame, goodsControl, orderID));
 		}
 	}
 
-	
-	//查询界面
-	public void searchui(){
-		String keyword = searchField.getText();
-		if(keyword.equals(""))
-			return;
-		goods = goodsBL.findFreeGoodsByKeyword(keyword);
+	//刷新界面
+	public void updateui(boolean updateOthers){
+		isSearchPattern = false;
 		warehousingMessageTable.setInfos(getInfos());
-	}
-	
-	public void updateui(int i){
-		goods = goodsBL.getAllFreeGoods();
-		warehousingMessageTable.setInfos(getInfos());
-		if(i==1){
-			repertoryFrame.exwarehousePanel.updateui(2);
+		if(updateOthers == true){
+			repertoryFrame.exwarehousePanel.updateui(false);
+			repertoryFrame.inventoryVertificationPanel.updateui(false);
+			repertoryFrame.createReceiptPanel.updateui(false);
+			repertoryFrame.lookReceiptPanel.updateui(false);
 		}
 		repaint();
 	}

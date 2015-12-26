@@ -2,16 +2,16 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-//import presentation.commonui.LocationHelper;
 
-import businesslogic.repertorybl.GoodsBL;
-import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.GoodsController;
+import businesslogic.repertorybl.controller.RepertoryController;
 import vo.GoodsVO;
 import vo.UserVO;
 
@@ -22,8 +22,8 @@ public class WarehousingPanel extends OperationPanel {
 	private RepertoryFrame repertoryFrame;
 	private WarehousingMainPanel warehousingMainPanel;
 	
-	private RepertoryBL repertoryBL;
-	private GoodsBL goodsBL;
+	private RepertoryController repertoryControl;
+	private GoodsController goodsControl;
 	
 	private MyTextLabel promptLabel;
 	
@@ -35,13 +35,15 @@ public class WarehousingPanel extends OperationPanel {
 
 	private int blockNum;
 	
-	public WarehousingPanel(RepertoryFrame repertoryFrame, WarehousingMainPanel warehousingMainPanel, UserVO userVO, String[] IDList, int blockNum) {
+	public WarehousingPanel(RepertoryFrame repertoryFrame, WarehousingMainPanel warehousingMainPanel, 
+							RepertoryController repertoryController, GoodsController goodsController, 
+							UserVO userVO, String[] IDList, int blockNum) {
 		
 		this.repertoryFrame = repertoryFrame;
 		this.warehousingMainPanel = warehousingMainPanel;
 		
-		repertoryBL = new RepertoryBL(userVO.userID);
-		goodsBL = new GoodsBL();
+		repertoryControl = repertoryController;
+		goodsControl = goodsController;
 		
 		this.blockNum = blockNum;
 		
@@ -55,7 +57,7 @@ public class WarehousingPanel extends OperationPanel {
 
 		goods = new ArrayList<GoodsVO>();
 		for(String ID : IDList){
-			GoodsVO good = goodsBL.findGoodsByID(ID);
+			GoodsVO good = goodsControl.findGoodsByID(ID);
 			goods.add(good);
 		}
 
@@ -80,7 +82,7 @@ public class WarehousingPanel extends OperationPanel {
 		returnLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				repertoryFrame.toMainPanel();
-				warehousingMainPanel.updateui(1);
+				warehousingMainPanel.updateui(true);
 			}
 		});
 	}
@@ -95,12 +97,13 @@ public class WarehousingPanel extends OperationPanel {
 
 	private ArrayList<String[]> getInfos(){
 		ArrayList<String[]> infos = new ArrayList<String[]>();
+		
 		for(GoodsVO goodsvo: goods){
-			String location = repertoryBL.searchVacantLocation(blockNum);
+			String location = repertoryControl.searchVacantLocation(blockNum);
 			String[] locationParts = location.split(" ");
 			infos.add(new String[]{goodsvo.Order_ID, blockName(blockNum), locationParts[0], locationParts[1], locationParts[2]});
 			//顺便帮它们入库
-			repertoryBL.enterRepertory(goodsvo.Order_ID, blockNum, Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), Integer.parseInt(locationParts[2]));
+			repertoryControl.enterRepertory(goodsvo.Order_ID, blockNum, Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), Integer.parseInt(locationParts[2]));
 		}
 		return infos;
 	}

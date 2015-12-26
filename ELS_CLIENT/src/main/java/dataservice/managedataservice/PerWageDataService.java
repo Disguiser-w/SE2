@@ -15,4 +15,5 @@ public interface PerWageDataService extends Remote {
 	public int modifyPerWage(PerWagePO perwagepo) throws RemoteException;
 	public PerWagePO findPerWage(ProfessionType profession) throws RemoteException;
 	public ArrayList<PerWagePO> showAllPerWages() throws RemoteException;
+	
 }

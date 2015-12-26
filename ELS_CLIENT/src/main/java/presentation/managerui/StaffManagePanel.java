@@ -11,15 +11,13 @@ import presentation.commonui.OperationPanel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-//import presentation.commonui.LocationHelper;
-
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.OrganizationVO;
 import vo.UserVO;
-import businesslogic.managebl.OrganizationBL;
-import businesslogic.userbl.UserBL;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.userbl.controller.UserManageController;
 
 public class StaffManagePanel extends OperationPanel {
 	
@@ -27,8 +25,8 @@ public class StaffManagePanel extends OperationPanel {
 	
 	private ManageFrame manageFrame;
 	
-	private UserBL userBL;
-	private OrganizationBL organizationBL;
+	private UserManageController userManageControl;
+	private OrganizationManageController organizationManageControl;
 	
 	private DeleteLabel deleteLabel;
 	private ModifyLabel modifyLabel;
@@ -40,12 +38,12 @@ public class StaffManagePanel extends OperationPanel {
 	
 	private int selectedIndex;
 	
-	public StaffManagePanel(ManageFrame manageFrame) {
+	public StaffManagePanel(ManageFrame manageFrame, UserManageController userController, OrganizationManageController organizationController) {
 		
 		this.manageFrame = manageFrame;
 		
-		this.userBL = new UserBL();
-		this.organizationBL = new OrganizationBL();
+		this.userManageControl = userController;
+		this.organizationManageControl = organizationController;
 		
 		deleteLabel = new DeleteLabel("删除用户");
 		modifyLabel = new ModifyLabel("分配机构");
@@ -57,7 +55,7 @@ public class StaffManagePanel extends OperationPanel {
 		add(modifyLabel);
 		add(searchField);
 		
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 
 		addListener();
 		setBaseInfos();
@@ -102,7 +100,7 @@ public class StaffManagePanel extends OperationPanel {
 
 	private void setBaseInfos() {
 		String[] head = new String[]{"姓名","用户编号","职业类型","所属机构","薪水策略","权限类型", "绩点"};
-		int[] widths = {60, 80, 100, 100, 80, 80, 100};
+		int[] widths = {60, 80, 100, 100, 90, 120, 43};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -124,7 +122,7 @@ public class StaffManagePanel extends OperationPanel {
 		int size = selectedIndexs.size();
 		
 		if(size == 0){
-			JOptionPane.showMessageDialog(null, "亲爱的管理员，选中某一个或某一些人员后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些人员后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		else if(size == 1){
@@ -132,17 +130,21 @@ public class StaffManagePanel extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			selectedIndex = selectedIndexs.get(0);
-			userBL.deleteUser(users.get(selectedIndex).userID);
+			if(users.get(selectedIndex).profession.equals(ProfessionType.administrator)){
+				JOptionPane.showMessageDialog(null, "亲爱的总经理，不可以删除管理员哦！", "删除出错", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			userManageControl.deleteUser(users.get(selectedIndex).userID);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些用户信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			for(int i: selectedIndexs){
-				userBL.deleteUser(users.get(i).userID);
+				userManageControl.deleteUser(users.get(i).userID);
 			}
 		}
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 		messageTable.setInfos(getInfos());
 	}
 	
@@ -174,13 +176,13 @@ public class StaffManagePanel extends OperationPanel {
 	//查询界面
 	public void searchui(){
 		String keyword = searchField.getText();
-		users = userBL.findUserByKeyword(keyword);
+		users = userManageControl.findUserByKeyword(keyword);
 		messageTable.setInfos(getInfos());
 	}
 	
 	//刷新界面
 	public void refreshui(){
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 		messageTable.setInfos(getInfos());
 	}
 		
@@ -188,11 +190,8 @@ public class StaffManagePanel extends OperationPanel {
 	//根据不同的职业类型返回职业名，给表去显示
 	public String professionName(ProfessionType profession){
 		int n = profession.ordinal();
-		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","财务人员","总经理"};
-		if(n<5)
-			return professionNameList[n];
-		else
-			return professionNameList[n-1];
+		String[] professionNameList = {"快递员","司机","仓库管理员","营业厅业务员","中转中心业务员","管理员", "财务人员","总经理"};
+		return professionNameList[n];
 	}
 	
 	//根据不同的机构编号返回机构名，给表去显示
@@ -203,11 +202,11 @@ public class StaffManagePanel extends OperationPanel {
 			return "/（待总经理分配）";
 		else if(organizationID.endsWith("-CK")){
 			organizationID = organizationID.substring(0,5);
-			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			OrganizationVO organizationvo = organizationManageControl.findOrganization(organizationID);
 			return organizationvo.name+"仓库";
 		}
 		else{
-			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			OrganizationVO organizationvo = organizationManageControl.findOrganization(organizationID);
 			return organizationvo.name;
 		}
 	}

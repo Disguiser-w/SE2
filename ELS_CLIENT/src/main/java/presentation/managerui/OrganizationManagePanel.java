@@ -11,12 +11,11 @@ import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.MySearchField;
-//import presentation.commonui.LocationHelper;
 
 import vo.OrganizationVO;
 import vo.RepertoryVO;
 import type.OrganizationType;
-import businesslogic.managebl.OrganizationBL;
+import businesslogic.managebl.controller.OrganizationManageController;
 
 public class OrganizationManagePanel extends OperationPanel {
 	
@@ -24,7 +23,7 @@ public class OrganizationManagePanel extends OperationPanel {
 
 	private ManageFrame manageFrame;
 	
-	private OrganizationBL organizationBL;
+	private OrganizationManageController organizationManageControl;
 
 	private AddLabel addLabel;
 	private DeleteLabel deleteLabel;
@@ -36,11 +35,11 @@ public class OrganizationManagePanel extends OperationPanel {
 
 	private int selectedIndex;
 	
-	public OrganizationManagePanel(ManageFrame manageFrame) {
+	public OrganizationManagePanel(ManageFrame manageFrame, OrganizationManageController organizationControl) {
 		
 		this.manageFrame = manageFrame;
 		
-		organizationBL = new OrganizationBL();
+		organizationManageControl = organizationControl;
 		
         addLabel = new AddLabel("新增机构");
         deleteLabel = new DeleteLabel("删除机构");
@@ -52,7 +51,7 @@ public class OrganizationManagePanel extends OperationPanel {
         add(deleteLabel);
         add(searchField);
         
-        organizations = organizationBL.showAllOrganizations();
+        organizations = organizationManageControl.showAllOrganizations();
         
         addListener();
         setBaseInfos();
@@ -85,16 +84,16 @@ public class OrganizationManagePanel extends OperationPanel {
 				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
 		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.0607142857142858 / 20),
 				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
-		searchField.setBounds((int) (width * 16.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
+		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 15.535714285714286 / 20));
+				(int) (width * 22.98335467349552 / 25), (int) (height * 15.035714285714286 / 20));
 	}
 	
 	
 	private void setBaseInfos() {
 		String[] head = new String[]{"机构类型", "机构名称", "机构编号", "下属仓库编号"};
-		int[] widths = {120, 200, 140, 140};
+		int[] widths = {120, 200, 140, 133};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -129,30 +128,30 @@ public class OrganizationManagePanel extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			selectedIndex = selectedIndexs.get(0);
-			organizationBL.deleteOrganization(organizations.get(selectedIndex).organizationID);
+			organizationManageControl.deleteOrganization(organizations.get(selectedIndex).organizationID);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些机构信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			for(int i: selectedIndexs){
-				organizationBL.deleteOrganization(organizations.get(i).organizationID);
+				organizationManageControl.deleteOrganization(organizations.get(i).organizationID);
 			}
 		}
-		organizations = organizationBL.showAllOrganizations();
+		organizations = organizationManageControl.showAllOrganizations();
 		messageTable.setInfos(getInfos());
 	}
 	
 	//查询界面
 	public void searchui(){
 		String keyword = searchField.getText();
-		organizations = organizationBL.findOrganizationByKeyword(keyword);
+		organizations = organizationManageControl.findOrganizationByKeyword(keyword);
 		messageTable.setInfos(getInfos());
 	}
 	
 	//刷新界面
 	public void refreshui(){
-		organizations = organizationBL.showAllOrganizations();
+		organizations = organizationManageControl.showAllOrganizations();
 		messageTable.setInfos(getInfos());
 	}
 		

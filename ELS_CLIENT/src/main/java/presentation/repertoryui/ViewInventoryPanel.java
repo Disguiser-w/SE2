@@ -15,13 +15,13 @@ import presentation.commonui.OperationPanel;
 
 import vo.InventoryCheckVO;
 import vo.UserVO;
-import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.RepertoryController;
 
 public class ViewInventoryPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 99L;
 	
-	private RepertoryBL repertoryBL;
+	private RepertoryController repertoryControl;
 	
 	private JLabel dateRange;
 	
@@ -55,9 +55,9 @@ public class ViewInventoryPanel extends OperationPanel {
 	
 	private InventoryCheckVO inventoryCheckVO;
 	
-	public ViewInventoryPanel(UserVO userVO) {
+	public ViewInventoryPanel(RepertoryController repertoryController, UserVO userVO) {
 		
-		repertoryBL = new RepertoryBL(userVO.userID);
+		repertoryControl = repertoryController;
 		
 		dateRange = new MyTextLabel("日期范围");
 		
@@ -186,13 +186,13 @@ public class ViewInventoryPanel extends OperationPanel {
 		String startDateStr = startDateField.getText();
 		String endDateStr = endDateField.getText();
 		
-		inventoryCheckVO = repertoryBL.inventoryCheck(startDateStr, endDateStr);
+		inventoryCheckVO = repertoryControl.inventoryCheck(startDateStr, endDateStr);
 
 		if(startDateStr.equals("") || endDateStr.equals("")){
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示", JOptionPane.CLOSED_OPTION);
 		}
 		else{
-			inventoryCheckVO = repertoryBL.inventoryCheck(startDateStr, endDateStr);
+			inventoryCheckVO = repertoryControl.inventoryCheck(startDateStr, endDateStr);
 			enterNumTotalField.setText(inventoryCheckVO.enterTotal+"");
 			enterFeeTotalField.setText(inventoryCheckVO.enterFeeTotal+"");
 			leaveNumTotalField.setText(inventoryCheckVO.leaveTotal+"");

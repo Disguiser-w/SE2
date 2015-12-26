@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import common.ImageGetter;
+
 import businesslogic.datafactory.DataFactory;
 import po.UserPO;
 import presentation.repertoryui.CreateReceiptPanel;
@@ -24,11 +26,18 @@ public class RepertoryMainController {
 	
 	private RepertoryFrame repertoryFrame;
 	
+	private RepertoryController repertoryController;
+	private GoodsController goodsController;
+	private EnterRepertoryReceiptController enterRepertoryReceiptController;
+	private LeaveRepertoryReceiptController leaveRepertoryReceiptController;
+	
 	// UserData的初始化，UserVO的初始化在此进行
 	public RepertoryMainController(String stockManID){
 	//RMI
 		try{
 			userData = DataFactory.getUserData();
+			
+			stockManVO = userPOToVO(userData.findUserByID(stockManID));
 		}catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (RemoteException e1) {
@@ -37,24 +46,36 @@ public class RepertoryMainController {
 			e1.printStackTrace();
 		}
 		
-		try{
-			stockManVO = userPOToVO(userData.findUserByID(stockManID));
-			repertoryFrame = new RepertoryFrame(stockManVO);
-			repertoryFrame.addFuncLabel(new InitializeInformationPanel(stockManVO), "库存信息初始化");
-			WarehousingMainPanel wareHousingMainPanel = new WarehousingMainPanel(repertoryFrame, stockManVO);
-			repertoryFrame.addFuncLabel(wareHousingMainPanel, "入库");
-			repertoryFrame.warehousingMainPanel = wareHousingMainPanel;
-			EXwarehousePanel exwareHousePanel = new EXwarehousePanel(repertoryFrame, stockManVO);
-			repertoryFrame.addFuncLabel(exwareHousePanel, "出库");
-			repertoryFrame.exwarehousePanel = exwareHousePanel;
-			repertoryFrame.addFuncLabel(new ViewInventoryPanel(stockManVO),"库存盘点");
-			repertoryFrame.addFuncLabel(new InventoryVerificationPanel(stockManVO), "库存查看");
-			repertoryFrame.addFuncLabel(new CreateReceiptPanel(stockManVO), "生成单据");
-			repertoryFrame.addFuncLabel(new LookReceiptPanel(repertoryFrame, stockManVO), "查看单据");
-			repertoryFrame.showFrame();
-		}catch(RemoteException exception){
-			exception.printStackTrace();
-		}
+		repertoryController = new RepertoryController(stockManVO.userID);
+		goodsController = new GoodsController();
+		enterRepertoryReceiptController = new EnterRepertoryReceiptController();
+		leaveRepertoryReceiptController = new LeaveRepertoryReceiptController();
+		
+		repertoryFrame = new RepertoryFrame(stockManVO);
+		InitializeInformationPanel initializeInfoPanel = new InitializeInformationPanel(repertoryController, stockManVO);
+		WarehousingMainPanel wareHousingMainPanel = new WarehousingMainPanel(repertoryFrame, repertoryController, goodsController, stockManVO);
+		EXwarehousePanel exwareHousePanel = new EXwarehousePanel(repertoryFrame, repertoryController, goodsController, stockManVO);
+		ViewInventoryPanel viewInventoryPanel = new ViewInventoryPanel(repertoryController, stockManVO);
+		InventoryVerificationPanel inventoryVerificationPanel = new InventoryVerificationPanel(repertoryFrame, repertoryController, stockManVO);
+		CreateReceiptPanel createReceiptPanel = new CreateReceiptPanel(repertoryFrame, repertoryController, goodsController, enterRepertoryReceiptController, leaveRepertoryReceiptController, stockManVO);
+		LookReceiptPanel lookReceiptPanel = new LookReceiptPanel(repertoryFrame, enterRepertoryReceiptController, leaveRepertoryReceiptController, stockManVO);
+		
+		repertoryFrame.initializeInformationPanel = initializeInfoPanel;
+		repertoryFrame.warehousingMainPanel = wareHousingMainPanel;
+		repertoryFrame.exwarehousePanel = exwareHousePanel;
+		repertoryFrame.viewInventoryPanel = viewInventoryPanel;
+		repertoryFrame.inventoryVertificationPanel = inventoryVerificationPanel;
+		repertoryFrame.createReceiptPanel = createReceiptPanel;
+		repertoryFrame.lookReceiptPanel = lookReceiptPanel;
+		
+		repertoryFrame.addFuncLabel(initializeInfoPanel, "库存信息初始化", ImageGetter.getImage("initializeInventoryMessage.png").getImage());
+		repertoryFrame.addFuncLabel(wareHousingMainPanel, "入库", ImageGetter.getImage("enterRepertory.png").getImage());
+		repertoryFrame.addFuncLabel(exwareHousePanel, "出库", ImageGetter.getImage("leaveRepertory.png").getImage());
+		repertoryFrame.addFuncLabel(viewInventoryPanel, "库存盘点", ImageGetter.getImage("viewInventory.png").getImage());
+		repertoryFrame.addFuncLabel(inventoryVerificationPanel, "库存查看", ImageGetter.getImage("inventoryVertification.png").getImage());
+		repertoryFrame.addFuncLabel(createReceiptPanel, "生成单据", ImageGetter.getImage("newReceipt.png").getImage());
+		repertoryFrame.addFuncLabel(lookReceiptPanel, "查看单据", ImageGetter.getImage("reviewReceipt.png").getImage());
+		repertoryFrame.showFrame();
 		
 	}
 	

@@ -4,38 +4,38 @@ import java.util.ArrayList;
 
 import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
+import businesslogicservice.manageblservice.CityDistanceBLService;
 
-public class CityDistanceController {
+public class CityDistanceController implements CityDistanceBLService{
 	
-	private CityDistanceBL cityDistance;
+	private CityDistanceBL cityDistanceBL;
 	
 	public CityDistanceController(){
-		cityDistance = new CityDistanceBL();
+		cityDistanceBL = new CityDistanceBL();
 	}
 	
 	public int addCityDistance(CityDistanceVO cityDistancevo){
-		return cityDistance.addCityDistance(cityDistancevo);
+		return cityDistanceBL.addCityDistance(cityDistancevo);
 	}
 	
 	public int deleteCityDistance(CityDistanceVO cityDistancevo){
-		return cityDistance.deleteCityDistance(cityDistancevo);
+		return cityDistanceBL.deleteCityDistance(cityDistancevo);
 	}
 	
 	public int modifyCityDistance(CityDistanceVO cityDistancevo){
-		return cityDistance.modifyCityDistance(cityDistancevo);
+		return cityDistanceBL.modifyCityDistance(cityDistancevo);
 	}
 	
 	public ArrayList<CityDistanceVO> findCityDistanceBySingle(String city){
-		return cityDistance.findCityDistanceBySingle(city);
+		return cityDistanceBL.findCityDistanceBySingle(city);
 	}
 	
 	public ArrayList<CityDistanceVO> findCityDistanceByBoth(String cityA, String cityB){
-		return cityDistance.findCityDistanceByBoth(cityA, cityB);
+		return cityDistanceBL.findCityDistanceByBoth(cityA, cityB);
 	}
 	
 	public ArrayList<CityDistanceVO> showAllCityDistances(){
-		return cityDistance.showAllCityDistances();
+		return cityDistanceBL.showAllCityDistances();
 	}
-	
 	
 }

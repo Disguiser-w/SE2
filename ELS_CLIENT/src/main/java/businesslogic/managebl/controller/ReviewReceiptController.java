@@ -1,18 +1,66 @@
 package businesslogic.managebl.controller;
 
+import java.util.ArrayList;
+
 import vo.AllReceiptShowVO;
+import vo.CollectionReceiptVO;
+import vo.DistributeReceiptVO;
+import vo.EnIntermediateReceiptVO;
+import vo.EnVehicleReceiptVO;
+import vo.GatheringReceiptVO;
+import vo.OrderAcceptReceiptVO;
+import vo.PaymentReceiptVO;
+import vo.TransferingReceiptVO;
 import businesslogic.managebl.ReviewReceiptBL;
+import businesslogicservice.manageblservice.ReviewReceiptBLService;
 
-public class ReviewReceiptController {
+public class ReviewReceiptController implements ReviewReceiptBLService{
 
-	private ReviewReceiptBL reviewReceipt;
+	private ReviewReceiptBL reviewReceiptBL;
 	
-	public int approve(String ID, Object ob){
-		return reviewReceipt.approve(ID, ob);
+	public ReviewReceiptController(){
+		reviewReceiptBL = new ReviewReceiptBL();
 	}
 	
-	public AllReceiptShowVO getReceiptList(){
-		return reviewReceipt.getAllReceiptList();
+	public int approve(String ID, Object ob){
+		return reviewReceiptBL.approve(ID, ob);
+	}
+	
+	public AllReceiptShowVO getAllReceiptList() {
+		return reviewReceiptBL.getAllReceiptList();
+	}
+	
+	public ArrayList<GatheringReceiptVO> getAllSubmittedGatheringReceipt(){
+		return reviewReceiptBL.getAllSubmittedGatheringReceipt();
+	}
+	
+	public ArrayList<CollectionReceiptVO> getAllSubmittedCollectionReceipt(){
+		return reviewReceiptBL.getAllSubmittedCollectionReceipt();
+	}
+	
+	public ArrayList<PaymentReceiptVO> getAllSubmittedPaymentReceipt(){
+		return reviewReceiptBL.getAllSubmittedPaymentReceipt();
+	}
+
+	public ArrayList<EnIntermediateReceiptVO> getAllSubmittedEnIntermediateReceipt(){
+		return reviewReceiptBL.getAllSubmittedEnIntermediateReceipt();
+	}
+	
+	
+	public ArrayList<TransferingReceiptVO> getAllSubmittedTransferingReceipt(){
+		return reviewReceiptBL.getAllSubmittedTransferingReceipt();
+	}
+
+	public ArrayList<EnVehicleReceiptVO> getAllSubmittedEnVehicleReceipt(){
+		return reviewReceiptBL.getAllSubmittedEnVehicleReceipt();
+	}
+	
+	public ArrayList<OrderAcceptReceiptVO> getAllSubmittedOrderAcceptReceipt(){
+		return reviewReceiptBL.getAllSubmittedOrderAcceptReceipt();
+	}
+	
+	public ArrayList<DistributeReceiptVO> getAllSubmittedDistributeReceipt(){
+		return reviewReceiptBL.getAllSubmittedDistributeReceipt();
 	}
 	
 }

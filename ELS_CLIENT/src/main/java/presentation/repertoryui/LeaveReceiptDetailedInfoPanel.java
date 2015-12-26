@@ -9,18 +9,18 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+
 import type.ReceiptState;
 import vo.LeaveRepertoryReceiptVO;
-import businesslogic.repertorybl.LeaveRepertoryReceiptBL;
+import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
 
 public class LeaveReceiptDetailedInfoPanel extends OperationPanel{
-
 
 	private static final long serialVersionUID = 50L;
 	
 	private RepertoryFrame repertoryFrame;
 
-	private LeaveRepertoryReceiptBL errBL;
+	private LeaveRepertoryReceiptController leaveRepertoryReceiptControl;
 	
 	private String receiptID;
 	
@@ -42,15 +42,15 @@ public class LeaveReceiptDetailedInfoPanel extends OperationPanel{
 	
 	private LeaveRepertoryReceiptVO errvo;
 	
-	public LeaveReceiptDetailedInfoPanel(RepertoryFrame repertoryFrame, String leaveReceiptID){
+	public LeaveReceiptDetailedInfoPanel(RepertoryFrame repertoryFrame, LeaveRepertoryReceiptController leaveRepertoryReceiptController, String leaveReceiptID){
 		
 		this.repertoryFrame = repertoryFrame;
 		
-		errBL = new LeaveRepertoryReceiptBL();
+		leaveRepertoryReceiptControl = leaveRepertoryReceiptController;
 		
 		this.receiptID = leaveReceiptID;
 		
-		errvo = errBL.findLeaveReceiptByReceiptID(receiptID);
+		errvo = leaveRepertoryReceiptControl.findLeaveReceiptByReceiptID(receiptID);
 		
 		categoryLabel = new MyTextLabel("出库单");
 		receiptIDLabel = new MyTextLabel("单据编号");

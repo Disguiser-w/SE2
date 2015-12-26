@@ -14,8 +14,8 @@ import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 
-import businesslogic.managebl.OrganizationBL;
-import businesslogic.userbl.UserBL;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.userbl.controller.UserManageController;
 import vo.OrganizationVO;
 import vo.UserVO;
 import type.ProfessionType;
@@ -28,8 +28,8 @@ public class UserMainPanel extends OperationPanel {
 
 	private AdminFrame adminFrame;
 	
-	private UserBL userBL;
-	private OrganizationBL organizationBL;
+	private UserManageController userManageControl;
+	private OrganizationManageController organizationManageControl;
 	
 	private AddLabel addLabel;
 	private DeleteLabel deleteLabel;
@@ -42,12 +42,12 @@ public class UserMainPanel extends OperationPanel {
 	
 	private int selectedIndex;
 	
-	public UserMainPanel(AdminFrame adminFrame) {
+	public UserMainPanel(AdminFrame adminFrame, UserManageController userController, OrganizationManageController organizationController) {
 		
 		this.adminFrame = adminFrame;
 		
-		this.userBL = new UserBL();
-		this.organizationBL = new OrganizationBL();
+		this.userManageControl = userController;
+		this.organizationManageControl = organizationController;
 		
 		addLabel = new AddLabel("新增用户");
 		deleteLabel = new DeleteLabel("删除用户");
@@ -61,7 +61,7 @@ public class UserMainPanel extends OperationPanel {
 		add(modifyLabel);
 		add(searchField);
 		
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 
 		addListener();
 		setBaseInfos();
@@ -113,7 +113,7 @@ public class UserMainPanel extends OperationPanel {
 
 	private void setBaseInfos() {
 		String[] head = new String[]{"姓名", "用户编号", "职业类型", "所属机构", "薪水策略", "权限类型"};
-		int[] widths = {60, 90, 120, 120, 90, 120};
+		int[] widths = {60, 90, 120, 120, 90, 113};
 		
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
@@ -152,17 +152,17 @@ public class UserMainPanel extends OperationPanel {
 				JOptionPane.showMessageDialog(null, "亲爱的管理员，不可以删除你自己哦！", "删除出错", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			userBL.deleteUser(users.get(selectedIndex).userID);
+			userManageControl.deleteUser(users.get(selectedIndex).userID);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些用户信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			for(int i: selectedIndexs){
-				userBL.deleteUser(users.get(i).userID);
+				userManageControl.deleteUser(users.get(i).userID);
 			}
 		}
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 		messageTable.setInfos(getInfos());
 	}
 	
@@ -195,13 +195,13 @@ public class UserMainPanel extends OperationPanel {
 	//查询界面
 	public void searchui(){
 		String keyword = searchField.getText();
-		users = userBL.findUserByKeyword(keyword);
+		users = userManageControl.findUserByKeyword(keyword);
 		messageTable.setInfos(getInfos());
 	}
 	
 	//刷新界面
 	public void refreshui(){
-		users = userBL.showAllUsers();
+		users = userManageControl.showAllUsers();
 		messageTable.setInfos(getInfos());
 	}
 	
@@ -221,11 +221,11 @@ public class UserMainPanel extends OperationPanel {
 			return "（待总经理分配）";
 		else if(organizationID.endsWith("-CK")){
 			organizationID = organizationID.substring(0,5);
-			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			OrganizationVO organizationvo = organizationManageControl.findOrganization(organizationID);
 			return organizationvo.name+"仓库";
 		}
 		else{
-			OrganizationVO organizationvo = organizationBL.findOrganization(organizationID);
+			OrganizationVO organizationvo = organizationManageControl.findOrganization(organizationID);
 			return organizationvo.name;
 		}
 	}

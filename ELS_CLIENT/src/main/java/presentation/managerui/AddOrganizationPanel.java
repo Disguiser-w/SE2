@@ -224,7 +224,7 @@ public class AddOrganizationPanel extends OperationPanel {
 		
 		OKLabel.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnLabel.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 35 / 48,
+		returnLabel.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 	}
 	

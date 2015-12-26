@@ -22,7 +22,6 @@ import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
 import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
-import type.ReceiptState;
 import vo.EnterRepertoryReceiptVO;
 import vo.GoodsVO;
 import vo.InventoryVO;
@@ -38,7 +37,6 @@ public class RepertoryBL implements RepertoryBLService{
 	public static LeaveRepertoryReceiptDataService lrrdService;
 	public static GoodsDataService gdService;
 	
-	private String userID;
 	private String repertoryID;
 	
 	public RepertoryBL(String stockManID){
@@ -49,7 +47,6 @@ public class RepertoryBL implements RepertoryBLService{
 			lrrdService = DataFactory.getLeaveRepertoryReceiptData();
 			gdService = DataFactory.getGoodsData();
 			
-			this.userID = stockManID;
 			repertoryID = rdService.findRepertoryByOwnerID(stockManID).getRepertoryID();
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
 			ex.printStackTrace();
@@ -352,7 +349,7 @@ public class RepertoryBL implements RepertoryBLService{
 	}
 	
 	
-	public int AddEnterRepertoryReceipt(String[] goodsIDList, String[] timeList){
+	/*public int AddEnterRepertoryReceipt(String[] goodsIDList, String[] timeList){
 		String now = getTimeNow();
 		try{
 			String receiptPost = errdService.getEnterReceiptPost();
@@ -389,7 +386,7 @@ public class RepertoryBL implements RepertoryBLService{
 			ex.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 	
 	public int getMaxRow(){
 		try{

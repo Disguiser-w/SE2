@@ -8,7 +8,7 @@ import po.EnterRepertoryReceiptPO;
 
 public interface EnterRepertoryReceiptDataService extends Remote {
 
-	public int addEnterRepertoryReceipt(EnterRepertoryReceiptPO lrrpo) throws RemoteException;
+	public int addEnterRepertoryReceipt(EnterRepertoryReceiptPO errpo) throws RemoteException;
 	public int deleteEnterReceipt(String receiptID) throws RemoteException;
 	public int sendEnterReceipt(String receiptID)throws RemoteException;
 	public int approveEnterReceipt(String receiptID)throws RemoteException;

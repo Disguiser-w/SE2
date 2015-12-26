@@ -11,7 +11,7 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import businesslogic.managebl.ReviewReceiptBL;
-
+import businesslogic.managebl.controller.ReviewReceiptController;
 import type.ReceiptState;
 import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
@@ -28,7 +28,7 @@ public class CheckReceiptPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 16L;
 	
-	private ReviewReceiptBL receiptBL;
+	private ReviewReceiptController receiptBL;
 	
 	private MyLabel detailedInfoLabel;
 	private MyLabel modifyLabel;
@@ -55,9 +55,9 @@ public class CheckReceiptPanel extends OperationPanel {
 	
 //	private LocationHelper helper;
 
-	public CheckReceiptPanel() {
+	public CheckReceiptPanel(ReviewReceiptController reviewReceiptController){
 
-		receiptBL = new ReviewReceiptBL();
+		receiptBL = reviewReceiptController;
 		
 		modifyLabel = new MyLabel("修改");
 		approveLabel = new MyLabel("通过");

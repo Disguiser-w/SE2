@@ -8,16 +8,16 @@ import java.awt.event.MouseEvent;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
-
 import presentation.commonui.OperationPanel;
-import businesslogic.repertorybl.RepertoryBL;
+
+import businesslogic.repertorybl.controller.RepertoryController;
 import vo.UserVO;
 
 public class InitializeInformationPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 147L;
 
-	private RepertoryBL repertoryBL;
+	private RepertoryController repertoryControl;
 	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -38,9 +38,9 @@ public class InitializeInformationPanel extends OperationPanel {
 	
 	private MyTextLabel suggestLabel;
 
-	public InitializeInformationPanel(UserVO userVO) {
+	public InitializeInformationPanel(RepertoryController repertoryController, UserVO userVO) {
 		
-		repertoryBL = new RepertoryBL(userVO.userID);
+		repertoryControl = repertoryController;
 		
 		maxRowLabel = new MyTextLabel("请输入最大排数");
 		maxRowField = new MyTextField();
@@ -56,7 +56,7 @@ public class InitializeInformationPanel extends OperationPanel {
 		
 		maxRatioTip = new MyTextLabel("100以内的正整数");
 		
-		suggestLabel = new MyTextLabel("默认值：最大排数:"+repertoryBL.getMaxRow()+"，最大架数:"+repertoryBL.getMaxShelf()+"，最大位数:"+repertoryBL.getMaxDigit()+"，警戒比例:"+repertoryBL.getMaxRatio());
+		suggestLabel = new MyTextLabel("默认值：最大排数:"+repertoryControl.getMaxRow()+"，最大架数:"+repertoryControl.getMaxShelf()+"，最大位数:"+repertoryControl.getMaxDigit()+"，警戒比例:"+repertoryControl.getMaxRatio());
 
 		OKLabel = new MyLabel("确认");
 
@@ -89,7 +89,7 @@ public class InitializeInformationPanel extends OperationPanel {
 				else
 					warningRatio = Integer.parseInt(maxRatioField.getText());
 				
-				int returnNum = repertoryBL.inventoryInitialization(maxRow, maxShelf, maxDigit, warningRatio);
+				int returnNum = repertoryControl.inventoryInitialization(maxRow, maxShelf, maxDigit, warningRatio);
 				maxRowField.setText("");
 				maxShelfField.setText("");
 				maxBitField.setText("");
@@ -177,7 +177,7 @@ public class InitializeInformationPanel extends OperationPanel {
 	
 	public void successInitialization(){
 		JOptionPane.showMessageDialog(null, "初始化成功(●'◡'●)", "库存信息初始化成功", JOptionPane.INFORMATION_MESSAGE);
-		suggestLabel.setText("Row:"+repertoryBL.getMaxRow()+"  Shelf:"+repertoryBL.getMaxShelf()+"  Digit:"+repertoryBL.getMaxDigit()+"  WarningRatio:"+repertoryBL.getMaxRatio());
+		suggestLabel.setText("Row:"+repertoryControl.getMaxRow()+"  Shelf:"+repertoryControl.getMaxShelf()+"  Digit:"+repertoryControl.getMaxDigit()+"  WarningRatio:"+repertoryControl.getMaxRatio());
 	}
 	
 	public void failedInitialization(){
