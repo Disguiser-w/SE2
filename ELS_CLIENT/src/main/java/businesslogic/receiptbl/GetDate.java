@@ -33,7 +33,7 @@ public class GetDate {
 	
 	
 	public static void main(String[] args){
-		String temp = getTime();
+		String temp = getdate();
 		System.out.println(temp);
 	}
 }

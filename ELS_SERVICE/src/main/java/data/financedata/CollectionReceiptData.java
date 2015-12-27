@@ -233,10 +233,10 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public static void main(String[] args) throws RemoteException{
 		
 		CollectionReceiptData collectionData=new CollectionReceiptData();
-		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "20151221", "鼓楼");
-		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "20151223", "仙林");
-		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151202", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "20151222", "鼓楼");
-		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151204", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "20151224", "鼓楼");
+		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151221", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "2015-12-21", "鼓楼");
+		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151223", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "2015-12-23", "仙林");
+		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151222", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "2015-12-22", "鼓楼");
+		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151224", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "2015-12-24", "鼓楼");
 		collectionData.createCollection(po3);
 		collectionData.createCollection(po1);
 		collectionData.createCollection(po2);

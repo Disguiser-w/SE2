@@ -220,9 +220,8 @@ public class ReceiptPanel_new extends  OperationPanel {
 		collectionReceiptInfo.addMouseListener(new MouseAdapter() {
 			
 			public void mouseClicked(MouseEvent e) {
-				setCollectionBaseInfo();
-				changeTable(collectionTable);
-				collectionTable.repaint();
+				showCollection();
+				
 			}
 		});
 		
@@ -231,9 +230,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 		 * */
 		paymentReceiptInfo.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-				setPaymentBaseInfo();
-				changeTable(paymentTable);
-				paymentTable.repaint();
+				showPayment();
 			}
 		});
 		sendButton.addMouseListener(new MouseAdapter() {
@@ -264,6 +261,23 @@ public class ReceiptPanel_new extends  OperationPanel {
 		
 	}
 
+	/**
+	 * 刷新付款单table
+	 * */
+	public void showCollection(){
+		setCollectionBaseInfo();
+		changeTable(collectionTable);
+		collectionTable.repaint();
+	}
+	
+	/**
+	 * 刷新入款单table
+	 * */
+	public void showPayment(){
+		setPaymentBaseInfo();
+		changeTable(paymentTable);
+		paymentTable.repaint();
+	}
 	/**
 	 * 不需要了，因为一旦生成单据就自动提交给总经理
 	 * */
@@ -362,12 +376,12 @@ public class ReceiptPanel_new extends  OperationPanel {
 
 	public void new1ui() {
 		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame,user,organizationController,accountManagementPanel_main
-				,costIncomeReceiptPanel_new,logDiaryPanel));
+				,costIncomeReceiptPanel_new,logDiaryPanel,this));
 	}
 
 	public void new2ui() {
 		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame,user,accountManagementPanel_main
-				,costIncomeReceiptPanel_new,logDiaryPanel));
+				,costIncomeReceiptPanel_new,logDiaryPanel,this));
 	}
 
 }

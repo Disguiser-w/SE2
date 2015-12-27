@@ -84,7 +84,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 			}
 		});
 
-
+		
 		collectionReceiptVOs = controller.showBSList("2011-01-01", GetDate.getdate()).cvos;
 		paymentReceiptVOs = controller.showBSList("2010-01-01", GetDate.getdate()).pvos;
 		setBaseInfo();

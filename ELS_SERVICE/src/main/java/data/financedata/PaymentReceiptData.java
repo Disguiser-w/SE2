@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import common.FileGetter;
 import po.PaymentReceiptPO;
 import type.ReceiptState;
-import type.ReceiptType;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{

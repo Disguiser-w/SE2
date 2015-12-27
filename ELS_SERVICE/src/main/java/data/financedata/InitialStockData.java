@@ -24,7 +24,6 @@ import type.ProfessionType;
 import type.SalaryPlanType;
 import type.Sexuality;
 import dataservice.financedataservice.InitialStockDataService;
-import file.JXCFile;
 
 public class InitialStockData extends UnicastRemoteObject implements InitialStockDataService{
 
@@ -33,7 +32,6 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	 */
 	private static final long serialVersionUID = 1L;
 
-	JXCFile file;
 	public InitialStockData() throws RemoteException {
 		super();
 	}

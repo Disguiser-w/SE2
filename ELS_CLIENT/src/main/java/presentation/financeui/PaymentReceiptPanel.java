@@ -62,9 +62,10 @@ public class PaymentReceiptPanel extends OperationPanel {
 	public AccountManagementPanel_main accountManagementPanel_main;
 	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
 	public LogDiaryPanel logDiaryPanel;
+	public ReceiptPanel_new receiptPanel_new;
 
 	public PaymentReceiptPanel(PaymentReceiptBLController controller,FinanceFrame parent,UserVO user,AccountManagementPanel_main accountManagementPanel_main,
-			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel,ReceiptPanel_new receiptPanel_new) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
@@ -72,6 +73,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		this.accountManagementPanel_main = accountManagementPanel_main;
 		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
 		this.logDiaryPanel = logDiaryPanel;
+		this.receiptPanel_new = receiptPanel_new;
 		dateChooseLabel = new JLabel("日期");
 		dateOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -281,6 +283,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 			accountManagementPanel_main.refreshui();
 			costIncomeReceiptPanel_new.refresh();
 			logDiaryPanel.refreshui();
+			receiptPanel_new.showPayment();
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

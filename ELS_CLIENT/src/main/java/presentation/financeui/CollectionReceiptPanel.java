@@ -65,11 +65,12 @@ public class CollectionReceiptPanel extends OperationPanel {
 	public AccountManagementPanel_main accountManagementPanel_main;
 	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
 	public LogDiaryPanel logDiaryPanel;
+	public ReceiptPanel_new receiptPanel_new;
 	String hallID_str;
 	String date_str;
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
 			UserVO user,OrganizationManageController organizationController,AccountManagementPanel_main accountManagementPanel_main,
-			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel,ReceiptPanel_new receiptPanel_new) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
@@ -78,7 +79,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		this.accountManagementPanel_main = accountManagementPanel_main;
 		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
 		this.logDiaryPanel=logDiaryPanel;
-		
+		this.receiptPanel_new = receiptPanel_new;
 		dateChooseLabel =new JLabel("日期");
 		collectionOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -288,6 +289,7 @@ public class CollectionReceiptPanel extends OperationPanel {
        	    LogDiaryVO logvo = new LogDiaryVO(GetDate.getTime(), user, "创建了一张合计收款单");
        	   bl.addLogDiary(logvo, GetDate.getTime());
 	         logDiaryPanel.refreshui();
+	         receiptPanel_new.showCollection();
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}
