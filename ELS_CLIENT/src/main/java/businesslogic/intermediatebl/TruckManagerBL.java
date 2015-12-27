@@ -5,9 +5,13 @@ import java.util.ArrayList;
 
 import po.TruckPO;
 import type.OperationState;
+import vo.IntermediateVO;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.TruckVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.getDate;
 import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
@@ -17,14 +21,22 @@ public class TruckManagerBL implements TruckManageBLService {
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
 	private ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
 
-	private OrganizationVO intermediateCentre;
+	private OrganizationVO intermediateCenter;
+	private IntermediateVO intermediate;
+
+	private LogDiaryBL logDiary;
 
 	public TruckManagerBL(ArrayList<TruckVO> truckList,
 			OrganizationVO intermediateCentre,
-			IntermediateDataService intermediateData) {
+			IntermediateDataService intermediateData,
+			IntermediateVO intermediate) {
+		// TODO 自动生成的方法存根
 		this.truckList = truckList;
-		this.intermediateCentre = intermediateCentre;
+		this.intermediateCenter = intermediateCentre;
 		this.intermediateData = intermediateData;
+		this.intermediate = intermediate;
+
+		logDiary = new LogDiaryBL();
 	}
 
 	public ArrayList<TruckVO> showTruckList() {
@@ -38,6 +50,8 @@ public class TruckManagerBL implements TruckManageBLService {
 		TruckVO truck_add = new TruckVO(ID, destination);
 		truckList.add(truck_add);
 		saveTruckList();
+		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
+				"在本中转中心汽车列表中新增了一架汽车"), getDate.getdate());
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -47,6 +61,8 @@ public class TruckManagerBL implements TruckManageBLService {
 			if (truck.ID.equals(s)) {
 				truckList.remove(truck);
 				saveTruckList();
+				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
+						intermediate, "在本中转中心汽车列表中删除了一架汽车"), getDate.getdate());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -59,6 +75,8 @@ public class TruckManagerBL implements TruckManageBLService {
 			if (truck.ID.equals(truck_modify.ID)) {
 				truckList.set(truckList.indexOf(truck), truck_modify);
 				saveTruckList();
+				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
+						intermediate, "在本中转中心中修改了一家汽车信息"), getDate.getdate());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -76,9 +94,10 @@ public class TruckManagerBL implements TruckManageBLService {
 
 	public OperationState saveTruckList() throws RemoteException {
 		// TODO 自动生成的方法存根
-		for (TruckVO train : truckList)
-			truckList_temp.add(IntermediateMainController.voToPO(train));
-		intermediateData.saveTruckList(intermediateCentre.organizationID,
+		for (TruckVO truck : truckList)
+			truckList_temp.add(IntermediateMainController.voToPO(truck));
+		System.out.println(intermediateCenter.organizationID);
+		intermediateData.saveTruckList(intermediateCenter.organizationID,
 				truckList_temp);
 		return OperationState.SUCCEED_OPERATION;
 	}
