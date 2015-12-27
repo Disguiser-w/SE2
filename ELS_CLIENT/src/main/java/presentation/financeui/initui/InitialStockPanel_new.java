@@ -350,8 +350,8 @@ public class InitialStockPanel_new extends OperationPanel{
 					}
 					else{
 					LogDiaryBL bl = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "新建了一套账");
-					bl.addLogDiary(vo, GetDate.getdate());
+					LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "新建了一套账");
+					bl.addLogDiary(vo, GetDate.getTime());
 					logDiaryPanel.refreshui();
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){

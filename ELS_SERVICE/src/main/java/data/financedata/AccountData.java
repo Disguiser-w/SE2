@@ -1,13 +1,19 @@
 package data.financedata;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
 import po.AccountPO;
 import dataservice.financedataservice.AccountDataService;
-import file.JXCFile;
 
 public class AccountData extends UnicastRemoteObject implements AccountDataService{
 
@@ -22,24 +28,75 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	 * JXCFile中包括读文件，写文件（修改后再写文件），写入单对象
 	 * 那我参数为string的怎么办2333
 	 * */
-	JXCFile file;
+//	JXCFile file;
 	public AccountData() throws RemoteException{
 		super();
-		file=new JXCFile("info/accountInfo/account.ser");
 	}
 	
+	/**
+	 * 获取文件中的account
+	 * */
+	public ArrayList<AccountPO> getAccountPOs(){
+		String path = "accountInfo/account.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<AccountPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<AccountPO> accountPOs = (ArrayList<AccountPO>) in.readObject();
+			in.close();
+			return accountPOs;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
+	/**
+	 * 将po存入文件
+	 * */
+	public int saveAccountPOs(ArrayList<AccountPO> pos){
+		String path = "accountInfo/account.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
 	/**
 	 * 添加账户：用户名不重复时可添加
 	 * */
 	public int addAccount(AccountPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		if(findbyName(po.getName())==null){
-			file.write(po);
-			return 0;
+        ArrayList<AccountPO> accountPOs = getAccountPOs();
+		
+		for(int i=0; i<accountPOs.size(); i++){
+			AccountPO p = accountPOs.get(i);
+			if (po.getName().equals(p.getName())) {
+				System.out.println("账户已存在");
+				return -1;
+			}
 		}
-		else
-		return 1;
+		accountPOs.add(po);
+		saveAccountPOs(accountPOs);
+		return 0;
+
 	}
 
 	/**
@@ -47,154 +104,112 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 	 * */
 	public int deleteAccount(AccountPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-//		ArrayList<AccountPO> accountPOs=new ArrayList<AccountPO>();
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取account.ser失败");
-			return 1;
-		}
-		for(Object o:os){
-			AccountPO accountpo=(AccountPO) o;
-			if(accountpo.getName().equals(po.getName())){
-				os.remove(accountpo);
-				break;
-			}
-		}
-		
-		file.writeM(os);
-		return 0;
+		int isExsit=-1;
+	   ArrayList<AccountPO> accountPOs = getAccountPOs();
+	  for(int i=0;i<accountPOs.size();i++){
+		if(accountPOs.get(i).getName().equals(po.getName())){
+			accountPOs.remove(i);
+			isExsit = 0;
+			break;
+		 }
+	   }
+	  saveAccountPOs(accountPOs);
+	  return isExsit;
 	}
-
+		
 	/**
 	 * 修改账户
 	 * */
 	public int modifyAccount(AccountPO po, String name) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		if(findbyName(po.getName())==null){
-			System.out.println("需要修改的账户不存在");
-			return 1;
-		}
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
-			return 1;
-		}
-		for(int i=0;i<os.size();i++){
-			AccountPO accountpo=(AccountPO) os.get(i);
-			if(accountpo.getName().equals(po.getName())){
-				accountpo.setName(name);
-				break;
+		int isExsit = -1 ;
+		ArrayList<AccountPO> accountPOs = getAccountPOs();
+		for(int i=0;i<accountPOs.size();i++){
+			if(accountPOs.get(i).getName().equals(po.getName())){
+				isExsit = 0;
+				accountPOs.get(i).setName(name);
 			}
 		}
-		file.writeM(os);
-		return 0;
+		saveAccountPOs(accountPOs);
+		return isExsit;
 	}
 
 	public AccountPO findbyName(String name) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
-			return null;
-		}
-		for(Object o:os){
-			AccountPO po=(AccountPO) o;
-			if(po.getName().equals(name)){
-				return po;
+		ArrayList<AccountPO> accountPOs = getAccountPOs();
+		for(int i=0;i<accountPOs.size();i++){
+			if(accountPOs.get(i).getName().equals(name)){
+			return accountPOs.get(i);
 			}
 		}
-		//不存在该用户：返回null
 		return null;
 	}
 
 	public ArrayList<AccountPO> findByKeyword(String s) throws RemoteException {
-		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
-			return null;
-		}
-		ArrayList<AccountPO> right=new ArrayList<AccountPO>();
-		for(Object o:os){
-			AccountPO po=(AccountPO) o;
-			if(po.getName().contains(s)){
-				right.add(po);
+	     ArrayList<AccountPO> accountPOs = getAccountPOs();
+	     ArrayList<AccountPO> result = new ArrayList<AccountPO>();
+		for(int i=0;i<accountPOs.size();i++){
+			if(accountPOs.get(i).getName().contains(s)){
+				result.add(accountPOs.get(i));
 			}
 		}
-		return right; 
+		return result;
+		
 	}
 
 	public ArrayList<AccountPO> showAll() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
+		ArrayList<AccountPO> accountPOs = getAccountPOs();
+		if(accountPOs!=null){
+		return accountPOs;
+		}
+		else{
 			return null;
 		}
-		ArrayList<AccountPO> accountpos=new ArrayList<AccountPO>();
-		for(Object o:os){
-			AccountPO accountpo=(AccountPO) o;
-			accountpos.add(accountpo);
-		}
-		return accountpos;
 	}
 
 	public int addMoney(String name, double m) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
-			return 1;
-		}
-		for(int i=0;i<os.size();i++){
-			AccountPO accountpo=(AccountPO) os.get(i);
-			if(accountpo.getName().equals(name)){
-				accountpo.addMoney(m);
-				break;
+		int isExsit=-1;
+		 ArrayList<AccountPO> accountPOs = getAccountPOs();
+		for(int i=0;i<accountPOs.size();i++){
+			if(accountPOs.get(i).getName().equals(name)){
+				accountPOs.get(i).addMoney(m);
+				isExsit = 0;
 			}
 		}
-		file.writeM(os);
-		return 0;
+		saveAccountPOs(accountPOs);
+		return isExsit;
+
 	}
 
 	public int delMoney(String name, double m) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/accountInfo/account.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取文件account.ser失败");
-			return 1;
-		}
-		for(int i=0;i<os.size();i++){
-			AccountPO accountpo=(AccountPO) os.get(i);
-			if(accountpo.getName().equals(name)){
-				accountpo.delMoney(m);
-				break;
+		int isExsit=-1;
+		 ArrayList<AccountPO> accountPOs = getAccountPOs();
+		for(int i=0;i<accountPOs.size();i++){
+			if(accountPOs.get(i).getName().equals(name)){
+				accountPOs.get(i).delMoney(m);
+				isExsit = 0;
 			}
 		}
-		file.writeM(os);
-		return 0;
+		saveAccountPOs(accountPOs);
+		return isExsit;
 	}
 	
 	public static void main(String[] args) throws RemoteException{
 		AccountData data=new AccountData();
-		
-////		AccountPO po=data.findbyName("刘钦");
-////		System.out.println("Data中的"+po.getMoney());
-		AccountPO po=new AccountPO("本宝宝", 200);
-//		data.modifyAccount(po, "其他宝宝");
-		data.addAccount(po);
+
+		AccountPO po = data.findbyName("王丽莉");
+		System.out.println(po.getMoney());
+//		data.addMoney("王丽莉", 200);
 		ArrayList<AccountPO> pos=data.showAll();
+		ArrayList<AccountPO> hh=data.findByKeyword("营业厅");
+		System.out.println(hh.get(0).getName());
 		for(AccountPO p:pos){
 			System.out.println("Name: "+p.getName()+" "+p.getMoney());
 		}
-//		
+	
 //		AccountPO po=data.findbyName("刘钦");
 //		data.deleteAccount(po);
 //		System.out.println("----------------------------------------");
@@ -229,40 +244,7 @@ public class AccountData extends UnicastRemoteObject implements AccountDataServi
 			*/
 	
 		
-//		AccountData data;
-//		----------------------------------------------------------
-//		try {
-//			data = new AccountData();
-//        --------------------------------------------------------------
-			
-			AccountPO po1=new AccountPO("鼓楼", 100);
-			AccountPO po2=new AccountPO("总账",10000);
-			AccountPO po3=new AccountPO("玄武",100);
-			AccountPO po4=new AccountPO("钟楼",1000);
-			data.addAccount(po1);
-			data.addAccount(po2);
-			data.addAccount(po3);
-			data.deleteAccount(po1);
-			data.addAccount(po4);
-			
-//			----------------------------------------------------------------------------
-//			ArrayList<AccountPO> pos=data.showAll();
-//			for(AccountPO p:pos){
-//				System.out.println("Name: "+p.getName());
-//			}
-//			System.out.println("---------------------------------------------------");
-//			ArrayList<AccountPO> pos_key=data.findByKeyword("楼");
-//			for(AccountPO p:pos_key){
-//				System.out.println("Name:  "+p.getName());
-//			}
-//			------------------------------------------------------------------------------
-			
- //			AccountPO po=data.findbyName("鼓楼");
-//			System.out.println("Name: "+po.getName()+"Money: "+po.getMoney());
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 		
 	}
 

@@ -122,8 +122,8 @@ public class AccountManagementPanel_modify extends OperationPanel{
 				if(result==0){
 					accountMainPanel.refreshui();
 					LogDiaryBL log = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "修改了一个账户");
-					log.addLogDiary(vo,GetDate.getdate());
+					LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "修改了一个账户");
+					log.addLogDiary(vo,GetDate.getTime());
 					logDiaryPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "修改账户成功！", "提示",
 							JOptionPane.CLOSED_OPTION);

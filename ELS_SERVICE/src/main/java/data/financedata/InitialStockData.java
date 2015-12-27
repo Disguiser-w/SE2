@@ -2,7 +2,10 @@ package data.financedata;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -33,9 +36,8 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	JXCFile file;
 	public InitialStockData() throws RemoteException {
 		super();
-
 	}
-
+	
 	/**
 	 * 将InitInfoPO中的信息写入InitInfo.ser
 	 * 我好像把期初建账理解错了23333
@@ -43,10 +45,25 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	 * */
 	public int initInfo(InitInfoPO po, String time) throws RemoteException {
 		// TODO Auto-generated method stub
-		String path = "info/"+"initInfo/"+time+"-initInfo.ser";
-		JXCFile file = new JXCFile(path);
-		file.write(po);
+		String path = "initInfo/"+time+"-initInfo.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(po);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return 0;
+
 	}
 
 

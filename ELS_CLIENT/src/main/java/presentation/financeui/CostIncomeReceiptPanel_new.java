@@ -44,8 +44,7 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		this.financeFrame = parent;
 
 		beginTime = "2010-01-01";
-		endTime = GetDate.getdate().substring(0, 4) + "-" + GetDate.getdate().substring(4, 6) + "-"
-				+ GetDate.getdate().substring(6);
+		endTime = GetDate.getdate();
 		ID = controller.getCostIncomeListID();
 //		function = new JLabel("成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");

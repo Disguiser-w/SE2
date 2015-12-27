@@ -31,15 +31,15 @@ public class BusinessStatementReceiptBLController implements BusinessstatementRe
 	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 		BusinessStatementReceiptBLController controller=new BusinessStatementReceiptBLController();
-		BusinessStatementReceiptVO vo=controller.showBSList("20121010", "20151206");
+		BusinessStatementReceiptVO vo=controller.showBSList("2010-01-01", "2016-01-10");
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
-		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
+//		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
 		for(CollectionReceiptVO v:cvos){
 			System.out.println(v.ID);
 		}
-		for(PaymentReceiptVO v2:pvos){
-			System.out.println(v2.ID+" "+v2.userID+" "+v2.date+" "+v2.cost);
-		}
+//		for(PaymentReceiptVO v2:pvos){
+//			System.out.println(v2.ID+" "+v2.userID+" "+v2.date+" "+v2.cost);
+//		}
 	}
 
 }
