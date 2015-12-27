@@ -25,9 +25,9 @@ import type.OrderState;
 import type.OrganizationType;
 
 public class ExpressData extends UnicastRemoteObject implements ExpressDataService {
-	
+
 	private GoodsData goodsData;
-	
+
 	public ExpressData() throws RemoteException {
 		super();
 		goodsData = new GoodsData();
@@ -80,23 +80,15 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		else// 首次生成
 		{
 			t = new AVLTree<String, String>();
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-
+			FileGetter.createFile(file);
 		}
-		
-		//新建一个Goods记录以便仓库管理员使用
-		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight()+po.getPackingExpense(),
+
+		// 新建一个Goods记录以便仓库管理员使用
+		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight() + po.getPackingExpense(),
 				po.getRecipientOrganization(), po.getSenderOrganization());
 		goodsData.addGoods(newGood);
 		System.out.println(po.getSenderAddress());
-		
-		
+
 		// 获取今日时间
 		String time = getTime();
 
@@ -125,8 +117,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		try {
 			ArrayList<OrderPO> orderPOs = null;
 			if (!orderFile.exists()) {
-				orderFile.getParentFile().mkdirs();
-				orderFile.createNewFile();
+				FileGetter.createFile(orderFile);
 				orderPOs = new ArrayList<OrderPO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(orderFile));
@@ -511,8 +502,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 		try {
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 			}
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			t = (AVLTree<String, String>) in.readObject();
@@ -548,8 +538,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 			File file2 = FileGetter.getFile("expressInfo/025001-express.dat");
 			if (!file2.exists()) {
-				file2.getParentFile().mkdirs();
-				file2.createNewFile();
+				FileGetter.createFile(file2);
 			}
 			ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
 			ExpressPO epo = new ExpressPO("狗剩", "KD-00001", "2.5", new ArrayList<String>(), po, new ArrayList<String>(),

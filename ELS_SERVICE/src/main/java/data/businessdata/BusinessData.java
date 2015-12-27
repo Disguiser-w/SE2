@@ -103,8 +103,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPOs = null;
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 				orderAcceptReceiptPOs = new ArrayList<OrderAcceptReceiptPO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -189,8 +188,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 
 			ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = null;
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 				enVehicleReceiptPOs = new ArrayList<EnVehicleReceiptPO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -220,8 +218,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			ArrayList<VehiclePO> vehiclePOs = null;
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 				vehiclePOs = new ArrayList<VehiclePO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -358,8 +355,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(grp);
@@ -427,15 +423,14 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			throws RemoteException {
 		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
 
-		File dir = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");
+		File file = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");
 
 		try {
-			if (!dir.exists()) {
-				dir.getParentFile().mkdirs();
-				dir.createNewFile();
+			if (!file.exists()) {
+				FileGetter.createFile(file);
 			}
 
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(dir));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
 			in.close();
 			pos.add(po);
@@ -486,8 +481,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			ArrayList<DistributeReceiptPO> distributeReceiptPOs = null;
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 				distributeReceiptPOs = new ArrayList<DistributeReceiptPO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -539,8 +533,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ArrayList<DriverPO> driverPOs = null;
 
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 				driverPOs = new ArrayList<DriverPO>();
 			} else {
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -923,9 +916,10 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException {
 		File file = FileGetter.getFile("organizationInfo/organization.ser");
 
-		if (!file.exists()){System.out.println("notfind");
+		if (!file.exists()) {
+			System.out.println("notfind");
 			return new ArrayList<OrganizationPO>();
-			
+
 		}
 
 		try {
@@ -949,8 +943,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			File file = FileGetter.getFile("driverInfo/025-0-driver.dat");
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",

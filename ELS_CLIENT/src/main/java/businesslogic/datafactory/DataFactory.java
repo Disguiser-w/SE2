@@ -36,11 +36,7 @@ public class DataFactory {
 		try {
 
 			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
-
 			address = in.next();
-			System.out.println(address);
-
-			//address = in.next();
 			address = "localhost:8888";
 
 			in.close();
