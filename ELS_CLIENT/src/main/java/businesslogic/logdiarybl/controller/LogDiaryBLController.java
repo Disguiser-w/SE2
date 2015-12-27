@@ -1,6 +1,5 @@
 package businesslogic.logdiarybl.controller;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import vo.LogDiaryVO;
@@ -13,7 +12,7 @@ public class LogDiaryBLController implements LogDiaryBLService{
 	public LogDiaryBLController(){
 		logDiaryBL = new LogDiaryBL();
 	}
-	public int addLogDiary(LogDiaryVO vo, String time) throws RemoteException {
+	public int addLogDiary(LogDiaryVO vo, String time) {
 		// TODO Auto-generated method stub
 		return logDiaryBL.addLogDiary(vo, time);
 	}
