@@ -47,19 +47,19 @@ public class TestService {
 	public static void main(String[] args) {
 
 		try {
-	
-			
-			byte[] b = new byte[3];
-			in.read(b);
-			in.close();
-			if (b[0] == -17 && b[1] == -69 && b[2] == -65)
-			System.out.println("：编码为UTF-8");
-			else
-			System.out.println("：可能是GBK，也可能是其他编码");
-			
+
+//			
+//			byte[] b = new byte[3];
+////			in.read(b);
+////			in.close();
+//			if (b[0] == -17 && b[1] == -69 && b[2] == -65)
+//			System.out.println("：编码为UTF-8");
+//			else
+//			System.out.println("：可能是GBK，也可能是其他编码");
+//			
 			
 //			br.close();
-			String address = "";
+			String address = "localhost";
 			System.setProperty("java.rmi.server.hostname", address);
 
 			ExpressDataService expressData = new ExpressData();
