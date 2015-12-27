@@ -3,14 +3,18 @@
 
 package data.financedata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import file.JXCFile;
+import common.FileGetter;
 import po.PaymentReceiptPO;
 import type.ReceiptState;
-import type.ReceiptType;
 import dataservice.financedataservice.PaymentReceiptDataService;
 
 public class PaymentReceiptData extends UnicastRemoteObject implements PaymentReceiptDataService{
@@ -18,55 +22,96 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JXCFile file;
 	public PaymentReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("info/paymentInfo/payment.ser");
+	}
+	
+	/**
+	 * 读取所有的入款单
+	 * */
+	public ArrayList<PaymentReceiptPO> getPaymentReceiptPOs(){
+		String path = "paymentInfo/payment.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<PaymentReceiptPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<PaymentReceiptPO> paymentReceiptPOs = (ArrayList<PaymentReceiptPO>) in.readObject();
+			in.close();
+			return paymentReceiptPOs;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	/**
+	 * 存储入款单
+	 * */
+	public int savePaymentReceiptPOs(ArrayList<PaymentReceiptPO> pos){
+		String path = "paymentInfo/payment.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			FileGetter.createFile(file);
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+		
 	}
 
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
-		file=new JXCFile("info/paymentInfo/payment.ser");
+		ArrayList<PaymentReceiptPO> payments = getPaymentReceiptPOs();
 		po.setState(ReceiptState.SUBMIT);
-		ArrayList<PaymentReceiptPO> ppos = getAllPaymentReceipt();
-		boolean isExsit = false;
-		if(ppos!=null){
-		for(PaymentReceiptPO p : ppos){
-			if(po.getDate().substring(0,7).equals(p.getDate().substring(0,7))){
-				isExsit = true;
-			}
-		}
-		}
-		if(isExsit == true){
+		if(findByID(po.getID())!=null){
+			System.out.println("付款单已存在");
 			return -1;
 		}
 		else{
-		file.write(po);
+		payments.add(po);
+		savePaymentReceiptPOs(payments);
 		return 0;
 		}
+//		file=new JXCFile("info/paymentInfo/payment.ser");
+//		po.setState(ReceiptState.SUBMIT);
+//		ArrayList<PaymentReceiptPO> ppos = getAllPaymentReceipt();
+//		boolean isExsit = false;
+//		if(ppos!=null){
+//		for(PaymentReceiptPO p : ppos){
+//			if(po.getDate().substring(0,7).equals(p.getDate().substring(0,7))){
+//				isExsit = true;
+//			}
+//		}
+//		}
+//		if(isExsit == true){
+//			return -1;
+//		}
+//		else{
+//		file.write(po);
+//		return 0;
+//		}
 	}
 
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/paymentInfo/payment.ser");
-//		ArrayList<Object> payment=file.read();
-		ArrayList<Object> payment=file.read();
-		if(payment==null){
-			System.out.println("读文件collection.ser失败或者文件为空");
-			return null;
-		}
-		else{
-			ArrayList<PaymentReceiptPO> buffer=new ArrayList<PaymentReceiptPO>();
-			for(Object o:payment){
-				PaymentReceiptPO p=(PaymentReceiptPO) o;
-				buffer.add(p);
+		if(getPaymentReceiptPOs()!=null){
+			return getPaymentReceiptPOs();
 			}
-			return buffer;
-		}
+			else{
+				return null;
+			}
 	}
 	
 	public int getNum()  throws RemoteException{
-		file=new JXCFile("info/paymentInfo/payment.ser");
 		return 0;
 	}
 	
@@ -84,38 +129,33 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * success
 	 * */
 	public int delete(String ID) throws RemoteException{
-		file=new JXCFile("info/paymentInfo/payment.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("文件为空");
-			return 1;
-		}
-		for(int i=0;i<os.size();i++){
-			PaymentReceiptPO po=(PaymentReceiptPO) os.get(i);
-			if(po.getID().equals(ID)){
-				os.remove(i);
-				System.out.println("remove successfully!");
+		int isExsit=-1;
+		   ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
+		  for(int i=0;i<paymentReceiptPOs.size();i++){
+			if(paymentReceiptPOs.get(i).getID().equals(ID)){
+				paymentReceiptPOs.remove(i);
+				isExsit = 0;
+				break;
+			 }
+		   }
+		  savePaymentReceiptPOs(paymentReceiptPOs);
+		  return isExsit;
 			}
-			}
 
-		file.writeM(os);
-		return 0;
-	}
-
-	public double getSalary()  throws RemoteException{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public double getFare()  throws RemoteException{
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public double getRent()  throws RemoteException{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	public double getSalary()  throws RemoteException{
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	public double getFare()  throws RemoteException{
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	public double getRent()  throws RemoteException{
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 	/**
 	 * 按时间条件获取付款单（查看经营情况表需要）
@@ -123,27 +163,14 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public ArrayList<PaymentReceiptPO> getPayment_right(String beginTime,
 			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/paymentInfo/payment.ser");
-		ArrayList<Object> os=file.read();
-		ArrayList<PaymentReceiptPO> pos=new ArrayList<PaymentReceiptPO>();
-		if(beginTime.compareTo(endTime)>0){
-			System.out.println("输入时间区间格式不对");
-			return null;
-		}
-		else{
-			if(os!=null){
-			for(Object o:os){
-				PaymentReceiptPO p=(PaymentReceiptPO) o;
-				if((p.getDate().compareTo(beginTime)>=0)&&(p.getDate().compareTo(endTime)<=0)){
-					pos.add(p);
-				}
-			}
-			return pos;
-			}
-			else{
-				return null;
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
+		ArrayList<PaymentReceiptPO> result = new ArrayList<PaymentReceiptPO>();
+		for(int i=0;i<paymentReceiptPOs.size();i++){
+			if((paymentReceiptPOs.get(i).getDate().compareTo(beginTime)>=0)&&(paymentReceiptPOs.get(i).getDate().compareTo(endTime)<=0)){
+				result.add(paymentReceiptPOs.get(i));
 			}
 		}
+		return result;
 	}
 
 	/**
@@ -151,52 +178,39 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	 * */
 	public ArrayList<PaymentReceiptPO> getUnapprovedPaymentReceipt() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/paymentInfo/payment.ser");
-		ArrayList<Object> os=file.read();
-		ArrayList<PaymentReceiptPO> unprovedPOs=new ArrayList<PaymentReceiptPO>();
-		for(Object o:os){
-			PaymentReceiptPO po=(PaymentReceiptPO) o;
-			if(po.getState()==ReceiptState.SUBMIT){
-				unprovedPOs.add(po);
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
+		ArrayList<PaymentReceiptPO> result = new ArrayList<PaymentReceiptPO>();
+		
+		for(int i=0;i<paymentReceiptPOs.size();i++){
+			if(paymentReceiptPOs.get(i).getState() == ReceiptState.SUBMIT){
+				result.add(paymentReceiptPOs.get(i));
 			}
 		}
-		return unprovedPOs;
+		return result;
 	}
 	
 	/**
 	 * 存储审批后的信息（总经理审批单据用）
 	 * */
 	 public int saveSubmittedPaymentReceiptInfo(PaymentReceiptPO po) throws RemoteException{
-		 file=new JXCFile("info/paymentInfo/payment.ser");
-		 ArrayList<Object> os=file.read();
-		 for(int i=0;i<os.size();i++){
-			 //文件中的
-			 PaymentReceiptPO po_infile=(PaymentReceiptPO) os.get(i);
-			 //总经理传过来的
-				 if(po_infile.getID().equals(po.getID())){
-					po_infile.setState(po.getState());
-				 }
-		 }
-		 file.writeM(os);
-		return 0;
+		 ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
+			for(int i=0;i<paymentReceiptPOs.size();i++){
+				if(paymentReceiptPOs.get(i).getID().equals(po.getID())){
+					paymentReceiptPOs.get(i).setState(po.getState());
+				}
+			}
+			savePaymentReceiptPOs(paymentReceiptPOs);
+			return 0;
 		 
 	 }
 	    
 	
 	public PaymentReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/paymentInfo/payment.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取付款单失败或付款单为空");
-			return null;
-		}
-		else{
-			for(Object o:os){
-				PaymentReceiptPO po=(PaymentReceiptPO) o;
-				if(po.getID().equals(ID)){
-					return po;
-				}
+		ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
+		for(int i=0;i<paymentReceiptPOs.size();i++){
+			if(paymentReceiptPOs.get(i).getID().equals(ID)){
+			return paymentReceiptPOs.get(i);
 			}
 		}
 		return null;
@@ -208,12 +222,12 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public static void main(String[] args) throws RemoteException{
 		
 		PaymentReceiptData data=new PaymentReceiptData();
-		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151201", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151201", "boss", "本宝宝");
+//		PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151201", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151201", "boss", "本宝宝");
 //		PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151211", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151211", "boss", "本宝宝");
 //		PaymentReceiptPO po3=new PaymentReceiptPO("FKD-20151226", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151226", "boss", "本宝宝");
 //		PaymentReceiptPO po4=new PaymentReceiptPO("FKD-20151227", "CW-00001", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20151227", "boss", "本宝宝");
 		try {
-			data.creatPaymentReceipt(po1);
+//			data.creatPaymentReceipt(po1);
 //			data.creatPaymentReceipt(po2);
 //			data.creatPaymentReceipt(po3);
 //			data.creatPaymentReceipt(po4);
@@ -221,14 +235,17 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 			ArrayList<PaymentReceiptPO> All;
 							All = data.getAllPaymentReceipt();
 							for(PaymentReceiptPO p:All){
-								System.out.println("ID: "+p.getID());
+								System.out.println("ID: "+p.getID()+" "+p.getDate());
 							}
 
 						} catch (RemoteException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-		
+		ArrayList<PaymentReceiptPO> pos = data.getPayment_right("2010-01-01", "2016-01-10");
+		for(PaymentReceiptPO p : pos){
+			System.out.println(p.getID());
+		}
 //		PaymentReceiptData paymentdata=new PaymentReceiptData();
 //			PaymentReceiptPO po1=new PaymentReceiptPO("FKD-20151010", "=.=", ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, 2000, 1000, 1000, "20110101", "boss", "本宝宝");
 //			PaymentReceiptPO po2=new PaymentReceiptPO("FKD-20151111", "呵呵", null, null, 200, 300, 1000, "20151111", "呵呵", "CW");

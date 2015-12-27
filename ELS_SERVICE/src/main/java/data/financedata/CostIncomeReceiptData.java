@@ -1,10 +1,17 @@
 package data.financedata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
 import po.CostIncomeReceiptPO;
+import type.ReceiptState;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import file.JXCFile;
 
@@ -19,33 +26,74 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	
 	public CostIncomeReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("info/costincomeInfo/costincome.ser");
+	}
+	
+	/**
+	 * 读出所有的成本收益表
+	 * */
+	public ArrayList<CostIncomeReceiptPO> getCostIncomeReceiptPOs(){
+		String path = "costincomeInfo/costincome.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<CostIncomeReceiptPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<CostIncomeReceiptPO> costIncomeReceiptPOs = (ArrayList<CostIncomeReceiptPO>) in.readObject();
+			in.close();
+			return costIncomeReceiptPOs;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 写入成本收益表
+	 * */
+	public int saveCostIncomeReceiptPOs(ArrayList<CostIncomeReceiptPO> pos){
+		String path = "costincomeInfo/costincome.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+				FileGetter.createFile(file);
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	public int creatCostIncomeList(CostIncomeReceiptPO po)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/costincomeInfo/costincome.ser");
-		file.write(po);
-		num++;
-		return 0;
+		ArrayList<CostIncomeReceiptPO> costIncomeReceiptPOs = getCostIncomeReceiptPOs();
+		po.setState(ReceiptState.SUBMIT);
+		if(findByID(po.getID())!=null){
+			System.out.println("成本收益表已存在");
+			return -1;
+		}
+		else{
+			costIncomeReceiptPOs.add(po);
+			saveCostIncomeReceiptPOs(costIncomeReceiptPOs);
+			return 0;
+		}
 	}
 
 	public ArrayList<CostIncomeReceiptPO> getAllCostIncomeList()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/costincomeInfo/costincome.ser");
-		ArrayList<Object> os=file.read();
-		if(os == null){
-			return null;
-		}
-		else{
-		ArrayList<CostIncomeReceiptPO> costIncomeReceiptPOs=new ArrayList<CostIncomeReceiptPO>();
-		for(Object o:os){
-			CostIncomeReceiptPO costIncomeReceiptPO=(CostIncomeReceiptPO) o;
-			costIncomeReceiptPOs.add(costIncomeReceiptPO);
-		}
-		return costIncomeReceiptPOs;
-		}
+	if(getAllCostIncomeList()!=null){
+		return getAllCostIncomeList();
+	}
+	else{
+		return null;
+	}
 	}
 
 
@@ -57,16 +105,10 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 
 	public CostIncomeReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/costincomeInfo/costincome.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取经营情况表失败");
-			return null;
-		}
-		for(Object o:os){
-			CostIncomeReceiptPO po=(CostIncomeReceiptPO) o;
-			if(po.getID().equals(ID)){
-				return po;
+		ArrayList<CostIncomeReceiptPO> costIncomeReceiptPOs = getCostIncomeReceiptPOs();
+		for(int i=0;i<costIncomeReceiptPOs.size();i++){
+			if(costIncomeReceiptPOs.get(i).getID().equals(ID)){
+			return costIncomeReceiptPOs.get(i);
 			}
 		}
 		return null;
@@ -87,18 +129,6 @@ public class CostIncomeReceiptData extends UnicastRemoteObject implements CostIn
 	public CostIncomeReceiptPO getCostIncomeReceipt(String time)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/costincomeInfo/costincome.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读取经营情况表失败");
-			return null;
-		}
-		for(Object o:os){
-			CostIncomeReceiptPO po=(CostIncomeReceiptPO) o;
-			if(po.getDate().equals(time)){
-				return po;
-			}
-		}
 		return null;
 	}
 	

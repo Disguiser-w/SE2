@@ -9,6 +9,7 @@ import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
 import businesslogic.financebl.BusinessStatementReceiptBL;
+import businesslogic.receiptbl.GetDate;
 import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
 
 public class BusinessStatementReceiptBLController implements BusinessstatementReceiptBLService{
@@ -31,7 +32,7 @@ public class BusinessStatementReceiptBLController implements BusinessstatementRe
 	
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException{
 		BusinessStatementReceiptBLController controller=new BusinessStatementReceiptBLController();
-		BusinessStatementReceiptVO vo=controller.showBSList("20121010", "20151206");
+		BusinessStatementReceiptVO vo=controller.showBSList("2010-01-01", "2015-12-29");
 		ArrayList<CollectionReceiptVO> cvos=vo.cvos;
 		ArrayList<PaymentReceiptVO> pvos=vo.pvos;
 		for(CollectionReceiptVO v:cvos){

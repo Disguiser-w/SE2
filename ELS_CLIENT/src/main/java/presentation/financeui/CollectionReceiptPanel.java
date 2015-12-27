@@ -65,11 +65,12 @@ public class CollectionReceiptPanel extends OperationPanel {
 	public AccountManagementPanel_main accountManagementPanel_main;
 	public CostIncomeReceiptPanel_new costIncomeReceiptPanel_new;
 	public LogDiaryPanel logDiaryPanel;
+	public ReceiptPanel_new receiptPanel_new;
 	String hallID_str;
 	String date_str;
 	public CollectionReceiptPanel(CollectionReceiptBLController controller,FinanceFrame parent,
 			UserVO user,OrganizationManageController organizationController,AccountManagementPanel_main accountManagementPanel_main,
-			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel) {
+			CostIncomeReceiptPanel_new costIncomeReceiptPanel_new,LogDiaryPanel logDiaryPanel,ReceiptPanel_new receiptPanel_new) {
 		this.controller=controller;
 		this.financeFrame=parent;
 		this.user = user;
@@ -78,7 +79,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		this.accountManagementPanel_main = accountManagementPanel_main;
 		this.costIncomeReceiptPanel_new = costIncomeReceiptPanel_new;
 		this.logDiaryPanel=logDiaryPanel;
-		
+		this.receiptPanel_new = receiptPanel_new;
 		dateChooseLabel =new JLabel("日期");
 		collectionOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
@@ -88,8 +89,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		date = new MyTextLabel("日期");
 		businessHall = new MyTextLabel("营业厅");
 		infoLine = new MyTextLabel();
-		infoLine.setText("时间："+GetDate.getdate().substring(0,4)+"-"+GetDate.getdate().substring(4, 6)+"-"+GetDate.getdate()
-				.substring(6)+ " 合计金额：0");
+		infoLine.setText("时间："+GetDate.getdate()+ " 合计金额：0");
 		
 		
 		date_Input = new MyTextField("");
@@ -244,8 +244,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			//仅依据时间筛选
 			else if(hallID.equals("")){
 				//因为是采用日历格式所以不会有时间的错误（除非选择的时间已经超过当前时间）
-				if(date_str.compareTo(GetDate.getdate().substring(0,4)+"-"+GetDate.getdate().substring(4,6)+"-"
-                                                       +GetDate.getdate().substring(6,8))>0){
+				if(date_str.compareTo(GetDate.getdate())>0){
 					JOptionPane.showMessageDialog(null, "您输入的日期还没到呢，请重新输入！", "提示",
 					         JOptionPane.CLOSED_OPTION);
 				}
@@ -278,8 +277,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	public void totalui() {
 		double money=controller.getTotalMoney(controller.getGatheringByTime(date_str));
-		infoLine.setText("日期："+GetDate.getdate().substring(0,4)+"-"+GetDate.getdate().substring(4, 6)+"-"+GetDate.getdate()
-				.substring(6)+"    金额总和："+money);
+		infoLine.setText("日期："+GetDate.getdate()+"    金额总和："+money);
 		CollectionReceiptVO vo=new CollectionReceiptVO(controller.getCollectionListID(), user.userID, ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, GetDate.getdate(), "boss");
 		int temp=controller.creatCollection(vo);
 		if(temp==0){
@@ -288,9 +286,10 @@ public class CollectionReceiptPanel extends OperationPanel {
 			//这个refresh好像暂时没有什么用
 			costIncomeReceiptPanel_new.refresh();
 			LogDiaryBL bl = new LogDiaryBL();
-       	    LogDiaryVO logvo = new LogDiaryVO(GetDate.getdate(), user, "创建了一张合计收款单");
-       	   bl.addLogDiary(logvo, GetDate.getdate());
+       	    LogDiaryVO logvo = new LogDiaryVO(GetDate.getTime(), user, "创建了一张合计收款单");
+       	   bl.addLogDiary(logvo, GetDate.getTime());
 	         logDiaryPanel.refreshui();
+	         receiptPanel_new.showCollection();
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示",
 					JOptionPane.DEFAULT_OPTION);
 		}

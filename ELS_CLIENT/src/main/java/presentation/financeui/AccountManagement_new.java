@@ -131,8 +131,8 @@ public class AccountManagement_new extends OperationPanel {
 				if(result==0){
 					returnui();
 					LogDiaryBL log = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "新增了一个账户");
-					log.addLogDiary(vo, GetDate.getdate());
+					LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "新增了一个账户");
+					log.addLogDiary(vo, GetDate.getTime());
 					logDiaryPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.DEFAULT_OPTION);

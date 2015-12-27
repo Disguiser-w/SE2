@@ -81,7 +81,6 @@ public class InitialStockPanel_main extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		detailButton.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
 		newButton.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
-//		function.setBounds((int)(width * 0.44642857142857145/25),(int)(height * 0.46966731898238745/20),(int)(width *  6.026785714285714 /25),(int)(height *  2.0743639921722115/20));
 		initTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));
 
 	}
@@ -156,9 +155,7 @@ public class InitialStockPanel_main extends OperationPanel {
 			JOptionPane.showMessageDialog(null, "一次只能查看一项信息哟！", "没有选择账户", JOptionPane.WARNING_MESSAGE);
 		}
 		else{
-//			LogDiaryBL bl = new LogDiaryBL();
-//			LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), userVO, "查看了期初信息");
-//			bl.addLogDiary(logvo, getDate.getdate());
+
 			selectedIndex = selectedIndexs.get(0);
 			InitInfoVO vo = initInfoVOs.get(selectedIndex);
 			financeFrame.changePanel(new InitialStockPanel_detail(controller, financeFrame,vo.time));

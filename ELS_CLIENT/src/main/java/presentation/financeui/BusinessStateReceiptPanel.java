@@ -29,9 +29,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	private JLabel endDateLabel;
 	private MyLabel dateOKLabel;
 	private MyLabel printLabel;
-//	private JLabel sendLabel;
 
-//	private JLabel function;
 	private JLabel dateRange;
 
 	private MyTextField startDate_Input;
@@ -53,9 +51,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		endDateLabel =new JLabel("结束日期");
 		dateOKLabel = new MyLabel("确认");
 		printLabel = new MyLabel("打印");
-//		sendLabel = new JLabel("发送");
 
-//		function = new JLabel("经营情况表");
 		dateRange = new JLabel("日期范围");
 
 		startDate_Input = new MyTextField();
@@ -88,9 +84,9 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 			}
 		});
 
-
-		collectionReceiptVOs = controller.showBSList("20110101", GetDate.getdate()).cvos;
-		paymentReceiptVOs = controller.showBSList("20100101", GetDate.getdate()).pvos;
+		
+		collectionReceiptVOs = controller.showBSList("2011-01-01", GetDate.getdate()).cvos;
+		paymentReceiptVOs = controller.showBSList("2010-01-01", GetDate.getdate()).pvos;
 		setBaseInfo();
 		setLayout(null);
 
@@ -122,8 +118,6 @@ public class BusinessStateReceiptPanel extends OperationPanel {
         endDateLabel.setBounds((int)(width * 13.472704081632653/25),(int)(height *  0.93052837573385516/20),(int)(width *   2.6247448979591837 /25),(int)(height *   1.1350293542074363/20));
         dateOKLabel.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
 		printLabel.setBounds((int)(width * 21.01019387755102/25),(int)(height * 0.93052837573385516/20),(int)(width *  2.7682551020408165 /25),(int)(height *   1.1350293542074363/20));
-//		sendLabel.setBounds((int)(width * 22.193877551020407/25),(int)(height * 0.3913894324853229/20),(int)(width *  2.232142857142857 /25),(int)(height *  1.5264187866927592/20));
-//		function.setBounds((int)(width * 0.5420918367346939/25),(int)(height * 0.43052837573385516/20),(int)(width *  6.919642857142857 /25),(int)(height *  1.6046966731898238/20));
 		dateRange.setBounds((int)(width * 1.2987244897959184/25),(int)(height * 0.930528375733855169/20),(int)(width *  3.1568877551020407 /25),(int)(height *   1.1350293542074363/20));
 		startDate_Input.setBounds((int)(width * 3.2063775510204085/25),(int)(height * 0.93052837573385516/20),(int)(width *  3.5568877551020407 /25),(int)(height *   1.1350293542074363/20));
 		endDate_Input.setBounds((int)(width * 9.809948979591837/25),(int)(height * 0.93052837573385516/20),(int)(width *  3.5566632653061225 /25),(int)(height *   1.1350293542074363/20));
@@ -179,11 +173,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 					JOptionPane.WARNING_MESSAGE);
 		}
 		else{
-//			LogDiaryBL bl = new LogDiaryBL();
-//			LogDiaryVO logvo = new LogDiaryVO(getDate.getdate(), userVO, "查看了经营情况表");
-//			bl.addLogDiary(logvo, getDate.getdate());
-			beginTime=beginTime.substring(0, 4)+beginTime.substring(5,7)+beginTime.substring(8);
-			endTime=endTime.substring(0, 4)+endTime.substring(5, 7)+endTime.substring(8);
+
 		BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
 		collectionReceiptVOs=vo.cvos;
 		paymentReceiptVOs=vo.pvos;
@@ -195,15 +185,13 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		String beginTime=startDate_Input.getText();
 		String endTime=endDate_Input.getText();
 		if(beginTime!=""&&endTime!=""){
-		beginTime=beginTime.substring(0, 4)+beginTime.substring(5,7)+beginTime.substring(8);
-		endTime=endTime.substring(0, 4)+endTime.substring(5, 7)+endTime.substring(8);
 	    BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
 	    collectionReceiptVOs=vo.cvos;
 	    paymentReceiptVOs=vo.pvos;
 		}
 		else{
-			collectionReceiptVOs = controller.showBSList("20110101", GetDate.getdate()).cvos;
-			paymentReceiptVOs = controller.showBSList("20100101", GetDate.getdate()).pvos;
+			collectionReceiptVOs = controller.showBSList("2011-01-01", GetDate.getdate()).cvos;
+			paymentReceiptVOs = controller.showBSList("2010-01-01", GetDate.getdate()).pvos;
 			}
 	    String[][] BSRExcel = new String[collectionReceiptVOs.size()+paymentReceiptVOs.size()][4];
 	    int temp = 0;

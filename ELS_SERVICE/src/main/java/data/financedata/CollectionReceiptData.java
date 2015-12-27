@@ -1,10 +1,16 @@
 package data.financedata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import file.JXCFile;
+import common.FileGetter;
 import po.CollectionReceiptPO;
 import type.ReceiptState;
 import type.ReceiptType;
@@ -16,26 +22,71 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JXCFile file;
 	//计次数
 	public CollectionReceiptData() throws RemoteException{
 		super();
-		file=new JXCFile("info/collectionInfo/collection.ser");
 	}
 
+	/**
+	 * 读取所有的入款单
+	 * */
+	public ArrayList<CollectionReceiptPO> getCollectionReceiptPOs(){
+		String path = "collectionInfo/collection.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<CollectionReceiptPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<CollectionReceiptPO> collectionReceiptPOs = (ArrayList<CollectionReceiptPO>) in.readObject();
+			in.close();
+			return collectionReceiptPOs;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	/**
+	 * 存储入款单
+	 * */
+	public int saveCollectionPOs(ArrayList<CollectionReceiptPO> pos){
+		String path = "collectionInfo/collection.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(pos);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
 	/**
 	 * 创建收款单，即将一个po写入序列化文件
 	 *  success
 	 * */
 	public int createCollection(CollectionReceiptPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
+		ArrayList<CollectionReceiptPO> collections = getCollectionReceiptPOs();
 		po.setState(ReceiptState.SUBMIT);
 		if(findByID(po.getID())!=null){
+			System.out.println("入款单已存在");
 			return -1;
 		}
 		else{
-		file.write(po);
+		collections.add(po);
+		saveCollectionPOs(collections);
 		return 0;
 		}
 	}
@@ -47,19 +98,11 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public ArrayList<CollectionReceiptPO> getAllCollection()
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
-		ArrayList<Object> collection=file.read();
-		if(collection==null){
-			System.out.println("读文件collection.ser失败或者文件为空");
-			return null;
+		if(getCollectionReceiptPOs()!=null){
+		return getCollectionReceiptPOs();
 		}
 		else{
-			ArrayList<CollectionReceiptPO> buffer=new ArrayList<CollectionReceiptPO>();
-			for(Object o:collection){
-				CollectionReceiptPO p=(CollectionReceiptPO) o;
-				buffer.add(p);
-			}
-			return buffer;
+			return null;
 		}
 	}
 	
@@ -69,7 +112,6 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public int getNum() throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
 		return 0;
 	}
 
@@ -79,16 +121,10 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public CollectionReceiptPO findByID(String ID) throws RemoteException {
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("读文件collection.ser失败或者文件为空");
-			return null;
-		}
-		for(Object o:os){
-			CollectionReceiptPO collectionReceiptPO=(CollectionReceiptPO) o;
-			if(collectionReceiptPO.getID().equals(ID)){
-				return collectionReceiptPO;
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		for(int i=0;i<collectionReceiptPOs.size();i++){
+			if(collectionReceiptPOs.get(i).getID().equals(ID)){
+			return collectionReceiptPOs.get(i);
 			}
 		}
 		return null;
@@ -108,22 +144,17 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * success
 	 * */
 	public int delete(String ID) throws RemoteException{
-		file=new JXCFile("info/collectionInfo/collection.ser");
-		ArrayList<Object> os=file.read();
-		if(os==null){
-			System.out.println("文件为空");
-			return 1;
-		}
-		for(int i=0;i<os.size();i++){
-			CollectionReceiptPO po=(CollectionReceiptPO) os.get(i);
-			if(po.getID().equals(ID)){
-				os.remove(i);
-				System.out.println("remove successfully!");
-			}
-			}
-
-		file.writeM(os);
-		return 0;
+		int isExsit=-1;
+		   ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		  for(int i=0;i<collectionReceiptPOs.size();i++){
+			if(collectionReceiptPOs.get(i).getID().equals(ID)){
+				collectionReceiptPOs.remove(i);
+				isExsit = 0;
+				break;
+			 }
+		   }
+		  saveCollectionPOs(collectionReceiptPOs);
+		  return isExsit;
 	}
 	/**
 	 * 根据时间筛选出入款单——只提供bl层调用，不需要写入文件（经营情况表）
@@ -131,28 +162,16 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public ArrayList<CollectionReceiptPO> getCollection_right(String beginTime,
 			String endTime)  throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
-		ArrayList<Object> os=file.read();
-		ArrayList<CollectionReceiptPO> pos=new ArrayList<CollectionReceiptPO>();		
-		//判断格式这个是不是应该放到bl里？？？
-		if(beginTime.compareTo(endTime)>0){
-			System.out.println("输入时间区间格式不对");
-			return null;
-		}
-		else{
-			if(os!=null){
-		      for(Object o:os){
-			          CollectionReceiptPO po=(CollectionReceiptPO) o;
-			          if((po.getDate().compareTo(beginTime)>=0)&&(po.getDate().compareTo(endTime)<=0)){
-			         pos.add(po);
-			         }
-		         }
-		             return pos;
-		          }
-			else{
-				return null;
+		
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		ArrayList<CollectionReceiptPO> result = new ArrayList<CollectionReceiptPO>();
+		for(int i=0;i<collectionReceiptPOs.size();i++){
+			if((collectionReceiptPOs.get(i).getDate().compareTo(beginTime)>=0)&&(collectionReceiptPOs.get(i).getDate().compareTo(endTime)<=0)){
+				result.add(collectionReceiptPOs.get(i));
 			}
 		}
+		return result;
+
 		
 	}
 	
@@ -162,57 +181,51 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	 * */
 	public ArrayList<CollectionReceiptPO> getUnapprovedCollectionReceipt() throws RemoteException{
 		// TODO Auto-generated method stub
-		file=new JXCFile("info/collectionInfo/collection.ser");
-		ArrayList<Object> os=file.read();
-		ArrayList<CollectionReceiptPO> unprovedPOs=new ArrayList<CollectionReceiptPO>();
-		for(Object o:os){
-			CollectionReceiptPO po=(CollectionReceiptPO) o;
-			if(po.getState()==ReceiptState.SUBMIT){
-				unprovedPOs.add(po);
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		ArrayList<CollectionReceiptPO> result = new ArrayList<CollectionReceiptPO>();
+		
+		for(int i=0;i<collectionReceiptPOs.size();i++){
+			if(collectionReceiptPOs.get(i).getState() == ReceiptState.SUBMIT){
+				result.add(collectionReceiptPOs.get(i));
 			}
 		}
-		return unprovedPOs;
+		return result;
+
 	}
 	
 	/**
 	 * 总经理审批的信息通知
 	 * */
 	public String getFeedback(CollectionReceiptPO po){
-		 file=new JXCFile("info/collectionInfo/collection.ser");
-		 String feedback=po.getID();
-		 ArrayList<Object> os=file.read();
-		 for(int i=0;i<os.size();i++){
-			 //文件中的
-			 CollectionReceiptPO po_infile=(CollectionReceiptPO) os.get(i);
-			 //总经理传过来的
-				 if(po_infile.getID().equals(po.getID())){
-					 if(po.getState()==ReceiptState.APPROVE){
-						 feedback+="单据审批通过！";
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		String feedback = po.getID();
+		for(int i=0;i<collectionReceiptPOs.size();i++){
+			if(collectionReceiptPOs.get(i).getID().equals(po.getID())){
+				if(po.getState() == ReceiptState.APPROVE){
+					 feedback+="单据审批通过！";
 					 }
 					 else if(po.getState()==ReceiptState.DISAPPROVE){
 						 feedback+="单据审批未通过！";
 					 }
-				 }
-		 }
+				}
+			}
 		return feedback;
-	}
+		}
 	
+
 	/**
 	 * 存储审批后结果
 	 * */
 	public int saveSubmittedCollectionReceiptInfo(CollectionReceiptPO  po) throws RemoteException{
-		 file=new JXCFile("info/collectionInfo/collection.ser");
-		 ArrayList<Object> os=file.read();
-		 for(int i=0;i<os.size();i++){
-			 //文件中的
-			 CollectionReceiptPO po_infile=(CollectionReceiptPO) os.get(i);
-			 //总经理传过来的
-				 if(po_infile.getID().equals(po.getID())){
-					po_infile.setState(po.getState());
-				 }
-		 }
-		 file.writeM(os);
+		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
+		for(int i=0;i<collectionReceiptPOs.size();i++){
+			if(collectionReceiptPOs.get(i).getID().equals(po.getID())){
+				collectionReceiptPOs.get(i).setState(po.getState());
+			}
+		}
+		saveCollectionPOs(collectionReceiptPOs);
 		return 0;
+
 		
 	}
 
@@ -220,14 +233,14 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 	public static void main(String[] args) throws RemoteException{
 		
 		CollectionReceiptData collectionData=new CollectionReceiptData();
-		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151201", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "20151221", "鼓楼");
-		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151203", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "20151223", "仙林");
-		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151202", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "20151222", "鼓楼");
-		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151204", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "20151224", "鼓楼");
+		CollectionReceiptPO po1=new CollectionReceiptPO("HJSKD-20151221", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 200, "2015-12-21", "鼓楼");
+		CollectionReceiptPO po2=new CollectionReceiptPO("HJSKD-20151223", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 300, "2015-12-23", "仙林");
+		CollectionReceiptPO po3=new CollectionReceiptPO("HJSKD-20151222", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 250, "2015-12-22", "鼓楼");
+		CollectionReceiptPO po4=new CollectionReceiptPO("HJSKD-20151224", "CW-00001", ReceiptType.COLLECTIONRECEIPT, ReceiptState.DRAFT, 1000, "2015-12-24", "鼓楼");
 		collectionData.createCollection(po3);
-//		collectionData.createCollection(po1);
-//		collectionData.createCollection(po2);
-//		collectionData.createCollection(po4);
+		collectionData.createCollection(po1);
+		collectionData.createCollection(po2);
+		collectionData.createCollection(po4);
 		ArrayList<CollectionReceiptPO> pos=collectionData.getAllCollection();
 		for(CollectionReceiptPO p:pos){
 			System.out.println("ID: "+p.getID()+" "+p.getState().toString());

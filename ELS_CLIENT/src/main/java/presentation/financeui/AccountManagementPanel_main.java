@@ -198,8 +198,8 @@ public class AccountManagementPanel_main extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			LogDiaryBL log = new LogDiaryBL();
-			LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "删除了一个账户");
-			log.addLogDiary(vo,GetDate.getdate());
+			LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "删除了一个账户");
+			log.addLogDiary(vo,GetDate.getTime());
 			logDiaryPanel.refreshui();
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);
