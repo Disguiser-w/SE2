@@ -45,6 +45,7 @@ import businesslogic.intermediatebl.PlaneManagerBL;
 import businesslogic.intermediatebl.TrainManagerBL;
 import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.intermediatebl.TruckManagerBL;
+import businesslogic.managebl.OrganizationBL;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateMainController {
@@ -54,6 +55,7 @@ public class IntermediateMainController {
 	private TrainManagerBL trainManager;
 	private TruckManagerBL truckManager;
 	private TransferingBL transfering;
+	private OrganizationBL findOrganization;
 	private static IntermediateDataService intermediateData;
 
 	private static IntermediateVO intermediate;
@@ -75,8 +77,10 @@ public class IntermediateMainController {
 			intermediateData = DataFactory.getIntermediateData();
 			intermediate = poToVO((IntermediatePO) (intermediateData
 					.getIntermediateInfo(intermediate_ID)));
-			// System.out.println(intermediate.organization.planeList.size());
-			intermediateCentre = intermediate.organization;
+
+			findOrganization = new OrganizationBL();
+			intermediateCentre = findOrganization
+					.findOrganization(intermediate.organization);
 			intermediateCentre.planeList = poToVO_PlaneList((ArrayList<PlanePO>) (intermediateData
 					.getPlaneList(intermediateCentre.organizationID)));
 			intermediateCentre.trainList = poToVO_TrainList((ArrayList<TrainPO>) (intermediateData
@@ -93,18 +97,19 @@ public class IntermediateMainController {
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
 		planeManager = new PlaneManagerBL(planeList, intermediateCentre,
-				intermediateData);
+				intermediateData, intermediate);
 		trainManager = new TrainManagerBL(trainList, intermediateCentre,
-				intermediateData);
+				intermediateData, intermediate);
 		truckManager = new TruckManagerBL(truckList, intermediateCentre,
-				intermediateData);
+				intermediateData, intermediate);
 		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "", "", ReceiptState.DRAFT);
-		transfering = new TransferingBL(transferingReceipt, intermediateData);
+		transfering = new TransferingBL(transferingReceipt, intermediateData,
+				intermediate);
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
 				truckManager, enplaningReceiptList, entrainingReceiptList,
-				entruckingReceiptList, intermediateData);
+				entruckingReceiptList, intermediateData, intermediate);
 
 		frame = new IntermediateFrame(intermediate);
 		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收");
@@ -118,7 +123,7 @@ public class IntermediateMainController {
 
 	public void updateIntermediateInfo() throws RemoteException {
 		intermediate = IntermediateMainController.poToVO(intermediateData
-				.getIntermediateInfo(intermediate.ID));
+				.getIntermediateInfo(intermediate.userID));
 	}
 
 	public static OrderPO voToPO(OrderVO order) {
@@ -408,11 +413,10 @@ public class IntermediateMainController {
 	}
 
 	public static IntermediateVO poToVO(IntermediatePO intermediate) {
-		// System.out.println(intermediate.getName());
-		return new IntermediateVO(
-				IntermediateMainController.poToVO(intermediate
-						.getOrganization()), intermediate.getName(),
-				intermediate.getID());
+		return new IntermediateVO(intermediate.getName(), intermediate.getID(),
+				intermediate.getPassword(), intermediate.getProfession(),
+				intermediate.getOrganization(), intermediate.getSalaryPlan(),
+				intermediate.getAuthority(), intermediate.getGrades());
 	}
 
 	public static EnIntermediateReceiptVO poToVO(

@@ -4,7 +4,7 @@ import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 
 public class CheckIncomePanel extends OperationPanel {
 	
@@ -42,7 +42,7 @@ public class CheckIncomePanel extends OperationPanel {
 		function = new MyTextLabel("查看成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		beginTime = "2010-01-01";
-		endTime = getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4,6)+"-"+getDate.getdate().substring(6);
+		endTime = GetDate.getdate().substring(0, 4)+"-"+GetDate.getdate().substring(4,6)+"-"+GetDate.getdate().substring(6);
 		ID = costIncomeReceiptControl.getCostIncomeListID();
 		
 		startDate = new MyTextLabel("开始时间");

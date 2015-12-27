@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import common.FileExporter;
 
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -89,8 +89,8 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		});
 
 
-		collectionReceiptVOs = controller.showBSList("20110101", getDate.getdate()).cvos;
-		paymentReceiptVOs = controller.showBSList("20100101", getDate.getdate()).pvos;
+		collectionReceiptVOs = controller.showBSList("20110101", GetDate.getdate()).cvos;
+		paymentReceiptVOs = controller.showBSList("20100101", GetDate.getdate()).pvos;
 		setBaseInfo();
 		setLayout(null);
 
@@ -202,8 +202,8 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	    paymentReceiptVOs=vo.pvos;
 		}
 		else{
-			collectionReceiptVOs = controller.showBSList("20110101", getDate.getdate()).cvos;
-			paymentReceiptVOs = controller.showBSList("20100101", getDate.getdate()).pvos;
+			collectionReceiptVOs = controller.showBSList("20110101", GetDate.getdate()).cvos;
+			paymentReceiptVOs = controller.showBSList("20100101", GetDate.getdate()).pvos;
 			}
 	    String[][] BSRExcel = new String[collectionReceiptVOs.size()+paymentReceiptVOs.size()][4];
 	    int temp = 0;

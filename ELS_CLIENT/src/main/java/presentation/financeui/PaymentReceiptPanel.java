@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
@@ -275,8 +275,8 @@ public class PaymentReceiptPanel extends OperationPanel {
 		int temp=controller.creatPaymentReceipt(vo);
 		if(temp==0){
 			 LogDiaryBL bl = new LogDiaryBL();
-        	 LogDiaryVO logvo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), user, "创建了一张付款单");
-        	 bl.addLogDiary(logvo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+        	 LogDiaryVO logvo = new LogDiaryVO(GetDate.getdate(), user, "创建了一张付款单");
+        	 bl.addLogDiary(logvo, GetDate.getdate());
 			controller.excute(vo);
 			accountManagementPanel_main.refreshui();
 			costIncomeReceiptPanel_new.refresh();

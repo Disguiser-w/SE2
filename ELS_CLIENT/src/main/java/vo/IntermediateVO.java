@@ -1,14 +1,16 @@
 package vo;
 
-public class IntermediateVO {
-	public final OrganizationVO organization;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
 
-	public final String name;
-	public final String ID;
-
-	public IntermediateVO(OrganizationVO organization, String name, String ID) {
-		this.organization = organization;
-		this.name = name;
-		this.ID = ID;
+public class IntermediateVO extends UserVO {
+	public IntermediateVO(String name, String ID, String password,
+			ProfessionType professionType, String organizationID,
+			SalaryPlanType salaryPlanType, AuthorityType authorityType,
+			int grades) {
+		super(name, ID, password, ProfessionType.intermediateCenterCounterman,
+				organizationID, SalaryPlanType.basicStaffSalaryPlan,
+				AuthorityType.lowest, grades);
 	}
 }

@@ -2,39 +2,17 @@ package po;
 
 import java.io.Serializable;
 
-public class IntermediatePO implements Serializable {
-	private OrganizationPO organization;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
 
-	private String name;
-	private String ID;
-
-	public IntermediatePO(OrganizationPO organization, String name, String ID) {
-		this.organization = organization;
-		this.name = name;
-		this.ID = ID;
+public class IntermediatePO extends UserPO implements Serializable {
+	public IntermediatePO(String userName, String userID,
+			ProfessionType profession, String organization,
+			SalaryPlanType salaryPlan, AuthorityType authority, int grades) {
+		super(userName, userID, profession, organization, salaryPlan,
+				authority, grades);
+		// TODO 自动生成的构造函数存根
 	}
 
-	public OrganizationPO getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(OrganizationPO organization) {
-		this.organization = organization;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
-	}
 }

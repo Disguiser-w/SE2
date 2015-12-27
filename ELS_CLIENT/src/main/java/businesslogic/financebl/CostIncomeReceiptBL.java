@@ -14,7 +14,7 @@ import dataservice.financedataservice.PaymentReceiptDataService;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import vo.CostIncomeReceiptVO;
 
 public class CostIncomeReceiptBL extends ReceiptBL{
@@ -137,7 +137,7 @@ public class CostIncomeReceiptBL extends ReceiptBL{
 	 * */
 	public String getCostIncomeListID() {
 		// TODO Auto-generated method stub
-		return "CBSYB-"+getDate.getdate();
+		return "CBSYB-"+GetDate.getdate();
 	}
 	
 	/**
