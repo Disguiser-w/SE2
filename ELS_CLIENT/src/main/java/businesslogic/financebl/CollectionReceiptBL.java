@@ -13,7 +13,7 @@ import vo.GatheringReceiptVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 /**
  * 论没有考虑账户变化的本宝宝要爆炸了！！！
  * 入款单：建立一个boss账户，所有钱累加到这个账户上
@@ -217,7 +217,7 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * */
 	public String getCollectionListID() {
 		// TODO Auto-generated method stub
-		return "HJSKD-"+getDate.getdate();
+		return "HJSKD-"+GetDate.getdate();
 	}
 
 	/**

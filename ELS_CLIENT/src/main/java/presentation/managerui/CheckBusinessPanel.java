@@ -19,7 +19,7 @@ import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 
 public class CheckBusinessPanel extends OperationPanel {
 	
@@ -72,8 +72,8 @@ public class CheckBusinessPanel extends OperationPanel {
 		
 		confirmDateLabel = new MyLabel("确认");
 		
-		collectionReceiptVOs = businessStatementReceiptControl.showBSList("20110101", getDate.getdate()).cvos;
-		paymentReceiptVOs = businessStatementReceiptControl.showBSList("20100101", getDate.getdate()).pvos;
+		collectionReceiptVOs = businessStatementReceiptControl.showBSList("20110101", GetDate.getdate()).cvos;
+		paymentReceiptVOs = businessStatementReceiptControl.showBSList("20100101", GetDate.getdate()).pvos;
 		
 		//加监听
 		confirmDateLabel.addMouseListener(new MouseAdapter(){

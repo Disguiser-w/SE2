@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -198,8 +198,8 @@ public class AccountManagementPanel_main extends OperationPanel {
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			LogDiaryBL log = new LogDiaryBL();
-			LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "删除了一个账户");
-			log.addLogDiary(vo,getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+			LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "删除了一个账户");
+			log.addLogDiary(vo,GetDate.getdate());
 			logDiaryPanel.refreshui();
 			for (int i : selectedIndexs){
 				controller.deleteAccount(accountVOs.get(i).name);

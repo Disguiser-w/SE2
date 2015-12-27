@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
@@ -131,8 +131,8 @@ public class AccountManagement_new extends OperationPanel {
 				if(result==0){
 					returnui();
 					LogDiaryBL log = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "新增了一个账户");
-					log.addLogDiary(vo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+					LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "新增了一个账户");
+					log.addLogDiary(vo, GetDate.getdate());
 					logDiaryPanel.refreshui();
 					JOptionPane.showMessageDialog(null, "添加账户成功！", "提示",
 							JOptionPane.DEFAULT_OPTION);

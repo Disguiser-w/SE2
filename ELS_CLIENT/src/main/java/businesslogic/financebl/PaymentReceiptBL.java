@@ -23,7 +23,7 @@ import vo.PaymentReceiptVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.FinanceMainController;
 import businesslogic.receiptbl.ReceiptBL;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 
 
 public class PaymentReceiptBL extends ReceiptBL {
@@ -129,7 +129,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	 * */
 	public String getPaymentReceiptListID() {
 		// TODO Auto-generated method stub
-		return "FKD-"+getDate.getdate();
+		return "FKD-"+GetDate.getdate();
 	}
 
 	/**

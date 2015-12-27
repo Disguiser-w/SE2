@@ -27,7 +27,7 @@ import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 
 public class FinanceBL_driver {
 
@@ -56,9 +56,9 @@ public class FinanceBL_driver {
 		
 		CollectionReceiptBLController controller = new CollectionReceiptBLController();
 		CollectionReceiptVO cvo = new CollectionReceiptVO("HJSKD-20151220", "CW-00001", ReceiptType.COLLECTIONRECEIPT,
-				ReceiptState.SUBMIT, 3000, getDate.getdate(), "鼓楼");
+				ReceiptState.SUBMIT, 3000, GetDate.getdate(), "鼓楼");
 		CollectionReceiptVO vol = new CollectionReceiptVO("HJSKD-20151220", "CW-00001", ReceiptType.COLLECTIONRECEIPT,
-				ReceiptState.APPROVE, 3000, getDate.getdate(), "鼓楼");
+				ReceiptState.APPROVE, 3000, GetDate.getdate(), "鼓楼");
 		controller.creatCollection(cvo);
 		ArrayList<CollectionReceiptVO> cvos=controller.getAllCollection();
 		System.out.println(cvos.size());
@@ -115,9 +115,9 @@ public class FinanceBL_driver {
 		
 		PaymentReceiptBLController paymentController = new PaymentReceiptBLController();
 		PaymentReceiptVO pvo = new PaymentReceiptVO("HJSKD-20151220", "CW-00001", ReceiptType.COLLECTIONRECEIPT,
-				ReceiptState.SUBMIT, 3000,2000,3000, getDate.getdate(), "鼓楼","doge");
+				ReceiptState.SUBMIT, 3000,2000,3000, GetDate.getdate(), "鼓楼","doge");
 		PaymentReceiptVO pvol = new PaymentReceiptVO("HJSKD-20151220", "CW-00001", ReceiptType.COLLECTIONRECEIPT,
-				ReceiptState.APPROVE, 3000,2000,3000, getDate.getdate(), "鼓楼","doge");
+				ReceiptState.APPROVE, 3000,2000,3000, GetDate.getdate(), "鼓楼","doge");
 		paymentController.creatPaymentReceipt(pvo);
 		ArrayList<PaymentReceiptVO> pvos=paymentController.getAllPaymentReceipt();
 		System.out.println(pvos.size());

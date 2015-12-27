@@ -26,7 +26,7 @@ import businesslogic.financebl.controller.AccountBLController;
 import businesslogic.financebl.controller.InitialStockBLController;
 import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.receiptbl.getDate;
+import businesslogic.receiptbl.GetDate;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
 
@@ -342,7 +342,7 @@ public class InitialStockPanel_new extends OperationPanel{
 			//期初建账完成(存储期初信息)
 			completeLabel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					initVO=new InitInfoVO(getDate.getdate(), userVO.userID,init_user, init_organization, init_vehicle, init_repertory, init_account);
+					initVO=new InitInfoVO(GetDate.getdate(), userVO.userID,init_user, init_organization, init_vehicle, init_repertory, init_account);
 					if(init_account.size()==0||init_organization.size()==0||init_repertory.size()==0
 							||init_user.size()==0||init_vehicle.size()==0){
 						JOptionPane.showMessageDialog(null,"输入的期初信息不完整（一共有五项哟）！", "提示",
@@ -350,19 +350,19 @@ public class InitialStockPanel_new extends OperationPanel{
 					}
 					else{
 					LogDiaryBL bl = new LogDiaryBL();
-					LogDiaryVO vo = new LogDiaryVO(getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6), userVO, "新建了一套账");
-					bl.addLogDiary(vo, getDate.getdate().substring(0, 4)+"-"+getDate.getdate().substring(4, 6)+"-"+getDate.getdate().substring(6));
+					LogDiaryVO vo = new LogDiaryVO(GetDate.getdate(), userVO, "新建了一套账");
+					bl.addLogDiary(vo, GetDate.getdate());
 					logDiaryPanel.refreshui();
 					ArrayList<InitInfoVO> vos=controller.getAllInitInfo();
 					if(vos==null){
-						controller.initInfo(initVO,getDate.getdate());
+						controller.initInfo(initVO,GetDate.getdate());
 						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
 								JOptionPane.CLOSED_OPTION);
 					}
 					else{
 					boolean isExsit=false;
 					for(InitInfoVO v:vos){
-						if(v.time.equals(getDate.getdate())){
+						if(v.time.equals(GetDate.getdate())){
 							isExsit=true;
 						}
 					}
@@ -371,7 +371,7 @@ public class InitialStockPanel_new extends OperationPanel{
 								JOptionPane.WARNING_MESSAGE);
 					}
 					else{
-						controller.initInfo(initVO,getDate.getdate());
+						controller.initInfo(initVO,GetDate.getdate());
 						JOptionPane.showMessageDialog(null,"建账成功！", "提示",
 								JOptionPane.CLOSED_OPTION);
 					}
