@@ -147,13 +147,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+		    FileGetter.
 		}
 
 		try {

@@ -13,17 +13,22 @@ import type.OrderState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
+import vo.IntermediateVO;
+import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.managebl.CityDistanceBL;
+import businesslogic.receiptbl.getDate;
 import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class EnvehicleBL implements EnvehicleBLService {
+	private IntermediateVO intermediate;
 	private IntermediateDataService intermediateData;
 	private AllocateWaitingOrderBL awobl;
 	private CityDistanceBL cdbl;
@@ -31,6 +36,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private PlaneManagerBL planeManager;
 	private TrainManagerBL trainManeger;
 	private TruckManagerBL truckManager;
+	private LogDiaryBL logDiary;
 
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
@@ -53,7 +59,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 			ArrayList<EnplaningReceiptVO> enplaningReceiptList,
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
 			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
-			IntermediateDataService intermediateData) {
+			IntermediateDataService intermediateData,
+			IntermediateVO intermediate) {
 		// updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
@@ -67,12 +74,14 @@ public class EnvehicleBL implements EnvehicleBLService {
 		this.entrainingReceiptList = entrainingReceiptList;
 		this.entruckingReceiptList = entruckingReceiptList;
 		this.intermediateData = intermediateData;
+		this.intermediate = intermediate;
 	}
 
 	public OperationState envehicle() throws Exception {
 		// TODO 自动生成的方法存根
 		awobl = new AllocateWaitingOrderBL(transferingReceipt);
 		cdbl = new CityDistanceBL();
+		logDiary = new LogDiaryBL();
 		waitingOrderList = awobl.updateWaitingList();
 
 		for (OrderVO order : waitingOrderList) {
@@ -117,6 +126,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 			}
 		}
 		waitingOrderList = awobl.updateWaitingList();
+		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
+				"进行了装车分配操作"), getDate.getdate());
 
 		return OperationState.FAIL_OPERATION;
 	}
