@@ -6,14 +6,12 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
-import vo.TruckVO;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import dataservice.managedataservice.CityDistanceDataService;

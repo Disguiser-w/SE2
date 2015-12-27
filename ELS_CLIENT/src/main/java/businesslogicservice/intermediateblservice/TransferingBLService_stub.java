@@ -47,13 +47,11 @@ public class TransferingBLService_stub implements TransferingBLService {
 		return null;
 	}
 
-	@Override
 	public OperationState modifyOrder(OrderVO order) throws Exception {
 		// TODO 自动生成的方法存根
 		return null;
 	}
 
-	@Override
 	public OperationState saveTransferingReceipt() throws RemoteException {
 		// TODO 自动生成的方法存根
 		return null;

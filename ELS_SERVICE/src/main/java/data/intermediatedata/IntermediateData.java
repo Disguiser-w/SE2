@@ -52,7 +52,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 					.readObject();
 			in.close();
 			for (IntermediatePO intermediate : intermediatePOList) {
-				if (intermediate.getID().equals(intermediate_ID)) {
+				if (intermediate.getUserID().equals(intermediate_ID)) {
 					return intermediate;
 				}
 			}
@@ -147,7 +147,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-plane.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-		    FileGetter.
+			FileGetter.createFile(file);
 		}
 
 		try {
@@ -171,13 +171,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-train.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			FileGetter.createFile(file);
 		}
 
 		try {
@@ -201,13 +195,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ "-truck.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			FileGetter.createFile(file);
 		}
 
 		try {
@@ -231,11 +219,6 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ organization_ID + "-" + date + "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
 		try {
-			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
-			}
-
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
 			TransferingReceiptPO transferingReceipt = (TransferingReceiptPO) in
@@ -243,7 +226,6 @@ public class IntermediateData extends UnicastRemoteObject implements
 			in.close();
 
 			return transferingReceipt;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("读写中转中心到达单信息失败！");
@@ -263,8 +245,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 
 		try {
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
@@ -280,8 +261,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 
 		try {
 			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
+				FileGetter.createFile(file);
 			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file, true));
@@ -332,6 +312,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				FileGetter.createFile(file);
+			}
+
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 			out.writeObject(enList);
@@ -345,6 +329,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				FileGetter.createFile(file);
+			}
+
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file, true));
 			out.writeObject(enList);
@@ -390,6 +378,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				FileGetter.createFile(file);
+			}
+
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 			out.writeObject(fare);
@@ -438,6 +430,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				FileGetter.createFile(file);
+			}
+
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 
@@ -491,6 +487,10 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		try {
+			if (!file.exists()) {
+				FileGetter.createFile(file);
+			}
+
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 
@@ -515,36 +515,36 @@ public class IntermediateData extends UnicastRemoteObject implements
 	}
 
 	/**************************** test **********************************************************/
-	public static void main(String[] args) {
-		// File file = FileGetter.getFile("intermediateInfo");
-		File file = new File(
-				"info/intermediateCentreInfo/intermediate/ZZZX-00185-intermediate.dat");
-		try {
-			if (!file.exists()) {
-				file.getParentFile().mkdirs();
-				file.createNewFile();
-			}
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(file));
-			OrganizationPO organization = new OrganizationPO(
-					OrganizationType.intermediateCenter, "141250", "软攻打作业");
-			IntermediatePO intermediate = new IntermediatePO(organization,
-					"痛苦的业务员", "ZZZX-00185");
-
-			RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
-
-			organization.setRepertory(repertory);
-
-			ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
-			list.add(intermediate);
-
-			out.writeObject(list);
-			out.close();
-		} catch (Exception e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-
-	}
+	// public static void main(String[] args) {
+	// // File file = FileGetter.getFile("intermediateInfo");
+	// File file = new File(
+	// "info/intermediateCentreInfo/intermediate/ZZZX-00185-intermediate.dat");
+	// try {
+	// if (!file.exists()) {
+	// file.getParentFile().mkdirs();
+	// file.createNewFile();
+	// }
+	// ObjectOutputStream out = new ObjectOutputStream(
+	// new FileOutputStream(file));
+	// OrganizationPO organization = new OrganizationPO(
+	// OrganizationType.intermediateCenter, "141250", "软攻打作业");
+	// IntermediatePO intermediate = new IntermediatePO(organization,
+	// "痛苦的业务员", "ZZZX-00185");
+	//
+	// RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
+	//
+	// organization.setRepertory(repertory);
+	//
+	// ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
+	// list.add(intermediate);
+	//
+	// out.writeObject(list);
+	// out.close();
+	// } catch (Exception e) {
+	// // TODO 自动生成的 catch 块
+	// e.printStackTrace();
+	// }
+	//
+	// }
 
 }
