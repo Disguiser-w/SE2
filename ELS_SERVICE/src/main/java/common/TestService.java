@@ -1,8 +1,11 @@
 package common;
 
-import java.io.InputStream;
+import java.io.File;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import data.businessdata.BusinessData;
 import data.expressdata.ExpressData;
@@ -47,19 +50,16 @@ public class TestService {
 	public static void main(String[] args) {
 
 		try {
-
-//			
-//			byte[] b = new byte[3];
-////			in.read(b);
-////			in.close();
-//			if (b[0] == -17 && b[1] == -69 && b[2] == -65)
-//			System.out.println("：编码为UTF-8");
-//			else
-//			System.out.println("：可能是GBK，也可能是其他编码");
-//			
-			
-//			br.close();
-			String address = "localhost";
+			String address = null;
+			File file = FileGetter.getFile("address");
+			if (!file.exists()) {
+				JOptionPane.showMessageDialog(null, "IP地址文件不存在,将使用本地地址，请检查Info目录下的address是否丢失");
+				address = "localhost";
+			} else {
+				Scanner in = new Scanner(file);
+				address = in.nextLine();
+				in.close();
+			}
 			System.setProperty("java.rmi.server.hostname", address);
 
 			ExpressDataService expressData = new ExpressData();

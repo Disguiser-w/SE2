@@ -28,17 +28,14 @@ import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
 
-
 public class DataFactory {
 	public static String address;
 
 	static {
 		try {
 
-			Scanner in = new Scanner(FileGetter.getFile("address.txt"));
+			Scanner in = new Scanner(FileGetter.getFile("address"));
 			address = in.next();
-			address = "localhost:8888";
-
 			in.close();
 
 		} catch (FileNotFoundException e) {
@@ -114,71 +111,61 @@ public class DataFactory {
 				.lookup("//" + address + "/CityDistanceDataService");
 		return cityDistanceData;
 	}
-	
-	public static CostDataService getCostData()
-			throws MalformedURLException, RemoteException, NotBoundException {
-		CostDataService costDataData = (CostDataService) Naming
-				.lookup("//" + address + "/CostDataService");
+
+	public static CostDataService getCostData() throws MalformedURLException, RemoteException, NotBoundException {
+		CostDataService costDataData = (CostDataService) Naming.lookup("//" + address + "/CostDataService");
 		return costDataData;
 	}
-	
+
 	public static OrganizationDataService getOrganizationData()
 			throws MalformedURLException, RemoteException, NotBoundException {
 		OrganizationDataService organizationData = (OrganizationDataService) Naming
 				.lookup("//" + address + "/OrganizationDataService");
 		return organizationData;
 	}
-	
-	public static PerWageDataService getPerWageData()
-			throws MalformedURLException, RemoteException, NotBoundException {
-		PerWageDataService perWageData = (PerWageDataService) Naming
-				.lookup("//" + address + "/PerWageDataService");
+
+	public static PerWageDataService getPerWageData() throws MalformedURLException, RemoteException, NotBoundException {
+		PerWageDataService perWageData = (PerWageDataService) Naming.lookup("//" + address + "/PerWageDataService");
 		return perWageData;
 	}
-	
-	public static UserDataService getUserData()
-		throws MalformedURLException, RemoteException, NotBoundException {
-		UserDataService userData= (UserDataService) Naming
-				.lookup("//" + address + "/UserDataService");
-			return userData;		
+
+	public static UserDataService getUserData() throws MalformedURLException, RemoteException, NotBoundException {
+		UserDataService userData = (UserDataService) Naming.lookup("//" + address + "/UserDataService");
+		return userData;
 	}
-	
-	//仓库管理员
-	public static  GoodsDataService getGoodsData()
-			throws MalformedURLException, RemoteException, NotBoundException {
-		GoodsDataService goodsData = (GoodsDataService) Naming
-				.lookup("//" + address + "/GoodsDataService");
+
+	// 仓库管理员
+	public static GoodsDataService getGoodsData() throws MalformedURLException, RemoteException, NotBoundException {
+		GoodsDataService goodsData = (GoodsDataService) Naming.lookup("//" + address + "/GoodsDataService");
 		return goodsData;
 	}
-	
+
 	public static RepertoryDataService getRepertoryData()
 			throws MalformedURLException, RemoteException, NotBoundException {
 		RepertoryDataService repertoryData = (RepertoryDataService) Naming
 				.lookup("//" + address + "/RepertoryDataService");
 		return repertoryData;
 	}
-	
+
 	public static EnterRepertoryReceiptDataService getEnterRepertoryReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
 		EnterRepertoryReceiptDataService enterRepertoryReceiptData = (EnterRepertoryReceiptDataService) Naming
 				.lookup("//" + address + "/EnterRepertoryReceiptDataService");
 		return enterRepertoryReceiptData;
 	}
-	
+
 	public static LeaveRepertoryReceiptDataService getLeaveRepertoryReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
 		LeaveRepertoryReceiptDataService leaveRepertoryReceiptData = (LeaveRepertoryReceiptDataService) Naming
 				.lookup("//" + address + "/LeaveRepertoryReceiptDataService");
 		return leaveRepertoryReceiptData;
 	}
-	
-	//系统日志
-	public static LogDiaryDataService getLogDiaryData() 
-			throws MalformedURLException, RemoteException, NotBoundException{
-		LogDiaryDataService logDiaryData = (LogDiaryDataService) Naming
-				.lookup("//" + address + "/LogDiaryDataService");
+
+	// 系统日志
+	public static LogDiaryDataService getLogDiaryData()
+			throws MalformedURLException, RemoteException, NotBoundException {
+		LogDiaryDataService logDiaryData = (LogDiaryDataService) Naming.lookup("//" + address + "/LogDiaryDataService");
 		return logDiaryData;
 	}
-
 
 }
