@@ -11,12 +11,15 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.AcceptCargoController;
 import businesslogic.businessbl.controller.BusinessMainController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import vo.LogDiaryVO;
 
 public class OrderReceiveManagerPanel extends OperationPanel {
 	private JLabel vehicleIDLabel;
@@ -40,10 +43,12 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 	private LocationHelper helper;
 	private AcceptCargoController controller;
 	private ArrayList<String[]> orderNum;
+	private LogDiaryBLController log;
 
 	public OrderReceiveManagerPanel(AcceptCargoController acceptCargoController) {
 		this.controller = acceptCargoController;
 
+		log = new LogDiaryBLController();
 		vehicleIDLabel = new MyTextLabel("司机ID");
 		vehicleIDField = new MyTextField();
 
@@ -142,6 +147,8 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				orderNum.add(new String[] { orderNumber });
 				orderNumField.setText("");
 				messageTable.addRow(new String[] { orderNumber });
+				log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "接收了一批货物"),
+						GetDate.getTime());
 			}
 		});
 

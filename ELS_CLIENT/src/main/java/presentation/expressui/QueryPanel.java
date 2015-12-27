@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -31,10 +32,12 @@ public class QueryPanel extends OperationPanel {
 	private LocationHelper help;
 
 	private LogisticQueryController controller;
+	private LogDiaryBLController log;
 
 	public QueryPanel(LogisticQueryController controller) {
 
 		this.controller = controller;
+		log = new LogDiaryBLController();
 
 		clearLabel = new MyLabel();
 		timeField = new MySearchField();

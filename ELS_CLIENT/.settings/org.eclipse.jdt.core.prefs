@@ -1,25 +1,15 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=02ef6dd67e4372194bc2227dab69151d78928b9a
+>>>>>>>=248bb43fb223bc7321415e3db45fc1481f433fd6
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
-<<<<<<< HEAD
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
 org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
 org.eclipse.jdt.core.compiler.compliance=1.8
-=======
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.7
-org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
-org.eclipse.jdt.core.compiler.compliance=1.7
->>>>>>> 248bb43fb223bc7321415e3db45fc1481f433fd6
 org.eclipse.jdt.core.compiler.debug.lineNumber=generate
 org.eclipse.jdt.core.compiler.debug.localVariable=generate
 org.eclipse.jdt.core.compiler.debug.sourceFile=generate
 org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
 org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
-<<<<<<< HEAD
 org.eclipse.jdt.core.compiler.source=1.8
-=======
-org.eclipse.jdt.core.compiler.source=1.7
->>>>>>> 248bb43fb223bc7321415e3db45fc1481f433fd6

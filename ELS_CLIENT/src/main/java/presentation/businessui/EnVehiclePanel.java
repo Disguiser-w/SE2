@@ -1,19 +1,20 @@
 package presentation.businessui;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.EnVehicleController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
+import vo.LogDiaryVO;
 
 public class EnVehiclePanel extends OperationPanel {
 	private MyTable messageTable;
@@ -25,9 +26,11 @@ public class EnVehiclePanel extends OperationPanel {
 	private EnVehicleController controller;
 
 	private LocationHelper helper;
+	private LogDiaryBLController log;
 
 	public EnVehiclePanel(EnVehicleController controller) {
 		this.controller = controller;
+		log = new LogDiaryBLController();
 
 		distributeLabel = new MyLabel();
 		confirmLabel = new MyLabel();
@@ -71,8 +74,10 @@ public class EnVehiclePanel extends OperationPanel {
 				result = controller.autoTruckLoading();
 				if (result.size() == 0)
 					warnning("不存在需要派件的订单");
-				else
+				else{
 					messageTable.setInfos(result);
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),BusinessMainController.businessVO,"进行了一次装车"), GetDate.getTime());	
+				}
 			}
 		});
 

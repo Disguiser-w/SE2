@@ -9,14 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextArea;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
+import vo.LogDiaryVO;
 import vo.OrderVO;
 
 public class FinishedOrderPanel extends OperationPanel {
@@ -37,9 +41,11 @@ public class FinishedOrderPanel extends OperationPanel {
 	private OrderVO vo;
 	// private LocationHelper helper;
 	private ReceiptOrderController controller;
+	private LogDiaryBLController log;
 
 	public FinishedOrderPanel(ReceiptOrderController controller) {
 		this.controller = controller;
+		log = new LogDiaryBLController();
 		orderIDField = new MySearchField();
 		clearLabel = new MyLabel();
 		messageArea = new MyTextArea();
@@ -185,7 +191,7 @@ public class FinishedOrderPanel extends OperationPanel {
 
 				}
 
-				vo.finishedID = ExpressMainController.expressVO.ID + "-" + timeField.getText();
+				vo.finishedID = ExpressMainController.expressVO.userID + "-" + timeField.getText();
 				vo.finishedDate = getTime();
 
 				vo.tRecipient = receiverNameField.getText();
@@ -195,6 +201,7 @@ public class FinishedOrderPanel extends OperationPanel {
 					tip("提交成功!");
 
 					clear();
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),BusinessMainController.businessVO,"完成了一份订单"), GetDate.getTime());	
 
 				} else {
 					warnning("提交失败,请重新提交");

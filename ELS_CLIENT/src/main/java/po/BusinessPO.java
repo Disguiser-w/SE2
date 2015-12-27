@@ -2,35 +2,24 @@ package po;
 
 import java.io.Serializable;
 
-public class BusinessPO implements Serializable{
-	private String name;
-	private String ID;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
+import vo.UserVO;
+
+public class BusinessPO extends UserPO implements Serializable{
+
 	private String serviceTime;
 	private OrganizationPO organizationPO;
 
-	public BusinessPO(String name, String ID, String serviceTime,
+	public BusinessPO(String name, String ID, String password,ProfessionType professionType, String organizationID,
+			SalaryPlanType salaryPlanType, AuthorityType authority, int grade,String serviceTime,
 			OrganizationPO organizationPO) {
-		this.name = name;
-		this.ID = ID;
+		super(name, ID, password, professionType, organizationID, salaryPlanType, authority, grade);
+
 		this.serviceTime = serviceTime;
 		this.organizationPO = organizationPO;
 
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
 	}
 
 	public String getServiceTime() {

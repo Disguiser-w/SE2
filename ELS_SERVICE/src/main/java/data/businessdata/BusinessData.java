@@ -22,6 +22,7 @@ import po.GatheringReceiptPO;
 import po.OrderAcceptReceiptPO;
 import po.OrganizationPO;
 import po.RepertoryPO;
+import po.UserPO;
 import po.VehiclePO;
 import type.OrganizationType;
 import type.Sexuality;
@@ -31,46 +32,26 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	public BusinessPO getBusinessInfo(String organizationID, String businessID) throws RemoteException {
-		if (organizationID != null) {
-			String path = "businessInfo/" + organizationID + "-business.dat";
-			File file = FileGetter.getFile(path);
-			if (!file.exists())
-				return null;
-			try {
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-				ArrayList<BusinessPO> businessPOs = (ArrayList<BusinessPO>) in.readObject();
-				in.close();
-				for (BusinessPO i : businessPOs)
-					if (i.getID().equals(businessID))
-						return i;
-				System.out.println("不存在此营业厅业务员，你见鬼了");
+		File file = FileGetter.getFile("userInfo/user.ser");
+		if (!file.exists()) {
+			return null;
+		}
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("营业厅业务员信息读取失败");
-			}
-		} else {
-
-			// 查找所有营业厅文件
-			File dir = FileGetter.getFile("businessInfo");
-			File[] files = dir.listFiles();
-			for (File i : files) {
-				try {
-					ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
-					ArrayList<BusinessPO> businessPOs = (ArrayList<BusinessPO>) in.readObject();
-					in.close();
-
-					for (BusinessPO po : businessPOs)
-						if (po.getID().equals(businessID))
-							return po;
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("营业厅业务员信息读取失败");
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<UserPO> users = (ArrayList<UserPO>) in.readObject();
+			in.close();
+			for (UserPO i : users) {
+				if (i.getUserID().equals(businessID)) {
+					return (BusinessPO) i;
 				}
 			}
-			System.out.println("不存在此营业厅业务员，你见鬼了");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
 		}
+
 		return null;
 	}
 

@@ -48,30 +48,30 @@ public class AddOrder {
 					// 如果同一营业厅,直接派送
 					po.setOrder_state(OrderState.WAITING_DISTRIBUTE);
 					po.getHistory().add("快件已发出");
-					po.getHistory().add("快件已到达" + expressVO.organization.name + ",正等待派送");
+					po.getHistory().add("快件已到达" + expressVO.organizationVO.name + ",正等待派送");
 
 				} else {
 					// 否则要经过一次转运,转运后状态变为等待派件
 					po.setOrder_state(OrderState.WAITING_ENVEHICLE);
 					po.getHistory().add("快件已发出");
-					po.getHistory().add("订单已到达" + expressVO.organization.name + ",正等待转运");
+					po.getHistory().add("订单已到达" + expressVO.organizationVO.name + ",正等待转运");
 				}
 			} else {
 				// 在不同城市,需要转运和中转
 
 				po.setOrder_state(OrderState.WAITING_ENVEHICLE);
 				po.getHistory().add("快件已发出");
-				po.getHistory().add("订单已到达" + expressVO.organization.name + ",正等待中转");
+				po.getHistory().add("订单已到达" + expressVO.organizationVO.name + ",正等待中转");
 			}
 
 			po.setPackingExpense(vo.packingExpense);
 			po.setFreight(vo.freight);
 			// 增加订单到本营业厅当日订单列表中
-			String organizationID = expressVO.organization.organizationID;
+			String organizationID = expressVO.organizationVO.organizationID;
 
 			result = expressData.addOrder(po, organizationID);
 			// 增加此订单ID到此快递员的SubmitOrderID中
-			expressData.addSubmitOrder(organizationID, expressVO.ID, vo.ID);
+			expressData.addSubmitOrder(organizationID, expressVO.userID, vo.ID);
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -147,8 +147,8 @@ public class AddOrder {
 
 		boolean result = false;
 		try {
-			result = expressData.updateChargeCollection(ExpressMainController.expressVO.organization.organizationID,
-					ExpressMainController.expressVO.ID, chargeCollection);
+			result = expressData.updateChargeCollection(ExpressMainController.expressVO.organizationVO.organizationID,
+					ExpressMainController.expressVO.userID, chargeCollection);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

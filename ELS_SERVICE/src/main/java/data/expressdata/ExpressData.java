@@ -3,7 +3,6 @@ package data.expressdata;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -19,10 +18,9 @@ import dataservice.expressdataservice.ExpressDataService;
 import po.ExpressPO;
 import po.GoodsPO;
 import po.OrderPO;
-import po.OrganizationPO;
-import po.RepertoryPO;
+import po.UserPO;
 import type.OrderState;
-import type.OrganizationType;
+import type.ProfessionType;
 
 public class ExpressData extends UnicastRemoteObject implements ExpressDataService {
 
@@ -146,63 +144,94 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	}
 
 	public ExpressPO getExpressInfo(String organizationID, String expressID) throws RemoteException {
+		//
+		// if (organizationID != null) {
+		// String path = "expressInfo/" + organizationID + "-express.dat";
+		// File file = FileGetter.getFile(path);
+		// try {
+		// ObjectInputStream in = new ObjectInputStream(new
+		// FileInputStream(file));
+		// ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>)
+		// in.readObject();
+		// in.close();
+		// for (ExpressPO i : expressPOs)
+		// if (i.getUserID().equals(expressID))
+		// return i;
+		// System.out.println("不存在此快递员，你见鬼了");
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.out.println("快递员信息读取失败");
+		// }
+		// } else {
+		//
+		// // 查找所有营业厅文件
+		// File dir = FileGetter.getFile("expressInfo");
+		// File[] files = dir.listFiles();
+		// for (File i : files) {
+		// try {
+		// ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
+		// ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>)
+		// in.readObject();
+		// in.close();
+		// for (ExpressPO po : expressPOs)
+		// if (po.getUserID().equals(expressID))
+		// return po;
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.out.println("快递员信息读取失败");
+		// }
+		// }
+		// System.out.println("不存在此快递员，你见鬼了");
+		// }
+		// return null;
+		File file = FileGetter.getFile("userInfo/user.ser");
+		if (!file.exists()) {
+			return null;
+		}
 
-		if (organizationID != null) {
-			String path = "expressInfo/" + organizationID + "-express.dat";
-			File file = FileGetter.getFile(path);
-			try {
-				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-				ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
-				in.close();
-				for (ExpressPO i : expressPOs)
-					if (i.getID().equals(expressID))
-						return i;
-				System.out.println("不存在此快递员，你见鬼了");
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("快递员信息读取失败");
-			}
-		} else {
-
-			// 查找所有营业厅文件
-			File dir = FileGetter.getFile("expressInfo");
-			File[] files = dir.listFiles();
-			for (File i : files) {
-				try {
-					ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));
-					ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
-					in.close();
-					for (ExpressPO po : expressPOs)
-						if (po.getID().equals(expressID))
-							return po;
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("快递员信息读取失败");
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<UserPO> users = (ArrayList<UserPO>) in.readObject();
+			in.close();
+			for (UserPO i : users) {
+				if (i.getUserID().equals(expressID)) {
+					return (ExpressPO) i;
 				}
 			}
-			System.out.println("不存在此快递员，你见鬼了");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
 		}
+
 		return null;
 	}
 
 	public ArrayList<ExpressPO> getExpressInfos(String organizationID) throws RemoteException {
-		String path = "expressInfo/" + organizationID + "-express.dat";
-		File file = FileGetter.getFile(path);
+
+		File file = FileGetter.getFile("userInfo/user.ser");
+
 		try {
 			if (!file.exists())
 				return new ArrayList<ExpressPO>();
 
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<ExpressPO> expressPOs = new ArrayList<ExpressPO>();
+			ArrayList<UserPO> users = (ArrayList<UserPO>) in.readObject();
 			in.close();
+			for (UserPO i : users) {
+				if (i.getProfession() == ProfessionType.courier) {
+					expressPOs.add((ExpressPO) i);
+				}
+			}
 			return expressPOs;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("快递员信息读写失败");
 		}
-		return null;
+		return new ArrayList<ExpressPO>();
 	}
 
 	public boolean updateChargeCollection(String organizationID, String expressID, ArrayList<String> chargeCollection)
@@ -215,7 +244,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
 			in.close();
 			for (ExpressPO i : expressPOs)
-				if (i.getID().equals(expressID))
+				if (i.getUserID().equals(expressID))
 					i.setChargeCollection(chargeCollection);
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -267,7 +296,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
 			in.close();
 			for (ExpressPO i : expressPOs) {
-				if (i.getID().equals(expressId)) {
+				if (i.getUserID().equals(expressId)) {
 					i.getPendingOrders().remove(po.getID());
 					i.getFinishedOrders().add(po.getID());
 					result = true;
@@ -316,7 +345,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
 			in.close();
 			for (ExpressPO i : expressPOs) {
-				if (i.getID().equals(expressId)) {
+				if (i.getUserID().equals(expressId)) {
 					i.getSubmitedOrderID().add(orderID);
 				}
 			}
@@ -341,7 +370,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
 			in.close();
 			for (ExpressPO i : expressPOs) {
-				if (i.getID().equals(expressId)) {
+				if (i.getUserID().equals(expressId)) {
 					i.getPendingOrders().add(orderID);
 				}
 			}
@@ -517,45 +546,6 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 	/***************************************************************** test ***************************************************/
 	public static void main(String[] args) {
-		try {
-
-			// File file =
-			// FileGetter.getFile("organizationInfo/organization.dat");
-			// if (!file.exists()) {
-			//
-			// file.getParentFile().mkdirs();
-			// file.createNewFile();
-			// }
-			// ObjectOutputStream out = new ObjectOutputStream(new
-			// FileOutputStream(file));
-			OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
-					new RepertoryPO("pig", "wo"));
-			// ArrayList<OrganizationPO> pos = new ArrayList<OrganizationPO>();
-			// pos.add(po);
-			//
-			// out.writeObject(pos);
-			// out.close();
-
-			File file2 = FileGetter.getFile("expressInfo/025001-express.dat");
-			if (!file2.exists()) {
-				FileGetter.createFile(file2);
-			}
-			ObjectOutputStream out2 = new ObjectOutputStream(new FileOutputStream(file2));
-			ExpressPO epo = new ExpressPO("狗剩", "KD-00001", "2.5", new ArrayList<String>(), po, new ArrayList<String>(),
-					new ArrayList<String>(), new ArrayList<String>());
-			ExpressPO epo1 = new ExpressPO("doge", "KD-00002", "2.5", new ArrayList<String>(), po,
-					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>());
-
-			ArrayList<ExpressPO> epos = new ArrayList<ExpressPO>();
-			epos.add(epo);
-			epos.add(epo1);
-			out2.writeObject(epos);
-			out2.close();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
 
 	}
 

@@ -3,50 +3,32 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ExpressPO implements Serializable {
-	private String name;
-	private String ID;
+import type.AuthorityType;
+import type.ProfessionType;
+import type.SalaryPlanType;
+import vo.UserVO;
+
+public class ExpressPO extends UserPO implements Serializable {
 	private String serviceTime;
 	private ArrayList<String> chargeCollection;
-	private OrganizationPO organization;
+	private OrganizationPO organizationPO;
 	private ArrayList<String> pendingOrders;
 	private ArrayList<String> finishedOrders;
 	private ArrayList<String> submitedOrderID;
 
-	public ExpressPO() {
-
-	}
-
-	public ExpressPO(String name, String ID, String serviceTime, ArrayList<String> chargeCollection,
-			OrganizationPO organization, ArrayList<String> pendingOrders, ArrayList<String> finishedOrders,
-			ArrayList<String> submitedOrderID) {
-		super();
-		this.name = name;
-		this.ID = ID;
+	public ExpressPO(String name, String ID, String password, ProfessionType professionType, String organizationID,
+			SalaryPlanType salaryPlanType, AuthorityType authority, int grade, String serviceTime,
+			ArrayList<String> chargeCollection, OrganizationPO organizationPO, ArrayList<String> pendingOrders,
+			ArrayList<String> finishedOrders, ArrayList<String> submitedOrderID) {
+		super(name, ID, password, professionType, organizationID, salaryPlanType, authority, grade);
 		this.serviceTime = serviceTime;
 		this.chargeCollection = chargeCollection;
 		if (chargeCollection.isEmpty())
 			chargeCollection.add("0.0");
-		this.organization = organization;
+		this.organizationPO = organizationPO;
 		this.pendingOrders = pendingOrders;
 		this.finishedOrders = finishedOrders;
 		this.submitedOrderID = submitedOrderID;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String ID) {
-		this.ID = ID;
 	}
 
 	public String getServiceTime() {
@@ -65,12 +47,12 @@ public class ExpressPO implements Serializable {
 		this.chargeCollection = chargeCollection;
 	}
 
-	public OrganizationPO getOrganization() {
-		return organization;
+	public OrganizationPO getOrganizationPO() {
+		return organizationPO;
 	}
 
-	public void setOrganization(OrganizationPO organization) {
-		this.organization = organization;
+	public void setOrganization(OrganizationPO organizationPO) {
+		this.organizationPO = organizationPO;
 	}
 
 	public ArrayList<String> getPendingOrders() {

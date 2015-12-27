@@ -1,19 +1,20 @@
 package presentation.businessui;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DistributeOrderController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
+import vo.LogDiaryVO;
 
 public class OrderDistributePanel extends OperationPanel {
 	private MyTable messageTable;
@@ -25,9 +26,11 @@ public class OrderDistributePanel extends OperationPanel {
 	private DistributeOrderController controller;
 
 	private LocationHelper helper;
-
+	private LogDiaryBLController log;
+	
 	public OrderDistributePanel(DistributeOrderController controller) {
 		this.controller = controller;
+		log = new LogDiaryBLController();
 
 		distributeLabel = new MyLabel();
 		confirmLabel = new MyLabel();
@@ -57,13 +60,19 @@ public class OrderDistributePanel extends OperationPanel {
 				(int) (height * 18.06451612903226 / 20) - 10, (int) (width * 1.7735334242837653 / 25),
 				(int) (height * 1.003584229390681 / 20));
 
-//		messageTable.setLocationAndSize((int) (width * 1.159618008185539 / 25),
-//				(int) (height * 1.2903225806451613 / 20), (int) (width * 22.646657571623464 / 25),
-//				(int) (height * 15.878136200716845 / 20));
-//		distributeLabel.setBounds((int) (width * 19.37244201909959 / 25), (int) (height * 18.06451612903226 / 20),
-//				(int) (width * 1.8417462482946794 / 25), (int) (height * 1.003584229390681 / 20));
-//		confirmLabel.setBounds((int) (width * 22.032742155525238 / 25), (int) (height * 18.06451612903226 / 20),
-//				(int) (width * 1.7735334242837653 / 25), (int) (height * 1.003584229390681 / 20));
+		// messageTable.setLocationAndSize((int) (width * 1.159618008185539 /
+		// 25),
+		// (int) (height * 1.2903225806451613 / 20), (int) (width *
+		// 22.646657571623464 / 25),
+		// (int) (height * 15.878136200716845 / 20));
+		// distributeLabel.setBounds((int) (width * 19.37244201909959 / 25),
+		// (int) (height * 18.06451612903226 / 20),
+		// (int) (width * 1.8417462482946794 / 25), (int) (height *
+		// 1.003584229390681 / 20));
+		// confirmLabel.setBounds((int) (width * 22.032742155525238 / 25), (int)
+		// (height * 18.06451612903226 / 20),
+		// (int) (width * 1.7735334242837653 / 25), (int) (height *
+		// 1.003584229390681 / 20));
 
 	}
 
@@ -80,8 +89,11 @@ public class OrderDistributePanel extends OperationPanel {
 				result = controller.distributeOrder();
 				if (result.size() == 0)
 					warnning("不存在需要派件的订单");
-				else
+				else {
 					messageTable.setInfos(result);
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "进行了一次派件"),
+							GetDate.getTime());
+				}
 			}
 		});
 

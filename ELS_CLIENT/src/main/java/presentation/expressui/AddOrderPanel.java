@@ -13,8 +13,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
@@ -22,6 +25,7 @@ import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import type.ExpressType;
 import type.PackType;
+import vo.LogDiaryVO;
 import vo.OrderVO;
 
 public class AddOrderPanel extends OperationPanel {
@@ -91,10 +95,12 @@ public class AddOrderPanel extends OperationPanel {
 	private ArrayList<ArrayList<String>> places;
 
 	// private LocationHelper helper;
+	private LogDiaryBLController log;
 
 	public AddOrderPanel(AddOrderController controller) {
 		this.controller = controller;
-
+		log = new LogDiaryBLController();
+		
 		senderLabel = new MyTextLabel("寄件人信息");
 		senderNameLabel = new MyTextLabel("姓名");
 		senderOrganizationLabel = new MyTextLabel("单位");
@@ -348,6 +354,7 @@ public class AddOrderPanel extends OperationPanel {
 				if (controller.addOrder(newOrder)) {
 					addSuccessful("订单提交成功！");
 					clear();
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),BusinessMainController.businessVO,"增加了一份订单"), GetDate.getTime());	
 				} else
 					warnning("订单提交失败，请重新提交");
 
@@ -495,7 +502,7 @@ public class AddOrderPanel extends OperationPanel {
 				String ID = null;
 				try {
 					ID = "DD-" + dateNowStr + "-" + (ExpressMainController.expressData
-							.getOrderNum(ExpressMainController.expressVO.organization.organizationID) + 1);
+							.getOrderNum(ExpressMainController.expressVO.organizationVO.organizationID) + 1);
 
 				} catch (RemoteException e2) {
 

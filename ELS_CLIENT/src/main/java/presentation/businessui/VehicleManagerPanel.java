@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
@@ -29,6 +31,7 @@ import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 import vo.DriverVO;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.VehicleVO;
 
@@ -51,10 +54,12 @@ public class VehicleManagerPanel extends OperationPanel {
 
 	private LocationHelper helper;
 	private int selectedIndex;
+	private LogDiaryBLController log;
 
 	public VehicleManagerPanel(VehicleManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
+		log = new LogDiaryBLController();
 		selectedIndex = -1;
 		addLabel = new AddLabel();
 		addLabel.setToolTipText("新增车辆");
@@ -154,6 +159,8 @@ public class VehicleManagerPanel extends OperationPanel {
 					vehicles = controller.getVehicleInfo();
 					messageTable.setInfos(getInfos());
 
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "删除了车辆信息"),
+							GetDate.getTime());
 				}
 			}
 		});
@@ -484,6 +491,8 @@ public class VehicleManagerPanel extends OperationPanel {
 						vehicles = controller.getVehicleInfo();
 						mainFrame.toMainPanel();
 
+						log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "修改了车辆信息"),
+								GetDate.getTime());
 					} else {
 						warnning("操作失败，请检查网络连接");
 						return;
@@ -799,6 +808,10 @@ public class VehicleManagerPanel extends OperationPanel {
 						messageTable.addRow(new String[] { id, destination.name, local.name, vo.name });
 						vehicles = controller.getVehicleInfo();
 						mainFrame.toMainPanel();
+
+						log.addLogDiary(
+								new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "增加了一个车辆信息"),
+								GetDate.getTime());
 
 					} else {
 						warnning("操作失败，请检查网络连接");

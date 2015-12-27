@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.DriverManagerController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyCheckBox;
 import presentation.commonui.MyComboBox;
@@ -31,6 +33,7 @@ import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 import type.Sexuality;
 import vo.DriverVO;
+import vo.LogDiaryVO;
 
 public class DriverManagerPanel extends OperationPanel {
 
@@ -48,11 +51,13 @@ public class DriverManagerPanel extends OperationPanel {
 	private ArrayList<DriverVO> drivers;
 
 	private int selectedIndex;
+	private LogDiaryBLController log;
 	// private LocationHelper helper;
 
 	public DriverManagerPanel(DriverManagerController controller, UserFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.controller = controller;
+		log = new LogDiaryBLController();
 		addLabel = new AddLabel();
 		addLabel.setToolTipText("新增车辆");
 		delLabel = new DeleteLabel();
@@ -156,6 +161,7 @@ public class DriverManagerPanel extends OperationPanel {
 					for (int i : selectedIndexs)
 						controller.deleteDriver(drivers.get(i));
 
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),BusinessMainController.businessVO,"删除了车辆信息"), GetDate.getTime())
 					drivers = controller.getDriverInfo();
 					messageTable.setInfos(getInfos());
 
@@ -498,8 +504,10 @@ public class DriverManagerPanel extends OperationPanel {
 						messageTable.setRowValueAt(new String[] { id, newName, idNum, mobilePhone, sex, times + "" },
 								selectedIndex);
 						drivers = controller.getDriverInfo();
-						//
 						mainFrame.toMainPanel();
+
+						log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "修改了车辆信息"),
+								GetDate.getTime());
 					} else {
 						warnning("操作失败，请检查网络连接");
 						return;
@@ -846,6 +854,8 @@ public class DriverManagerPanel extends OperationPanel {
 						drivers = controller.getDriverInfo();
 						clear();
 						mainFrame.toMainPanel();
+						
+						log.addLogDiary(new LogDiaryVO(GetDate.getTime(),BusinessMainController.businessVO,"增加了车辆信息"), GetDate.getTime())
 					} else {
 						warnning("提交失败，请检查网络连接");
 					}

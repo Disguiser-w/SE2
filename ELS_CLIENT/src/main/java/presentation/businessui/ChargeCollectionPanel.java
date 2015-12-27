@@ -13,11 +13,14 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.GatheringController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import vo.LogDiaryVO;
 
 public class ChargeCollectionPanel extends OperationPanel {
 	// private JLabel tablehead;
@@ -29,10 +32,12 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 	private ArrayList<String[]> chargeInfos;
 	private GatheringController controller;
+	private LogDiaryBLController log;
 
 	public ChargeCollectionPanel(GatheringController controller) {
 
 		this.controller = controller;
+		log = new LogDiaryBLController();
 
 		totalMessageLabel = new MyTextLabel();
 		totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
@@ -53,7 +58,6 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 		addListener();
 		setBaseInfos();
-
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -99,6 +103,9 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 				totalMessageLabel.setText(" 日期 : " + date + "  营业厅编号 : " + oID + "  金额总和 : " + total);
 
+				//
+				log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "进行了本日的收款汇总"),
+						GetDate.getTime());
 			}
 		});
 

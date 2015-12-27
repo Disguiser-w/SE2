@@ -34,13 +34,7 @@ public class ImageLabel extends JLabel {
 		night = new NightLabel();
 		this.nameAndId = str;
 		String head = str[1].split("-")[0];
-		switch (head) {
-		case "ZZZX":
-			image = ImageGetter.getImage("ZZZX.gif").getImage();
-			break;
-		default:
-			image = ImageGetter.getImage(head + ".png").getImage();
-		}
+		image = ImageGetter.getImage(head + ".png").getImage();
 		MouseListener l = new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (UserFrame.type == UserFrame.TYPE_0) {
@@ -81,7 +75,7 @@ public class ImageLabel extends JLabel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// 这句是圆角效果
 		if (UserFrame.type == UserFrame.TYPE_0)
-//			g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
+			// g2d.fillRoundRect(0, 0, getWidth(), getHeight() + 7, 14, 14);
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);

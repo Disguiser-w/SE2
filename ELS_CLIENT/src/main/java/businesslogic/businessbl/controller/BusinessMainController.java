@@ -80,7 +80,7 @@ public class BusinessMainController {
 		try {
 
 			businessVO = businessPOToVO(
-					businessData.getBusinessInfo(businessVO.organizationVO.organizationID, businessVO.ID));
+					businessData.getBusinessInfo(businessVO.organizationVO.organizationID, businessVO.userID));
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -89,12 +89,19 @@ public class BusinessMainController {
 	}
 
 	public static BusinessVO businessPOToVO(BusinessPO po) {
-		return new BusinessVO(po.getName(), po.getID(), po.getServiceTime(),
+		// super(name, ID, password, professionType, organizationID,
+		// salaryPlanType, authority, grade);
+		//
+		// this.serviceTime = serviceTime;
+		// this.organizationPO = or,
+		return new BusinessVO(po.getName(), po.getID(), po.getPassword(), po.getProfession(), po.getOrganization(),
+				po.getSalaryPlan(), po.getAuthority(), po.getGrades(), po.getServiceTime(),
 				OrganizationBL.organizationPOToVO(po.getOrganizationPO()));
 	}
 
 	public static BusinessPO businessVOToPO(BusinessVO vo) {
-		return new BusinessPO(vo.name, vo.ID, vo.serviceTime, OrganizationBL.organizationVOToPO(vo.organizationVO));
+		return new BusinessPO(vo.userName, vo.userID, vo.password, vo.profession, vo.organization, vo.salaryPlan,
+				vo.authority, vo.grades, vo.serviceTime, OrganizationBL.organizationVOToPO(vo.organizationVO));
 	}
 
 	public static OrderAcceptReceiptPO orderAcceptReceiptVOToPO(OrderAcceptReceiptVO vo) {

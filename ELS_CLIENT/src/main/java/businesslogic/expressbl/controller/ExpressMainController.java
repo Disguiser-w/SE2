@@ -47,10 +47,12 @@ public class ExpressMainController {
 		receiptOrderController = new ReceiptOrderController();
 
 		expressFrame = new ExpressFrame(expressVO);
-		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController), "添加订单", ImageGetter.getImage("addOrder.png").getImage());
+		expressFrame.addFuncLabel(new AddOrderPanel(addOrderController), "添加订单",
+				ImageGetter.getImage("addOrder.png").getImage());
 		expressFrame.addFuncLabel(new ChargeMessageCollectionPanel(chargeCollectionController), "收费汇总",
 				ImageGetter.getImage("chargeCollection.png").getImage());
-		expressFrame.addFuncLabel(new QueryPanel(logisticQuery), "订单查询", ImageGetter.getImage("orderQuery.png").getImage());
+		expressFrame.addFuncLabel(new QueryPanel(logisticQuery), "订单查询",
+				ImageGetter.getImage("orderQuery.png").getImage());
 		expressFrame.addFuncLabel(new FinishedOrderPanel(receiptOrderController), "订单接收",
 				ImageGetter.getImage("finishOrder.png").getImage());
 
@@ -62,7 +64,7 @@ public class ExpressMainController {
 	// 最后此方法在此聚合
 	public static void updateExpressInfo() {
 		try {
-			expressVO = expressPOToVO(expressData.getExpressInfo(expressVO.organization.organizationID, expressVO.ID));
+			expressVO = expressPOToVO(expressData.getExpressInfo(expressVO.organizationVO.organizationID, expressVO.userID));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,17 +99,19 @@ public class ExpressMainController {
 
 	public static ExpressPO expressVOToPO(ExpressVO vo) {
 
-		return new ExpressPO(vo.name, vo.ID, vo.serviceTime, vo.chargeCollection,
-				OrganizationBL.organizationVOToPO(vo.organization), vo.pendingOrders, vo.finishedOrders,
+		return new ExpressPO(vo.userName, vo.userID, vo.password, vo.profession, vo.organization, vo.salaryPlan,
+				vo.authority, vo.grades, vo.serviceTime, vo.chargeCollection,
+				OrganizationBL.organizationVOToPO(vo.organizationVO), vo.pendingOrders, vo.finishedOrders,
 				vo.submitedOrderID);
 
 	}
 
 	public static ExpressVO expressPOToVO(ExpressPO po) {
 
-		return new ExpressVO(po.getName(), po.getID(), po.getServiceTime(), po.getChargeCollection(),
-				OrganizationBL.organizationPOToVO(po.getOrganization()), po.getPendingOrders(), po.getFinishedOrders(),
-				po.getSubmitedOrderID());
+		return new ExpressVO(po.getName(), po.getID(), po.getPassword(), po.getProfession(), po.getOrganization(),
+				po.getSalaryPlan(), po.getAuthority(), po.getGrades(), po.getServiceTime(), po.getChargeCollection(),
+				OrganizationBL.organizationPOToVO(po.getOrganizationPO()), po.getPendingOrders(),
+				po.getFinishedOrders(), po.getSubmitedOrderID());
 	}
 
 	// test

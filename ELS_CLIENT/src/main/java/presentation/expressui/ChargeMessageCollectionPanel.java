@@ -62,11 +62,11 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 
 		// expressID从expressVO处获
 		if (ExpressMainController.expressVO.chargeCollection.size() != 0)
-			totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.ID + "  金额总和 : "
+			totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID + "  金额总和 : "
 					+ ExpressMainController.expressVO.chargeCollection.get(0));
 		else
 			totalMessageLabel
-					.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.ID + "  金额总和 : " + "0");
+					.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID + "  金额总和 : " + "0");
 		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
 		String[] head = new String[] { "订单号", "收费" };
 
