@@ -1,21 +1,78 @@
 package data.repertorydata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
+
 import po.GoodsPO;
-import file.JXCFile;
 import dataservice.repertorydataservice.GoodsDataService;
 
 public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 
 	private static final long serialVersionUID = 131250149L;
 		
-	JXCFile goodsFile;
-	
 	public GoodsData() throws RemoteException{
-		goodsFile = new JXCFile("info/goodInfo/goods.ser");
+		super();
+	}
+	
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<GoodsPO> getGoodsList() throws RemoteException{
+		String path = "goodsInfo/goods.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<GoodsPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<GoodsPO> repertoryList = (ArrayList<GoodsPO>) in.readObject();
+			in.close();
+			return repertoryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveGoodsList(ArrayList<GoodsPO> repertoryList) throws RemoteException {
+		String path = "goodsInfo/goods.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(repertoryList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 	
 	
@@ -27,14 +84,16 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
 	public int addGoods(GoodsPO goodspo) throws RemoteException{
-    	if(findGoodsByID(goodspo.getOrder_ID())==null){
-    		goodsFile.write(goodspo);
-    		return 0;
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
+    	
+    	for(int i=0; i<goodsList.size(); i++){
+    		GoodsPO tmpGoodspo = goodsList.get(i);
+    		if(tmpGoodspo.getOrder_ID().endsWith(goodspo.getOrder_ID()))
+    			return 1;
     	}
-    	else {
-    		System.out.println("已经存在相同ID的货物");
-    		return 1;
-    		}
+    	goodsList.add(goodspo);
+    	saveGoodsList(goodsList);
+    	return 0;
     }
     
 	
@@ -46,22 +105,23 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public int deleteGoods(String orderID) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(orderID)){
-				objectList.remove(i);
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(orderID)){
+				goodsList.remove(i);
+				hasExist = true;
 				break;
 			}
 		}
 		
-		//goodsFile.clear();
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -73,24 +133,28 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public int modifyGoods(GoodsPO goodspo) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodspo.getOrder_ID())){
-				tempGoodsPO.setEnterTime(goodspo.getLatestEnterTime());
-				tempGoodsPO.setLeaveTime(goodspo.getLatestLeaveTime());
-				tempGoodsPO.setEnterRepertoryID(goodspo.getLatestEnterRepertoryID());
-				tempGoodsPO.setLeaveRepertoryID(goodspo.getLatestLeaveRepertoryID());
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodspo.getOrder_ID())){
+				if(tmpGoodsPO.getOrder_ID().equals(goodspo.getOrder_ID())){
+					tmpGoodsPO.setEnterTime(goodspo.getLatestEnterTime());
+					tmpGoodsPO.setLeaveTime(goodspo.getLatestLeaveTime());
+					tmpGoodsPO.setEnterRepertoryID(goodspo.getLatestEnterRepertoryID());
+					tmpGoodsPO.setLeaveRepertoryID(goodspo.getLatestLeaveRepertoryID());
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -102,21 +166,25 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public int modifyGoodsEnterTime(String goodsID, String enterTime) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
-				tempGoodsPO.setEnterTime(enterTime);
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+				if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+					tmpGoodsPO.setEnterTime(enterTime);
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -128,21 +196,25 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
    	 * 
    	 * */
     public int modifyGoodsEnterRepertoryID(String goodsID, String enterRepertoryID) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
-				tempGoodsPO.setEnterRepertoryID(enterRepertoryID);
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+				if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+					tmpGoodsPO.setEnterRepertoryID(enterRepertoryID);
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -154,21 +226,25 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public int modifyGoodsLeaveTime(String goodsID, String leaveTime) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
-				tempGoodsPO.setLeaveTime(leaveTime);
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+				if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+					tmpGoodsPO.setLeaveTime(leaveTime);
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -180,21 +256,25 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
    	 * 
    	 * */
     public int modifyGoodsLeaveRepertoryID(String goodsID, String leaveRepertoryID) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
-				tempGoodsPO.setLeaveRepertoryID(leaveRepertoryID);
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+				if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+					tmpGoodsPO.setLeaveRepertoryID(leaveRepertoryID);
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -206,21 +286,25 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
    	 * 
    	 * */
     public int modifyGoodsState(String goodsID, boolean isInRepertory) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+ArrayList<GoodsPO> goodsList = getGoodsList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(goodsID)){
-				tempGoodsPO.setInRepertory(isInRepertory);
-				break;
+    	boolean hasExist = false;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+				if(tmpGoodsPO.getOrder_ID().equals(goodsID)){
+					tmpGoodsPO.setInRepertory(isInRepertory);
+					hasExist = true;
+					break;
+				}
 			}
 		}
 		
-		goodsFile.writeM(objectList);
-		return 0;
+		saveGoodsList(goodsList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
     
@@ -232,15 +316,12 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public GoodsPO findGoodsByID(String orderID) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
-    	
-		if(objectList==null)	
-			return null;  	  
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
 		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().equals(orderID)){
-				return tempGoodsPO;
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().equals(orderID)){
+				return tmpGoodsPO;
 			}
 		}
 		
@@ -256,19 +337,16 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public ArrayList<GoodsPO> findGoodsByKeyword(String keyword) throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
-    	ArrayList<GoodsPO> goodsList = new ArrayList<GoodsPO>();
-    	
-		if(objectList==null)	
-			return null;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.getOrder_ID().contains(keyword) || tempGoodsPO.getDeparturePlace().contains(keyword) || tempGoodsPO.getDestination().contains(keyword)){
-				goodsList.add(tempGoodsPO);
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
+    	ArrayList<GoodsPO> goodspoList = new ArrayList<GoodsPO>();
+
+    	for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = goodsList.get(i);
+			if(tmpGoodsPO.getOrder_ID().contains(keyword) || tmpGoodsPO.getDeparturePlace().contains(keyword) || tmpGoodsPO.getDestination().contains(keyword)){
+				goodspoList.add(tmpGoodsPO);
 			}
 		}
-		return goodsList;
+		return goodspoList;
     }
     
     
@@ -279,18 +357,7 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public ArrayList<GoodsPO> showAllGoods() throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
-    	
-		if(objectList==null)
-			return null;  	  
-		
-		ArrayList<GoodsPO> goodsList = new ArrayList<GoodsPO>();
-		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			goodsList.add(tempGoodsPO);
-		}
-		
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
 		return goodsList;
     }
     
@@ -302,13 +369,13 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 	 * 
 	 * */
     public ArrayList<GoodsPO> getAllFreeGoods() throws RemoteException{
-    	ArrayList<Object> objectList = goodsFile.read();
+    	ArrayList<GoodsPO> goodsList = getGoodsList();
 		ArrayList<GoodsPO> freeGoodsList = new ArrayList<GoodsPO>();
 		
-		for(int i=0; i<objectList.size(); i++){
-			GoodsPO tempGoodsPO = (GoodsPO)(objectList.get(i));
-			if(tempGoodsPO.isInRepertory() == false)
-				freeGoodsList.add(tempGoodsPO);
+		for(int i=0; i<goodsList.size(); i++){
+			GoodsPO tmpGoodsPO = (GoodsPO)(goodsList.get(i));
+			if(tmpGoodsPO.isInRepertory() == false)
+				freeGoodsList.add(tmpGoodsPO);
 		}
 		
 		return freeGoodsList;
@@ -348,9 +415,9 @@ public class GoodsData extends UnicastRemoteObject implements GoodsDataService{
 				goodsData.addGoods(new GoodsPO("DD-20151224-1", 11.0, "南京鼓楼", "南京仙林"));
 				goodsData.addGoods(new GoodsPO("DD-20151224-2", 12.0, "南京仙林", "上海静安"));
 				goodsData.addGoods(new GoodsPO("DD-20151224-3", 13.0, "上海浦东", "上海静安"));
-				//goodsData.addGoods(new GoodsPO("DD-20151224-4", 14.0, "北京朝阳", "广州白云"));
-				//goodsData.addGoods(new GoodsPO("DD-20151224-5", 15.0, "上海静安", "广州白云"));
-				//goodsData.addGoods(new GoodsPO("DD-20151224-6", 16.0, "南京仙林", "南京仙林"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-4", 14.0, "北京朝阳", "广州白云"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-5", 15.0, "上海静安", "广州白云"));
+				goodsData.addGoods(new GoodsPO("DD-20151224-6", 16.0, "南京仙林", "南京仙林"));
 				
 				System.out.println("所有在外的货物");
 				ArrayList<GoodsPO> freeGoodList = goodsData.getAllFreeGoods();

@@ -1,5 +1,11 @@
 package data.repertorydata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.SimpleDateFormat;
@@ -8,26 +14,75 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import common.FileGetter;
+
 import dataservice.repertorydataservice.RepertoryDataService;
 import po.GoodsPO;
 import po.InventoryPO;
 import po.RepertoryPO;
 import po.InventoryCheckPO;
 import po.OrganizationPO;
-import file.JXCFile;
 
 public class RepertoryData extends UnicastRemoteObject implements RepertoryDataService{
 
 	private static final long serialVersionUID = 131250148L;
 	
-	JXCFile organizationFile;
-	JXCFile goodsFile;
-	GoodsData goodsData;
+	private GoodsData goodsData;
 	
 	public RepertoryData() throws RemoteException{
-		organizationFile = new JXCFile("info/organizationInfo/organization.ser");
-		goodsFile = new JXCFile("info/goodInfo/goods.ser");
+		super();
 		goodsData = new GoodsData();
+	}
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<OrganizationPO> getOrganizationList() throws RemoteException{
+		String path = "organizationInfo/organization.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<OrganizationPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<OrganizationPO> repertoryList = (ArrayList<OrganizationPO>) in.readObject();
+			in.close();
+			return repertoryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveOrganizationList(ArrayList<OrganizationPO> repertoryList) throws RemoteException {
+		String path = "organizationInfo/organization.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(repertoryList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 	
 	
@@ -36,14 +91,15 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * @param String repertoryID, String ownerID
 	 * @return 0(modify succeed), 1(modify failed)
+	 * @throws RemoteException 
 	 * 
 	 * */
-	public int modifyRepertoryOwner(String repertoryID, String ownerID){
-		ArrayList<Object> organizationList = organizationFile.read();
+	public int modifyRepertoryOwner(String repertoryID, String ownerID) throws RemoteException{
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
-			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			OrganizationPO organization = organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
 			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
 				repertory.setOwnerID(ownerID);
@@ -52,7 +108,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 			}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -65,11 +121,11 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public int modifyRepertory(RepertoryPO repertorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
-			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			OrganizationPO organization = organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
 			if(repertory!=null && repertory.getRepertoryID().equals(repertorypo.getRepertoryID())){
 				repertory.setOwnerID(repertorypo.getOwnerID());
@@ -77,18 +133,13 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 				repertory.setMaxShelf(repertorypo.getMaxShelf());
 				repertory.setMaxDigit(repertorypo.getMaxDigit());
 				repertory.setWarningRatio(repertorypo.getWarningRatio());
-				/*int []a = repertorypo.getStockNumArray();
-				if(a != null)
-					System.out.println(a[0]+" "+a[1]+" "+a[2]+" "+a[3]);
-				else 
-					System.out.println("a = null!!!");*/
 				repertory.setStockNumArray(repertorypo.getStockNumArray());
 				returnNum = 0;
 				break;
 			}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -101,7 +152,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public RepertoryPO findRepertory(String repertoryID) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -122,7 +173,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public RepertoryPO findRepertoryByOwnerID(String ownerID) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		for(int i=0;i<organizationList.size();i++){
 			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
@@ -142,14 +193,11 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public ArrayList<RepertoryPO> showAllRepertorys() throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
-
-		if(organizationList==null)
-			return null;
-		
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		ArrayList<RepertoryPO> repertoryList = new ArrayList<RepertoryPO>();
+		
 		for(int i=0;i<organizationList.size();i++){
-			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			OrganizationPO organization = organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
 			if(repertory!=null)
 				repertoryList.add(repertory);
@@ -166,11 +214,11 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public int addInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		int returnNum =1;
 		for(int i=0;i<organizationList.size();i++){
-			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			OrganizationPO organization = organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
 			
 			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
@@ -187,7 +235,7 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 			}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -200,21 +248,21 @@ public class RepertoryData extends UnicastRemoteObject implements RepertoryDataS
 	 * 
 	 * */
 	public int deleteInventory(String repertoryID, String orderID) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
 		int returnNum =1;
 loop1:		for(int i=0;i<organizationList.size();i++){
-				OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+				OrganizationPO organization = organizationList.get(i);
 				RepertoryPO repertory = organization.getRepertory();
 				
 				if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
 					ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
 					
 	loop2:				for(int j=0;j<inventoryList.size();j++){
-							InventoryPO tempInventory = (InventoryPO)inventoryList.get(j);
-							if(tempInventory.getGood().getOrder_ID().equals(orderID)){
-								inventoryList.remove(tempInventory);
-								repertory.stockNumSub(tempInventory.getBlockNum());
+							InventoryPO tmpInventory = (InventoryPO)inventoryList.get(j);
+							if(tmpInventory.getGood().getOrder_ID().equals(orderID)){
+								inventoryList.remove(tmpInventory);
+								repertory.stockNumSub(tmpInventory.getBlockNum());
 
 								returnNum = 0;
 								break loop2;
@@ -224,7 +272,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 				}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -237,23 +285,31 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * 
 	 * */
 	public int modifyInventory(String repertoryID, InventoryPO inventorypo) throws RemoteException{
-		RepertoryPO repertory = findRepertory(repertoryID);
-		ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
-		for(int i=0;i<inventoryList.size();i++){
-			InventoryPO tempInventory = (InventoryPO)inventoryList.get(i);
-			if(tempInventory.getGood().getOrder_ID().equals(inventorypo.getGood().getOrder_ID())){
-				tempInventory.setBlockNum(inventorypo.getBlockNum());
-				tempInventory.setRowNum(inventorypo.getRowNum());
-				tempInventory.setShelfNum(inventorypo.getShelfNum());
-				tempInventory.setDigitNum(inventorypo.getDigitNum());
-				tempInventory.getGood().setEnterTime(inventorypo.getGood().getLatestEnterTime());
-				tempInventory.getGood().setLeaveTime(inventorypo.getGood().getLatestLeaveTime());
-				tempInventory.getGood().setEnterRepertoryID(inventorypo.getGood().getLatestEnterRepertoryID());
-				tempInventory.getGood().setLeaveRepertoryID(inventorypo.getGood().getLatestLeaveRepertoryID());
-				return 0;
-			}
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
+		
+		int returnNum =1;
+			for(int i=0; i<organizationList.size(); i++){
+				OrganizationPO organization = organizationList.get(i);
+				RepertoryPO repertory = organization.getRepertory();
+				ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
+				for(int j=0;j<inventoryList.size();j++){
+					InventoryPO tmpInventory = (InventoryPO)inventoryList.get(j);
+					if(tmpInventory.getGood().getOrder_ID().equals(inventorypo.getGood().getOrder_ID())){
+						tmpInventory.setBlockNum(inventorypo.getBlockNum());
+						tmpInventory.setRowNum(inventorypo.getRowNum());
+						tmpInventory.setShelfNum(inventorypo.getShelfNum());
+						tmpInventory.setDigitNum(inventorypo.getDigitNum());
+						tmpInventory.getGood().setEnterTime(inventorypo.getGood().getLatestEnterTime());
+						tmpInventory.getGood().setLeaveTime(inventorypo.getGood().getLatestLeaveTime());
+						tmpInventory.getGood().setEnterRepertoryID(inventorypo.getGood().getLatestEnterRepertoryID());
+						tmpInventory.getGood().setLeaveRepertoryID(inventorypo.getGood().getLatestLeaveRepertoryID());
+						returnNum = 0;
+						break;
+					}
+				}
 		}
-		return 1;
+		saveOrganizationList(organizationList);
+		return returnNum;
 	}
 	
 	
@@ -268,9 +324,9 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 		RepertoryPO repertory = findRepertory(repertoryID);
 		ArrayList<InventoryPO> inventoryList = repertory.getInventoryList();
 		for(int i=0;i<inventoryList.size();i++){
-			InventoryPO tempInventory = (InventoryPO)inventoryList.get(i);
-			if(tempInventory.getGood().getOrder_ID().equals(orderID)){
-				return tempInventory;
+			InventoryPO tmpInventory = (InventoryPO)inventoryList.get(i);
+			if(tmpInventory.getGood().getOrder_ID().equals(orderID)){
+				return tmpInventory;
 			}
 		}
 		return null;
@@ -288,28 +344,22 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 		//beginDate和endDate参数的标准形式为yyyy-mm-dd，goodsPO里面enterTime和leaveTime的标准形式为yyyy-mm-dd hh:mm:ss;
 		InventoryCheckPO inventoryCheckPO = new InventoryCheckPO();
 		
-		ArrayList<Object> goodsList = goodsFile.read();
+		ArrayList<GoodsPO> goodsList = goodsData.showAllGoods();
 		for(int i=0;i<goodsList.size();i++){
-			GoodsPO tempGoods = (GoodsPO)goodsList.get(i);
-			String[] enterRepertory = tempGoods.getEnterRepertoryID();
-			String[] leaveRepertory = tempGoods.getLeaveRepertoryID();
-			String[] enterDate = tempGoods.getEnterDate();
-			String[] leaveDate = tempGoods.getLeaveDate();
+			GoodsPO tmpGoods = goodsList.get(i);
+			String[] enterRepertory = tmpGoods.getEnterRepertoryID();
+			String[] leaveRepertory = tmpGoods.getLeaveRepertoryID();
+			String[] enterDate = tmpGoods.getEnterDate();
+			String[] leaveDate = tmpGoods.getLeaveDate();
 			for(int j=0;j<4;j++){
 				if((enterDate[j]!=null) && (leaveDate[j]!=null)){
-					/*System.out.println("ID: "+tempGoods.getOrder_ID()+"  Enter:"+enterDate[j]+"  Leave: "+leaveDate[j]);
-					System.out.println((enterDate[j].compareTo(beginDate)>=0));
-					System.out.println((enterDate[j].compareTo(endDate)<=0));
-					System.out.println((leaveDate[j].compareTo(beginDate)>=0));
-					System.out.println((leaveDate[j].compareTo(endDate)<=0));*/
-					
 					if((enterDate[j]!=null) && (enterRepertory[j].equals(repertoryID)) && (enterDate[j].compareTo(beginDate)>=0) && (enterDate[j].compareTo(endDate)<=0)){
 						inventoryCheckPO.enterTotalPlus();
-						inventoryCheckPO.enterFeeTotalPlus(tempGoods.getFee());
+						inventoryCheckPO.enterFeeTotalPlus(tmpGoods.getFee());
 					}
 					if((leaveDate[j]!=null) && (leaveRepertory[j].equals(repertoryID)) && (leaveDate[j].compareTo(beginDate)>=0) && (leaveDate[j].compareTo(endDate)<=0)){
 						inventoryCheckPO.leaveTotalPlus();
-						inventoryCheckPO.leaveFeeTotalPlus(tempGoods.getFee());
+						inventoryCheckPO.leaveFeeTotalPlus(tmpGoods.getFee());
 					}
 				}
 			}
@@ -460,11 +510,11 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * 
 	 * */
 	public int setLastCreateEnterReceiptTime(String repertoryID, String newEnterTime) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
-			OrganizationPO organization = (OrganizationPO)organizationList.get(i);
+			OrganizationPO organization = organizationList.get(i);
 			RepertoryPO repertory = organization.getRepertory();
 			if(repertory!=null && repertory.getRepertoryID().equals(repertoryID)){
 				repertory.setLastCreateEnterReceiptTime(newEnterTime);
@@ -473,7 +523,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 			}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -486,7 +536,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 	 * 
 	 * */
 	public int setLastCreateLeaveReceiptTime(String repertoryID, String newLeaveTime) throws RemoteException{
-		ArrayList<Object> organizationList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		
 		int returnNum = 1;
 		for(int i=0;i<organizationList.size();i++){
@@ -499,7 +549,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 			}
 		}
 		
-		organizationFile.writeM(organizationList);
+		saveOrganizationList(organizationList);
 		return returnNum;
 	}
 	
@@ -515,7 +565,7 @@ loop1:		for(int i=0;i<organizationList.size();i++){
 		return timeNow;
 	}
 	
-	
+
 	/*--------------------------------------------------Test Part---------------------------------------------------*/ 
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/

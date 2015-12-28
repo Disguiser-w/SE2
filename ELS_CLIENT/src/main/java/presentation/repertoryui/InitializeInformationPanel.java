@@ -2,6 +2,8 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -10,6 +12,12 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+<<<<<<< HEAD
+=======
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.repertorybl.controller.RepertoryController;
+import vo.LogDiaryVO;
+>>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 import vo.UserVO;
 
 public class InitializeInformationPanel extends OperationPanel {
@@ -17,6 +25,12 @@ public class InitializeInformationPanel extends OperationPanel {
 	private static final long serialVersionUID = 147L;
 
 	private RepertoryController repertoryControl;
+	private LogDiaryBLController logDiaryControl;
+
+	private LogDiaryVO logDiary;
+	private String logDiaryTime;
+	
+	private UserVO stockMan;
 	
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
@@ -40,6 +54,9 @@ public class InitializeInformationPanel extends OperationPanel {
 	public InitializeInformationPanel(RepertoryController repertoryController, UserVO userVO) {
 		
 		repertoryControl = repertoryController;
+		logDiaryControl = new LogDiaryBLController();
+		
+		stockMan = userVO;
 		
 		maxRowLabel = new MyTextLabel("请输入最大排数");
 		maxRowField = new MyTextField();
@@ -177,10 +194,22 @@ public class InitializeInformationPanel extends OperationPanel {
 	public void successInitialization(){
 		JOptionPane.showMessageDialog(null, "初始化成功(●'◡'●)", "库存信息初始化成功", JOptionPane.INFORMATION_MESSAGE);
 		suggestLabel.setText("Row:"+repertoryControl.getMaxRow()+"  Shelf:"+repertoryControl.getMaxShelf()+"  Digit:"+repertoryControl.getMaxDigit()+"  WarningRatio:"+repertoryControl.getMaxRatio());
+
+		logDiaryTime = getTimeNow();
+		logDiary = new LogDiaryVO(logDiaryTime, stockMan, "初始化了库存信息");
+		logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 	}
 	
 	public void failedInitialization(){
 		JOptionPane.showMessageDialog(null, "初始化失败(T_T)", "库存信息初始化失败", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	//获取当前时间
+	public static String getTimeNow(){
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String timeNow = dateFormat.format(now); 
+		return timeNow;
 	}
 	
 }

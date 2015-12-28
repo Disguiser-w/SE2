@@ -2,7 +2,9 @@ package presentation.managerui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -12,9 +14,22 @@ import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.MySearchField;
+<<<<<<< HEAD
 import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
+=======
+import vo.LogDiaryVO;
+import vo.OrganizationVO;
+import vo.RepertoryVO;
+import vo.UserVO;
+import type.AuthorityType;
+import type.OrganizationType;
+import type.ProfessionType;
+import type.SalaryPlanType;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.managebl.controller.OrganizationManageController;
+>>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 
 public class OrganizationManagePanel extends OperationPanel {
 	
@@ -23,7 +38,11 @@ public class OrganizationManagePanel extends OperationPanel {
 	private ManageFrame manageFrame;
 	
 	private OrganizationManageController organizationManageControl;
+	private LogDiaryBLController logDiaryControl;
 
+	private LogDiaryVO logDiary;
+	private String logDiaryTime;
+	
 	private AddLabel addLabel;
 	private DeleteLabel deleteLabel;
 	private MySearchField searchField;
@@ -39,6 +58,7 @@ public class OrganizationManagePanel extends OperationPanel {
 		this.manageFrame = manageFrame;
 		
 		organizationManageControl = organizationControl;
+		logDiaryControl = new LogDiaryBLController();
 		
         addLabel = new AddLabel("新增机构");
         deleteLabel = new DeleteLabel("删除机构");
@@ -111,6 +131,11 @@ public class OrganizationManagePanel extends OperationPanel {
 	//新增机构界面
 	public void addui(){
 		manageFrame.changePanel(new AddOrganizationPanel(manageFrame, this));
+		
+		logDiaryTime = getTimeNow();
+		logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+				ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "新增一个机构");
+		logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 	}
 	
 	//删除机构界面
@@ -128,6 +153,11 @@ public class OrganizationManagePanel extends OperationPanel {
 				return;
 			selectedIndex = selectedIndexs.get(0);
 			organizationManageControl.deleteOrganization(organizations.get(selectedIndex).organizationID);
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个机构");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些机构信息？", "",
@@ -135,6 +165,11 @@ public class OrganizationManagePanel extends OperationPanel {
 				return;
 			for(int i: selectedIndexs){
 				organizationManageControl.deleteOrganization(organizations.get(i).organizationID);
+				
+				logDiaryTime = getTimeNow();
+				logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+						ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个机构");
+				logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 			}
 		}
 		organizations = organizationManageControl.showAllOrganizations();
@@ -177,5 +212,12 @@ public class OrganizationManagePanel extends OperationPanel {
 		JOptionPane.showMessageDialog(null, message, "机构信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 
+	//获取当前时间
+	public static String getTimeNow(){
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String timeNow = dateFormat.format(now); 
+		return timeNow;
+	}
 	
 }

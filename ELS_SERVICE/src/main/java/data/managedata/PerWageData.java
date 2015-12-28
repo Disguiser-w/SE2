@@ -1,82 +1,136 @@
 package data.managedata;
 
-import java.rmi.Naming;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
+
 import po.PerWagePO;
 import type.ProfessionType;
-import file.JXCFile;
 import dataservice.managedataservice.PerWageDataService;
 
 public class PerWageData extends UnicastRemoteObject implements PerWageDataService{
 
-	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
 	private static final long serialVersionUID = 131250150L;
-		
-	JXCFile perWageFile;
-    
-    public PerWageData() throws RemoteException {
-		perWageFile = new JXCFile("info/basicDataInfo/perWage.ser");
+	
+	public PerWageData() throws RemoteException {
+		super();
 	}
-    
-    public int addPerWage(PerWagePO perWagepo) throws RemoteException{
-    	if(findPerWage(perWagepo.getProfession())==null){
-    		perWageFile.write(perWagepo);
-    		return 0;
-    	}
-    	else 
-    		return 1;
-    }
-    
-    public int deletePerWage(ProfessionType profession) throws RemoteException{
-    	ArrayList<Object> objectList = perWageFile.read();
-    	
-		if(objectList==null)
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			PerWagePO tempPerWagePO = (PerWagePO)(objectList.get(i));
-			if(tempPerWagePO.getProfession().equals(profession)){
-				objectList.remove(i);
-				break;
-			}
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<PerWagePO> getPerWageList() throws RemoteException{
+		String path = "basicDataInfo/perWage.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<PerWagePO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<PerWagePO> perWageList = (ArrayList<PerWagePO>) in.readObject();
+			in.close();
+			return perWageList;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		//perWageFile.clear();
-		perWageFile.writeM(objectList);
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int savePerWageList(ArrayList<PerWagePO> perWageList) throws RemoteException {
+		String path = "basicDataInfo/perWage.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(perWageList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return 0;
-    }
-    
-    public int modifyPerWage(PerWagePO perWagepo) throws RemoteException{
-    	ArrayList<Object> objectList = perWageFile.read();
+	}
+	
+	public int addPerWage(PerWagePO perWagepo) throws RemoteException{
+		ArrayList<PerWagePO> perWageList = getPerWageList();
     	
-		if(objectList==null)	
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			PerWagePO tempPerWagePO = (PerWagePO)(objectList.get(i));
+		for(int i=0; i<perWageList.size(); i++){
+			PerWagePO tempPerWagePO = perWageList.get(i);
 			if(tempPerWagePO.getProfession().equals(perWagepo.getProfession())){
-				objectList.add(perWagepo);
-				objectList.remove(i);
+				return 1;
+			}
+		}
+		
+		perWageList.add(perWagepo);
+		savePerWageList(perWageList);
+		return 0;
+	}
+	/**
+	 * 修改每次工资信息
+	 * @param PerWagePO perWagepo
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+    public int modifyPerWage(PerWagePO perWagepo) throws RemoteException{
+    	ArrayList<PerWagePO> perWageList = getPerWageList();
+    	
+		boolean hasExist = false;
+		
+		for(int i=0; i<perWageList.size(); i++){
+			PerWagePO tempPerWagePO = perWageList.get(i);
+			if(tempPerWagePO.getProfession().equals(perWagepo.getProfession())){
+				tempPerWagePO.setPerWage(perWagepo.getPerWage());
+				hasExist = true;
 				break;
 			}
 		}
 		
-		perWageFile.writeM(objectList);
-		return 0;
+		savePerWageList(perWageList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
+    
+    /**
+	 * 根据职业类型查找每次工资（精确搜索）
+	 * @param ProfessionType profession
+	 * @return PerWagePO
+	 * 
+	 * */
     public PerWagePO findPerWage(ProfessionType profession) throws RemoteException{
-    	ArrayList<Object> objectList = perWageFile.read();
+    	ArrayList<PerWagePO> perWageList = getPerWageList();
     	
-		if(objectList==null)	
+		if(perWageList==null)	
 			return null;  	  
 		
-		for(int i=0; i<objectList.size(); i++){
-			PerWagePO tempPerWagePO = (PerWagePO)(objectList.get(i));
+		for(int i=0; i<perWageList.size(); i++){
+			PerWagePO tempPerWagePO = perWageList.get(i);
 			if(tempPerWagePO.getProfession().equals(profession)){
 				return tempPerWagePO;
 			}
@@ -85,19 +139,14 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
 		return null;
     }
     
+    
+    /**
+	 * 显示所有每次工资信息
+	 * @return ArrayList<PerWagePO>
+	 * 
+	 * */
     public ArrayList<PerWagePO> showAllPerWages() throws RemoteException{
-    	ArrayList<Object> objectList = perWageFile.read();
-    	
-		if(objectList==null)
-			return null;  	  
-		
-		ArrayList<PerWagePO> perWageList = new ArrayList<PerWagePO>();
-		
-		for(int i=0; i<objectList.size(); i++){
-			PerWagePO tempPerWagePO = (PerWagePO)(objectList.get(i));
-			perWageList.add(tempPerWagePO);
-		}
-		
+    	ArrayList<PerWagePO> perWageList = getPerWageList();
 		return perWageList;
     }
     
@@ -106,7 +155,7 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
-    /*public static void main(String[] args){
+    public static void main(String[] args){
 		PerWageData perWageData;
 		try{
 			perWageData = new PerWageData();
@@ -143,40 +192,17 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
 				else 
 					System.out.println("Cannot find the perWage");
 				
-				System.out.println("没有删除前:");
-				ArrayList<PerWagePO> perWagepoList1 = perWageData.showAllPerWages();
-				if(perWagepoList1 != null){
-	    			for(int i=0;i<perWagepoList1.size();i++){
-	    				PerWagePO tempPerWagepo = perWagepoList1.get(i);
-	    				System.out.println(tempPerWagepo.getProfession()+"  "+tempPerWagepo.getPerWage());
-	    			}
-				}
-				else 
-					System.out.println("Cannot find the perWage");
-				
-				//perWageData.deletePerWage(ProfessionType.courier);
-				System.out.println("删除后:");
-				ArrayList<PerWagePO> perWagepoList2 = perWageData.showAllPerWages();
-				if(perWagepoList2 != null){
-	    			for(int i=0;i<perWagepoList2.size();i++){
-	    				PerWagePO tempPerWagepo = perWagepoList2.get(i);
-	    				System.out.println(tempPerWagepo.getProfession()+"  "+tempPerWagepo.getPerWage());
-	    			}
-				}
-				else 
-					System.out.println("Cannot find the perWage");
-				
 			}catch(RemoteException exception){
 				exception.printStackTrace();
 			}
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
-	}*/
+	}
     
     /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
     
-    public static void main(String[] args){
+    /*public static void main(String[] args){
      	try{
 			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
 			PerWageDataService perWageData = new PerWageData();
@@ -198,7 +224,7 @@ public class PerWageData extends UnicastRemoteObject implements PerWageDataServi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
     
     
 }

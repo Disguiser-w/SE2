@@ -1,113 +1,207 @@
 package data.repertorydata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
 import dataservice.repertorydataservice.EnterRepertoryReceiptDataService;
 import po.EnterRepertoryReceiptPO;
 import type.ReceiptState;
-import file.JXCFile;
 
 public class EnterRepertoryReceiptData extends UnicastRemoteObject implements EnterRepertoryReceiptDataService{
 
 	private static final long serialVersionUID = 40L;
 	
-	JXCFile enterReceiptFile;
-	
 	public EnterRepertoryReceiptData() throws RemoteException{
-		enterReceiptFile = new JXCFile("info/repertoryInfo/enterReceipt.ser");
+		super();
 	}
 	
-	public int addEnterRepertoryReceipt(EnterRepertoryReceiptPO errpo) throws RemoteException{
-		enterReceiptFile.write(errpo);
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<EnterRepertoryReceiptPO> getEnterRepertoryReceiptList() throws RemoteException{
+		String path = "repertoryInfo/enterReceipt.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<EnterRepertoryReceiptPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<EnterRepertoryReceiptPO> repertoryList = (ArrayList<EnterRepertoryReceiptPO>) in.readObject();
+			in.close();
+			return repertoryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveEnterRepertoryReceiptList(ArrayList<EnterRepertoryReceiptPO> repertoryList) throws RemoteException {
+		String path = "repertoryInfo/enterReceipt.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(repertoryList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return 0;
 	}
 	
-	public int deleteEnterReceipt(String receiptID) throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
-		
-		int returnNum = 1;
-		
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getID().equals(receiptID)){
-				objectList.remove(lrrpo);
-				returnNum = 0;
+	
+	/**
+	 * 新增货物（每次AddOrder完成新增一个订单时调该方法）
+	 * 
+	 * @param EnterRepertoryReceiptPO enterRepertoryReceiptpo
+	 * @return 0(add succeed), 1(enterRepertoryReceipt with the ID has already existed)
+	 * 
+	 * */
+	public int addEnterRepertoryReceipt(EnterRepertoryReceiptPO enterRepertoryReceiptpo) throws RemoteException{
+    	ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+    	
+    	for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+    		EnterRepertoryReceiptPO tmpEnterRepertoryReceiptpo = enterRepertoryReceiptList.get(i);
+    		if(tmpEnterRepertoryReceiptpo.getReceiptID().endsWith(enterRepertoryReceiptpo.getReceiptID()))
+    			return 1;
+    	}
+    	enterRepertoryReceiptList.add(enterRepertoryReceiptpo);
+    	saveEnterRepertoryReceiptList(enterRepertoryReceiptList);
+    	return 0;
+    }
+    
+	
+	/**
+	 * 删除货物
+	 * 
+	 * @param String orderID
+	 * @return 0(delete succeed), 1(delete failed)
+	 * 
+	 * */
+    public int deleteEnterRepertoryReceipt(String receiptID) throws RemoteException{
+    	ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+    	
+    	boolean hasExist = false;
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO tmpEnterRepertoryReceiptPO = enterRepertoryReceiptList.get(i);
+			if(tmpEnterRepertoryReceiptPO.getReceiptID().equals(receiptID)){
+				enterRepertoryReceiptList.remove(i);
+				hasExist = true;
+				break;
 			}
 		}
-		enterReceiptFile.writeM(objectList);
-		return returnNum;
+		
+		saveEnterRepertoryReceiptList(enterRepertoryReceiptList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
+    }
+    
+    
+    public int sendEnterReceipt(String receiptID)throws RemoteException{
+    	ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+    	
+    	boolean hasExist = false;
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getID().equals(receiptID)){
+				errpo.setState(ReceiptState.SUBMIT);
+				hasExist = true;
+			}
+		}
+		saveEnterRepertoryReceiptList(enterRepertoryReceiptList);
+		if(hasExist)
+			return 0;
+		else 
+			return 1;
 	}
 
-	public int sendEnterReceipt(String receiptID)throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
-		
-		int returnNum = 1;
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getID().equals(receiptID)){
-				lrrpo.setState(ReceiptState.SUBMIT);
-				returnNum = 0;
-			}
-		}
-		enterReceiptFile.writeM(objectList);
-		return returnNum;
-	}
-	
 	
 	public int approveEnterReceipt(String receiptID) throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
-		
-		int returnNum = 1;
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getID().equals(receiptID)){
-				lrrpo.setState(ReceiptState.APPROVE);
-				returnNum = 0;
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+    	
+    	boolean hasExist = false;
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getID().equals(receiptID)){
+				errpo.setState(ReceiptState.APPROVE);
+				hasExist = true;
 			}
 		}
-		enterReceiptFile.writeM(objectList);
-		return returnNum;
+		saveEnterRepertoryReceiptList(enterRepertoryReceiptList);
+		if(hasExist)
+			return 0;
+		else 
+			return 1;
 	}
 	
 	
 	public int disapproveEnterReceipt(String receiptID)throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
-		
-		int returnNum = 1;
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getID().equals(receiptID)){
-				lrrpo.setState(ReceiptState.DISAPPROVE);
-				returnNum = 0;
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+    	
+    	boolean hasExist = false;
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getID().equals(receiptID)){
+				errpo.setState(ReceiptState.DISAPPROVE);
+				hasExist = true;
 			}
 		}
-		enterReceiptFile.writeM(objectList);
-		return returnNum;
+		saveEnterRepertoryReceiptList(enterRepertoryReceiptList);
+		if(hasExist)
+			return 0;
+		else 
+			return 1;
 	}
 	
 	
 	public EnterRepertoryReceiptPO findEnterReceiptByReceiptID(String receiptID) throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getID().equals(receiptID)){
-				return lrrpo;
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getID().equals(receiptID)){
+				return errpo;
 			}
 		}
 		return null;
 	}
 
 	public ArrayList<EnterRepertoryReceiptPO> findEnterReceiptByCreatorID(String creatorID) throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOList = new ArrayList<EnterRepertoryReceiptPO>();
-		
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getUserID().equals(creatorID)){
-				enterRepertoryReceiptPOList.add(lrrpo);
+
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getUserID().equals(creatorID)){
+				enterRepertoryReceiptPOList.add(errpo);
 			}
 		}
 		
@@ -119,22 +213,22 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOListByCreatorAndKeyword = new ArrayList<EnterRepertoryReceiptPO>();
 		
 		for(int i=0,size = enterRepertoryReceiptPOListByCreator.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)enterRepertoryReceiptPOListByCreator.get(i);
-			if(lrrpo.getID().contains(keyword)){
-				enterRepertoryReceiptPOListByCreatorAndKeyword.add(lrrpo);
+			EnterRepertoryReceiptPO errpo = (EnterRepertoryReceiptPO)enterRepertoryReceiptPOListByCreator.get(i);
+			if(errpo.getID().contains(keyword)){
+				enterRepertoryReceiptPOListByCreatorAndKeyword.add(errpo);
 			}
 		}
 		return enterRepertoryReceiptPOListByCreatorAndKeyword;
 	}
 	
 	public ArrayList<EnterRepertoryReceiptPO> getAllSubmitedEnterReceipts() throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		ArrayList<EnterRepertoryReceiptPO> enterReceiptList = new ArrayList<EnterRepertoryReceiptPO>();
 		
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			if(lrrpo.getState().equals(ReceiptState.SUBMIT)){
-				enterReceiptList.add(lrrpo);
+		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
+			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptList.get(i);
+			if(errpo.getState().equals(ReceiptState.SUBMIT)){
+				enterReceiptList.add(errpo);
 			}
 		}
 		return enterReceiptList;
@@ -142,23 +236,14 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 	
 	
 	public ArrayList<EnterRepertoryReceiptPO> getAllEnterReceipts() throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
-		ArrayList<EnterRepertoryReceiptPO> enterReceiptList = new ArrayList<EnterRepertoryReceiptPO>();
-		
-		for(int i=0,size = objectList.size(); i<size; i++){
-			EnterRepertoryReceiptPO lrrpo = (EnterRepertoryReceiptPO)objectList.get(i);
-			enterReceiptList.add(lrrpo);
-		}
-		return enterReceiptList;
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
+		return enterRepertoryReceiptList;
 	}
 	
 	public String getEnterReceiptPost() throws RemoteException{
-		ArrayList<Object> objectList = enterReceiptFile.read();
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 
-		if(objectList == null)
-			return "00001";
-		
-		int size = objectList.size();
+		int size = enterRepertoryReceiptList.size();
 		int post = size + 1;
 		if(post <= 9)
 			return "0000"+(post);
@@ -194,5 +279,6 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 			exception.printStackTrace();
 		}
 	}
+
      
 }

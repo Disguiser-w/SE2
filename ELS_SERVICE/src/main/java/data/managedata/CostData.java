@@ -1,83 +1,138 @@
 package data.managedata;
 
-import java.rmi.Naming;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-import file.JXCFile;
+import common.FileGetter;
+
 import po.CostPO;
 import type.ExpressType;
 import dataservice.managedataservice.CostDataService;
 
 public class CostData extends UnicastRemoteObject implements CostDataService{
 
-	//我也不知道下面这句话有什么用，只是因为继承了UnicastRemoteObject所以要声明这样一个字段
-	private static final long serialVersionUID = 131250153L;
-		
-	JXCFile costFile;
-    
-    public CostData() throws RemoteException {
-		costFile = new JXCFile("info/basicDataInfo/cost.ser");
+	private static final long serialVersionUID = 141250153L;
+
+
+	public CostData() throws RemoteException {
+		super();
 	}
-    
-    public int addCost(CostPO costpo) throws RemoteException{
-    	if(findCost(costpo.getExpressType())==null){
-    		costFile.write(costpo);
-    		return 0;
-    	}
-    	else 
-    		return 1;
-    }
-    
-    public int deleteCost(ExpressType expressType) throws RemoteException{
-    	ArrayList<Object> objectList = costFile.read();
-    	
-		if(objectList==null)
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			CostPO tempCostPO = (CostPO)(objectList.get(i));
-			if(tempCostPO.getExpressType().equals(expressType)){
-				objectList.remove(i);
-				break;
-			}
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<CostPO> getCostList() throws RemoteException{
+		String path = "basicDataInfo/cost.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<CostPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<CostPO> costList = (ArrayList<CostPO>) in.readObject();
+			in.close();
+			return costList;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		//costFile.clear();
-		costFile.writeM(objectList);
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveCostList(ArrayList<CostPO> costList) throws RemoteException {
+		String path = "basicDataInfo/cost.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(costList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return 0;
-    }
-    
-    public int modifyCost(CostPO costpo) throws RemoteException{
-    	ArrayList<Object> objectList = costFile.read();
+	}
+	
+	public int addCost(CostPO costpo) throws RemoteException{
+		ArrayList<CostPO> costList = getCostList();
     	
-		if(objectList==null)
-			return 1;  	  
-		
-		for(int i=0; i<objectList.size(); i++){
-			CostPO tempCostPO = (CostPO)(objectList.get(i));
+		for(int i=0; i<costList.size(); i++){
+			CostPO tempCostPO = costList.get(i);
 			if(tempCostPO.getExpressType().equals(costpo.getExpressType())){
-				objectList.add(costpo);
-				objectList.remove(i);
+				return 1;
+			}
+		}
+		
+		costList.add(costpo);
+		saveCostList(costList);
+		return 0;
+	}
+	/**
+	 * 修改运费系数信息
+	 * @param CostPO costpo
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+    public int modifyCost(CostPO costpo) throws RemoteException{
+    	ArrayList<CostPO> costList = getCostList();
+    	
+		boolean hasExist = false;
+		
+		for(int i=0; i<costList.size(); i++){
+			CostPO tempCostPO = costList.get(i);
+			if(tempCostPO.getExpressType().equals(costpo.getExpressType())){
+				tempCostPO.setCost(costpo.getCost());
+				hasExist = true;
 				break;
 			}
 		}
 		
-		costFile.writeM(objectList);
-		return 0;
+		saveCostList(costList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
     }
     
-    public CostPO findCost(ExpressType expressType) throws RemoteException{
-    	ArrayList<Object> objectList = costFile.read();
+    
+    /**
+	 * 根据职业类型查找运费系数（精确搜索）
+	 * @param ProfessionType profession
+	 * @return CostPO
+	 * 
+	 * */
+    public CostPO findCost(ExpressType express) throws RemoteException{
+    	ArrayList<CostPO> costList = getCostList();
     	
-		if(objectList==null)
+		if(costList==null)	
 			return null;  	  
 		
-		for(int i=0; i<objectList.size(); i++){
-			CostPO tempCostPO = (CostPO)(objectList.get(i));
-			if(tempCostPO.getExpressType().equals(expressType)){
+		for(int i=0; i<costList.size(); i++){
+			CostPO tempCostPO = costList.get(i);
+			if(tempCostPO.getExpressType().equals(express)){
 				return tempCostPO;
 			}
 		}
@@ -85,19 +140,14 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
 		return null;
     }
     
+    
+    /**
+	 * 显示所有运费系数信息
+	 * @return ArrayList<CostPO>
+	 * 
+	 * */
     public ArrayList<CostPO> showAllCosts() throws RemoteException{
-    	ArrayList<Object> objectList = costFile.read();
-    	
-		if(objectList==null)
-			return null;  	  
-		
-		ArrayList<CostPO> costList = new ArrayList<CostPO>();
-		
-		for(int i=0; i<objectList.size(); i++){
-			CostPO tempCostPO = (CostPO)(objectList.get(i));
-			costList.add(tempCostPO);
-		}
-		
+    	ArrayList<CostPO> costList = getCostList();
 		return costList;
     }
     
@@ -106,7 +156,7 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
     
     /*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
     
-    /*public static void main(String[] args){
+    public static void main(String[] args){
 		CostData costData;
 		try{
 			costData = new CostData();
@@ -143,41 +193,17 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
 				}
 				else 
 					System.out.println("Cannot find the cost");
-				
-				System.out.println("没有删除前:");
-				ArrayList<CostPO> costpoList2 = costData.showAllCosts();
-				if(costpoList2 != null){
-	    			for(int i=0;i<costpoList2.size();i++){
-	    				CostPO tempCostpo = costpoList2.get(i);
-	    				System.out.println(tempCostpo.getExpressType()+"  "+tempCostpo.getCost());
-	    			}
-				}
-				else 
-					System.out.println("Cannot find the cost");
-				
-				//costData.deleteCost(ExpressType.STANDARD);
-				System.out.println("删除后:");
-				ArrayList<CostPO> costpoList3 = costData.showAllCosts();
-				if(costpoList3 != null){
-	    			for(int i=0;i<costpoList3.size();i++){
-	    				CostPO tempCostpo = costpoList3.get(i);
-	    				System.out.println(tempCostpo.getExpressType()+"  "+tempCostpo.getCost());
-	    			}
-				}
-				else 
-					System.out.println("Cannot find the cost");
-				
 			}catch(RemoteException exception){
 				exception.printStackTrace();
 			}
 		}catch(RemoteException exception){
 			exception.printStackTrace();
 		}
-	}*/
+	}
     
     /*------------------------------------- Part 2: Test server whether can normally work -----------------------------------*/
     
-    public static void main(String[] args){
+    /*public static void main(String[] args){
      	try{
 			System.setProperty("java.rmi.server.hostname", "172.25.132.40");
 			CostDataService costData = new CostData();
@@ -199,7 +225,7 @@ public class CostData extends UnicastRemoteObject implements CostDataService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
     
     
 }

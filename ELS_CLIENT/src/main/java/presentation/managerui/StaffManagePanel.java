@@ -2,7 +2,9 @@ package presentation.managerui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -16,8 +18,16 @@ import presentation.special_ui.MySearchField;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.UserVO;
+<<<<<<< HEAD
+=======
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.receiptbl.getDate;
+import businesslogic.userbl.controller.UserManageController;
+>>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 
 public class StaffManagePanel extends OperationPanel {
 	
@@ -27,6 +37,10 @@ public class StaffManagePanel extends OperationPanel {
 	
 	private UserManageController userManageControl;
 	private OrganizationManageController organizationManageControl;
+	private LogDiaryBLController logDiaryControl;
+	
+	private LogDiaryVO logDiary;
+	private String logDiaryTime;
 	
 	private DeleteLabel deleteLabel;
 	private ModifyLabel modifyLabel;
@@ -44,6 +58,7 @@ public class StaffManagePanel extends OperationPanel {
 		
 		this.userManageControl = userController;
 		this.organizationManageControl = organizationController;
+		this.logDiaryControl = new LogDiaryBLController();
 		
 		deleteLabel = new DeleteLabel("删除用户");
 		modifyLabel = new ModifyLabel("分配机构");
@@ -135,6 +150,10 @@ public class StaffManagePanel extends OperationPanel {
 				return;
 			}
 			userManageControl.deleteUser(users.get(selectedIndex).userID);
+			logDiary = new LogDiaryVO(getDate.getdate(), new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个用户");
+			logDiaryTime = getTimeNow();
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些用户信息？", "",
@@ -142,6 +161,10 @@ public class StaffManagePanel extends OperationPanel {
 				return;
 			for(int i: selectedIndexs){
 				userManageControl.deleteUser(users.get(i).userID);
+				logDiary = new LogDiaryVO(getDate.getdate(), new UserVO("刘钦", "JL-00001", "", 
+						ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个用户");
+				logDiaryTime = getTimeNow();
+				logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 			}
 		}
 		users = userManageControl.showAllUsers();
@@ -170,6 +193,11 @@ public class StaffManagePanel extends OperationPanel {
 		else{
 			manageFrame.changePanel(new ModifyStaffOrganizationPanel(manageFrame, this, vo.userName, vo.userID, 
 					professionName(vo.profession), vo.organization, salaryPlanName(vo.salaryPlan), authorityName(vo.authority), vo.grades+""));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "修改一个用户信息");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 	}
 	
@@ -234,5 +262,12 @@ public class StaffManagePanel extends OperationPanel {
 		JOptionPane.showMessageDialog(null, message, "用户信息错误", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	//获取当前时间
+	public static String getTimeNow(){
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String timeNow = dateFormat.format(now); 
+		return timeNow;
+	}
 	
 }
