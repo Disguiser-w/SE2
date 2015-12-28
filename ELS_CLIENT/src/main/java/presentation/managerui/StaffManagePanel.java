@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
@@ -21,13 +22,7 @@ import type.SalaryPlanType;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.UserVO;
-<<<<<<< HEAD
-=======
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.receiptbl.getDate;
-import businesslogic.userbl.controller.UserManageController;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
+
 
 public class StaffManagePanel extends OperationPanel {
 	

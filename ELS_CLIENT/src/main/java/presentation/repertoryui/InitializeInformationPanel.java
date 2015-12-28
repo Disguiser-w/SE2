@@ -7,17 +7,13 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-<<<<<<< HEAD
-=======
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
-import businesslogic.repertorybl.controller.RepertoryController;
 import vo.LogDiaryVO;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 import vo.UserVO;
 
 public class InitializeInformationPanel extends OperationPanel {

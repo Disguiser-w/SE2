@@ -8,28 +8,22 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.OrganizationManageController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.MySearchField;
-<<<<<<< HEAD
-import type.OrganizationType;
-import vo.OrganizationVO;
-import vo.RepertoryVO;
-=======
-import vo.LogDiaryVO;
-import vo.OrganizationVO;
-import vo.RepertoryVO;
-import vo.UserVO;
 import type.AuthorityType;
 import type.OrganizationType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
-import businesslogic.managebl.controller.OrganizationManageController;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
+import vo.LogDiaryVO;
+import vo.OrganizationVO;
+import vo.RepertoryVO;
+import vo.UserVO;
+
 
 public class OrganizationManagePanel extends OperationPanel {
 	

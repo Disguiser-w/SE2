@@ -2,38 +2,25 @@ package presentation.userui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
-<<<<<<< HEAD
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.userbl.controller.UserManageController;
-=======
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import presentation.commonui.OperationPanel;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
+import javax.swing.JOptionPane;
+
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-<<<<<<< HEAD
 import type.AuthorityType;
-=======
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.userbl.controller.UserManageController;
-import vo.LogDiaryVO;
-import vo.OrganizationVO;
-import vo.UserVO;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 import type.ProfessionType;
 import type.SalaryPlanType;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.UserVO;
 

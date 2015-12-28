@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.BasicSalaryController;
 import businesslogic.managebl.controller.CityDistanceController;
 import businesslogic.managebl.controller.CostController;
@@ -19,30 +20,16 @@ import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-<<<<<<< HEAD
+import type.AuthorityType;
 import type.ExpressType;
 import type.ProfessionType;
+import type.SalaryPlanType;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
-import vo.PerWageVO;
-=======
 import vo.LogDiaryVO;
 import vo.PerWageVO;
-import vo.BasicSalaryVO;
-import vo.CityDistanceVO;
-import vo.CostVO;
 import vo.UserVO;
-import type.AuthorityType;
-import type.ProfessionType;
-import type.ExpressType;
-import type.SalaryPlanType;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
-import businesslogic.managebl.controller.BasicSalaryController;
-import businesslogic.managebl.controller.CityDistanceController;
-import businesslogic.managebl.controller.CostController;
-import businesslogic.managebl.controller.PerWageController;
->>>>>>> 6ae698f408747916aa3566adf8d97750b76f3b84
 
 public class BasicDataManagePanel extends OperationPanel {
 
