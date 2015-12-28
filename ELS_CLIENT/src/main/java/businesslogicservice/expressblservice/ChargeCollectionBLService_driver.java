@@ -1,7 +1,5 @@
 package businesslogicservice.expressblservice;
 
-import vo.ExpressVO;
-
 public class ChargeCollectionBLService_driver {
 	public void drive(ChargeCollectionBLService chargeCollecitonBLService) {
 //		chargeCollecitonBLService.getChargeInfo();

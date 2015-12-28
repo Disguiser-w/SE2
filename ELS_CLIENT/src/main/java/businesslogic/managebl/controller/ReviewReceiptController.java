@@ -2,6 +2,8 @@ package businesslogic.managebl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.managebl.ReviewReceiptBL;
+import businesslogicservice.manageblservice.ReviewReceiptBLService;
 import vo.AllReceiptShowVO;
 import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
@@ -11,8 +13,6 @@ import vo.GatheringReceiptVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
-import businesslogic.managebl.ReviewReceiptBL;
-import businesslogicservice.manageblservice.ReviewReceiptBLService;
 
 public class ReviewReceiptController implements ReviewReceiptBLService{
 

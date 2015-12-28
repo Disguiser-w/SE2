@@ -2,11 +2,11 @@ package businesslogic.userbl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.userbl.UserBL;
+import businesslogicservice.userblservice.UserBLService;
 import type.AuthorityType;
 import vo.LogVO;
 import vo.UserVO;
-import businesslogic.userbl.UserBL;
-import businesslogicservice.userblservice.UserBLService;
 
 public class UserManageController implements UserBLService{
 

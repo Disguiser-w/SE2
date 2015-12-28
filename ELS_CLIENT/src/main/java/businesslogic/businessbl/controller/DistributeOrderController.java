@@ -1,6 +1,5 @@
 package businesslogic.businessbl.controller;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import businesslogic.businessbl.DistributeOrder;

@@ -2,8 +2,6 @@ package businessbl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,22 +13,20 @@ import po.OrganizationPO;
 import po.RepertoryPO;
 import type.OrganizationType;
 import type.Sexuality;
-import vo.BusinessVO;
 import vo.DriverVO;
-import vo.OrganizationVO;
 import vo.VehicleVO;
 
 public class VehicleManagerTest {
 
-	private VehicleManagerController controller;
+	private VehicleManagerController controller;	
 
 	@Before
 	public void setUp() throws Exception {
 		BusinessMainController.businessData = DataFactory.getBusinessData();
 		OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
 				new RepertoryPO("pig", "wo"));
-		BusinessMainController.businessVO = new BusinessVO("doge", "YYT-00001", "2",
-				OrganizationBL.organizationPOToVO(po));
+//		BusinessMainController.businessVO = new BusinessVO("doge", "YYT-00001", "2",
+//				OrganizationBL.organizationPOToVO(po));
 		controller = new VehicleManagerController();
 	}
 

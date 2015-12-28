@@ -1,11 +1,11 @@
 package dataservice.managedataservice;
 
-import po.BasicSalaryPO;
-import type.ProfessionType;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import po.BasicSalaryPO;
+import type.ProfessionType;
 
 public interface BasicSalaryDataService extends Remote {
 

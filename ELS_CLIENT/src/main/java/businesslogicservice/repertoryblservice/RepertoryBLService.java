@@ -1,10 +1,10 @@
 package businesslogicservice.repertoryblservice;
 
-import vo.InventoryVO;
-import vo.InventoryCheckVO;
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import vo.InventoryCheckVO;
+import vo.InventoryVO;
 
 public interface RepertoryBLService {
 	

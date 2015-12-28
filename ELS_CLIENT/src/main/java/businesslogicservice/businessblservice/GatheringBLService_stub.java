@@ -2,9 +2,6 @@ package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
-import vo.ExpressVO;
-import vo.GatheringReceiptVO;
-
 public class GatheringBLService_stub implements GatheringBLService{
 
 

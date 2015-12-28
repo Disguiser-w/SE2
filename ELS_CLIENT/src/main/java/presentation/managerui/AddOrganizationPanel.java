@@ -1,7 +1,5 @@
 package presentation.managerui;
 
-import javax.swing.JOptionPane;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -9,13 +7,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import businesslogic.managebl.OrganizationBL;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import businesslogic.managebl.OrganizationBL;
-
 import type.OrganizationType;
 import vo.OrganizationVO;
 

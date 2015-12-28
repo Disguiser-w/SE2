@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,10 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import common.ImageGetter;
-import presentation.special_ui.DayLabel;
 import presentation.special_ui.ExitLabel;
 import presentation.special_ui.LogOutLabel;
-import presentation.special_ui.NightLabel;
 
 class MessagePanel extends JPanel {
 

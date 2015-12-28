@@ -2,7 +2,6 @@ package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
 
-
 import vo.PaymentReceiptVO;
 
 public class PaymentReceiptBLService_stub implements PaymentReceiptBLService {

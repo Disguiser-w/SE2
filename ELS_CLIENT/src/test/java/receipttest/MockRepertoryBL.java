@@ -1,9 +1,5 @@
 package receipttest;
 
-import java.util.ArrayList;
-
-import businesslogic.repertorybl.RepertoryBL;
-import vo.GoodsVO;
 import vo.InventoryVO;
 import vo.RepertoryVO;
 

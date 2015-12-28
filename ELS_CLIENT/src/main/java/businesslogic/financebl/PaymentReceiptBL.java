@@ -6,6 +6,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.datafactory.DataFactory;
+import businesslogic.financebl.controller.FinanceMainController;
+import businesslogic.receiptbl.GetDate;
+import businesslogic.receiptbl.ReceiptBL;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
@@ -20,10 +24,6 @@ import type.OrganizationType;
 import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.PaymentReceiptVO;
-import businesslogic.datafactory.DataFactory;
-import businesslogic.financebl.controller.FinanceMainController;
-import businesslogic.receiptbl.ReceiptBL;
-import businesslogic.receiptbl.GetDate;
 
 
 public class PaymentReceiptBL extends ReceiptBL {

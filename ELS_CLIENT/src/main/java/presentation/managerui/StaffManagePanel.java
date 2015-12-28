@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.DeleteLabel;
@@ -16,8 +18,6 @@ import type.ProfessionType;
 import type.SalaryPlanType;
 import vo.OrganizationVO;
 import vo.UserVO;
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.userbl.controller.UserManageController;
 
 public class StaffManagePanel extends OperationPanel {
 	

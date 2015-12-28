@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import businesslogic.datafactory.DataFactory;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import dataservice.managedataservice.CityDistanceDataService;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
-import businesslogic.datafactory.DataFactory;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import dataservice.managedataservice.CityDistanceDataService;
 
 public class Management_newPanel extends OperationPanel {
 	private UserFrame frame;

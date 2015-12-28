@@ -6,16 +6,15 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.managebl.controller.OrganizationManageController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.MySearchField;
-
+import type.OrganizationType;
 import vo.OrganizationVO;
 import vo.RepertoryVO;
-import type.OrganizationType;
-import businesslogic.managebl.controller.OrganizationManageController;
 
 public class OrganizationManagePanel extends OperationPanel {
 	

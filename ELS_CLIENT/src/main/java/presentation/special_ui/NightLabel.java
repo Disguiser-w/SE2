@@ -1,13 +1,8 @@
 package presentation.special_ui;
 
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JFrame;
 
 import common.ImageGetter;
-import init.Client;
 import presentation.commonui.MyLabel;
 
 public class NightLabel extends MyLabel {

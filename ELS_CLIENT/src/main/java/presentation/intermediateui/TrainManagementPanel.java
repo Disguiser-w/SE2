@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.TrainVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class TrainManagementPanel extends OperationPanel {
 	private IntermediateMainController controller;

@@ -1,12 +1,12 @@
 package dataservice.userdataservice;
 
-import po.UserPO;
-import type.AuthorityType;
-import type.ProfessionType;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import po.UserPO;
+import type.AuthorityType;
+import type.ProfessionType;
 
 public interface UserDataService extends Remote {
 	

@@ -2,9 +2,9 @@ package businesslogic.logdiarybl.controller;
 
 import java.util.ArrayList;
 
-import vo.LogDiaryVO;
 import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogicservice.logdiaryblservice.LogDiaryBLService;
+import vo.LogDiaryVO;
 
 public class LogDiaryBLController implements LogDiaryBLService{
 	private LogDiaryBL logDiaryBL;

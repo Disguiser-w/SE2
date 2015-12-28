@@ -5,13 +5,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.userbl.UserBL;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import type.AuthorityType;
-import businesslogic.userbl.UserBL;
 
 public class ModifyUserAuthorityPanel extends OperationPanel {
 

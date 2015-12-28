@@ -9,15 +9,14 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.SliderUI;
 
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.PlaneVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class PlaneManagementPanel extends OperationPanel {
 	private IntermediateMainController controller;

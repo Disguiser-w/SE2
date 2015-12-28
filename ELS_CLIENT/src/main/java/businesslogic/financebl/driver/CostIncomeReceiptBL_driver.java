@@ -1,9 +1,9 @@
 package businesslogic.financebl.driver;
 
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.CostIncomeReceiptVO;
-import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 
 public class CostIncomeReceiptBL_driver {
 	public static void main(String[] args){

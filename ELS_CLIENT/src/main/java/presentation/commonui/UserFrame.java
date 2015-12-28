@@ -1,21 +1,14 @@
 package presentation.commonui;
 
-import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import common.ImageGetter;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板

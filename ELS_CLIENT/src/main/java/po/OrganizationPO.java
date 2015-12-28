@@ -3,7 +3,6 @@ package po;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import po.RepertoryPO;
 import type.OrganizationType;
 
 public class OrganizationPO implements Serializable {

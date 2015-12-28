@@ -6,13 +6,12 @@ import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class Transfering_newPanel extends OperationPanel {
 	protected IntermediateMainController controller;

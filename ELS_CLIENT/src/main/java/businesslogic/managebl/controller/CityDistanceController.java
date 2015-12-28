@@ -2,9 +2,9 @@ package businesslogic.managebl.controller;
 
 import java.util.ArrayList;
 
-import vo.CityDistanceVO;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogicservice.manageblservice.CityDistanceBLService;
+import vo.CityDistanceVO;
 
 public class CityDistanceController implements CityDistanceBLService{
 	

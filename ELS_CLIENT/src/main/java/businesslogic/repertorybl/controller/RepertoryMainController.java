@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import common.ImageGetter;
-
 import businesslogic.datafactory.DataFactory;
+import common.ImageGetter;
+import dataservice.userdataservice.UserDataService;
 import po.UserPO;
 import presentation.repertoryui.CreateReceiptPanel;
 import presentation.repertoryui.EXwarehousePanel;
@@ -17,7 +17,6 @@ import presentation.repertoryui.RepertoryFrame;
 import presentation.repertoryui.ViewInventoryPanel;
 import presentation.repertoryui.WarehousingMainPanel;
 import vo.UserVO;
-import dataservice.userdataservice.UserDataService;
 
 public class RepertoryMainController {
 

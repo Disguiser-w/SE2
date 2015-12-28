@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import vo.OrderVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class TransferingPanel extends OperationPanel {
 	private IntermediateMainController controller;

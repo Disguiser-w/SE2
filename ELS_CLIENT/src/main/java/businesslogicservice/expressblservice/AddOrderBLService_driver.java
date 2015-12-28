@@ -1,7 +1,5 @@
 package businesslogicservice.expressblservice;
 
-import vo.OrderVO;
-
 public class AddOrderBLService_driver {
 	public void drive(AddOrderBLService addOrderBLService) {
 		addOrderBLService.addOrder(null);

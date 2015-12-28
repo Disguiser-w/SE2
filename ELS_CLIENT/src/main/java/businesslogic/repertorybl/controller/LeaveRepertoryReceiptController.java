@@ -2,8 +2,8 @@ package businesslogic.repertorybl.controller;
 
 import java.util.ArrayList;
 
-import vo.LeaveRepertoryReceiptVO;
 import businesslogic.repertorybl.LeaveRepertoryReceiptBL;
+import vo.LeaveRepertoryReceiptVO;
 
 public class LeaveRepertoryReceiptController {
 

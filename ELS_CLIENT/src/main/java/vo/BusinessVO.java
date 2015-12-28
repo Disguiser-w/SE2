@@ -1,6 +1,5 @@
 package vo;
 
-import po.OrganizationPO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;

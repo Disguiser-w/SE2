@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.managebl.controller.BasicSalaryController;
+import businesslogic.managebl.controller.CityDistanceController;
+import businesslogic.managebl.controller.CostController;
+import businesslogic.managebl.controller.PerWageController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -13,17 +17,12 @@ import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-
-import vo.PerWageVO;
+import type.ExpressType;
+import type.ProfessionType;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
-import type.ProfessionType;
-import type.ExpressType;
-import businesslogic.managebl.controller.BasicSalaryController;
-import businesslogic.managebl.controller.CityDistanceController;
-import businesslogic.managebl.controller.CostController;
-import businesslogic.managebl.controller.PerWageController;
+import vo.PerWageVO;
 
 public class BasicDataManagePanel extends OperationPanel {
 

@@ -2,11 +2,11 @@ package businesslogic.repertorybl.controller;
 
 import java.util.ArrayList;
 
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogicservice.repertoryblservice.RepertoryBLService;
 import vo.GoodsVO;
 import vo.InventoryCheckVO;
 import vo.InventoryVO;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogicservice.repertoryblservice.RepertoryBLService;
 
 public class RepertoryController implements RepertoryBLService{
 

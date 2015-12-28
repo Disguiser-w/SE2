@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import vo.UserVO;
 
 public class ExpressPO extends UserPO implements Serializable {
 	private String serviceTime;

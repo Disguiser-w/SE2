@@ -2,14 +2,8 @@ package financetest;
 
 import java.util.ArrayList;
 
-import po.AccountPO;
-import po.DriverPO;
-import po.InitInfoPO;
-import po.OrganizationPO;
-import po.RepertoryPO;
-import po.UserPO;
-import po.VehiclePO;
 import businesslogic.financebl.controller.InitialStockBLController;
+import junit.framework.TestCase;
 import type.AuthorityType;
 import type.OrganizationType;
 import type.ProfessionType;
@@ -22,7 +16,6 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
-import junit.framework.TestCase;
 
 public class InitialStockBLTest extends TestCase{
 	InitInfoVO vo1,vo2;

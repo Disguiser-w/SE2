@@ -1,12 +1,6 @@
 package repertorytest;
 
-import vo.GoodsVO;
-import vo.InventoryVO;
 import junit.framework.TestCase;
-
-import java.util.ArrayList;
-
-import receipttest.MockRepertoryBL;
 
 public class RepertoryTest extends TestCase {
 	

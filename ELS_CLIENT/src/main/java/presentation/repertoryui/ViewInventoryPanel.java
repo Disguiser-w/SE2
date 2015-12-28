@@ -7,15 +7,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import vo.InventoryCheckVO;
 import vo.UserVO;
-import businesslogic.repertorybl.controller.RepertoryController;
 
 public class ViewInventoryPanel extends OperationPanel {
 	

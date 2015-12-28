@@ -3,8 +3,6 @@ package vo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import po.OrganizationPO;
-import po.VehiclePO;
 import type.ReceiptState;
 
 public class OrderAcceptReceiptVO implements Serializable {

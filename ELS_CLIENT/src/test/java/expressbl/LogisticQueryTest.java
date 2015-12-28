@@ -2,9 +2,6 @@ package expressbl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import org.junit.Before;

@@ -6,12 +6,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.BasicSalaryPO;
-import vo.BasicSalaryVO;
-import type.ProfessionType;
 import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.BasicSalaryBLService;
 import dataservice.managedataservice.BasicSalaryDataService;
+import po.BasicSalaryPO;
+import type.ProfessionType;
+import vo.BasicSalaryVO;
 
 public class BasicSalaryBL implements BasicSalaryBLService{
 	

@@ -1,12 +1,11 @@
 package businesslogicservice.userblservice;
 
-import vo.UserVO;
-import vo.LogVO;
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import type.AuthorityType;
+import vo.LogVO;
+import vo.UserVO;
 
 public interface UserBLService {
 	

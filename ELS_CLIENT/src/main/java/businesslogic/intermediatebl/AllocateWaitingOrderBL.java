@@ -2,10 +2,10 @@ package businesslogic.intermediatebl;
 
 import java.util.ArrayList;
 
+import businesslogicservice.intermediateblservice.envehicleblservice.AllocateWaitingOrderBLService;
 import type.OrderState;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
-import businesslogicservice.intermediateblservice.envehicleblservice.AllocateWaitingOrderBLService;
 
 public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();

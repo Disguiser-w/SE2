@@ -2,6 +2,7 @@ package businesslogic.financebl.driver;
 
 import java.util.ArrayList;
 
+import businesslogic.financebl.controller.InitialStockBLController;
 import type.AuthorityType;
 import type.OrganizationType;
 import type.ProfessionType;
@@ -14,7 +15,6 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
-import businesslogic.financebl.controller.InitialStockBLController;
 
 public class InitialStockBL_driver {
 	public static void main(String[] args){

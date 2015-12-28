@@ -1,8 +1,8 @@
 package financetest;
 
 import businesslogic.financebl.AccountBL;
-import vo.AccountVO;
 import junit.framework.TestCase;
+import vo.AccountVO;
 
 public class AccountBLTest extends TestCase{
 	AccountVO acc1,acc2,acc3;

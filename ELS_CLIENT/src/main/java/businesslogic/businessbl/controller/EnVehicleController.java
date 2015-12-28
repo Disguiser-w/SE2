@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import businesslogic.businessbl.EnVehicle;
 import businesslogicservice.businessblservice.EnVehicleBLService;
-import vo.OrderVO;
-import vo.VehicleVO;
 
 public class EnVehicleController implements EnVehicleBLService {
 

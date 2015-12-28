@@ -1,23 +1,22 @@
 package presentation.userui;
 
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.userbl.UserBL;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import presentation.userui.UserMainPanel;	
-import businesslogic.userbl.UserBL;
-import vo.UserVO;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
+import vo.UserVO;
 
 public class AddUserPanel extends OperationPanel {
 	

@@ -5,24 +5,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import type.ReceiptState;
-import vo.AllReceiptShowVO;
-import vo.ReceiptVO;
-import vo.CollectionReceiptVO;
-import vo.DistributeReceiptVO;
-import vo.EnIntermediateReceiptVO;
-import vo.EnVehicleReceiptVO;
-import vo.GatheringReceiptVO;
-import vo.OrderAcceptReceiptVO;
-import vo.PaymentReceiptVO;
-import vo.TransferingReceiptVO;
-import po.EnIntermediateReceiptPO;
-import po.GatheringReceiptPO;
-import po.TransferingReceiptPO;
-import po.EnplaningReceiptPO;
-import po.EnVehicleReceiptPO;
-import po.OrderAcceptReceiptPO;
-import po.DistributeReceiptPO;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.CollectionReceiptBL;
@@ -31,6 +13,22 @@ import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogicservice.manageblservice.ReviewReceiptBLService;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
+import po.DistributeReceiptPO;
+import po.EnIntermediateReceiptPO;
+import po.EnVehicleReceiptPO;
+import po.GatheringReceiptPO;
+import po.OrderAcceptReceiptPO;
+import po.TransferingReceiptPO;
+import type.ReceiptState;
+import vo.AllReceiptShowVO;
+import vo.CollectionReceiptVO;
+import vo.DistributeReceiptVO;
+import vo.EnIntermediateReceiptVO;
+import vo.EnVehicleReceiptVO;
+import vo.GatheringReceiptVO;
+import vo.OrderAcceptReceiptVO;
+import vo.PaymentReceiptVO;
+import vo.TransferingReceiptVO;
 
 public class ReviewReceiptBL implements ReviewReceiptBLService{
 

@@ -1,6 +1,5 @@
 package managetest;
 import junit.framework.TestCase;
-
 import vo.MockCostIncomeReceiptVO;
 
 public class CostIncomeReceiptTest extends TestCase {

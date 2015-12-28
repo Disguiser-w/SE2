@@ -2,9 +2,9 @@ package businesslogic.repertorybl.controller;
 
 import java.util.ArrayList;
 
-import vo.GoodsVO;
 import businesslogic.repertorybl.GoodsBL;
 import businesslogicservice.repertoryblservice.GoodsBLService;
+import vo.GoodsVO;
 
 public class GoodsController implements GoodsBLService{
 

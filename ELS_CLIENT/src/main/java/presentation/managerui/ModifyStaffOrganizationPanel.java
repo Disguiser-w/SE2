@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import businesslogic.managebl.OrganizationBL;
+import businesslogic.userbl.UserBL;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.OrganizationVO;
-import businesslogic.managebl.OrganizationBL;
-import businesslogic.userbl.UserBL;
 
 public class ModifyStaffOrganizationPanel extends OperationPanel {
 	

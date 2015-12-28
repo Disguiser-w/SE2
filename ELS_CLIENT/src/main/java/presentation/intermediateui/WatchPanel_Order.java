@@ -3,12 +3,10 @@ package presentation.intermediateui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JLabel;
-
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.UserFrame;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 
 public class WatchPanel_Order extends Transfering_newPanel {
 	private MyLabel confirmButton;

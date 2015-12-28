@@ -2,11 +2,11 @@ package presentation.repertoryui;
 
 import java.util.ArrayList;
 
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogic.repertorybl.controller.RepertoryController;
 import vo.InventoryVO;
 import vo.UserVO;
 

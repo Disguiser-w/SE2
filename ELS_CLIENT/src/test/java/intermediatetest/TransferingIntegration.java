@@ -1,8 +1,8 @@
 package intermediatetest;
 
-import vo.ReceiptVO;
 import businesslogic.receiptbl.MockReceipt;
 import businesslogicservice.intermediateblservice.TransferingBLService_stub;
+import vo.ReceiptVO;
 
 public class TransferingIntegration {
 	public void testTransfering() {

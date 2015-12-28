@@ -3,8 +3,8 @@ package businesslogicservice.manageblservice;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import vo.BasicSalaryVO;
 import type.ProfessionType;
+import vo.BasicSalaryVO;
 
 public interface BasicSalaryBLService {
 	

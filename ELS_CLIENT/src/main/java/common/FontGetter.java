@@ -1,6 +1,6 @@
 package common;
 
-import java.awt.*;
+import java.awt.GraphicsEnvironment;
 
 public class FontGetter {// 获得当前系统字体
 

@@ -2,7 +2,6 @@ package po;
 
 import java.io.Serializable;
 
-import po.ReceiptPO;
 import type.ReceiptState;
 import type.ReceiptType;
 

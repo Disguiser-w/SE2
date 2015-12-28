@@ -1,10 +1,10 @@
 package presentation.managerui;
 
+import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import businesslogic.financebl.controller.CostIncomeReceiptBLController;
-import businesslogic.receiptbl.GetDate;
 
 public class CheckIncomePanel extends OperationPanel {
 	

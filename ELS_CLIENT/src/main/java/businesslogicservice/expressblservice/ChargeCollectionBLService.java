@@ -1,7 +1,5 @@
 package businesslogicservice.expressblservice;
 
-import vo.ExpressVO;
-
 /**
  * 快递员-收费信息汇总
  */

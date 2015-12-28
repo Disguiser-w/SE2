@@ -1,6 +1,7 @@
 package presentation.financeui;
 
 import java.awt.Graphics;
+
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyTextField;

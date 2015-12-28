@@ -1,13 +1,13 @@
 package dataservice.repertorydataservice;
 
-import java.util.ArrayList;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.GoodsPO;
+import po.InventoryCheckPO;
 import po.InventoryPO;
 import po.RepertoryPO;
-import po.InventoryCheckPO;
 
 public interface RepertoryDataService extends Remote {
 	

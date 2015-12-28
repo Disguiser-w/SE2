@@ -2,10 +2,10 @@ package businesslogic.financebl.controller;
 
 import java.util.ArrayList;
 
-import vo.CollectionReceiptVO;
-import vo.GatheringReceiptVO;
 import businesslogic.financebl.CollectionReceiptBL;
 import businesslogicservice.financeblservice.CollectionReceiptBLService;
+import vo.CollectionReceiptVO;
+import vo.GatheringReceiptVO;
 
 public class CollectionReceiptBLController implements CollectionReceiptBLService{
 

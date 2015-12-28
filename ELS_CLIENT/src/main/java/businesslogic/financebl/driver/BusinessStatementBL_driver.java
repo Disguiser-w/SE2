@@ -1,7 +1,7 @@
 package businesslogic.financebl.driver;
 
-import vo.BusinessStatementReceiptVO;
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
+import vo.BusinessStatementReceiptVO;
 
 public class BusinessStatementBL_driver {
 	public static void main(String[] args){

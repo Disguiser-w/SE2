@@ -6,16 +6,15 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import presentation.commonui.MyLabel;
-import presentation.commonui.MyTable;
-import presentation.commonui.MyTextLabel;
-import presentation.commonui.OperationPanel;
-
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
 import businesslogic.repertorybl.controller.GoodsController;
 import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
 import businesslogic.repertorybl.controller.RepertoryController;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextLabel;
+import presentation.commonui.OperationPanel;
 import vo.GoodsVO;
 import vo.UserVO;
 

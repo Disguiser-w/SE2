@@ -6,17 +6,16 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
+import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
-
 import type.ReceiptState;
 import vo.EnterRepertoryReceiptVO;
 import vo.LeaveRepertoryReceiptVO;
 import vo.UserVO;
-import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
-import businesslogic.repertorybl.controller.LeaveRepertoryReceiptController;
 
 public class LookReceiptPanel extends OperationPanel {
 	

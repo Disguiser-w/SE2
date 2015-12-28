@@ -1,7 +1,7 @@
 package intermediatetest;
 
-import businesslogic.intermediatebl.envehiclebl.AllocateWaitingOrderBL;
-import businesslogic.intermediatebl.envehiclebl.TrainManagerBL;
+import businesslogic.intermediatebl.AllocateWaitingOrderBL;
+import businesslogic.intermediatebl.TrainManagerBL;
 
 public class EntrainingIntegration {
 	 public void testEntraining(){

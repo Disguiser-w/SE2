@@ -4,11 +4,17 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import common.ImageGetter;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
 import businesslogic.userbl.controller.UserManageController;
+import common.ImageGetter;
+import dataservice.managedataservice.BasicSalaryDataService;
+import dataservice.managedataservice.CityDistanceDataService;
+import dataservice.managedataservice.CostDataService;
+import dataservice.managedataservice.OrganizationDataService;
+import dataservice.managedataservice.PerWageDataService;
+import dataservice.userdataservice.UserDataService;
 import po.BasicSalaryPO;
 import po.CityDistancePO;
 import po.CostPO;
@@ -17,9 +23,8 @@ import po.PerWagePO;
 import po.RepertoryPO;
 import po.UserPO;
 import presentation.managerui.BasicDataManagePanel;
-import presentation.managerui.CheckIncomePanel;
 import presentation.managerui.CheckBusinessPanel;
-import presentation.managerui.CheckReceiptPanel;
+import presentation.managerui.CheckIncomePanel;
 import presentation.managerui.ManageFrame;
 import presentation.managerui.OrganizationManagePanel;
 import presentation.managerui.StaffManagePanel;
@@ -30,8 +35,6 @@ import vo.OrganizationVO;
 import vo.PerWageVO;
 import vo.RepertoryVO;
 import vo.UserVO;
-import dataservice.managedataservice.*;
-import dataservice.userdataservice.*;
 
 public class ManageMainController {
 

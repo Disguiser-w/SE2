@@ -1,8 +1,8 @@
 package vo;
 
+import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import type.AuthorityType;
 
 public class UserVO {
 	

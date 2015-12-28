@@ -2,9 +2,9 @@ package businesslogic.managebl.controller;
 
 import java.util.ArrayList;
 
-import vo.OrganizationVO;
 import businesslogic.managebl.OrganizationBL;
 import businesslogicservice.manageblservice.OrganizationBLService;
+import vo.OrganizationVO;
 
 public class OrganizationManageController implements OrganizationBLService{
 

@@ -1,7 +1,5 @@
 package presentation.mainui;
 
-import init.UserNameController;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,12 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.xml.namespace.QName;
 
-import presentation.commonui.LocationHelper;
-import presentation.commonui.MyTextField;
-import vo.LogVO;
-import vo.OrderVO;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.LogisticQuery;
 import businesslogic.expressbl.controller.ExpressMainController;
@@ -42,6 +35,11 @@ import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
 import common.ImageGetter;
+import init.UserNameController;
+import presentation.commonui.LocationHelper;
+import presentation.commonui.MyTextField;
+import vo.LogVO;
+import vo.OrderVO;
 
 /**
  * 打开客户端的第一个界面

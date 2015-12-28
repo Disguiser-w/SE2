@@ -1,7 +1,5 @@
 package businesslogicservice.expressblservice;
 
-import vo.OrderVO;
-
 public class ReceiptOrderBLService_driver {
 	public void drive(ReceiptOrderBLService receiptOrderBLService) {
 //		receiptOrderBLService.getOrderInfo(1000);

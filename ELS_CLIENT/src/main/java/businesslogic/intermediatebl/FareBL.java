@@ -3,15 +3,15 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogicservice.intermediateblservice.FareBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 import type.OperationState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
 import vo.OrganizationVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogicservice.intermediateblservice.FareBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class FareBL implements FareBLService {
 	private IntermediateDataService intermediateData;

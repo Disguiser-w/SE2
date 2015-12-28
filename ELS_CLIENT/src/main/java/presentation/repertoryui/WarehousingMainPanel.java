@@ -2,21 +2,19 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.repertorybl.controller.GoodsController;
+import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
-
 import vo.GoodsVO;
 import vo.UserVO;
-import businesslogic.repertorybl.controller.GoodsController;
-import businesslogic.repertorybl.controller.RepertoryController;
 
 public class WarehousingMainPanel extends OperationPanel {
 	

@@ -11,9 +11,6 @@ import java.util.Observer;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 
 public class MyTextField extends JTextField {
 	// private Image image;

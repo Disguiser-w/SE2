@@ -2,10 +2,10 @@ package businesslogic.managebl.controller;
 
 import java.util.ArrayList;
 
-import type.ProfessionType;
-import vo.PerWageVO;
 import businesslogic.managebl.PerWageBL;
 import businesslogicservice.manageblservice.PerWageBLService;
+import type.ProfessionType;
+import vo.PerWageVO;
 
 public class PerWageController implements PerWageBLService{
 	

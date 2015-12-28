@@ -2,6 +2,12 @@ package businesslogicservice.manageblservice;
 
 import java.rmi.RemoteException;
 
+import businesslogic.managebl.BasicSalaryBL;
+import businesslogic.managebl.CityDistanceBL;
+import businesslogic.managebl.CostBL;
+import businesslogic.managebl.OrganizationBL;
+import businesslogic.managebl.PerWageBL;
+import businesslogic.managebl.ReviewReceiptBL;
 import type.ExpressType;
 import type.OrganizationType;
 import type.ProfessionType;
@@ -10,12 +16,6 @@ import vo.CityDistanceVO;
 import vo.CostVO;
 import vo.OrganizationVO;
 import vo.PerWageVO;
-import businesslogic.managebl.BasicSalaryBL;
-import businesslogic.managebl.CityDistanceBL;
-import businesslogic.managebl.CostBL;
-import businesslogic.managebl.OrganizationBL;
-import businesslogic.managebl.PerWageBL;
-import businesslogic.managebl.ReviewReceiptBL;
 
 public class ManageBLService_driver {
 

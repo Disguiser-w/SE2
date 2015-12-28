@@ -1,6 +1,6 @@
 package businessbl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -10,15 +10,9 @@ import org.junit.Test;
 import businesslogic.businessbl.controller.AcceptCargoController;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.datafactory.DataFactory;
-import businesslogic.managebl.OrganizationBL;
 import po.OrganizationPO;
 import po.RepertoryPO;
-import type.ExpressType;
-import type.OrderState;
 import type.OrganizationType;
-import type.PackType;
-import vo.BusinessVO;
-import vo.OrderVO;
 
 public class AcceptCargoTest {
 	private AcceptCargoController acceptCargo;
@@ -28,8 +22,8 @@ public class AcceptCargoTest {
 		BusinessMainController.businessData = DataFactory.getBusinessData();
 		OrganizationPO po = new OrganizationPO(OrganizationType.businessHall, "025001", "鼓楼营业厅",
 				new RepertoryPO("pig", "wo"));
-		BusinessMainController.businessVO = new BusinessVO("doge", "YYT-00001", "2",
-				OrganizationBL.organizationPOToVO(po));
+//		BusinessMainController.businessVO = new BusinessVO("doge", "YYT-00001", "2",
+//				OrganizationBL.organizationPOToVO(po));
 		acceptCargo = new AcceptCargoController();
 	}
 

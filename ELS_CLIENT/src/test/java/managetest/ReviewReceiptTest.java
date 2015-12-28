@@ -1,7 +1,6 @@
 package managetest;
-import junit.framework.TestCase;
-
 import businesslogic.managebl.ReviewReceiptBL;
+import junit.framework.TestCase;
 
 public class ReviewReceiptTest extends TestCase {
 

@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JComboBox;
-import javax.swing.plaf.metal.MetalComboBoxButton;
 
 public class MyComboBox<T> extends JComboBox<T> {
 	public MyComboBox() {

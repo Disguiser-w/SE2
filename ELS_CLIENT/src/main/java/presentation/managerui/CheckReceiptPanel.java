@@ -5,13 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import businesslogic.managebl.controller.ReviewReceiptController;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import businesslogic.managebl.ReviewReceiptBL;
-import businesslogic.managebl.controller.ReviewReceiptController;
 import type.ReceiptState;
 import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;

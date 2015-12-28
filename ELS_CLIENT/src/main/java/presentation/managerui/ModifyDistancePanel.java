@@ -1,16 +1,16 @@
 package presentation.managerui;
 
-import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import businesslogic.managebl.CityDistanceBL;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.CityDistanceVO;
-import businesslogic.managebl.CityDistanceBL;
 
 public class ModifyDistancePanel extends OperationPanel {
 

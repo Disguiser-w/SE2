@@ -1,8 +1,8 @@
 package financetest;
 
 import businesslogic.financebl.CostIncomeReceiptBL;
-import vo.CostIncomeReceiptVO;
 import junit.framework.TestCase;
+import vo.CostIncomeReceiptVO;
 
 public class CostIncomeReceiptBLTest extends TestCase{
 	CostIncomeReceiptVO vo;

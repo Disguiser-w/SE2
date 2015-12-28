@@ -2,13 +2,11 @@ package financetest;
 
 import java.util.ArrayList;
 
-import type.ReceiptState;
-import type.ReceiptType;
-import vo.CollectionReceiptVO;
-import vo.GatheringReceiptVO;
 import businesslogic.businessbl.Gathering;
 import businesslogic.financebl.CollectionReceiptBL;
 import junit.framework.TestCase;
+import vo.CollectionReceiptVO;
+import vo.GatheringReceiptVO;
 
 public class CollectionReceiptBLTest extends TestCase{
 	CollectionReceiptBL collectionReceiptBL;

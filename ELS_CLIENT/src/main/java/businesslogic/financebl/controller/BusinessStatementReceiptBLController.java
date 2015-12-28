@@ -5,12 +5,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.financebl.BusinessStatementReceiptBL;
+import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
-import businesslogic.financebl.BusinessStatementReceiptBL;
-import businesslogic.receiptbl.GetDate;
-import businesslogicservice.financeblservice.BusinessstatementReceiptBLService;
 
 public class BusinessStatementReceiptBLController implements BusinessstatementReceiptBLService{
 

@@ -2,11 +2,11 @@ package financetest;
 
 import java.util.ArrayList;
 
+import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
+import junit.framework.TestCase;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
-import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
-import junit.framework.TestCase;
 
 public class BusinessStatementReceiptBLTest extends TestCase{
 	BusinessStatementReceiptBLController businessStatementReceiptBL;

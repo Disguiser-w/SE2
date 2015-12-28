@@ -1,16 +1,15 @@
 package presentation.repertoryui;
 
-import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
-import businesslogic.repertorybl.controller.RepertoryController;
 import vo.UserVO;
 
 public class InitializeInformationPanel extends OperationPanel {

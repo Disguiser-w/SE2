@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import vo.CostIncomeReceiptVO;
 import businesslogic.financebl.CostIncomeReceiptBL;
 import businesslogicservice.financeblservice.CostIncomeReceiptBLService;
+import vo.CostIncomeReceiptVO;
 
 public class CostIncomeReceiptBLController implements CostIncomeReceiptBLService{
 	

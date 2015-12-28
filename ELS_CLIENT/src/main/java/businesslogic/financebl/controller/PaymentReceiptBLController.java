@@ -2,9 +2,9 @@ package businesslogic.financebl.controller;
 
 import java.util.ArrayList;
 
-import vo.PaymentReceiptVO;
 import businesslogic.financebl.PaymentReceiptBL;
 import businesslogicservice.financeblservice.PaymentReceiptBLService;
+import vo.PaymentReceiptVO;
 
 public class PaymentReceiptBLController implements PaymentReceiptBLService{
 	

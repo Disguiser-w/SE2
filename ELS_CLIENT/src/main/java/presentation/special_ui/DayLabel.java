@@ -2,8 +2,6 @@ package presentation.special_ui;
 
 import java.awt.Image;
 
-import javax.swing.JFrame;
-
 import common.ImageGetter;
 import presentation.commonui.MyLabel;
 

@@ -3,7 +3,6 @@ package dataservice.expressdataservice;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.CostBasePO;
 import po.ExpressPO;
 import po.OrderPO;
 import type.OrderState;

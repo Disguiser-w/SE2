@@ -6,12 +6,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.PerWagePO;
-import vo.PerWageVO;
-import type.ProfessionType;
 import businesslogic.datafactory.DataFactory;
 import businesslogicservice.manageblservice.PerWageBLService;
 import dataservice.managedataservice.PerWageDataService;
+import po.PerWagePO;
+import type.ProfessionType;
+import vo.PerWageVO;
 
 public class PerWageBL implements PerWageBLService{
 	

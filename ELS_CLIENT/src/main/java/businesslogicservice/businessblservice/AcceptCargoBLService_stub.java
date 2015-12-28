@@ -2,8 +2,6 @@ package businesslogicservice.businessblservice;
 
 import java.util.ArrayList;
 
-import vo.OrderAcceptReceiptVO;
-
 public class AcceptCargoBLService_stub implements AcceptCargoBLService {
 
 	@Override

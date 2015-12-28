@@ -1,18 +1,17 @@
 package presentation.managerui;
 
-import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import businesslogic.managebl.PerWageBL;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
-import vo.PerWageVO;
 import type.ProfessionType;
-import businesslogic.managebl.PerWageBL;
+import vo.PerWageVO;
 
 public class ModifyPerWagePanel extends OperationPanel {
 

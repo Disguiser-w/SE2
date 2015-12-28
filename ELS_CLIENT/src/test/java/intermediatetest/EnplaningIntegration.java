@@ -1,7 +1,7 @@
 package intermediatetest;
 
-import businesslogic.intermediatebl.envehiclebl.AllocateWaitingOrderBL;
-import businesslogic.intermediatebl.envehiclebl.PlaneManagerBL;
+import businesslogic.intermediatebl.AllocateWaitingOrderBL;
+import businesslogic.intermediatebl.PlaneManagerBL;
 
 public class EnplaningIntegration {
     public void testEnplaning(){

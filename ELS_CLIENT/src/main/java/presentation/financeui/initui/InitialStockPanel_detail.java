@@ -4,6 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import businesslogic.businessbl.controller.VehicleManagerController;
+import businesslogic.financebl.controller.AccountBLController;
+import businesslogic.financebl.controller.InitialStockBLController;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.repertorybl.RepertoryBL;
+import businesslogic.userbl.UserBL;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -17,12 +23,6 @@ import vo.OrganizationVO;
 import vo.RepertoryVO;
 import vo.UserVO;
 import vo.VehicleVO;
-import businesslogic.businessbl.controller.VehicleManagerController;
-import businesslogic.financebl.controller.AccountBLController;
-import businesslogic.financebl.controller.InitialStockBLController;
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.repertorybl.RepertoryBL;
-import businesslogic.userbl.UserBL;
 
 public class InitialStockPanel_detail extends OperationPanel{
 

@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
+import businesslogic.receiptbl.GetDate;
 import common.ImageGetter;
-
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -18,8 +19,6 @@ import presentation.commonui.OperationPanel;
 import vo.BusinessStatementReceiptVO;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;
-import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
-import businesslogic.receiptbl.GetDate;
 
 public class CheckBusinessPanel extends OperationPanel {
 	

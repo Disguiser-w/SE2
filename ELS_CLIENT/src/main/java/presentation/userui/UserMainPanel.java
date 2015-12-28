@@ -2,25 +2,23 @@ package presentation.userui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import java.util.ArrayList;
-
-import presentation.commonui.OperationPanel;
+import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
+import presentation.commonui.OperationPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-
-import businesslogic.managebl.controller.OrganizationManageController;
-import businesslogic.userbl.controller.UserManageController;
-import vo.OrganizationVO;
-import vo.UserVO;
+import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import type.AuthorityType;
+import vo.OrganizationVO;
+import vo.UserVO;
 
 public class UserMainPanel extends OperationPanel {
 	

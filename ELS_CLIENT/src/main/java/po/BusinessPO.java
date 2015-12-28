@@ -5,7 +5,6 @@ import java.io.Serializable;
 import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import vo.UserVO;
 
 public class BusinessPO extends UserPO implements Serializable{
 

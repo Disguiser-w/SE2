@@ -4,15 +4,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-
 import type.ReceiptState;
 import vo.EnterRepertoryReceiptVO;
-import businesslogic.repertorybl.controller.EnterRepertoryReceiptController;
 
 public class EnterReceiptDetailedInfoPanel extends OperationPanel{
 

@@ -3,10 +3,10 @@ package businesslogicservice.userblservice;
 import java.rmi.RemoteException;
 
 import businesslogic.userbl.UserBL;
-import vo.UserVO;
+import type.AuthorityType;
 import type.ProfessionType;
 import type.SalaryPlanType;
-import type.AuthorityType;
+import vo.UserVO;
 
 public class UserBLService_driver {
 

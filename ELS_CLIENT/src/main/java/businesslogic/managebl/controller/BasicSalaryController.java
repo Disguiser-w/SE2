@@ -2,10 +2,10 @@ package businesslogic.managebl.controller;
 
 import java.util.ArrayList;
 
-import type.ProfessionType;
-import vo.BasicSalaryVO;
 import businesslogic.managebl.BasicSalaryBL;
 import businesslogicservice.manageblservice.BasicSalaryBLService;
+import type.ProfessionType;
+import vo.BasicSalaryVO;
 
 public class BasicSalaryController implements BasicSalaryBLService{
 	
