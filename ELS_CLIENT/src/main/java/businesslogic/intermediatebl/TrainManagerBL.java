@@ -3,16 +3,17 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogicservice.intermediateblservice.envehicleblservice.TrainManagerBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import po.TrainPO;
 import type.OperationState;
 import vo.IntermediateVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.TrainVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.envehicleblservice.TrainManagerBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TrainManagerBL implements TrainManagerBLService {
 	private IntermediateDataService intermediateData;
@@ -49,8 +50,8 @@ public class TrainManagerBL implements TrainManagerBLService {
 		TrainVO train_add = new TrainVO(ID, destination);
 		trainList.add(train_add);
 		saveTrainList();
-		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
-				"在本中转中心火车列表中新增了一架火车"), getDate.getdate());
+		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
+				"在本中转中心火车列表中新增了一架火车"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -60,8 +61,8 @@ public class TrainManagerBL implements TrainManagerBLService {
 			if (train.ID.equals(s)) {
 				trainList.remove(train);
 				saveTrainList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心火车列表中删除了一架火车"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心火车列表中删除了一架火车"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -74,8 +75,8 @@ public class TrainManagerBL implements TrainManagerBLService {
 			if (train.ID.equals(train_modify.ID)) {
 				trainList.set(trainList.indexOf(train), train_modify);
 				saveTrainList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心中修改了一家火车信息"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心中修改了一家火车信息"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}

@@ -2,17 +2,18 @@ package businesslogic.intermediatebl;
 
 import java.rmi.RemoteException;
 
-import businesslogic.expressbl.controller.ExpressMainController;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogicservice.intermediateblservice.TransferingBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import type.OperationState;
 import type.OrderState;
 import vo.IntermediateVO;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
+import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.TransferingBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
@@ -42,8 +43,8 @@ public class TransferingBL implements TransferingBLService {
 				.poToVO(ExpressMainController.expressData.find(ID));
 		order.order_state = OrderState.WAITING_ENVEHICLE;
 		transferingReceipt.orderList.add(order);
-		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
-				"在本中转中心新接收了一个快件"), getDate.getdate());
+		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
+				"在本中转中心新接收了一个快件"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -53,8 +54,8 @@ public class TransferingBL implements TransferingBLService {
 			if (order.ID.equals(ID)) {
 				transferingReceipt.orderList.remove(order);
 				order.order_state = OrderState.TRANSFERING;
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在中转中心到达单中删除了一个快件"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在中转中心到达单中删除了一个快件"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -79,8 +80,8 @@ public class TransferingBL implements TransferingBLService {
 		intermediateData.saveTransferingReceiptInfo(
 				IntermediateMainController.voToPO(transferingReceipt),
 				transferingReceipt.interdiateCentre.organizationID);
-		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
-				"进行了保存中转中心到达单的操作"), getDate.getdate());
+		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
+				"进行了保存中转中心到达单的操作"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
 }

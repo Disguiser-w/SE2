@@ -3,16 +3,17 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogicservice.intermediateblservice.envehicleblservice.PlaneManagerBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import po.PlanePO;
 import type.OperationState;
 import vo.IntermediateVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.envehicleblservice.PlaneManagerBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class PlaneManagerBL implements PlaneManagerBLService {
 	private IntermediateDataService intermediateData;
@@ -49,8 +50,8 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 		PlaneVO plane_add = new PlaneVO(ID, destination);
 		planeList.add(plane_add);
 		savePlaneList();
-		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
-				"在本中转中心飞机列表中新增了一架飞机"), getDate.getdate());
+		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
+				"在本中转中心飞机列表中新增了一架飞机"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -60,8 +61,8 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 			if (plane.ID.equals(s)) {
 				planeList.remove(plane);
 				savePlaneList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心飞机列表中删除了一架飞机"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心飞机列表中删除了一架飞机"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -74,8 +75,8 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 			if (plane.ID.equals(plane_modify.ID)) {
 				planeList.set(planeList.indexOf(plane), plane_modify);
 				savePlaneList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心中修改了一家飞机信息"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心中修改了一家飞机信息"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}

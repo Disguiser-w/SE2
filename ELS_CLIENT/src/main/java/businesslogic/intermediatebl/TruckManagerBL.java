@@ -3,16 +3,17 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import po.TruckPO;
 import type.OperationState;
 import vo.IntermediateVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.TruckVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.logdiarybl.LogDiaryBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TruckManagerBL implements TruckManageBLService {
 	private IntermediateDataService intermediateData;
@@ -49,8 +50,8 @@ public class TruckManagerBL implements TruckManageBLService {
 		TruckVO truck_add = new TruckVO(ID, destination);
 		truckList.add(truck_add);
 		saveTruckList();
-		logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(), intermediate,
-				"在本中转中心汽车列表中新增了一架汽车"), getDate.getdate());
+		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
+				"在本中转中心汽车列表中新增了一架汽车"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -60,8 +61,8 @@ public class TruckManagerBL implements TruckManageBLService {
 			if (truck.ID.equals(s)) {
 				truckList.remove(truck);
 				saveTruckList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心汽车列表中删除了一架汽车"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心汽车列表中删除了一架汽车"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
@@ -74,8 +75,8 @@ public class TruckManagerBL implements TruckManageBLService {
 			if (truck.ID.equals(truck_modify.ID)) {
 				truckList.set(truckList.indexOf(truck), truck_modify);
 				saveTruckList();
-				logDiary.addLogDiary(new LogDiaryVO(getDate.getdate(),
-						intermediate, "在本中转中心中修改了一家汽车信息"), getDate.getdate());
+				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
+						intermediate, "在本中转中心中修改了一家汽车信息"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
 			}
 		}
