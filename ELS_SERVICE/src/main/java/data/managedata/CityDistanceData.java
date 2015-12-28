@@ -1,135 +1,233 @@
 ﻿package data.managedata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
 import po.CityDistancePO;
-import file.JXCFile;
 import dataservice.managedataservice.CityDistanceDataService;
 
 public class CityDistanceData extends UnicastRemoteObject implements CityDistanceDataService {
 
-	private static final long serialVersionUID = 131250152L;
-
-	JXCFile cityDistanceFile;
-
+	private static final long serialVersionUID = 131250151L;
+	
 	public CityDistanceData() throws RemoteException {
-		cityDistanceFile = new JXCFile("info/basicDataInfo/cityDistance.ser");
+		super();
 	}
-
-	public int addCityDistance(CityDistancePO cityDistancepo) throws RemoteException {
-		if (findCityDistanceByBoth(cityDistancepo.getCityA(), cityDistancepo.getCityB()) == null) {
-			cityDistanceFile.write(cityDistancepo);
-			return 0;
-		} else
-			return 1;
-	}
-
-	public int deleteCityDistance(String cityA, String cityB) throws RemoteException {
-		ArrayList<Object> objectList = cityDistanceFile.read();
-
-		if (objectList == null)
-			return 1;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
-			if (((tempCityDistancePO.getCityA().equals(cityA)) && (tempCityDistancePO.getCityB().equals(cityB)))
-					|| (((tempCityDistancePO.getCityA().equals(cityB))
-							&& (tempCityDistancePO.getCityB().equals(cityA))))) {
-				objectList.remove(i);
-				break;
-			}
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<CityDistancePO> getCityDistanceList() throws RemoteException{
+		String path = "basicDataInfo/cityDistance.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<CityDistancePO>();
 		}
-
-		// cityDistanceFile.clear();
-		cityDistanceFile.writeM(objectList);
-		return 0;
-	}
-
-	public int modifyCityDistance(CityDistancePO cityDistancepo) throws RemoteException {
-		ArrayList<Object> objectList = cityDistanceFile.read();
-
-		if (objectList == null)
-			return 1;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
-			if (((tempCityDistancePO.getCityA().equals(cityDistancepo.getCityA()))
-					&& (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityB())))
-					|| (((tempCityDistancePO.getCityA().equals(cityDistancepo.getCityB()))
-							&& (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityA()))))) {
-				objectList.add(cityDistancepo);
-				objectList.remove(i);
-				break;
-			}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<CityDistancePO> cityDistanceList = (ArrayList<CityDistancePO>) in.readObject();
+			in.close();
+			return cityDistanceList;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		cityDistanceFile.writeM(objectList);
-		return 0;
-	}
-
-	public ArrayList<CityDistancePO> findCityDistanceBySingle(String city) throws RemoteException {
-		ArrayList<Object> objectList = cityDistanceFile.read();
-		ArrayList<CityDistancePO> cityToFindDistanceList = new ArrayList<CityDistancePO>();
-
-		if (objectList == null)
-			return null;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
-			if ((tempCityDistancePO.getCityA().equals(city)) || (tempCityDistancePO.getCityB().equals(city))) {
-				cityToFindDistanceList.add(tempCityDistancePO);
-			}
-		}
-
-		return cityToFindDistanceList;
-	}
-
-	public ArrayList<CityDistancePO> findCityDistanceByBoth(String cityA, String cityB) throws RemoteException {
-		ArrayList<Object> objectList = cityDistanceFile.read();
-		ArrayList<CityDistancePO> cityToFindDistanceList = new ArrayList<CityDistancePO>();
 		
-		if (objectList == null)
-			return null;
+		return null;
+	}
 
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
-			if (((tempCityDistancePO.getCityA().equals(cityA)) && (tempCityDistancePO.getCityB().equals(cityB)))
-				|| (((tempCityDistancePO.getCityA().equals(cityB)) && (tempCityDistancePO.getCityB().equals(cityA))))) {
-				cityToFindDistanceList.add(tempCityDistancePO);
-				break;
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveCityDistanceList(ArrayList<CityDistancePO> cityDistanceList) throws RemoteException {
+		String path = "basicDataInfo/cityDistance.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 
-		return cityToFindDistanceList;
-	}
-
-	public ArrayList<CityDistancePO> showAllCityDistances() throws RemoteException {
-		ArrayList<Object> objectList = cityDistanceFile.read();
-
-		if (objectList == null)
-			return null;
-
-		ArrayList<CityDistancePO> cityDistanceList = new ArrayList<CityDistancePO>();
-
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
-			cityDistanceList.add(tempCityDistancePO);
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(cityDistanceList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
+		return 0;
+	}
+	
+	
+	/**
+	 * 新增城市间距离信息
+	 * @param CityDistancePO cityDistancepo
+	 * @return 0(add succeed), 1(add failed)
+	 * 
+	 * */
+	public int addCityDistance(CityDistancePO cityDistancepo) throws RemoteException{
+		ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
+    	
+		for(int i=0; i<cityDistanceList.size(); i++){
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
+			if( (tempCityDistancePO.getCityA().equals(cityDistancepo.getCityA() ) && ( (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityB()) ) )
+			|| (tempCityDistancePO.getCityA().equals(cityDistancepo.getCityB() ) && ( (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityA()) ) )))){
+				return 1;
+			}
+		}
+		
+		cityDistanceList.add(cityDistancepo);
+		saveCityDistanceList(cityDistanceList);
+		return 0;
+	}
+	
+	
+	/**
+	 * 删除城市间距离信息
+	 * @param String cityA, String cityB
+	 * @return 0(delete succeed), 1(delete failed)
+	 * 
+	 * */
+	public int deleteCityDistance(String cityA, String cityB) throws RemoteException {
+		ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
+
+		boolean hasExist = false;
+		
+		for(int i=0; i<cityDistanceList.size(); i++){
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
+			if ( ( tempCityDistancePO.getCityA().equals(cityA) && tempCityDistancePO.getCityB().equals(cityB) )
+				|| (tempCityDistancePO.getCityA().equals(cityB) && tempCityDistancePO.getCityB().equals(cityA)) ){
+				hasExist = true;
+				cityDistanceList.remove(i);
+				break;
+			}
+		}
+		
+		saveCityDistanceList(cityDistanceList);
+		
+		if(hasExist)
+			return 0;
+		else
+			return 1;
+	}
+	
+	
+	/**
+	 * 修改城市间距离信息
+	 * @param CityDistancePO cityDistancepo
+	 * @return 0(modify succeed), 1(modify failed)
+	 * 
+	 * */
+    public int modifyCityDistance(CityDistancePO cityDistancepo) throws RemoteException{
+    	ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
+    	
+		boolean hasExist = false;
+		
+		for(int i=0; i<cityDistanceList.size(); i++){
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
+			if( (tempCityDistancePO.getCityA().equals(cityDistancepo.getCityA() ) && ( (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityB()) ) )
+					|| (tempCityDistancePO.getCityA().equals(cityDistancepo.getCityB() ) && ( (tempCityDistancePO.getCityB().equals(cityDistancepo.getCityA()) ) )))){
+				tempCityDistancePO.setDistance(cityDistancepo.getDistance());
+				hasExist = true;
+				break;
+			}
+		}
+		
+		saveCityDistanceList(cityDistanceList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
+    }
+    
+    
+    /**
+	 * 单城市模式下查找城市间距离信息（模糊搜索）
+	 * @param String city
+	 * @return ArrayList<CityDistancePO>
+	 * 
+	 * */
+	public ArrayList<CityDistancePO> findCityDistanceBySingle(String city) throws RemoteException {
+		ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
+    	ArrayList<CityDistancePO> cityDistancepoList = new ArrayList<CityDistancePO>();
+    	
+		if(cityDistanceList==null)	
+			return null;  	  
+		
+		for(int i=0; i<cityDistanceList.size(); i++){
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
+			if( (tempCityDistancePO.getCityA().equals(city) ) 
+					|| (tempCityDistancePO.getCityB().equals(city) ) ){
+				cityDistancepoList.add(tempCityDistancePO);
+			}
+		}
+		
+		return cityDistancepoList;
+	}
+
+    
+	/**
+	 * 双城市模式下查找城市间距离信息（精确搜索）
+	 * @param String cityA, String cityB
+	 * @return ArrayList<CityDistancePO>
+	 * 
+	 * */
+    public ArrayList<CityDistancePO> findCityDistanceByBoth(String cityA, String cityB) throws RemoteException{
+    	ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
+    	ArrayList<CityDistancePO> cityDistancepoList = new ArrayList<CityDistancePO>();
+    	
+		if(cityDistanceList==null)	
+			return null;  	  
+		
+		for(int i=0; i<cityDistanceList.size(); i++){
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
+			if((tempCityDistancePO.getCityA().equals(cityA) && ( (tempCityDistancePO.getCityB().equals(cityB) ) )
+					|| (tempCityDistancePO.getCityA().equals(cityB) && ( (tempCityDistancePO.getCityB().equals(cityA) ) )))){
+				cityDistancepoList.add(tempCityDistancePO);
+			}
+		}
+		
+		return cityDistancepoList;
+    }
+    
+    
+    /**
+	 * 显示所有城市间距离信息
+	 * @return ArrayList<CityDistancePO>
+	 * 
+	 * */
+    public ArrayList<CityDistancePO> showAllCityDistances() throws RemoteException{
+    	ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
 		return cityDistanceList;
 	}
-
-	public ArrayList<String> getAllCitys() {
+    
+    
+    /**
+	 * 显示所有已有城市（供快递员新建订单时使用）
+	 * @return ArrayList<CityDistancePO>
+	 * 
+	 * */
+	public ArrayList<String> getAllCitys() throws RemoteException {
+		ArrayList<CityDistancePO> cityDistanceList = getCityDistanceList();
 		ArrayList<String> str = new ArrayList<String>();
-		ArrayList<Object> objectList = cityDistanceFile.read();
 
-		if (objectList == null)
-			return null;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			CityDistancePO tempCityDistancePO = (CityDistancePO) (objectList.get(i));
+		for (int i = 0; i < cityDistanceList.size(); i++) {
+			CityDistancePO tempCityDistancePO = cityDistanceList.get(i);
 			String cityA = tempCityDistancePO.getCityA();
 			String cityB = tempCityDistancePO.getCityB();
 
@@ -159,6 +257,8 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		}
 		return str;
 	}
+
+	
 	/*--------------------------------------------------Test Part---------------------------------------------------*/
 
 	/*-------------------------------------- Part 1: Test logic whether is right -----------------------------------*/
@@ -167,38 +267,49 @@ public class CityDistanceData extends UnicastRemoteObject implements CityDistanc
 		CityDistanceData cityDistanceData;
 		try {
 			cityDistanceData = new CityDistanceData();
-			//cityDistanceData.deleteCityDistance("南京", "上海");
-			//cityDistanceData.deleteCityDistance("北京", "上海");
-			//cityDistanceData.deleteCityDistance("南京", "北京");
-			cityDistanceData.addCityDistance(new CityDistancePO("北京", "上海", 1064.7));
+			cityDistanceData.addCityDistance(new CityDistancePO("北京", "上海", 1800));
 			cityDistanceData.addCityDistance(new CityDistancePO("北京", "广州", 1888.8));
 			cityDistanceData.addCityDistance(new CityDistancePO("北京", "南京", 900));
 			cityDistanceData.addCityDistance(new CityDistancePO("上海", "广州", 1213));
 			cityDistanceData.addCityDistance(new CityDistancePO("上海", "南京", 266));
 			cityDistanceData.addCityDistance(new CityDistancePO("广州", "南京", 1132));
 			
-			ArrayList<CityDistancePO> cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "南京");
+			ArrayList<CityDistancePO> cityDistancepo = cityDistanceData.findCityDistanceByBoth( "南京", "北京");
 			 if(cityDistancepo != null)
 				 System.out.println("Find the cityDistance: "+cityDistancepo.get(0).getCityA()+""+cityDistancepo.get(0).getCityB()+" "+cityDistancepo.get(0).getDistance());
 			 else
 				 System.out.println("Cannot find the cityDistance");
+			 
+			 System.out.println("添加后:");
+			 ArrayList<CityDistancePO> cityDistancepoList0 = cityDistanceData.showAllCityDistances();
+			 if(cityDistancepoList0 != null){
+				 for(int i=0;i<cityDistancepoList0.size();i++){
+					 CityDistancePO tempCityDistancepo = cityDistancepoList0.get(i);
+					 System.out.println(tempCityDistancepo.getCityA()+""+tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance());
+				 }
+			 }
+			 else
+				 System.out.println("Cannot find the cityDistance");
+			 
+			cityDistanceData.modifyCityDistance(new CityDistancePO("北京", "上海",1064.7));
+			System.out.println("修改后:");
+			ArrayList<CityDistancePO> cityDistancepoList1 = cityDistanceData.showAllCityDistances();
+			if(cityDistancepoList1 != null){
+				for(int i=0;i<cityDistancepoList1.size();i++){
+					 CityDistancePO tempCityDistancepo = cityDistancepoList1.get(i);
+					 System.out.println(tempCityDistancepo.getCityA()+" "+tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance());
+				}
+			}
+			else
+				System.out.println("Cannot find the cityDistance");
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	/* System.out.println("添加后:");
-	 ArrayList<CityDistancePO> cityDistancepoList0 = cityDistanceData.showAllCityDistances();
-	 if(cityDistancepoList0 != null){
-		 for(int i=0;i<cityDistancepoList0.size();i++){
-			 CityDistancePO tempCityDistancepo = cityDistancepoList0.get(i);
-			 System.out.println(tempCityDistancepo.getCityA()+""+tempCityDistancepo.getCityB()+" "+tempCityDistancepo.getDistance());
-		 }
-	 }
-	 else
-		 System.out.println("Cannot find the cityDistance");
 	
-	 CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "南京");
+	 /* CityDistancePO cityDistancepo = cityDistanceData.findCityDistanceByBoth("北京", "南京");
 	 if(cityDistancepo != null)
 		 System.out.println("Find the cityDistance: "+cityDistancepo.getCityA()+""+cityDistancepo.getCityB()+" "+cityDistancepo.getDistance());
 	 else

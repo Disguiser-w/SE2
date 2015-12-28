@@ -2,7 +2,9 @@ package presentation.managerui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -13,13 +15,17 @@ import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
-
+import vo.LogDiaryVO;
 import vo.PerWageVO;
 import vo.BasicSalaryVO;
 import vo.CityDistanceVO;
 import vo.CostVO;
+import vo.UserVO;
+import type.AuthorityType;
 import type.ProfessionType;
 import type.ExpressType;
+import type.SalaryPlanType;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.BasicSalaryController;
 import businesslogic.managebl.controller.CityDistanceController;
 import businesslogic.managebl.controller.CostController;
@@ -37,6 +43,10 @@ public class BasicDataManagePanel extends OperationPanel {
 	private BasicSalaryController basicSalaryControl;
 	private CityDistanceController distancesControl;
 	private CostController baseFreightControl;
+	private LogDiaryBLController logDiaryControl;
+
+	private LogDiaryVO logDiary;
+	private String logDiaryTime;
 	
 	private MyLabel perWageLabel;
 	private MyLabel basicSalaryLabel;
@@ -71,6 +81,7 @@ public class BasicDataManagePanel extends OperationPanel {
 		basicSalaryControl = basicSalaryController;
 		distancesControl = cityDistanceController;
 		baseFreightControl = costController;
+		logDiaryControl = new LogDiaryBLController();
 		
 		perWageLabel = new MyLabel("每次工资");
 		basicSalaryLabel = new MyLabel("基础月薪");
@@ -302,6 +313,11 @@ public class BasicDataManagePanel extends OperationPanel {
 	//新增城市距离界面
 	public void addui(){
 		manageFrame.changePanel(new AddDistancePanel(manageFrame, this));
+		
+		logDiaryTime = getTimeNow();
+		logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+				ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "新增一个城市距离");
+		logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 	}
 	
 	//删除城市距离界面
@@ -319,6 +335,11 @@ public class BasicDataManagePanel extends OperationPanel {
 				return;
 			selectedIndex = selectedIndexs.get(0);
 			distancesControl.deleteCityDistance(distances.get(selectedIndex));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个城市距离");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 		else{
 			if(JOptionPane.showConfirmDialog(null, "确认删除这些信息？", "",
@@ -326,6 +347,11 @@ public class BasicDataManagePanel extends OperationPanel {
 				return;
 			for(int i: selectedIndexs){
 				distancesControl.deleteCityDistance(distances.get(i));
+				
+				logDiaryTime = getTimeNow();
+				logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+						ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个城市距离");
+				logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 			}
 		}
 		
@@ -338,6 +364,11 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(rightChoose()){
 			PerWageVO vo = perWages.get(selectedIndex);
 			manageFrame.changePanel(new ModifyPerWagePanel(manageFrame, this, professionName(vo.profession)));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "修改一个每次工资");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 	}
 	
@@ -346,6 +377,11 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(rightChoose()){
 			BasicSalaryVO vo = basicSalarys.get(selectedIndex);
 			manageFrame.changePanel(new ModifyBasicSalaryPanel(manageFrame, this, professionName(vo.profession)));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "修改一个基础月薪");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 	}
 	
@@ -354,6 +390,11 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(rightChoose()){
 			CityDistanceVO vo = distances.get(selectedIndex);
 			manageFrame.changePanel(new ModifyDistancePanel(manageFrame, this, vo.cityA, vo.cityB));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "修改一个城市距离");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 	}
 	
@@ -362,6 +403,11 @@ public class BasicDataManagePanel extends OperationPanel {
 		if(rightChoose()){
 			CostVO vo = baseFreights.get(selectedIndex);
 			manageFrame.changePanel(new ModifyBaseFreightPanel(manageFrame, this, expressCategoryName(vo.category)));
+			
+			logDiaryTime = getTimeNow();
+			logDiary = new LogDiaryVO(logDiaryTime, new UserVO("刘钦", "JL-00001", "", 
+					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "修改一个运费系数");
+			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
 		}
 	}
 	
@@ -426,6 +472,15 @@ public class BasicDataManagePanel extends OperationPanel {
 	public void warnning(String message) {
 		JOptionPane.showMessageDialog(null, message, "出错啦！( ▼-▼ )", JOptionPane.ERROR_MESSAGE);
 	}
-	
 
+	
+	//获取当前时间
+	public static String getTimeNow(){
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String timeNow = dateFormat.format(now); 
+		return timeNow;
+	}
+	
+	
 }

@@ -108,11 +108,15 @@ public class CreateReceiptPanel extends OperationPanel{
 					int returnNum = enterRepertoryReceiptControl.addEnterRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 					if(returnNum == 0)
 						successCreateReceipt(1);
+					else
+						failedCreateReceipt(1);
 				}
 				else{		//生成出库单
 					int returnNum = leaveRepertoryReceiptControl.addLeaveRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 					if(returnNum == 0)
 						successCreateReceipt(2);
+					else
+						failedCreateReceipt(2);
 				}
 			}	
 		});
@@ -228,6 +232,17 @@ public class CreateReceiptPanel extends OperationPanel{
 		else{
 			setBaseInfos(2);
 			JOptionPane.showMessageDialog(null, "生成出库单成功(●'◡'●)", "生成单据成功", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void failedCreateReceipt(int patternNum){
+		if(patternNum == 1){
+			setBaseInfos(1);
+			JOptionPane.showMessageDialog(null, "生成入库单失败(T_T)", "生成单据失败", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else{
+			setBaseInfos(2);
+			JOptionPane.showMessageDialog(null, "生成出库单失败(T_T)", "生成单据失败", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

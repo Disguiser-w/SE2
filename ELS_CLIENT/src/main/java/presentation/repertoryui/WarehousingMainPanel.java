@@ -2,7 +2,6 @@ package presentation.repertoryui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -12,7 +11,6 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import presentation.special_ui.MySearchField;
-
 import vo.GoodsVO;
 import vo.UserVO;
 import businesslogic.repertorybl.controller.GoodsController;
@@ -24,10 +22,10 @@ public class WarehousingMainPanel extends OperationPanel {
 
 	private RepertoryFrame repertoryFrame;
 	
-	private UserVO uservo;
-	
 	private RepertoryController repertoryControl;
 	private GoodsController goodsControl;
+	
+	private UserVO stockMan;
 	
 	private MyTextLabel chooseLabel;
 	private MyLabel planeLabel;
@@ -56,7 +54,7 @@ public class WarehousingMainPanel extends OperationPanel {
 		this.repertoryControl = repertoryController;
 		this.goodsControl = goodsController;
 		
-		this.uservo = uservo;
+		stockMan = uservo;
 		
 		detailedInfoLabel = new MyLabel("详细物流信息");
 		searchField = new MySearchField();
@@ -211,7 +209,7 @@ public class WarehousingMainPanel extends OperationPanel {
 				IDStr[count] = orderID;
 				count++;
 			}
-			repertoryFrame.changePanel(new WarehousingPanel(repertoryFrame, this, repertoryControl, goodsControl, this.uservo, IDStr, blockNum));
+			repertoryFrame.changePanel(new WarehousingPanel(repertoryFrame, this, repertoryControl, goodsControl, this.stockMan, IDStr, blockNum));
 		}
 	}
 	

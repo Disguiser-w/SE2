@@ -1,33 +1,92 @@
 package data.managedata;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import common.FileGetter;
+import data.userdata.UserData;
 import dataservice.managedataservice.OrganizationDataService;
-import file.JXCFile;
 import po.OrganizationPO;
 import po.RepertoryPO;
 import po.UserPO;
-//import po.RepertoryPO;
 import type.OrganizationType;
 
 /**
  * 机构数据的处理，包括新增机构，删除机构，修改机构,查询机构等基本操作
  * */
 
+
 public class OrganizationData extends UnicastRemoteObject implements OrganizationDataService {
 
 	private static final long serialVersionUID = 131250154L;
 
-	JXCFile organizationFile;
-	JXCFile userFile;
-
+	UserData userData; 
+	
 	public OrganizationData() throws RemoteException {
-		organizationFile = new JXCFile("info/organizationInfo/organization.ser");
-		userFile = new JXCFile("info/userInfo/user.ser");
+		super();
+		userData = new UserData();
 	}
 
+	
+	/**
+	 * 读文件（增删改查统一调用它）
+	 * 
+	 * */
+	public ArrayList<OrganizationPO> getOrganizationList() throws RemoteException{
+		String path = "organizationInfo/organization.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return new ArrayList<OrganizationPO>();
+		}
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			@SuppressWarnings("unchecked")
+			ArrayList<OrganizationPO> organizationList = (ArrayList<OrganizationPO>) in.readObject();
+			in.close();
+			return organizationList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
+	/**
+	 * 写文件（增删改查统一调用它）
+	 * 
+	 * */
+	public int saveOrganizationList(ArrayList<OrganizationPO> organizationList) throws RemoteException {
+		String path = "organizationInfo/organization.ser";
+		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(organizationList);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+	
+	
 	/**
 	 * 新增机构
 	 * @param OrganizationPO organizationpo
@@ -35,11 +94,18 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public int addOrganization(OrganizationPO organizationpo) throws RemoteException {
-		if (findOrganizationByID(organizationpo.getOrganizationID()) == null) {
-			organizationFile.write(organizationpo);
-			return 0;
-		} else
-			return 1;
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
+		
+		for(int i=0; i<organizationList.size(); i++){
+			OrganizationPO tempOrganizationPO = organizationList.get(i);
+			if (tempOrganizationPO.getOrganizationID().equals(organizationpo.getOrganizationID())) {
+				return 1;
+			}
+		}
+		
+		organizationList.add(organizationpo);
+		saveOrganizationList(organizationList);
+		return 0;
 	}
 
 	
@@ -50,32 +116,32 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public int deleteOrganization(String organizationID) throws RemoteException {
-		ArrayList<Object> organizationList = organizationFile.read();
-		ArrayList<Object> userList = userFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
-		if (organizationList == null)
-			return 1;
-
-		else{
-			for (int i = 0; i < organizationList.size(); i++) {
-				OrganizationPO tempOrganizationPO = (OrganizationPO) (organizationList.get(i));
-				if (tempOrganizationPO.getOrganizationID().equals(organizationID)) {
-					organizationList.remove(i);
-					break;
-				}
+		boolean hasExist = false;
+		
+		for(int i=0; i<organizationList.size(); i++){
+			OrganizationPO tempOrganizationPO = organizationList.get(i);
+			if (tempOrganizationPO.getOrganizationID().equals(organizationID)){
+				hasExist = true;
+				organizationList.remove(i);
+				break;
 			}
-	
-			for (int i = 0; i < userList.size(); i++) {
-				UserPO tempUserPO = (UserPO)(userList.get(i));
-				if(tempUserPO.getOrganization().contains(organizationID)) {
-					userList.remove(i);
-				}
-			}
-			
-			organizationFile.writeM(organizationList);
-			userFile.writeM(userList);
-			return 0;
 		}
+		
+		saveOrganizationList(organizationList);
+		
+		String keyword = organizationID;
+		ArrayList<UserPO> userList = userData.findUserByKeyword(keyword);
+		
+		for(int i=0, size = userList.size(); i<size; i++){
+			userData.deleteUser(userList.get(i).getUserID());
+		}		
+		
+		if(hasExist)
+			return 0;
+		else
+			return 1;
 	}
 
 	
@@ -86,25 +152,27 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public int modifyOrganization(OrganizationPO organizationpo) throws RemoteException {
-		ArrayList<Object> objectList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 
-		if (objectList == null)
-			return 1;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
-			if (tempOrganizationPO.getOrganizationID().equals(organizationpo.getOrganizationID())) {
-				tempOrganizationPO.setName(organizationpo.getName());
-				tempOrganizationPO.setRepertory(organizationpo.getRepertory());
+		boolean hasExist = false;
+		
+		for(int i=0; i<organizationList.size(); i++){
+			OrganizationPO tempOrganizationPO = organizationList.get(i);
+			if (tempOrganizationPO.getOrganizationID().equals(organizationpo.getOrganizationID())){
+				hasExist = true;
 				tempOrganizationPO.setPlaneList(organizationpo.getPlaneList());
 				tempOrganizationPO.setTrainList(organizationpo.getTrainList());
 				tempOrganizationPO.setTruckList(organizationpo.getTruckList());
+				tempOrganizationPO.setRepertory(organizationpo.getRepertory());
 				break;
 			}
 		}
-
-		organizationFile.writeM(objectList);
-		return 0;
+		
+		saveOrganizationList(organizationList);
+		if(hasExist)
+			return 0;
+		else
+			return 1;
 	}
 
 	
@@ -115,18 +183,14 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public OrganizationPO findOrganizationByID(String organizationID) throws RemoteException {
-		ArrayList<Object> objectList = organizationFile.read();
-
-		if (objectList == null)
-			return null;
-
-		for (int i = 0; i < objectList.size(); i++) {
-			OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
+		
+		for(int i=0; i<organizationList.size(); i++){
+			OrganizationPO tempOrganizationPO = organizationList.get(i);
 			if (tempOrganizationPO.getOrganizationID().equals(organizationID)) {
 				return tempOrganizationPO;
 			}
 		}
-
 		return null;
 	}
 	
@@ -138,16 +202,16 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public ArrayList<OrganizationPO> findOrganizationByKeyword(String keyword) throws RemoteException {
-		ArrayList<Object> objectList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		ArrayList<OrganizationPO> organizationpoList = new ArrayList<OrganizationPO>();
 
-		if (objectList == null)
+		if (organizationList == null)
 			return null;
 
 		else {
-			for (int i = 0; i < objectList.size(); i++) {
-				OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
-				if (tempOrganizationPO.getOrganizationID().contains(keyword)  || tempOrganizationPO.getName().contains(keyword)) {
+			for (int i = 0; i < organizationList.size(); i++) {
+				OrganizationPO tempOrganizationPO = (organizationList.get(i));
+				if (tempOrganizationPO.getOrganizationID().contains(keyword) || tempOrganizationPO.getName().contains(keyword)) {
 					organizationpoList.add(tempOrganizationPO);
 				}
 			}
@@ -162,18 +226,7 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 
 	 * */
 	public ArrayList<OrganizationPO> showAllOrganizations() throws RemoteException {
-		ArrayList<Object> objectList = organizationFile.read();
-
-		if (objectList == null)
-			return null;
-
-		ArrayList<OrganizationPO> organizationList = new ArrayList<OrganizationPO>();
-
-		for (int i = 0; i < objectList.size(); i++) {
-			OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
-			organizationList.add(tempOrganizationPO);
-		}
-
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		return organizationList;
 	}
 
@@ -186,16 +239,15 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 	 * 一点限制就是，总经理新建机构的时候，要输入全名，比如“南京市仙林营业厅”
 	 * */
 	public ArrayList<String> getBelongingPlaces(String city) throws RemoteException {
-		ArrayList<Object> objectList = organizationFile.read();
+		ArrayList<OrganizationPO> organizationList = getOrganizationList();
 		ArrayList<String> belongingPlaces = new ArrayList<String>();
 
-		if (objectList == null)
+		if (organizationList == null)
 			return null;
 
-		for (int i = 0; i < objectList.size(); i++) {
-			OrganizationPO tempOrganizationPO = (OrganizationPO) (objectList.get(i));
-			if (tempOrganizationPO.getName().startsWith(city)
-					&& tempOrganizationPO.getCategory().equals(OrganizationType.businessHall)) {
+		for (int i = 0; i < organizationList.size(); i++) {
+			OrganizationPO tempOrganizationPO = organizationList.get(i);
+			if (tempOrganizationPO.getName().startsWith(city) && tempOrganizationPO.getCategory().equals(OrganizationType.businessHall)) {
 				String[] transition1 = tempOrganizationPO.getName().split("市");
 				String[] transition2 = transition1[1].split("营业厅");
 				belongingPlaces.add(transition2[0]);
@@ -267,9 +319,6 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 				} else
 					System.out.println("Cannot find the organization");
 
-				// organizationData.modifyOrganization(new
-				// OrganizationPO(OrganizationType.intermediateCenter,"025-0","南京呵呵呵中转中心",new
-				// RepertoryPO("025-呵呵呵-CK","CK-01")));
 				System.out.println("修改后:");
 				ArrayList<OrganizationPO> organizationpoList3 = organizationData.showAllOrganizations();
 				if (organizationpoList3 != null) {
