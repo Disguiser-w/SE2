@@ -9,10 +9,9 @@ import po.EnterRepertoryReceiptPO;
 public interface EnterRepertoryReceiptDataService extends Remote {
 
 	public int addEnterRepertoryReceipt(EnterRepertoryReceiptPO errpo) throws RemoteException;
-	public int deleteEnterReceipt(String receiptID) throws RemoteException;
-	public int sendEnterReceipt(String receiptID)throws RemoteException;
-	public int approveEnterReceipt(String receiptID)throws RemoteException;
-	public int disapproveEnterReceipt(String receiptID)throws RemoteException;
+	public int sendEnterReceipt(String receiptID) throws RemoteException;
+	public int approveEnterReceipt(String receiptID) throws RemoteException;
+	public int disapproveEnterReceipt(String receiptID) throws RemoteException;
 	public EnterRepertoryReceiptPO findEnterReceiptByReceiptID(String receiptID) throws RemoteException;
 	public ArrayList<EnterRepertoryReceiptPO> findEnterReceiptByCreatorID(String creatorID) throws RemoteException;
 	public ArrayList<EnterRepertoryReceiptPO> findEnterReceiptByCreatorAndKeyword(String creator, String keyword) throws RemoteException;
