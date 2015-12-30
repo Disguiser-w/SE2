@@ -22,23 +22,18 @@ public class ManageBLService_driver {
 	public void driveOrganization(OrganizationBLService organizationBLService) throws RemoteException{
 		organizationBLService.deleteOrganization("021000");
 		organizationBLService.addOrganization(new OrganizationVO(OrganizationType.businessHall, "021000", "北京市朝阳营业厅", null));
-		organizationBLService.modifyOrganization(new OrganizationVO(OrganizationType.businessHall, "025000", "南京市鼓楼营业厅", null));
         organizationBLService.findOrganization("025000");
         organizationBLService.showAllOrganizations();
         organizationBLService.chooseDepartment("KD-00001", "025000");
 	}
 	
 	public void drivePerWage(PerWageBLService perWageBLService) throws RemoteException{
-		perWageBLService.deletePerWage(new PerWageVO(ProfessionType.courier, 2));
-		perWageBLService.addPerWage(new PerWageVO(ProfessionType.courier, 2));
 		perWageBLService.modifyPerWage(new PerWageVO(ProfessionType.courier, 0.5));
 		perWageBLService.findPerWage(ProfessionType.courier);
 		perWageBLService.showAllPerWages();
 	}
 	
 	public void driveBasicSalary(BasicSalaryBLService basicSalaryBLService) throws RemoteException{
-		basicSalaryBLService.deleteBasicSalary(new BasicSalaryVO(ProfessionType.courier, 2000));
-		basicSalaryBLService.addBasicSalary(new BasicSalaryVO(ProfessionType.courier, 2000));
 		basicSalaryBLService.modifyBasicSalary(new BasicSalaryVO(ProfessionType.courier, 2000));
 		basicSalaryBLService.findBasicSalary(ProfessionType.courier);
 		basicSalaryBLService.showAllBasicSalarys();
@@ -54,8 +49,6 @@ public class ManageBLService_driver {
 	}
 	
 	public void driveCost(CostBLService costBLService) throws RemoteException{
-		costBLService.deleteCost(new CostVO(ExpressType.STANDARD, 23));
-		costBLService.addCost(new CostVO(ExpressType.STANDARD, 23));
         costBLService.modifyCost(new CostVO(ExpressType.STANDARD, 23));
         costBLService.findCost(ExpressType.STANDARD);
         costBLService.showAllCosts();

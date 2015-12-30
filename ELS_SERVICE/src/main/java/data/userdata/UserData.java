@@ -383,8 +383,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 
 		for (int i = 0; i < userList.size(); i++) {
 			UserPO tempUserPO = (userList.get(i));
-			if (tempUserPO.getUserID().equals(userID) && !tempUserPO.getOrganization().equals("")) {
-
+			if (tempUserPO.getUserID().equals(userID)) {
 				return tempUserPO;
 			}
 		}

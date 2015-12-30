@@ -125,7 +125,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
     }
     
     
-    public int sendEnterReceipt(String receiptID)throws RemoteException{
+    public int sendEnterRepertoryReceipt(String receiptID)throws RemoteException{
     	ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
     	
     	boolean hasExist = false;
@@ -144,7 +144,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 	}
 
 	
-	public int approveEnterReceipt(String receiptID) throws RemoteException{
+	public int approveEnterRepertoryReceipt(String receiptID) throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
     	
     	boolean hasExist = false;
@@ -163,7 +163,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 	}
 	
 	
-	public int disapproveEnterReceipt(String receiptID)throws RemoteException{
+	public int disapproveEnterRepertoryReceipt(String receiptID)throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
     	
     	boolean hasExist = false;
@@ -182,7 +182,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 	}
 	
 	
-	public EnterRepertoryReceiptPO findEnterReceiptByReceiptID(String receiptID) throws RemoteException{
+	public EnterRepertoryReceiptPO findEnterRepertoryReceiptByReceiptID(String receiptID) throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		
 		for(int i=0; i<enterRepertoryReceiptList.size(); i++){
@@ -194,7 +194,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 		return null;
 	}
 
-	public ArrayList<EnterRepertoryReceiptPO> findEnterReceiptByCreatorID(String creatorID) throws RemoteException{
+	public ArrayList<EnterRepertoryReceiptPO> findEnterRepertoryReceiptByCreatorID(String creatorID) throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOList = new ArrayList<EnterRepertoryReceiptPO>();
 
@@ -208,8 +208,8 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 		return enterRepertoryReceiptPOList;
 	}
 	
-	public ArrayList<EnterRepertoryReceiptPO> findEnterReceiptByCreatorAndKeyword(String creator, String keyword) throws RemoteException{
-		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOListByCreator = findEnterReceiptByCreatorID(creator); 
+	public ArrayList<EnterRepertoryReceiptPO> findEnterRepertoryReceiptByCreatorAndKeyword(String creator, String keyword) throws RemoteException{
+		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOListByCreator = findEnterRepertoryReceiptByCreatorID(creator); 
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptPOListByCreatorAndKeyword = new ArrayList<EnterRepertoryReceiptPO>();
 		
 		for(int i=0,size = enterRepertoryReceiptPOListByCreator.size(); i<size; i++){
@@ -221,7 +221,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 		return enterRepertoryReceiptPOListByCreatorAndKeyword;
 	}
 	
-	public ArrayList<EnterRepertoryReceiptPO> getAllSubmitedEnterReceipts() throws RemoteException{
+	public ArrayList<EnterRepertoryReceiptPO> getAllSubmitedEnterRepertoryReceipts() throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		ArrayList<EnterRepertoryReceiptPO> enterReceiptList = new ArrayList<EnterRepertoryReceiptPO>();
 		
@@ -235,12 +235,12 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 	}
 	
 	
-	public ArrayList<EnterRepertoryReceiptPO> getAllEnterReceipts() throws RemoteException{
+	public ArrayList<EnterRepertoryReceiptPO> getAllEnterRepertoryReceipts() throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 		return enterRepertoryReceiptList;
 	}
 	
-	public String getEnterReceiptPost() throws RemoteException{
+	public String getEnterRepertoryReceiptPost() throws RemoteException{
 		ArrayList<EnterRepertoryReceiptPO> enterRepertoryReceiptList = getEnterRepertoryReceiptList();
 
 		int size = enterRepertoryReceiptList.size();
@@ -264,7 +264,7 @@ public class EnterRepertoryReceiptData extends UnicastRemoteObject implements En
 			try{
 				
 				System.out.println("所有入库单");
-				ArrayList<EnterRepertoryReceiptPO> errpoList = errData.getAllEnterReceipts();
+				ArrayList<EnterRepertoryReceiptPO> errpoList = errData.getAllEnterRepertoryReceipts();
 				for(EnterRepertoryReceiptPO errpo : errpoList){
 					System.out.println(errpo.receiptID+" "+errpo.userID+" "+errpo.getCreateTime()+" "+errpo.getRepertoryID()+" "+errpo.state);
 					for(int i=0,size = errpo.getExpressIDList().length; i<size; i++){
