@@ -346,7 +346,7 @@ public class MainFrame extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					isPressed = false;
 					queryButton.setIcon(query_hover);
-					toQueryPanel();
+                    // queryPanel
 				}
 			});
 
