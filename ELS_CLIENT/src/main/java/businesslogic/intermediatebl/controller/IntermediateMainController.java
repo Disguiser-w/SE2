@@ -13,6 +13,7 @@ import businesslogic.intermediatebl.TrainManagerBL;
 import businesslogic.intermediatebl.TransferingBL;
 import businesslogic.intermediatebl.TruckManagerBL;
 import businesslogic.managebl.OrganizationBL;
+import businesslogic.receiptbl.GetDate;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
@@ -96,6 +97,7 @@ public class IntermediateMainController {
 		planeList = intermediateCentre.planeList;
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
+
 		planeManager = new PlaneManagerBL(planeList, intermediateCentre,
 				intermediateData, intermediate);
 		trainManager = new TrainManagerBL(trainList, intermediateCentre,
@@ -104,7 +106,9 @@ public class IntermediateMainController {
 				intermediateData, intermediate);
 		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
-				orderList, "", "", ReceiptState.DRAFT);
+				orderList, "ZZZXDDD-" + GetDate.getdate() + "-"
+						+ transferingReceipt.interdiateCentre.organizationID,
+				GetDate.getdate(), ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData,
 				intermediate);
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,

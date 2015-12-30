@@ -54,6 +54,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private final double ECONOMIC_TRAIN = 200;
 	private final double ECONOMIC_PLANE = 500;
 
+	private int receipt_ID;
+
 	public EnvehicleBL(TransferingBL transfering, PlaneManagerBL planeManager,
 			TrainManagerBL trainManeger, TruckManagerBL truckManager,
 			ArrayList<EnplaningReceiptVO> enplaningReceiptList,
@@ -75,6 +77,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 		this.entruckingReceiptList = entruckingReceiptList;
 		this.intermediateData = intermediateData;
 		this.intermediate = intermediate;
+
+		receipt_ID = 1;
 	}
 
 	public OperationState envehicle() throws Exception {
@@ -193,14 +197,26 @@ public class EnvehicleBL implements EnvehicleBLService {
 			throws RemoteException {
 		// TODO 自动生成的方法存根
 		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
-				.voToPO_enplaningReceiptList(enplaningReceiptList))
+				.voToPO_enplaningReceiptList(enplaningReceiptList)) {
+			enplaningReceipt.receiptID = "ZCD-"
+					+ transferingReceipt.interdiateCentre.organizationID
+					+ receipt_ID++;
 			enList.add(enplaningReceipt);
+		}
 		for (EntrainingReceiptPO entrainingReceipt : IntermediateMainController
-				.voToPO_entrainingReceiptList(entrainingReceiptList))
+				.voToPO_entrainingReceiptList(entrainingReceiptList)) {
+			entrainingReceipt.receiptID = "ZCD-"
+					+ transferingReceipt.interdiateCentre.organizationID
+					+ receipt_ID++;
 			enList.add(entrainingReceipt);
+		}
 		for (EntruckingReceiptPO entruckingReceipt : IntermediateMainController
-				.voToPO_entruckingReceiptList(entruckingReceiptList))
+				.voToPO_entruckingReceiptList(entruckingReceiptList)) {
+			entruckingReceipt.receiptID = "ZCD-"
+					+ transferingReceipt.interdiateCentre.organizationID
+					+ receipt_ID++;
 			enList.add(entruckingReceipt);
+		}
 		intermediateData.saveEnIntermediateReceiptInfo(enList,
 				transferingReceipt.interdiateCentre.organizationID);
 		return OperationState.SUCCEED_OPERATION;
