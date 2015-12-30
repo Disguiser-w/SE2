@@ -2,14 +2,28 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JTextArea;
 
 public class MyTextArea extends JTextArea {
+	private MyObservable observable;
 
 	public MyTextArea() {
-//		setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190, 125)));
+		observable = new MyObservable();
+		// setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190,
+		// 125)));
 		setBackground(new Color(150, 150, 150, 75));
+	}
+
+	public void setText(String str) {
+		super.setText(str);
+
+	}
+
+	public void addObserver(Observer o) {
+		observable.addObserver(o);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -19,5 +33,12 @@ public class MyTextArea extends JTextArea {
 			setForeground(Color.WHITE);
 		}
 		super.paintComponent(g);
+	}
+}
+
+class MyObservable extends Observable {
+	public void setData() {
+		setChanged();
+		notifyObservers();
 	}
 }

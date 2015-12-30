@@ -17,12 +17,6 @@ public class OperationPanel extends JPanel implements Observer {
 
 	protected OperationPanel() {
 		background = ImageGetter.getImage("background4.png").getImage();
-		// (new Thread(new Runnable() {
-		// public void run() {
-		// while (true)
-		// repaint();
-		// }
-		// })).start();
 
 	}
 
@@ -32,13 +26,17 @@ public class OperationPanel extends JPanel implements Observer {
 	}
 
 	public void remove(MyTable table) {
-
 		remove(table.getScrollPanel());
 	}
 
 	public void add(MyTextField field) {
 		field.addObservable(this);
 		add(field.getLabel());
+	}
+
+	public void add(MyTextArea area) {
+		area.addObserver(this);
+		add(area);
 	}
 
 	public void remove(MyTextField field) {
@@ -56,7 +54,7 @@ public class OperationPanel extends JPanel implements Observer {
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-//		super.paintComponent(g);
+		// super.paintComponent(g);
 	}
 
 	@Override

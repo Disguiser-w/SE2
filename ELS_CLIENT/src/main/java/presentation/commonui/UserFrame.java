@@ -35,7 +35,6 @@ public class UserFrame extends JFrame {
 		isMoving = false;
 		num = 0;
 		operationPanels = new ArrayList<JPanel>();
-		System.out.println(name+" "+ID);
 		imageLabel = new ImageLabel(new String[] { name, ID }, this);
 		messagePanel = new MessagePanel(this);
 		functionPanel = new FunctionPanel();

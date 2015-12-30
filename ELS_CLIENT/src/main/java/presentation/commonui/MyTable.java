@@ -96,16 +96,19 @@ public class MyTable extends JPanel {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				int dir = e.getWheelRotation();
 				if (dir == 1) {
-					if (panel.getY() + panel.getHeight() > scrollPanel.getHeight())
+					if (panel.getY() + panel.getHeight() > scrollPanel.getHeight()) {
 						panel.setLocation(0, panel.getY() - 10);
-
+						tableObservable.setData();
+					}
 				}
 
 				if (dir == -1) {
-					if (panel.getY() < 0)
+					if (panel.getY() < 0) {
 						panel.setLocation(0, panel.getY() + 10);
+						tableObservable.setData();
+					}
 				}
-				tableObservable.setData();
+
 			}
 
 		});
@@ -349,6 +352,11 @@ public class MyTable extends JPanel {
 				add(box);
 			} else
 				setSize(30 + width, height);
+			box.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					tableObservable.setData();
+				}
+			});
 
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {

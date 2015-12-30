@@ -197,6 +197,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			in.close();
 			for (UserPO i : users) {
 				if (i.getUserID().equals(expressID)) {
+					System.out.println(((ExpressPO)i).getChargeCollection().size());
 					return (ExpressPO) i;
 				}
 			}
@@ -237,18 +238,18 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	public boolean updateChargeCollection(String organizationID, String expressID, ArrayList<String> chargeCollection)
 			throws RemoteException {
 		// 退出前如果没手动清空就询问是否清空
-		String path = "expressInfo/" + organizationID + "-express.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<UserPO> userPOs = (ArrayList<UserPO>) in.readObject();
 			in.close();
-			for (ExpressPO i : expressPOs)
+			for (UserPO i : userPOs)
 				if (i.getUserID().equals(expressID))
-					i.setChargeCollection(chargeCollection);
+					((ExpressPO)i).setChargeCollection(chargeCollection);
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(expressPOs);
+			out.writeObject(userPOs);
 			out.close();
 
 		} catch (Exception e) {
