@@ -7,7 +7,7 @@ public class EntruckingIntegration {
 	public void testEntrucking(){
     	MockTransferingReceipt transferingReceipt = new MockTransferingReceipt(null, "test", null, null);
     	AllocateWaitingOrderBL awo = new AllocateWaitingOrderBL(transferingReceipt);
-    	TruckManagerBL ebl = new TruckManagerBL(null, null, null);
+//    	TruckManagerBL ebl = new TruckManagerBL(null, null, null);
     	
 		// MockEntruckingReceipt entruckingReceipt = (MockEntruckingReceipt)
 		// ebl.entruck(awo.updateWaitingList(transferingReceipt));

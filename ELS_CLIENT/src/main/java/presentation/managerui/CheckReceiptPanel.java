@@ -157,11 +157,11 @@ public class CheckReceiptPanel extends OperationPanel {
 				break;
 		case 4:
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)
-				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.userID, "中转中心业务员", enIntermediatevo.createTime, stateName(enIntermediatevo.state)});
+				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.userID, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
 				break;
 		case 5:
 			for(TransferingReceiptVO transferingvo : transferingList)
-				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.createTime, stateName(transferingvo.state)});
+				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.state)});
 				break;
 		case 6:
 			for(EnVehicleReceiptVO enVehiclevo : enVehicleList)
@@ -177,11 +177,11 @@ public class CheckReceiptPanel extends OperationPanel {
 				break;		
 		case 9:
 			for(PaymentReceiptVO paymentvo : paymentList)
-				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.createTime, stateName(paymentvo.state)});
+				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
 				break;
 		case 10:
 			for(PaymentReceiptVO paymentvo : paymentList)
-				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.createTime, stateName(paymentvo.state)});
+				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
 				break;		
 		default:
 				break;

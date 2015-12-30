@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.receiptbl.GetDate;
 import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
@@ -145,7 +146,7 @@ public class StaffManagePanel extends OperationPanel {
 				return;
 			}
 			userManageControl.deleteUser(users.get(selectedIndex).userID);
-			logDiary = new LogDiaryVO(getDate.getdate(), new UserVO("刘钦", "JL-00001", "", 
+			logDiary = new LogDiaryVO(GetDate.getTime(), new UserVO("刘钦", "JL-00001", "", 
 					ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个用户");
 			logDiaryTime = getTimeNow();
 			logDiaryControl.addLogDiary(logDiary, logDiaryTime);
@@ -156,7 +157,7 @@ public class StaffManagePanel extends OperationPanel {
 				return;
 			for(int i: selectedIndexs){
 				userManageControl.deleteUser(users.get(i).userID);
-				logDiary = new LogDiaryVO(getDate.getdate(), new UserVO("刘钦", "JL-00001", "", 
+				logDiary = new LogDiaryVO(GetDate.getTime(), new UserVO("刘钦", "JL-00001", "", 
 						ProfessionType.manager, "", SalaryPlanType.basicStaffSalaryPlan, AuthorityType.highest, 0), "删除一个用户");
 				logDiaryTime = getTimeNow();
 				logDiaryControl.addLogDiary(logDiary, logDiaryTime);

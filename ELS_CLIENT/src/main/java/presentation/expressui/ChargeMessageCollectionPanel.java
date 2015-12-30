@@ -45,7 +45,7 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		// 所有组件setBounds
 		totalMessageLabel.setBounds((int) (width * 1.0572987721691678 / 25) + 10,
-				(int) (height * 17.56272401433692 / 20)-8, (int) (width * 22.919508867667123 / 25) - 20,
+				(int) (height * 17.56272401433692 / 20) - 8, (int) (width * 22.919508867667123 / 25) - 20,
 				(int) (height * 1.7921146953405018 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0572987721691678 / 25),
 				(int) (height * 1.146953405017921 / 20), (int) (width * 22.919508867667123 / 25),
@@ -55,19 +55,8 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 
 	// 设置载入动态的内容
 	private void setBaseInfos() {
-		// 信息label
-		Date date = new Date();
-		SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
-		String time = f.format(date);
 
-		// expressID从expressVO处获
-		if (ExpressMainController.expressVO.chargeCollection.size() != 0)
-			totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID + "  金额总和 : "
-					+ ExpressMainController.expressVO.chargeCollection.get(0));
-		else
-			totalMessageLabel
-					.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID + "  金额总和 : " + "0");
-		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
+		setLabelInfo();
 		String[] head = new String[] { "订单号", "收费" };
 
 		int[] widths = { 330, 292 };
@@ -75,6 +64,24 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 		messageTable = new MyTable(head, getInfos(), widths, false);
 		add(messageTable);
 
+	}
+
+	private void setLabelInfo() {
+		// 信息label
+		Date date = new Date();
+		SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd");
+		String time = f.format(date);
+		
+
+		// expressID从expressVO处获
+
+		if (ExpressMainController.expressVO.chargeCollection.size() != 0)
+			totalMessageLabel.setText("日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID
+					+ "  金额总和 : " + ExpressMainController.expressVO.chargeCollection.get(0));
+		else
+			totalMessageLabel.setText(
+					"日期 : " + time + "  快递员编号 : " + ExpressMainController.expressVO.userID + "  金额总和 : " + "0");
+		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
 
 	private ArrayList<String[]> getInfos() {
@@ -91,6 +98,7 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 
 		super.paintComponent(g);
 		ExpressMainController.updateExpressInfo();
+		setLabelInfo();
 		messageTable.setInfos(getInfos());
 		if (UserFrame.type == UserFrame.TYPE_0)
 			totalMessageLabel.setForeground(Color.BLACK);

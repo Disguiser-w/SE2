@@ -33,19 +33,23 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 	// 清空当日收费信息
 	public boolean deleteChargeInfos(String organizationID) throws RemoteException {
-		String path = "expressInfo/" + organizationID + "-express.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<UserPO> userPOs = (ArrayList<UserPO>) in.readObject();
 			in.close();
 
-			for (ExpressPO i : expressPOs) {
-				i.setChargeCollection(new ArrayList<String>());
+			for (UserPO i : userPOs) {
+				if (i.getProfession() == ProfessionType.courier) {
+					if (((ExpressPO) i).getOrganizationPO().getOrganizationID().equals(organizationID)) {
+						((ExpressPO) i).setChargeCollection(new ArrayList<String>());
+					}
+				}
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(expressPOs);
+			out.writeObject(userPOs);
 			out.close();
 
 		} catch (Exception e) {
@@ -85,7 +89,6 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight() + po.getPackingExpense(),
 				po.getRecipientOrganization(), po.getSenderOrganization());
 		goodsData.addGoods(newGood);
-		System.out.println(po.getSenderAddress());
 
 		// 获取今日时间
 		String time = getTime();
@@ -197,7 +200,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			in.close();
 			for (UserPO i : users) {
 				if (i.getUserID().equals(expressID)) {
-					System.out.println(((ExpressPO)i).getChargeCollection().size());
+
 					return (ExpressPO) i;
 				}
 			}
@@ -246,7 +249,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			in.close();
 			for (UserPO i : userPOs)
 				if (i.getUserID().equals(expressID))
-					((ExpressPO)i).setChargeCollection(chargeCollection);
+					((ExpressPO) i).setChargeCollection(chargeCollection);
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(userPOs);
@@ -290,22 +293,23 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 	public boolean receiptOrder(String organizationID, String expressId, OrderPO po) throws RemoteException {
 		boolean result = false;
-		String path = "expressInfo/" + organizationID + "-express.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<UserPO> userpo = (ArrayList<UserPO>) in.readObject();
 			in.close();
-			for (ExpressPO i : expressPOs) {
+			for (UserPO i : userpo) {
+
 				if (i.getUserID().equals(expressId)) {
-					i.getPendingOrders().remove(po.getID());
-					i.getFinishedOrders().add(po.getID());
+					((ExpressPO) i).getPendingOrders().remove(po.getID());
+					((ExpressPO) i).getFinishedOrders().add(po.getID());
 					result = true;
 				}
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(expressPOs);
+			out.writeObject(userpo);
 			out.close();
 
 			String time = getTime();
@@ -339,20 +343,20 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	}
 
 	public boolean addSubmitOrder(String organizationID, String expressId, String orderID) throws RemoteException {
-		String path = "expressInfo/" + organizationID + "-express.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<UserPO> userPOs = (ArrayList<UserPO>) in.readObject();
 			in.close();
-			for (ExpressPO i : expressPOs) {
+			for (UserPO i : userPOs) {
 				if (i.getUserID().equals(expressId)) {
-					i.getSubmitedOrderID().add(orderID);
+					((ExpressPO) i).getSubmitedOrderID().add(orderID);
 				}
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(expressPOs);
+			out.writeObject(userPOs);
 			out.close();
 
 		} catch (Exception e) {
@@ -364,20 +368,20 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	}
 
 	public boolean addPendingOrder(String organizationID, String expressId, String orderID) throws RemoteException {
-		String path = "expressInfo/" + organizationID + "-express.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			ArrayList<ExpressPO> expressPOs = (ArrayList<ExpressPO>) in.readObject();
+			ArrayList<UserPO> userPOs = (ArrayList<UserPO>) in.readObject();
 			in.close();
-			for (ExpressPO i : expressPOs) {
+			for (UserPO i : userPOs) {
 				if (i.getUserID().equals(expressId)) {
-					i.getPendingOrders().add(orderID);
+					((ExpressPO) i).getPendingOrders().add(orderID);
 				}
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(expressPOs);
+			out.writeObject(userPOs);
 			out.close();
 
 		} catch (Exception e) {

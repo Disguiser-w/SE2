@@ -7,7 +7,7 @@ public class EntrainingIntegration {
 	 public void testEntraining(){
 	    	MockTransferingReceipt transferingReceipt = new MockTransferingReceipt(null, "test", null, null);
 	    	AllocateWaitingOrderBL awo = new AllocateWaitingOrderBL(transferingReceipt);
-	    	TrainManagerBL ebl = new TrainManagerBL(null, null, null);
+//	    	TrainManagerBL ebl = new TrainManagerBL(null, null, null);
 	    	
 		// MockEntrainingReceipt entrainingReceipt = (MockEntrainingReceipt)
 		// ebl.entrain(awo.updateWaitingList());

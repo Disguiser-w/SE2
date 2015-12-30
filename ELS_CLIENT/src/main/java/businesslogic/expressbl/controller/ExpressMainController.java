@@ -64,7 +64,8 @@ public class ExpressMainController {
 	// 最后此方法在此聚合
 	public static void updateExpressInfo() {
 		try {
-			expressVO = expressPOToVO(expressData.getExpressInfo(expressVO.organizationVO.organizationID, expressVO.userID));
+			expressVO = expressPOToVO(
+					expressData.getExpressInfo(expressVO.organizationVO.organizationID, expressVO.userID));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
