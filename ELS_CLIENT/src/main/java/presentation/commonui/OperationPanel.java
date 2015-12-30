@@ -35,9 +35,11 @@ public class OperationPanel extends JPanel implements Observer {
 	}
 
 	public void add(MyTextArea area) {
-		area.addObserver(this);
-		add(area);
+		super.add(area);
+		area.addObservable(this);
 	}
+	
+	
 
 	public void remove(MyTextField field) {
 		remove(field.getLabel());

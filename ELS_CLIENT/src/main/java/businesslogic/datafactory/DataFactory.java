@@ -30,6 +30,25 @@ import dataservice.userdataservice.UserDataService;
 
 public class DataFactory {
 	public static String address;
+	private static ExpressDataService expressData;
+	private static BusinessDataService businessData;
+	private static AccountDataService accountData;
+	private static CollectionReceiptDataService collectionData;
+	private static PaymentReceiptDataService paymentData;
+	private static CostIncomeReceiptDataService costincomeData;
+	private static InitialStockDataService initialData;
+	private static IntermediateDataService intermediateData;
+	private static UserDataService userData;
+	private static OrganizationDataService organizationData;
+	private static RepertoryDataService repertoryData;
+	private static EnterRepertoryReceiptDataService enterRepertoryReceiptData;
+	private static LeaveRepertoryReceiptDataService leaveRepertoryReceiptData;
+	private static GoodsDataService goodsData;
+	private static PerWageDataService perWageData;
+	private static BasicSalaryDataService basicSalaryData;
+	private static CityDistanceDataService cityDistanceData;
+	private static CostDataService costData;
+	private static LogDiaryDataService logDiaryData;
 
 	static {
 		try {
@@ -45,118 +64,166 @@ public class DataFactory {
 	}
 
 	public static ExpressDataService getExpressData() throws MalformedURLException, RemoteException, NotBoundException {
-		ExpressDataService expressData = (ExpressDataService) Naming.lookup("//" + address + "/ExpressDataService");
+		if (expressData != null) {
+			return expressData;
+		}
+		expressData = (ExpressDataService) Naming.lookup("//" + address + "/ExpressDataService");
 		return expressData;
 	}
 
 	public static BusinessDataService getBusinessData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		BusinessDataService businessData = (BusinessDataService) Naming.lookup("//" + address + "/BusinessDataService");
+		if (businessData != null) {
+			return businessData;
+		}
+		businessData = (BusinessDataService) Naming.lookup("//" + address + "/BusinessDataService");
 		return businessData;
 	}
 
 	// 财务人员相关数据
 	public static AccountDataService getAccountData() throws MalformedURLException, RemoteException, NotBoundException {
-		AccountDataService accountData = (AccountDataService) Naming.lookup("//" + address + "/AccountDataService");
+		if (accountData != null) {
+			return accountData;
+		}
+		accountData = (AccountDataService) Naming.lookup("//" + address + "/AccountDataService");
 		return accountData;
 	}
 
 	public static CollectionReceiptDataService getCollectionReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		CollectionReceiptDataService collectionData = (CollectionReceiptDataService) Naming
-				.lookup("//" + address + "/CollectionReceiptDataService");
+		if (collectionData != null) {
+			return collectionData;
+		}
+		collectionData = (CollectionReceiptDataService) Naming.lookup("//" + address + "/CollectionReceiptDataService");
 		return collectionData;
 	}
 
 	public static PaymentReceiptDataService getPaymentReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		PaymentReceiptDataService paymentData = (PaymentReceiptDataService) Naming
-				.lookup("//" + address + "/PaymentReceiptDataService");
+		if (paymentData != null) {
+			return paymentData;
+		}
+		paymentData = (PaymentReceiptDataService) Naming.lookup("//" + address + "/PaymentReceiptDataService");
 		return paymentData;
 	}
 
 	public static CostIncomeReceiptDataService getCostIncomeData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		CostIncomeReceiptDataService costIncomeData = (CostIncomeReceiptDataService) Naming
-				.lookup("//" + address + "/CostIncomeReceiptDataService");
-		return costIncomeData;
+		if (costincomeData != null) {
+			return costincomeData;
+		}
+		costincomeData = (CostIncomeReceiptDataService) Naming.lookup("//" + address + "/CostIncomeReceiptDataService");
+		return costincomeData;
 	}
 
 	public static InitialStockDataService getInitialStockData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		InitialStockDataService initData = (InitialStockDataService) Naming
-				.lookup("//" + address + "/InitialStockDataService");
-		return initData;
+		if (initialData != null) {
+			return initialData;
+		}
+		initialData = (InitialStockDataService) Naming.lookup("//" + address + "/InitialStockDataService");
+		return initialData;
 	}
 
 	// 中转中心
 	public static IntermediateDataService getIntermediateData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		IntermediateDataService intermediateData = (IntermediateDataService) Naming
-				.lookup("//" + address + "/IntermediateDataService");
+		if (intermediateData != null) {
+			return intermediateData;
+		}
+		intermediateData = (IntermediateDataService) Naming.lookup("//" + address + "/IntermediateDataService");
 		return intermediateData;
 	}
 
 	// 总经理
 	public static BasicSalaryDataService getBasicSalaryData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		BasicSalaryDataService basicSalaryData = (BasicSalaryDataService) Naming
-				.lookup("//" + address + "/BasicSalaryDataService");
+		if (basicSalaryData != null) {
+			return basicSalaryData;
+		}
+		basicSalaryData = (BasicSalaryDataService) Naming.lookup("//" + address + "/BasicSalaryDataService");
 		return basicSalaryData;
 	}
 
 	public static CityDistanceDataService getCityDistanceData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		CityDistanceDataService cityDistanceData = (CityDistanceDataService) Naming
-				.lookup("//" + address + "/CityDistanceDataService");
+		if (cityDistanceData != null) {
+			return cityDistanceData;
+		}
+		cityDistanceData = (CityDistanceDataService) Naming.lookup("//" + address + "/CityDistanceDataService");
 		return cityDistanceData;
 	}
 
 	public static CostDataService getCostData() throws MalformedURLException, RemoteException, NotBoundException {
-		CostDataService costDataData = (CostDataService) Naming.lookup("//" + address + "/CostDataService");
-		return costDataData;
+		if (costData != null) {
+			return costData;
+		}
+		costData = (CostDataService) Naming.lookup("//" + address + "/CostDataService");
+		return costData;
 	}
 
 	public static OrganizationDataService getOrganizationData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		OrganizationDataService organizationData = (OrganizationDataService) Naming
-				.lookup("//" + address + "/OrganizationDataService");
+		if (organizationData != null) {
+			return organizationData;
+		}
+		organizationData = (OrganizationDataService) Naming.lookup("//" + address + "/OrganizationDataService");
 		return organizationData;
 	}
 
 	public static PerWageDataService getPerWageData() throws MalformedURLException, RemoteException, NotBoundException {
-		PerWageDataService perWageData = (PerWageDataService) Naming.lookup("//" + address + "/PerWageDataService");
+		if (perWageData != null) {
+			return perWageData;
+		}
+		perWageData = (PerWageDataService) Naming.lookup("//" + address + "/PerWageDataService");
 		return perWageData;
 	}
 
 	public static UserDataService getUserData() throws MalformedURLException, RemoteException, NotBoundException {
-		UserDataService userData = (UserDataService) Naming.lookup("//" + address + "/UserDataService");
+
+		if (userData != null) {
+			return userData;
+		}
+		userData = (UserDataService) Naming.lookup("//" + address + "/UserDataService");
 		return userData;
 	}
 
 	// 仓库管理员
 	public static GoodsDataService getGoodsData() throws MalformedURLException, RemoteException, NotBoundException {
-		GoodsDataService goodsData = (GoodsDataService) Naming.lookup("//" + address + "/GoodsDataService");
+
+		if (goodsData != null) {
+			return goodsData;
+		}
+		goodsData = (GoodsDataService) Naming.lookup("//" + address + "/GoodsDataService");
 		return goodsData;
 	}
 
 	public static RepertoryDataService getRepertoryData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		RepertoryDataService repertoryData = (RepertoryDataService) Naming
-				.lookup("//" + address + "/RepertoryDataService");
+		if (repertoryData != null) {
+			return repertoryData;
+		}
+
+		repertoryData = (RepertoryDataService) Naming.lookup("//" + address + "/RepertoryDataService");
 		return repertoryData;
 	}
 
 	public static EnterRepertoryReceiptDataService getEnterRepertoryReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		EnterRepertoryReceiptDataService enterRepertoryReceiptData = (EnterRepertoryReceiptDataService) Naming
+		if (enterRepertoryReceiptData != null) {
+			return enterRepertoryReceiptData;
+		}
+		enterRepertoryReceiptData = (EnterRepertoryReceiptDataService) Naming
 				.lookup("//" + address + "/EnterRepertoryReceiptDataService");
 		return enterRepertoryReceiptData;
 	}
 
 	public static LeaveRepertoryReceiptDataService getLeaveRepertoryReceiptData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		LeaveRepertoryReceiptDataService leaveRepertoryReceiptData = (LeaveRepertoryReceiptDataService) Naming
+		if (leaveRepertoryReceiptData != null) {
+			return leaveRepertoryReceiptData;
+		}
+		leaveRepertoryReceiptData = (LeaveRepertoryReceiptDataService) Naming
 				.lookup("//" + address + "/LeaveRepertoryReceiptDataService");
 		return leaveRepertoryReceiptData;
 	}
@@ -164,7 +231,11 @@ public class DataFactory {
 	// 系统日志
 	public static LogDiaryDataService getLogDiaryData()
 			throws MalformedURLException, RemoteException, NotBoundException {
-		LogDiaryDataService logDiaryData = (LogDiaryDataService) Naming.lookup("//" + address + "/LogDiaryDataService");
+		if (logDiaryData != null) {
+			return logDiaryData;
+		}
+
+		logDiaryData = (LogDiaryDataService) Naming.lookup("//" + address + "/LogDiaryDataService");
 		return logDiaryData;
 	}
 

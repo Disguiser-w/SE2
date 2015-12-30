@@ -1,14 +1,11 @@
 package presentation.businessui;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -18,6 +15,7 @@ import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextArea;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.LogDiaryVO;
@@ -25,7 +23,7 @@ import vo.LogDiaryVO;
 public class ChargeCollectionPanel extends OperationPanel {
 	// private JLabel tablehead;
 	private MyTable messageTable;
-	private JLabel totalMessageLabel;
+	private MyTextArea totalMessageLabel;
 	private MyLabel collectionLabel;
 
 	private LocationHelper helper;
@@ -39,11 +37,13 @@ public class ChargeCollectionPanel extends OperationPanel {
 		this.controller = controller;
 		log = new LogDiaryBLController();
 
-		totalMessageLabel = new MyTextLabel();
-		totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
-		totalMessageLabel.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN, 15));
-		totalMessageLabel.setForeground(Color.WHITE);
-		totalMessageLabel.setOpaque(true);
+		totalMessageLabel = new MyTextArea();
+		// totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
+		// totalMessageLabel.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN,
+		// 15));
+		// totalMessageLabel.setForeground(Color.WHITE);
+		// totalMessageLabel.setOpaque(true);
+		//
 		collectionLabel = new MyLabel();
 
 		add(totalMessageLabel);
@@ -67,9 +67,10 @@ public class ChargeCollectionPanel extends OperationPanel {
 		messageTable.setLocationAndSize((int) (width * 0.9890859481582538 / 25),
 				(int) (height * 1.1827956989247312 / 20), (int) (width * 22.987721691678036 / 25),
 				(int) (height * 15.376344086021506 / 20));
-		totalMessageLabel.setBounds((int) (width * 0.9890859481582538 / 25), (int) (height * 17.634408602150536 / 20),
+
+		totalMessageLabel.setBounds((int) (width * 1.2890859481582538 / 25), (int) (height * 17.434408602150536 / 20),
 				(int) (width * 18.92905866302865 / 25), (int) (height * 1.3261648745519714 / 20));
-		collectionLabel.setBounds((int) (width * 22.13506139154161 / 25), (int) (height * 17.634408602150536 / 20),
+		collectionLabel.setBounds((int) (width * 21.83506139154161 / 25), (int) (height * 17.434408602150536 / 20),
 				(int) (width * 1.8417462482946794 / 25), (int) (height * 1.3261648745519714 / 20));
 	}
 

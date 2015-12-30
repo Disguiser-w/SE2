@@ -458,7 +458,7 @@ public class MainFrame extends JFrame {
 						frame.setVisible(false);
 						// 成功登录，生成界面
 						nameController.addNewName(userID);
-						updateNames();
+//						updateNames();
 
 						String type = userID.split("-")[0];
 						// 不同人员的方式自己来补完

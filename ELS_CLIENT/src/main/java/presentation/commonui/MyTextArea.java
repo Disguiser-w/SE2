@@ -22,8 +22,8 @@ public class MyTextArea extends JTextArea {
 
 	}
 
-	public void addObserver(Observer o) {
-		observable.addObserver(o);
+	public void addObservable(Object o) {
+		observable.addObserver((Observer)o);
 	}
 
 	public void paintComponent(Graphics g) {

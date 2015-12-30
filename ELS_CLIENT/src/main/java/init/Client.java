@@ -1,5 +1,7 @@
 package init;
 
+import javax.swing.ImageIcon;
+
 import presentation.mainui.MainFrame;
 
 public class Client {

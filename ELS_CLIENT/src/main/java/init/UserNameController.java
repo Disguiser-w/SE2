@@ -73,7 +73,7 @@ public class UserNameController {
 
 			if (!file.exists()) {
 				file.createNewFile();
-				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File("users.dat")));
+				ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 				ArrayList<String> userNames = new ArrayList<String>();
 				userNames.add(userName);
 
@@ -92,7 +92,7 @@ public class UserNameController {
 
 			userNames.add(userName);
 
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File("users.dat")));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(userNames);
 			out.close();
 
