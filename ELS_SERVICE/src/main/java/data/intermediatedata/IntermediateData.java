@@ -76,7 +76,6 @@ public class IntermediateData extends UnicastRemoteObject implements
 					file));
 			@SuppressWarnings("unchecked")
 			ArrayList<PlanePO> planeList = (ArrayList<PlanePO>) in.readObject();
-			System.out.println(planeList.size());
 			in.close();
 			return planeList;
 		} catch (Exception e) {
