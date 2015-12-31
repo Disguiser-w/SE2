@@ -90,7 +90,6 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 	 */
 	public int addUser(UserPO userpo) throws RemoteException {
 		ArrayList<UserPO> userList = getUserList();
-
 		for (int i = 0; i < userList.size(); i++) {
 			UserPO tempUserPO = userList.get(i);
 			if (tempUserPO.getUserID().equals(userpo.getUserID())) {
@@ -328,8 +327,8 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 
 					break;
 				case intermediateCenterCounterman:
-					UserPO po3 = new UserPO(tempUserPO.getName(),tempUserPO.getUserID(),
-							tempUserPO.getPassword(), 
+					UserPO po3 = new UserPO(tempUserPO.getName(),
+							tempUserPO.getUserID(), tempUserPO.getPassword(),
 							tempUserPO.getProfession(),
 							tempUserPO.getOrganization(),
 							tempUserPO.getSalaryPlan(),
@@ -645,7 +644,7 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 					for (int i = 0; i < userpoList0.size(); i++) {
 						UserPO tempUserpo = userpoList0.get(i);
 						System.out.println(tempUserpo.getName() + "  "
-								+ tempUserpo.getUserID() + "  "
+								+ tempUserpo.getUserID() + "  " + tempUserpo.getPassword() + " "
 								+ tempUserpo.getOrganization() + "  "
 								+ tempUserpo.getProfession() + " "
 								+ tempUserpo.getGrades() + "");

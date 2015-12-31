@@ -107,7 +107,7 @@ public class IntermediateMainController {
 		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "ZZZXDDD-" + GetDate.getdate() + "-"
-						+ transferingReceipt.interdiateCentre.organizationID,
+						+ intermediateCentre.organizationID,
 				GetDate.getdate(), ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData,
 				intermediate);

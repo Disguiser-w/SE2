@@ -41,8 +41,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 	public UserPO getIntermediateInfo(String intermediate_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/intermediate/" + intermediate_ID
-				+ "-intermediate.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
