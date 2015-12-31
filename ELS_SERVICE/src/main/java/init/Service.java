@@ -1,12 +1,14 @@
-package common;
+package init;
 
 import java.io.File;
 import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import common.FileGetter;
 import data.businessdata.BusinessData;
 import data.expressdata.ExpressData;
 import data.financedata.AccountData;
@@ -45,9 +47,32 @@ import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
+import presentation.serviceui.ServiceMainFrame;
 
-public class TestService {
-	public static void main(String[] args) {
+public class Service {
+	private ExpressDataService expressData;
+	private BusinessDataService businessData;
+	private AccountDataService accountData;
+	private CollectionReceiptDataService collectionData;
+	private PaymentReceiptDataService paymentData;
+	private CostIncomeReceiptDataService costincomeData;
+	private InitialStockDataService initialData;
+	private IntermediateDataService intermediateData;
+	private UserDataService userData;
+	private OrganizationDataService organizationData;
+	private RepertoryDataService repertoryData;
+	private EnterRepertoryReceiptDataService enterRepertoryReceiptData;
+	private LeaveRepertoryReceiptDataService leaveRepertoryReceiptData;
+	private GoodsDataService goodsData;
+	private PerWageDataService perWageData;
+	private BasicSalaryDataService basicSalaryData;
+	private CityDistanceDataService cityDistanceData;
+	private CostDataService costData;
+	private LogDiaryDataService logDiaryData;
+
+	private Remote reg;
+
+	public boolean startService() {
 
 		try {
 			String address = null;
@@ -62,27 +87,27 @@ public class TestService {
 			}
 			System.setProperty("java.rmi.server.hostname", address);
 
-			ExpressDataService expressData = new ExpressData();
-			BusinessDataService businessData = new BusinessData();
-			AccountDataService accountData = new AccountData();
-			CollectionReceiptDataService collectionData = new CollectionReceiptData();
-			PaymentReceiptDataService paymentData = new PaymentReceiptData();
-			CostIncomeReceiptDataService costincomeData = new CostIncomeReceiptData();
-			InitialStockDataService initialData = new InitialStockData();
-			IntermediateDataService intermediateData = new IntermediateData();
-			UserDataService userData = new UserData();
-			OrganizationDataService organizationData = new OrganizationData();
-			RepertoryDataService repertoryData = new RepertoryData();
-			EnterRepertoryReceiptDataService enterRepertoryReceiptData = new EnterRepertoryReceiptData();
-			LeaveRepertoryReceiptDataService leaveRepertoryReceiptData = new LeaveRepertoryReceiptData();
-			GoodsDataService goodsData = new GoodsData();
-			PerWageDataService perWageData = new PerWageData();
-			BasicSalaryDataService basicSalaryData = new BasicSalaryData();
-			CityDistanceDataService cityDistanceData = new CityDistanceData();
-			CostDataService costData = new CostData();
-			LogDiaryDataService logDiaryData = new LogDiaryData();
+			expressData = new ExpressData();
+			businessData = new BusinessData();
+			accountData = new AccountData();
+			collectionData = new CollectionReceiptData();
+			paymentData = new PaymentReceiptData();
+			costincomeData = new CostIncomeReceiptData();
+			initialData = new InitialStockData();
+			intermediateData = new IntermediateData();
+			userData = new UserData();
+			organizationData = new OrganizationData();
+			repertoryData = new RepertoryData();
+			enterRepertoryReceiptData = new EnterRepertoryReceiptData();
+			leaveRepertoryReceiptData = new LeaveRepertoryReceiptData();
+			goodsData = new GoodsData();
+			perWageData = new PerWageData();
+			basicSalaryData = new BasicSalaryData();
+			cityDistanceData = new CityDistanceData();
+			costData = new CostData();
+			logDiaryData = new LogDiaryData();
 
-			LocateRegistry.createRegistry(8888);
+			reg = LocateRegistry.createRegistry(8888);
 
 			Naming.rebind("rmi://" + address + ":8888/ExpressDataService", expressData);
 			Naming.rebind("rmi://" + address + ":8888/BusinessDataService", businessData);
@@ -105,12 +130,41 @@ public class TestService {
 			Naming.rebind("rmi://" + address + ":8888/RepertoryDataService", repertoryData);
 			Naming.rebind("rmi://" + address + ":8888/LogDiaryDataService", logDiaryData);
 
-			System.out.println("Service start");
-
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 
+	}
+
+	public boolean stopService() {
+		expressData = null;
+		businessData = null;
+		accountData = null;
+		collectionData = null;
+		paymentData = null;
+		costincomeData = null;
+		initialData = null;
+		intermediateData = null;
+		userData = null;
+		organizationData = null;
+		repertoryData = null;
+		enterRepertoryReceiptData = null;
+		leaveRepertoryReceiptData = null;
+		goodsData = null;
+		perWageData = null;
+		basicSalaryData = null;
+		cityDistanceData = null;
+		costData = null;
+		logDiaryData = null;
+		reg = null;
+
+		return true;
+	}
+
+	public static void main(String[] args){
+		new ServiceMainFrame();
 	}
 }

@@ -28,6 +28,8 @@ import type.OrganizationType;
 import type.Sexuality;
 
 public class BusinessData extends UnicastRemoteObject implements BusinessDataService {
+	private static final long serialVersionUID = 1189857824410417884L;
+
 	public BusinessData() throws RemoteException {
 	}
 

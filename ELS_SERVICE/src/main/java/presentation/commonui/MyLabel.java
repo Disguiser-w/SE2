@@ -2,7 +2,6 @@ package presentation.commonui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -55,74 +54,48 @@ public class MyLabel extends JLabel {
 	public MyLabel() {
 		this("");
 	}
-
-	public void setEnable(boolean b) {
+	
+	public void setEnable(boolean b){
 	}
 
 	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		int width = getWidth();
 		int height = getHeight();
 
-		int radio = 10;
+		int radio = 20;
 
-		if(UserFrame.type == UserFrame.TYPE_0){
-			if (isMouseOn) {
-				if (hover != null)
-					g2d.drawImage(hover, 0, 0, width, height, this);
-				else {
-
-					g2d.setColor(new Color(0, 121, 255));
-					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.setColor(Color.WHITE);
-				}
-
-			}
-
+		if (isPressed) {
+			if (press != null)
+				g2d.drawImage(press, 0, 0, width, height, this);
 			else {
-				if (normal != null)
-					g2d.drawImage(normal, 0, 0, width, height, this);
-				else {
-					g2d.setColor(Color.WHITE);
-					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.setColor(new Color(0, 121, 255));
-					g2d.drawRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
-
-				}
+				g2d.setColor(new Color(0, 82, 130));
+				g2d.fillRoundRect(0, 0, width, height, radio, radio);
 			}
-		}else{
-			if (isMouseOn) {
-				if (hover != null)
-					g2d.drawImage(hover, 0, 0, width, height, this);
-				else {
-
-					g2d.setColor(Color.WHITE);
-					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.setColor(Color.BLACK);
-				}
-
-			}
-
+		} else if (isMouseOn) {
+			if (hover != null)
+				g2d.drawImage(hover, 0, 0, width, height, this);
 			else {
-				if (normal != null)
-					g2d.drawImage(normal, 0, 0, width, height, this);
-				else {
-					g2d.setColor(Color.BLACK);
-					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.setColor(Color.WHITE);
-					g2d.drawRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
-
-				}
+				g2d.setColor(new Color(0, 82, 130));
+				g2d.fillRoundRect(0, height / 2 - 8, width, height / 2 + 9, radio, radio);
+				g2d.setColor(new Color(0, 151, 255));
+				g2d.fillRoundRect(0, 0, width, height - 3, radio, radio);
 			}
+
 		}
 
-		FontMetrics fm = g2d.getFontMetrics();
-		int strH = fm.getAscent();
-		int strW = fm.stringWidth(text);
-		g2d.drawString(text, (width - strW) / 2, (height + strH) / 2 - 2);
+		else {
+			if (normal != null)
+				g2d.drawImage(normal, 0, 0, width, height, this);
+			else {
+				g2d.setColor(new Color(0, 82, 130));
+				g2d.fillRoundRect(0, height / 2 - 8, width, 9 + height / 2, radio, radio);
+				g2d.setColor(new Color(0, 111, 255));
+				g2d.fillRoundRect(0, 0, width, height - 3, radio, radio);
+			}
+		}
+		
 	}
 
 	public void setImages(Image image1, Image image2, Image image3) {
@@ -153,8 +126,7 @@ public class MyLabel extends JLabel {
 
 		});
 	}
-
-	public void reSet() {
+	public void reSet(){
 		isPressed = false;
 		isMouseOn = false;
 	}
