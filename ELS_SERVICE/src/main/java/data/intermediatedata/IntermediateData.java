@@ -3,7 +3,6 @@ package data.intermediatedata;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -14,15 +13,12 @@ import java.util.Date;
 
 import po.EnIntermediateReceiptPO;
 import po.FarePO;
-import po.UserPO;
-import po.OrganizationPO;
 import po.PlanePO;
-import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
+import po.UserPO;
 import type.OperationState;
-import type.OrganizationType;
 import type.ReceiptState;
 
 import common.FileGetter;
@@ -344,12 +340,16 @@ public class IntermediateData extends UnicastRemoteObject implements
 		return OperationState.SUCCEED_OPERATION;
 	}
 
-	public FarePO getFareInfo(String organization_ID, String fare_ID,
-			String date) throws RemoteException {
+	public ArrayList<FarePO> getFareInfo(String organization_ID, String date)
+			throws RemoteException {
 		// TODO 自动生成的方法存根
 		String path = "intermediateCentreInfo/fare/" + organization_ID + "-"
 				+ date + "-fare.dat";
 		File file = FileGetter.getFile(path);
+
+		if (!file.exists()) {
+			FileGetter.createFile(file);
+		}
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
@@ -357,10 +357,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			@SuppressWarnings("unchecked")
 			ArrayList<FarePO> fareList = (ArrayList<FarePO>) in.readObject();
 			in.close();
-			for (FarePO fare : fareList) {
-				if (fare.getID().equals(fare_ID))
-					return fare;
-			}
+			return fareList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("读取运费成本信息失败！");
@@ -376,6 +373,8 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ date + "-fare.dat";
 		File file = FileGetter.getFile(path);
 
+		ArrayList<FarePO> fareList = getFareInfo(organization_ID, date);
+		fareList.add(fare);
 		try {
 			if (!file.exists()) {
 				FileGetter.createFile(file);
@@ -383,7 +382,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
-			out.writeObject(fare);
+			out.writeObject(fareList);
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();

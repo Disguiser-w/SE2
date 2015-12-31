@@ -45,6 +45,12 @@ public class FareBL implements FareBLService {
 			fare_sum += entrainingReceipt.fare;
 		for (EntruckingReceiptVO entruckingReceipt : entruckingReceiptList)
 			fare_sum += entruckingReceipt.fare;
+		try {
+			saveFare();
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 		return OperationState.SUCCEED_OPERATION;
 	}
 
@@ -54,7 +60,7 @@ public class FareBL implements FareBLService {
 				IntermediateMainController.voToPO(new FareVO(
 						enplaningReceiptList.get(0).intermediateCentre,
 						enplaningReceiptList, entrainingReceiptList,
-						entruckingReceiptList, fare_sum, null, null)));
+						entruckingReceiptList, fare_sum)));
 		return OperationState.SUCCEED_OPERATION;
 	}
 }

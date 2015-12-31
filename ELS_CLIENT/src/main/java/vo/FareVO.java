@@ -10,20 +10,15 @@ public class FareVO {
 	public ArrayList<EntruckingReceiptVO> entruckingReceiptVOList;
 
 	public double fare_sum;
-	public String ID;
-	public String date;
 
 	public FareVO(OrganizationVO intermediateCentre,
 			ArrayList<EnplaningReceiptVO> enplaningReceiptVOList,
 			ArrayList<EntrainingReceiptVO> entrainingVOList,
-			ArrayList<EntruckingReceiptVO> entruckingVOList, double fare_sum,
-			String ID, String date) {
+			ArrayList<EntruckingReceiptVO> entruckingVOList, double fare_sum) {
 		this.enplaningReceiptVOList = enplaningReceiptVOList;
 		this.entrainingReceiptVOList = entrainingVOList;
 		this.entruckingReceiptVOList = entruckingVOList;
 		this.fare_sum = fare_sum;
-		this.ID = ID;
-		this.date = date;
 		this.intermediateCentre = intermediateCentre;
 	}
 }
