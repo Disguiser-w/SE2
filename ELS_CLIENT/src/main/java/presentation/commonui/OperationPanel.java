@@ -17,7 +17,6 @@ public class OperationPanel extends JPanel implements Observer {
 
 	protected OperationPanel() {
 		background = ImageGetter.getImage("background4.png").getImage();
-
 	}
 
 	public void add(MyTable table) {
@@ -38,17 +37,16 @@ public class OperationPanel extends JPanel implements Observer {
 		super.add(area);
 		area.addObservable(this);
 	}
-	
-	
 
 	public void remove(MyTextField field) {
 		remove(field.getLabel());
 	}
 
 	public void paintComponent(Graphics g) {
-
+		
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// 圆角方法
 		if (UserFrame.type == UserFrame.TYPE_0) {
@@ -56,12 +54,13 @@ public class OperationPanel extends JPanel implements Observer {
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-		// super.paintComponent(g);
+		
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
+		System.out.println(12340);
 	}
 
 }

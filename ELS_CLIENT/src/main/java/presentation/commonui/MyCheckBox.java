@@ -8,11 +8,11 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 import common.ImageGetter;
 
-public class MyCheckBox extends JPanel {
+public class MyCheckBox extends JLabel {
 	private boolean isSelected;
 	private boolean isPressed;
 	private boolean isMouseOn;
@@ -30,34 +30,19 @@ public class MyCheckBox extends JPanel {
 
 		unselect_day = ImageGetter.getImage("unselected_day.png").getImage();
 		select_day = ImageGetter.getImage("selected_day.png").getImage();
-		unselect_night = ImageGetter.getImage("unselected_black.png").getImage();
+		unselect_night = ImageGetter.getImage("unselected_black.png")
+				.getImage();
 		select_night = ImageGetter.getImage("selected_black.png").getImage();
 		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				isPressed = true;
-				repaint();
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				if (isMouseOn) {
-					if (isSelected)
-						isSelected = false;
-					else
-						isSelected = true;
-					isPressed = false;
-					repaint();
+			public void mouseClicked(MouseEvent e) {
+				if (!isSelected)
+					isSelected = true;
+				else{
+					isSelected = false;
 				}
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				isMouseOn = true;
-			}
-
-			public void mouseExited(MouseEvent e) {
-				isMouseOn = false;
-				isPressed = false;
 				repaint();
 			}
+
 		});
 
 	}
@@ -72,8 +57,13 @@ public class MyCheckBox extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+
+//		g.setColor(new Color(0, 0, 0, 0));
+//		g.fillRect(0, 0, getWidth(), getHeight());
+
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		int width = getWidth();
 		int height = getHeight();
 		g2d.setColor(new Color(0, 134, 255));
@@ -83,7 +73,8 @@ public class MyCheckBox extends JPanel {
 
 		g2d.setColor(new Color(0, 134, 255));
 		if (isSelected)
-			g2d.fillOval(width / 4 + 3, height / 4 + 3, width / 2 - 5, height / 2 - 5);
+			g2d.fillOval(width / 4 + 3, height / 4 + 3, width / 2 - 5,
+					height / 2 - 5);
 
 		// if (isSelected) {
 		// if (UserFrame.type == UserFrame.TYPE_0) {

@@ -117,14 +117,22 @@ public class UserFrame extends JFrame {
 		int width = getWidth();
 		int height = getHeight();
 
-		imageLabel.setBounds((int) (width * 0.0 / 25), (int) (height * 0.0 / 20),
-				(int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20));
-		messagePanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 0.0 / 20),
-				(int) (width * 19.088541666666668 / 25), (int) (height * 2.5625 / 20));
-		functionPanel.setBounds((int) (width * 0.0 / 25), (int) (height * 2.5625 / 20),
-				(int) (width * 5.911458333333333 / 25), (int) (height * 17.4375 / 20));
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
+		imageLabel.setBounds((int) (width * 0.0 / 25),
+				(int) (height * 0.0 / 20),
+				(int) (width * 5.911458333333333 / 25),
+				(int) (height * 2.5625 / 20));
+		messagePanel.setBounds((int) (width * 5.911458333333333 / 25),
+				(int) (height * 0.0 / 20),
+				(int) (width * 19.088541666666668 / 25),
+				(int) (height * 2.5625 / 20));
+		functionPanel.setBounds((int) (width * 0.0 / 25),
+				(int) (height * 2.5625 / 20),
+				(int) (width * 5.911458333333333 / 25),
+				(int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
+				(int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25),
+				(int) (height * 17.4375 / 20));
 
 		// 227 82
 		// 733 82
@@ -143,8 +151,10 @@ public class UserFrame extends JFrame {
 		int height = getHeight();
 		int width = getWidth();
 
-		newPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
+		newPanel.setBounds((int) (width * 5.911458333333333 / 25),
+				(int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25),
+				(int) (height * 17.4375 / 20));
 		operationPanels.add(newPanel);
 
 		FuncLabel funcLabel = new FuncLabel(str, image);
@@ -159,8 +169,10 @@ public class UserFrame extends JFrame {
 			repaint();
 		}
 
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
+				(int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25),
+				(int) (height * 17.4375 / 20));
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				FuncLabel label = (FuncLabel) (e.getSource());
@@ -173,7 +185,8 @@ public class UserFrame extends JFrame {
 				functionPanel.setNowLabel(num);
 
 				add(operationPanel);
-				repaint();
+				operationPanel.repaint();
+				setVisible(true);
 			}
 		});
 	}
@@ -183,18 +196,21 @@ public class UserFrame extends JFrame {
 		operationPanel = newPanel;
 		int width = getWidth();
 		int height = getHeight();
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
+				(int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25),
+				(int) (height * 17.4375 / 20));
 		add(operationPanel);
-		repaint();
-
+		setVisible(true);
+		operationPanel.repaint();
+		setVisible(true);
 	}
 
 	public void toMainPanel() {
 		remove(operationPanel);
 		operationPanel = operationPanels.get(num);
 		add(operationPanel);
-		repaint();
+		setVisible(true);
 	}
 
 	public void review() {
