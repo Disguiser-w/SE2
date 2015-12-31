@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.repertorybl.controller.RepertoryController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;

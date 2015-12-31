@@ -8,7 +8,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.BasicSalaryController;
 import businesslogic.managebl.controller.CityDistanceController;
 import businesslogic.managebl.controller.CostController;

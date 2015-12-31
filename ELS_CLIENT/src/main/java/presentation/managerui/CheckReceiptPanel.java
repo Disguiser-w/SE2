@@ -204,7 +204,7 @@ public class CheckReceiptPanel extends OperationPanel {
 		int size = selectedIndexs.size();
 		
 		if(size == 0){
-			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些机构后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些单据后再进行审批哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		else{
