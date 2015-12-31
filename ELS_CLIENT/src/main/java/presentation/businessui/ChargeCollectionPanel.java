@@ -44,7 +44,8 @@ public class ChargeCollectionPanel extends OperationPanel {
 		// totalMessageLabel.setForeground(Color.WHITE);
 		// totalMessageLabel.setOpaque(true);
 		//
-		collectionLabel = new MyLabel();
+		collectionLabel = new MyLabel("收款汇总");
+		collectionLabel.setToolTipText("建议每日一次");
 
 		add(totalMessageLabel);
 		add(collectionLabel);
