@@ -6,11 +6,16 @@
 
 package presentation.commonui;
 
+import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JComboBox;
 
 /**
  * <p>
@@ -43,7 +48,7 @@ public class DateChooserPanel extends javax.swing.JDialog {
 	private javax.swing.JPanel basePanel;
 	private javax.swing.JPanel containerPanel;
 	private javax.swing.JPanel controlPanel;
-	private MyComboBox jComboBox1;
+	private JComboBox jComboBox1;
 	private javax.swing.JSpinner jSpinner1;
 	private MonthlyCalendar monthCalendar;
 	private javax.swing.JPanel viewPanel;
@@ -103,7 +108,6 @@ public class DateChooserPanel extends javax.swing.JDialog {
 		init();
 	}
 
-	
 	private void init() {
 		initComponents();
 		// init date
@@ -114,8 +118,6 @@ public class DateChooserPanel extends javax.swing.JDialog {
 		jSpinner1.setValue(calendar.getTime());
 		monthCalendar.setYearMonth(y, m + 1);
 	}
-	
-	
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -126,7 +128,7 @@ public class DateChooserPanel extends javax.swing.JDialog {
 		basePanel = new javax.swing.JPanel();
 		containerPanel = new javax.swing.JPanel();
 		controlPanel = new javax.swing.JPanel();
-		jComboBox1 = new MyComboBox();
+		jComboBox1 = new JComboBox();
 		jSpinner1 = new javax.swing.JSpinner();
 		viewPanel = new javax.swing.JPanel();
 		monthCalendar = new MonthlyCalendar() {
@@ -134,6 +136,12 @@ public class DateChooserPanel extends javax.swing.JDialog {
 				doSelection();
 			}
 		};
+
+		jComboBox1.setMaximumRowCount(100);
+		jComboBox1.setFont(new Font("Microsoft YaHei", Font.PLAIN, 12));
+
+		jComboBox1.setBackground(Color.WHITE);
+		jComboBox1.setForeground(Color.BLACK);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("请选择日期");
