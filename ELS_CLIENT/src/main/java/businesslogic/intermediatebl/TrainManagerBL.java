@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import po.TrainPO;
 import type.OperationState;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.TrainVO;
@@ -22,14 +22,14 @@ public class TrainManagerBL implements TrainManagerBLService {
 	private ArrayList<TrainPO> trainList_temp = new ArrayList<TrainPO>();
 
 	private OrganizationVO intermediateCenter;
-	private IntermediateVO intermediate;
+	private UserVO intermediate;
 
 	private LogDiaryBL logDiary;
 
 	public TrainManagerBL(ArrayList<TrainVO> trainList,
 			OrganizationVO intermediateCentre,
 			IntermediateDataService intermediateData,
-			IntermediateVO intermediate) {
+			UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.trainList = trainList;
 		this.intermediateCenter = intermediateCentre;

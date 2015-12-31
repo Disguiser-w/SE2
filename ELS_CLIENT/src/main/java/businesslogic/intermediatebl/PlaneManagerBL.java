@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import po.PlanePO;
 import type.OperationState;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
@@ -22,14 +22,14 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 	private ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
 
 	private OrganizationVO intermediateCenter;
-	private IntermediateVO intermediate;
+	private UserVO intermediate;
 
 	private LogDiaryBL logDiary;
 
 	public PlaneManagerBL(ArrayList<PlaneVO> planeList,
 			OrganizationVO intermediateCentre,
 			IntermediateDataService intermediateData,
-			IntermediateVO intermediate) {
+			UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.planeList = planeList;
 		this.intermediateCenter = intermediateCentre;

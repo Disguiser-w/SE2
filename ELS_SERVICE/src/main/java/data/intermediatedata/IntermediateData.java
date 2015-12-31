@@ -14,7 +14,7 @@ import java.util.Date;
 
 import po.EnIntermediateReceiptPO;
 import po.FarePO;
-import po.IntermediatePO;
+import po.UserPO;
 import po.OrganizationPO;
 import po.PlanePO;
 import po.RepertoryPO;
@@ -38,20 +38,19 @@ public class IntermediateData extends UnicastRemoteObject implements
 		// TODO 自动生成的构造函数存根
 	}
 
-	public IntermediatePO getIntermediateInfo(String intermediate_ID)
+	public UserPO getIntermediateInfo(String intermediate_ID)
 			throws RemoteException {
 		// TODO 自动生成的方法存根
-		String path = "intermediateCentreInfo/intermediate/" + intermediate_ID
-				+ "-intermediate.dat";
+		String path = "userInfo/user.ser";
 		File file = FileGetter.getFile(path);
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
 			@SuppressWarnings("unchecked")
-			ArrayList<IntermediatePO> intermediatePOList = (ArrayList<IntermediatePO>) in
+			ArrayList<UserPO> intermediatePOList = (ArrayList<UserPO>) in
 					.readObject();
 			in.close();
-			for (IntermediatePO intermediate : intermediatePOList) {
+			for (UserPO intermediate : intermediatePOList) {
 				if (intermediate.getUserID().equals(intermediate_ID)) {
 					return intermediate;
 				}
@@ -528,14 +527,14 @@ public class IntermediateData extends UnicastRemoteObject implements
 	// new FileOutputStream(file));
 	// OrganizationPO organization = new OrganizationPO(
 	// OrganizationType.intermediateCenter, "141250", "软攻打作业");
-	// IntermediatePO intermediate = new IntermediatePO(organization,
+	// UserPO intermediate = new UserPO(organization,
 	// "痛苦的业务员", "ZZZX-00185");
 	//
 	// RepertoryPO repertory = new RepertoryPO("坑爹", "Lizi");
 	//
 	// organization.setRepertory(repertory);
 	//
-	// ArrayList<IntermediatePO> list = new ArrayList<IntermediatePO>();
+	// ArrayList<UserPO> list = new ArrayList<UserPO>();
 	// list.add(intermediate);
 	//
 	// out.writeObject(list);

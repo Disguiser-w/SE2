@@ -14,6 +14,7 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
+import type.OrganizationType;
 import vo.OrganizationVO;
 
 public class ModifyStaffOrganizationPanel extends OperationPanel {
@@ -66,12 +67,35 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 		this.organizationBL = new OrganizationBL();
 
 		ArrayList<OrganizationVO> organizationArr = organizationBL.showAllOrganizations();
-		organizationNameList = new String[50];
-		organizationIDList = new String[50];
-
+		
+		int intermediateCenterCount = 0;
 		for (int i = 0; i < organizationArr.size(); i++) {
-			organizationNameList[i] = (organizationArr.get(i).name);
-			organizationIDList[i] = (organizationArr.get(i).organizationID);
+			if(organizationArr.get(i).category.equals(OrganizationType.intermediateCenter)){
+				intermediateCenterCount++;
+			}
+		}
+		
+		if( (userID.startsWith("ZZZX")) || (userID.startsWith("CK"))){
+			organizationNameList = new String[intermediateCenterCount];
+			organizationIDList = new String[intermediateCenterCount];
+			
+			for (int i = 0; i < organizationArr.size(); i++) {
+				if(organizationArr.get(i).category.equals(OrganizationType.intermediateCenter)){
+					organizationNameList[i] = (organizationArr.get(i).name);
+					organizationIDList[i] = (organizationArr.get(i).organizationID);
+				}
+			}
+		}
+		else{
+			organizationNameList = new String[organizationArr.size()-intermediateCenterCount];
+			organizationIDList = new String[organizationArr.size()-intermediateCenterCount];
+			
+			for (int i = 0; i < organizationArr.size(); i++) {
+				if(organizationArr.get(i).category.equals(OrganizationType.businessHall)){
+					organizationNameList[i] = (organizationArr.get(i).name);
+					organizationIDList[i] = (organizationArr.get(i).organizationID);
+				}
+			}
 		}
 
 		function = new MyTextLabel("用户管理——修改用户机构");

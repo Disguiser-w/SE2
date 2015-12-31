@@ -2,6 +2,8 @@ package presentation.intermediateui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -23,6 +25,7 @@ public class TransferingPanel extends OperationPanel {
 
 	private MyLabel addButton;
 	private MyLabel delButton;
+	private MyLabel saveButton;
 
 	private MyTextField inputField;
 	private MyLabel confirmButton;
@@ -39,7 +42,7 @@ public class TransferingPanel extends OperationPanel {
 
 		addButton = new MyLabel("增");
 		delButton = new MyLabel("删");
-
+		saveButton = new MyLabel("存");
 		inputField = new MyTextField();
 		confirmButton = new MyLabel();
 
@@ -47,6 +50,7 @@ public class TransferingPanel extends OperationPanel {
 
 		add(addButton);
 		add(delButton);
+		add(saveButton);
 
 		add(inputField);
 		add(confirmButton);
@@ -64,6 +68,10 @@ public class TransferingPanel extends OperationPanel {
 				(int) (width * 1.4324693042291952 / 25),
 				(int) (height * 1.3978494623655915 / 20));
 		delButton.setBounds((int) (width * 6.207366984993179 / 25),
+				(int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25),
+				(int) (height * 1.3978494623655915 / 20));
+		saveButton.setBounds((int) (width * 11.084583901773533 / 25),
 				(int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25),
 				(int) (height * 1.3978494623655915 / 20));
@@ -139,6 +147,17 @@ public class TransferingPanel extends OperationPanel {
 					}
 					orderList = controller.getTransferingReceipt().orderList;
 					messageTable.setInfos(getInfos());
+				}
+			}
+		});
+		
+		saveButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					controller.getTransferingBL().saveTransferingReceipt();
+				} catch (RemoteException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
 				}
 			}
 		});

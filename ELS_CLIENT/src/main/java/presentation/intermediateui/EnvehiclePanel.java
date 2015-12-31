@@ -2,6 +2,7 @@ package presentation.intermediateui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class EnvehiclePanel extends OperationPanel {
 	private ArrayList<OrderVO> waitingOrderList;
 
 	private MyLabel envehicle;
+	private MyLabel saveButton;
 
 	private MyTextField inputField;
 	private MyLabel confirmButton;
@@ -37,6 +39,7 @@ public class EnvehiclePanel extends OperationPanel {
 		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
 
 		envehicle = new MyLabel("do");
+		saveButton = new MyLabel("cun");
 
 		inputField = new MyTextField();
 		confirmButton = new MyLabel();
@@ -46,6 +49,7 @@ public class EnvehiclePanel extends OperationPanel {
 		add(envehicle);
 		add(inputField);
 		add(confirmButton);
+		add(saveButton);
 
 		setLayout(null);
 		addListener();
@@ -56,6 +60,10 @@ public class EnvehiclePanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 
 		envehicle.setBounds((int) (width * 1.2278308321964528 / 25),
+				(int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.4324693042291952 / 25),
+				(int) (height * 1.3978494623655915 / 20));
+		saveButton.setBounds((int) (width * 6.207366984993179 / 25),
 				(int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25),
 				(int) (height * 1.3978494623655915 / 20));
@@ -101,6 +109,17 @@ public class EnvehiclePanel extends OperationPanel {
 				try {
 					controller.getEnvehicleBL().envehicle();
 				} catch (Exception e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		saveButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					controller.getTransferingBL().saveTransferingReceipt();
+				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
 				}

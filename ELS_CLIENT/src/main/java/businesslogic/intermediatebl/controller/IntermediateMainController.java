@@ -20,7 +20,7 @@ import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
 import po.FarePO;
-import po.IntermediatePO;
+import po.UserPO;
 import po.OrderPO;
 import po.OrganizationPO;
 import po.PlanePO;
@@ -40,7 +40,7 @@ import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
@@ -59,7 +59,7 @@ public class IntermediateMainController {
 	private OrganizationBL findOrganization;
 	private static IntermediateDataService intermediateData;
 
-	private static IntermediateVO intermediate;
+	private static UserVO intermediate;
 	private OrganizationVO intermediateCentre;
 	private TransferingReceiptVO transferingReceipt;
 
@@ -76,7 +76,7 @@ public class IntermediateMainController {
 			throws MalformedURLException, RemoteException, NotBoundException {
 		try {
 			intermediateData = DataFactory.getIntermediateData();
-			intermediate = poToVO((IntermediatePO) (intermediateData
+			intermediate = poToVO((UserPO) (intermediateData
 					.getIntermediateInfo(intermediate_ID)));
 
 			findOrganization = new OrganizationBL();
@@ -107,7 +107,7 @@ public class IntermediateMainController {
 		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "ZZZXDDD-" + GetDate.getdate() + "-"
-						+ transferingReceipt.interdiateCentre.organizationID,
+						+ intermediateCentre.organizationID,
 				GetDate.getdate(), ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData,
 				intermediate);
@@ -416,8 +416,8 @@ public class IntermediateMainController {
 		return intermediateCenter;
 	}
 
-	public static IntermediateVO poToVO(IntermediatePO intermediate) {
-		return new IntermediateVO(intermediate.getName(), intermediate.getID(),
+	public static UserVO poToVO(UserPO intermediate) {
+		return new UserVO(intermediate.getName(), intermediate.getID(),
 				intermediate.getPassword(), intermediate.getProfession(),
 				intermediate.getOrganization(), intermediate.getSalaryPlan(),
 				intermediate.getAuthority(), intermediate.getGrades());

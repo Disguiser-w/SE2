@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import po.TruckPO;
 import type.OperationState;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.TruckVO;
@@ -22,14 +22,14 @@ public class TruckManagerBL implements TruckManageBLService {
 	private ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
 
 	private OrganizationVO intermediateCenter;
-	private IntermediateVO intermediate;
+	private UserVO intermediate;
 
 	private LogDiaryBL logDiary;
 
 	public TruckManagerBL(ArrayList<TruckVO> truckList,
 			OrganizationVO intermediateCentre,
 			IntermediateDataService intermediateData,
-			IntermediateVO intermediate) {
+			UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.truckList = truckList;
 		this.intermediateCenter = intermediateCentre;
