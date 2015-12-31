@@ -144,11 +144,9 @@ public class MainFrame extends JFrame {
 			exit.setIcon(exit_normal);
 			min.setIcon(min_normal);
 
-			queryButton.setBounds(MAIN_WIDTH * 38 / 320,
-					MAIN_HEIGHT * 297 / 600, MAIN_WIDTH * 97 / 320,
+			queryButton.setBounds(MAIN_WIDTH * 38 / 320, MAIN_HEIGHT * 297 / 600, MAIN_WIDTH * 97 / 320,
 					MAIN_HEIGHT * 36 / 600);
-			signInButton.setBounds(MAIN_WIDTH * 186 / 320,
-					MAIN_HEIGHT * 297 / 600, MAIN_WIDTH * 97 / 320,
+			signInButton.setBounds(MAIN_WIDTH * 186 / 320, MAIN_HEIGHT * 297 / 600, MAIN_WIDTH * 97 / 320,
 					MAIN_HEIGHT * 36 / 600);
 			exit.setBounds(295, 8, 12, 12);
 			min.setBounds(269, 17, 14, 2);
@@ -346,7 +344,7 @@ public class MainFrame extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					isPressed = false;
 					queryButton.setIcon(query_hover);
-                    // queryPanel
+					// queryPanel
 				}
 			});
 
@@ -547,8 +545,7 @@ public class MainFrame extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					isPressed = false;
 					signInButton.setIcon(signIn_hover);
-					signIn((String) names.getSelectedItem(), new String(
-							passwordField.getPassword()));
+					signIn((String) names.getSelectedItem(), new String(passwordField.getPassword()));
 				}
 			});
 
@@ -634,6 +631,15 @@ public class MainFrame extends JFrame {
 
 			setInfos();
 			updateNames();
+
+			String lastID = nameController.getLastID();
+			for (int i = 0; i < names.getItemCount(); i++) {
+				if (names.getItemAt(i).equals(lastID)) {
+					names.setSelectedIndex(i);
+					ComboBoxEditor editor = names.getEditor();
+					names.configureEditor(editor, lastID);
+				}
+			}
 			repaint();
 		}
 
@@ -656,19 +662,17 @@ public class MainFrame extends JFrame {
 			names.setEditable(true);// 将JComboBox设成是可编辑的.
 			ComboBoxEditor editor = names.getEditor();
 			names.configureEditor(editor, "");
-			names.getEditor().getEditorComponent()
-					.addKeyListener(new KeyAdapter() {
-						public void keyPressed(KeyEvent e) {
-							if (names.getItemCount() == 0)
-								return;
-							if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-								nameController.deleteName((String) names
-										.getSelectedItem());
-								updateNames();
-								repaint();
-							}
-						}
-					});
+			names.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					if (names.getItemCount() == 0)
+						return;
+					if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+						nameController.deleteName((String) names.getSelectedItem());
+						updateNames();
+						repaint();
+					}
+				}
+			});
 
 		}
 
@@ -706,13 +710,10 @@ public class MainFrame extends JFrame {
 			LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("The user doesn't exist")) {
-				JOptionPane.showMessageDialog(null, "不存在该编号用户", "错误",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "不存在该编号用户", "错误", JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (logvo.logReply
-					.equals("The userID and the password don't match")) {
-				JOptionPane.showMessageDialog(null, "用户密码错误，请重新输入", "错误",
-						JOptionPane.ERROR_MESSAGE);
+			} else if (logvo.logReply.equals("The userID and the password don't match")) {
+				JOptionPane.showMessageDialog(null, "用户密码错误，请重新输入", "错误", JOptionPane.ERROR_MESSAGE);
 				return;
 			} else {
 
@@ -722,7 +723,7 @@ public class MainFrame extends JFrame {
 						frame.setVisible(false);
 						// 成功登录，生成界面
 						nameController.addNewName(userID);
-//						updateNames();
+						// updateNames();
 
 						String type = userID.split("-")[0];
 						// 不同人员的方式自己来补完
@@ -730,8 +731,7 @@ public class MainFrame extends JFrame {
 						switch (type) {
 						case "KD":
 							// 快递员登录
-							ExpressMainController expressMainController = new ExpressMainController(
-									userID);
+							ExpressMainController expressMainController = new ExpressMainController(userID);
 							break;
 						case "ZZZX":
 							// 中转中心业务员登录
@@ -745,14 +745,12 @@ public class MainFrame extends JFrame {
 							break;
 						case "YYT":
 							// 营业厅业务员登录
-							BusinessMainController businessMainController = new BusinessMainController(
-									userID);
+							BusinessMainController businessMainController = new BusinessMainController(userID);
 							break;
 						// 来这里加吧，上面的 uservo通过 logvo.uservo得到
 						case "CW":
 							try {
-								FinanceMainController financeMainController = new FinanceMainController(
-										userID);
+								FinanceMainController financeMainController = new FinanceMainController(userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -760,8 +758,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "admin":
 							try {
-								UserMainController userMainController = new UserMainController(
-										userID);
+								UserMainController userMainController = new UserMainController(userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -769,8 +766,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "JL":
 							try {
-								ManageMainController manageMainController = new ManageMainController(
-										userID);
+								ManageMainController manageMainController = new ManageMainController(userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -778,8 +774,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "CK":
 							try {
-								RepertoryMainController repertoryMainController = new RepertoryMainController(
-										userID);
+								RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -887,15 +882,13 @@ public class MainFrame extends JFrame {
 					JLabel gap = new JLabel("|");
 					int len2 = getWidthByNum("|");
 
-					gap.setBounds(200 - len2 / 2, 130 + 105 * (i - 1) + 25,
-							len2, 25);
+					gap.setBounds(200 - len2 / 2, 130 + 105 * (i - 1) + 25, len2, 25);
 					add(gap);
 				}
 			}
 
 			int l3 = getWidthByNum("返回");
-			cancel.setBounds(200 - l3 / 2 - 15, 255 + 105 * (len - 1) - 50,
-					l3 + 30, 30);
+			cancel.setBounds(200 - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
 		}
 
 		public int getWidthByNum(String str) {
@@ -904,8 +897,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void warnning(String msg) {
-		JOptionPane.showMessageDialog(null, msg, "订单信息错误",
-				JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

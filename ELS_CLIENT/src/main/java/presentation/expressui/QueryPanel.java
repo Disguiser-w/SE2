@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
 import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import presentation.commonui.DateChooser;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -42,6 +43,7 @@ public class QueryPanel extends OperationPanel {
 		clearLabel = new MyLabel();
 		timeField = new MySearchField();
 		timeSetLabel = new MyLabel();
+		DateChooser chooser = new DateChooser(timeField,timeSetLabel);
 
 
 		queryOrders = new ArrayList<String[]>();

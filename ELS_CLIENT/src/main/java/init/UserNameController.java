@@ -1,6 +1,5 @@
 package init;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +32,7 @@ public class UserNameController {
 	}
 
 	public boolean deleteName(String userName) {
-
+		System.out.println(userName);
 		try {
 			File file = FileGetter.getFile("users.dat");
 
@@ -50,6 +49,7 @@ public class UserNameController {
 			userNames.remove(i);
 			if (userNames.isEmpty()) {
 				file.delete();
+				return true;
 			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -86,9 +86,11 @@ public class UserNameController {
 			ArrayList<String> userNames = (ArrayList<String>) in.readObject();
 			in.close();
 
-			for (String i : userNames)
-				if (i.equals(userName))
-					return false;
+			for (int i = 0; i < userNames.size(); i++)
+				if (userNames.get(i).equals(userName)) {
+					userNames.remove(i);
+					break;
+				}
 
 			userNames.add(userName);
 
@@ -105,16 +107,21 @@ public class UserNameController {
 		return false;
 	}
 
-	public Image getImageByName(String name) {
-		String type = name.substring(1, 2);
-		switch (type) {
-		case "KDY":
-			return null;
-		case "YYT":
-			return null;
-		default:
-			return null;
+	public String getLastID() {
+		File file = FileGetter.getFile("users.dat");
+		if (!file.exists())
+			return "";
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<String> userNames = (ArrayList<String>) in.readObject();
+			in.close();
+			if (!userNames.isEmpty())
+				return userNames.get(userNames.size()-1);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return "";
 	}
 
 }

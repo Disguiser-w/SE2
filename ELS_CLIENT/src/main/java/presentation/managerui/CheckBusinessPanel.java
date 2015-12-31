@@ -11,6 +11,7 @@ import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.receiptbl.GetDate;
 import common.ImageGetter;
 import presentation.commonui.DateChooser;
+import presentation.commonui.DateChooserPanel;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
@@ -30,9 +31,9 @@ public class CheckBusinessPanel extends OperationPanel {
 	private int tableHeight;
 
 	private MyTextLabel dateRange;
-	private MyTextLabel startDateLabel;
+	private MyLabel startDateLabel;
 	private MyTextLabel startDateChooseLabel;
-	private MyTextLabel endDateLabel;
+	private MyLabel endDateLabel;
 	private MyTextLabel endDateChooseLabel;
 
 	private MyTextField startDateField;
@@ -54,20 +55,21 @@ public class CheckBusinessPanel extends OperationPanel {
 		businessStatementReceiptControl = businessStatementControl;
 
 		dateRange = new MyTextLabel("日期范围");
-		startDateLabel = new MyTextLabel();
+		startDateLabel = new MyLabel();
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-12-08");
 		startDateChooseLabel = new MyTextLabel("开始日期");
-		endDateLabel = new MyTextLabel();
+		endDateLabel = new MyLabel();
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-12-08");
 		endDateChooseLabel = new MyTextLabel("结束日期");
 
 		startDateLabel.setLayout(new BorderLayout());
-		startDateLabel.add(new DateChooser(startDateField), BorderLayout.CENTER);
+		new DateChooser(startDateField, startDateLabel);
 
 		endDateLabel.setLayout(new BorderLayout());
-		endDateLabel.add(new DateChooser(endDateField), BorderLayout.CENTER);
+		new DateChooser(endDateField, endDateLabel);
+		
 
 		confirmDateLabel = new MyLabel("确认");
 

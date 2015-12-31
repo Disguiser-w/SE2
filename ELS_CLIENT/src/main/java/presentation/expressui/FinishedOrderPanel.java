@@ -201,7 +201,8 @@ public class FinishedOrderPanel extends OperationPanel {
 					tip("提交成功!");
 
 					clear();
-					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),ExpressMainController.expressVO,"完成了一份订单"), GetDate.getTime());	
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), ExpressMainController.expressVO, "完成了一份订单"),
+							GetDate.getTime());
 
 				} else {
 					warnning("提交失败,请重新提交");
