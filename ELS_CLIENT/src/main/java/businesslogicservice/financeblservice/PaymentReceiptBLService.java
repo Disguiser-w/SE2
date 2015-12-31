@@ -6,6 +6,7 @@ package businesslogicservice.financeblservice;
 
 import java.util.ArrayList;
 
+import type.OperationState;
 import vo.PaymentReceiptVO;
 /**
  * 创建付款单

@@ -15,13 +15,13 @@ public class CostController implements CostBLService{
 		costBL = new CostBL();
 	}
 	
-	public int addCost(CostVO costvo){
+	/*public int addCost(CostVO costvo){
 		return costBL.addCost(costvo);
 	}
 	
 	public int deleteCost(CostVO costvo){
 		return costBL.deleteCost(costvo);
-	}
+	}*/
 	
 	public int modifyCost(CostVO costvo){
 		return costBL.modifyCost(costvo);

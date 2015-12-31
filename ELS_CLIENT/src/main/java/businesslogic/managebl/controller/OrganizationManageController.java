@@ -22,9 +22,9 @@ public class OrganizationManageController implements OrganizationBLService{
 		return organizationBL.deleteOrganization(organzationID);
 	}
 	
-	public int modifyOrganization(OrganizationVO organizationvo){
+	/*public int modifyOrganization(OrganizationVO organizationvo){
 		return organizationBL.modifyOrganization(organizationvo);
-	}
+	}*/
 	
 	public OrganizationVO findOrganization(String organzationID){
 		return organizationBL.findOrganization(organzationID);

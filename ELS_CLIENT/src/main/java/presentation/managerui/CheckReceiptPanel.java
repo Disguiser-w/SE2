@@ -16,7 +16,9 @@ import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
 import vo.EnIntermediateReceiptVO;
 import vo.EnVehicleReceiptVO;
+import vo.EnterRepertoryReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.LeaveRepertoryReceiptVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
@@ -48,6 +50,8 @@ public class CheckReceiptPanel extends OperationPanel {
 	ArrayList<EnVehicleReceiptVO> enVehicleList;
 	ArrayList<OrderAcceptReceiptVO> orderAcceptList;
 	ArrayList<DistributeReceiptVO> distributeList;
+	ArrayList<EnterRepertoryReceiptVO> enterRepertoryList;
+	ArrayList<LeaveRepertoryReceiptVO> leaveRepertoryList;
 	
 	private int tableWidth;
 	private int tableHeight;
@@ -84,6 +88,8 @@ public class CheckReceiptPanel extends OperationPanel {
 		enVehicleList = receiptBL.getAllSubmittedEnVehicleReceipt();
 		orderAcceptList = receiptBL.getAllSubmittedOrderAcceptReceipt();
 		distributeList = receiptBL.getAllSubmittedDistributeReceipt();
+		enterRepertoryList = receiptBL.getAllSubmittedEnterRepertoryReceipt();
+		leaveRepertoryList = receiptBL.getAllSubmittedLeaveRepertoryReceipt();
 
 		receiptCategoryChoose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
@@ -176,12 +182,12 @@ public class CheckReceiptPanel extends OperationPanel {
 				infos.add(new String[]{distributevo.ID, "营业厅派件单", "营业厅", "营业厅业务员", distributevo.time, stateName(distributevo.receiptState)});
 				break;		
 		case 9:
-			for(PaymentReceiptVO paymentvo : paymentList)
-				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
+			for(EnterRepertoryReceiptVO entervo : enterRepertoryList)
+				infos.add(new String[]{entervo.receiptID, "入库单", entervo.userID, "财务人员", entervo.createTime, stateName(entervo.state)});
 				break;
 		case 10:
-			for(PaymentReceiptVO paymentvo : paymentList)
-				infos.add(new String[]{paymentvo.ID, "合计收款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
+			for(LeaveRepertoryReceiptVO leavevo : leaveRepertoryList)
+				infos.add(new String[]{leavevo.receiptID, "出库单", leavevo.userID, "财务人员", leavevo.createTime, stateName(leavevo.state)});
 				break;		
 		default:
 				break;

@@ -15,13 +15,13 @@ public class BasicSalaryController implements BasicSalaryBLService{
 		basicSalaryBL = new BasicSalaryBL();
 	}
 	
-	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
+	/*public int addBasicSalary(BasicSalaryVO basicSalaryvo){
 		return basicSalaryBL.addBasicSalary(basicSalaryvo);
 	}
 	
 	public int deleteBasicSalary(BasicSalaryVO basicSalaryvo){
 		return basicSalaryBL.deleteBasicSalary(basicSalaryvo);
-	}
+	}*/
 	
 	public int modifyBasicSalary(BasicSalaryVO basicSalaryvo){
 		return basicSalaryBL.modifyBasicSalary(basicSalaryvo);

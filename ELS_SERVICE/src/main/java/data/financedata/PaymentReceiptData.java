@@ -71,7 +71,13 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 	public int creatPaymentReceipt(PaymentReceiptPO po) throws RemoteException {
 		ArrayList<PaymentReceiptPO> payments = getPaymentReceiptPOs();
 		po.setState(ReceiptState.SUBMIT);
-		if(findByID(po.getID())!=null){
+		boolean isExsit = false;
+		for(PaymentReceiptPO p : payments){
+			if(p.getDate().contains(po.getDate().substring(0,7))){
+				isExsit = true;
+			}
+		}
+		if(isExsit == true){
 			System.out.println("付款单已存在");
 			return -1;
 		}
@@ -80,24 +86,7 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		savePaymentReceiptPOs(payments);
 		return 0;
 		}
-//		file=new JXCFile("info/paymentInfo/payment.ser");
-//		po.setState(ReceiptState.SUBMIT);
-//		ArrayList<PaymentReceiptPO> ppos = getAllPaymentReceipt();
-//		boolean isExsit = false;
-//		if(ppos!=null){
-//		for(PaymentReceiptPO p : ppos){
-//			if(po.getDate().substring(0,7).equals(p.getDate().substring(0,7))){
-//				isExsit = true;
-//			}
-//		}
-//		}
-//		if(isExsit == true){
-//			return -1;
-//		}
-//		else{
-//		file.write(po);
-//		return 0;
-//		}
+
 	}
 
 	public ArrayList<PaymentReceiptPO> getAllPaymentReceipt()
@@ -142,20 +131,6 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		  return isExsit;
 			}
 
-//	public double getSalary()  throws RemoteException{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	public double getFare()  throws RemoteException{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	public double getRent()  throws RemoteException{
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 
 	/**
 	 * 按时间条件获取付款单（查看经营情况表需要）

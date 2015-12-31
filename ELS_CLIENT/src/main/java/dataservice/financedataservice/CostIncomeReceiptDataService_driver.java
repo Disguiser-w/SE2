@@ -12,12 +12,7 @@ public class CostIncomeReceiptDataService_driver {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		try {
-			cds.getAllCostIncomeList();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 //		cds.findByID(null);
 //		cds.getCollection();
 //		cds.getPayment();

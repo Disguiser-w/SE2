@@ -181,6 +181,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	}
 
 	public void printui() {
+<<<<<<< HEAD
 		String beginTime = startDate_Input.getText();
 		String endTime = endDate_Input.getText();
 		if (beginTime != "" && endTime != "") {
@@ -200,6 +201,18 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 				BSRExcel[temp][2] = v1.totalMoney + "";
 				BSRExcel[temp][3] = v1.userID;
 				temp++;
+=======
+		String beginTime=startDate_Input.getText();
+		String endTime=endDate_Input.getText();
+		if(beginTime.equals("")&&endTime.equals("")){
+			collectionReceiptVOs = controller.showBSList("2011-01-01", GetDate.getdate()).cvos;
+			paymentReceiptVOs = controller.showBSList("2010-01-01", GetDate.getdate()).pvos;
+		}
+		else{
+		    BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
+		    collectionReceiptVOs=vo.cvos;
+		    paymentReceiptVOs=vo.pvos;
+>>>>>>> 1910c07c1fe49ec21685b75b920135596554a075
 			}
 		}
 		if (paymentReceiptVOs != null) {

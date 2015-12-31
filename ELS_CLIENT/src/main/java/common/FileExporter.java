@@ -3,6 +3,7 @@ package common;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import jxl.SheetSettings;
 import jxl.Workbook;
@@ -21,6 +22,10 @@ public class FileExporter {
 		chooser.setFileSelectionMode(JFileChooser.SAVE_DIALOG | JFileChooser.DIRECTORIES_ONLY);
 		chooser.showDialog(null, null);
 		File fi = chooser.getSelectedFile();
+		if(fi == null){
+			return;
+		}
+		else{
 		String f = fi.getAbsolutePath() + "/" + name;
 		File file = new File(f);
 		if (!file.exists()) {
@@ -56,18 +61,22 @@ public class FileExporter {
 
 		book.write();
 		book.close();
+		
+//		JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
+//				JOptionPane.CLOSED_OPTION);
+		}
 
 	}
 
-//	 public static void main(String[] args) {
-//	 String name = "test.xls";
-//	 String[] head = { "第一列", "第二列", "第三列" };
-//	 String[][] content = { { "1x1", "1x2", "1x3" }, { "2x1", "2x2", "3x2" }
-//	 };
-//	 try {
-//	 FileExporter.exportExcel(name, head, content);
-//	 } catch (Exception e) {
-//	 e.printStackTrace();
-//	 }
-//	 }
+	 public static void main(String[] args) {
+	 String name = "test.xls";
+	 String[] head = { "第一列", "第二列", "第三列" };
+	 String[][] content = { { "1x1", "1x2", "1x3" }, { "2x1", "2x2", "3x2" }
+	 };
+	 try {
+	 FileExporter.exportExcel(name, head, content);
+	 } catch (Exception e) {
+	 e.printStackTrace();
+	 }
+	 }
 }

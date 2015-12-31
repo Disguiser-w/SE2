@@ -31,7 +31,7 @@ public class EnterRepertoryReceiptBL {
 	public int addEnterRepertoryReceipt(String repertoryID, String userID, String[] goodsIDList, String[] timeList){
 		String now = getTimeNow();
 		try{
-			String receiptPost = errdService.getEnterReceiptPost();
+			String receiptPost = errdService.getEnterRepertoryReceiptPost();
 			EnterRepertoryReceiptVO errvo = new EnterRepertoryReceiptVO("RKD-"+receiptPost, userID, now, ReceiptState.DRAFT, repertoryID, goodsIDList, timeList);
 			EnterRepertoryReceiptPO errpo = enterRepertoryReceiptVOToPO(errvo);
 			
@@ -47,18 +47,18 @@ public class EnterRepertoryReceiptBL {
 		}
 	}
 	
-	public int deleteEnterReceipt(String receiptID){
+	/*public int deleteEnterReceipt(String receiptID){
 		try{
-			return errdService.deleteEnterReceipt(receiptID);
+			return errdService.deleteEnterRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 
 	public int sendEnterReceipt(String receiptID){
 		try{
-			return errdService.sendEnterReceipt(receiptID);
+			return errdService.sendEnterRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -67,7 +67,7 @@ public class EnterRepertoryReceiptBL {
 	
 	public int approveEnterReceipt(String receiptID){
 		try{
-			return errdService.approveEnterReceipt(receiptID);
+			return errdService.approveEnterRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -76,7 +76,7 @@ public class EnterRepertoryReceiptBL {
 	
 	public int disapproveEnterReceipt(String receiptID){
 		try{
-			return errdService.disapproveEnterReceipt(receiptID);
+			return errdService.disapproveEnterRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -85,7 +85,7 @@ public class EnterRepertoryReceiptBL {
 	
 	public EnterRepertoryReceiptVO findEnterReceiptByReceiptID(String receiptID){
 		try{
-			return enterRepertoryReceiptPOToVO(errdService.findEnterReceiptByReceiptID(receiptID));
+			return enterRepertoryReceiptPOToVO(errdService.findEnterRepertoryReceiptByReceiptID(receiptID));
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return null;
@@ -96,7 +96,7 @@ public class EnterRepertoryReceiptBL {
 		ArrayList<EnterRepertoryReceiptVO> enterReceiptVOList = new ArrayList<EnterRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.findEnterReceiptByCreatorID(creatorID);
+			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.findEnterRepertoryReceiptByCreatorID(creatorID);
 			
 			for(int i=0, size = enterReceiptPOList.size(); i<size;i++){
 				EnterRepertoryReceiptPO enterRepertoryReceiptPO = enterReceiptPOList.get(i);
@@ -113,7 +113,7 @@ public class EnterRepertoryReceiptBL {
 		ArrayList<EnterRepertoryReceiptVO> enterReceiptVOList = new ArrayList<EnterRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.findEnterReceiptByCreatorAndKeyword(creator, keyword);
+			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.findEnterRepertoryReceiptByCreatorAndKeyword(creator, keyword);
 			
 			for(int i=0, size = enterReceiptPOList.size(); i<size;i++){
 				EnterRepertoryReceiptPO enterRepertoryReceiptPO = enterReceiptPOList.get(i);
@@ -130,7 +130,7 @@ public class EnterRepertoryReceiptBL {
 		ArrayList<EnterRepertoryReceiptVO> enterReceiptVOList = new ArrayList<EnterRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.getAllSubmitedEnterReceipts();
+			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.getAllSubmitedEnterRepertoryReceipts();
 			
 			for(int i=0, size = enterReceiptPOList.size(); i<size;i++){
 				EnterRepertoryReceiptPO enterRepertoryReceiptPO = enterReceiptPOList.get(i);
@@ -148,7 +148,7 @@ public class EnterRepertoryReceiptBL {
 		ArrayList<EnterRepertoryReceiptVO> enterReceiptVOList = new ArrayList<EnterRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.getAllEnterReceipts();
+			ArrayList<EnterRepertoryReceiptPO> enterReceiptPOList = errdService.getAllEnterRepertoryReceipts();
 			
 			for(int i=0, size = enterReceiptPOList.size(); i<size;i++){
 				EnterRepertoryReceiptPO enterRepertoryReceiptPO = enterReceiptPOList.get(i);
@@ -163,7 +163,7 @@ public class EnterRepertoryReceiptBL {
 	
 	public String getEnterReceiptPost(){
 		try{
-			return errdService.getEnterReceiptPost();
+			return errdService.getEnterRepertoryReceiptPost();
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return "wrong";

@@ -10,7 +10,7 @@ public class PaymentReceiptDataService_driver {
 		pds.getAllPaymentReceipt();
 //		pds.findByID(null);
 //		pds.getNum();
-		pds.modify(new PaymentReceiptPO());
+//		pds.modify(new PaymentReceiptPO());
 	}
 	
 	public static void main(String[] args) throws RemoteException{

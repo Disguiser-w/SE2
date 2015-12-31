@@ -25,7 +25,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 		}
 	}
 	
-	public int addBasicSalary(BasicSalaryVO basicSalaryvo){
+	/*public int addBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{
 			BasicSalaryPO basicSalarypo = basicSalaryVOToPO(basicSalaryvo);
 			return(bsdService.addBasicSalary(basicSalarypo));
@@ -42,7 +42,7 @@ public class BasicSalaryBL implements BasicSalaryBLService{
 			exception.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 	
 	public int modifyBasicSalary(BasicSalaryVO basicSalaryvo){
 		try{

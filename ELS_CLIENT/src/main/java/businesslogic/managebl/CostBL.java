@@ -25,7 +25,7 @@ public class CostBL implements CostBLService{
 		}
 	}
 	
-	public int addCost(CostVO costvo){
+	/*public int addCost(CostVO costvo){
 		try{
 			CostPO costpo = costVOToPO(costvo);
 			return(codService.addCost(costpo));
@@ -42,7 +42,7 @@ public class CostBL implements CostBLService{
 			exception.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 	
 	public int modifyCost(CostVO costvo){
 		try{
@@ -98,7 +98,7 @@ public class CostBL implements CostBLService{
 			for(CostPO cost:costList0)
 				System.out.println("ExpressType: "+cost.getExpressType()+", Cost: "+cost.getCost());
 
-			costData.addCost(new CostPO(ExpressType.STANDARD,24));
+			//costData.addCost(new CostPO(ExpressType.STANDARD,24));
 			
 			ArrayList<CostPO> costList1 = costData.showAllCosts();
 			for(CostPO cost:costList1)

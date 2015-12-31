@@ -51,7 +51,7 @@ public class OrganizationBL implements OrganizationBLService {
 		}
 	}
 
-	public int modifyOrganization(OrganizationVO organizationvo) {
+	/*public int modifyOrganization(OrganizationVO organizationvo) {
 		try {
 			OrganizationPO organizationpo = organizationVOToPO(organizationvo);
 			return (odService.modifyOrganization(organizationpo));
@@ -59,7 +59,7 @@ public class OrganizationBL implements OrganizationBLService {
 			exception.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 
 	public OrganizationVO findOrganization(String organizationID) {
 		try {

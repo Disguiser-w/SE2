@@ -325,9 +325,9 @@ public class ReceiptPanel_new extends  OperationPanel {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
-						JOptionPane.WARNING_MESSAGE);
-				System.out.println("导出excel失败了");
+//				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
+//						JOptionPane.WARNING_MESSAGE);
+//				System.out.println("导出excel失败了");
 			}
 		}
 		//导出付款单
@@ -360,14 +360,14 @@ public class ReceiptPanel_new extends  OperationPanel {
 			String[] head = new String[]{"付款单编号","付款日期","付款金额","付款人","账户","单据状态"};
 			try {
 				FileExporter.exportExcel("payment.xls", head, paymentExcel);
-				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
-						JOptionPane.CLOSED_OPTION);
+//				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
+//						JOptionPane.CLOSED_OPTION);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
-						JOptionPane.WARNING_MESSAGE);
-				System.out.println("导出excel失败了");
+//				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
+//						JOptionPane.WARNING_MESSAGE);
+//				System.out.println("导出excel失败了");
 			}
 			
 		}
