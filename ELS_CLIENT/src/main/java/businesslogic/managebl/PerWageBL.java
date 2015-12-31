@@ -25,7 +25,7 @@ public class PerWageBL implements PerWageBLService{
 		}
 	}
 	
-	public int addPerWage(PerWageVO perWagevo){
+	/*public int addPerWage(PerWageVO perWagevo){
 		try{
 			PerWagePO perWagepo = perWageVOToPO(perWagevo);
 			return(pwdService.addPerWage(perWagepo));
@@ -42,7 +42,7 @@ public class PerWageBL implements PerWageBLService{
 			exception.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 	
 	public int modifyPerWage(PerWageVO perWagevo){
 		try{
@@ -98,7 +98,7 @@ public class PerWageBL implements PerWageBLService{
 			for(PerWagePO perWage:perWageList0)
 				System.out.println("Profession: "+perWage.getProfession()+", PerWage: "+perWage.getPerWage());
 
-			perWageData.addPerWage(new PerWagePO(ProfessionType.courier,4));
+			//perWageData.addPerWage(new PerWagePO(ProfessionType.courier,4));
 			
 			ArrayList<PerWagePO> perWageList1 = perWageData.showAllPerWages();
 			for(PerWagePO perWage:perWageList1)

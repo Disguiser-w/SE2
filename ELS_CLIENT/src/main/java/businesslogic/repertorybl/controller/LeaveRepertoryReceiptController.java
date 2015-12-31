@@ -17,9 +17,9 @@ public class LeaveRepertoryReceiptController {
 		return leaveRepertoryReceiptBL.addLeaveRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 	}
 	
-	public int deleteLeaveReceipt(String receiptID){
+	/*public int deleteLeaveReceipt(String receiptID){
 		return leaveRepertoryReceiptBL.deleteLeaveReceipt(receiptID);
-	}
+	}*/
 	
 	public int sendLeaveReceipt(String receiptID){
 		return leaveRepertoryReceiptBL.sendLeaveReceipt(receiptID);

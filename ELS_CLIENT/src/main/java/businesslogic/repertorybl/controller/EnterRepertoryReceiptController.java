@@ -18,9 +18,9 @@ public class EnterRepertoryReceiptController implements EnterRepertoryReceiptBLS
 		return enterRepertoryReceiptBL.addEnterRepertoryReceipt(repertoryID, userID, goodsIDList, timeList);
 	}
 	
-	public int deleteEnterReceipt(String receiptID){
+	/*public int deleteEnterReceipt(String receiptID){
 		return enterRepertoryReceiptBL.deleteEnterReceipt(receiptID);
-	}
+	}*/
 	
 	public int sendEnterReceipt(String receiptID){
 		return enterRepertoryReceiptBL.sendEnterReceipt(receiptID);

@@ -15,13 +15,13 @@ public class PerWageController implements PerWageBLService{
 		perWageBL = new PerWageBL();
 	}
 	
-	public int addPerWage(PerWageVO perWagevo){
+	/*public int addPerWage(PerWageVO perWagevo){
 		return perWageBL.addPerWage(perWagevo);
 	}
 	
 	public int deletePerWage(PerWageVO perWagevo){
 		return perWageBL.deletePerWage(perWagevo);
-	}
+	}*/
 	
 	public int modifyPerWage(PerWageVO perWagevo){
 		return perWageBL.modifyPerWage(perWagevo);

@@ -31,7 +31,7 @@ public class LeaveRepertoryReceiptBL {
 	public int addLeaveRepertoryReceipt(String repertoryID, String userID, String[] goodsIDList, String[] timeList){
 		String now = getTimeNow();
 		try{
-			String receiptPost = lrrdService.getLeaveReceiptPost();
+			String receiptPost = lrrdService.getLeaveRepertoryReceiptPost();
 			LeaveRepertoryReceiptVO lrrvo = new LeaveRepertoryReceiptVO("CKD-"+receiptPost, userID, now, ReceiptState.DRAFT, repertoryID, goodsIDList, timeList);
 			LeaveRepertoryReceiptPO lrrpo = leaveRepertoryReceiptVOToPO(lrrvo);
 			
@@ -47,18 +47,18 @@ public class LeaveRepertoryReceiptBL {
 		}
 	}
 	
-	public int deleteLeaveReceipt(String receiptID){
+	/*public int deleteLeaveReceipt(String receiptID){
 		try{
-			return lrrdService.deleteLeaveReceipt(receiptID);
+			return lrrdService.deleteLeaveRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 
 	public int sendLeaveReceipt(String receiptID){
 		try{
-			return lrrdService.sendLeaveReceipt(receiptID);
+			return lrrdService.sendLeaveRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -67,7 +67,7 @@ public class LeaveRepertoryReceiptBL {
 	
 	public int approveLeaveReceipt(String receiptID){
 		try{
-			return lrrdService.approveLeaveReceipt(receiptID);
+			return lrrdService.approveLeaveRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -76,7 +76,7 @@ public class LeaveRepertoryReceiptBL {
 	
 	public int disapproveLeaveReceipt(String receiptID){
 		try{
-			return lrrdService.disapproveLeaveReceipt(receiptID);
+			return lrrdService.disapproveLeaveRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
@@ -85,7 +85,7 @@ public class LeaveRepertoryReceiptBL {
 	
 	public LeaveRepertoryReceiptVO findLeaveReceiptByReceiptID(String receiptID){
 		try{
-			return leaveRepertoryReceiptPOToVO(lrrdService.findLeaveReceiptByReceiptID(receiptID));
+			return leaveRepertoryReceiptPOToVO(lrrdService.findLeaveRepertoryReceiptByReceiptID(receiptID));
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return null;
@@ -96,7 +96,7 @@ public class LeaveRepertoryReceiptBL {
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveReceiptByCreatorID(creatorID);
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveRepertoryReceiptByCreatorID(creatorID);
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -113,7 +113,7 @@ public class LeaveRepertoryReceiptBL {
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveReceiptByCreatorAndKeyword(creator, keyword);
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.findLeaveRepertoryReceiptByCreatorAndKeyword(creator, keyword);
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -130,7 +130,7 @@ public class LeaveRepertoryReceiptBL {
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllSubmitedLeaveReceipts();
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllSubmitedLeaveRepertoryReceipts();
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -148,7 +148,7 @@ public class LeaveRepertoryReceiptBL {
 		ArrayList<LeaveRepertoryReceiptVO> leaveReceiptVOList = new ArrayList<LeaveRepertoryReceiptVO>();
 		
 		try{
-			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllLeaveReceipts();
+			ArrayList<LeaveRepertoryReceiptPO> leaveReceiptPOList = lrrdService.getAllLeaveRepertoryReceipts();
 			
 			for(int i=0, size = leaveReceiptPOList.size(); i<size;i++){
 				LeaveRepertoryReceiptPO leaveRepertoryReceiptPO = leaveReceiptPOList.get(i);
@@ -163,7 +163,7 @@ public class LeaveRepertoryReceiptBL {
 	
 	public String getLeaveReceiptPost(){
 		try{
-			return lrrdService.getLeaveReceiptPost();
+			return lrrdService.getLeaveRepertoryReceiptPost();
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return "wrong";
