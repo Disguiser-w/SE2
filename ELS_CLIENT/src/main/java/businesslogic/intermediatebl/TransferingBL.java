@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import type.OperationState;
 import type.OrderState;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
@@ -19,12 +19,12 @@ public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
 	private IntermediateDataService intermediateData;
 
-	private IntermediateVO intermediate;
+	private UserVO intermediate;
 	private LogDiaryBL logDiary;
 
 	public TransferingBL(TransferingReceiptVO transferingReceipt,
 			IntermediateDataService intermediateData,
-			IntermediateVO intermediate) {
+			UserVO intermediate) {
 		this.transferingReceipt = transferingReceipt;
 		this.intermediateData = intermediateData;
 		this.intermediate = intermediate;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import po.EnIntermediateReceiptPO;
 import po.FarePO;
-import po.IntermediatePO;
+import po.UserPO;
 import po.PlanePO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
@@ -14,7 +14,7 @@ import po.TruckPO;
 import type.OperationState;
 
 public interface IntermediateDataService extends Remote {
-	public IntermediatePO getIntermediateInfo(String intermediate_ID)
+	public UserPO getIntermediateInfo(String intermediate_ID)
 			throws RemoteException;
 
 	public ArrayList<PlanePO> getPlaneList(String organization_ID)

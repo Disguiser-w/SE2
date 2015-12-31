@@ -13,7 +13,7 @@ import type.OrderState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
-import vo.IntermediateVO;
+import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.PlaneVO;
@@ -28,7 +28,7 @@ import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBL
 import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class EnvehicleBL implements EnvehicleBLService {
-	private IntermediateVO intermediate;
+	private UserVO intermediate;
 	private IntermediateDataService intermediateData;
 	private AllocateWaitingOrderBL awobl;
 	private CityDistanceBL cdbl;
@@ -62,7 +62,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
 			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
 			IntermediateDataService intermediateData,
-			IntermediateVO intermediate) {
+			UserVO intermediate) {
 		// updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;

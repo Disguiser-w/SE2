@@ -1,10 +1,10 @@
 package presentation.intermediateui;
 
 import presentation.commonui.UserFrame;
-import vo.IntermediateVO;
+import vo.UserVO;
 
 public class IntermediateFrame extends UserFrame {
-	public IntermediateFrame(IntermediateVO intermediate) {
+	public IntermediateFrame(UserVO intermediate) {
 		super(intermediate.organization, intermediate.userID);
 	}
 }
