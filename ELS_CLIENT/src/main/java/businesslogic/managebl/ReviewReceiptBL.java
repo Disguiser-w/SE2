@@ -10,6 +10,8 @@ import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.CollectionReceiptBL;
 import businesslogic.financebl.PaymentReceiptBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.repertorybl.EnterRepertoryReceiptBL;
+import businesslogic.repertorybl.LeaveRepertoryReceiptBL;
 import businesslogicservice.manageblservice.ReviewReceiptBLService;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.intermediatedataservice.IntermediateDataService;
@@ -25,7 +27,9 @@ import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
 import vo.EnIntermediateReceiptVO;
 import vo.EnVehicleReceiptVO;
+import vo.EnterRepertoryReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.LeaveRepertoryReceiptVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
@@ -37,6 +41,8 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	private CollectionReceiptBL collectionBL;
 	private PaymentReceiptBL paymentBL;
+	private EnterRepertoryReceiptBL enterReceiptBL;
+	private LeaveRepertoryReceiptBL leaveReceiptBL;
 	
 	private ArrayList<GatheringReceiptVO> gatheringReceiptVOList;
 	private ArrayList<CollectionReceiptVO> collectionReceiptVOList;
@@ -61,6 +67,8 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			
 			collectionBL = new CollectionReceiptBL();
 			paymentBL = new PaymentReceiptBL();
+			enterReceiptBL = new EnterRepertoryReceiptBL();
+			leaveReceiptBL = new LeaveRepertoryReceiptBL();
 
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
 			ex.printStackTrace();
@@ -117,10 +125,21 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			return approveDistributeReceipt(drvo);
 		}
 
+		//入库单	EnterRepertoryReceipt
+		else if(receiptID.startsWith("RKD")){
+			EnterRepertoryReceiptVO errvo = (EnterRepertoryReceiptVO)ob;
+			return approveEnterRepertoryReceipt(errvo);
+		} 
+		
+		//出库单	LeaveRepertoryReceipt
+		else if(receiptID.startsWith("CKD")){
+			LeaveRepertoryReceiptVO lrrvo = (LeaveRepertoryReceiptVO)ob;
+			return approveLeaveRepertoryReceipt(lrrvo);
+		} 
+		
 		else{
 			return 0;
-		} 
-			
+		}
 	}
 
 	public AllReceiptShowVO refresh(){
@@ -341,6 +360,26 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			e.printStackTrace();
 			return 1;
 		}
+	}
+	
+	//获取全部提交的入库单
+	public ArrayList<EnterRepertoryReceiptVO> getAllSubmittedEnterRepertoryReceipt(){
+		return enterReceiptBL.getAllSubmitedEnterReceipts();
+	}
+	
+	//审批一个入库单
+	public int approveEnterRepertoryReceipt(EnterRepertoryReceiptVO errVO){
+		return enterReceiptBL.approveEnterReceipt(errVO.receiptID);
+	}
+	
+	//获取全部提交的出库单
+	public ArrayList<LeaveRepertoryReceiptVO> getAllSubmittedLeaveRepertoryReceipt(){
+		return leaveReceiptBL.getAllSubmitedLeaveReceipts();
+	}
+	
+	//审批一个出库单
+	public int approveLeaveRepertoryReceipt(LeaveRepertoryReceiptVO lrrVO){
+		return leaveReceiptBL.approveLeaveReceipt(lrrVO.receiptID);
 	}
 	
 }

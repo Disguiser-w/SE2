@@ -9,7 +9,9 @@ import vo.CollectionReceiptVO;
 import vo.DistributeReceiptVO;
 import vo.EnIntermediateReceiptVO;
 import vo.EnVehicleReceiptVO;
+import vo.EnterRepertoryReceiptVO;
 import vo.GatheringReceiptVO;
+import vo.LeaveRepertoryReceiptVO;
 import vo.OrderAcceptReceiptVO;
 import vo.PaymentReceiptVO;
 import vo.TransferingReceiptVO;
@@ -61,6 +63,14 @@ public class ReviewReceiptController implements ReviewReceiptBLService{
 	
 	public ArrayList<DistributeReceiptVO> getAllSubmittedDistributeReceipt(){
 		return reviewReceiptBL.getAllSubmittedDistributeReceipt();
+	}
+	
+	public ArrayList<EnterRepertoryReceiptVO> getAllSubmittedEnterRepertoryReceipt(){
+		return reviewReceiptBL.getAllSubmittedEnterRepertoryReceipt();
+	}
+	
+	public ArrayList<LeaveRepertoryReceiptVO> getAllSubmittedLeaveRepertoryReceipt(){
+		return reviewReceiptBL.getAllSubmittedLeaveRepertoryReceipt();
 	}
 	
 }
