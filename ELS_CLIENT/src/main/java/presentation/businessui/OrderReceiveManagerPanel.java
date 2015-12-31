@@ -60,9 +60,9 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 
 		inputLabel = new MyTextLabel("输入订单号");
 		orderNumField = new MyTextField();
-		inputConfirmButton = new MyLabel();
+		inputConfirmButton = new MyLabel("确认");
 
-		confirmButton = new MyLabel();
+		confirmButton = new MyLabel("提交");
 
 		orderNum = new ArrayList<String[]>();
 
@@ -104,10 +104,10 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				(int) (width * 2.6145975443383356 / 25), (int) (height * 1.3261648745519714 / 20));
 		orderNumField.setBounds((int) (width * 5.559345156889496 / 25), (int) (height * 1.7204301075268817 / 20),
 				(int) (width * 4.399727148703956 / 25), (int) (height * 1.3261648745519714 / 20));
-		inputConfirmButton.setBounds((int) (width * 11.493860845839018 / 25), (int) (height * 1.7204301075268817 / 20),
-				(int) (width * 1.9781718963165076 / 25), (int) (height * 1.3261648745519714 / 20));
-		confirmButton.setBounds((int) (width * 5.38881309686221 / 25), (int) (height * 15.161290322580646 / 20),
-				(int) (width * 2.796725784447476 / 25), (int) (height * 1.6487455197132617 / 20));
+		inputConfirmButton.setBounds((int) (width * 11.493860845839018 / 25), (int) (height * 1.9204301075268817 / 20),
+				(int) (width * 1.9781718963165076 / 25), (int) (height * 0.9261648745519714 / 20));
+		confirmButton.setBounds((int) (width * 4.38881309686221 / 25), (int) (height * 15.161290322580646 / 20),
+				(int) (width * 4.796725784447476 / 25), (int) (height * 2.8487455197132617 / 20));
 		messageTable.setLocationAndSize((int) (width * 14.972714870395635 / 25),
 				(int) (height * 1.7562724014336917 / 20), (int) (width * 8.526603001364256 / 25),
 				(int) (height * 16.666666666666668 / 20));

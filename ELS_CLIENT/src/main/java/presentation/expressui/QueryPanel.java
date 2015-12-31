@@ -40,11 +40,10 @@ public class QueryPanel extends OperationPanel {
 		this.controller = controller;
 		log = new LogDiaryBLController();
 
-		clearLabel = new MyLabel();
+		clearLabel = new MyLabel("清空");
 		timeField = new MySearchField();
-		timeSetLabel = new MyLabel();
-		DateChooser chooser = new DateChooser(timeField,timeSetLabel);
-
+		timeSetLabel = new MyLabel("时间");
+		DateChooser chooser = new DateChooser(timeField, timeSetLabel);
 
 		queryOrders = new ArrayList<String[]>();
 
@@ -54,7 +53,6 @@ public class QueryPanel extends OperationPanel {
 		add(clearLabel);
 		add(timeField);
 		add(timeSetLabel);
-	
 
 		timeSetLabel.setLayout(new BorderLayout());
 		// timeSetLabel.add(new DateChooser(timeField), BorderLayout.CENTER);
@@ -91,11 +89,11 @@ public class QueryPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 
 		clearLabel.setBounds((int) (width * 1.593724420190996 / 25), (int) (height * 0.967741935483871 / 20),
-				(int) (width * 1.5688949522510232 / 25), (int) (height * 0.967741935483871 / 20));
-		timeField.setBounds((int) (width * 15.82537517053206 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.9888949522510232 / 25), (int) (height * 0.967741935483871 / 20));
+		timeField.setBounds((int) (width * 14.82537517053206 / 25), (int) (height * 1.039426523297491 / 20),
 				(int) (width * 4.843110504774898 / 25), 30);
-		timeSetLabel.setBounds((int) (width * 22.504911323328785 / 25), (int) (height * 1.039426523297491 / 20),
-				(int) (width * 0.9890859481582538 / 25), (int) (height * 0.967741935483871 / 20));
+		timeSetLabel.setBounds((int) (width * 21.504911323328785 / 25), (int) (height * 1.039426523297491 / 20),
+				(int) (width * 1.9890859481582538 / 25), (int) (height * 0.967741935483871 / 20));
 
 		messageTable.setLocationAndSize((int) (width * 1.2278308321964528 / 25),
 				(int) (height * 2.8315412186379927 / 20), (int) (width * 22.68076398362892 / 25),

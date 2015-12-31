@@ -284,8 +284,8 @@ public class AddOrderPanel extends OperationPanel {
 		cost.setBounds(width * 16 / 25, height * 17 / 25, width / 8, height / 20);
 		time.setBounds(width * 16 / 25, height * 19 / 25, width / 8, height / 20);
 
-		calcuButton.setBounds(width * 19 / 25, height * 22 / 25, width / 12, height / 15);
-		confirmButton.setBounds(width * 22 / 25, height * 22 / 25, width / 12, height / 15);
+		calcuButton.setBounds(width * 19 / 25, height * 22 / 25, width / 12, height / 20);
+		confirmButton.setBounds(width * 22 / 25, height * 22 / 25, width / 12, height / 20);
 
 	}
 

@@ -47,7 +47,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		this.controller = controller;
 		log = new LogDiaryBLController();
 		orderIDField = new MySearchField();
-		clearLabel = new MyLabel();
+		clearLabel = new MyLabel("清空");
 		messageArea = new MyTextArea();
 
 		receiveTimeLabel = new MyTextLabel("收件时间");
@@ -57,7 +57,7 @@ public class FinishedOrderPanel extends OperationPanel {
 		receiverNameField = new MyTextField();
 		receiverPhoneNumField = new MyTextField();
 
-		confirmLabel = new MyLabel();
+		confirmLabel = new MyLabel("确认");
 
 		orderIDField.setToolTipText("例如:DD-20151204-2");
 
