@@ -51,7 +51,7 @@ public class InventoryVerificationPanel extends OperationPanel {
 				(int) (width * 2.848911651728553 / 25), (int) (height * 1.5178571428571428 / 20));
 		timeLabel.setBounds((int) (width * 11.503841229193341 / 25), (int) (height * 1.6071428571428572 / 20),
 				(int) (width * 6.353393085787452 / 25), (int) (height * 1.5178571428571428 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.2163892445582587 / 25), (int) (height * 4.285714285714286 / 20),
+		messageTable.setLocationAndSize((int) (width * 1.2163892445582587 / 25), (int) (height * 3.385714285714286 / 20),
 				(int) (width * 22.823303457106274 / 25), (int) (height * 14.125 / 20));
 	}
 	

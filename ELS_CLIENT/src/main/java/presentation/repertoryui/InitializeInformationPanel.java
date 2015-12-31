@@ -167,7 +167,7 @@ public class InitializeInformationPanel extends OperationPanel {
 				(int) (PANEL_WIDTH * 6.751536491677337 / 25), (int) (PANEL_HEIGHT * 1.5178571428571428 / 20));
 		
 		OKLabel.setBounds((int) (PANEL_WIDTH * 11.107554417413573 / 25), (int) (PANEL_HEIGHT * 13.725 / 20),
-				(int) (PANEL_WIDTH * 2.801536491677337 / 25), (int) (PANEL_HEIGHT * 1.5303571428571428 / 20));
+				(int) (PANEL_WIDTH * 2.601536491677337 / 25), (int) (PANEL_HEIGHT * 1.303571428571428 / 20));
 		
 		suggestLabel.setBounds((int) (PANEL_WIDTH * 5.607554417413573 / 25), (int) (PANEL_HEIGHT * 15.725 / 20),
 				(int) (PANEL_WIDTH * 15.272727272727273 / 25), (int) (PANEL_HEIGHT * 1.8303571428571428 / 20));

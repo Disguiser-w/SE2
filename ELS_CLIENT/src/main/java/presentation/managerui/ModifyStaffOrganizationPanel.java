@@ -145,7 +145,10 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				int chosenInt = organizationChoose.getSelectedIndex();
 				String newOrganizationID = organizationIDList[chosenInt];
-
+				
+				if(userIDStr.startsWith("CK"))
+					newOrganizationID = newOrganizationID + "-CK";
+				
 				int returnNum = userBL.modifyUserOrganization(userIDStr, newOrganizationID);
 
 				if (returnNum == 0) {

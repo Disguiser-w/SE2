@@ -3,7 +3,11 @@ package presentation.managerui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import businesslogic.managebl.controller.ReviewReceiptController;
 import presentation.commonui.MyComboBox;
@@ -32,13 +36,12 @@ public class CheckReceiptPanel extends OperationPanel {
 	private ReviewReceiptController receiptBL;
 	
 	private MyLabel detailedInfoLabel;
-	private MyLabel modifyLabel;
 	private MyLabel approveLabel;
 
 	private MyTable messageTable;
 	private MyTable currentTable;
 
-	private String[] receiptCategoryList = {"全部", "收款单","合计收款单","付款单","中转中心装车单","中转中心到达单","营业厅装车单","营业厅到达单","派件单","入库单","出库单"};
+	private String[] receiptCategoryList = {"收款单","合计收款单","付款单","中转中心装车单","中转中心到达单","营业厅装车单","营业厅到达单","派件单","入库单","出库单"};
 	private MyTextLabel receiptCategoryLabel;
 	private MyComboBox<String> receiptCategoryChoose;
 
@@ -56,13 +59,14 @@ public class CheckReceiptPanel extends OperationPanel {
 	private int tableWidth;
 	private int tableHeight;
 	
+	private int selectedIndex;
+	private int patternNum;
 //	private LocationHelper helper;
 
 	public CheckReceiptPanel(ReviewReceiptController reviewReceiptController){
 
 		receiptBL = reviewReceiptController;
 		
-		modifyLabel = new MyLabel("修改");
 		approveLabel = new MyLabel("通过");
 		detailedInfoLabel = new MyLabel("查看详情");
 		
@@ -78,7 +82,6 @@ public class CheckReceiptPanel extends OperationPanel {
 		receiptCategoryChoose.addItem(receiptCategoryList[7]);
 		receiptCategoryChoose.addItem(receiptCategoryList[8]);
 		receiptCategoryChoose.addItem(receiptCategoryList[9]);
-		receiptCategoryChoose.addItem(receiptCategoryList[10]);
 		
 		gatheringList = receiptBL.getAllSubmittedGatheringReceipt();
 		collectionList = receiptBL.getAllSubmittedCollectionReceipt();
@@ -94,26 +97,31 @@ public class CheckReceiptPanel extends OperationPanel {
 		receiptCategoryChoose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
 				int chosen = receiptCategoryChoose.getSelectedIndex();
-				System.out.println(chosen);
+				patternNum = chosen;
 				setBaseInfos(chosen);
+			}
+		});
+		
+		approveLabel.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent ae){
+				approveui();
 			}
 		});
 		
 		setLayout(null);
 		
-		add(modifyLabel);
 		add(approveLabel);
 		add(detailedInfoLabel);
 		add(receiptCategoryLabel);
 		add(receiptCategoryChoose);
 
 //		helper = new LocationHelper(this);
-		setBaseInfos(2);
+		patternNum = 1;
+		setBaseInfos(1);
 		/*给setBaseInfos加上参数，不同的int值表示MyTable加载不同内容
-		0代表All
-		1代表Gathering， 2代表Collection，3代表Payment，4代表EnIntermediateList
-		5代表transfering,6代表enVehicle,7代表orderAccept,8代表distribute
-		9代表enterRepertory,10代表leaveRepertory*/
+		0代表Gathering， 1代表Collection，2代表Payment，3代表EnIntermediateList
+		4代表transfering,5代表enVehicle,6代表orderAccept,7代表distribute
+		8代表enterRepertory,9代表leaveRepertory*/
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -122,10 +130,8 @@ public class CheckReceiptPanel extends OperationPanel {
 		this.tableWidth = width;
 		this.tableHeight = height;
 		
-		detailedInfoLabel.setBounds((int) (width * 4.522407170294494 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 1.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
-		modifyLabel.setBounds((int) (width * 7.755441741357235 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 1.824583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
+		detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.7410714285714286 / 20),
+				(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
 		approveLabel.setBounds((int) (width * 10.084507042253522 / 25), (int) (height * 1.7410714285714286 / 20),
 				(int) (width * 1.824583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
 		receiptCategoryLabel.setBounds((int) (width * 14.505121638924457 / 25), (int) (height * 1.7410714285714286 / 20),
@@ -148,51 +154,62 @@ public class CheckReceiptPanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		switch(num){
 		case 0:
-			break;
-		case 1:
 			for(GatheringReceiptVO gatheringvo : gatheringList)
 				infos.add(new String[]{gatheringvo.receiptID, "收款单", gatheringvo.businesshall.name, "营业厅业务员", gatheringvo.time, stateName(gatheringvo.receiptState)});
 			break;
-		case 2:
+		case 1:
 			for(CollectionReceiptVO collectionvo : collectionList)
 				infos.add(new String[]{collectionvo.ID, "合计收款单", collectionvo.userID, "财务人员", collectionvo.date, stateName(collectionvo.state)});
-				break;
-		case 3:
+			break;
+		case 2:
 			for(PaymentReceiptVO paymentvo : paymentList)
 				infos.add(new String[]{paymentvo.ID, "付款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
-				break;
-		case 4:
+			break;
+		case 3:
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)
 				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.userID, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
-				break;
-		case 5:
+			break;
+		case 4:
 			for(TransferingReceiptVO transferingvo : transferingList)
 				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.state)});
-				break;
-		case 6:
+			break;
+		case 5:
 			for(EnVehicleReceiptVO enVehiclevo : enVehicleList)
 				infos.add(new String[]{enVehiclevo.receiptID, "营业厅装车单", enVehiclevo.placeOfDeparture.name, "营业厅业务员", enVehiclevo.time, stateName(enVehiclevo.receiptState)});
-				break;
-		case 7:
+			break;
+		case 6:
 			for(OrderAcceptReceiptVO orderAcceptvo : orderAcceptList)
 				infos.add(new String[]{orderAcceptvo.receiptID, "营业厅接收单", orderAcceptvo.local.name, "营业厅业务员", orderAcceptvo.time, stateName(orderAcceptvo.receiptState)});
-				break;		
-		case 8:
+			break;	
+		case 7:
 			for(DistributeReceiptVO distributevo : distributeList)
 				infos.add(new String[]{distributevo.ID, "营业厅派件单", "营业厅", "营业厅业务员", distributevo.time, stateName(distributevo.receiptState)});
-				break;		
-		case 9:
+			break;		
+		case 8:
 			for(EnterRepertoryReceiptVO entervo : enterRepertoryList)
 				infos.add(new String[]{entervo.receiptID, "入库单", entervo.userID, "财务人员", entervo.createTime, stateName(entervo.state)});
-				break;
-		case 10:
+			break;
+		case 9:
 			for(LeaveRepertoryReceiptVO leavevo : leaveRepertoryList)
 				infos.add(new String[]{leavevo.receiptID, "出库单", leavevo.userID, "财务人员", leavevo.createTime, stateName(leavevo.state)});
-				break;		
+			break;	
 		default:
 				break;
 		}
 		return infos;
+	}
+	
+	public void approveui(){
+		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
+		int size = selectedIndexs.size();
+		
+		if(size == 0){
+			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些机构后再删除哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		else{
+			selectedIndex = selectedIndexs.get(0);
+		}
 	}
 	
 	public void changeTable(MyTable currentTable){

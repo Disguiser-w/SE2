@@ -174,7 +174,7 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
 		
 		OKLabel.setBounds(PANEL_WIDTH * 34 / 48, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		returnLabel.setBounds(PANEL_WIDTH * 5 / 72, PANEL_HEIGHT * 40 / 48,
+		returnLabel.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 40 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
     }
     

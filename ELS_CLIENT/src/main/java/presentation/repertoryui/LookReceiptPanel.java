@@ -136,16 +136,16 @@ public class LookReceiptPanel extends OperationPanel {
 		tableWidth = width;
 		tableHeight = height;
 		
-		lookEnterReceiptLabel.setBounds((int) (width * 6.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
-				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		lookLeaveReceiptLabel.setBounds((int) (width * 13.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
-				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		detailedInfoLabel.setBounds((int) (width * 9.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
-				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		searchField.setBounds((int) (width * 16.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
-				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 4.5053571428571428 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 12.53571428571428 / 20));
+		lookEnterReceiptLabel.setBounds((int) (width * 2.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
+				(int) (width * 2.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		lookLeaveReceiptLabel.setBounds((int) (width * 5.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
+				(int) (width * 2.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		detailedInfoLabel.setBounds((int) (width * 12.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
+				(int) (width * 2.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		searchField.setBounds((int) (width * 18.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
+				(int) (width * 3.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.8053571428571428 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 13.83571428571428 / 20));
 		sendLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),
 				(int) (width * 2.592829705505762 / 25), (int) (height * 1.4285714285714286 / 20));
 	}

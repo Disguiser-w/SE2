@@ -8,7 +8,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.financebl.controller.LogDiaryBLController;
+import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.userbl.controller.UserManageController;
 import presentation.commonui.MyTable;
@@ -112,7 +112,7 @@ public class UserMainPanel extends OperationPanel {
 		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.0607142857142858 / 20),
 				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
 		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
+				(int) (width * 3.721382842509603 / 25), (int) (height * 1.303571428571428 / 22));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 15.035714285714286 / 20));
 	}

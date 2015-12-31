@@ -77,9 +77,9 @@ public class EXwarehousePanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 		
 		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.0007142857142858 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5003571428571428 / 22));
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3003571428571428 / 22));
 		exwarehouseMessageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 14.535714285714286 / 20));
+				(int) (width * 22.98335467349552 / 25), (int) (height * 14.935714285714286 / 20));
 		leaveRepertoryLabel.setBounds((int) (width * 11.224839948783611 / 25), (int) (height * 17.7607142857142858 / 20),
 				(int) (width * 2.8303571428571428 / 25), (int) (height * 1.503571428571428 / 22));
 	}

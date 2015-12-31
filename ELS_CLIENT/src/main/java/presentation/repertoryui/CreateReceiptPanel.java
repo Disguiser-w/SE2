@@ -133,11 +133,11 @@ public class CreateReceiptPanel extends OperationPanel{
 				(int) (width * 20.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		createEnterReceiptLabel.setBounds((int) (width * 6.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
 				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		createLeaveReceiptLabel.setBounds((int) (width * 13.070422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
+		createLeaveReceiptLabel.setBounds((int) (width * 14.200422535211268 / 25), (int) (height * 2.80053571428571428 / 20),
 				(int) (width * 4.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 4.5053571428571428 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 12.53571428571428 / 20));
-		createReceiptLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),
+		createReceiptLabel.setBounds((int) (width * 11.329513444302176 / 25), (int) (height * 17.410714285714285 / 20),
 				(int) (width * 2.592829705505762 / 25), (int) (height * 1.4285714285714286 / 20));
 	}
 	
