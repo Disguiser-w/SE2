@@ -183,14 +183,14 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	public void printui() {
 		String beginTime=startDate_Input.getText();
 		String endTime=endDate_Input.getText();
-		if(beginTime!=""&&endTime!=""){
-	    BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
-	    collectionReceiptVOs=vo.cvos;
-	    paymentReceiptVOs=vo.pvos;
-		}
-		else{
+		if(beginTime.equals("")&&endTime.equals("")){
 			collectionReceiptVOs = controller.showBSList("2011-01-01", GetDate.getdate()).cvos;
 			paymentReceiptVOs = controller.showBSList("2010-01-01", GetDate.getdate()).pvos;
+		}
+		else{
+		    BusinessStatementReceiptVO vo=controller.showBSList(beginTime, endTime);
+		    collectionReceiptVOs=vo.cvos;
+		    paymentReceiptVOs=vo.pvos;
 			}
 	    String[][] BSRExcel = new String[collectionReceiptVOs.size()+paymentReceiptVOs.size()][4];
 	    int temp = 0;
