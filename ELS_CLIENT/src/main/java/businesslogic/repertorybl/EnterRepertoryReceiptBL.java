@@ -47,14 +47,14 @@ public class EnterRepertoryReceiptBL {
 		}
 	}
 	
-	public int deleteEnterReceipt(String receiptID){
+	/*public int deleteEnterReceipt(String receiptID){
 		try{
 			return errdService.deleteEnterRepertoryReceipt(receiptID);
 		}catch(RemoteException ex){
 			ex.printStackTrace();
 			return 2;
 		}
-	}
+	}*/
 
 	public int sendEnterReceipt(String receiptID){
 		try{

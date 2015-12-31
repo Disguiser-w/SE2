@@ -8,7 +8,6 @@ import vo.EnterRepertoryReceiptVO;
 public interface EnterRepertoryReceiptBLService {
 
 	public int addEnterRepertoryReceipt(String repertoryID, String userID, String[] goodsIDList, String[] timeList) throws RemoteException;
-	public int deleteEnterReceipt(String receiptID) throws RemoteException;
 	public int sendEnterReceipt(String receiptID)throws RemoteException;
 	public int approveEnterReceipt(String receiptID)throws RemoteException;
 	public int disapproveEnterReceipt(String receiptID)throws RemoteException;

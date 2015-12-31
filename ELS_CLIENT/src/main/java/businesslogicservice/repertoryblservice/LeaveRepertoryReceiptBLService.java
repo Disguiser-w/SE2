@@ -8,7 +8,7 @@ import vo.LeaveRepertoryReceiptVO;
 public interface LeaveRepertoryReceiptBLService {
 
 	public int addLeaveRepertoryReceipt(LeaveRepertoryReceiptVO lrrvo) throws RemoteException;
-	public int deleteLeaveReceipt(String receiptID) throws RemoteException;
+	//public int deleteLeaveReceipt(String receiptID) throws RemoteException;
 	public int sendLeaveReceipt(String receiptID)throws RemoteException;
 	public int approveLeaveReceipt(String receiptID)throws RemoteException;
 	public int disapproveLeaveReceipt(String receiptID)throws RemoteException;
