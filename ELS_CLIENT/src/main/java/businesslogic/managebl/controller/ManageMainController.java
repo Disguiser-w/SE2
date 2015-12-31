@@ -25,7 +25,6 @@ import po.UserPO;
 import presentation.managerui.BasicDataManagePanel;
 import presentation.managerui.CheckBusinessPanel;
 import presentation.managerui.CheckIncomePanel;
-import presentation.managerui.CheckReceiptPanel;
 import presentation.managerui.ManageFrame;
 import presentation.managerui.OrganizationManagePanel;
 import presentation.managerui.StaffManagePanel;
@@ -92,7 +91,7 @@ public class ManageMainController {
 		manageFrame = new ManageFrame(manageVO);
 		manageFrame.addFuncLabel(new StaffManagePanel(manageFrame, userManageController, organizationManageController), "用户管理", ImageGetter.getImage("userManager.png").getImage());
 		manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame, organizationManageController), "机构管理", ImageGetter.getImage("organizationManager.png").getImage());
-		manageFrame.addFuncLabel(new CheckReceiptPanel(reviewReceiptController), "单据审批", ImageGetter.getImage("reviewReceipt.png").getImage());
+		//manageFrame.addFuncLabel(new CheckReceiptPanel(reviewReceiptController), "单据审批", ImageGetter.getImage("reviewReceipt.png").getImage());
 		manageFrame.addFuncLabel(new CheckBusinessPanel(businessStatementReceiptController), "查看经营情况表", ImageGetter.getImage("businessStatement.png").getImage());
 		manageFrame.addFuncLabel(new CheckIncomePanel(costIncomeReceiptController), "查看成本收益表", ImageGetter.getImage("costIncome.png").getImage());
 		manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame, perWageController, basicSalaryController, cityDistanceController, costController),"基础数据设置", ImageGetter.getImage("basicDataManager.png").getImage());

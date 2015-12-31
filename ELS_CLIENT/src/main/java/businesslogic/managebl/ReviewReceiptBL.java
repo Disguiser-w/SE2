@@ -166,8 +166,6 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			gatheringReceiptPOList = bdService.getSubmittedGatheringReceiptInfo();
 			gatheringReceiptVOList = new ArrayList<GatheringReceiptVO>();
 			
-			if(gatheringReceiptPOList == null)
-				return gatheringReceiptVOList;
 			for(int i=0;i<gatheringReceiptPOList.size();i++){
 				gatheringReceiptVOList.add(BusinessMainController.gatheringPOToVO(gatheringReceiptPOList.get(i)));
 			}
@@ -220,7 +218,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			enIntermediateReceiptVOList = new ArrayList<EnIntermediateReceiptVO>();
 			
 			if(enIntermediateReceiptPOList == null)
-				return enIntermediateReceiptVOList;
+				return null;
 			for(int i=0; i<enIntermediateReceiptPOList.size();i++){
 				if(IntermediateMainController.poToVO(enIntermediateReceiptPOList.get(i)) != null)
 				enIntermediateReceiptVOList.add(IntermediateMainController.poToVO(enIntermediateReceiptPOList.get(i)));
