@@ -128,6 +128,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		//入库单	EnterRepertoryReceipt
 		else if(receiptID.startsWith("RKD")){
 			EnterRepertoryReceiptVO errvo = (EnterRepertoryReceiptVO)ob;
+			System.out.println("BL   shenpi   approve");
 			return approveEnterRepertoryReceipt(errvo);
 		} 
 		
@@ -371,6 +372,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个入库单
 	public int approveEnterRepertoryReceipt(EnterRepertoryReceiptVO errVO){
+		System.out.println("BL   shenpi"  + errVO.receiptID);
 		return enterReceiptBL.approveEnterReceipt(errVO.receiptID);
 	}
 	
