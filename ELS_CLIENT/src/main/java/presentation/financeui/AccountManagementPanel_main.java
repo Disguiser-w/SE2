@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.financebl.LogDiaryBL;
 import businesslogic.financebl.controller.AccountBLController;
-import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
-import presentation.logdiaryui.LogDiaryPanel;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;

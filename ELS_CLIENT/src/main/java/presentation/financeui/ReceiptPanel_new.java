@@ -13,7 +13,6 @@ import common.FileExporter;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
-import presentation.logdiaryui.LogDiaryPanel;
 import type.ReceiptState;
 import vo.CollectionReceiptVO;
 import vo.PaymentReceiptVO;

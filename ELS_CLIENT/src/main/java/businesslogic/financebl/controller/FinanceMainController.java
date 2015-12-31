@@ -9,19 +9,19 @@ import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
 import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.managebl.controller.OrganizationManageController;
 import businesslogic.repertorybl.RepertoryBL;
 import businesslogic.userbl.UserBL;
+import businesslogic.userbl.controller.UserMainController;
 import common.ImageGetter;
 import dataservice.businessdataservice.BusinessDataService;
 import dataservice.financedataservice.AccountDataService;
 import dataservice.financedataservice.CollectionReceiptDataService;
 import dataservice.financedataservice.CostIncomeReceiptDataService;
 import dataservice.financedataservice.InitialStockDataService;
+import dataservice.financedataservice.LogDiaryDataService;
 import dataservice.financedataservice.PaymentReceiptDataService;
-import dataservice.logdiarydataservice.LogDiaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
@@ -31,6 +31,7 @@ import po.CollectionReceiptPO;
 import po.CostIncomeReceiptPO;
 import po.GatheringReceiptPO;
 import po.InitInfoPO;
+import po.LogDiaryPO;
 import po.OrganizationPO;
 import po.PaymentReceiptPO;
 import po.RepertoryPO;
@@ -40,9 +41,9 @@ import presentation.financeui.AccountManagementPanel_main;
 import presentation.financeui.BusinessStateReceiptPanel;
 import presentation.financeui.CostIncomeReceiptPanel_new;
 import presentation.financeui.FinanceFrame;
+import presentation.financeui.LogDiaryPanel;
 import presentation.financeui.ReceiptPanel_new;
 import presentation.financeui.initui.InitialStockPanel_main;
-import presentation.logdiaryui.LogDiaryPanel;
 import type.AuthorityType;
 import type.ReceiptType;
 import vo.AccountVO;
@@ -51,6 +52,7 @@ import vo.CollectionReceiptVO;
 import vo.CostIncomeReceiptVO;
 import vo.GatheringReceiptVO;
 import vo.InitInfoVO;
+import vo.LogDiaryVO;
 import vo.OrganizationVO;
 import vo.PaymentReceiptVO;
 import vo.RepertoryVO;
@@ -617,6 +619,40 @@ public class FinanceMainController {
 		for (CostIncomeReceiptPO p : pos) {
 			CostIncomeReceiptVO vo = cipoToVO(p);
 			vos.add(vo);
+		}
+		return vos;
+	}
+	
+	/**
+	 * logDiary PO to VO
+	 * */
+	public static LogDiaryVO logDiaryPOToVO(LogDiaryPO po){
+		String time = po.getDate();
+		UserVO userVO = UserMainController.userPOToVO(po.getUserpo());
+		String info = po.getInfo();
+		LogDiaryVO logDiaryVO = new LogDiaryVO(time, userVO, info);
+		return logDiaryVO;
+	}
+	
+	/**
+	 * logDiaryVO to PO
+	 * */
+	public static LogDiaryPO logDiaryVOToPO(LogDiaryVO vo){
+		String time = vo.time;
+		UserPO userPO = UserMainController.userVOToPO(vo.userVO);
+		String info = vo.info;
+		LogDiaryPO logDiaryPO = new LogDiaryPO(time, userPO, info);
+		return logDiaryPO;
+	}
+	
+	/**
+	 * logDiaryPOs to VOs
+	 * */
+	public static ArrayList<LogDiaryVO> logDiaryPOsToVOs(ArrayList<LogDiaryPO> pos){
+		ArrayList<LogDiaryVO> vos = new ArrayList<LogDiaryVO>();
+		for(LogDiaryPO p : pos){
+			LogDiaryVO v = logDiaryPOToVO(p);
+			vos.add(v);
 		}
 		return vos;
 	}

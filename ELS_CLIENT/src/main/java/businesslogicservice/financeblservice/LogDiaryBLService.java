@@ -1,4 +1,4 @@
-package businesslogicservice.logdiaryblservice;
+package businesslogicservice.financeblservice;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

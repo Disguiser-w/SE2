@@ -1,4 +1,4 @@
-package data.logdiarydata;
+package data.financedata;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import common.FileGetter;
 import po.LogDiaryPO;
-import dataservice.logdiarydataservice.LogDiaryDataService;
+import dataservice.financedataservice.LogDiaryDataService;
 
 public class LogDiaryData extends UnicastRemoteObject implements LogDiaryDataService{
 

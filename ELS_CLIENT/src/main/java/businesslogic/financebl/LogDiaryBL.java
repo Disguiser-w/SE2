@@ -1,4 +1,4 @@
-package businesslogic.logdiarybl;
+package businesslogic.financebl;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -6,9 +6,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import businesslogic.datafactory.DataFactory;
-import businesslogic.logdiarybl.controller.LogDiaryMainController;
-import businesslogicservice.logdiaryblservice.LogDiaryBLService;
-import dataservice.logdiarydataservice.LogDiaryDataService;
+import businesslogic.financebl.controller.FinanceMainController;
+import businesslogicservice.financeblservice.LogDiaryBLService;
+import dataservice.financedataservice.LogDiaryDataService;
 import po.LogDiaryPO;
 import vo.LogDiaryVO;
 
@@ -33,7 +33,7 @@ public class LogDiaryBL implements LogDiaryBLService{
 
 	public int addLogDiary(LogDiaryVO vo, String time) {
 		// TODO Auto-generated method stub
-		LogDiaryPO po = LogDiaryMainController.logDiaryVOToPO(vo);
+		LogDiaryPO po = FinanceMainController.logDiaryVOToPO(vo);
 		try {
 			return logDiaryData.addLogDiary(po, time);
 		} catch (RemoteException e) {
@@ -52,7 +52,7 @@ public class LogDiaryBL implements LogDiaryBLService{
 				System.out.println("不存在该时间的日志信息");
 				return null;
 			}
-			vos = LogDiaryMainController.logDiaryPOsToVOs(logDiaryData.getLogDiaryPO(time));
+			vos = FinanceMainController.logDiaryPOsToVOs(logDiaryData.getLogDiaryPO(time));
 			return vos;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +71,7 @@ public class LogDiaryBL implements LogDiaryBLService{
 				return null;
 			}
 			else{
-			vos = LogDiaryMainController.logDiaryPOsToVOs(logDiaryData.getAllLogDiaryPOs());
+			vos = FinanceMainController.logDiaryPOsToVOs(logDiaryData.getAllLogDiaryPOs());
 			return vos;
 			}
 		} catch (RemoteException e) {

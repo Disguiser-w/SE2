@@ -1,9 +1,9 @@
-package businesslogic.logdiarybl.controller;
+package businesslogic.financebl.controller;
 
 import java.util.ArrayList;
 
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogicservice.logdiaryblservice.LogDiaryBLService;
+import businesslogic.financebl.LogDiaryBL;
+import businesslogicservice.financeblservice.LogDiaryBLService;
 import vo.LogDiaryVO;
 
 public class LogDiaryBLController implements LogDiaryBLService{

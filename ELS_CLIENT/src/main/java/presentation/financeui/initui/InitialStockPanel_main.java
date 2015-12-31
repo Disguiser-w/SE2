@@ -16,7 +16,7 @@ import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.financeui.FinanceFrame;
-import presentation.logdiaryui.LogDiaryPanel;
+import presentation.financeui.LogDiaryPanel;
 import vo.InitInfoVO;
 import vo.UserVO;
 

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import businesslogic.financebl.LogDiaryBL;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
-import businesslogic.logdiarybl.LogDiaryBL;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyComboBox;
@@ -19,7 +19,6 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
-import presentation.logdiaryui.LogDiaryPanel;
 import type.ReceiptState;
 import type.ReceiptType;
 import vo.LogDiaryVO;

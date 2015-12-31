@@ -1,4 +1,4 @@
-package presentation.logdiaryui;
+package presentation.financeui;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import presentation.commonui.DateChooser;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
