@@ -60,7 +60,7 @@ public class OperationPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
-		System.out.println(12340);
+
 	}
 
 }

@@ -240,6 +240,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	 */
 	public void okui() {
 		date_str = date_Input.getText();
+		hallID = (String) businessHallID_Input.getSelectedItem();
 
 		if (date_str.equals("") && hallID.equals("")) {
 			JOptionPane.showMessageDialog(null, "请输入至少一项信息哟！", "提示", JOptionPane.CLOSED_OPTION);
@@ -252,6 +253,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			} else {
 				gatheringReceiptVOs = controller.getGatheringByTime(date_str);
 				collectionTable.setInfos(getInfos(gatheringReceiptVOs));
+				totalButton.setVisible(true);
 			}
 		}
 		// 仅依据营业厅编号筛选
