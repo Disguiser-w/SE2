@@ -186,6 +186,7 @@ public class UserFrame extends JFrame {
 
 				add(operationPanel);
 				operationPanel.repaint();
+				repaint();
 				setVisible(true);
 			}
 		});
@@ -203,6 +204,7 @@ public class UserFrame extends JFrame {
 		add(operationPanel);
 		setVisible(true);
 		operationPanel.repaint();
+		repaint();
 		setVisible(true);
 	}
 
@@ -210,6 +212,7 @@ public class UserFrame extends JFrame {
 		remove(operationPanel);
 		operationPanel = operationPanels.get(num);
 		add(operationPanel);
+		repaint();
 		setVisible(true);
 	}
 
@@ -220,6 +223,7 @@ public class UserFrame extends JFrame {
 		for (JPanel i : operationPanels)
 			i.repaint();
 		operationPanel.repaint();
+		repaint();
 		setVisible(true);
 
 	}

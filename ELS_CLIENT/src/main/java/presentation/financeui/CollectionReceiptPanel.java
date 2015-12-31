@@ -157,9 +157,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
 		cancelButton.setBounds((int) (width * 20.139795918367346 / 28), (int) (height * 18.434442270058707 / 20),
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
-		// function.setBounds((int)(width * 0.6696428571428571/25),(int)(height
-		// * 0.821917808219178/20),(int)(width * 6.919642857142857
-		// /25),(int)(height * 1.643835616438356/20));
 		date.setBounds((int) (width * 2.391581632653061 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.594387755102041 / 25), (int) (height * 0.9001956947162426 / 20));
 		businessHall.setBounds((int) (width * 10.356122448979592 / 25), (int) (height * 0.93052837573385516 / 20),
@@ -253,7 +250,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 			if (date_str.compareTo(GetDate.getdate()) > 0) {
 				JOptionPane.showMessageDialog(null, "您输入的日期还没到呢，请重新输入！", "提示", JOptionPane.CLOSED_OPTION);
 			} else {
-
 				gatheringReceiptVOs = controller.getGatheringByTime(date_str);
 				collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 			}
@@ -262,11 +258,11 @@ public class CollectionReceiptPanel extends OperationPanel {
 		else if (date_str.equals("")) {
 			gatheringReceiptVOs = controller.getGatheringByHall(hallID);
 			collectionTable.setInfos(getInfos(gatheringReceiptVOs));
-			totalButton.setEnabled(false);
+			totalButton.setVisible(false);
 		} else {
 			gatheringReceiptVOs = controller.getGatheingByBoth(date_str, hallID);
 			collectionTable.setInfos(getInfos(gatheringReceiptVOs));
-			totalButton.setEnabled(false);
+			totalButton.setVisible(false);
 		}
 	}
 
