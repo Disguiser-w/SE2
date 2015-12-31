@@ -93,7 +93,7 @@ public class LogDiaryPanel extends OperationPanel{
         startDateLabel.setBounds((int)(width * 6.896683673469388/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.6247448979591837 /25),(int)(height *   1.1350293542074363/20));
         dateOKLabel.setBounds((int)(width * 17.0109693877551/25),(int)(height *  0.93052837573385516/20),(int)(width *  2.7683673469387754 /25),(int)(height *   1.1350293542074363/20));
 		startDate_Input.setBounds((int)(width * 2.2063775510204085/25),(int)(height * 0.93052837573385516/20),(int)(width *  4.0568877551020407 /25),(int)(height *   1.1350293542074363/20));
-		logDiaryTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  15.921154598825832/20));		
+		logDiaryTable.setLocationAndSize((int)(width * 1.1002551020408165/25),(int)(height * 2.505479452054795/20),(int)(width *  23.007397959183675 /25),(int)(height *  14.921154598825832/20));		
 	}
 	private void setBaseInfo(){
 		String[] head = new String[]{"日期","操作人","操作"};
