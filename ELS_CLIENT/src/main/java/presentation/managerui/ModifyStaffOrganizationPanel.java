@@ -75,7 +75,7 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 			}
 		}
 		
-		if(userID.startsWith("ZZZX")){
+		if( (userID.startsWith("ZZZX")) || (userID.startsWith("CK"))){
 			organizationNameList = new String[intermediateCenterCount];
 			organizationIDList = new String[intermediateCenterCount];
 			
