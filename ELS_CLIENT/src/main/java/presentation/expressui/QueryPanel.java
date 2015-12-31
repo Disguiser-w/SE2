@@ -11,7 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 
 import businesslogic.expressbl.controller.LogisticQueryController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import presentation.commonui.DateChooser;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;

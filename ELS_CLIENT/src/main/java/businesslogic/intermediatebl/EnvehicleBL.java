@@ -3,6 +3,12 @@ package businesslogic.intermediatebl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogic.financebl.LogDiaryBL;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.managebl.CityDistanceBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
@@ -13,19 +19,13 @@ import type.OrderState;
 import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
-import vo.UserVO;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.logdiarybl.LogDiaryBL;
-import businesslogic.managebl.CityDistanceBL;
-import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
+import vo.UserVO;
 
 public class EnvehicleBL implements EnvehicleBLService {
 	private UserVO intermediate;

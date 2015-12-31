@@ -13,10 +13,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.AddOrderController;
 import businesslogic.expressbl.controller.ExpressMainController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;

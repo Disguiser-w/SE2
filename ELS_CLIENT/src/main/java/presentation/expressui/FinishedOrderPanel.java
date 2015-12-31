@@ -9,10 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
-import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.controller.ExpressMainController;
 import businesslogic.expressbl.controller.ReceiptOrderController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTextArea;

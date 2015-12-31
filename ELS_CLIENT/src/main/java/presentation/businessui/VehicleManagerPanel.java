@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.VehicleManagerController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyComboBox;

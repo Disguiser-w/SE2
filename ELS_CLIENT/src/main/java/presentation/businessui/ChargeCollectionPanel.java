@@ -10,13 +10,12 @@ import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.businessbl.controller.GatheringController;
-import businesslogic.logdiarybl.controller.LogDiaryBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextArea;
-import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.LogDiaryVO;
 
@@ -71,8 +70,8 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 		totalMessageLabel.setBounds((int) (width * 1.2890859481582538 / 25), (int) (height * 17.434408602150536 / 20),
 				(int) (width * 18.92905866302865 / 25), (int) (height * 1.3261648745519714 / 20));
-		collectionLabel.setBounds((int) (width * 21.83506139154161 / 25), (int) (height * 17.434408602150536 / 20),
-				(int) (width * 1.8417462482946794 / 25), (int) (height * 1.3261648745519714 / 20));
+		collectionLabel.setBounds((int) (width * 21.33506139154161 / 25), (int) (height * 17.434408602150536 / 20),
+				(int) (width * 2.3417462482946794 / 25), (int) (height * 1.3261648745519714 / 20));
 	}
 
 	private void setBaseInfos() {
