@@ -1,11 +1,13 @@
 package presentation.businessui;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -15,14 +17,14 @@ import businesslogic.receiptbl.GetDate;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextArea;
+import presentation.commonui.MyTextLabel;
 import presentation.commonui.OperationPanel;
 import vo.LogDiaryVO;
 
 public class ChargeCollectionPanel extends OperationPanel {
 	// private JLabel tablehead;
 	private MyTable messageTable;
-	private MyTextArea totalMessageLabel;
+	private MyTextLabel totalMessageLabel;
 	private MyLabel collectionLabel;
 
 	private LocationHelper helper;
@@ -36,7 +38,9 @@ public class ChargeCollectionPanel extends OperationPanel {
 		this.controller = controller;
 		log = new LogDiaryBLController();
 
-		totalMessageLabel = new MyTextArea();
+		totalMessageLabel = new MyTextLabel();
+		totalMessageLabel.setBackground(new Color(200, 200, 200, 0));
+		totalMessageLabel.setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190, 125)));
 		// totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
 		// totalMessageLabel.setFont(new Font("WenQuanYi Micro Hei", Font.PLAIN,
 		// 15));

@@ -270,15 +270,15 @@ public class MyTable extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-
-		if (UserFrame.type == 0) {
-			g.setColor(Color.WHITE);
-			scrollPanel.setBackground(Color.WHITE);
-			g.fillRect(0, 0, getWidth(), getHeight());
-		} else if (UserFrame.type == 1) {
-			scrollPanel.setBackground(new Color(0, 0, 0, 0));
-			setBackground(new Color(0, 0, 0, 0));
-		}
+//
+//		if (UserFrame.type == 0) {
+//			g.setColor(Color.WHITE);
+//			scrollPanel.setBackground(Color.WHITE);
+//			g.fillRect(0, 0, getWidth(), getHeight());
+//		} else if (UserFrame.type == 1) {
+//			scrollPanel.setBackground(new Color(0, 0, 0, 0));
+//			setBackground(new Color(0, 0, 0, 0));
+//		}
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
