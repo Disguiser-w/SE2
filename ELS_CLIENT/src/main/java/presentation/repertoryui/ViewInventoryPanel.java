@@ -24,9 +24,9 @@ public class ViewInventoryPanel extends OperationPanel {
 	
 	private JLabel dateRange;
 	
-	private MyTextLabel startDateLabel;
+	private MyLabel startDateLabel;
 	private MyTextLabel startDateChooseLabel;
-	private MyTextLabel endDateLabel;
+	private MyLabel endDateLabel;
 	private MyTextLabel endDateChooseLabel;
 	
 	private MyTextField startDateField;
@@ -60,19 +60,20 @@ public class ViewInventoryPanel extends OperationPanel {
 		
 		dateRange = new MyTextLabel("日期范围");
 		
-		startDateLabel = new MyTextLabel();
+		startDateLabel = new MyLabel();
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-10-01");
 		startDateChooseLabel = new MyTextLabel("开始日期");
-		endDateLabel = new MyTextLabel();
+		endDateLabel = new MyLabel();
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-10-01");
 		endDateChooseLabel = new MyTextLabel("结束日期");
 
 		startDateLabel.setLayout(new BorderLayout());
-		startDateLabel.add(new DateChooser(startDateField),BorderLayout.CENTER);
+		new DateChooser(startDateField, startDateLabel);
+
 		endDateLabel.setLayout(new BorderLayout());
-		endDateLabel.add(new DateChooser(endDateField),BorderLayout.CENTER);
+		new DateChooser(endDateField, endDateLabel);
 		
 		OKLabel = new MyLabel("确认");
 		
