@@ -43,7 +43,7 @@ public class CheckIncomePanel extends OperationPanel {
 		function = new MyTextLabel("查看成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		beginTime = "2010-01-01";
-		endTime = GetDate.getTime().substring(0, 4)+"-"+GetDate.getTime().substring(4,6)+"-"+GetDate.getTime().substring(6);
+		endTime = GetDate.getdate();
 		ID = costIncomeReceiptControl.getCostIncomeListID();
 		
 		startDate = new MyTextLabel("开始时间");

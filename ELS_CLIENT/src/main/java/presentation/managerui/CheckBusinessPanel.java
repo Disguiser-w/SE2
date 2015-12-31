@@ -9,9 +9,7 @@ import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.receiptbl.GetDate;
-import common.ImageGetter;
 import presentation.commonui.DateChooser;
-import presentation.commonui.DateChooserPanel;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
@@ -31,9 +29,9 @@ public class CheckBusinessPanel extends OperationPanel {
 	private int tableHeight;
 
 	private MyTextLabel dateRange;
-	private MyLabel startDateLabel;
+	private MyTextLabel startDateLabel;
 	private MyTextLabel startDateChooseLabel;
-	private MyLabel endDateLabel;
+	private MyTextLabel endDateLabel;
 	private MyTextLabel endDateChooseLabel;
 
 	private MyTextField startDateField;
@@ -55,21 +53,20 @@ public class CheckBusinessPanel extends OperationPanel {
 		businessStatementReceiptControl = businessStatementControl;
 
 		dateRange = new MyTextLabel("日期范围");
-		startDateLabel = new MyLabel();
+		startDateLabel = new MyTextLabel();
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-12-08");
 		startDateChooseLabel = new MyTextLabel("开始日期");
-		endDateLabel = new MyLabel();
+		endDateLabel = new MyTextLabel();
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-12-08");
 		endDateChooseLabel = new MyTextLabel("结束日期");
 
 		startDateLabel.setLayout(new BorderLayout());
-		new DateChooser(startDateField, startDateLabel);
+		startDateLabel.add(new DateChooser(startDateField), BorderLayout.CENTER);
 
 		endDateLabel.setLayout(new BorderLayout());
-		new DateChooser(endDateField, endDateLabel);
-		
+		endDateLabel.add(new DateChooser(endDateField), BorderLayout.CENTER);
 
 		confirmDateLabel = new MyLabel("确认");
 
@@ -153,12 +150,9 @@ public class CheckBusinessPanel extends OperationPanel {
 		if (beginDate.equals("") || endDate.equals("")) {
 			JOptionPane.showMessageDialog(null, "请输入完整信息！", "提示", JOptionPane.CLOSED_OPTION);
 		} else if (beginDate.compareTo(endDate) > 0) {
-			String[] options = { "我选择狗带", "我选择死亡", "这个是不是超级可爱(●'◡'●)!!" };
-			JOptionPane.showOptionDialog(null, "制表人员王腻腻说，开始日期晚于结束日期，你看着她的眼睛再选一遍", "恭喜恭喜，你触发了我设置的大礼包", WHEN_FOCUSED,
-					WHEN_FOCUSED, ImageGetter.getImage("CW.png"), options, options[0]);
-			// JOptionPane.showMessageDialog(null,
-			// "制表人员王腻腻说，开始日期晚于结束日期，你看着她的眼睛再选一遍", "提示",
-			// JOptionPane.WARNING_MESSAGE, ImageGetter.getImage("CW.png"));
+			JOptionPane.showMessageDialog(null, "开始日期晚于结束日期，请重新选择起始日期", "出错啦！", JOptionPane.ERROR_MESSAGE);
+			startDateField.setText("");
+			endDateField.setText("");
 		} else {
 			beginDate = beginDate.substring(0, 4) + beginDate.substring(5, 7) + beginDate.substring(8);
 			endDate = endDate.substring(0, 4) + endDate.substring(5, 7) + endDate.substring(8);
