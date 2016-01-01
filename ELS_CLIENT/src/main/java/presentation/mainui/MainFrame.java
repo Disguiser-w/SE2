@@ -1,7 +1,6 @@
 package presentation.mainui;
 
-import init.UserNameController;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,10 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-import presentation.commonui.LocationHelper;
-import vo.LogVO;
-import vo.OrderVO;
 import businesslogic.businessbl.controller.BusinessMainController;
 import businesslogic.expressbl.LogisticQuery;
 import businesslogic.expressbl.controller.ExpressMainController;
@@ -38,6 +36,10 @@ import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
 import common.ImageGetter;
+import init.UserNameController;
+import presentation.commonui.LocationHelper;
+import vo.LogVO;
+import vo.OrderVO;
 
 /**
  * 打开客户端的第一个界面
@@ -55,7 +57,13 @@ public class MainFrame extends JFrame {
 	private UserBL userbl;
 
 	public MainFrame() {
-
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mainPanel = new MainPanel();
 		add(mainPanel);
 		userbl = new UserBL();
@@ -172,6 +180,7 @@ public class MainFrame extends JFrame {
 					isPressed = false;
 					queryButton.setIcon(query_hover);
 					toQueryPanel();
+					queryButton.setIcon(query_normal);
 				}
 			});
 
@@ -196,6 +205,7 @@ public class MainFrame extends JFrame {
 					isPressed = false;
 					signInButton.setIcon(signIn_hover);
 					toSignInPanel();
+					signInButton.setIcon(signIn_normal);
 				}
 			});
 
@@ -308,6 +318,7 @@ public class MainFrame extends JFrame {
 			query = new LogisticQuery();
 
 			ID_input = new JTextField();
+
 			queryButton = new JLabel();
 			cancel = new JLabel();
 			exit = new JLabel();
@@ -524,7 +535,13 @@ public class MainFrame extends JFrame {
 			cancel.setBounds(173, 344, 82, 27);
 			exit.setBounds(295, 8, 12, 12);
 			min.setBounds(269, 17, 14, 2);
-
+			passwordField.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent e) {
+					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+						signIn((String) names.getSelectedItem(), new String(passwordField.getPassword()));
+					}
+				}
+			});
 			signInButton.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e) {
 					if (!isPressed) {

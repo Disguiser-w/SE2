@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * 所有Frame继承这个，调用 来添加一个功能及其对应的面板
@@ -31,7 +33,13 @@ public class UserFrame extends JFrame {
 	public static final int DEFAULT_HEIGHT = 640;
 
 	public UserFrame(String name, String ID) {
-
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		isMoving = false;
 		num = 0;
 		operationPanels = new ArrayList<JPanel>();
@@ -117,22 +125,14 @@ public class UserFrame extends JFrame {
 		int width = getWidth();
 		int height = getHeight();
 
-		imageLabel.setBounds((int) (width * 0.0 / 25),
-				(int) (height * 0.0 / 20),
-				(int) (width * 5.911458333333333 / 25),
-				(int) (height * 2.5625 / 20));
-		messagePanel.setBounds((int) (width * 5.911458333333333 / 25),
-				(int) (height * 0.0 / 20),
-				(int) (width * 19.088541666666668 / 25),
-				(int) (height * 2.5625 / 20));
-		functionPanel.setBounds((int) (width * 0.0 / 25),
-				(int) (height * 2.5625 / 20),
-				(int) (width * 5.911458333333333 / 25),
-				(int) (height * 17.4375 / 20));
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
-				(int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25),
-				(int) (height * 17.4375 / 20));
+		imageLabel.setBounds((int) (width * 0.0 / 25), (int) (height * 0.0 / 20),
+				(int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20));
+		messagePanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 0.0 / 20),
+				(int) (width * 19.088541666666668 / 25), (int) (height * 2.5625 / 20));
+		functionPanel.setBounds((int) (width * 0.0 / 25), (int) (height * 2.5625 / 20),
+				(int) (width * 5.911458333333333 / 25), (int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
 
 		// 227 82
 		// 733 82
@@ -151,10 +151,8 @@ public class UserFrame extends JFrame {
 		int height = getHeight();
 		int width = getWidth();
 
-		newPanel.setBounds((int) (width * 5.911458333333333 / 25),
-				(int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25),
-				(int) (height * 17.4375 / 20));
+		newPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
 		operationPanels.add(newPanel);
 
 		FuncLabel funcLabel = new FuncLabel(str, image);
@@ -169,10 +167,8 @@ public class UserFrame extends JFrame {
 			repaint();
 		}
 
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
-				(int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25),
-				(int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
 		funcLabel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				FuncLabel label = (FuncLabel) (e.getSource());
@@ -197,10 +193,8 @@ public class UserFrame extends JFrame {
 		operationPanel = newPanel;
 		int width = getWidth();
 		int height = getHeight();
-		operationPanel.setBounds((int) (width * 5.911458333333333 / 25),
-				(int) (height * 2.5625 / 20),
-				(int) (width * 19.088541666666668 / 25),
-				(int) (height * 17.4375 / 20));
+		operationPanel.setBounds((int) (width * 5.911458333333333 / 25), (int) (height * 2.5625 / 20),
+				(int) (width * 19.088541666666668 / 25), (int) (height * 17.4375 / 20));
 		add(operationPanel);
 		setVisible(true);
 		operationPanel.repaint();

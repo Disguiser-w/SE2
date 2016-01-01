@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +23,7 @@ public class MyTextField extends JTextField {
 		// super(str);
 		observable = new MyObservable();
 		label = new BackLabel();
-		setBorder(new EmptyBorder(0, 0, 0, 0));
+		setBorder(null);
 		setFont(new Font("Microsoft YaHei", Font.PLAIN, 14));
 
 	}

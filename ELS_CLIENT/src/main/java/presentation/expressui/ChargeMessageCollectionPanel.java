@@ -2,6 +2,8 @@ package presentation.expressui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -82,7 +84,6 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 
 		messageTable = new MyTable(head, getInfos(), widths, false);
 		add(messageTable);
-
 	}
 
 	private void setLabelInfo() {

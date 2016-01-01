@@ -1,6 +1,7 @@
 package init;
 
-import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import presentation.mainui.MainFrame;
 
@@ -13,6 +14,7 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
+
 		new Client();
 	}
 }
