@@ -100,13 +100,13 @@ public class InitialStockData extends UnicastRemoteObject implements InitialStoc
 	public ArrayList<InitInfoPO> getAllInitInfo() throws RemoteException {
 		// TODO Auto-generated method stub
 
-		File dir =FileGetter.getFile("initInfo");
-		File[] files = dir.listFiles();
-		if(files.length == 0){
-			return null;
-		}
+		ArrayList<InitInfoPO> initInfoPOs = new ArrayList<InitInfoPO>();
+		File dir =FileGetter.getFile("initInfo/");
+	
+		if (!dir.exists())
+			return initInfoPOs;
 		else{
-			ArrayList<InitInfoPO> initInfoPOs = new ArrayList<InitInfoPO>();
+			File[] files = dir.listFiles();
 		for(File i:files){
 			try{
 				ObjectInputStream in = new ObjectInputStream(new FileInputStream(i));

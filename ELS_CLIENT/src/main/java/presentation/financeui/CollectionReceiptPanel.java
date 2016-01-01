@@ -53,7 +53,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	private MyTable collectionTable;
 
-	private int businesshallInt;
+//	private int businesshallInt;
 	public CollectionReceiptBLController controller;
 	public OrganizationManageController organizationController;
 	public FinanceFrame financeFrame;
@@ -103,7 +103,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			}
 		}
 
-		businesshallInt = -1;
+//		businesshallInt = -1;
 		hallID = "";
 
 		setLayout(null);
@@ -225,14 +225,15 @@ public class CollectionReceiptPanel extends OperationPanel {
 	 * 输入营业厅信息的方法
 	 */
 	public void infookui() {
-		ArrayList<OrganizationVO> businessHallVOs = new ArrayList<OrganizationVO>();
-		for (OrganizationVO v : organizationController.showAllOrganizations()) {
-			if (v.category == OrganizationType.businessHall) {
-				businessHallVOs.add(v);
-			}
-		}
-		businesshallInt = businessHallID_Input.getSelectedIndex();
-		hallID = businessHallVOs.get(businesshallInt).organizationID;
+//		ArrayList<OrganizationVO> businessHallVOs = new ArrayList<OrganizationVO>();
+//		for (OrganizationVO v : organizationController.showAllOrganizations()) {
+//			if (v.category == OrganizationType.businessHall) {
+//				businessHallVOs.add(v);
+//			}
+//		}
+////		businesshallInt = businessHallID_Input.getSelectedIndex();
+////		hallID = businessHallVOs.get(businesshallInt).organizationID;
+//		hallID = (String) businessHallID_Input.getSelectedItem();
 	}
 
 	/**
