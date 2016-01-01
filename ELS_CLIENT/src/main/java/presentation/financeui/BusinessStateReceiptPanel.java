@@ -50,7 +50,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		startDateLabel = new MyLabel("开始日期");
 		endDateLabel = new MyLabel("结束日期");
 		dateOKLabel = new MyLabel("确认");
-		printLabel = new MyLabel("打印");
+		printLabel = new MyLabel("导出");
 
 
 		startDate_Input = new MyTextField();
