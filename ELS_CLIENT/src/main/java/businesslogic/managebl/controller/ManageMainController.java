@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import businesslogic.datafactory.DataFactory;
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.financebl.controller.CostIncomeReceiptBLController;
+import businesslogic.financebl.controller.LogDiaryBLController;
 import businesslogic.userbl.controller.UserManageController;
 import common.ImageGetter;
 import dataservice.managedataservice.BasicSalaryDataService;
@@ -22,6 +23,7 @@ import po.OrganizationPO;
 import po.PerWagePO;
 import po.RepertoryPO;
 import po.UserPO;
+import presentation.financeui.LogDiaryPanel;
 import presentation.managerui.BasicDataManagePanel;
 import presentation.managerui.CheckBusinessPanel;
 import presentation.managerui.CheckIncomePanel;
@@ -57,6 +59,7 @@ public class ManageMainController {
 	private CostIncomeReceiptBLController costIncomeReceiptController;
 	private ReviewReceiptController reviewReceiptController;
 	private UserManageController userManageController;
+	private LogDiaryBLController logDiaryController;
 	
 	private ManageFrame manageFrame;
 	public ManageMainController(String managerID){
@@ -88,7 +91,8 @@ public class ManageMainController {
 		costIncomeReceiptController = new CostIncomeReceiptBLController();
 		reviewReceiptController = new ReviewReceiptController();
 		userManageController = new UserManageController();
-			
+		logDiaryController = new LogDiaryBLController();
+		
 		manageFrame = new ManageFrame(manageVO);
 		manageFrame.addFuncLabel(new StaffManagePanel(manageFrame, userManageController, organizationManageController), "用户管理", ImageGetter.getImage("userManager.png").getImage());
 		manageFrame.addFuncLabel(new OrganizationManagePanel(manageFrame, organizationManageController), "机构管理", ImageGetter.getImage("organizationManager.png").getImage());
@@ -96,6 +100,7 @@ public class ManageMainController {
 		manageFrame.addFuncLabel(new CheckBusinessPanel(businessStatementReceiptController), "查看经营情况表", ImageGetter.getImage("businessStatement.png").getImage());
 		manageFrame.addFuncLabel(new CheckIncomePanel(costIncomeReceiptController), "查看成本收益表", ImageGetter.getImage("costIncome.png").getImage());
 		manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame, perWageController, basicSalaryController, cityDistanceController, costController),"基础数据设置", ImageGetter.getImage("basicDataManager.png").getImage());
+		manageFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志",ImageGetter.getImage("库存查看.png").getImage());
 		manageFrame.showFrame();
 		
 	}

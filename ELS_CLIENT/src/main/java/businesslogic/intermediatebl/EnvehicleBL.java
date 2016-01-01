@@ -37,6 +37,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private TrainManagerBL trainManeger;
 	private TruckManagerBL truckManager;
 	private LogDiaryBL logDiary;
+	private FareBL fareBL;
 
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
@@ -61,8 +62,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 			ArrayList<EnplaningReceiptVO> enplaningReceiptList,
 			ArrayList<EntrainingReceiptVO> entrainingReceiptList,
 			ArrayList<EntruckingReceiptVO> entruckingReceiptList,
-			IntermediateDataService intermediateData,
-			UserVO intermediate) {
+			IntermediateDataService intermediateData, UserVO intermediate) {
 		// updateMessage();
 		this.transfering = transfering;
 		this.planeManager = planeManager;
@@ -77,6 +77,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 		this.entruckingReceiptList = entruckingReceiptList;
 		this.intermediateData = intermediateData;
 		this.intermediate = intermediate;
+		fareBL = new FareBL(enplaningReceiptList, entrainingReceiptList,
+				entruckingReceiptList, intermediateData,
+				transferingReceipt.interdiateCentre);
 
 		receipt_ID = 1;
 	}
@@ -133,6 +136,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
 				"进行了装车分配操作"), GetDate.getTime());
 
+		fareBL.computeFare();
 		return OperationState.FAIL_OPERATION;
 	}
 

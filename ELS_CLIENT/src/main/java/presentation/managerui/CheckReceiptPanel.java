@@ -33,9 +33,9 @@ public class CheckReceiptPanel extends OperationPanel {
 	
 	private static final long serialVersionUID = 16L;
 	
-	private ReviewReceiptController receiptBL;
+	private ReviewReceiptController receiptControl;
 	
-	private MyLabel detailedInfoLabel;
+	//private MyLabel detailedInfoLabel;
 	private MyLabel approveLabel;
 
 	private MyTable messageTable;
@@ -59,16 +59,15 @@ public class CheckReceiptPanel extends OperationPanel {
 	private int tableWidth;
 	private int tableHeight;
 	
-	private int selectedIndex;
 	private int patternNum;
 //	private LocationHelper helper;
 
 	public CheckReceiptPanel(ReviewReceiptController reviewReceiptController){
 
-		receiptBL = reviewReceiptController;
+		receiptControl = reviewReceiptController;
 		
-		approveLabel = new MyLabel("通过");
-		detailedInfoLabel = new MyLabel("查看详情");
+		approveLabel = new MyLabel("审批通过");
+		//detailedInfoLabel = new MyLabel("查看详情");
 		
 		receiptCategoryLabel = new MyTextLabel("单据类型选择");
 		receiptCategoryChoose = new MyComboBox<String>();
@@ -83,16 +82,16 @@ public class CheckReceiptPanel extends OperationPanel {
 		receiptCategoryChoose.addItem(receiptCategoryList[8]);
 		receiptCategoryChoose.addItem(receiptCategoryList[9]);
 		
-		gatheringList = receiptBL.getAllSubmittedGatheringReceipt();
-		collectionList = receiptBL.getAllSubmittedCollectionReceipt();
-		paymentList = receiptBL.getAllSubmittedPaymentReceipt();
-		enIntermediateList = receiptBL.getAllSubmittedEnIntermediateReceipt();
-		transferingList = receiptBL.getAllSubmittedTransferingReceipt();
-		enVehicleList = receiptBL.getAllSubmittedEnVehicleReceipt();
-		orderAcceptList = receiptBL.getAllSubmittedOrderAcceptReceipt();
-		distributeList = receiptBL.getAllSubmittedDistributeReceipt();
-		enterRepertoryList = receiptBL.getAllSubmittedEnterRepertoryReceipt();
-		leaveRepertoryList = receiptBL.getAllSubmittedLeaveRepertoryReceipt();
+		gatheringList = receiptControl.getAllSubmittedGatheringReceipt();
+		collectionList = receiptControl.getAllSubmittedCollectionReceipt();
+		paymentList = receiptControl.getAllSubmittedPaymentReceipt();
+		enIntermediateList = receiptControl.getAllSubmittedEnIntermediateReceipt();
+		transferingList = receiptControl.getAllSubmittedTransferingReceipt();
+		enVehicleList = receiptControl.getAllSubmittedEnVehicleReceipt();
+		orderAcceptList = receiptControl.getAllSubmittedOrderAcceptReceipt();
+		distributeList = receiptControl.getAllSubmittedDistributeReceipt();
+		enterRepertoryList = receiptControl.getAllSubmittedEnterRepertoryReceipt();
+		leaveRepertoryList = receiptControl.getAllSubmittedLeaveRepertoryReceipt();
 
 		receiptCategoryChoose.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae){
@@ -111,7 +110,7 @@ public class CheckReceiptPanel extends OperationPanel {
 		setLayout(null);
 		
 		add(approveLabel);
-		add(detailedInfoLabel);
+		//add(detailedInfoLabel);
 		add(receiptCategoryLabel);
 		add(receiptCategoryChoose);
 
@@ -130,22 +129,22 @@ public class CheckReceiptPanel extends OperationPanel {
 		this.tableWidth = width;
 		this.tableHeight = height;
 		
-		detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
-		approveLabel.setBounds((int) (width * 10.084507042253522 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 1.824583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
+		//detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.7410714285714286 / 20),
+			//	(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
+		approveLabel.setBounds((int) (width * 8.084507042253522 / 25), (int) (height * 1.7410714285714286 / 20),
+				(int) (width * 3.324583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
 		receiptCategoryLabel.setBounds((int) (width * 14.505121638924457 / 25), (int) (height * 1.7410714285714286 / 20),
 				(int) (width * 3.2 / 25), (int) (height * 1.3392857142857142 / 20));
 		receiptCategoryChoose.setBounds((int) (width * 18.005121638924457 / 25), (int) (height * 1.7410714285714286 / 20),
 				(int) (width * 4.353393085787452 / 25), (int) (height * 1.3392857142857142 / 20));
-		messageTable.setLocationAndSize((int) (width * 1.9846350832266326 / 25), (int) (height * 3.464285714285714 / 20),
-				(int) (width * 22.02304737516005 / 25), (int) (height * 15.723214285714286 / 20));
+		messageTable.setLocationAndSize((int) (width * 0.5846350832266326 / 25), (int) (height * 3.464285714285714 / 20),
+				(int) (width * 23.52304737516005 / 25), (int) (height * 15.723214285714286 / 20));
 	}
 
 	
 	private void setBaseInfos(int num){
-		String[] head = new String[]{"单据编号", "单据类型", "提交人/机构编号", "提交人类型", "提交时间", "单据状态"};
-		int[] widths = new int[]{130, 80, 100, 80, 100, 70};
+		String[] head = new String[]{"单据编号", "单据类型", "提交人/机构", "提交人类型", "提交时间", "单据状态"};
+		int[] widths = new int[]{160, 90, 100, 90, 100, 70};
 		currentTable = new MyTable(head, getInfos(num), widths, true);
 		changeTable(currentTable);
 	}
@@ -183,7 +182,7 @@ public class CheckReceiptPanel extends OperationPanel {
 			break;	
 		case 7:
 			for(DistributeReceiptVO distributevo : distributeList)
-				infos.add(new String[]{distributevo.ID, "营业厅派件单", "营业厅", "营业厅业务员", distributevo.time, stateName(distributevo.receiptState)});
+				infos.add(new String[]{distributevo.ID, "营业厅派件单", "YYT-00001", "营业厅业务员", distributevo.time, stateName(distributevo.receiptState)});
 			break;		
 		case 8:
 			for(EnterRepertoryReceiptVO entervo : enterRepertoryList)
@@ -203,13 +202,77 @@ public class CheckReceiptPanel extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		
+		System.out.println(patternNum);
 		if(size == 0){
 			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些单据后再进行审批哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 		else{
-			selectedIndex = selectedIndexs.get(0);
+			int returnNum = 0;
+			
+			if(patternNum == 0){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(gatheringList.get(i).receiptID, gatheringList.get(i));
+			}
+			else if(patternNum == 1){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(collectionList.get(i).receiptID, collectionList.get(i));
+			}
+			else if(patternNum == 2){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(paymentList.get(i).receiptID, paymentList.get(i));
+			}
+			else if(patternNum == 3){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(enIntermediateList.get(i).receiptID, enIntermediateList.get(i));
+			}
+			else if(patternNum == 4){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(transferingList.get(i).receiptID, transferingList.get(i));
+			}
+			else if(patternNum == 5){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(enVehicleList.get(i).receiptID, enVehicleList.get(i));
+			}
+			else if(patternNum == 6){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(orderAcceptList.get(i).receiptID, orderAcceptList.get(i));
+			}
+			else if(patternNum == 7){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(distributeList.get(i).ID, distributeList.get(i));
+			}
+			else if(patternNum == 8){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(enterRepertoryList.get(i).receiptID, enterRepertoryList.get(i));
+				System.out.println("jiemian"+"    shenpi");
+			}
+			else if(patternNum == 9){
+				for(int i :selectedIndexs)
+					returnNum += receiptControl.approve(leaveRepertoryList.get(i).receiptID, leaveRepertoryList.get(i));
+				System.out.println("jiemian"+"    shenpi");
+			}
+
+			if(returnNum == 0)
+				successCheck();
+			else
+				failedCheck();
 		}
+	}
+	
+	public void updateui(){
+		messageTable.setInfos(getInfos(patternNum));
+	}
+	
+	public void successCheck(){
+		updateui();
+		JOptionPane.showMessageDialog(null, "审批成功(●'◡'●)", "审批单据成功", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	//修改失败时返回上一级界面，同时给用户提示信息
+	public void failedCheck(){
+		updateui();
+		JOptionPane.showMessageDialog(null, "审批失败(T_T)", "审批单据失败", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void changeTable(MyTable currentTable){
@@ -217,8 +280,8 @@ public class CheckReceiptPanel extends OperationPanel {
 			remove(messageTable);
 		}
 		messageTable = currentTable;
-		messageTable.setLocationAndSize((int) (tableWidth * 1.9846350832266326 / 25), (int) (tableHeight * 3.464285714285714 / 20),
-				(int) (tableWidth * 22.02304737516005 / 25), (int) (tableHeight * 15.723214285714286 / 20));
+		messageTable.setLocationAndSize((int) (tableWidth * 0.5846350832266326 / 25), (int) (tableHeight * 3.464285714285714 / 20),
+				(int) (tableWidth * 23.52304737516005 / 25), (int) (tableHeight * 15.723214285714286 / 20));
 		add(messageTable);
 		repaint();
 		updateUI();

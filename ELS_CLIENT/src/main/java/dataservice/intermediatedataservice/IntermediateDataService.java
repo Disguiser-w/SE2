@@ -50,8 +50,8 @@ public interface IntermediateDataService extends Remote {
 			ArrayList<EnIntermediateReceiptPO> enIntermediateReceiptList,
 			String organization_ID) throws RemoteException;
 
-	public FarePO getFareInfo(String organization_ID, String fare_ID,
-			String date) throws RemoteException;
+	public ArrayList<FarePO> getFareInfo(String organization_ID, String date)
+			throws RemoteException;
 
 	public OperationState saveFareInfo(String organization_ID, FarePO fare)
 			throws RemoteException;
