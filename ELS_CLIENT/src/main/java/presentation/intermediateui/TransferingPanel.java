@@ -3,22 +3,21 @@ package presentation.intermediateui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
-import java.sql.Savepoint;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.MySearchField;
 import vo.OrderVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class TransferingPanel extends OperationPanel {
 	private IntermediateMainController controller;
 
@@ -34,8 +33,6 @@ public class TransferingPanel extends OperationPanel {
 
 	private MyTable messageTable;
 
-	private int selectedIndex;
-
 	public TransferingPanel(IntermediateMainController c, IntermediateFrame f) {
 		this.controller = c;
 		this.frame = f;
@@ -46,8 +43,6 @@ public class TransferingPanel extends OperationPanel {
 		delButton = new DeleteLabel();
 		saveButton = new MyLabel("存");
 		inputField = new MySearchField();
-
-		selectedIndex = -1;
 
 		add(addButton);
 		add(delButton);

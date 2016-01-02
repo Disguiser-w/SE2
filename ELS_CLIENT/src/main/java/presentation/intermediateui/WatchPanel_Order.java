@@ -3,23 +3,20 @@ package presentation.intermediateui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.UserFrame;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class WatchPanel_Order extends Transfering_newPanel {
 	private MyLabel confirmButton;
 
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 
-	private String id;
-
-	public WatchPanel_Order(IntermediateMainController c, UserFrame f,
-			MyTable m, String id) {
+	public WatchPanel_Order(IntermediateMainController c, UserFrame f, MyTable m) {
 		super(c, f, m);
-		this.id = id;
 		remove(function);
 		remove(OKButton);
 		setBaseInfo();

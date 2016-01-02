@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import presentation.special_ui.AddLabel;
@@ -21,7 +19,9 @@ import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
 import vo.TruckVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class TruckManagementPanel extends OperationPanel {
 	private IntermediateMainController controller;
 
@@ -98,7 +98,6 @@ public class TruckManagementPanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		truckList = controller.getTruckList();
 		for (TruckVO vo : truckList) {
-			String sex = null;
 			infos.add(new String[] { vo.ID,
 					controller.getIntermediateCentre().name, vo.destination,
 					vo.farePrice + "", "工作中" });

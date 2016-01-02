@@ -5,14 +5,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.UserFrame;
 import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TruckVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class WatchPanel_Management extends Management_modifyPanel {
 	private MyLabel confirmButton;
 
