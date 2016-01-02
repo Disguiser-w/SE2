@@ -110,8 +110,8 @@ class MessagePanel extends JPanel {
 	public void setBounds(int x, int y, int width, int height) {
 
 		super.setBounds(x, y, width, height);
-		logoutLabel.setBounds((int) (width * 20.83901773533424 / 25), (int) (height * 5.121951219512195 / 20), 30, 30);
-		exitLabel.setBounds((int) (width * 22.78308321964529 / 25), (int) (height * 5.121951219512195 / 20), 30, 30);
+		logoutLabel.setBounds((int) (width * 20.83901773533424 / 25), (int) (height * 4.521951219512195 / 20), 48, 48);
+		exitLabel.setBounds((int) (width * 22.78308321964529 / 25), (int) (height * 4.521951219512195 / 20), 48, 48);
 		timeLabel.setBounds((int) (width * 1.5688949522510232 / 25), (int) (height * 5.121951219512195 / 20),
 				(int) (width * 8.526603001364256 / 25), (int) (height * 9.75609756097561 / 20));
 	}

@@ -1,6 +1,5 @@
 package presentation.mainui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,6 +36,7 @@ import businesslogic.userbl.controller.UserMainController;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyComboBox;
 import vo.LogVO;
 import vo.OrderVO;
 
@@ -68,7 +67,7 @@ public class MainFrame extends JFrame {
 		add(mainPanel);
 		userbl = new UserBL();
 
-		setTitle("                       ELS");
+//		setTitle("                       ELS");
 		setSize(MAIN_WIDTH, MAIN_HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -493,7 +492,7 @@ public class MainFrame extends JFrame {
 		private JLabel min;
 
 		private JPasswordField passwordField;
-		private JComboBox<String> names;
+		private MyComboBox<String> names;
 
 		private boolean isPressed;
 
@@ -525,7 +524,7 @@ public class MainFrame extends JFrame {
 			min.setIcon(min_normal);
 
 			passwordField = new JPasswordField();
-			names = new JComboBox<String>();
+			names = new MyComboBox<String>();
 
 			nameController = new UserNameController();
 
@@ -724,7 +723,7 @@ public class MainFrame extends JFrame {
 			// return new LogVO("The server failed", null);
 			// }
 
-			LogVO logvo = userbl.login(userID, password);
+			final LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("The user doesn't exist")) {
 				JOptionPane.showMessageDialog(null, "不存在该编号用户", "错误", JOptionPane.ERROR_MESSAGE);
@@ -748,7 +747,8 @@ public class MainFrame extends JFrame {
 						switch (type) {
 						case "KD":
 							// 快递员登录
-							ExpressMainController expressMainController = new ExpressMainController(logvo.uservo.userID);
+							ExpressMainController expressMainController = new ExpressMainController(
+									logvo.uservo.userID);
 							break;
 						case "ZZZX":
 							// 中转中心业务员登录
@@ -762,12 +762,14 @@ public class MainFrame extends JFrame {
 							break;
 						case "YYT":
 							// 营业厅业务员登录
-							BusinessMainController businessMainController = new BusinessMainController(logvo.uservo.userID);
+							BusinessMainController businessMainController = new BusinessMainController(
+									logvo.uservo.userID);
 							break;
 						// 来这里加吧，上面的 uservo通过 logvo.uservo得到
 						case "CW":
 							try {
-								FinanceMainController financeMainController = new FinanceMainController(logvo.uservo.userID);
+								FinanceMainController financeMainController = new FinanceMainController(
+										logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -783,7 +785,8 @@ public class MainFrame extends JFrame {
 							break;
 						case "JL":
 							try {
-								ManageMainController manageMainController = new ManageMainController(logvo.uservo.userID);
+								ManageMainController manageMainController = new ManageMainController(
+										logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -791,7 +794,8 @@ public class MainFrame extends JFrame {
 							break;
 						case "CK":
 							try {
-								RepertoryMainController repertoryMainController = new RepertoryMainController(logvo.uservo.userID);
+								RepertoryMainController repertoryMainController = new RepertoryMainController(
+										logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

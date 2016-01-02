@@ -37,7 +37,6 @@ import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
@@ -99,16 +98,10 @@ public class MyComboBox<E> extends JComboBox<E> {
 			setBackground(Color.WHITE);
 
 		} else if (UserFrame.type == UserFrame.TYPE_1) {
-			// setPopupBorder(BorderFactory.createLineBorder(Color.RED));
-			// setPopupBackground(Color.DARK_GRAY);
-			// setSelectionBackground(Color.BLUE);
-			// setSelectionForeground(Color.RED);
-			// setForegroundAndToPopup(Color.YELLOW);
 			setBackground(Color.BLACK);
 			setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 			setSelectionBackground(new Color(240, 240, 240));
 			setForegroundAndToPopup(Color.WHITE);
-
 		}
 		super.paintComponent(g);
 	}
@@ -475,6 +468,8 @@ public class MyComboBox<E> extends JComboBox<E> {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(triangleColor);
+			if (UserFrame.type == UserFrame.TYPE_1)
+				g2.setColor(Color.WHITE);
 			AffineTransform af = new AffineTransform();
 			af.translate(x, y);
 			Shape shape = af.createTransformedShape(triangle);

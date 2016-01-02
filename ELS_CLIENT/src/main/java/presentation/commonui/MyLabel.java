@@ -88,7 +88,7 @@ public class MyLabel extends JLabel {
 					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
 					g2d.setColor(new Color(0, 121, 255));
 					g2d.drawRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
+//					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
 
 				}
 			}
@@ -98,9 +98,14 @@ public class MyLabel extends JLabel {
 					g2d.drawImage(hover, 0, 0, width, height, this);
 				else {
 
-					g2d.setColor(Color.WHITE);
-					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
+//					g2d.setColor(Color.WHITE);
+//					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
+//					g2d.setColor(Color.BLACK);
 					g2d.setColor(Color.BLACK);
+					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
+					g2d.setColor(Color.WHITE);
+					g2d.drawRoundRect(0, 0, width - 1, height - 1, radio, radio);
+//					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
 				}
 
 			}
@@ -111,9 +116,9 @@ public class MyLabel extends JLabel {
 				else {
 					g2d.setColor(Color.BLACK);
 					g2d.fillRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.setColor(Color.WHITE);
+					g2d.setColor(new Color(150,150,150));
 					g2d.drawRoundRect(0, 0, width - 1, height - 1, radio, radio);
-					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
+//					g2d.drawRoundRect(1, 1, width - 3, height - 3, radio, radio);
 
 				}
 			}
