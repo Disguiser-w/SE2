@@ -9,12 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
-import type.OperationState;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class Transfering_newPanel extends OperationPanel {
 	protected IntermediateMainController controller;
 
