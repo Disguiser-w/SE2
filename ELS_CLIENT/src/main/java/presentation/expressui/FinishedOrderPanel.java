@@ -25,7 +25,7 @@ import vo.OrderVO;
 public class FinishedOrderPanel extends OperationPanel {
 	private MySearchField orderIDField;
 	private JLabel clearLabel;
-	private JTextArea messageArea;
+	private MyTextArea messageArea;
 
 	private JLabel receiveTimeLabel;
 	private JLabel receiverNameLabel;

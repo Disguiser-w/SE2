@@ -306,7 +306,7 @@ public class DriverManagerPanel extends OperationPanel {
 			setInfo1();
 			addListener1();
 
-			helper = new LocationHelper(this);
+
 
 		}
 
@@ -665,7 +665,6 @@ public class DriverManagerPanel extends OperationPanel {
 			setInfo1();
 			addListener2();
 
-			helper = new LocationHelper(this);
 
 		}
 

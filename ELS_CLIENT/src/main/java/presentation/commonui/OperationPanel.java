@@ -42,8 +42,13 @@ public class OperationPanel extends JPanel implements Observer {
 		remove(field.getLabel());
 	}
 
+	public void add(MyTextLabel label) {
+		super.add(label);
+		label.addObservable(this);
+	}
+
 	public void paintComponent(Graphics g) {
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -54,13 +59,12 @@ public class OperationPanel extends JPanel implements Observer {
 			g2d.fillRect(0, 0, getWidth(), getHeight());
 		} else if (UserFrame.type == UserFrame.TYPE_1)
 			g2d.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-		
+
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
-
 	}
 
 }
