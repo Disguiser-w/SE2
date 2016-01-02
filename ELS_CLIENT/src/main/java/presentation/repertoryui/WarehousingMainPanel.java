@@ -150,8 +150,7 @@ public class WarehousingMainPanel extends OperationPanel {
 
 		detailedInfoLabel.setBounds((int) (width * 7.624839948783611 / 25), (int) (height * 1.0007142857142858 / 20),
 				(int) (width * 3.8303571428571428 / 25), (int) (height * 1.3003571428571428 / 22));
-		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.0007142857142858 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3003571428571428 / 22));
+		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.0007142857142858 / 20), 100, 30);
 		warehousingMessageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 12.535714285714286 / 20));
 		chooseLabel.setBounds((int) (width * 1.0409731113956466 / 25), (int) (height * 15.080357142857142 / 20),

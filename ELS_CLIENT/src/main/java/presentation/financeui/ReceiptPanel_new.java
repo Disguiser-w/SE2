@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import businesslogic.financebl.controller.CollectionReceiptBLController;
 import businesslogic.financebl.controller.PaymentReceiptBLController;
 import businesslogic.managebl.controller.OrganizationManageController;
+import businesslogic.receiptbl.GetDate;
 import common.FileExporter;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
@@ -319,14 +320,9 @@ public class ReceiptPanel_new extends  OperationPanel {
 			String[] head = new String[]{"收款单编号","收款日期","收款金额","收款人","账户","单据状态"};
 			try {
 				FileExporter.exportExcel("collection.xls", head, collectionExcel);
-				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
-						JOptionPane.CLOSED_OPTION);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-//				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
-//						JOptionPane.WARNING_MESSAGE);
-//				System.out.println("导出excel失败了");
 			}
 		}
 		//导出付款单
@@ -358,15 +354,10 @@ public class ReceiptPanel_new extends  OperationPanel {
 			}
 			String[] head = new String[]{"付款单编号","付款日期","付款金额","付款人","账户","单据状态"};
 			try {
-				FileExporter.exportExcel("payment.xls", head, paymentExcel);
-//				JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
-//						JOptionPane.CLOSED_OPTION);
+				FileExporter.exportExcel(GetDate.getTime()+"payment.xls", head, paymentExcel);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-//				JOptionPane.showMessageDialog(null, "导出excel失败了！", "提示",
-//						JOptionPane.WARNING_MESSAGE);
-//				System.out.println("导出excel失败了");
 			}
 			
 		}
@@ -374,11 +365,13 @@ public class ReceiptPanel_new extends  OperationPanel {
 	}
 
 	public void new1ui() {
+		collectionReceiptButton_new.reSet();
 		financeFrame.changePanel(new CollectionReceiptPanel(collectionController, financeFrame,user,organizationController,accountManagementPanel_main
 				,costIncomeReceiptPanel_new,logDiaryPanel,this));
 	}
 
 	public void new2ui() {
+		paymentReceiptButton_new.reSet();
 		financeFrame.changePanel(new PaymentReceiptPanel(paymentReceiptBLController,financeFrame,user,accountManagementPanel_main
 				,costIncomeReceiptPanel_new,logDiaryPanel,this));
 	}

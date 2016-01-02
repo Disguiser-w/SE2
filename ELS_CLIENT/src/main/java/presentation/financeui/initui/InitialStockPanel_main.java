@@ -29,7 +29,6 @@ public class InitialStockPanel_main extends OperationPanel {
 	private MyLabel newButton;
 	private MyLabel detailButton;
 	
-//	private JLabel function;
 
 	private MyTable initTable;
 	
@@ -142,11 +141,13 @@ public class InitialStockPanel_main extends OperationPanel {
 	}
 
 	public void newInitInfoui() {
+		newButton.reSet();
 		financeFrame.changePanel(new InitialStockPanel_new(controller, userController,organizationController,
 				vehicleController,repertoryController,accountController, financeFrame,this,userVO,logDiaryPanel));
 		}
 	
 	public void detailui(){
+		detailButton.reSet();
 		ArrayList<Integer> selectedIndexs = initTable.getSelectedIndex();
 		if(selectedIndexs.size()==0){
 			JOptionPane.showMessageDialog(null, "请选中某一个或某一项后再查看哦！", "没有选择账户", JOptionPane.WARNING_MESSAGE);

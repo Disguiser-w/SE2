@@ -217,8 +217,7 @@ public class BasicDataManagePanel extends OperationPanel {
 		addLabel.setBounds((int) (width * 3.12932138284251 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
 		delLabel.setBounds((int) (width * 6.482714468629961 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
 		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
-		searchField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 4.219642857142857 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.303571428571428 / 22));
+		searchField.setBounds((int) (width * 17.805121638924457 / 25), (int) (height * 4.219642857142857 / 20), 100, 30);
 		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 5.951428571428571 / 20),
 				(int) (width * 21.862996158770805 / 25), (int) (height * 12.351428571428571 / 20));
 	}

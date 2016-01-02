@@ -9,7 +9,7 @@ import vo.UserVO;
 
 public interface UserBLService {
 	
-	public LogVO login(String userID, String password) throws RemoteException;
+	public LogVO login(String userName, String password) throws RemoteException;
 	public int addUser(UserVO uservo) throws RemoteException;
 	public int deleteUser(String userID) throws RemoteException;
 	public int modifyUserPassword(String userID, String newPassword) throws RemoteException;

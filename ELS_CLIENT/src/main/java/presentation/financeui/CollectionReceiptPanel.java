@@ -53,7 +53,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	private MyTable collectionTable;
 
-//	private int businesshallInt;
+	private int businesshallInt;
 	public CollectionReceiptBLController controller;
 	public OrganizationManageController organizationController;
 	public FinanceFrame financeFrame;
@@ -103,7 +103,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			}
 		}
 
-//		businesshallInt = -1;
+		businesshallInt = -1;
 		hallID = "";
 
 		setLayout(null);
@@ -166,7 +166,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		date_Input.setBounds((int) (width * 3.877295918367347 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 2.874234693877551 / 25), (int) (height * 1.0 / 20));
 		businessHallID_Input.setBounds((int) (width * 12.333163265306122 / 25),
-				(int) (height * 0.93052837573385516 / 20), (int) (width * 5.174234693877551 / 25),
+				(int) (height * 0.93052837573385516 / 20), (int) (width * 2.874234693877551 / 25),
 				(int) (height * 1.0 / 20));
 		collectionTable.setLocationAndSize((int) (width * 1.1002551020408165 / 25),
 				(int) (height * 2.505479452054795 / 20), (int) (width * 22.92091836734694 / 25),
@@ -231,9 +231,8 @@ public class CollectionReceiptPanel extends OperationPanel {
 //				businessHallVOs.add(v);
 //			}
 //		}
-////		businesshallInt = businessHallID_Input.getSelectedIndex();
-////		hallID = businessHallVOs.get(businesshallInt).organizationID;
-//		hallID = (String) businessHallID_Input.getSelectedItem();
+//		businesshallInt = businessHallID_Input.getSelectedIndex();
+//		hallID = businessHallVOs.get(businesshallInt).organizationID;
 	}
 
 	/**
@@ -280,7 +279,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		double money = controller.getTotalMoney(controller.getGatheringByTime(date_str));
 		infoLine.setText("日期：" + GetDate.getdate() + "    金额总和：" + money);
 		CollectionReceiptVO vo = new CollectionReceiptVO(controller.getCollectionListID(), user.userID,
-				ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, GetDate.getdate(), "总账");
+				ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, GetDate.getdate(), "boss");
 		int temp = controller.creatCollection(vo);
 		if (temp == 0) {
 			controller.excute(vo);

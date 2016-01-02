@@ -17,6 +17,7 @@ import dataservice.managedataservice.BasicSalaryDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import dataservice.managedataservice.PerWageDataService;
 import dataservice.userdataservice.UserDataService;
+import po.FarePO;
 import po.OrganizationPO;
 import po.PaymentReceiptPO;
 import po.UserPO;
@@ -196,6 +197,7 @@ public class PaymentReceiptBL extends ReceiptBL {
 	 * */
 	public double getFare(String time) {
 		// TODO Auto-generated method stub
+		double fare = 0;
 		ArrayList<OrganizationPO> organizationPOs;
 		try {
 			organizationPOs = organizationData.showAllOrganizations();
@@ -205,12 +207,28 @@ public class PaymentReceiptBL extends ReceiptBL {
 					pos_intermedia.add(p);
 				}
 			}
+			String timetemp;
+			ArrayList<FarePO> farepotemp;
+			String nianyue = time.substring(0,8);
+			String[] date = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",
+					"21","22","23","24","25","26","27","28","29","30","31"};
+			for(int i=0;i<31;i++){
+				timetemp = nianyue + date[i];
+			for(OrganizationPO p : pos_intermedia){
+				farepotemp = intermediateData.getFareInfo(p.getOrganizationID(), timetemp);
+				if(farepotemp!=null){
+				for(FarePO ftemp :farepotemp){
+					fare = fare +ftemp.getMoney();
+				}
+			}
+			}
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return 0;
+		return fare;
 	}
 
 	
