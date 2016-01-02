@@ -86,8 +86,12 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		}
 
 		// 新建一个Goods记录以便仓库管理员使用
+		String[] leavePlaceAll = po.getSenderAddress().split(" ");
+		String leavePlaceStr = leavePlaceAll[0] + leavePlaceAll[1];
+		String[] destinationAll = po.getRecipientAddress().split(" ");
+		String destinationStr = destinationAll[0] + destinationAll[1];
 		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight() + po.getPackingExpense(),
-				po.getRecipientOrganization(), po.getSenderOrganization());
+				leavePlaceStr, destinationStr);
 		goodsData.addGoods(newGood);
 
 		// 获取今日时间

@@ -42,7 +42,7 @@ public class UserBL implements UserBLService {
 			if (userList == null || userList.size() == 0) // 找不到该用户，返回2
 				return new LogVO("The user doesn't exist", null);
 			UserPO userpo = userList.get(0);
-			if (userpo.getOrganization().equals("")) {
+			if (userpo.getOrganization().equals("") || !userpo.getName().equals(userName)) {
 				return new LogVO("The user doesn't exist", null);
 			}
 			if (!(userpo.getPassword().equals(password))) // 用户密码错误，返回1
