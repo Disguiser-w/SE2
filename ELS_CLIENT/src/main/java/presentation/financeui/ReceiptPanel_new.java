@@ -292,6 +292,11 @@ public class ReceiptPanel_new extends  OperationPanel {
 		//导出入款单
 		if(currentTable == collectionTable){
 			collectionReceiptVOs = collectionController.getAllCollection();
+			if(collectionReceiptVOs.size() == 0 ){
+				 JOptionPane.showMessageDialog(null, "表格中无内容！", "提示",
+						 JOptionPane.WARNING_MESSAGE);
+			}
+			else{
 			String[][] collectionExcel= new String[collectionReceiptVOs.size()][6];
 			int temp =0;
 			for(CollectionReceiptVO v : collectionReceiptVOs){
@@ -325,9 +330,15 @@ public class ReceiptPanel_new extends  OperationPanel {
 				e.printStackTrace();
 			}
 		}
+		}
 		//导出付款单
 		else{
 			paymentReceiptVOs = paymentReceiptBLController.getAllPaymentReceipt();
+			if(paymentReceiptVOs.size() == 0 ){
+				 JOptionPane.showMessageDialog(null, "表格中无内容！", "提示",
+						 JOptionPane.WARNING_MESSAGE);
+			}
+			else{
 			String[][] paymentExcel= new String[paymentReceiptVOs.size()][6];
 			int temp =0;
 			for(PaymentReceiptVO v : paymentReceiptVOs){
@@ -358,6 +369,7 @@ public class ReceiptPanel_new extends  OperationPanel {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
 			}
 			
 		}

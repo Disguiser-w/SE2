@@ -53,7 +53,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 
 	private MyTable collectionTable;
 
-	private int businesshallInt;
 	public CollectionReceiptBLController controller;
 	public OrganizationManageController organizationController;
 	public FinanceFrame financeFrame;
@@ -103,7 +102,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 			}
 		}
 
-		businesshallInt = -1;
 		hallID = "";
 
 		setLayout(null);

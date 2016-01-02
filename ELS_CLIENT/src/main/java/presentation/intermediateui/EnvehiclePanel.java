@@ -112,6 +112,7 @@ public class EnvehiclePanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					controller.getTransferingBL().saveTransferingReceipt();
+					saveSuccessing("装车单信息已保存");
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
@@ -129,5 +130,10 @@ public class EnvehiclePanel extends OperationPanel {
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "装车成功",
 				JOptionPane.DEFAULT_OPTION);
+	}
+	
+	public void saveSuccessing(String message) {
+		JOptionPane.showMessageDialog(null, message, "保存成功",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 }

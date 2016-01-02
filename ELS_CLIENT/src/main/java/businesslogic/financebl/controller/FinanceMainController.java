@@ -149,7 +149,7 @@ public class FinanceMainController {
 			financeFrame.addFuncLabel(costIncomeReceiptPanel_new,"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
 			financeFrame.addFuncLabel(businessStateReceiptPanel, "经营情况表",ImageGetter.getImage("businessStatement.png").getImage());
 			financeFrame.addFuncLabel(initialStockPanel_main,"期初建账",ImageGetter.getImage("initInfo.png").getImage());
-			financeFrame.addFuncLabel(logDiaryPanel, "系统日志",ImageGetter.getImage("库存查看.png").getImage());
+			financeFrame.addFuncLabel(logDiaryPanel, "系统日志",ImageGetter.getImage("viewInventory.png").getImage());
 		
 			financeFrame.showFrame();
 		} else {
@@ -157,7 +157,7 @@ public class FinanceMainController {
 			financeFrame.addFuncLabel(costIncomeReceiptPanel_new,"成本收益表",ImageGetter.getImage("costIncome.png").getImage());
 			financeFrame.addFuncLabel(businessStateReceiptPanel, "经营情况表",ImageGetter.getImage("businessStatement.png").getImage());
 			financeFrame.addFuncLabel(initialStockPanel_main,"期初建账",ImageGetter.getImage("initInfo.png").getImage());
-			financeFrame.addFuncLabel(logDiaryPanel, "系统日志",ImageGetter.getImage("库存查看.png").getImage());
+			financeFrame.addFuncLabel(logDiaryPanel, "系统日志",ImageGetter.getImage("viewInventory.png").getImage());
 		
 			financeFrame.showFrame();
 		}

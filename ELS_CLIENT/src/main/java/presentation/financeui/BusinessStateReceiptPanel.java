@@ -5,14 +5,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.financebl.controller.BusinessStatementReceiptBLController;
 import businesslogic.receiptbl.GetDate;
 import common.FileExporter;
 import presentation.commonui.DateChooser;
-import presentation.commonui.DateChooserPanel;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
