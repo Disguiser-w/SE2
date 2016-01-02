@@ -55,6 +55,8 @@ public class Management_newPanel extends OperationPanel {
 		this.frame = f;
 		this.messageTable = m;
 		this.type = s;
+		
+		farePrice_input = new MyTextField();
 
 		switch (type) {
 		case "plane":
@@ -70,11 +72,12 @@ public class Management_newPanel extends OperationPanel {
 								controller.getPlaneList().size() - 1).ID
 								.length())) + 1;
 
-			function = new JLabel("新增汽车");
-			ID = new JLabel("汽车编号");
-			destination = new JLabel("汽车目的地");
-			farePrice = new JLabel("汽车租金（/个）");
+			function = new JLabel("新增飞机");
+			ID = new JLabel("飞机编号");
+			destination = new JLabel("飞机目的地");
+			farePrice = new JLabel("飞机租金（/个）");
 			OKButton = new MyLabel("ok");
+			farePrice_input.setText("0.2");
 
 			OKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -112,6 +115,7 @@ public class Management_newPanel extends OperationPanel {
 			destination = new JLabel("火车目的地");
 			farePrice = new JLabel("火车租金（/个）");
 			OKButton = new MyLabel("ok");
+			farePrice_input.setText("0.002");
 
 			OKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -149,6 +153,7 @@ public class Management_newPanel extends OperationPanel {
 			destination = new JLabel("汽车目的地");
 			farePrice = new JLabel("汽车租金（/个）");
 			OKButton = new MyLabel("ok");
+			farePrice_input.setText("0.02");
 
 			OKButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
@@ -171,8 +176,6 @@ public class Management_newPanel extends OperationPanel {
 		}
 
 		intermediateCenterID = controller.getIntermediateCentre().organizationID;
-		farePrice_input = new MyTextField();
-		farePrice_input.setText("0.2");
 
 		try {
 			cityDistanceData = DataFactory.getCityDistanceData();

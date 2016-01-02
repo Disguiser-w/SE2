@@ -6,6 +6,6 @@ import vo.UserVO;
 @SuppressWarnings("serial")
 public class IntermediateFrame extends UserFrame {
 	public IntermediateFrame(UserVO intermediate) {
-		super(intermediate.organization, intermediate.userID);
+		super(intermediate.userName, intermediate.userID);
 	}
 }
