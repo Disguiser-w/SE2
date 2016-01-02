@@ -163,11 +163,11 @@ public class TransferingPanel extends OperationPanel {
 
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "提交成功",
-				JOptionPane.DEFAULT_OPTION);
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void saveSuccessing(String message) {
 		JOptionPane.showMessageDialog(null, message, "保存成功",
-				JOptionPane.DEFAULT_OPTION);
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 }
