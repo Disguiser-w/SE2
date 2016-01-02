@@ -19,7 +19,6 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 	private IntermediateDataService intermediateData;
 
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
-	private ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
 
 	private OrganizationVO intermediateCenter;
 	private UserVO intermediate;
@@ -28,8 +27,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 
 	public PlaneManagerBL(ArrayList<PlaneVO> planeList,
 			OrganizationVO intermediateCentre,
-			IntermediateDataService intermediateData,
-			UserVO intermediate) {
+			IntermediateDataService intermediateData, UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.planeList = planeList;
 		this.intermediateCenter = intermediateCentre;
@@ -61,6 +59,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 			if (plane.ID.equals(s)) {
 				planeList.remove(plane);
 				savePlaneList();
+				System.out.println("oyo");
 				logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(),
 						intermediate, "在本中转中心飞机列表中删除了一架飞机"), GetDate.getTime());
 				return OperationState.SUCCEED_OPERATION;
@@ -94,6 +93,7 @@ public class PlaneManagerBL implements PlaneManagerBLService {
 
 	public OperationState savePlaneList() throws RemoteException {
 		// TODO 自动生成的方法存根
+		ArrayList<PlanePO> planeList_temp = new ArrayList<PlanePO>();
 		for (PlaneVO plane : planeList)
 			planeList_temp.add(IntermediateMainController.voToPO(plane));
 		intermediateData.savePlaneList(intermediateCenter.organizationID,

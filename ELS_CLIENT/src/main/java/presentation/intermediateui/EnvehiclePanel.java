@@ -13,6 +13,7 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import presentation.special_ui.MySearchField;
 import vo.OrderVO;
 
 public class EnvehiclePanel extends OperationPanel {
@@ -25,8 +26,7 @@ public class EnvehiclePanel extends OperationPanel {
 	private MyLabel envehicle;
 	private MyLabel saveButton;
 
-	private MyTextField inputField;
-	private MyLabel confirmButton;
+	private MySearchField inputField;
 
 	private MyTable messageTable;
 
@@ -41,14 +41,12 @@ public class EnvehiclePanel extends OperationPanel {
 		envehicle = new MyLabel("do");
 		saveButton = new MyLabel("cun");
 
-		inputField = new MyTextField();
-		confirmButton = new MyLabel();
+		inputField = new MySearchField();
 
 		selectedIndex = -1;
 
 		add(envehicle);
 		add(inputField);
-		add(confirmButton);
 		add(saveButton);
 
 		setLayout(null);
@@ -69,12 +67,7 @@ public class EnvehiclePanel extends OperationPanel {
 				(int) (height * 1.3978494623655915 / 20));
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
 				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25),
-				(int) (height * 1.075268817204301 / 20));
-		confirmButton.setBounds((int) (width * 21.350613915416098 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 1.6371077762619373 / 25),
-				(int) (height * 1.039426523297491 / 20));
+				(int) (width * 5.320600272851296 / 25), 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20),
@@ -122,21 +115,6 @@ public class EnvehiclePanel extends OperationPanel {
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
-				}
-			}
-		});
-
-		confirmButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				String id = inputField.getText();
-				if (id.equals(""))
-					warnning("请输入飞机");
-
-				for (OrderVO vo : waitingOrderList) {
-					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel_Order(controller,
-								frame, messageTable, vo.ID));
-					}
 				}
 			}
 		});

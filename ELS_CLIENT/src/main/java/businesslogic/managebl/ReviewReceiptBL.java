@@ -235,10 +235,10 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个中转中心装车单
 	public int approveEnIntermediateReceipt(EnIntermediateReceiptVO erVO){
-		/*EnplaningReceiptPO erPO = IntermediateMainController.voToPO(erVO);
+		/*EnIntermediateReceiptPO erPO = IntermediateMainController.voToPO(erVO);
 		erPO.setReceiptState(ReceiptState.APPROVE);
 		try{
-			itmdService.saveEnIntermediateReceiptInfo(erPO);
+			itmdService.saveEnIntermediateReceipt(erPO);
 			return 0;
 		}catch (RemoteException e) {
 			e.printStackTrace();
@@ -269,7 +269,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		/*TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
 		trPO.setReceiptState(ReceiptState.APPROVE);
 		try{
-			itmdService.saveTransferingReceiptInfo(trPO);
+			itmdService.saveSubmittedTransferingReceipt(trPO);
 			return 0;
 		}catch (RemoteException e) {
 			e.printStackTrace();

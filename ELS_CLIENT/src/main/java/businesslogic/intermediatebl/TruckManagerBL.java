@@ -19,7 +19,6 @@ public class TruckManagerBL implements TruckManageBLService {
 	private IntermediateDataService intermediateData;
 
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
-	private ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
 
 	private OrganizationVO intermediateCenter;
 	private UserVO intermediate;
@@ -28,8 +27,7 @@ public class TruckManagerBL implements TruckManageBLService {
 
 	public TruckManagerBL(ArrayList<TruckVO> truckList,
 			OrganizationVO intermediateCentre,
-			IntermediateDataService intermediateData,
-			UserVO intermediate) {
+			IntermediateDataService intermediateData, UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.truckList = truckList;
 		this.intermediateCenter = intermediateCentre;
@@ -94,6 +92,7 @@ public class TruckManagerBL implements TruckManageBLService {
 
 	public OperationState saveTruckList() throws RemoteException {
 		// TODO 自动生成的方法存根
+		ArrayList<TruckPO> truckList_temp = new ArrayList<TruckPO>();
 		for (TruckVO truck : truckList)
 			truckList_temp.add(IntermediateMainController.voToPO(truck));
 		System.out.println(intermediateCenter.organizationID);

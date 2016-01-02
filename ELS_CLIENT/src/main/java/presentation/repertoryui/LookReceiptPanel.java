@@ -142,8 +142,7 @@ public class LookReceiptPanel extends OperationPanel {
 				(int) (width * 2.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
 		detailedInfoLabel.setBounds((int) (width * 12.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
 				(int) (width * 2.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
-		searchField.setBounds((int) (width * 18.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20),
-				(int) (width * 3.6645326504481435 / 25), (int) (height * 1.2053571428571428 / 20));
+		searchField.setBounds((int) (width * 18.070422535211268 / 25), (int) (height * 1.20053571428571428 / 20), 100, 30);
 		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.8053571428571428 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 13.83571428571428 / 20));
 		sendLabel.setBounds((int) (width * 10.979513444302176 / 25), (int) (height * 17.410714285714285 / 20),

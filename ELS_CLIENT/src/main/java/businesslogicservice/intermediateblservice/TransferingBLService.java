@@ -9,7 +9,7 @@ import vo.TransferingReceiptVO;
 public interface TransferingBLService {
     public TransferingReceiptVO showTransferingReceipt();
     
-    public OperationState addOrder(String ID) throws RemoteException;
+    public String[] addOrder(String ID) throws RemoteException;
     
     public OperationState deleteOrder(String ID) throws Exception;
     

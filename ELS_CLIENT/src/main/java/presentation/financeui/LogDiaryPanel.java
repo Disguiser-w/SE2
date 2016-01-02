@@ -70,7 +70,6 @@ public class LogDiaryPanel extends OperationPanel {
 
 		add(startDateLabel);
 		add(dateOKLabel);
-		// add(function);
 		add(refreshLabel);
 		add(startDate_Input);
 
@@ -132,6 +131,7 @@ public class LogDiaryPanel extends OperationPanel {
 	}
 
 	public void refreshui() {
+		refreshLabel.reSet();
 		ArrayList<LogDiaryVO> logDiaryVOs = controller.getAllLogDiaryVOs();
 		logDiaryTable.setInfos(getInfos(logDiaryVOs));
 	}

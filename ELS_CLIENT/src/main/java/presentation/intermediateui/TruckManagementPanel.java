@@ -19,6 +19,7 @@ import presentation.commonui.UserFrame;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
+import presentation.special_ui.MySearchField;
 import vo.TruckVO;
 
 public class TruckManagementPanel extends OperationPanel {
@@ -32,8 +33,7 @@ public class TruckManagementPanel extends OperationPanel {
 	private MyLabel delButton;
 	private MyLabel modifyButton;
 
-	private MyTextField inputField;
-	private MyLabel confirmButton;
+	private MySearchField inputField;
 
 	private MyTable messageTable;
 
@@ -49,8 +49,7 @@ public class TruckManagementPanel extends OperationPanel {
 		delButton = new DeleteLabel();
 		modifyButton = new ModifyLabel();
 
-		inputField = new MyTextField();
-		confirmButton = new MyLabel();
+		inputField = new MySearchField();
 
 		selectedIndex = -1;
 
@@ -59,7 +58,6 @@ public class TruckManagementPanel extends OperationPanel {
 		add(modifyButton);
 
 		add(inputField);
-		add(confirmButton);
 
 		setLayout(null);
 		addListener();
@@ -79,12 +77,7 @@ public class TruckManagementPanel extends OperationPanel {
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
 				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25),
-				(int) (height * 1.075268817204301 / 20));
-		confirmButton.setBounds((int) (width * 21.350613915416098 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 1.6371077762619373 / 25),
-				(int) (height * 1.039426523297491 / 20));
+				(int) (width * 5.320600272851296 / 25), 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20),
@@ -96,7 +89,7 @@ public class TruckManagementPanel extends OperationPanel {
 		String[] head = new String[] { "汽车编号", "所属机构", "目的地", "运送费用", "工作状态" };
 
 		int[] widths = { 80, 196, 60, 197, 60 };
-		
+
 		messageTable = new MyTable(head, getInfos(), widths, true);
 		add(messageTable);
 	}
@@ -168,21 +161,6 @@ public class TruckManagementPanel extends OperationPanel {
 					}
 					truckList = controller.getTruckList();
 					messageTable.setInfos(getInfos());
-				}
-			}
-		});
-
-		confirmButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				String id = inputField.getText();
-				if (id.equals(""))
-					warnning("请输入汽车");
-
-				for (TruckVO vo : truckList) {
-					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel_Management(controller,
-								frame, messageTable, vo, 0));
-					}
 				}
 			}
 		});

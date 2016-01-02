@@ -212,6 +212,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo/transferingReceipt/"
 				+ organization_ID + "-" + date + "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -277,6 +280,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ organization_ID + "-" + date + "-enIntermediateReceipt.dat";
 		File file = FileGetter.getFile(path);
 
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -347,7 +353,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		if (!file.exists()) {
-			FileGetter.createFile(file);
+			return null;
 		}
 
 		try {
@@ -395,7 +401,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		String path = "receiptInfo/transferingReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -448,11 +456,37 @@ public class IntermediateData extends UnicastRemoteObject implements
 		return OperationState.FAIL_OPERATION;
 	}
 
+	public OperationState saveSubmittedTransferingReceipt(
+			TransferingReceiptPO transferingReceipt) {
+		ArrayList<TransferingReceiptPO> transferingReceiptList = null;
+		try {
+			transferingReceiptList = getSubmittedTransferingReceiptInfo();
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		for (TransferingReceiptPO ope : transferingReceiptList) {
+			if (ope.getID().equals(transferingReceipt.getID()))
+				transferingReceiptList.set(transferingReceiptList.indexOf(ope),
+						transferingReceipt);
+		}
+		try {
+			saveSubmittedTransferingReceiptInfo(transferingReceiptList);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
+		return OperationState.SUCCEED_OPERATION;
+	}
+
 	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo()
 			throws RemoteException {
 		String path = "receiptInfo/enIntermediateReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -503,6 +537,29 @@ public class IntermediateData extends UnicastRemoteObject implements
 		}
 
 		return OperationState.FAIL_OPERATION;
+	}
+
+	public OperationState saveSubmittedEnIntermediateReceipt(
+			EnIntermediateReceiptPO receipt) {
+		ArrayList<EnIntermediateReceiptPO> receiptList = null;
+		try {
+			receiptList = getSubmittedEnIntermediateReceiptInfo();
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		for (EnIntermediateReceiptPO ope : receiptList) {
+			if (ope.getID().equals(receipt.getID()))
+				receiptList.set(receiptList.indexOf(ope), receipt);
+		}
+		try {
+			saveSubmittedEnIntermediateReceiptInfo(receiptList);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
+		return OperationState.SUCCEED_OPERATION;
 	}
 
 	private String getDate() {
