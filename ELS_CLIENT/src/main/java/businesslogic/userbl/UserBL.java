@@ -39,9 +39,12 @@ public class UserBL implements UserBLService {
 	public LogVO login(String userName, String password) {
 		try {
 			ArrayList<UserPO> userList = udService.findUserByKeyword(userName);
-			if (userList == null) // 找不到该用户，返回2
+			if (userList == null || userList.size() == 0) // 找不到该用户，返回2
 				return new LogVO("The user doesn't exist", null);
 			UserPO userpo = userList.get(0);
+			if (userpo.getOrganization().equals("")) {
+				return new LogVO("The user doesn't exist", null);
+			}
 			if (!(userpo.getPassword().equals(password))) // 用户密码错误，返回1
 				return new LogVO("The userID and the password don't match", null);
 			else {
