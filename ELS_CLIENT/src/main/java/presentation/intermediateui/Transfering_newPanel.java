@@ -6,12 +6,14 @@ import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import type.OperationState;
 
 public class Transfering_newPanel extends OperationPanel {
 	protected IntermediateMainController controller;
@@ -48,8 +50,12 @@ public class Transfering_newPanel extends OperationPanel {
 		OKButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
-					controller.getTransferingBL().addOrder(
-							order_ID_input.getText());
+					if (controller.getTransferingBL().addOrder(
+							order_ID_input.getText()) == null)
+						warnning("错误的订单号");
+					messageTable.addRow(controller.getTransferingBL().addOrder(
+							order_ID_input.getText()));
+
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
@@ -84,5 +90,10 @@ public class Transfering_newPanel extends OperationPanel {
 				(int) (PANEL_HEIGHT * 5.215419501133787 / 20),
 				(int) (PANEL_WIDTH * 9.907670454545455 / 25),
 				(int) (PANEL_HEIGHT * 1.8594104308390023 / 20));
+	}
+
+	public void warnning(String message) {
+		JOptionPane.showMessageDialog(null, message, "订单信息错误",
+				JOptionPane.ERROR_MESSAGE);
 	}
 }

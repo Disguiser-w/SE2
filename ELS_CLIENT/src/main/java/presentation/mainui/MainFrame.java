@@ -724,7 +724,7 @@ public class MainFrame extends JFrame {
 			// return new LogVO("The server failed", null);
 			// }
 
-			LogVO logvo = userbl.login(userID, password);
+			final LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("The user doesn't exist")) {
 				JOptionPane.showMessageDialog(null, "不存在该编号用户", "错误", JOptionPane.ERROR_MESSAGE);

@@ -1,19 +1,23 @@
 package businesslogic.intermediatebl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import businesslogic.expressbl.controller.ExpressMainController;
-import businesslogic.financebl.LogDiaryBL;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.TransferingBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import type.OperationState;
 import type.OrderState;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
 import vo.UserVO;
+import businesslogic.datafactory.DataFactory;
+import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.financebl.LogDiaryBL;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.TransferingBLService;
+import dataservice.expressdataservice.ExpressDataService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class TransferingBL implements TransferingBLService {
 	private TransferingReceiptVO transferingReceipt;
@@ -22,13 +26,26 @@ public class TransferingBL implements TransferingBLService {
 	private UserVO intermediate;
 	private LogDiaryBL logDiary;
 
+	private ExpressDataService expressData;
+
 	public TransferingBL(TransferingReceiptVO transferingReceipt,
-			IntermediateDataService intermediateData,
-			UserVO intermediate) {
+			IntermediateDataService intermediateData, UserVO intermediate) {
 		this.transferingReceipt = transferingReceipt;
 		this.intermediateData = intermediateData;
 		this.intermediate = intermediate;
 
+		try {
+			expressData = DataFactory.getExpressData();
+		} catch (MalformedURLException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 		logDiary = new LogDiaryBL();
 	}
 
@@ -37,15 +54,48 @@ public class TransferingBL implements TransferingBLService {
 		return transferingReceipt;
 	}
 
-	public OperationState addOrder(String ID) throws RemoteException {
+	public String[] addOrder(String ID) throws RemoteException {
 		// TODO 自动生成的方法存根
-		OrderVO order = IntermediateMainController
-				.poToVO(ExpressMainController.expressData.find(ID));
+		if (expressData.find(ID) == null)
+			return null;
+
+		OrderVO order = IntermediateMainController.poToVO(expressData.find(ID));
 		order.order_state = OrderState.WAITING_ENVEHICLE;
 		transferingReceipt.orderList.add(order);
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
 				"在本中转中心新接收了一个快件"), GetDate.getTime());
-		return OperationState.SUCCEED_OPERATION;
+		String state = "";
+		switch (order.order_state) {
+		case WAITING_ENVEHICLE:
+			state = "等待装车";
+			break;
+		case TRANSFERING:
+			state = "中转中";
+			break;
+		case WAITING_DISTRIBUTE:
+			state = "等待派件";
+			break;
+		case DISTRIBUEING:
+			state = "派件中";
+			break;
+		case FINISHED:
+			state = "已完成";
+			break;
+		}
+		String type = "";
+		switch (order.expressType) {
+		case ECONOMIC:
+			type = "经济型";
+			break;
+		case FAST:
+			type = "特快型";
+			break;
+		case STANDARD:
+			type = "标准型";
+			break;
+		}
+		return new String[] { ID, order.senderAddress, order.recipientAddress,
+				state, type };
 	}
 
 	public OperationState deleteOrder(String ID) throws Exception {

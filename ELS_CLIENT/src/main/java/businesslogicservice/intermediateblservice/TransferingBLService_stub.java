@@ -14,7 +14,7 @@ public class TransferingBLService_stub implements TransferingBLService {
 		return null;
 	}
 
-	public OperationState addOrder(String ID) {
+	public String[] addOrder(String ID) {
 		// TODO 自动生成的方法存根
 		System.out.println("add successfully!");
 		return null;

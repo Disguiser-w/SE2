@@ -146,6 +146,7 @@ public class TransferingPanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					controller.getTransferingBL().saveTransferingReceipt();
+					saveSuccessing("中转中心到达单已保存");
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
@@ -162,6 +163,11 @@ public class TransferingPanel extends OperationPanel {
 
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "提交成功",
+				JOptionPane.DEFAULT_OPTION);
+	}
+
+	public void saveSuccessing(String message) {
+		JOptionPane.showMessageDialog(null, message, "保存成功",
 				JOptionPane.DEFAULT_OPTION);
 	}
 }

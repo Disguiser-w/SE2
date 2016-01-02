@@ -107,8 +107,8 @@ public class IntermediateMainController {
 		// System.out.println(orderList.size());
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "ZZZXDDD-" + GetDate.getdate() + "-"
-						+ intermediateCentre.organizationID,
-				GetDate.getdate(), ReceiptState.DRAFT);
+						+ intermediateCentre.organizationID, GetDate.getdate(),
+				ReceiptState.DRAFT);
 		transfering = new TransferingBL(transferingReceipt, intermediateData,
 				intermediate);
 		envehicle = new EnvehicleBL(transfering, planeManager, trainManager,
@@ -433,6 +433,24 @@ public class IntermediateMainController {
 				enIntermediateReceipt.getFare(), enIntermediateReceipt.getID(),
 				enIntermediateReceipt.getDate(), enIntermediateReceipt
 						.getReceiptState());
+	}
+
+	public static EnIntermediateReceiptPO voToPO(
+			EnIntermediateReceiptVO enIntermediateReceipt) {
+		return new EnIntermediateReceiptPO(
+				IntermediateMainController
+						.voToPO(enIntermediateReceipt.intermediateCentre),
+				IntermediateMainController
+						.voToPO_OrderList(enIntermediateReceipt.orderList),
+				enIntermediateReceipt.ID);
+	}
+
+	public static ArrayList<OrderPO> voToPO_OrderList(
+			ArrayList<OrderVO> orderList) {
+		ArrayList<OrderPO> ope = new ArrayList<OrderPO>();
+		for (OrderVO order : orderList)
+			ope.add(IntermediateMainController.voToPO(order));
+		return ope;
 	}
 
 	public static EnplaningReceiptVO poToVO(EnplaningReceiptPO enplaningReceipt) {
