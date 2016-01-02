@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+@SuppressWarnings("serial")
 public class TransferingInfoTable extends JTable {
 	private int width = 720;
 	private int height = 480;

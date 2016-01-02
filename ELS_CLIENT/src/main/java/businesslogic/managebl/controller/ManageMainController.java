@@ -100,7 +100,7 @@ public class ManageMainController {
 		manageFrame.addFuncLabel(new CheckBusinessPanel(businessStatementReceiptController), "查看经营情况表", ImageGetter.getImage("businessStatement.png").getImage());
 		manageFrame.addFuncLabel(new CheckIncomePanel(costIncomeReceiptController), "查看成本收益表", ImageGetter.getImage("costIncome.png").getImage());
 		manageFrame.addFuncLabel(new BasicDataManagePanel(manageFrame, perWageController, basicSalaryController, cityDistanceController, costController),"基础数据设置", ImageGetter.getImage("basicDataManager.png").getImage());
-		manageFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志",ImageGetter.getImage("库存查看.png").getImage());
+		manageFrame.addFuncLabel(new LogDiaryPanel(logDiaryController), "系统日志",ImageGetter.getImage("viewInventory.png").getImage());
 		manageFrame.showFrame();
 		
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
+@SuppressWarnings("serial")
 public class OrderAcceptReceiptVO implements Serializable {
 	public final OrganizationVO local;
 	public final String time;

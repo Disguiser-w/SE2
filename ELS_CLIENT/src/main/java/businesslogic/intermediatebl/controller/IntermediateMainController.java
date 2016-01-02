@@ -5,22 +5,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogic.datafactory.DataFactory;
-import businesslogic.expressbl.controller.ExpressMainController;
-import businesslogic.intermediatebl.EnvehicleBL;
-import businesslogic.intermediatebl.PlaneManagerBL;
-import businesslogic.intermediatebl.TrainManagerBL;
-import businesslogic.intermediatebl.TransferingBL;
-import businesslogic.intermediatebl.TruckManagerBL;
-import businesslogic.managebl.OrganizationBL;
-import businesslogic.receiptbl.GetDate;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
 import po.EntruckingReceiptPO;
 import po.FarePO;
-import po.UserPO;
 import po.OrderPO;
 import po.OrganizationPO;
 import po.PlanePO;
@@ -28,6 +17,7 @@ import po.RepertoryPO;
 import po.TrainPO;
 import po.TransferingReceiptPO;
 import po.TruckPO;
+import po.UserPO;
 import presentation.intermediateui.EnvehiclePanel;
 import presentation.intermediateui.IntermediateFrame;
 import presentation.intermediateui.PlaneManagementPanel;
@@ -40,7 +30,6 @@ import vo.EnplaningReceiptVO;
 import vo.EntrainingReceiptVO;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;
-import vo.UserVO;
 import vo.OrderVO;
 import vo.OrganizationVO;
 import vo.PlaneVO;
@@ -48,6 +37,17 @@ import vo.RepertoryVO;
 import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
+import vo.UserVO;
+import businesslogic.datafactory.DataFactory;
+import businesslogic.expressbl.controller.ExpressMainController;
+import businesslogic.intermediatebl.EnvehicleBL;
+import businesslogic.intermediatebl.PlaneManagerBL;
+import businesslogic.intermediatebl.TrainManagerBL;
+import businesslogic.intermediatebl.TransferingBL;
+import businesslogic.intermediatebl.TruckManagerBL;
+import businesslogic.managebl.OrganizationBL;
+import businesslogic.receiptbl.GetDate;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class IntermediateMainController {
 	private IntermediateFrame frame;
@@ -117,7 +117,7 @@ public class IntermediateMainController {
 
 		frame = new IntermediateFrame(intermediate);
 		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收");
-		frame.addFuncLabel(new EnvehiclePanel(this, frame), "装车分配");
+		frame.addFuncLabel(new EnvehiclePanel(this), "装车分配");
 		frame.addFuncLabel(new PlaneManagementPanel(this, frame), "飞机信息管理");
 		frame.addFuncLabel(new TrainManagementPanel(this, frame), "火车信息管理");
 		frame.addFuncLabel(new TruckManagementPanel(this, frame), "汽车信息管理");
@@ -556,11 +556,5 @@ public class IntermediateMainController {
 
 	public TruckManagerBL getTruckManagerBL() {
 		return truckManager;
-	}
-
-	public static void main(String[] args) throws MalformedURLException,
-			RemoteException, NotBoundException {
-		IntermediateMainController controller = new IntermediateMainController(
-				"ZZZX-00185");
 	}
 }

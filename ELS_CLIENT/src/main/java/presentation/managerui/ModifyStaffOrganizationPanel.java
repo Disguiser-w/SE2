@@ -74,15 +74,17 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 				intermediateCenterCount++;
 			}
 		}
-		
+
 		if( (userID.startsWith("ZZZX")) || (userID.startsWith("CK"))){
 			organizationNameList = new String[intermediateCenterCount];
 			organizationIDList = new String[intermediateCenterCount];
 			
+			int j = 0;
 			for (int i = 0; i < organizationArr.size(); i++) {
 				if(organizationArr.get(i).category.equals(OrganizationType.intermediateCenter)){
-					organizationNameList[i] = (organizationArr.get(i).name);
-					organizationIDList[i] = (organizationArr.get(i).organizationID);
+					organizationNameList[j] = (organizationArr.get(i).name);
+					organizationIDList[j] = (organizationArr.get(i).organizationID);
+					j++;
 				}
 			}
 		}
@@ -90,10 +92,12 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 			organizationNameList = new String[organizationArr.size()-intermediateCenterCount];
 			organizationIDList = new String[organizationArr.size()-intermediateCenterCount];
 			
+			int j = 0;
 			for (int i = 0; i < organizationArr.size(); i++) {
 				if(organizationArr.get(i).category.equals(OrganizationType.businessHall)){
-					organizationNameList[i] = (organizationArr.get(i).name);
-					organizationIDList[i] = (organizationArr.get(i).organizationID);
+					organizationNameList[j] = (organizationArr.get(i).name);
+					organizationIDList[j] = (organizationArr.get(i).organizationID);
+					j++;
 				}
 			}
 		}
