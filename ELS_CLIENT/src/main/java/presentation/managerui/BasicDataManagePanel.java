@@ -214,16 +214,13 @@ public class BasicDataManagePanel extends OperationPanel {
 				(int) (width * 3.1370038412291934 / 25), (int) (height * 1.4285714285714286 / 20));
 		baseFreightLabel.setBounds((int) (width * 18.405889884763123 / 25), (int) (height * 1.5625 / 20),
 				(int) (width * 3.1370038412291934 / 25), (int) (height * 1.4285714285714286 / 20));
-		addLabel.setBounds((int) (width * 3.12932138284251 / 25), (int) (height * 4.019642857142857 / 20),
-				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
-		delLabel.setBounds((int) (width * 6.482714468629961 / 25), (int) (height * 4.019642857142857 / 20),
-				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
-		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.019642857142857 / 20),
-				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
+		addLabel.setBounds((int) (width * 3.12932138284251 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
+		delLabel.setBounds((int) (width * 6.482714468629961 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
+		modifyLabel.setBounds((int) (width * 9.836107554417413 / 25), (int) (height * 4.219642857142857 / 20), 30, 30);
 		searchField.setBounds((int) (width * 16.005121638924457 / 25), (int) (height * 4.219642857142857 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
-		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 6.521428571428571 / 20),
-				(int) (width * 21.862996158770805 / 25), (int) (height * 11.821428571428571 / 20));
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.303571428571428 / 22));
+		messageTable.setLocationAndSize((int) (width * 2.0166453265044813 / 25), (int) (height * 5.951428571428571 / 20),
+				(int) (width * 21.862996158770805 / 25), (int) (height * 12.351428571428571 / 20));
 	}
 	
 	

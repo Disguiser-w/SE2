@@ -14,6 +14,8 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
 import vo.OrderVO;
 
 public class TransferingPanel extends OperationPanel {
@@ -40,8 +42,8 @@ public class TransferingPanel extends OperationPanel {
 
 		orderList = controller.getTransferingReceipt().orderList;
 
-		addButton = new MyLabel("增");
-		delButton = new MyLabel("删");
+		addButton = new AddLabel();
+		delButton = new DeleteLabel();
 		saveButton = new MyLabel("存");
 		inputField = new MyTextField();
 		confirmButton = new MyLabel();
@@ -64,13 +66,9 @@ public class TransferingPanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 		addButton.setBounds((int) (width * 1.2278308321964528 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+				(int) (height * 1.039426523297491 / 20), 30, 30);
 		delButton.setBounds((int) (width * 6.207366984993179 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+				(int) (height * 1.039426523297491 / 20), 30, 30);
 		saveButton.setBounds((int) (width * 11.084583901773533 / 25),
 				(int) (height * 1.039426523297491 / 20),
 				(int) (width * 1.4324693042291952 / 25),

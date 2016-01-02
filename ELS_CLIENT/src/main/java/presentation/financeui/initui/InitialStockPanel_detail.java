@@ -251,20 +251,20 @@ public class InitialStockPanel_detail extends OperationPanel{
 	public void setCmpLocation(MyTable table){
 //		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
 //				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 5 / 32,
+		humanInfo.setBounds(PANEL_WIDTH* 4/ 60, PANEL_HEIGHT * 2 / 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		organizationInfo.setBounds(PANEL_WIDTH * 12/60, PANEL_HEIGHT *5 / 32,
+		organizationInfo.setBounds(PANEL_WIDTH * 12/60, PANEL_HEIGHT *2/ 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		vehicleInfo.setBounds(PANEL_WIDTH *20/60, PANEL_HEIGHT *5 / 32,
+		vehicleInfo.setBounds(PANEL_WIDTH *20/60, PANEL_HEIGHT *2 / 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		stockInfo.setBounds(PANEL_WIDTH *28/60, PANEL_HEIGHT * 5 / 32,
+		stockInfo.setBounds(PANEL_WIDTH *28/60, PANEL_HEIGHT * 2/ 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		accountInfo.setBounds(PANEL_WIDTH *36/60, PANEL_HEIGHT * 5 / 32,
+		accountInfo.setBounds(PANEL_WIDTH *36/60, PANEL_HEIGHT * 2/ 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 		cancelLabel.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *46 / 48,
 				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *1 / 16);
-		table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 3 / 14,
-				PANEL_WIDTH *47 /50 , PANEL_HEIGHT *73/ 100);
+		table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 2 / 14,
+				PANEL_WIDTH *47 /50 , PANEL_HEIGHT *82/ 100);
 	}
 	
 	/**

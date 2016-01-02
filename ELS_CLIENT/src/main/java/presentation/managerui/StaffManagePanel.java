@@ -98,14 +98,12 @@ public class StaffManagePanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.0607142857142858 / 20),
-				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
-		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.0607142857142858 / 20),
-				(int) (width * 1.8303571428571428 / 25), (int) (height * 1.8303571428571428 / 22));
-		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.2107142857142858 / 20),
-				(int) (width * 4.321382842509603 / 25), (int) (height * 1.5303571428571428 / 22));
-		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 3.401785714285714 / 20),
-				(int) (width * 22.98335467349552 / 25), (int) (height * 15.035714285714286 / 20));
+		deleteLabel.setBounds((int) (width * 6.594110115236876 / 25), (int) (height * 1.0607142857142858 / 20), 30, 30);
+		modifyLabel.setBounds((int) (width * 10.56338028169014 / 25), (int) (height * 1.0607142857142858 / 20), 30, 30);
+		searchField.setBounds((int) (width * 17.677336747759284 / 25), (int) (height * 1.0607142857142858 / 20),
+				(int) (width * 4.321382842509603 / 25), (int) (height * 1.303571428571428 / 22));
+		messageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.851785714285714 / 20),
+				(int) (width * 22.98335467349552 / 25), (int) (height * 15.505714285714286 / 20));
 	}
 	
 

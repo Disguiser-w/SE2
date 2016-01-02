@@ -34,16 +34,17 @@ public class CheckReceiptPanel extends OperationPanel {
 	private static final long serialVersionUID = 16L;
 	
 	private ReviewReceiptController receiptControl;
-	
-	//private MyLabel detailedInfoLabel;
-	private MyLabel approveLabel;
-
-	private MyTable messageTable;
-	private MyTable currentTable;
 
 	private String[] receiptCategoryList = {"收款单","合计收款单","付款单","中转中心装车单","中转中心到达单","营业厅装车单","营业厅到达单","派件单","入库单","出库单"};
 	private MyTextLabel receiptCategoryLabel;
 	private MyComboBox<String> receiptCategoryChoose;
+
+	//private MyLabel detailedInfoLabel;
+	private MyLabel approveLabel;
+	private MyLabel updateLabel;
+	
+	private MyTable messageTable;
+	private MyTable currentTable;
 
 	ArrayList<GatheringReceiptVO> gatheringList;
 	ArrayList<CollectionReceiptVO> collectionList;
@@ -66,9 +67,6 @@ public class CheckReceiptPanel extends OperationPanel {
 
 		receiptControl = reviewReceiptController;
 		
-		approveLabel = new MyLabel("审批通过");
-		//detailedInfoLabel = new MyLabel("查看详情");
-		
 		receiptCategoryLabel = new MyTextLabel("单据类型选择");
 		receiptCategoryChoose = new MyComboBox<String>();
 		receiptCategoryChoose.addItem(receiptCategoryList[0]);
@@ -82,6 +80,10 @@ public class CheckReceiptPanel extends OperationPanel {
 		receiptCategoryChoose.addItem(receiptCategoryList[8]);
 		receiptCategoryChoose.addItem(receiptCategoryList[9]);
 		
+		//detailedInfoLabel = new MyLabel("查看详情");
+		approveLabel = new MyLabel("审批通过");
+		updateLabel = new MyLabel("刷新");
+	
 		gatheringList = receiptControl.getAllSubmittedGatheringReceipt();
 		collectionList = receiptControl.getAllSubmittedCollectionReceipt();
 		paymentList = receiptControl.getAllSubmittedPaymentReceipt();
@@ -107,10 +109,17 @@ public class CheckReceiptPanel extends OperationPanel {
 			}
 		});
 		
+		updateLabel.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent ae){
+				updateui();
+			}
+		});
+		
 		setLayout(null);
 		
-		add(approveLabel);
 		//add(detailedInfoLabel);
+		add(approveLabel);
+		add(updateLabel);
 		add(receiptCategoryLabel);
 		add(receiptCategoryChoose);
 
@@ -129,15 +138,17 @@ public class CheckReceiptPanel extends OperationPanel {
 		this.tableWidth = width;
 		this.tableHeight = height;
 		
-		//detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.7410714285714286 / 20),
-			//	(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
-		approveLabel.setBounds((int) (width * 8.084507042253522 / 25), (int) (height * 1.7410714285714286 / 20),
+		receiptCategoryLabel.setBounds((int) (width * 2.224839948783611 / 25), (int) (height * 1.060714285714286 / 20),
+				(int) (width * 3.253393085787452 / 25), (int) (height * 1.3392857142857142 / 20));
+		receiptCategoryChoose.setBounds((int) (width * 6.084507042253522 / 25), (int) (height * 1.060714285714286 / 20),
 				(int) (width * 3.324583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
-		receiptCategoryLabel.setBounds((int) (width * 14.505121638924457 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 3.2 / 25), (int) (height * 1.3392857142857142 / 20));
-		receiptCategoryChoose.setBounds((int) (width * 18.005121638924457 / 25), (int) (height * 1.7410714285714286 / 20),
-				(int) (width * 4.353393085787452 / 25), (int) (height * 1.3392857142857142 / 20));
-		messageTable.setLocationAndSize((int) (width * 0.5846350832266326 / 25), (int) (height * 3.464285714285714 / 20),
+		//detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.060714285714286 / 20),
+		//	(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
+		approveLabel.setBounds((int) (width * 16.505121638924457 / 25), (int) (height * 1.060714285714286 / 20),
+				(int) (width * 3 / 25), (int) (height * 1.3392857142857142 / 20));
+		updateLabel.setBounds((int) (width * 20.505121638924457 / 25), (int) (height * 1.060714285714286 / 20),
+				(int) (width * 1.5 / 25), (int) (height * 1.3392857142857142 / 20));
+		messageTable.setLocationAndSize((int) (width * 0.5846350832266326 / 25), (int) (height * 2.851785714285714 / 20),
 				(int) (width * 23.52304737516005 / 25), (int) (height * 15.723214285714286 / 20));
 	}
 

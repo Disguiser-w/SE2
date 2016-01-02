@@ -16,8 +16,6 @@ public class CheckIncomePanel extends OperationPanel {
 	private int PANEL_WIDTH = 720;
 	private int PANEL_HEIGHT = 480;
 	
-	private MyTextLabel function;
-	
 	private MyTextLabel costIncomeReceipt_ID;
 	private MyTextLabel startDate;
 	private MyTextLabel endDate;
@@ -40,7 +38,6 @@ public class CheckIncomePanel extends OperationPanel {
 		
 		this.costIncomeReceiptControl = costIncomeControl;
 		
-		function = new MyTextLabel("查看成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		beginTime = "2010-01-01";
 		endTime = GetDate.getdate();
@@ -78,7 +75,6 @@ public class CheckIncomePanel extends OperationPanel {
 		//把组件加到Panel上
 		setLayout(null);
 
-		add(function);
 		add(costIncomeReceipt_ID);
 		add(startDate);
 		add(endDate);
@@ -98,33 +94,30 @@ public class CheckIncomePanel extends OperationPanel {
 
 	//设置位置
 	public void setCmpLocation() {
-		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24,
-				PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
-		
-		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT / 4,
+		costIncomeReceipt_ID.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 10 / 48,
 				PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
-		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 17 / 48,
+		startDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 15 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 11 / 24,
+		endDate.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 20 / 48,
 				PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
-		totalIncome.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 9 / 16,
+		totalIncome.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		totalCost.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 2 / 3,
+		totalCost.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
-		totalProfit.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 37 / 48,
+		totalProfit.setBounds(PANEL_WIDTH / 9, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 8, PANEL_HEIGHT / 16);
 		
-		costIncomeReceipt_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT / 4,
+		costIncomeReceipt_ID_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 10 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		startDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 17 / 48,
+		startDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 15 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		endDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 11 / 24,
+		endDate_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 20 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 9 / 16,
+		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 25 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 2 / 3,
+		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 30 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 37 / 48,
+		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 35 / 48,
 				PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 	}
 

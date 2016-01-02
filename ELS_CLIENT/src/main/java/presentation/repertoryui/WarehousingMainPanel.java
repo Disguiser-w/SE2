@@ -154,17 +154,17 @@ public class WarehousingMainPanel extends OperationPanel {
 				(int) (width * 4.321382842509603 / 25), (int) (height * 1.3003571428571428 / 22));
 		warehousingMessageTable.setLocationAndSize((int) (width * 1.0243277848911652 / 25), (int) (height * 2.401785714285714 / 20),
 				(int) (width * 22.98335467349552 / 25), (int) (height * 12.535714285714286 / 20));
-		chooseLabel.setBounds((int) (width * 1.0409731113956466 / 25), (int) (height * 14.580357142857142 / 20),
+		chooseLabel.setBounds((int) (width * 1.0409731113956466 / 25), (int) (height * 15.080357142857142 / 20),
 				(int) (width * 4.496798975672215 / 25), (int) (height * 1.6071428571428572 / 20));
-		planeLabel.setBounds((int) (width * 4.5409731113956466 / 25), (int) (height * 16.080357142857142 / 20),
+		planeLabel.setBounds((int) (width * 4.5409731113956466 / 25), (int) (height * 15.580357142857142 / 20),
 				(int) (width * 2.496798975672215 / 25), (int) (height * 1.3071428571428572 / 20));
-		trainLabel.setBounds((int) (width * 9.246478873239437 / 25), (int) (height * 16.080357142857142 / 20),
+		trainLabel.setBounds((int) (width * 9.246478873239437 / 25), (int) (height * 15.580357142857142 / 20),
 				(int) (width * 2.496798975672215 / 25), (int) (height * 1.3071428571428572 / 20));
-		vehicleLabel.setBounds((int) (width * 13.945902688860436 / 25), (int) (height * 16.080357142857142 / 20),
+		vehicleLabel.setBounds((int) (width * 13.945902688860436 / 25), (int) (height * 15.580357142857142 / 20),
 				(int) (width * 2.496798975672215 / 25), (int) (height * 1.3071428571428572 / 20));
-		motorLabel.setBounds((int) (width * 18.649244558258643 / 25), (int) (height * 16.080357142857142 / 20),
+		motorLabel.setBounds((int) (width * 18.649244558258643 / 25), (int) (height * 15.580357142857142 / 20),
 				(int) (width * 2.496798975672215 / 25), (int) (height * 1.3071428571428572 / 20));
-		enterRepertoryLabel.setBounds((int) (width * 11.224839948783611 / 25), (int) (height * 17.7607142857142858 / 20),
+		enterRepertoryLabel.setBounds((int) (width * 11.224839948783611 / 25), (int) (height * 17.5807142857142858 / 20),
 				(int) (width * 2.8303571428571428 / 25), (int) (height * 1.503571428571428 / 22));
 	}
 	

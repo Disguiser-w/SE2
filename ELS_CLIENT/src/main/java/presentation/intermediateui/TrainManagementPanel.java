@@ -16,6 +16,9 @@ import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
+import presentation.special_ui.AddLabel;
+import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.ModifyLabel;
 import vo.TrainVO;
 
 public class TrainManagementPanel extends OperationPanel {
@@ -42,9 +45,9 @@ public class TrainManagementPanel extends OperationPanel {
 
 		trainList = c.getTrainList();
 
-		addButton = new MyLabel("增");
-		delButton = new MyLabel("删");
-		modifyButton = new MyLabel("改");
+		addButton = new AddLabel();
+		delButton = new DeleteLabel();
+		modifyButton = new ModifyLabel();
 
 		inputField = new MyTextField();
 		confirmButton = new MyLabel();
@@ -68,17 +71,11 @@ public class TrainManagementPanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 
 		addButton.setBounds((int) (width * 1.2278308321964528 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+				(int) (height * 1.039426523297491 / 20), 30, 30);
 		delButton.setBounds((int) (width * 6.207366984993179 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+				(int) (height * 1.039426523297491 / 20), 30, 30);
 		modifyButton.setBounds((int) (width * 11.084583901773533 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+				(int) (height * 1.039426523297491 / 20), 30, 30);
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
 				(int) (height * 1.2186379928315412 / 20),

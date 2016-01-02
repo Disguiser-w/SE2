@@ -742,19 +742,19 @@ public class MainFrame extends JFrame {
 						nameController.addNewName(userID);
 						// updateNames();
 
-						String type = userID.split("-")[0];
+						String type = logvo.uservo.userID.split("-")[0];
 						// 不同人员的方式自己来补完
 
 						switch (type) {
 						case "KD":
 							// 快递员登录
-							ExpressMainController expressMainController = new ExpressMainController(userID);
+							ExpressMainController expressMainController = new ExpressMainController(logvo.uservo.userID);
 							break;
 						case "ZZZX":
 							// 中转中心业务员登录
 							try {
 								IntermediateMainController intermediateMaincontroller = new IntermediateMainController(
-										userID);
+										logvo.uservo.userID);
 							} catch (Exception e1) {
 								// TODO 自动生成的 catch 块
 								e1.printStackTrace();
@@ -762,12 +762,12 @@ public class MainFrame extends JFrame {
 							break;
 						case "YYT":
 							// 营业厅业务员登录
-							BusinessMainController businessMainController = new BusinessMainController(userID);
+							BusinessMainController businessMainController = new BusinessMainController(logvo.uservo.userID);
 							break;
 						// 来这里加吧，上面的 uservo通过 logvo.uservo得到
 						case "CW":
 							try {
-								FinanceMainController financeMainController = new FinanceMainController(userID);
+								FinanceMainController financeMainController = new FinanceMainController(logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -775,7 +775,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "admin":
 							try {
-								UserMainController userMainController = new UserMainController(userID);
+								UserMainController userMainController = new UserMainController(logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -783,7 +783,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "JL":
 							try {
-								ManageMainController manageMainController = new ManageMainController(userID);
+								ManageMainController manageMainController = new ManageMainController(logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -791,7 +791,7 @@ public class MainFrame extends JFrame {
 							break;
 						case "CK":
 							try {
-								RepertoryMainController repertoryMainController = new RepertoryMainController(userID);
+								RepertoryMainController repertoryMainController = new RepertoryMainController(logvo.uservo.userID);
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
