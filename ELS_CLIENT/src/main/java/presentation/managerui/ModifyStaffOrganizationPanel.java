@@ -76,8 +76,8 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 		}
 		
 		if( (userID.startsWith("ZZZX")) || (userID.startsWith("CK"))){
-			organizationNameList = new String[intermediateCenterCount];
-			organizationIDList = new String[intermediateCenterCount];
+			organizationNameList = new String[intermediateCenterCount+1];
+			organizationIDList = new String[intermediateCenterCount+1];
 			
 			for (int i = 0; i < organizationArr.size(); i++) {
 				if(organizationArr.get(i).category.equals(OrganizationType.intermediateCenter)){
@@ -87,8 +87,8 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 			}
 		}
 		else{
-			organizationNameList = new String[organizationArr.size()-intermediateCenterCount];
-			organizationIDList = new String[organizationArr.size()-intermediateCenterCount];
+			organizationNameList = new String[organizationArr.size()-intermediateCenterCount+1];
+			organizationIDList = new String[organizationArr.size()-intermediateCenterCount+1];
 			
 			for (int i = 0; i < organizationArr.size(); i++) {
 				if(organizationArr.get(i).category.equals(OrganizationType.businessHall)){
