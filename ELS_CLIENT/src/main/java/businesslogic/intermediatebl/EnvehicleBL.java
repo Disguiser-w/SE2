@@ -48,7 +48,6 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
 	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
 
-	private ArrayList<EnIntermediateReceiptPO> enList = new ArrayList<EnIntermediateReceiptPO>();
 	private TransferingReceiptVO transferingReceipt;
 
 	private final double STANDARD_PLANE = 200;
@@ -200,6 +199,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 	public OperationState saveEnIntermediateReceiptList()
 			throws RemoteException {
 		// TODO 自动生成的方法存根
+		ArrayList<EnIntermediateReceiptPO> enList = new ArrayList<EnIntermediateReceiptPO>();
 		for (EnplaningReceiptPO enplaningReceipt : IntermediateMainController
 				.voToPO_enplaningReceiptList(enplaningReceiptList)) {
 			enplaningReceipt.receiptID = "ZCD-"

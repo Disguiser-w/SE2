@@ -19,7 +19,6 @@ public class TrainManagerBL implements TrainManagerBLService {
 	private IntermediateDataService intermediateData;
 
 	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
-	private ArrayList<TrainPO> trainList_temp = new ArrayList<TrainPO>();
 
 	private OrganizationVO intermediateCenter;
 	private UserVO intermediate;
@@ -28,8 +27,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 
 	public TrainManagerBL(ArrayList<TrainVO> trainList,
 			OrganizationVO intermediateCentre,
-			IntermediateDataService intermediateData,
-			UserVO intermediate) {
+			IntermediateDataService intermediateData, UserVO intermediate) {
 		// TODO 自动生成的方法存根
 		this.trainList = trainList;
 		this.intermediateCenter = intermediateCentre;
@@ -94,6 +92,7 @@ public class TrainManagerBL implements TrainManagerBLService {
 
 	public OperationState saveTrainList() throws RemoteException {
 		// TODO 自动生成的方法存根
+		ArrayList<TrainPO> trainList_temp = new ArrayList<TrainPO>();
 		for (TrainVO train : trainList)
 			trainList_temp.add(IntermediateMainController.voToPO(train));
 		System.out.println(intermediateCenter.organizationID);

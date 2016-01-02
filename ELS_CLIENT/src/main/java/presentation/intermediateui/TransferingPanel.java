@@ -16,6 +16,7 @@ import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
+import presentation.special_ui.MySearchField;
 import vo.OrderVO;
 
 public class TransferingPanel extends OperationPanel {
@@ -29,8 +30,7 @@ public class TransferingPanel extends OperationPanel {
 	private MyLabel delButton;
 	private MyLabel saveButton;
 
-	private MyTextField inputField;
-	private MyLabel confirmButton;
+	private MySearchField inputField;
 
 	private MyTable messageTable;
 
@@ -45,8 +45,7 @@ public class TransferingPanel extends OperationPanel {
 		addButton = new AddLabel();
 		delButton = new DeleteLabel();
 		saveButton = new MyLabel("存");
-		inputField = new MyTextField();
-		confirmButton = new MyLabel();
+		inputField = new MySearchField();
 
 		selectedIndex = -1;
 
@@ -55,7 +54,6 @@ public class TransferingPanel extends OperationPanel {
 		add(saveButton);
 
 		add(inputField);
-		add(confirmButton);
 
 		setLayout(null);
 		addListener();
@@ -76,12 +74,7 @@ public class TransferingPanel extends OperationPanel {
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
 				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25),
-				(int) (height * 1.075268817204301 / 20));
-		confirmButton.setBounds((int) (width * 21.350613915416098 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 1.6371077762619373 / 25),
-				(int) (height * 1.039426523297491 / 20));
+				(int) (width * 5.320600272851296 / 25), 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20),
@@ -148,7 +141,7 @@ public class TransferingPanel extends OperationPanel {
 				}
 			}
 		});
-		
+
 		saveButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -156,21 +149,6 @@ public class TransferingPanel extends OperationPanel {
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
-				}
-			}
-		});
-
-		confirmButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				String id = inputField.getText();
-				if (id.equals(""))
-					warnning("请输入订单号");
-
-				for (OrderVO vo : orderList) {
-					if (vo.ID.equals(id)) {
-						frame.changePanel(new WatchPanel_Order(controller,
-								frame, messageTable, vo.ID));
-					}
 				}
 			}
 		});
