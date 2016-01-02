@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import businesslogic.datafactory.DataFactory;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import dataservice.managedataservice.CityDistanceDataService;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
@@ -18,7 +15,11 @@ import presentation.commonui.UserFrame;
 import vo.PlaneVO;
 import vo.TrainVO;
 import vo.TruckVO;
+import businesslogic.datafactory.DataFactory;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import dataservice.managedataservice.CityDistanceDataService;
 
+@SuppressWarnings("serial")
 public class Management_modifyPanel extends OperationPanel {
 	public UserFrame frame;
 
@@ -33,6 +34,7 @@ public class Management_modifyPanel extends OperationPanel {
 	protected JLabel farePrice;
 
 	protected MyTextField ID_input;
+	@SuppressWarnings("rawtypes")
 	protected JComboBox destination_input;
 	protected MyTextField farePrice_input;
 
@@ -49,6 +51,7 @@ public class Management_modifyPanel extends OperationPanel {
 
 	protected int selectedNum;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
 			MyTable m, PlaneVO p, int n) {
 		this.controller = c;
@@ -110,6 +113,7 @@ public class Management_modifyPanel extends OperationPanel {
 		setCmpLocation();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
 			MyTable m, TrainVO t, int n) {
 		this.controller = c;
@@ -173,6 +177,7 @@ public class Management_modifyPanel extends OperationPanel {
 		setCmpLocation();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Management_modifyPanel(IntermediateMainController c, UserFrame f,
 			MyTable m, TruckVO p, int n) {
 		this.controller = c;

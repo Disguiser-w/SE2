@@ -117,7 +117,7 @@ public class IntermediateMainController {
 
 		frame = new IntermediateFrame(intermediate);
 		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收");
-		frame.addFuncLabel(new EnvehiclePanel(this, frame), "装车分配");
+		frame.addFuncLabel(new EnvehiclePanel(this), "装车分配");
 		frame.addFuncLabel(new PlaneManagementPanel(this, frame), "飞机信息管理");
 		frame.addFuncLabel(new TrainManagementPanel(this, frame), "火车信息管理");
 		frame.addFuncLabel(new TruckManagementPanel(this, frame), "汽车信息管理");

@@ -7,19 +7,16 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import businesslogic.intermediatebl.controller.IntermediateMainController;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
-import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
-import presentation.commonui.UserFrame;
 import presentation.special_ui.MySearchField;
 import vo.OrderVO;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
 
+@SuppressWarnings("serial")
 public class EnvehiclePanel extends OperationPanel {
 	private IntermediateMainController controller;
-
-	private UserFrame frame;
 
 	private ArrayList<OrderVO> waitingOrderList;
 
@@ -30,11 +27,8 @@ public class EnvehiclePanel extends OperationPanel {
 
 	private MyTable messageTable;
 
-	private int selectedIndex;
-
-	public EnvehiclePanel(IntermediateMainController c, IntermediateFrame f) {
+	public EnvehiclePanel(IntermediateMainController c) {
 		this.controller = c;
-		this.frame = f;
 
 		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
 
@@ -42,8 +36,6 @@ public class EnvehiclePanel extends OperationPanel {
 		saveButton = new MyLabel("cun");
 
 		inputField = new MySearchField();
-
-		selectedIndex = -1;
 
 		add(envehicle);
 		add(inputField);
