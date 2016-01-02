@@ -212,6 +212,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo/transferingReceipt/"
 				+ organization_ID + "-" + date + "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -277,6 +280,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 				+ organization_ID + "-" + date + "-enIntermediateReceipt.dat";
 		File file = FileGetter.getFile(path);
 
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -347,7 +353,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		if (!file.exists()) {
-			FileGetter.createFile(file);
+			return null;
 		}
 
 		try {
@@ -395,7 +401,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		String path = "receiptInfo/transferingReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
@@ -476,7 +484,9 @@ public class IntermediateData extends UnicastRemoteObject implements
 			throws RemoteException {
 		String path = "receiptInfo/enIntermediateReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
-
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
