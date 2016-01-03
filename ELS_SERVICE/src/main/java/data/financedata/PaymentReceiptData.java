@@ -171,12 +171,11 @@ public class PaymentReceiptData extends UnicastRemoteObject implements PaymentRe
 		 ArrayList<PaymentReceiptPO> paymentReceiptPOs = getPaymentReceiptPOs();
 			for(int i=0;i<paymentReceiptPOs.size();i++){
 				if(paymentReceiptPOs.get(i).getID().equals(po.getID())){
-					paymentReceiptPOs.get(i).setState(po.getState());
+					paymentReceiptPOs.get(i).setState(ReceiptState.APPROVE);
 				}
 			}
 			savePaymentReceiptPOs(paymentReceiptPOs);
 			return 0;
-		 
 	 }
 	    
 	

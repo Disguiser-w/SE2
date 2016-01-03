@@ -220,7 +220,7 @@ public class CollectionReceiptData extends UnicastRemoteObject implements Collec
 		ArrayList<CollectionReceiptPO> collectionReceiptPOs = getCollectionReceiptPOs();
 		for(int i=0;i<collectionReceiptPOs.size();i++){
 			if(collectionReceiptPOs.get(i).getID().equals(po.getID())){
-				collectionReceiptPOs.get(i).setState(po.getState());
+				collectionReceiptPOs.get(i).setState(ReceiptState.APPROVE);
 			}
 		}
 		saveCollectionPOs(collectionReceiptPOs);
