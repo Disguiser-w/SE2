@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.OperationPanel;
-import presentation.special_ui.MySearchField;
 import vo.OrderVO;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 
@@ -23,8 +22,6 @@ public class EnvehiclePanel extends OperationPanel {
 	private MyLabel envehicle;
 	private MyLabel saveButton;
 
-	private MySearchField inputField;
-
 	private MyTable messageTable;
 
 	public EnvehiclePanel(IntermediateMainController c) {
@@ -32,13 +29,10 @@ public class EnvehiclePanel extends OperationPanel {
 
 		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
 
-		envehicle = new MyLabel("do");
-		saveButton = new MyLabel("cun");
-
-		inputField = new MySearchField();
+		envehicle = new MyLabel("一键装车");
+		saveButton = new MyLabel("保存单据");
 
 		add(envehicle);
-		add(inputField);
 		add(saveButton);
 
 		setLayout(null);
@@ -49,20 +43,19 @@ public class EnvehiclePanel extends OperationPanel {
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		envehicle.setBounds((int) (width * 1.2278308321964528 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
-		saveButton.setBounds((int) (width * 6.207366984993179 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
-		inputField.setBounds((int) (width * 15.654843110504775 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25), 30);
+		envehicle
+		.setBounds((int) (width * 20.6343792633015 / 25),
+				(int) (height * 18 / 20),
+				(int) (width * 2.830832196452933 / 25),
+				(int) (height * 1 / 20));
+		saveButton
+		.setBounds((int) (width * 17 / 25),
+				(int) (height * 18 / 20),
+				(int) (width * 2.830832196452933 / 25),
+				(int) (height * 1 / 20));
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
-				(int) (height * 3.369175627240143 / 20),
+				(int) (height * 5 / 40),
 				(int) (width * 22.98335467349552 / 25),
 				(int) (height * 15.412186379928315 / 20));
 	}
