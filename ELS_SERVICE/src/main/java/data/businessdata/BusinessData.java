@@ -408,12 +408,12 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			throws RemoteException {
 		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
 
-		File file = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");
-
+		File file = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");	
 		try {
 			if (!file.exists()) {
 				return new ArrayList<GatheringReceiptPO>();
 			}
+
 
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
