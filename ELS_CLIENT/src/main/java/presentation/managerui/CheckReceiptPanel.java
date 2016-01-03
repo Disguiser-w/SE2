@@ -181,12 +181,12 @@ public class CheckReceiptPanel extends OperationPanel {
 		case 3:
 			enIntermediateList = receiptControl.getAllSubmittedEnIntermediateReceipt();
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)
-				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.userID, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
+				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.intermediateCentre.name, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
 			break;
 		case 4:
 			transferingList = receiptControl.getAllSubmittedTransferingReceipt();
 			for(TransferingReceiptVO transferingvo : transferingList)
-				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.receiptState)});
+				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.interdiateCentre.name, "中转中心业务员", transferingvo.date, stateName(transferingvo.receiptState)});
 			break;
 		case 5:
 			enVehicleList = receiptControl.getAllSubmittedEnVehicleReceipt();

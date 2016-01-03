@@ -243,7 +243,6 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			e.printStackTrace();
 			return 1;
 		}
-		return 0;
 	}
 	
 	//获取全部提交的中转中心到达单
@@ -274,7 +273,6 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 			e.printStackTrace();
 			return 1;
 		}
-		return 0;
 	}
 	
 	//获取全部提交的营业厅装车单
