@@ -102,8 +102,9 @@ public class AcceptCargo {
 		try {
 			if (expressData.find(id) == null)
 				return false;
-			else
+			else {
 				return true;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

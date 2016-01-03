@@ -16,6 +16,7 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.ToolTipManager;
 
 public class MyTable extends JPanel {
 
@@ -176,6 +177,13 @@ public class MyTable extends JPanel {
 	public void setRowValueAt(String[] info, int index) {
 		infos.set(index, info);
 		rowPanel.get(index).repaint();
+		String tip = "";
+		String[] rowInfosTemp = infos.get(index);
+		for (int i = 0; i < rowInfosTemp.length; i++) {
+			tip += rowInfosTemp[i] + " ";
+		}
+
+		rowPanel.get(index).setToolTipText(tip);
 		scrollPanel.repaint();
 		tableObservable.setData();
 	}
@@ -357,8 +365,8 @@ public class MyTable extends JPanel {
 		MyCheckBox box;
 		boolean isMouseOn;
 
-		public MyRowPanel(int i) {
-			this.index = i;
+		public MyRowPanel(int in) {
+			this.index = in;
 			height = 30;
 			box = new MyCheckBox();
 			if (multiChoose) {
@@ -383,11 +391,20 @@ public class MyTable extends JPanel {
 						setSelectedNum(index);
 						box.setSelected(true);
 					}
-					tableObservable.setData();
 
 				}
-			});
 
+				public void mouseExited(MouseEvent e) {
+					tableObservable.reSet();
+				}
+			});
+			String tip = "";
+			String[] rowInfosTemp = infos.get(index);
+			for (int i = 0; i < rowInfosTemp.length; i++) {
+				tip += rowInfosTemp[i] + " ";
+			}
+
+			setToolTipText(tip);
 		}
 
 		public void paintComponent(Graphics g) {
@@ -423,13 +440,21 @@ public class MyTable extends JPanel {
 
 				if (rowInfos[i] == null)
 					rowInfos[i] = "-";
-				int strWidth = fm.stringWidth(rowInfos[i]);
+
+				String drawedStr = rowInfos[i];
+				int strWidth = fm.stringWidth(drawedStr);
+				if (strWidth > columnWidth[i]) {
+					drawedStr = drawedStr.substring(0, drawedStr.length() / 2) + "...";
+					strWidth = fm.stringWidth(drawedStr);
+
+				}
+
 				if (type == 0)
 					g2d.setColor(Color.BLACK);
 				else if (type == 1)
 					g2d.setColor(Color.WHITE);
 
-				g2d.drawString(rowInfos[i], widths + (columnWidth[i] - strWidth) / 2, (height + ascent) / 2 - 2);
+				g2d.drawString(drawedStr, widths + (columnWidth[i] - strWidth) / 2, (height + ascent) / 2 - 2);
 
 				g2d.setColor(Color.WHITE);
 				widths += columnWidth[i];
@@ -450,6 +475,7 @@ public class MyTable extends JPanel {
 			if (isMouseOn)
 				g2d.drawRect(0, 0, widths - 1, height - 1);
 
+			tableObservable.reSet();
 		}
 
 		// 用这个来刷新

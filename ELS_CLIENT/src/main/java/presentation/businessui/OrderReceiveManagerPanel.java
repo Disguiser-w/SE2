@@ -49,7 +49,7 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 		this.controller = acceptCargoController;
 
 		log = new LogDiaryBLController();
-		vehicleIDLabel = new MyTextLabel("司机ID");
+		vehicleIDLabel = new MyTextLabel("车辆ID");
 		vehicleIDField = new MyTextField();
 
 		timeLabel = new MyTextLabel("时间");
@@ -154,8 +154,33 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				orderNum.add(new String[] { orderNumber });
 				orderNumField.setText("");
 				messageTable.addRow(new String[] { orderNumber });
-				log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "接收了一批货物"),
-						GetDate.getTime());
+
+			}
+		});
+
+		confirmButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String vehicleID = vehicleIDField.getText();
+				if (vehicleID.equals("")) {
+					warnning("请输入车辆ID");
+					return;
+				}
+
+				ArrayList<String> str = new ArrayList<String>();
+				for (String[] i : orderNum) {
+					str.add(i[0]);
+				}
+
+				if (str.size() == 0) {
+					warnning("订单列表为空");
+					return;
+				}
+				if (controller.acceptCargo(vehicleID, str)) {
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "接收了一批货物"),
+							GetDate.getTime());
+					warnning("收货单已提交!");
+				}
+
 			}
 		});
 

@@ -230,7 +230,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<UserPO> users = (ArrayList<UserPO>) in.readObject();
 			in.close();
 			for (UserPO i : users) {
-				if (i.getProfession() == ProfessionType.courier) {
+				if (i.getProfession() == ProfessionType.courier&&!i.getOrganization().equals("")) {
 					expressPOs.add((ExpressPO) i);
 				}
 			}
@@ -426,6 +426,9 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 		String time = getTime();
 		File file = FileGetter.getFile("orderInfo/" + organizationID + "/" + time + "-order.dat");
+		if(!file.exists()){
+			FileGetter.createFile(file);
+		}
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));

@@ -775,7 +775,7 @@ public class BusinessData extends UnicastRemoteObject implements
 
 	public ArrayList<OrderAcceptReceiptPO> getSubmittedOrderAcceptReceiptInfo()
 			throws RemoteException {
-		File file = FileGetter.getFile("enVehicleInfo");
+		File file = FileGetter.getFile("orderAcceptInfo");
 		if (!file.exists())
 			return new ArrayList<OrderAcceptReceiptPO>();
 		ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPO = new ArrayList<OrderAcceptReceiptPO>();
