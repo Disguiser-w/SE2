@@ -2,12 +2,8 @@ package presentation.intermediateui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
@@ -76,8 +72,7 @@ public class TruckManagementPanel extends OperationPanel {
 				(int) (height * 1.039426523297491 / 20), 30, 30);
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25), 30);
+				(int) (height * 1.2186379928315412 / 20), width / 4, 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20),
@@ -90,13 +85,12 @@ public class TruckManagementPanel extends OperationPanel {
 
 		int[] widths = { 80, 196, 60, 197, 60 };
 
-		messageTable = new MyTable(head, getInfos(), widths, true);
+		messageTable = new MyTable(head, getInfos(truckList), widths, true);
 		add(messageTable);
 	}
 
-	private ArrayList<String[]> getInfos() {
+	private ArrayList<String[]> getInfos(ArrayList<TruckVO> truckList) {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
-		truckList = controller.getTruckList();
 		for (TruckVO vo : truckList) {
 			infos.add(new String[] { vo.ID,
 					controller.getIntermediateCentre().name, vo.destination,
@@ -110,6 +104,7 @@ public class TruckManagementPanel extends OperationPanel {
 
 		addButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				messageTable.setInfos(getInfos(truckList));
 				Management_newPanel newPanel = new Management_newPanel(
 						controller, frame, messageTable, "truck");
 				frame.changePanel(newPanel);
@@ -118,7 +113,6 @@ public class TruckManagementPanel extends OperationPanel {
 
 		modifyButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 				ArrayList<Integer> selectedIndexs = messageTable
 						.getSelectedIndex();
 				int size = selectedIndexs.size();
@@ -159,8 +153,28 @@ public class TruckManagementPanel extends OperationPanel {
 						}
 					}
 					truckList = controller.getTruckList();
-					messageTable.setInfos(getInfos());
+					messageTable.setInfos(getInfos(truckList));
 				}
+			}
+		});
+
+		inputField.getImageLabel().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入汽车编号");
+				boolean searchSuccessful = false;
+				for (TruckVO i : controller.getTruckList()) {
+					if (i.ID.equals(id)) {
+						WatchPanel_Management watch = new WatchPanel_Management(
+								controller, frame, messageTable, i, 0);
+						searchSuccessful = true;
+						frame.changePanel(watch);
+					}
+				}
+				
+				if (!searchSuccessful)
+					warnning("输入火车编号有误");
 			}
 		});
 	}
@@ -174,14 +188,5 @@ public class TruckManagementPanel extends OperationPanel {
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "提交成功",
 				JOptionPane.DEFAULT_OPTION);
-	}
-
-	public static void main(String[] args) throws MalformedURLException,
-			RemoteException, NotBoundException {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new TruckManagementPanel(new IntermediateMainController(
-				"141250185"), new UserFrame("任婧雯", "CW-00001")));
-		frame.setVisible(true);
 	}
 }
