@@ -239,14 +239,15 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "intermediateCentreInfo/transferingReceipt/"
 				+ organization_ID + "-" + date + "-transferingReceipt.dat";
 		File file = FileGetter.getFile(path);
-
+		ArrayList<TransferingReceiptPO> ope = new ArrayList<TransferingReceiptPO>();
+		ope.add(transferingReceipt);
 		try {
 			if (!file.exists()) {
 				FileGetter.createFile(file);
 			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
-			out.writeObject(transferingReceipt);
+			out.writeObject(ope);
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,7 +263,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			}
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file, true));
-			out.writeObject(transferingReceipt);
+			out.writeObject(ope);
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();

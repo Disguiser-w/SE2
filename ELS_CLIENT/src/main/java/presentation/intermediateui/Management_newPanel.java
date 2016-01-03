@@ -4,9 +4,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
@@ -32,7 +32,7 @@ public class Management_newPanel extends OperationPanel {
 
 	private MyTextField ID_input;
 	@SuppressWarnings("rawtypes")
-	private JComboBox destination_input;
+	private MyComboBox destination_input;
 	private MyTextField farePrice_input;
 
 	private IntermediateMainController controller;
@@ -55,7 +55,7 @@ public class Management_newPanel extends OperationPanel {
 		this.frame = f;
 		this.messageTable = m;
 		this.type = s;
-		
+
 		farePrice_input = new MyTextField();
 
 		switch (type) {
@@ -195,7 +195,7 @@ public class Management_newPanel extends OperationPanel {
 		ID_input = new MyTextField();
 		ID_input.setText(id);
 
-		destination_input = new JComboBox();
+		destination_input = new MyComboBox();
 		for (String city : citys)
 			destination_input.addItem(city);
 

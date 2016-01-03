@@ -90,9 +90,38 @@ public class TransferingPanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		orderList = controller.getTransferingReceipt().orderList;
 		for (OrderVO vo : orderList) {
+			String state = "";
+			switch (vo.order_state) {
+			case WAITING_ENVEHICLE:
+				state = "等待装车";
+				break;
+			case TRANSFERING:
+				state = "中转中";
+				break;
+			case WAITING_DISTRIBUTE:
+				state = "等待派件";
+				break;
+			case DISTRIBUEING:
+				state = "派件中";
+				break;
+			case FINISHED:
+				state = "已完成";
+				break;
+			}
+			String type = "";
+			switch (vo.expressType) {
+			case ECONOMIC:
+				type = "经济型";
+				break;
+			case FAST:
+				type = "特快型";
+				break;
+			case STANDARD:
+				type = "标准型";
+				break;
+			}
 			infos.add(new String[] { vo.ID, vo.senderAddress,
-					vo.recipientAddress, vo.order_state.toString(),
-					vo.expressType.toString() });
+					vo.recipientAddress, state, type });
 		}
 
 		return infos;
