@@ -80,12 +80,14 @@ public class EnvehicleBL implements EnvehicleBLService {
 				entruckingReceiptList, intermediateData,
 				transferingReceipt.interdiateCentre);
 
+		awobl = new AllocateWaitingOrderBL(transferingReceipt);
+
 		receipt_ID = 1;
 	}
 
 	public OperationState envehicle() throws Exception {
 		// TODO 自动生成的方法存根
-		awobl = new AllocateWaitingOrderBL(transferingReceipt);
+        awobl.setTransferingReceipt(transferingReceipt);
 		cdbl = new CityDistanceBL();
 		logDiary = new LogDiaryBL();
 		waitingOrderList = awobl.updateWaitingList();

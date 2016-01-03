@@ -181,7 +181,7 @@ public class CheckReceiptPanel extends OperationPanel {
 			break;
 		case 4:
 			for(TransferingReceiptVO transferingvo : transferingList)
-				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.state)});
+				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.receiptState)});
 			break;
 		case 5:
 			for(EnVehicleReceiptVO enVehiclevo : enVehicleList)

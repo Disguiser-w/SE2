@@ -71,7 +71,7 @@ public class EnvehiclePanel extends OperationPanel {
 
 	private ArrayList<String[]> getInfos() {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
-		waitingOrderList = controller.getEnvehicleBL().getWaitingOrderList();
+		waitingOrderList = controller.getEnvehicleBL().getAllocateWwaitingOrderBL().updateWaitingList();
 		for (OrderVO vo : waitingOrderList) {
 			infos.add(new String[] { vo.ID, vo.senderAddress,
 					vo.recipientAddress, vo.order_state.toString(),

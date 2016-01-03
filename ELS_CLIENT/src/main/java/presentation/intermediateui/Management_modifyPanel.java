@@ -4,9 +4,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import presentation.commonui.MyComboBox;
 import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
 import presentation.commonui.MyTextField;
@@ -35,7 +35,7 @@ public class Management_modifyPanel extends OperationPanel {
 
 	protected MyTextField ID_input;
 	@SuppressWarnings("rawtypes")
-	protected JComboBox destination_input;
+	protected MyComboBox destination_input;
 	protected MyTextField farePrice_input;
 
 	protected IntermediateMainController controller;
@@ -80,7 +80,7 @@ public class Management_modifyPanel extends OperationPanel {
 		ID_input.setText(plane.ID);
 		ID_input.setEditable(false);
 
-		destination_input = new JComboBox();
+		destination_input = new MyComboBox();
 		for (String city : citys)
 			destination_input.addItem(city);
 		destination_input.setSelectedItem(plane.destination);
@@ -142,7 +142,7 @@ public class Management_modifyPanel extends OperationPanel {
 		ID_input.setText(train.ID);
 		ID_input.setEditable(false);
 
-		destination_input = new JComboBox();
+		destination_input = new MyComboBox();
 		for (String city : citys)
 			destination_input.addItem(city);
 		destination_input.setSelectedItem(train.destination);
@@ -206,7 +206,7 @@ public class Management_modifyPanel extends OperationPanel {
 		ID_input.setText(truck.ID);
 		ID_input.setEditable(false);
 
-		destination_input = new JComboBox();
+		destination_input = new MyComboBox();
 		for (String city : citys)
 			destination_input.addItem(city);
 		destination_input.setSelectedItem(truck.destination);

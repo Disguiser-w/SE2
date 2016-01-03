@@ -4,12 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import presentation.commonui.MyLabel;
 import presentation.commonui.MyTable;
+import presentation.commonui.MyTextField;
 import presentation.commonui.OperationPanel;
 import presentation.commonui.UserFrame;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
@@ -22,13 +22,13 @@ public class Transfering_newPanel extends OperationPanel {
 
 	protected MyTable messageTable;
 
-	protected JButton OKButton;
+	protected MyLabel OKButton;
 
 	protected JLabel function;
 
 	protected JLabel order_ID;
 
-	protected JTextField order_ID_input;
+	protected MyTextField order_ID_input;
 
 	protected int PANEL_WIDTH = 720;
 	protected int PANEL_HEIGHT = 480;
@@ -39,22 +39,30 @@ public class Transfering_newPanel extends OperationPanel {
 		this.frame = f;
 		this.messageTable = m;
 
-		OKButton = new JButton("ok");
+		OKButton = new MyLabel("确认");
 
 		function = new JLabel("新增中转订单");
 
 		order_ID = new JLabel("订单编号");
 
-		order_ID_input = new JTextField();
+		order_ID_input = new MyTextField();
 
 		OKButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					if (controller.getTransferingBL().addOrder(
-							order_ID_input.getText()) == null)
+							order_ID_input.getText()) == null) {
 						warnning("错误的订单号");
-					messageTable.addRow(controller.getTransferingBL().addOrder(
-							order_ID_input.getText()));
+						frame.toMainPanel();
+					} else
+						try {
+							controller.getTransferingBL().deleteOrder(order_ID_input.getText());
+						} catch (Exception e1) {
+							// TODO 自动生成的 catch 块
+							e1.printStackTrace();
+						}
+						messageTable.addRow(controller.getTransferingBL()
+								.addOrder(order_ID_input.getText()));
 
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块

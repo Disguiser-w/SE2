@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 
 import type.OperationState;
 import type.OrderState;
+import type.ReceiptState;
 import vo.LogDiaryVO;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
@@ -126,6 +127,7 @@ public class TransferingBL implements TransferingBLService {
 
 	public OperationState saveTransferingReceipt() throws RemoteException {
 		// TODO 自动生成的方法存根
+		transferingReceipt.receiptState = ReceiptState.SUBMIT;
 		intermediateData.saveTransferingReceiptInfo(
 				IntermediateMainController.voToPO(transferingReceipt),
 				transferingReceipt.interdiateCentre.organizationID);
