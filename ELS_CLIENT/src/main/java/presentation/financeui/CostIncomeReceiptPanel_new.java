@@ -17,7 +17,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 	private int PANEL_HEIGHT = 480;
 
 
-//	private JLabel function;
 	private MyTextLabel costIncomeReceipt_ID;
 	private MyTextLabel startDate;
 	private MyTextLabel endDate;
@@ -25,7 +24,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 	private MyTextLabel totalCost;
 	private MyTextLabel totalProfit;
 	
-//	private MyLabel refreshLabel;
 
 	private MyTextField costIncomeReceipt_ID_Input;
 	private MyTextField startDate_Input;
@@ -47,7 +45,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		beginTime = "2010-01-01";
 		endTime = GetDate.getdate();
 		ID = controller.getCostIncomeListID();
-//		function = new JLabel("成本收益表");
 		costIncomeReceipt_ID = new MyTextLabel("成本收益表编号");
 		startDate = new MyTextLabel("开始时间");
 		endDate = new MyTextLabel("结束时间");
@@ -55,7 +52,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalIncome = new MyTextLabel("总支出");
 		totalProfit = new MyTextLabel("总利润");
 		
-//		refreshLabel = new MyLabel("刷新");
 		
 		
 
@@ -92,20 +88,10 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		add(totalCost_Input);
 		add(totalIncome_Input);
 		add(totalProfit_Input);
-//		add(refreshLabel);
 
-//		
-//             refreshLabel.addMouseListener(new MouseAdapter() {
-//			
-//			public void mouseClicked(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				refresh();
-//			}
-//		});
 	}
 
 	public void setCmpLocation() {
-//		function.setBounds(PANEL_WIDTH / 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 		costIncomeReceipt_ID.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT *5/ 32, PANEL_WIDTH * 7 / 20, PANEL_HEIGHT / 18);
 		startDate.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT * 8/ 32, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
 		endDate.setBounds(PANEL_WIDTH *2/ 9, PANEL_HEIGHT * 11 / 32, PANEL_WIDTH / 6, PANEL_HEIGHT / 16);
@@ -118,7 +104,6 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		totalIncome_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 14 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalCost_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT  * 17 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
 		totalProfit_Input.setBounds(PANEL_WIDTH / 2, PANEL_HEIGHT * 20 / 32, PANEL_WIDTH / 3, PANEL_HEIGHT / 16);
-//		refreshLabel.setBounds(PANEL_WIDTH *20/ 36, PANEL_HEIGHT / 24, PANEL_WIDTH * 4 / 18, PANEL_HEIGHT / 12);
 	}
 
 	public void setBounds(int x, int y, int width, int height) {
@@ -135,11 +120,11 @@ public class CostIncomeReceiptPanel_new extends OperationPanel {
 		double income = controller.getIncome();
 		double cost = controller.getCost();
 		double profit = income-cost;
-		totalCost_Input = new MyTextField(income + "");
+		totalCost_Input.setText(income + "");
 		totalCost_Input.setEditable(false);
-		totalIncome_Input = new MyTextField(cost + "");
+		totalIncome_Input.setText(cost + "");
 		totalIncome_Input.setEditable(false);
-		totalProfit_Input = new MyTextField(profit + "");
+		totalProfit_Input.setText(profit + "");
 		totalProfit_Input.setEditable(false);
 	}
 	

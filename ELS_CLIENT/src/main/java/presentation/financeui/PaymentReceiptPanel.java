@@ -76,7 +76,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		dateChooseLabel = new MyLabel("日期");
 		dateOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
-		cancelButton = new MyLabel("取消");
+		cancelButton = new MyLabel("返回");
 
 		clauseLabel = new MyTextLabel("条目");
 		date = new MyTextLabel("日期");
