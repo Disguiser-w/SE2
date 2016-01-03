@@ -17,10 +17,13 @@ public class MyTextArea extends JTextArea {
 		// setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190,
 		// 125)));
 		setBackground(new Color(150, 150, 150, 75));
+//		setEnabled(false);
 	}
 
 	public void setText(String str) {
 		super.setText(str);
+		if (observable != null)
+			observable.setData();
 
 	}
 
@@ -40,7 +43,7 @@ public class MyTextArea extends JTextArea {
 			if (time == 1) {
 				time--;
 				observable.setData();
-				
+
 			}
 		}
 		super.paintComponent(g);

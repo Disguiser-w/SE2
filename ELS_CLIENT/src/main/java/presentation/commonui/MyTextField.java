@@ -8,10 +8,8 @@ import java.awt.RenderingHints;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 public class MyTextField extends JTextField {
 	// private Image image;
@@ -33,6 +31,8 @@ public class MyTextField extends JTextField {
 	}
 
 	public void setText(String str) {
+		if (observable != null)
+			observable.setData();
 		super.setText(str);
 
 	}
@@ -83,14 +83,16 @@ public class MyTextField extends JTextField {
 				g2d.fillRoundRect(1, 1, width - 3, height - 3, height - 2, height - 2);
 				g2d.setColor(new Color(100, 100, 100));
 				g2d.drawRoundRect(0, 0, width - 1, height - 1, height, height);
-//				g2d.drawRoundRect(1, 1, width - 3, height - 3, height - 2, height - 2);
+				// g2d.drawRoundRect(1, 1, width - 3, height - 3, height - 2,
+				// height - 2);
 
 			} else if (UserFrame.type == UserFrame.TYPE_1) {
 				g2d.setColor(Color.BLACK);
 				g2d.fillRoundRect(1, 1, width - 3, height - 3, height - 2, height - 2);
 				g2d.setColor(new Color(200, 200, 200));
 				g2d.drawRoundRect(0, 0, width - 1, height - 1, height, height);
-//				g2d.drawRoundRect(1, 1, width - 3, height - 3, height - 2, height - 2);
+				// g2d.drawRoundRect(1, 1, width - 3, height - 3, height - 2,
+				// height - 2);
 			}
 
 		}

@@ -86,6 +86,7 @@ public class ServiceMainFrame extends JFrame {
 		stopServiceLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (isStart) {
+					isStart = false;
 					if (service.stopService()) {
 
 						showMessage("服务已停止!");

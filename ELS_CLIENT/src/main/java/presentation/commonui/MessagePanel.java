@@ -9,16 +9,24 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.FileNotFoundException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import common.FileGetter;
 import common.ImageGetter;
+import init.Client;
 import presentation.special_ui.ExitLabel;
 import presentation.special_ui.LogOutLabel;
+import testConnection.TestConnection;
 
 class MessagePanel extends JPanel {
 
@@ -58,14 +66,43 @@ class MessagePanel extends JPanel {
 		setLayout(null);
 		(new Thread(new Runnable() {
 			public void run() {
+				int time = 0;
+
+				Scanner in = null;
+				try {
+					in = new Scanner(FileGetter.getFile("address"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String address = in.next();
+				in.close();
 				while (true) {
 					refreshTime();
 					try {
 						Thread.sleep(100);
+
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					time++;
+					if (time == 10)
+						try {
+							time = 0;
+
+							TestConnection test = (TestConnection) Naming.lookup("//" + address + "/TestConnection");
+							if (!test.getConnectionInfo()) {
+								throw new Exception();
+							}
+
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(null, "网络连接中断,请检查服务器是否停止", "", JOptionPane.ERROR_MESSAGE);
+							frame.setVisible(false);
+							new Client();
+							break;
+						}
+
 				}
 			}
 		})).start();

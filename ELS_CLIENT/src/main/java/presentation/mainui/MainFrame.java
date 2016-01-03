@@ -9,7 +9,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
@@ -33,10 +40,12 @@ import businesslogic.managebl.controller.ManageMainController;
 import businesslogic.repertorybl.controller.RepertoryMainController;
 import businesslogic.userbl.UserBL;
 import businesslogic.userbl.controller.UserMainController;
+import common.FileGetter;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
 import presentation.commonui.MyComboBox;
+import testConnection.TestConnection;
 import vo.LogVO;
 import vo.OrderVO;
 
@@ -55,7 +64,14 @@ public class MainFrame extends JFrame {
 	private JScrollPane resultPanel;
 	private UserBL userbl;
 
+	private int oldX;
+	private int oldY;
+	private boolean isMoving;
+
 	public MainFrame() {
+		oldX = 0;
+		oldY = 0;
+		isMoving = false;
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -64,6 +80,7 @@ public class MainFrame extends JFrame {
 			e.printStackTrace();
 		}
 		mainPanel = new MainPanel();
+		addDragListener(mainPanel);
 		add(mainPanel);
 
 		// setTitle(" ELS");
@@ -83,6 +100,7 @@ public class MainFrame extends JFrame {
 
 	public void toQueryPanel() {
 		queryPanel = new QueryPanel();
+		addDragListener(queryPanel);
 		remove(mainPanel);
 		add(queryPanel);
 
@@ -91,6 +109,7 @@ public class MainFrame extends JFrame {
 
 	public void toSignInPanel() {
 		signInPanel = new SignInPanel();
+		addDragListener(signInPanel);
 		remove(mainPanel);
 		add(signInPanel);
 
@@ -176,14 +195,20 @@ public class MainFrame extends JFrame {
 
 				public void mouseReleased(MouseEvent e) {
 
-					try {
-						userbl = new UserBL();
-					} catch (Exception ex) {
-						warnning("网络连接错误或服务器未打开，请检查IP地址和服务器开启状态。");
-						return;
-					}
 					isPressed = false;
 					queryButton.setIcon(query_hover);
+
+					if (!testConnection()) {
+						warnning("网络连接错误或服务器未打开，请检查IP地址和服务器开启状态。");
+						queryButton.setIcon(query_normal);
+						return;
+					}
+					try {
+						userbl = new UserBL();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
 					toQueryPanel();
 					queryButton.setIcon(query_normal);
 
@@ -209,15 +234,20 @@ public class MainFrame extends JFrame {
 
 				public void mouseReleased(MouseEvent e) {
 
-					try {
-						userbl = new UserBL();
-					} catch (Exception ex) {
+					isPressed = false;
+					signInButton.setIcon(signIn_hover);
+
+					if (!testConnection()) {
 						warnning("网络连接错误或服务器未打开，请检查IP地址和服务器开启状态。");
+						signInButton.setIcon(signIn_normal);
 						return;
 					}
 
-					isPressed = false;
-					signInButton.setIcon(signIn_hover);
+					try {
+						userbl = new UserBL();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 					toSignInPanel();
 					signInButton.setIcon(signIn_normal);
 				}
@@ -279,6 +309,24 @@ public class MainFrame extends JFrame {
 		}
 
 		public void showPanel() {
+		}
+
+		public boolean testConnection() {
+			Scanner in = null;
+			try {
+				in = new Scanner(FileGetter.getFile("address"));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String address = in.next();
+			in.close();
+			try {
+
+				return ((TestConnection) Naming.lookup("//" + address + "/TestConnection")).getConnectionInfo();
+			} catch (Exception e) {
+				return false;
+			}
 		}
 
 		public void paintComponent(Graphics g) {
@@ -935,6 +983,35 @@ public class MainFrame extends JFrame {
 
 	private void warnning(String msg) {
 		JOptionPane.showMessageDialog(null, msg, "订单信息错误", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public void addDragListener(JPanel panel) {
+		panel.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				oldX = e.getX();
+				oldY = e.getY();
+				isMoving = true;
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				isMoving = false;
+			}
+
+		});
+
+		panel.addMouseMotionListener(new MouseMotionAdapter() {
+
+			public void mouseDragged(MouseEvent e) {
+				if (!isMoving)
+					return;
+				int newX = e.getX();
+				int newY = e.getY();
+				int dx = newX - oldX;
+				int dy = newY - oldY;
+				frame.setLocation(frame.getX() + dx, frame.getY() + dy);
+			}
+
+		});
 	}
 
 }

@@ -152,7 +152,7 @@ public class FinishedOrderPanel extends OperationPanel {
 				vo.packingExpense = ((int) ((vo.packingExpense) * 10)) / 10;
 				vo.freight = ((int) ((vo.freight) * 10)) / 10;
 
-				String msg = "          订单号: " + vo.ID + "\n" + "\n           收件人: \n" + "                姓名: "
+				String msg = "\n" + "          订单号: " + vo.ID + "\n" + "\n           收件人: \n" + "                姓名: "
 						+ vo.senderName + "                地址: " + vo.senderAddress + "                电话:　"
 						+ vo.senderPhoneNumber + "                手机号: " + vo.senderMobilePhoneNumber + "\n"
 						+ "\n           寄件人: \n" + "                姓名: " + vo.recipientName + "                地址: "

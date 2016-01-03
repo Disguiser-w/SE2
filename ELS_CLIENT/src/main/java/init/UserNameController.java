@@ -47,10 +47,6 @@ public class UserNameController {
 				}
 
 			userNames.remove(i);
-			if (userNames.isEmpty()) {
-				file.delete();
-				return true;
-			}
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(userNames);
@@ -117,7 +113,7 @@ public class UserNameController {
 			ArrayList<String> userNames = (ArrayList<String>) in.readObject();
 			in.close();
 			if (!userNames.isEmpty())
-				return userNames.get(userNames.size()-1);
+				return userNames.get(userNames.size() - 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

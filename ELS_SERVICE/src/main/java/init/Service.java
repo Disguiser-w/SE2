@@ -1,17 +1,17 @@
 package init;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import presentation.serviceui.ServiceMainFrame;
-
 import common.FileGetter;
-
 import data.businessdata.BusinessData;
 import data.expressdata.ExpressData;
 import data.financedata.AccountData;
@@ -50,6 +50,9 @@ import dataservice.repertorydataservice.GoodsDataService;
 import dataservice.repertorydataservice.LeaveRepertoryReceiptDataService;
 import dataservice.repertorydataservice.RepertoryDataService;
 import dataservice.userdataservice.UserDataService;
+import presentation.serviceui.ServiceMainFrame;
+import testConnection.Test;
+import testConnection.TestConnection;
 
 public class Service {
 	private ExpressDataService expressData;
@@ -71,14 +74,16 @@ public class Service {
 	private CityDistanceDataService cityDistanceData;
 	private CostDataService costData;
 	private LogDiaryDataService logDiaryData;
+	private TestConnection test;
 
 	private Remote reg;
+	private String address;
 
-	public boolean startService() {
+	public Service() {
+		File file = FileGetter.getFile("address");
 
 		try {
-			String address = null;
-			File file = FileGetter.getFile("address");
+
 			if (!file.exists()) {
 				JOptionPane.showMessageDialog(null, "IP地址文件不存在,将使用本地地址，请检查Info目录下的address是否丢失");
 				address = "localhost";
@@ -87,7 +92,22 @@ public class Service {
 				address = in.nextLine();
 				in.close();
 			}
+
 			System.setProperty("java.rmi.server.hostname", address);
+			reg = LocateRegistry.createRegistry(8888);
+			test = new Test();
+			Naming.bind("rmi://" + address + ":8888/TestConnection", test);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "请勿重复启动服务器", "", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+			e.printStackTrace();
+		}
+	}
+
+	public boolean startService() {
+
+		try {
 
 			expressData = new ExpressData();
 			businessData = new BusinessData();
@@ -108,8 +128,7 @@ public class Service {
 			cityDistanceData = new CityDistanceData();
 			costData = new CostData();
 			logDiaryData = new LogDiaryData();
-
-			reg = LocateRegistry.createRegistry(8888);
+			Test.isConnection = true;
 
 			Naming.rebind("rmi://" + address + ":8888/ExpressDataService", expressData);
 			Naming.rebind("rmi://" + address + ":8888/BusinessDataService", businessData);
@@ -142,31 +161,12 @@ public class Service {
 	}
 
 	public boolean stopService() {
-		expressData = null;
-		businessData = null;
-		accountData = null;
-		collectionData = null;
-		paymentData = null;
-		costincomeData = null;
-		initialData = null;
-		intermediateData = null;
-		userData = null;
-		organizationData = null;
-		repertoryData = null;
-		enterRepertoryReceiptData = null;
-		leaveRepertoryReceiptData = null;
-		goodsData = null;
-		perWageData = null;
-		basicSalaryData = null;
-		cityDistanceData = null;
-		costData = null;
-		logDiaryData = null;
-		reg = null;
 
+		Test.isConnection = false;
 		return true;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		new ServiceMainFrame();
 	}
 }

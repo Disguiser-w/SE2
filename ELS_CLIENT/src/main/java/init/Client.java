@@ -1,14 +1,18 @@
 package init;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.util.Scanner;
 
+import common.FileGetter;
 import presentation.mainui.MainFrame;
+import testConnection.TestConnection;
 
 public class Client {
 	private MainFrame frame;
 
 	public Client() {
+
 		frame = new MainFrame();
 		frame.showFrame();
 	}

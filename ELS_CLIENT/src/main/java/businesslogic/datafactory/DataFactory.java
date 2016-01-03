@@ -63,6 +63,13 @@ public class DataFactory {
 		}
 	}
 
+	public static UserDataService getUserData() throws MalformedURLException, RemoteException, NotBoundException {
+
+		userData = (UserDataService) Naming.lookup("//" + address + "/UserDataService");
+
+		return userData;
+	}
+
 	public static ExpressDataService getExpressData() throws MalformedURLException, RemoteException, NotBoundException {
 		if (expressData != null) {
 			return expressData;
@@ -177,15 +184,6 @@ public class DataFactory {
 		}
 		perWageData = (PerWageDataService) Naming.lookup("//" + address + "/PerWageDataService");
 		return perWageData;
-	}
-
-	public static UserDataService getUserData() throws MalformedURLException, RemoteException, NotBoundException {
-
-		if (userData != null) {
-			return userData;
-		}
-		userData = (UserDataService) Naming.lookup("//" + address + "/UserDataService");
-		return userData;
 	}
 
 	// 仓库管理员
