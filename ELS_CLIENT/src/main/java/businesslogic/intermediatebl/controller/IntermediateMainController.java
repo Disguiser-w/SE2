@@ -5,6 +5,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import common.ImageGetter;
+
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
@@ -116,11 +118,16 @@ public class IntermediateMainController {
 				entruckingReceiptList, intermediateData, intermediate);
 
 		frame = new IntermediateFrame(intermediate);
-		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收");
-		frame.addFuncLabel(new EnvehiclePanel(this), "装车分配");
-		frame.addFuncLabel(new PlaneManagementPanel(this, frame), "飞机信息管理");
-		frame.addFuncLabel(new TrainManagementPanel(this, frame), "火车信息管理");
-		frame.addFuncLabel(new TruckManagementPanel(this, frame), "汽车信息管理");
+		frame.addFuncLabel(new TransferingPanel(this, frame), "中转接收",
+				ImageGetter.getImage("transfering.png").getImage());
+		frame.addFuncLabel(new EnvehiclePanel(this), "装车分配", ImageGetter
+				.getImage("envehicle.png").getImage());
+		frame.addFuncLabel(new PlaneManagementPanel(this, frame), "飞机信息管理",
+				ImageGetter.getImage("planeManagement.png").getImage());
+		frame.addFuncLabel(new TrainManagementPanel(this, frame), "火车信息管理",
+				ImageGetter.getImage("trainManagement.png").getImage());
+		frame.addFuncLabel(new TruckManagementPanel(this, frame), "汽车信息管理",
+				ImageGetter.getImage("truckManagement.png").getImage());
 
 		frame.showFrame();
 	}
