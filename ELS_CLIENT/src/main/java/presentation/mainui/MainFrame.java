@@ -65,9 +65,8 @@ public class MainFrame extends JFrame {
 		}
 		mainPanel = new MainPanel();
 		add(mainPanel);
-		userbl = new UserBL();
 
-//		setTitle("                       ELS");
+		// setTitle(" ELS");
 		setSize(MAIN_WIDTH, MAIN_HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -176,10 +175,18 @@ public class MainFrame extends JFrame {
 				}
 
 				public void mouseReleased(MouseEvent e) {
+
+					try {
+						userbl = new UserBL();
+					} catch (Exception ex) {
+						warnning("网络连接错误或服务器未打开，请检查IP地址和服务器开启状态。");
+						return;
+					}
 					isPressed = false;
 					queryButton.setIcon(query_hover);
 					toQueryPanel();
 					queryButton.setIcon(query_normal);
+
 				}
 			});
 
@@ -201,6 +208,14 @@ public class MainFrame extends JFrame {
 				}
 
 				public void mouseReleased(MouseEvent e) {
+
+					try {
+						userbl = new UserBL();
+					} catch (Exception ex) {
+						warnning("网络连接错误或服务器未打开，请检查IP地址和服务器开启状态。");
+						return;
+					}
+
 					isPressed = false;
 					signInButton.setIcon(signIn_hover);
 					toSignInPanel();
@@ -226,6 +241,7 @@ public class MainFrame extends JFrame {
 				}
 
 				public void mouseReleased(MouseEvent e) {
+
 					isPressed = false;
 					exit.setIcon(exit_hover);
 					System.exit(0);

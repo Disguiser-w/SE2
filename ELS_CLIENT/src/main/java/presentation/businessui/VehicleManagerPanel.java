@@ -30,6 +30,7 @@ import presentation.special_ui.AddLabel;
 import presentation.special_ui.DeleteLabel;
 import presentation.special_ui.ModifyLabel;
 import presentation.special_ui.MySearchField;
+import type.OrganizationType;
 import vo.DriverVO;
 import vo.LogDiaryVO;
 import vo.OrganizationVO;
@@ -97,7 +98,7 @@ public class VehicleManagerPanel extends OperationPanel {
 	}
 
 	private void setBaseInfos() {
-		String[] head = new String[] { "车辆编号", "出发地", "目的地", "司机" };
+		String[] head = new String[] { "车辆编号", "目的地", "出发地", "司机" };
 
 		int[] widths = { 173, 150, 150, 120 };
 
@@ -787,7 +788,13 @@ public class VehicleManagerPanel extends OperationPanel {
 					OrganizationVO destination = organizationVOs.get(index);
 					String name = destination.name;
 
-					String destinationCity = destination.name.substring(0, name.length() - 3);
+					String destinationCity = destination.name;
+					// destination.name.substring(0, name.length() - 4);
+//					if (destination.category == OrganizationType.businessHall) {
+//						destination.name.substring(0, name.length() - 3);
+//					} else {
+//						destination.name.substring(0, name.length() - 4);
+//					}
 					OrganizationVO local = BusinessMainController.businessVO.organizationVO;
 
 					int driverIndex = driversBox.getSelectedIndex();

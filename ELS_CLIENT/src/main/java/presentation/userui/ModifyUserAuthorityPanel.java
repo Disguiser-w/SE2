@@ -51,7 +51,11 @@ public class ModifyUserAuthorityPanel extends OperationPanel {
     	this.adminFrame = frame;
     	this.userMainPanel = userMainPanel;
     	
-    	this.userBL = new UserBL();
+    	try {
+			this.userBL = new UserBL();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
     	
     	function = new MyTextLabel("用户管理——修改用户权限");
     	

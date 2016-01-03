@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -26,6 +27,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 	private MyTable messageTable;
 	private MyTextLabel totalMessageLabel;
 	private MyLabel collectionLabel;
+	private MyLabel refreshLabel;
 
 	private LocationHelper helper;
 
@@ -39,6 +41,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 		log = new LogDiaryBLController();
 
 		totalMessageLabel = new MyTextLabel();
+		totalMessageLabel.setHorizontalAlignment(JLabel.CENTER);
 		totalMessageLabel.setBackground(new Color(200, 200, 200, 0));
 		totalMessageLabel.setBorder(BorderFactory.createLineBorder(new Color(190, 190, 190, 125)));
 		// totalMessageLabel.setBackground(new Color(160, 160, 160, 100));
@@ -49,10 +52,12 @@ public class ChargeCollectionPanel extends OperationPanel {
 		//
 		collectionLabel = new MyLabel("收款汇总");
 		collectionLabel.setToolTipText("建议每日一次");
+		refreshLabel = new MyLabel("刷新");
 
 		add(totalMessageLabel);
 		add(collectionLabel);
-		// helper = new LocationHelper(this);
+		add(refreshLabel);
+//		helper = new LocationHelper(this);
 		setLayout(null);
 
 		chargeInfos = controller.getChargeInfo();
@@ -73,9 +78,11 @@ public class ChargeCollectionPanel extends OperationPanel {
 				(int) (height * 15.376344086021506 / 20));
 
 		totalMessageLabel.setBounds((int) (width * 1.2890859481582538 / 25), (int) (height * 17.434408602150536 / 20),
-				(int) (width * 18.92905866302865 / 25), (int) (height * 1.3261648745519714 / 20));
+				(int) (width * 16.62905866302865 / 25), (int) (height * 1.3261648745519714 / 20));
 		collectionLabel.setBounds((int) (width * 21.33506139154161 / 25), (int) (height * 17.434408602150536 / 20),
 				(int) (width * 2.3417462482946794 / 25), (int) (height * 1.3261648745519714 / 20));
+		refreshLabel.setBounds((int) (width * 18.724420190995907 / 25), (int) (height * 17.419354838709676 / 20),
+				(int) (width * 2.319236016371078 / 25), (int) (height * 1.3261648745519714 / 20));
 	}
 
 	private void setBaseInfos() {
@@ -95,6 +102,12 @@ public class ChargeCollectionPanel extends OperationPanel {
 
 	public void addListener() {
 
+		refreshLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				messageTable.setInfos(getInfos());
+			}
+		});
+
 		collectionLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				double total = controller.gathering();
@@ -107,6 +120,7 @@ public class ChargeCollectionPanel extends OperationPanel {
 				}
 
 				totalMessageLabel.setText(" 日期 : " + date + "  营业厅编号 : " + oID + "  金额总和 : " + total);
+				messageTable.setInfos(getInfos());
 
 				//
 				log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "进行了本日的收款汇总"),

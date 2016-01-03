@@ -42,7 +42,6 @@ public class EnVehiclePanel extends OperationPanel {
 		// helper = new LocationHelper(this);
 		setLayout(null);
 		addListener();
-//		LocationHelper helper = new LocationHelper(this);
 		setBaseInfos();
 	}
 
@@ -64,6 +63,7 @@ public class EnVehiclePanel extends OperationPanel {
 		confirmLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				result = new ArrayList<String[]>();
+				messageTable.setInfos(result);
 
 			}
 		});
@@ -71,7 +71,7 @@ public class EnVehiclePanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				result = controller.autoTruckLoading();
 				if (result.size() == 0)
-					warnning("不存在需要派件的订单");
+					warnning("不存在需要装车的订单");
 				else {
 					messageTable.setInfos(result);
 					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "进行了一次装车"),

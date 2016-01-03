@@ -17,6 +17,7 @@ import po.EnVehicleReceiptPO;
 import po.OrderPO;
 import po.VehiclePO;
 import type.OrderState;
+import type.OrganizationType;
 import type.ReceiptState;
 import vo.OrganizationVO;
 
@@ -98,6 +99,7 @@ public class EnVehicle {
 
 		int j = 0;
 		for (VehiclePO i : vehiclePO) {
+
 			// 对每一辆车,生成一个装车单，放在装车单的ArrayList中
 			EnVehicleReceiptPO enVehicle = new EnVehicleReceiptPO();
 
@@ -108,14 +110,33 @@ public class EnVehicle {
 			ArrayList<String> orderIDs = new ArrayList<String>();
 
 			boolean hasOrder = false;
-			for (OrderPO o : distributingPo)
-				if (o.getRecipientAddress().split(" ")[1].equals(i.getDestinationCity())) {
+			// 情况1,到同一城市的中转中心(判断后缀)
+			// 情况2,到同一城市营业厅
+			int num = 0;
+			for (; num < distributingPo.size(); num++) {
+				OrderPO o = distributingPo.get(num);
+				// 中转中心车辆
+				if (i.getDestination().getCategory() == OrganizationType.intermediateCenter) {
+					// 判断该订单是否要中转
+					if (!o.getSenderAddress().split("-")[0].equals(o.getRecipientAddress().split("-")[0])) {
+						orderIDs.add(o.getID());
+						result.add(new String[] { i.getID(), BusinessMainController.businessVO.organizationVO.name,
+								i.getDestinationCity(), o.getID() });
+						hasOrder = true;
+						distributingPo.remove(num);
+						num--;
+					}
+					// 营业厅车辆,例如：南京鼓楼 到 南京仙林
+				} else if (i.getDestinationCity().contains(o.getRecipientAddress().split(" ")[1])) {
 					orderIDs.add(o.getID());
-					result.add(new String[] { i.getID(), o.getSenderAddress().split(" ")[1], i.getDestinationCity(),
-							o.getID() });
-					hasOrder = true;
-				}
 
+					result.add(new String[] { i.getID(), BusinessMainController.businessVO.organizationVO.name,
+							i.getDestinationCity(), o.getID() });
+					hasOrder = true;
+					distributingPo.remove(num);
+					num--;
+				}
+			}
 			if (hasOrder) {
 				try {
 					businessData.addDriverTime(organizationVO.organizationID, i.getDriver().getID());

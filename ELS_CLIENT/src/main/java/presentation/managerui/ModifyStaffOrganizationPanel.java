@@ -63,7 +63,11 @@ public class ModifyStaffOrganizationPanel extends OperationPanel {
 		this.manageFrame = frame;
 		this.staffManagePanel = staffManagePanel;
 
-		this.userBL = new UserBL();
+		try {
+			this.userBL = new UserBL();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		this.organizationBL = new OrganizationBL();
 
 		ArrayList<OrganizationVO> organizationArr = organizationBL.showAllOrganizations();

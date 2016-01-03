@@ -99,7 +99,7 @@ public class AddOrderPanel extends OperationPanel {
 	public AddOrderPanel(AddOrderController controller) {
 		this.controller = controller;
 		log = new LogDiaryBLController();
-		
+
 		senderLabel = new MyTextLabel("寄件人信息");
 		senderNameLabel = new MyTextLabel("姓名");
 		senderOrganizationLabel = new MyTextLabel("单位");
@@ -295,15 +295,12 @@ public class AddOrderPanel extends OperationPanel {
 		places = new ArrayList<ArrayList<String>>();
 
 		try {
-			;
+
 			citys = controller.getAllCitys();
 
 			for (String i : citys) {
 				places.add(controller.getBelongCitys(i));
-				// ArrayList<String> str = new ArrayList<String>();
-				// str.add("这里");
-				// str.add("那里");
-				// places.add(str);
+
 			}
 
 			places.add(new ArrayList<String>());
@@ -353,7 +350,8 @@ public class AddOrderPanel extends OperationPanel {
 				if (controller.addOrder(newOrder)) {
 					addSuccessful("订单提交成功！");
 					clear();
-					log.addLogDiary(new LogDiaryVO(GetDate.getTime(),ExpressMainController.expressVO,"增加了一份订单"), GetDate.getTime());	
+					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), ExpressMainController.expressVO, "增加了一份订单"),
+							GetDate.getTime());
 				} else
 					warnning("订单提交失败，请重新提交");
 

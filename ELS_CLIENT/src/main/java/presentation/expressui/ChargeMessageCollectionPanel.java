@@ -69,7 +69,7 @@ public class ChargeMessageCollectionPanel extends OperationPanel {
 		refreshLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				setLabelInfo();
-				setBaseInfos();
+				messageTable.setInfos(getInfos());
 			}
 		});
 	}

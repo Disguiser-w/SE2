@@ -76,6 +76,7 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 		add(inputLabel);
 		add(orderNumField);
 		add(inputConfirmButton);
+		// helper = new LocationHelper(this);
 
 		add(confirmButton);
 
@@ -104,8 +105,8 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				(int) (width * 2.6145975443383356 / 25), (int) (height * 1.3261648745519714 / 20));
 		orderNumField.setBounds((int) (width * 5.559345156889496 / 25), (int) (height * 1.7204301075268817 / 20),
 				(int) (width * 4.399727148703956 / 25), (int) (height * 1.3261648745519714 / 20));
-		inputConfirmButton.setBounds((int) (width * 11.493860845839018 / 25), (int) (height * 1.9204301075268817 / 20),
-				(int) (width * 1.9781718963165076 / 25), (int) (height * 0.9261648745519714 / 20));
+		inputConfirmButton.setBounds((int) (width * 10.879945429740792 / 25), (int) (height * 1.8279569892473118 / 20),
+				(int) (width * 2.2851296043656206 / 25), (int) (height * 1.075268817204301 / 20));
 		confirmButton.setBounds((int) (width * 4.38881309686221 / 25), (int) (height * 15.161290322580646 / 20),
 				(int) (width * 4.796725784447476 / 25), (int) (height * 2.8487455197132617 / 20));
 		messageTable.setLocationAndSize((int) (width * 14.972714870395635 / 25),
@@ -143,6 +144,12 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 					warnning("不存在此订单号，请检查订单号是否有误");
 					return;
 				}
+
+				for (int i = 0; i < orderNum.size(); i++)
+					if (orderNum.get(i)[0].equals(orderNumber)) {
+						warnning("已经添加该订单");
+						return;
+					}
 
 				orderNum.add(new String[] { orderNumber });
 				orderNumField.setText("");

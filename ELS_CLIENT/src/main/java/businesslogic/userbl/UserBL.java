@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import businesslogic.datafactory.DataFactory;
 import businesslogicservice.userblservice.UserBLService;
 import dataservice.userdataservice.UserDataService;
-import po.ExpressPO;
 import po.UserPO;
 import type.AuthorityType;
 import type.ProfessionType;
@@ -19,12 +18,8 @@ public class UserBL implements UserBLService {
 
 	public static UserDataService udService;
 
-	public UserBL() {
-		try {
+	public UserBL() throws Exception{
 			udService = DataFactory.getUserData();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 	/**
