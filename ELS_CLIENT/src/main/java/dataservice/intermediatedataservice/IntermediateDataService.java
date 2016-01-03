@@ -62,6 +62,8 @@ public interface IntermediateDataService extends Remote {
 	public OperationState saveSubmittedTransferingReceiptInfo(
 			ArrayList<TransferingReceiptPO> transferingReceiptList)
 			throws RemoteException;
+	
+	public OperationState saveSubmittedTransferingReceipt(TransferingReceiptPO receipt) throws RemoteException;
 
 	public ArrayList<EnIntermediateReceiptPO> getSubmittedEnIntermediateReceiptInfo()
 			throws RemoteException;

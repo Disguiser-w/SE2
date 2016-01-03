@@ -218,11 +218,11 @@ public class IntermediateData extends UnicastRemoteObject implements
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
-			TransferingReceiptPO transferingReceipt = (TransferingReceiptPO) in
+			ArrayList<TransferingReceiptPO> transferingReceiptList = (ArrayList<TransferingReceiptPO>) in
 					.readObject();
 			in.close();
 
-			return transferingReceipt;
+			return transferingReceiptList.get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("读写中转中心到达单信息失败！");
