@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import businesslogic.financebl.LogDiaryBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.envehicleblservice.TruckManageBLService;
+import businesslogicservice.intermediateblservice.TruckManageBLService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import po.TruckPO;
 import type.OperationState;

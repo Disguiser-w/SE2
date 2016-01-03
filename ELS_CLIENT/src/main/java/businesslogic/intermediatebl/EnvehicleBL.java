@@ -7,7 +7,7 @@ import businesslogic.financebl.LogDiaryBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
+import businesslogicservice.intermediateblservice.EnvehicleBLService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
