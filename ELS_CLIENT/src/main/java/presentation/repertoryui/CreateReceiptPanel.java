@@ -180,7 +180,6 @@ public class CreateReceiptPanel extends OperationPanel{
 			promptLabel.setText("上次生成出库单据的时间: "+lastTime+"     当前时间: "+nowTime);
 			
 			goods = repertoryControl.getLeaveRepertoryGoods();
-			System.out.println(goods.size());
 			
 			int size = goods.size();
 			goodsIDList = new String[size];

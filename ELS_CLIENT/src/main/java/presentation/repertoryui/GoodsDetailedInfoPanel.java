@@ -114,8 +114,8 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 		intermediateMessageTable.setLocationAndSize((int) (width * 3.880921895006402 / 25), (int) (height * 11.0035714285714284 / 20),
 				(int) (width * 18.85403329065301 / 25), (int) (height * 6.651785714285714 / 20));
 		
-		returnLabel.setBounds((int) (width * 11.479513444302176 / 25),(int) (height * 17.20285714285715 / 20), 
-				(int) (width * 3.23303457106274 / 25),(int) (height * 1.3839285714285714 / 20));
+		returnLabel.setBounds((int) (width * 11.479513444302176 / 25),(int) (height * 18.30285714285715 / 20), 
+				(int) (width * 3.23303457106274 / 25),(int) (height * 1.2539285714285714 / 20));
 	}
 	
 	

@@ -94,31 +94,31 @@ public class EnterReceiptDetailedInfoPanel extends OperationPanel{
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
 
-		categoryLabel.setBounds((int) (width * 3.880921895006402 / 25), (int) (height * 2.0035714285714284 / 20),
+		categoryLabel.setBounds((int) (width * 3.880921895006402 / 25), (int) (height * 1.0035714285714284 / 20),
 				(int) (width * 3.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		receiptIDLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 3.5035714285714284 / 20),
+		receiptIDLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 2.5035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		userIDLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 5.0035714285714284 / 20),
+		userIDLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 4.0035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		createTimeLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 6.5035714285714284 / 20),
+		createTimeLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 5.5035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		stateLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 8.0035714285714284 / 20),
+		stateLabel.setBounds((int) (width * 6.880921895006402 / 25), (int) (height * 7.0035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		enterMessageLabel.setBounds((int) (width * 3.880921895006402 / 25), (int) (height * 9.5035714285714284 / 20),
+		enterMessageLabel.setBounds((int) (width * 3.880921895006402 / 25), (int) (height * 8.5035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		receiptIDField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 3.5035714285714284 / 20),
+		receiptIDField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 2.5035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		userIDField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 5.0035714285714284 / 20),
+		userIDField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 4.0035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		createTimeField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 6.5035714285714284 / 20),
+		createTimeField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 5.5035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		stateField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 8.0035714285714284 / 20),
+		stateField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 7.0035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
-		messageTable.setLocationAndSize((int) (width * 3.880921895006402 / 25), (int) (height * 11.0035714285714284 / 20),
-				(int) (width * 18.85403329065301 / 25), (int) (height * 6.651785714285714 / 20));
+		messageTable.setLocationAndSize((int) (width * 3.880921895006402 / 25), (int) (height * 10.0035714285714284 / 20),
+				(int) (width * 18.85403329065301 / 25), (int) (height * 6.901785714285714 / 20));
 		
-		returnLabel.setBounds((int) (width * 11.479513444302176 / 25),(int) (height * 17.20285714285715 / 20), 
-				(int) (width * 3.23303457106274 / 25),(int) (height * 1.3839285714285714 / 20));
+		returnLabel.setBounds((int) (width * 11.479513444302176 / 25),(int) (height * 17.80285714285715 / 20), 
+				(int) (width * 3.23303457106274 / 25),(int) (height * 1.2539285714285714 / 20));
 	}
 	
 	

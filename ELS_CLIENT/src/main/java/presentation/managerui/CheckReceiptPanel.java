@@ -164,42 +164,52 @@ public class CheckReceiptPanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		switch(num){
 		case 0:
+			gatheringList = receiptControl.getAllSubmittedGatheringReceipt();
 			for(GatheringReceiptVO gatheringvo : gatheringList)
 				infos.add(new String[]{gatheringvo.receiptID, "收款单", gatheringvo.businesshall.name, "营业厅业务员", gatheringvo.time, stateName(gatheringvo.receiptState)});
 			break;
 		case 1:
+			collectionList = receiptControl.getAllSubmittedCollectionReceipt();
 			for(CollectionReceiptVO collectionvo : collectionList)
 				infos.add(new String[]{collectionvo.ID, "合计收款单", collectionvo.userID, "财务人员", collectionvo.date, stateName(collectionvo.state)});
 			break;
 		case 2:
+			paymentList = receiptControl.getAllSubmittedPaymentReceipt();
 			for(PaymentReceiptVO paymentvo : paymentList)
 				infos.add(new String[]{paymentvo.ID, "付款单", paymentvo.userID, "财务人员", paymentvo.date, stateName(paymentvo.state)});
 			break;
 		case 3:
+			enIntermediateList = receiptControl.getAllSubmittedEnIntermediateReceipt();
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)
 				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.userID, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
 			break;
 		case 4:
+			transferingList = receiptControl.getAllSubmittedTransferingReceipt();
 			for(TransferingReceiptVO transferingvo : transferingList)
 				infos.add(new String[]{transferingvo.ID, "中转单", transferingvo.userID, "中转中心业务员", transferingvo.date, stateName(transferingvo.state)});
 			break;
 		case 5:
+			enVehicleList = receiptControl.getAllSubmittedEnVehicleReceipt();
 			for(EnVehicleReceiptVO enVehiclevo : enVehicleList)
 				infos.add(new String[]{enVehiclevo.receiptID, "营业厅装车单", enVehiclevo.placeOfDeparture.name, "营业厅业务员", enVehiclevo.time, stateName(enVehiclevo.receiptState)});
 			break;
 		case 6:
+			orderAcceptList = receiptControl.getAllSubmittedOrderAcceptReceipt();
 			for(OrderAcceptReceiptVO orderAcceptvo : orderAcceptList)
 				infos.add(new String[]{orderAcceptvo.receiptID, "营业厅接收单", orderAcceptvo.local.name, "营业厅业务员", orderAcceptvo.time, stateName(orderAcceptvo.receiptState)});
 			break;	
 		case 7:
+			distributeList = receiptControl.getAllSubmittedDistributeReceipt();
 			for(DistributeReceiptVO distributevo : distributeList)
 				infos.add(new String[]{distributevo.ID, "营业厅派件单", "YYT-00001", "营业厅业务员", distributevo.time, stateName(distributevo.receiptState)});
 			break;		
 		case 8:
+			enterRepertoryList = receiptControl.getAllSubmittedEnterRepertoryReceipt();
 			for(EnterRepertoryReceiptVO entervo : enterRepertoryList)
 				infos.add(new String[]{entervo.receiptID, "入库单", entervo.userID, "财务人员", entervo.createTime, stateName(entervo.state)});
 			break;
 		case 9:
+			leaveRepertoryList = receiptControl.getAllSubmittedLeaveRepertoryReceipt();
 			for(LeaveRepertoryReceiptVO leavevo : leaveRepertoryList)
 				infos.add(new String[]{leavevo.receiptID, "出库单", leavevo.userID, "财务人员", leavevo.createTime, stateName(leavevo.state)});
 			break;	
@@ -213,7 +223,6 @@ public class CheckReceiptPanel extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = messageTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		
-		System.out.println(patternNum);
 		if(size == 0){
 			JOptionPane.showMessageDialog(null, "亲爱的总经理，选中某一个或某一些单据后再进行审批哦！", "没有选择用户", JOptionPane.WARNING_MESSAGE);
 			return;
@@ -256,12 +265,10 @@ public class CheckReceiptPanel extends OperationPanel {
 			else if(patternNum == 8){
 				for(int i :selectedIndexs)
 					returnNum += receiptControl.approve(enterRepertoryList.get(i).receiptID, enterRepertoryList.get(i));
-				System.out.println("jiemian"+"    shenpi");
 			}
 			else if(patternNum == 9){
 				for(int i :selectedIndexs)
 					returnNum += receiptControl.approve(leaveRepertoryList.get(i).receiptID, leaveRepertoryList.get(i));
-				System.out.println("jiemian"+"    shenpi");
 			}
 
 			if(returnNum == 0)
