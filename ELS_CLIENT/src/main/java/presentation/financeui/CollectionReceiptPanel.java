@@ -86,7 +86,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 		totalButton = new MyLabel("合计");
 		cancelButton = new MyLabel("返回");
 
-		// function = new JLabel("新建入款单");
 		date = new MyTextLabel("日期");
 		businessHall = new MyTextLabel("营业厅");
 		infoLine = new MyTextLabel();
@@ -111,7 +110,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 		add(totalButton);
 		add(cancelButton);
 
-		// add(function);
 		add(date);
 		add(businessHall);
 		add(infoLine);
@@ -164,7 +162,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		date_Input.setBounds((int) (width * 3.877295918367347 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 2.874234693877551 / 25), (int) (height * 1.0 / 20));
 		businessHallID_Input.setBounds((int) (width * 12.333163265306122 / 25),
-				(int) (height * 0.93052837573385516 / 20), (int) (width * 2.874234693877551 / 25),
+				(int) (height * 0.93052837573385516 / 20), (int) (width * 3.874234693877551 / 25),
 				(int) (height * 1.0 / 20));
 		collectionTable.setLocationAndSize((int) (width * 1.1002551020408165 / 25),
 				(int) (height * 2.505479452054795 / 20), (int) (width * 22.92091836734694 / 25),
