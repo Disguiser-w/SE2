@@ -41,7 +41,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private MyLabel totalButton;
 	private MyLabel cancelButton;
 
-	// private JLabel function;
 	private MyTextLabel date;
 	private MyTextLabel businessHall;
 	private MyTextLabel infoLine;
@@ -272,6 +271,16 @@ public class CollectionReceiptPanel extends OperationPanel {
 	}
 
 	public void totalui() {
+		date_str = date_Input.getText();
+		if(date_str.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入需要合计的时间！", "提示", JOptionPane.WARNING_MESSAGE);
+			return ;
+		}
+		else{
+			if(controller.getGatheringByTime(date_str).size() == 0){
+				JOptionPane.showMessageDialog(null, "该日期还未产生任何单据！", "提示", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 		double money = controller.getTotalMoney(controller.getGatheringByTime(date_str));
 		infoLine.setText("日期：" + GetDate.getdate() + "    金额总和：" + money);
 		CollectionReceiptVO vo = new CollectionReceiptVO(controller.getCollectionListID(), user.userID,
@@ -290,6 +299,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示", JOptionPane.DEFAULT_OPTION);
 		} else {
 			JOptionPane.showMessageDialog(null, "该入款单已经被创建了！", "提示", JOptionPane.WARNING_MESSAGE);
+		}
 		}
 	}
 

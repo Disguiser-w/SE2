@@ -193,11 +193,11 @@ public class AccountManagementPanel_main extends OperationPanel {
 			return ;
 		}
 		else {
-			if(JOptionPane.showConfirmDialog(null, "确认删除该用户信息？", "",
+			if(JOptionPane.showConfirmDialog(null, "确认删除账户信息？", "",
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 				return;
 			LogDiaryBL log = new LogDiaryBL();
-			LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "删除了一个账户");
+			LogDiaryVO vo = new LogDiaryVO(GetDate.getTime(), userVO, "删除了一个或多个账户");
 			log.addLogDiary(vo,GetDate.getTime());
 			logDiaryPanel.refreshui();
 			for (int i : selectedIndexs){
