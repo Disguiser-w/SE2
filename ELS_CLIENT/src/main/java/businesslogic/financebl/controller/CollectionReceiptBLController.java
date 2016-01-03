@@ -34,10 +34,10 @@ public class CollectionReceiptBLController implements CollectionReceiptBLService
 		return collectionReceiptBL.getGatheringByTime(Time);
 	}
 	
-	public ArrayList<GatheringReceiptVO> getGatheingByBoth(String time,
-			String hallID) {
+	public ArrayList<GatheringReceiptVO> getGatheingByBoth(String hallID,
+			String time) {
 		// TODO Auto-generated method stub
-		return collectionReceiptBL.getGatheringByBoth(time, hallID);
+		return collectionReceiptBL.getGatheringByBoth(hallID, time);
 	}
 	
 	public ArrayList<GatheringReceiptVO> getGatheringByHall(String hallID) {

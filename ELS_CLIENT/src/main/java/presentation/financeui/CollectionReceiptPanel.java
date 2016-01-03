@@ -152,16 +152,16 @@ public class CollectionReceiptPanel extends OperationPanel {
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
 		cancelButton.setBounds((int) (width * 20.139795918367346 / 28), (int) (height * 18.434442270058707 / 20),
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
-		date.setBounds((int) (width * 2.391581632653061 / 25), (int) (height * 0.93052837573385516 / 20),
+		date.setBounds((int) (width * 1.591581632653061 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.594387755102041 / 25), (int) (height * 0.9001956947162426 / 20));
 		businessHall.setBounds((int) (width * 10.356122448979592 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.6581632653061225 / 25), (int) (height * 0.8610567514677103 / 20));
 		infoLine.setBounds((int) (width * 2.5191326530612246 / 25), (int) (height * 18.12133072407045 / 20),
 				(int) (width * 13.424744897959183 / 25), (int) (height * 1.2915851272015655 / 20));
-		date_Input.setBounds((int) (width * 3.877295918367347 / 25), (int) (height * 0.93052837573385516 / 20),
-				(int) (width * 2.874234693877551 / 25), (int) (height * 1.0 / 20));
+		date_Input.setBounds((int) (width * 2.877295918367347 / 25), (int) (height * 0.93052837573385516 / 20),
+				(int) (width * 3.874234693877551 / 25), (int) (height * 1.0 / 20));
 		businessHallID_Input.setBounds((int) (width * 12.333163265306122 / 25),
-				(int) (height * 0.93052837573385516 / 20), (int) (width * 3.874234693877551 / 25),
+				(int) (height * 0.93052837573385516 / 20), (int) (width * 4.874234693877551 / 25),
 				(int) (height * 1.0 / 20));
 		collectionTable.setLocationAndSize((int) (width * 1.1002551020408165 / 25),
 				(int) (height * 2.505479452054795 / 20), (int) (width * 22.92091836734694 / 25),
@@ -255,7 +255,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 			totalButton.setVisible(false);
 		} else {
-			gatheringReceiptVOs = controller.getGatheingByBoth(date_str, hallID);
+			gatheringReceiptVOs = controller.getGatheingByBoth(hallID, date_str);
 			collectionTable.setInfos(getInfos(gatheringReceiptVOs));
 			totalButton.setVisible(false);
 		}
@@ -299,14 +299,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 			JOptionPane.showMessageDialog(null, "该入款单已经被创建了！", "提示", JOptionPane.WARNING_MESSAGE);
 		}
 		}
-	}
-
-	public void nextui() {
-
-	}
-
-	public void previousui() {
-
 	}
 
 }

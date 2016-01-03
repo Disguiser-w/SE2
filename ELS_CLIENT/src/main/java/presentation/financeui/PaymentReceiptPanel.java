@@ -134,14 +134,14 @@ public class PaymentReceiptPanel extends OperationPanel {
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1741682974559686 / 20));
 		dateOKButton.setBounds((int) (width * 21.01019387755102 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
-		clauseLabel.setBounds((int) (width * 2.74234693877551 / 25), (int) (height * 0.93052837573385516 / 20),
+		clauseLabel.setBounds((int) (width * 2.24234693877551 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.594387755102041 / 25), (int) (height * 1.1741682974559686 / 20));
 		date.setBounds((int) (width * 7.844387755102041 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.4349489795918366 / 25), (int) (height * 1.1741682974559686 / 20));
-		date_Input.setBounds((int) (width * 9.948979591836734 / 25), (int) (height * 0.93052837573385516 / 20),
-				(int) (width * 2.874234693877551 / 25), (int) (height * 1.1741682974559686 / 20));
-		clause_choose.setBounds((int) (width * 4.878826530612245 / 25), (int) (height * 0.93052837573385516 / 20),
-				(int) (width * 2.072704081632653 / 25), (int) (height * 1.1741682974559686 / 20));
+		date_Input.setBounds((int) (width * 8.948979591836734 / 25), (int) (height * 0.93052837573385516 / 20),
+				(int) (width * 3.874234693877551 / 25), (int) (height * 1.1741682974559686 / 20));
+		clause_choose.setBounds((int) (width * 3.878826530612245 / 25), (int) (height * 0.93052837573385516 / 20),
+				(int) (width * 3.072704081632653 / 25), (int) (height * 1.1741682974559686 / 20));
 		paymentTable.setLocationAndSize((int) (width * 1.1002551020408165 / 25),
 				(int) (height * 2.505479452054795 / 20), (int) (width * 22.92091836734694 / 25),
 				(int) (height * 15.921154598825832 / 20));

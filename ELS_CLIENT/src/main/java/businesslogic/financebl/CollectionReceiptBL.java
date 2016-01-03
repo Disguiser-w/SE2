@@ -124,10 +124,10 @@ public class CollectionReceiptBL extends ReceiptBL {
 	 * 获取符合时间和营业厅ID的gatheringPO
 	 * doge : 还有这个
 	 * */
-	public ArrayList<GatheringReceiptVO> getGatheringByBoth(String time,String hallID){
+	public ArrayList<GatheringReceiptVO> getGatheringByBoth(String hallID,String time){
 		try {
-			if(businessData.getGatheringReceiptByBoth(time,hallID)!=null){
-			 return FinanceMainController.gposToVOs(businessData.getGatheringReceiptByBoth(time,hallID));
+			if(businessData.getGatheringReceiptByBoth(hallID,time)!=null){
+			 return FinanceMainController.gposToVOs(businessData.getGatheringReceiptByBoth(hallID,time));
 			}
 			else{
 				return new ArrayList<GatheringReceiptVO>();
