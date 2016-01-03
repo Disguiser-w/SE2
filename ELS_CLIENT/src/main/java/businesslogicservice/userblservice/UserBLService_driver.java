@@ -26,7 +26,13 @@ public class UserBLService_driver {
     }
  
     public static void main(String[] args) throws RemoteException{
-        UserBLService userBLService = new UserBL();
+        UserBLService userBLService = null;
+		try {
+			userBLService = new UserBL();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         UserBLService_driver driver = new UserBLService_driver();
         driver.drive(userBLService);
     }

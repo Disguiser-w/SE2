@@ -13,7 +13,11 @@ public class UserManageController implements UserBLService{
 	private UserBL userBL;
 	
 	public UserManageController(){
-		userBL = new UserBL();
+		try {
+			userBL = new UserBL();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public LogVO login(String userID, String password){
