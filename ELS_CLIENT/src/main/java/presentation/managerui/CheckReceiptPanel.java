@@ -141,7 +141,7 @@ public class CheckReceiptPanel extends OperationPanel {
 		receiptCategoryLabel.setBounds((int) (width * 2.224839948783611 / 25), (int) (height * 1.060714285714286 / 20),
 				(int) (width * 3.253393085787452 / 25), (int) (height * 1.3392857142857142 / 20));
 		receiptCategoryChoose.setBounds((int) (width * 6.084507042253522 / 25), (int) (height * 1.060714285714286 / 20),
-				(int) (width * 3.324583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
+				(int) (width * 6.324583866837388 / 25), (int) (height * 1.3392857142857142 / 20));
 		//detailedInfoLabel.setBounds((int) (width * 2.522407170294494 / 25), (int) (height * 1.060714285714286 / 20),
 		//	(int) (width * 4.6965428937259923 / 25), (int) (height * 1.3392857142857142 / 20));
 		approveLabel.setBounds((int) (width * 16.505121638924457 / 25), (int) (height * 1.060714285714286 / 20),
