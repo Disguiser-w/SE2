@@ -21,6 +21,7 @@ public class EnvehiclePanel extends OperationPanel {
 
 	private MyLabel envehicle;
 	private MyLabel saveButton;
+	private MyLabel refresh;
 
 	private MyTable messageTable;
 
@@ -31,9 +32,11 @@ public class EnvehiclePanel extends OperationPanel {
 
 		envehicle = new MyLabel("一键装车");
 		saveButton = new MyLabel("保存单据");
+		refresh = new MyLabel("刷新");
 
 		add(envehicle);
 		add(saveButton);
+		add(refresh);
 
 		setLayout(null);
 		addListener();
@@ -44,15 +47,15 @@ public class EnvehiclePanel extends OperationPanel {
 		super.setBounds(x, y, width, height);
 
 		envehicle
-		.setBounds((int) (width * 20.6343792633015 / 25),
-				(int) (height * 18 / 20),
-				(int) (width * 2.830832196452933 / 25),
-				(int) (height * 1 / 20));
+				.setBounds((int) (width * 20 / 25), (int) (height * 18 / 20),
+						(int) (width * 2.830832196452933 / 25),
+						(int) (height * 1 / 20));
 		saveButton
-		.setBounds((int) (width * 17 / 25),
-				(int) (height * 18 / 20),
-				(int) (width * 2.830832196452933 / 25),
-				(int) (height * 1 / 20));
+				.setBounds((int) (width * 17 / 25), (int) (height * 18 / 20),
+						(int) (width * 2.830832196452933 / 25),
+						(int) (height * 1 / 20));
+		refresh.setBounds((int) (width * 14 / 25), (int) (height * 18 / 20),
+				(int) (width * 2.830832196452933 / 25), (int) (height * 1 / 20));
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 5 / 40),
@@ -71,11 +74,41 @@ public class EnvehiclePanel extends OperationPanel {
 
 	private ArrayList<String[]> getInfos() {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
-		waitingOrderList = controller.getEnvehicleBL().getAllocateWwaitingOrderBL().updateWaitingList();
+		waitingOrderList = controller.getEnvehicleBL()
+				.getAllocateWwaitingOrderBL().updateWaitingList();
 		for (OrderVO vo : waitingOrderList) {
+			String state = "";
+			switch (vo.order_state) {
+			case WAITING_ENVEHICLE:
+				state = "等待装车";
+				break;
+			case TRANSFERING:
+				state = "中转中";
+				break;
+			case WAITING_DISTRIBUTE:
+				state = "等待派件";
+				break;
+			case DISTRIBUEING:
+				state = "派件中";
+				break;
+			case FINISHED:
+				state = "已完成";
+				break;
+			}
+			String type = "";
+			switch (vo.expressType) {
+			case ECONOMIC:
+				type = "经济型";
+				break;
+			case FAST:
+				type = "特快型";
+				break;
+			case STANDARD:
+				type = "标准型";
+				break;
+			}
 			infos.add(new String[] { vo.ID, vo.senderAddress,
-					vo.recipientAddress, vo.order_state.toString(),
-					vo.expressType.toString() });
+					vo.recipientAddress, state, type });
 		}
 
 		return infos;
@@ -104,6 +137,12 @@ public class EnvehiclePanel extends OperationPanel {
 				}
 			}
 		});
+
+		refresh.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				messageTable.setInfos(getInfos());
+			}
+		});
 	}
 
 	public void warnning(String message) {
@@ -116,7 +155,7 @@ public class EnvehiclePanel extends OperationPanel {
 		JOptionPane.showMessageDialog(null, message, "装车成功",
 				JOptionPane.DEFAULT_OPTION);
 	}
-	
+
 	public void saveSuccessing(String message) {
 		JOptionPane.showMessageDialog(null, message, "保存成功",
 				JOptionPane.INFORMATION_MESSAGE);

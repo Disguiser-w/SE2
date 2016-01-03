@@ -8,16 +8,17 @@ import java.util.Date;
 
 import type.ReceiptState;
 
+@SuppressWarnings("serial")
 public class EnIntermediateReceiptPO extends ReceiptPO implements Serializable {
-	private OrganizationPO intermediateCentre;
+	OrganizationPO intermediateCentre;
 
-	private ArrayList<OrderPO> orderList;
+	ArrayList<OrderPO> orderList;
 
-	private double fare;
-	private String ID;
-	private String date;
+	double fare;
+	String ID;
+	String date;
 
-	private ReceiptState receiptState;
+	ReceiptState receiptState;
 
 	public EnIntermediateReceiptPO(OrganizationPO intermediateCentre,
 			ArrayList<OrderPO> orderList, String ID) {
