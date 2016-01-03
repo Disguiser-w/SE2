@@ -41,7 +41,6 @@ public class CollectionReceiptPanel extends OperationPanel {
 	private MyLabel totalButton;
 	private MyLabel cancelButton;
 
-	// private JLabel function;
 	private MyTextLabel date;
 	private MyTextLabel businessHall;
 	private MyTextLabel infoLine;
@@ -221,14 +220,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 	 * 输入营业厅信息的方法
 	 */
 	public void infookui() {
-//		ArrayList<OrganizationVO> businessHallVOs = new ArrayList<OrganizationVO>();
-//		for (OrganizationVO v : organizationController.showAllOrganizations()) {
-//			if (v.category == OrganizationType.businessHall) {
-//				businessHallVOs.add(v);
-//			}
-//		}
-//		businesshallInt = businessHallID_Input.getSelectedIndex();
-//		hallID = businessHallVOs.get(businesshallInt).organizationID;
+
 	}
 
 	/**
@@ -236,13 +228,18 @@ public class CollectionReceiptPanel extends OperationPanel {
 	 */
 	public void okui() {
 		date_str = date_Input.getText();
-		hallID = (String) businessHallID_Input.getSelectedItem();
-
-		if (date_str.equals("") && hallID.equals("")) {
+		String hallName = (String) businessHallID_Input.getSelectedItem();
+		for(OrganizationVO v : organizationController.showAllOrganizations()){
+			if(v.name.equals(hallName)){
+				hallID = v.organizationID;
+				break ;
+			}
+		}
+		if (date_str.equals("") && hallName.equals("")) {
 			JOptionPane.showMessageDialog(null, "请输入至少一项信息哟！", "提示", JOptionPane.CLOSED_OPTION);
 		}
 		// 仅依据时间筛选
-		else if (hallID.equals("")) {
+		else if (hallName.equals("")) {
 			// 因为是采用日历格式所以不会有时间的错误（除非选择的时间已经超过当前时间）
 			if (date_str.compareTo(GetDate.getdate()) > 0) {
 				JOptionPane.showMessageDialog(null, "您输入的日期还没到呢，请重新输入！", "提示", JOptionPane.CLOSED_OPTION);
@@ -272,6 +269,16 @@ public class CollectionReceiptPanel extends OperationPanel {
 	}
 
 	public void totalui() {
+		date_str = date_Input.getText();
+		if(date_str.equals("")){
+			JOptionPane.showMessageDialog(null, "请输入需要合计的时间！", "提示", JOptionPane.WARNING_MESSAGE);
+			return ;
+		}
+		else{
+			if(controller.getGatheringByTime(date_str).size() == 0){
+				JOptionPane.showMessageDialog(null, "该日期还未产生任何单据！", "提示", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 		double money = controller.getTotalMoney(controller.getGatheringByTime(date_str));
 		infoLine.setText("日期：" + GetDate.getdate() + "    金额总和：" + money);
 		CollectionReceiptVO vo = new CollectionReceiptVO(controller.getCollectionListID(), user.userID,
@@ -290,6 +297,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 			JOptionPane.showMessageDialog(null, "创建入款单成功！", "提示", JOptionPane.DEFAULT_OPTION);
 		} else {
 			JOptionPane.showMessageDialog(null, "该入款单已经被创建了！", "提示", JOptionPane.WARNING_MESSAGE);
+		}
 		}
 	}
 

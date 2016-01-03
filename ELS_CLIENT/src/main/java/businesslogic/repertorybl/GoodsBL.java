@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import businesslogic.datafactory.DataFactory;
+import dataservice.managedataservice.OrganizationDataService;
 import dataservice.repertorydataservice.GoodsDataService;
 import po.GoodsPO;
 import vo.GoodsVO;
@@ -13,10 +14,12 @@ import vo.GoodsVO;
 public class GoodsBL {
 
 	public static GoodsDataService gdService;
+	public static OrganizationDataService odService;
 	
 	public GoodsBL(){
 		try{
 			gdService = DataFactory.getGoodsData();
+			odService = DataFactory.getOrganizationData();
 		}catch(RemoteException | MalformedURLException | NotBoundException ex){
 			ex.printStackTrace();
 		}
@@ -127,7 +130,7 @@ public class GoodsBL {
 						
 					}
 					else{
-						intermediateMessageStr += goods.getEnterTime()[i] + "进入" + goods.getEnterRepertoryID()[i] + "\n";
+						intermediateMessageStr += goods.getEnterTime()[i] + "进入" + repertoryName(goods.getEnterRepertoryID()[i]) + "\n";
 					}
 				}
 				for(int i=0;i<4 ;i++){
@@ -135,7 +138,7 @@ public class GoodsBL {
 						
 					}
 					else{
-						intermediateMessageStr += goods.getLeaveTime()[i] + "离开" + goods.getLeaveRepertoryID()[i] + "\n";
+						intermediateMessageStr += goods.getLeaveTime()[i] + "离开" + repertoryName(goods.getLeaveRepertoryID()[i]) + "\n";
 					}
 				}
 				if(intermediateMessageStr != "")
@@ -149,6 +152,17 @@ public class GoodsBL {
 			ex.printStackTrace();
 			return "服务器崩了，爽不爽！！！";
 		}
+	}
+	
+	public String repertoryName(String repertoryID){
+		String intermediateID = repertoryID.substring(0,5);
+		String repertoryName = "";
+		try {
+			repertoryName = odService.findOrganizationByID(intermediateID).getName() + "仓库";
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return repertoryName;
 	}
 	
 	public static GoodsVO goodsPOToVO(GoodsPO goodspo){

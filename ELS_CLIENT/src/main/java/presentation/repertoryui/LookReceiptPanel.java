@@ -184,8 +184,8 @@ public class LookReceiptPanel extends OperationPanel {
 			remove(messageTable);
 		}
 		messageTable = currentTable;
-		messageTable.setLocationAndSize((int) (tableWidth * 1.0243277848911652 / 25), (int) (tableHeight * 4.5053571428571428 / 20),
-				(int) (tableWidth * 22.98335467349552 / 25), (int) (tableHeight * 12.53571428571428 / 20));
+		messageTable.setLocationAndSize((int) (tableWidth * 1.0243277848911652 / 25), (int) (tableHeight * 2.8053571428571428 / 20),
+				(int) (tableWidth * 22.98335467349552 / 25), (int) (tableHeight * 13.83571428571428 / 20));
 		add(messageTable);
 		repaint();
 		updateUI();
@@ -205,7 +205,6 @@ public class LookReceiptPanel extends OperationPanel {
 		selectedIndex = selectedIndexs.get(0);
 		if(patternNum == 1){
 			String enterReceiptID = errvos.get(selectedIndex).receiptID;
-			System.out.println(enterReceiptID);
 			repertoryFrame.changePanel(new EnterReceiptDetailedInfoPanel(repertoryFrame, enterRepertoryReceiptControl, enterReceiptID));
 		}
 		else{

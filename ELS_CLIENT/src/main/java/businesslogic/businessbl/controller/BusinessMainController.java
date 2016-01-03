@@ -58,7 +58,7 @@ public class BusinessMainController {
 		businessFrame = new BusinessFrame(businessVO);
 
 		businessFrame.addFuncLabel(new EnVehiclePanel(enVehicleController), "装车管理",
-				ImageGetter.getImage("装车管理.png").getImage());
+				ImageGetter.getImage("envehicle.png").getImage());
 		businessFrame.addFuncLabel(new OrderDistributePanel(distributeorderController), "派件",
 				ImageGetter.getImage("distribute.png").getImage());
 

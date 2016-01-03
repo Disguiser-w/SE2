@@ -128,7 +128,6 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		//入库单	EnterRepertoryReceipt
 		else if(receiptID.startsWith("RKD")){
 			EnterRepertoryReceiptVO errvo = (EnterRepertoryReceiptVO)ob;
-			System.out.println("BL   shenpi   approve");
 			return approveEnterRepertoryReceipt(errvo);
 		} 
 		
@@ -235,15 +234,15 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个中转中心装车单
 	public int approveEnIntermediateReceipt(EnIntermediateReceiptVO erVO){
-		/*EnIntermediateReceiptPO erPO = IntermediateMainController.voToPO(erVO);
+		EnIntermediateReceiptPO erPO = IntermediateMainController.voToPO(erVO);
 		erPO.setReceiptState(ReceiptState.APPROVE);
 		try{
-			itmdService.saveEnIntermediateReceipt(erPO);
+			itmdService.saveSubmittedEnIntermediateReceipt(erPO);
 			return 0;
 		}catch (RemoteException e) {
 			e.printStackTrace();
 			return 1;
-		}*/
+		}
 		return 0;
 	}
 	
@@ -266,7 +265,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	
 	//审批一个中转中心到达单
 	public int approveTransferingReceipt(TransferingReceiptVO trVO){
-		/*TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
+		TransferingReceiptPO trPO = IntermediateMainController.voToPO(trVO);
 		trPO.setReceiptState(ReceiptState.APPROVE);
 		try{
 			itmdService.saveSubmittedTransferingReceipt(trPO);
@@ -274,7 +273,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 		}catch (RemoteException e) {
 			e.printStackTrace();
 			return 1;
-		}*/
+		}
 		return 0;
 	}
 	

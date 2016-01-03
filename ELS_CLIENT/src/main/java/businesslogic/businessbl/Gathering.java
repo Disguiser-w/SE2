@@ -44,6 +44,13 @@ public class Gathering {
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
+			for (int i = 0; i < po.size(); i++) {
+				ExpressPO p = po.get(i);
+				if (!p.getOrganizationPO().getOrganizationID().equals(organizationVO.organizationID)) {
+					po.remove(i);
+					i--;
+				}
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -57,8 +64,10 @@ public class Gathering {
 		for (ExpressPO i : po) {
 
 			double charge = 0;
-			if (!i.getChargeCollection().isEmpty())
+
+			if (!i.getChargeCollection().isEmpty()) {
 				charge = Double.parseDouble(i.getChargeCollection().get(0));
+			}
 			total += charge;
 			chargeInfo.add(new String[] { i.getID(), charge + "" });
 		}
@@ -74,6 +83,14 @@ public class Gathering {
 		ArrayList<ExpressPO> po = null;
 		try {
 			po = expressData.getExpressInfos(organizationVO.organizationID);
+			for (int i = 0; i < po.size(); i++) {
+				ExpressPO p = po.get(i);
+				if (!p.getOrganizationPO().getOrganizationID().equals(organizationVO.organizationID)) {
+					po.remove(i);
+					i--;
+				}
+			}
+			
 			expressData.deleteChargeInfos(organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();

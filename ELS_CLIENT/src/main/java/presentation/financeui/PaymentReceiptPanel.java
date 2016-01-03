@@ -37,7 +37,6 @@ public class PaymentReceiptPanel extends OperationPanel {
 	private MyLabel cancelButton;
 	private MyLabel totalButton;
 
-	// private JLabel function;
 	private MyTextLabel clauseLabel;
 	private MyTextLabel date;
 
@@ -79,7 +78,6 @@ public class PaymentReceiptPanel extends OperationPanel {
 		totalButton = new MyLabel("合计");
 		cancelButton = new MyLabel("取消");
 
-		// function = new JLabel("新建付款单");
 		clauseLabel = new MyTextLabel("条目");
 		date = new MyTextLabel("日期");
 
@@ -136,9 +134,6 @@ public class PaymentReceiptPanel extends OperationPanel {
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1741682974559686 / 20));
 		dateOKButton.setBounds((int) (width * 21.01019387755102 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 2.7683673469387754 / 25), (int) (height * 1.1350293542074363 / 20));
-		// function.setBounds((int)(width * 1.913265306122449/25),(int)(height *
-		// 0.6653620352250489/20),(int)(width * 6.919642857142857
-		// /25),(int)(height * 1.643835616438356/20));
 		clauseLabel.setBounds((int) (width * 2.74234693877551 / 25), (int) (height * 0.93052837573385516 / 20),
 				(int) (width * 1.594387755102041 / 25), (int) (height * 1.1741682974559686 / 20));
 		date.setBounds((int) (width * 7.844387755102041 / 25), (int) (height * 0.93052837573385516 / 20),
@@ -204,6 +199,11 @@ public class PaymentReceiptPanel extends OperationPanel {
 	 */
 	public void ok() {
 		String time = date_Input.getText();
+		if(time.compareTo(GetDate.getdate())>0){
+			JOptionPane.showMessageDialog(null, "输入的日期还未到!", "提示", JOptionPane.WARNING_MESSAGE);
+			return ;
+		}
+		else{
 		if (clause == "运费") {
 			PaymentItemVO vo = new PaymentItemVO(time, clause, "总账", controller.getFare(time), user.userID);
 			boolean isExsit = false;
@@ -248,6 +248,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		}
 		paymentTable.setInfos(getInfos(paymentItemVOs));
 	}
+	}
 
 	public void totalui() {
 		String time = "";
@@ -266,6 +267,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 				salary = v.money;
 			}
 		}
+		if(fare!=0&&rent!=0&&salary!=0){
 		PaymentReceiptVO vo = new PaymentReceiptVO(
 				"FKD-" + time.substring(0, 4) + time.substring(5, 7) + time.substring(8, 10), user.userID,
 				ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, rent, fare, salary, time, "总账", user.userName);
@@ -282,6 +284,10 @@ public class PaymentReceiptPanel extends OperationPanel {
 			JOptionPane.showMessageDialog(null, "创建付款单成功！", "提示", JOptionPane.DEFAULT_OPTION);
 		} else {
 			JOptionPane.showMessageDialog(null, "该月的付款单已经被创建了！", "提示", JOptionPane.WARNING_MESSAGE);
+		}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "该月份的三项付款条目统计不全！", "提示", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
