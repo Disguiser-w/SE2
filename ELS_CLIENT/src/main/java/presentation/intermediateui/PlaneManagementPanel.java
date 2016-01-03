@@ -2,12 +2,8 @@ package presentation.intermediateui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import presentation.commonui.MyLabel;
@@ -75,8 +71,7 @@ public class PlaneManagementPanel extends OperationPanel {
 				(int) (height * 1.039426523297491 / 20), 30, 30);
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25), 30);
+				(int) (height * 1.2186379928315412 / 20), width / 4, 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
 				(int) (height * 3.369175627240143 / 20),
@@ -90,13 +85,12 @@ public class PlaneManagementPanel extends OperationPanel {
 
 		int[] widths = { 80, 196, 60, 197, 60 };
 
-		messageTable = new MyTable(head, getInfos(), widths, true);
+		messageTable = new MyTable(head, getInfos(planeList), widths, true);
 		add(messageTable);
 	}
 
-	private ArrayList<String[]> getInfos() {
+	private ArrayList<String[]> getInfos(ArrayList<PlaneVO> planeList) {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
-		planeList = controller.getPlaneList();
 		for (PlaneVO vo : planeList) {
 			infos.add(new String[] { vo.ID,
 					controller.getIntermediateCentre().name, vo.destination,
@@ -110,6 +104,7 @@ public class PlaneManagementPanel extends OperationPanel {
 
 		addButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				messageTable.setInfos(getInfos(planeList));
 				Management_newPanel newPanel = new Management_newPanel(
 						controller, frame, messageTable, "plane");
 				frame.changePanel(newPanel);
@@ -118,7 +113,6 @@ public class PlaneManagementPanel extends OperationPanel {
 
 		modifyButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 				ArrayList<Integer> selectedIndexs = messageTable
 						.getSelectedIndex();
 				int size = selectedIndexs.size();
@@ -127,7 +121,6 @@ public class PlaneManagementPanel extends OperationPanel {
 					return;
 
 				selectedIndex = selectedIndexs.get(0);
-				System.out.println(selectedIndex);
 				Management_modifyPanel modifyPanel = new Management_modifyPanel(
 						controller, frame, messageTable, planeList
 								.get(selectedIndex), selectedIndex);
@@ -160,8 +153,28 @@ public class PlaneManagementPanel extends OperationPanel {
 						}
 					}
 					planeList = controller.getPlaneList();
-					messageTable.setInfos(getInfos());
+					messageTable.setInfos(getInfos(planeList));
 				}
+			}
+		});
+
+		inputField.getImageLabel().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入飞机编号");
+				boolean searchSuccessful = false;
+				for (PlaneVO i : controller.getPlaneList()) {
+					if (i.ID.equals(id)) {
+						WatchPanel_Management watch = new WatchPanel_Management(
+								controller, frame, messageTable, i, 0);
+						searchSuccessful = true;
+						frame.changePanel(watch);
+					}
+				}
+				
+				if (!searchSuccessful)
+					warnning("输入飞机编号有误");
 			}
 		});
 	}
@@ -175,14 +188,5 @@ public class PlaneManagementPanel extends OperationPanel {
 	public void successing(String message) {
 		JOptionPane.showMessageDialog(null, message, "提交成功",
 				JOptionPane.DEFAULT_OPTION);
-	}
-
-	public static void main(String[] args) throws MalformedURLException,
-			RemoteException, NotBoundException {
-		JFrame frame = new JFrame();
-		frame.setSize(800, 550);
-		frame.add(new PlaneManagementPanel(new IntermediateMainController(
-				"141250185"), new UserFrame("任婧雯", "CW-00001")));
-		frame.setVisible(true);
 	}
 }

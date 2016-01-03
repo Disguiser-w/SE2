@@ -41,7 +41,7 @@ public class TransferingPanel extends OperationPanel {
 
 		addButton = new AddLabel();
 		delButton = new DeleteLabel();
-		saveButton = new MyLabel("存");
+		saveButton = new MyLabel("保存单据");
 		inputField = new MySearchField();
 
 		add(addButton);
@@ -62,17 +62,17 @@ public class TransferingPanel extends OperationPanel {
 				(int) (height * 1.039426523297491 / 20), 30, 30);
 		delButton.setBounds((int) (width * 6.207366984993179 / 25),
 				(int) (height * 1.039426523297491 / 20), 30, 30);
-		saveButton.setBounds((int) (width * 11.084583901773533 / 25),
-				(int) (height * 1.039426523297491 / 20),
-				(int) (width * 1.4324693042291952 / 25),
-				(int) (height * 1.3978494623655915 / 20));
+		saveButton
+				.setBounds((int) (width * 20.6343792633015 / 25),
+						(int) (height * 18 / 20),
+						(int) (width * 2.830832196452933 / 25),
+						(int) (height * 1 / 20));
 
 		inputField.setBounds((int) (width * 15.654843110504775 / 25),
-				(int) (height * 1.2186379928315412 / 20),
-				(int) (width * 5.320600272851296 / 25), 30);
+				(int) (height * 1.2186379928315412 / 20), width / 4, 30);
 		messageTable.setLocationAndSize(
 				(int) (width * 1.0243277848911652 / 25),
-				(int) (height * 3.369175627240143 / 20),
+				(int) (height * 5 / 40),
 				(int) (width * 22.98335467349552 / 25),
 				(int) (height * 15.412186379928315 / 20));
 	}
@@ -102,6 +102,7 @@ public class TransferingPanel extends OperationPanel {
 
 		addButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				messageTable.setInfos(getInfos());
 				Transfering_newPanel newPanel = new Transfering_newPanel(
 						controller, frame, messageTable);
 				frame.changePanel(newPanel);
@@ -146,6 +147,25 @@ public class TransferingPanel extends OperationPanel {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
 				}
+			}
+		});
+
+		inputField.getImageLabel().addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String id = inputField.getText();
+				if (id.equals(""))
+					warnning("请输入订单编号");
+				boolean searchSuccessful = false;
+				for (OrderVO i : controller.getTransferingReceipt().orderList) {
+					if (i.ID.equals(id)) {
+						WatchPanel_Order watch = new WatchPanel_Order(
+								controller, frame, messageTable);
+						searchSuccessful = true;
+						frame.changePanel(watch);
+					}
+				}
+				if (!searchSuccessful)
+					warnning("输入飞机编号有误");
 			}
 		});
 	}
