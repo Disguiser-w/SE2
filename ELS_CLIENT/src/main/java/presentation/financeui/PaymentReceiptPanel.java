@@ -90,6 +90,8 @@ public class PaymentReceiptPanel extends OperationPanel {
 
 		paymentItemVOs = new ArrayList<PaymentItemVO>();
 		clauseInt = -1;
+		
+		clause = "";
 
 		setLayout(null);
 
@@ -199,7 +201,10 @@ public class PaymentReceiptPanel extends OperationPanel {
 	 */
 	public void ok() {
 		String time = date_Input.getText();
-		if(time.compareTo(GetDate.getdate())>0){
+		if(time.equals("")||clause.equals("")){
+			JOptionPane.showMessageDialog(null, "信息输入不全!", "提示", JOptionPane.WARNING_MESSAGE);
+		}
+		else if(time.compareTo(GetDate.getdate())>0){
 			JOptionPane.showMessageDialog(null, "输入的日期还未到!", "提示", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}

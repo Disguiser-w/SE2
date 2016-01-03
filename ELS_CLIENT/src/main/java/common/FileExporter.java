@@ -3,6 +3,7 @@ package common;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import jxl.SheetSettings;
 import jxl.Workbook;
@@ -64,8 +65,8 @@ public class FileExporter {
 			book.write();
 			book.close();
 
-			// JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
-			// JOptionPane.CLOSED_OPTION);
+			 JOptionPane.showMessageDialog(null, "导出excel成功辣！", "提示",
+			 JOptionPane.CLOSED_OPTION);
 		}
 
 	}
