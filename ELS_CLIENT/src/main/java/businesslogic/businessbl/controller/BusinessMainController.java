@@ -128,6 +128,7 @@ public class BusinessMainController {
 	}
 
 	public static VehicleVO vehiclePOToVO(VehiclePO po) {
+
 		return new VehicleVO(po.getID(), po.getEngineNumber(), po.getLicensePlateNumber(), po.getLowNumberPlate(),
 				po.getBuyTime(), po.getServiceTime(), OrganizationBL.organizationPOToVO(po.getDestination()),
 				po.getDestinationCity(), OrganizationBL.organizationPOToVO(po.getLocal()),

@@ -311,10 +311,11 @@ public class ReviewReceiptBL implements ReviewReceiptBLService{
 	public ArrayList<OrderAcceptReceiptVO> getAllSubmittedOrderAcceptReceipt(){
 		try{
 			orderAcceptReceiptPOList = bdService.getSubmittedOrderAcceptReceiptInfo();
+
 			orderAcceptReceiptVOList = new ArrayList<OrderAcceptReceiptVO>();
 			
 			for(int i=0;i<orderAcceptReceiptPOList.size();i++){
-				orderAcceptReceiptVOList.add(BusinessMainController.orderAcceptReceiptPOToVO(orderAcceptReceiptPOList.get(i))); 
+				orderAcceptReceiptVOList.add(BusinessMainController.orderAcceptReceiptPOToVO(orderAcceptReceiptPOList.get(i)));
 			}
 			return orderAcceptReceiptVOList;
 		}catch(RemoteException e){

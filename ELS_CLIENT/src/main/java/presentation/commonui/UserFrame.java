@@ -72,53 +72,10 @@ public class UserFrame extends JFrame {
 		setSize(960, 640);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-		// 不规则形状用这个
-		// setBackground(new Color(0, 0, 0, 0));
+
 		setFocusable(false);
 		setResizable(false);
-
-		// setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageGetter.getImage("doge.png").getImage(),
-		// new Point(20,5), "stick"));
-
 	}
-
-	// public void initGlobalFontSetting() {
-	// 设置字体
-
-	// GraphicsEnvironment e =
-	// GraphicsEnvironment.getLocalGraphicsEnvironment();
-	// String[] fontName = e.getAvailableFontFamilyNames();
-	//
-	// File file = FileGetter.getFile("src/main/font/font.ttf");
-	// Font fnt = null;
-	//
-	// try {
-	// // System.out.println(file.exists());
-	// Font font = Font.createFont(Font.TRUETYPE_FONT, file);
-	// fnt = new Font("Microsoft YaHei", Font.PLAIN, 15);
-
-	// GraphicsEnvironment ge =
-	// GraphicsEnvironment.getLocalGraphicsEnvironment();
-	// ge.registerFont(font);
-	// initGlobalFontSetting(fnt);
-
-	// initGlobalFontSetting(new Font("WenQuanYi Micro Hei
-	// Mono",Font.PLAIN,15));
-
-	// } catch (Exception e1) {
-	// e1.printStackTrace();
-	// }
-	//
-	// FontUIResource fontRes = new FontUIResource(fnt);
-	// for (Enumeration keys = UIManager.getDefaults().keys();
-	// keys.hasMoreElements();) {
-	// Object key = keys.nextElement();
-	// Object value = UIManager.get(key);
-	// if (value instanceof FontUIResource)
-	// if (value instanceof FontUIResource)
-	// UIManager.put(key, fontRes);
-	// }
-	// }
 
 	public void showFrame() {
 		add(operationPanels.get(0));
