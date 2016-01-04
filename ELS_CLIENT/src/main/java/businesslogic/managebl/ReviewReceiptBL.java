@@ -1,4 +1,4 @@
-package businesslogic.managebl;
+﻿package businesslogic.managebl;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -96,7 +96,7 @@ public class ReviewReceiptBL implements ReviewReceiptBLService {
 		}
 
 		// 中转中心装车单 EnIntermediateReceipt
-		if (receiptID.startsWith("ZZZXZCD")) {
+		else if (receiptID.startsWith("ZZZXZCD")) {
 			EnIntermediateReceiptVO ervo = (EnIntermediateReceiptVO) ob;
 			return approveEnIntermediateReceipt(ervo);
 		}
