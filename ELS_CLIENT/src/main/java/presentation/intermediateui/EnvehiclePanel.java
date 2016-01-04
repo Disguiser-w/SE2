@@ -76,6 +76,7 @@ public class EnvehiclePanel extends OperationPanel {
 		ArrayList<String[]> infos = new ArrayList<String[]>();
 		waitingOrderList = controller.getEnvehicleBL()
 				.getAllocateWwaitingOrderBL().updateWaitingList();
+		System.out.println(waitingOrderList.size() + "jajajaja");
 		for (OrderVO vo : waitingOrderList) {
 			String state = "";
 			switch (vo.order_state) {
@@ -119,6 +120,7 @@ public class EnvehiclePanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					controller.getEnvehicleBL().envehicle();
+					successing("装车成功");
 				} catch (Exception e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();

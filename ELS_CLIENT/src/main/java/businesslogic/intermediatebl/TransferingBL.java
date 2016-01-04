@@ -135,4 +135,14 @@ public class TransferingBL implements TransferingBLService {
 				"进行了保存中转中心到达单的操作"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
+	
+	public OperationState changeState(OrderVO temp){
+		for(OrderVO vo:transferingReceipt.orderList){
+			if(vo.ID.equals(temp.ID)){
+				transferingReceipt.orderList.set(transferingReceipt.orderList.indexOf(vo), temp);
+				System.out.println(temp.order_state.toString() + " state");
+			}
+		}
+		return OperationState.SUCCEED_OPERATION;
+	}
 }
