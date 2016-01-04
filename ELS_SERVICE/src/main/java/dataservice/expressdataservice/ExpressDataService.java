@@ -57,6 +57,9 @@ public interface ExpressDataService extends Remote {
 	
 	//清空当日收费信息
 	public boolean deleteChargeInfos(String organizationID) throws RemoteException;
+	
+	//获得待派送的所有订单
+	public ArrayList<OrderPO> getDistributingOrder(String organizationID) throws RemoteException;
 	// /**
 	// * 返回订单费用的基本信息CostBasePO
 	// */

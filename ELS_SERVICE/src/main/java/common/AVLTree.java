@@ -6,7 +6,7 @@ public class AVLTree<Key extends Comparable, Value> implements Serializable {
 	private Node root;
 	private int size;
 
-	class Node implements Serializable{
+	class Node implements Serializable {
 		// 键值，订单ID,String
 		Key key;
 		// 订单路径，String
@@ -184,9 +184,9 @@ public class AVLTree<Key extends Comparable, Value> implements Serializable {
 		if (node != root) {
 
 			if (node == node.father.rightChild)
-				left.father.leftChild = left;
-			else
 				left.father.rightChild = left;
+			else
+				left.father.leftChild = left;
 		} else
 			root = left;
 
@@ -209,6 +209,23 @@ public class AVLTree<Key extends Comparable, Value> implements Serializable {
 
 	public int getSize() {
 		return size;
+	}
+
+	public int getInfoByKeyword(String time) {
+		return getInfoByKeyword(time, root);
+	}
+
+	private int getInfoByKeyword(String time, Node next) {
+		if (next == null) {
+			return 0;
+		}
+
+		int num = getInfoByKeyword(time, next.leftChild) + getInfoByKeyword(time, next.rightChild);
+		if (((String) (next.key)).contains(time)) {
+			num++;
+		}
+		return num;
+
 	}
 
 	// public void watch() {

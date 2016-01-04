@@ -5,7 +5,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import businesslogic.businessbl.controller.BusinessMainController;
@@ -41,15 +40,19 @@ public class DistributeOrder {
 		}
 	}
 
-	// 从昨天的订单中搜索，如果状态是WAITING_DISTRIBUTE就去出来准备分发
-	// 取出本营业的所有快递员的po，按照顺序增加到快递员的pendingOrder中
 	public ArrayList<String[]> distributeOrder() {
 		BusinessMainController.updateBusinessVO();
 
 		OrganizationVO organizationVO = BusinessMainController.businessVO.organizationVO;
-		ArrayList<ExpressPO> expressPOs = null;
+		ArrayList<ExpressPO> expressPOs = new ArrayList<ExpressPO>();
 		try {
-			expressPOs = expressData.getExpressInfos(organizationVO.organizationID);
+			ArrayList<ExpressPO> allExpressPOs = expressData.getExpressInfos(organizationVO.organizationID);
+			for (ExpressPO p : allExpressPOs) {
+				if (p.getOrganizationPO().getOrganizationID()
+						.equals(BusinessMainController.businessVO.organizationVO.organizationID)) {
+					expressPOs.add(p);
+				}
+			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -57,23 +60,11 @@ public class DistributeOrder {
 
 		ArrayList<OrderPO> pos = new ArrayList<OrderPO>();
 
-		// 获得改营业厅前一天接收的准备拍派件的订单
-		Calendar calendar = Calendar.getInstance();
-		Date today = calendar.getTime();
-		calendar.add(Calendar.DATE, -1); // 得到前一天还有今天
-		Date yestoday = calendar.getTime();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String time1 = df.format(yestoday);
-		String time2 = df.format(today);
-
 		ArrayList<String[]> result = new ArrayList<String[]>();
 		ArrayList<String> result1 = new ArrayList<String>();
 		ArrayList<OrderPO> distributingOrders = null;
 		try {
-			distributingOrders = expressData.getOrderInfosByTime(organizationVO.organizationID, time1);
-			ArrayList<OrderPO> pos2 = expressData.getOrderInfosByTime(organizationVO.organizationID, time2);
-			for (OrderPO i : pos2)
-				distributingOrders.add(i);
+			distributingOrders = expressData.getDistributingOrder(organizationVO.name);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -101,10 +92,17 @@ public class DistributeOrder {
 		}
 
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
-		String nowTime = df.format(new Date());
-
-		DistributeReceiptPO po = new DistributeReceiptPO("PJD-" + organizationVO.organizationID + "-" + nowTime,
-				result1, nowTime, ReceiptState.SUBMIT);
+		String nowTime = fm.format(new Date());
+		int num = 0;
+		try {
+			num = businessData.getNumOfOrderDistributeReceipt(organizationVO.organizationID);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		DistributeReceiptPO po = new DistributeReceiptPO(
+				"PJD-" + organizationVO.organizationID + "-" + nowTime + "-" + num, result1, nowTime,
+				ReceiptState.SUBMIT);
 		// 增加派件单，一天一个
 		try {
 			businessData.addDistributeReceipt(organizationVO.organizationID, po);

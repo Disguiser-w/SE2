@@ -9,6 +9,7 @@ import dataservice.expressdataservice.ExpressDataService;
 import dataservice.managedataservice.CityDistanceDataService;
 import dataservice.managedataservice.OrganizationDataService;
 import po.OrderPO;
+import type.ExpressType;
 import type.OrderState;
 import vo.ExpressVO;
 import vo.OrderVO;
@@ -121,14 +122,21 @@ public class AddOrder {
 
 		float freight = 0;
 		if (city1.equals(city2))
-			freight = (float) (tWeight * 23)/1000;
+			freight = (float) (tWeight * 23) / 1000;
 		else
-			freight = (float) (distance * tWeight * 23)/1000;
+			freight = (float) (distance * tWeight * 23) / 1000;
+
+		switch (vo.expressType) {
+		case ECONOMIC:
+			freight = 18f / 23f * freight;
+			break;
+		case FAST:
+			freight = 28f / 23f * freight;
+		}
 
 		vo.freight = ((int) (freight * 10)) / 10;
 		vo.packingExpense = ((int) (packExpense * 10)) / 10;
-		
-		
+
 	}
 
 	public boolean chargeCollection(String chargeInfo) {

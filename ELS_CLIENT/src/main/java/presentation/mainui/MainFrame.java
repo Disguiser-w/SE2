@@ -11,16 +11,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,7 +42,6 @@ import common.FileGetter;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
-import presentation.commonui.MyComboBox;
 import testConnection.TestConnection;
 import vo.LogVO;
 import vo.OrderVO;
@@ -556,7 +553,7 @@ public class MainFrame extends JFrame {
 		private JLabel min;
 
 		private JPasswordField passwordField;
-		private MyComboBox<String> names;
+		private JComboBox<String> names;
 
 		private boolean isPressed;
 
@@ -588,7 +585,7 @@ public class MainFrame extends JFrame {
 			min.setIcon(min_normal);
 
 			passwordField = new JPasswordField();
-			names = new MyComboBox<String>();
+			names = new JComboBox<String>();
 
 			nameController = new UserNameController();
 

@@ -11,6 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import common.FileGetter;
+import data.managedata.OrganizationData;
+import dataservice.businessdataservice.BusinessDataService;
 import po.BusinessPO;
 import po.DistributeReceiptPO;
 import po.DriverPO;
@@ -22,12 +25,8 @@ import po.RepertoryPO;
 import po.UserPO;
 import po.VehiclePO;
 import type.OrganizationType;
+import type.ReceiptState;
 import type.Sexuality;
-
-import common.FileGetter;
-
-import data.managedata.OrganizationData;
-import dataservice.businessdataservice.BusinessDataService;
 
 public class BusinessData extends UnicastRemoteObject implements BusinessDataService {
 	private static final long serialVersionUID = 1189857824410417884L;
@@ -81,6 +80,31 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 	}
 
 	// OrderAcceptReceipt
+	public int getNumOfOrderReceipt(String organizationID) throws RemoteException {
+		String time = getTime();
+		String path = "orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat";
+		File file = FileGetter.getFile(path);
+		try {
+			ArrayList<OrderAcceptReceiptPO> orderAcceptReceiptPOs = null;
+			if (!file.exists()) {
+				return 0;
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+				orderAcceptReceiptPOs = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
+
+				in.close();
+			}
+			return orderAcceptReceiptPOs.size();
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+			System.out.println("读写收货单信息失败");
+		}
+
+		return 0;
+	}
+
 	public boolean addReceipt(String organizationID, OrderAcceptReceiptPO po) throws RemoteException {
 		String time = getTime();
 		String path = "orderAcceptInfo/" + organizationID + "/" + time + "-orderAccept.dat";
@@ -161,6 +185,32 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			}
 			return vehiclePOs;
 		}
+
+	}
+
+	public int getNumOfEnVechileReceipt(String organizationID) throws RemoteException {
+		String time = getTime();
+		String path = "enVehicleInfo/" + organizationID + "/" + time + "-enVehicle.dat";
+		File file = FileGetter.getFile(path);
+		try {
+
+			if (!file.exists()) {
+				return 0;
+			}
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+			ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = (ArrayList<EnVehicleReceiptPO>) in.readObject();
+			in.close();
+
+			return enVehicleReceiptPOs.size();
+
+		} catch (Exception e)
+
+		{
+			e.printStackTrace();
+			System.out.println("读写装车单信息失败");
+		}
+
+		return 0;
 
 	}
 
@@ -408,12 +458,11 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			throws RemoteException {
 		ArrayList<GatheringReceiptPO> pos = new ArrayList<GatheringReceiptPO>();
 
-		File file = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");	
+		File file = FileGetter.getFile("gatheringInfo/" + organizationID + "/" + time + "-gathering.dat");
 		try {
 			if (!file.exists()) {
 				return new ArrayList<GatheringReceiptPO>();
 			}
-
 
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
@@ -460,6 +509,31 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		}
 
 		return pos;
+	}
+
+	public int getNumOfOrderDistributeReceipt(String organizationID) throws RemoteException {
+		String time = getTime();
+		String path = "distributeInfo/" + organizationID + "/" + time + "-distribute.dat";
+		File file = FileGetter.getFile(path);
+		try {
+			ArrayList<DistributeReceiptPO> distributeReceiptPOs = null;
+			if (!file.exists()) {
+				return 0;
+			} else {
+				ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+				distributeReceiptPOs = (ArrayList<DistributeReceiptPO>) in.readObject();
+				in.close();
+
+			}
+			return distributeReceiptPOs.size();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("读写派件单信息失败");
+		}
+
+		return 0;
 	}
 
 	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException {
@@ -628,8 +702,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
 					GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
 					in.close();
-
-					gatheringReceiptPO.add(po);
+					if (po.getReceiptState() == ReceiptState.SUBMIT)
+						gatheringReceiptPO.add(po);
 
 				}
 			}
@@ -657,7 +731,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					in.close();
 
 					for (DistributeReceiptPO onePO : pos) {
-						distributeReceiptPO.add(onePO);
+						if (onePO.getReceiptState() == ReceiptState.SUBMIT)
+							distributeReceiptPO.add(onePO);
 					}
 				}
 			}
@@ -685,7 +760,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					in.close();
 
 					for (EnVehicleReceiptPO onePO : pos) {
-						enVehicleReceiptPO.add(onePO);
+						if (onePO.getReceiptState() == ReceiptState.SUBMIT)
+							enVehicleReceiptPO.add(onePO);
 					}
 				}
 			}
@@ -713,7 +789,9 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 					in.close();
 
 					for (OrderAcceptReceiptPO onePO : pos) {
-						orderAcceptReceiptPO.add(onePO);
+						if (onePO.getReceiptState() == ReceiptState.SUBMIT)
+							orderAcceptReceiptPO.add(onePO);
+
 					}
 				}
 			}
@@ -738,7 +816,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ArrayList<DistributeReceiptPO> pos = (ArrayList<DistributeReceiptPO>) in.readObject();
 			for (DistributeReceiptPO i : pos) {
 				if (po.getID().equals(i.getID())) {
-					i.setReceiptState(po.getReceiptState());
+					i.setReceiptState(ReceiptState.APPROVE);
 				}
 			}
 
@@ -763,7 +841,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ArrayList<OrderAcceptReceiptPO> pos = (ArrayList<OrderAcceptReceiptPO>) in.readObject();
 			for (OrderAcceptReceiptPO i : pos) {
 				if (po.getReceiptID().equals(i.getReceiptID())) {
-					i.setReceiptState(po.getReceiptState());
+					i.setReceiptState(ReceiptState.APPROVE);
 				}
 			}
 
@@ -788,7 +866,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 			ArrayList<EnVehicleReceiptPO> pos = (ArrayList<EnVehicleReceiptPO>) in.readObject();
 			for (EnVehicleReceiptPO i : pos) {
 				if (po.getReceiptID().equals(i.getReceiptID())) {
-					i.setReceiptState(po.getReceiptState());
+					i.setReceiptState(ReceiptState.APPROVE);
 				}
 			}
 
@@ -811,7 +889,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			GatheringReceiptPO pos = (GatheringReceiptPO) in.readObject();
-
+			pos.setReceiptState(ReceiptState.APPROVE);
 			pos.setReceiptState(po.getReceiptState());
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));

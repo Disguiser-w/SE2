@@ -28,7 +28,7 @@ public interface ExpressDataService extends Remote {
 	// 查找,在total.dat中查找机构和时间，然后就可以继续在文件中查找详细信息
 	public OrderPO find(String ID) throws RemoteException;
 
-	// 更新改订单的状态（改成了finished），以及该订单在ExpressPO中的状态（从PendingList移动到FinishedList）
+	// ，以及该订单在ExpressPO中的状态（从PendingList移动到FinishedList）
 	// 在po的时间对应的文件中查找
 	public boolean receiptOrder(String organizationID, String expressId, OrderPO po) throws RemoteException;
 
@@ -42,14 +42,14 @@ public interface ExpressDataService extends Remote {
 	public boolean changeState(OrderState orderState, String orderID) throws RemoteException;
 
 	// 将某OrderPO直接加到某营业厅某日的订单列表中
-	public boolean addDistributingOrder(ArrayList<OrderPO> orderPOs, String organizationID) throws RemoteException;
+	public boolean addDistributingOrder(ArrayList<OrderPO> po, String organizationID) throws RemoteException;
 	// 将
 
 	// 查询某个营业厅某天的订单
 	public ArrayList<OrderPO> getOrderInfosByTime(String organizationID, String time) throws RemoteException;
 
 	// 增加某个订单的历史流程(此属性只放在添加该订单的营业厅的OrderPO的副本中，与total.dat中的订单位置对应，供查询所需),在该营业厅的昨天的订单中查找
-	//如果organizationID为null说明不知道属于哪个营业厅，于是调用find
+	// 如果organizationID为null说明不知道属于哪个营业厅，于是调用find
 	public boolean addHistory(String process, String organizationID, String orderID) throws RemoteException;
 
 	// 获得本营业厅当日的订单数
@@ -57,6 +57,9 @@ public interface ExpressDataService extends Remote {
 	
 	//清空当日收费信息
 	public boolean deleteChargeInfos(String organizationID) throws RemoteException;
+	
+	//获得待派送的所有订单
+	public ArrayList<OrderPO> getDistributingOrder(String organizationID) throws RemoteException;
 	// /**
 	// * 返回订单费用的基本信息CostBasePO
 	// */

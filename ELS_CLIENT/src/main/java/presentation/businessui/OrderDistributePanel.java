@@ -58,20 +58,6 @@ public class OrderDistributePanel extends OperationPanel {
 		confirmLabel.setBounds((int) (width * 20.6343792633015 / 25), (int) (height * 17.491039426523297 / 20),
 				(int) (width * 2.830832196452933 / 25), (int) (height * 1.3261648745519714 / 20));
 
-		// messageTable.setLocationAndSize((int) (width * 1.159618008185539 /
-		// 25),
-		// (int) (height * 1.2903225806451613 / 20), (int) (width *
-		// 22.646657571623464 / 25),
-		// (int) (height * 15.878136200716845 / 20));
-		// distributeLabel.setBounds((int) (width * 19.37244201909959 / 25),
-		// (int) (height * 18.06451612903226 / 20),
-		// (int) (width * 1.8417462482946794 / 25), (int) (height *
-		// 1.003584229390681 / 20));
-		// confirmLabel.setBounds((int) (width * 22.032742155525238 / 25), (int)
-		// (height * 18.06451612903226 / 20),
-		// (int) (width * 1.7735334242837653 / 25), (int) (height *
-		// 1.003584229390681 / 20));
-
 	}
 
 	public void addListener() {
@@ -79,7 +65,7 @@ public class OrderDistributePanel extends OperationPanel {
 		confirmLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				result = new ArrayList<String[]>();
-
+				messageTable.setInfos(result);
 			}
 		});
 		distributeLabel.addMouseListener(new MouseAdapter() {
@@ -98,9 +84,9 @@ public class OrderDistributePanel extends OperationPanel {
 	}
 
 	private void setBaseInfos() {
-		String[] head = new String[] { "快递员", "当日收费" };
+		String[] head = new String[] { "快递员", "目的地", "订单号" };
 
-		int[] widths = { 320, 295, };
+		int[] widths = { 320, 95, 200 };
 
 		messageTable = new MyTable(head, new ArrayList<String[]>(), widths, false);
 		add(messageTable);

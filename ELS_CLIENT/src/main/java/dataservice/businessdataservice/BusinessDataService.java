@@ -54,8 +54,10 @@ public interface BusinessDataService extends Remote {
 	public ArrayList<GatheringReceiptPO> getGatheringReceipt(String time) throws RemoteException;
 
 	public ArrayList<GatheringReceiptPO> getGatheringReceiptByHallID(String organization) throws RemoteException;
-	
-	public ArrayList<GatheringReceiptPO> getGatheringReceiptByBoth(String organization,String time) throws RemoteException;
+
+	public ArrayList<GatheringReceiptPO> getGatheringReceiptByBoth(String organization, String time)
+			throws RemoteException;
+
 	// 增加一个DistributeOrder到本营业厅今日的文件中，一天也就一个
 	public boolean addDistributeReceipt(String organizationID, DistributeReceiptPO po) throws RemoteException;
 
@@ -105,7 +107,14 @@ public interface BusinessDataService extends Remote {
 	public ArrayList<OrganizationPO> getOrganizationInfos() throws RemoteException;
 
 	public int getNumOfVehicles(String organizationID) throws RemoteException;
+
 	public int getNumOfDrivers(String organizationID) throws RemoteException;
+
+	public int getNumOfEnVechileReceipt(String organizationID) throws RemoteException;
+
+	public int getNumOfOrderReceipt(String organizationID) throws RemoteException;
+
+	public int getNumOfOrderDistributeReceipt(String organizationID) throws RemoteException;
 	//
 	// /**
 	// * 返回待转运的订单的列表

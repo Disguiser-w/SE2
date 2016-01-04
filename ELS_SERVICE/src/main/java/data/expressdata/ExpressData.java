@@ -2,7 +2,9 @@ package data.expressdata;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -90,8 +92,8 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		String leavePlaceStr = leavePlaceAll[0] + leavePlaceAll[1];
 		String[] destinationAll = po.getRecipientAddress().split(" ");
 		String destinationStr = destinationAll[0] + destinationAll[1];
-		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight() + po.getPackingExpense(),
-				leavePlaceStr, destinationStr);
+		GoodsPO newGood = new GoodsPO(po.getID(), po.getFreight() + po.getPackingExpense(), leavePlaceStr,
+				destinationStr);
 		goodsData.addGoods(newGood);
 
 		// 获取今日时间
@@ -230,7 +232,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<UserPO> users = (ArrayList<UserPO>) in.readObject();
 			in.close();
 			for (UserPO i : users) {
-				if (i.getProfession() == ProfessionType.courier&&!i.getOrganization().equals("")) {
+				if (i.getProfession() == ProfessionType.courier && !i.getOrganization().equals("")) {
 					expressPOs.add((ExpressPO) i);
 				}
 			}
@@ -303,6 +305,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<UserPO> userpo = (ArrayList<UserPO>) in.readObject();
 			in.close();
+
 			for (UserPO i : userpo) {
 
 				if (i.getUserID().equals(expressId)) {
@@ -317,7 +320,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			out.close();
 
 			String time = getTime();
-			String orderPath = "orderInfo/" + organizationID + "/" + time + "-order.dat";
+			String orderPath = getPath(po.getID());
 			File orderFile = FileGetter.getFile(orderPath);
 			if (!orderFile.exists())
 				return false;
@@ -426,7 +429,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 		String time = getTime();
 		File file = FileGetter.getFile("orderInfo/" + organizationID + "/" + time + "-order.dat");
-		if(!file.exists()){
+		if (!file.exists()) {
 			FileGetter.createFile(file);
 		}
 
@@ -504,7 +507,6 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	// 获得当日订单数
 	public int getOrderNum(String organizationID) throws RemoteException {
 
-		String time = getTime();
 		String orderPath = "orderInfo/total.dat";
 		File file = FileGetter.getFile(orderPath);
 
@@ -514,11 +516,11 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-			AVLTree<String, String> orderPOs = (AVLTree<String, String>) in.readObject();
+			AVLTree<String, String> tree = (AVLTree<String, String>) in.readObject();
 
 			in.close();
 
-			return orderPOs.getSize();
+			return tree.getInfoByKeyword(getTime().replace("-", ""));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -556,9 +558,40 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		return t.find(id);
 	}
 
+	@Override
+	public ArrayList<OrderPO> getDistributingOrder(String organizationName) throws RemoteException {
+		ArrayList<OrderPO> result = new ArrayList<OrderPO>();
+		String path = "orderInfo/";
+		File dirs = FileGetter.getFile(path);
+		for (File i : dirs.listFiles()) {
+			if (i.isDirectory()) {
+				for (File j : i.listFiles()) {
+					try {
+						ObjectInputStream in = new ObjectInputStream(new FileInputStream(j));
+						ArrayList<OrderPO> po = (ArrayList<OrderPO>) in.readObject();
+						in.close();
+						for (OrderPO p : po) {
+							String[] receiverAddress = p.getRecipientAddress().split(" ");
+							if (organizationName.contains(receiverAddress[0])
+									&& organizationName.contains(receiverAddress[1])
+									&& p.getOrder_state() == OrderState.WAITING_DISTRIBUTE) {
+								result.add(p);
+							}
+
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
 	/***************************************************************** test ***************************************************/
 	public static void main(String[] args) {
-		
+
 	}
 
 }

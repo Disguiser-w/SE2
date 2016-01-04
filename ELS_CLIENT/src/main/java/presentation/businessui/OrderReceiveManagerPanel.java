@@ -166,6 +166,11 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 					return;
 				}
 
+				if (!controller.vehicleExist(vehicleID)) {
+					warnning("该司机不存在,请检查司机ID是否输入错误");
+					return;
+				}
+
 				ArrayList<String> str = new ArrayList<String>();
 				for (String[] i : orderNum) {
 					str.add(i[0]);
@@ -178,12 +183,19 @@ public class OrderReceiveManagerPanel extends OperationPanel {
 				if (controller.acceptCargo(vehicleID, str)) {
 					log.addLogDiary(new LogDiaryVO(GetDate.getTime(), BusinessMainController.businessVO, "接收了一批货物"),
 							GetDate.getTime());
-					warnning("收货单已提交!");
+					success("收货单已提交!");
+					clear();
 				}
 
 			}
 		});
 
+	}
+
+	private void clear() {
+		messageTable.setInfos(new ArrayList<String[]>());
+		vehicleIDField.setText("");
+		orderNumField.setText("");
 	}
 
 	private void warnning(String message) {

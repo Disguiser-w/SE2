@@ -473,20 +473,26 @@ public class AddOrderPanel extends OperationPanel {
 
 				case "经济":
 					expressT = ExpressType.ECONOMIC;
+					break;
 				case "标准":
 					expressT = ExpressType.STANDARD;
+					break;
 				case "特快":
 					expressT = ExpressType.FAST;
+					break;
 				}
 
 				PackType packageT = null;
 				switch (packageType) {
 				case "纸箱":
 					packageT = PackType.CARTONS;
+					break;
 				case "木箱":
 					packageT = PackType.WOODCASE;
-				case "快递带":
+					break;
+				case "快递袋":
 					packageT = PackType.COURIERBAGS;
+					break;
 				}
 
 				Date d = new Date();

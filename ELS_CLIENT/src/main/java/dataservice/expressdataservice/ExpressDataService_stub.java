@@ -94,4 +94,10 @@ public class ExpressDataService_stub implements ExpressDataService {
 		return false;
 	}
 
+	@Override
+	public ArrayList<OrderPO> getDistributingOrder(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

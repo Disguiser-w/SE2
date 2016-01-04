@@ -98,6 +98,13 @@ public class EnVehicle {
 		ArrayList<String[]> result = new ArrayList<String[]>();
 
 		int j = 0;
+		try {
+			j = businessData.getNumOfEnVechileReceipt(organizationVO.organizationID) + 1;
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		for (VehiclePO i : vehiclePO) {
 
 			// 对每一辆车,生成一个装车单，放在装车单的ArrayList中

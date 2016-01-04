@@ -86,8 +86,9 @@ public class AcceptCargo {
 			int num = businessData.getNumOfOrderAcceptReceipt(organizationVO.organizationID);
 			String receiptID = "YYTDDD-" + organizationVO.organizationID + "-" + time2 + "-" + num;
 			OrderAcceptReceiptPO newPO = new OrderAcceptReceiptPO(po, time,
-					businessData.getVehicleInfo(organizationVO.organizationID, vehicleID), orderIDs, receiptID,
+					businessData.getVehicleInfo(vehicleID.split("-")[1], vehicleID), orderIDs, receiptID,
 					ReceiptState.SUBMIT);
+			System.out.println(businessData.getVehicleInfo(vehicleID.split("-")[1], vehicleID));
 
 			result = businessData.addReceipt(organizationVO.organizationID, newPO);
 		} catch (Exception e) {
@@ -114,13 +115,11 @@ public class AcceptCargo {
 
 	public boolean vehicleExist(String vehicleID) {
 		try {
-			if (businessData.getVehicleInfo(null, vehicleID) == null)
+			if (businessData.getVehicleInfo(vehicleID.split("-")[1], vehicleID) == null)
 				return false;
 			else
 				return true;
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 		return false;
 	}

@@ -29,6 +29,7 @@ public class LogisticQuery {
 		ArrayList<OrderVO> vo = new ArrayList<OrderVO>();
 		try {
 			for (String i : orderIDs) {
+
 				vo.add(ExpressMainController.orderPOToVO(expressData.find(i)));
 			}
 		} catch (Exception e) {
