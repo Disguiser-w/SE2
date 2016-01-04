@@ -2,9 +2,7 @@ package data.expressdata;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
@@ -489,7 +487,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
 			for (OrderPO i : orderPOs) {
 				if (i.getID().equals(orderID))
-					i.getHistory().add(process);
+					i.getHistory().add(getTimes() + "  " + process);
 			}
 			in.close();
 
@@ -588,6 +586,11 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 		}
 
 		return result;
+	}
+
+	private String getTimes() {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return fm.format(new Date());
 	}
 
 	/***************************************************************** test ***************************************************/

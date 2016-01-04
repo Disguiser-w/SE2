@@ -1,12 +1,9 @@
 package presentation.mainui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -20,7 +17,6 @@ import java.util.Scanner;
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +41,10 @@ import common.FileGetter;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyLabel;
+import presentation.commonui.MyTable;
+import presentation.commonui.MyTextLabel;
+import presentation.commonui.UserFrame;
 import testConnection.TestConnection;
 import vo.LogVO;
 import vo.OrderVO;
@@ -69,6 +69,7 @@ public class MainFrame extends JFrame {
 	private boolean isMoving;
 
 	public MainFrame() {
+		UserFrame.type = UserFrame.TYPE_0;
 		oldX = 0;
 		oldY = 0;
 		isMoving = false;
@@ -534,14 +535,8 @@ public class MainFrame extends JFrame {
 				warnning("订单号不存在");
 				return;
 			}
-			frame.remove(queryPanel);
-			QueryResultPanel panel = new QueryResultPanel(vo);
-			resultPanel = new JScrollPane(panel);
-//			resultPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-			resultPanel.setBounds(0, 0, 300, 500);
 
-			frame.add(resultPanel);
-			frame.setVisible(true);
+			QueryResultFrame panel = new QueryResultFrame(vo);
 		}
 
 	}
@@ -786,7 +781,6 @@ public class MainFrame extends JFrame {
 		// 调用bl层的方法登录
 		public void signIn(final String userID, String password) {
 
-
 			final LogVO logvo = userbl.login(userID, password);
 
 			if (logvo.logReply.equals("The user doesn't exist")) {
@@ -876,46 +870,96 @@ public class MainFrame extends JFrame {
 		}
 	}
 
-	class QueryResultPanel extends JScrollPane {
-		private JLabel stateLabel;
-		private JLabel historyLabel;
-		private JButton cancel;
+	class QueryResultFrame extends JFrame {
+		private JLabel resultLabel;
+		private MyTable messageTable;
+		private MyLabel exitLabel;
+		private MyTextLabel nowState;
 
 		private OrderVO vo;
-		private int dx1;
-		private int dx2;
 		private LocationHelper helper;
+		private JFrame queryFrame;
+		private Panel panel;
 
-		public QueryResultPanel(OrderVO vo) {
-			stateLabel = new JLabel();
-			historyLabel = new JLabel("历史转运流程:");
-			cancel = new JButton("返回");
+		public QueryResultFrame(OrderVO vo) {
+			queryFrame = this;
 			setBackground(Color.WHITE);
 			this.vo = vo;
-			setResult();
-			setLayout(null);
+			panel = new Panel();
 
-			add(stateLabel);
-			add(historyLabel);
-			add(cancel);
+			panel.setLayout(null);
+			panel.setSize(800, 600);
+			panel.setBackground(Color.WHITE);
 
-			// addMouseListener(new MouseAdapter() {
-			// public void mouseClicked(MouseEvent e) {
-			// System.out.println(e.getX() + " " + e.getY());
-			// }
-			// });
-			cancel.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					frame.remove(resultPanel);
-					((MainFrame) frame).toQueryPanel();
+			add(panel);
+			setSize(800, 600);
+			setLocationRelativeTo(null);
+			setUndecorated(true);
 
-				}
-			});
+			resultLabel = new JLabel("查询结果");
+			resultLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 30));
 
-			// helper = new LocationHelper(this);
+			exitLabel = new MyLabel("关闭");
+
+			nowState = new MyTextLabel();
+			nowState.setText("当前状态 : " + getResult());
+			nowState.setHorizontalAlignment(JLabel.CENTER);
+			nowState.setFont(new Font("Microsoft YaHei", Font.PLAIN, 20));
+
+			panel.add(resultLabel);
+			panel.add(exitLabel);
+			panel.add(nowState);
+			panel.setBorder(BorderFactory.createLineBorder(new Color(0, 121, 255), 2));
+
+			setBaseInfo();
+			addListener();
+
+			int width = getWidth();
+			int height = getHeight();
+			resultLabel.setBounds((int) (width * 1.59375 / 25), (int) (height * 1.1333333333333333 / 20),
+					(int) (width * 4.875 / 25), (int) (height * 1.9 / 20));
+			exitLabel.setBounds((int) (width * 10.96875 / 25), (int) (height * 17.233333333333334 / 20),
+					(int) (width * 3.4375 / 25), (int) (height * 1.6666666666666667 / 20));
+			nowState.setBounds((int) (width * 16.65625 / 25), (int) (height * 1.9666666666666666 / 20),
+					(int) (width * 6.125 / 25), (int) (height * 1.3666666666666667 / 20));
+			messageTable.setLocationAndSize((int) (width * 1.625 / 25), (int) (height * 4.5 / 20),
+					(int) (width * 21.84375 / 25), (int) (height * 11.833333333333334 / 20));
+
+			// helper = new LocationHelper(panel);
+			setVisible(true);
 		}
 
-		public void setResult() {
+		private ArrayList<String[]> getInfos() {
+			ArrayList<String[]> infos = new ArrayList<String[]>();
+			for (String str : vo.history) {
+				infos.add(str.split("  "));
+			}
+			return infos;
+		}
+
+		private void addListener() {
+			exitLabel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					queryFrame.setVisible(false);
+				}
+			});
+		}
+
+		private void setBaseInfo() {
+			String[] head = new String[] { "时间", "历史流程" };
+
+			int[] widths = { 200, 449 };
+
+			messageTable = new MyTable(head, getInfos(), widths, false);
+			panel.add(messageTable.getScrollPanel());
+		}
+
+		public void setBounds(int x, int y, int width, int height) {
+			super.setBounds(x, y, width, height);
+
+		}
+
+		public String getResult() {
 			String state = null;
 			switch (vo.order_state) {
 
@@ -941,54 +985,9 @@ public class MainFrame extends JFrame {
 			default:
 				break;
 			}
-
-			int center = 160;
-			String stateStr = "货物状态 : " + state;
-			stateLabel.setText(stateStr);
-			int l = getWidthByNum(stateStr);
-			stateLabel.setBounds(center - l / 2, 30, l, 25);
-
-			String history = "历史转运流程:";
-			int l2 = getWidthByNum(history);
-			historyLabel.setBounds(center - l2 / 2, 105, l2, 20);
-
-			int len = vo.history.size();
-
-			setPreferredSize(new Dimension(300, 255 + 105 * (len - 1)));
-
-			int i = 0;
-			for (int j = vo.history.size() - 1; j >= 0; j--) {
-				String record = vo.history.get(j);
-				JLabel label = new JLabel(record);
-				label.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
-				label.setHorizontalAlignment(JLabel.CENTER);
-				label.setToolTipText(record);
-				add(label);
-				int len1 = getWidthByNum(record);
-				label.setBounds(center - len1 / 2 - 4, 130 + 105 * i, len1, 25);
-
-				i++;
-				if (i != len) {
-					JLabel gap = new JLabel("|");
-					gap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					int len2 = getWidthByNum("|");
-
-					gap.setBounds(center - len2 / 2, 130 + 105 * (i - 1) + 25, len2, 80);
-					add(gap);
-				}
-			}
-
-			int l3 = getWidthByNum("返回");
-
-			if (255 + 105 * (len - 1) <= frame.getHeight())
-				cancel.setBounds(center - l3 / 2 - 15, frame.getHeight() - 70, l3 + 30, 30);
-			else
-				cancel.setBounds(center - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
+			return state;
 		}
 
-		public int getWidthByNum(String str) {
-			return 16 * str.length();
-		}
 	}
 
 	private void warnning(String msg) {
@@ -1022,6 +1021,18 @@ public class MainFrame extends JFrame {
 			}
 
 		});
+	}
+
+	class Panel extends JPanel {
+		public JLabel label1;
+		public JLabel label2;
+		public JLabel label3;
+		public JLabel label4;
+		public JLabel label5;
+		public JLabel label6;
+		public JLabel label7;
+		public JLabel label8;
+		public JLabel label9;
 	}
 
 }

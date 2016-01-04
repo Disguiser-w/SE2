@@ -1,7 +1,9 @@
 package businesslogic.expressbl;
 
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import businesslogic.datafactory.DataFactory;
 import businesslogic.expressbl.controller.ExpressMainController;
@@ -48,21 +50,21 @@ public class AddOrder {
 				if (addr1[1].equals(addr2[1])) {
 					// 如果同一营业厅,直接派送
 					po.setOrder_state(OrderState.WAITING_DISTRIBUTE);
-					po.getHistory().add("快件已发出");
-					po.getHistory().add("快件已到达" + expressVO.organizationVO.name + ",正等待派送");
+
+					po.getHistory().add(getTimes() + "  快件已到达" + expressVO.organizationVO.name + ",正等待派送");
 
 				} else {
 					// 否则要经过一次转运,转运后状态变为等待派件
 					po.setOrder_state(OrderState.WAITING_ENVEHICLE);
-					po.getHistory().add("快件已发出");
-					po.getHistory().add("订单已到达" + expressVO.organizationVO.name + ",正等待转运");
+
+					po.getHistory().add(getTimes() + "  订单已到达" + expressVO.organizationVO.name + ",正等待转运");
 				}
 			} else {
 				// 在不同城市,需要转运和中转
 
 				po.setOrder_state(OrderState.WAITING_ENVEHICLE);
-				po.getHistory().add("快件已发出");
-				po.getHistory().add("订单已到达" + expressVO.organizationVO.name + ",正等待中转");
+
+				po.getHistory().add(getTimes() + "  订单已到达" + expressVO.organizationVO.name + ",正等待中转");
 			}
 
 			po.setPackingExpense(vo.packingExpense);
@@ -184,6 +186,11 @@ public class AddOrder {
 			e.printStackTrace();
 		}
 		return new ArrayList<String>();
+	}
+
+	private String getTimes() {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return fm.format(new Date());
 	}
 
 }
