@@ -404,7 +404,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "receiptInfo/transferingReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			return null;
+			return new ArrayList<TransferingReceiptPO>();
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
@@ -487,7 +487,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		String path = "receiptInfo/enIntermediateReceiptInfo.dat";
 		File file = FileGetter.getFile(path);
 		if (!file.exists()) {
-			return null;
+			return new ArrayList<EnIntermediateReceiptPO>();
 		}
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
