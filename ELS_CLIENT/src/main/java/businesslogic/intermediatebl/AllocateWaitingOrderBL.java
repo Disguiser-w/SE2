@@ -18,14 +18,15 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	public ArrayList<OrderVO> updateWaitingList() {
 		// TODO 自动生成的方法存根
 		if (transferingReceipt.orderList == null) {
-			System.out.println("jiji");
 			return new ArrayList<OrderVO>();
 		} else {
+			waitingOrderList = new ArrayList<OrderVO>();
 			for (OrderVO order : transferingReceipt.orderList) {
-//				if (order.order_state == OrderState.TRANSFERING)
+				if (order.order_state == OrderState.WAITING_ENVEHICLE){
 					waitingOrderList.add(order);
+					System.out.println("what!?");
+				}
 			}
-			System.out.println("gaga");
 			return waitingOrderList;
 		}
 	}

@@ -101,35 +101,40 @@ public class EnvehicleBL implements EnvehicleBLService {
 					|| (order.expressType == ExpressType.STANDARD && distance > STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE)) {
 				for (PlaneVO plane : planeList) {
-					 if ((this.showEnplaningReceipt(plane).orderList.size() <=
-					 2000)
-					 && address_end[0] == plane.destination) {
-					 this.showEnplaningReceipt(plane).orderList.add(order);
-					 order.order_state = OrderState.TRANSFERING;
-					 return OperationState.SUCCEED_OPERATION;
-					 }
+					if ((this.showEnplaningReceipt(plane).orderList.size() <= 2000)
+							&& address_end[0].equals(plane.destination)) {
+						this.showEnplaningReceipt(plane).orderList.add(order);
+						order.order_state = OrderState.TRANSFERING;
+						transfering.changeState(order);
+						System.out.println("hehe");
+					}
 				}
 			} else if ((order.expressType == ExpressType.STANDARD && distance <= STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC
 							&& distance <= ECONOMIC_PLANE && distance > ECONOMIC_TRAIN)) {
+				System.out.println("heihei");
 				for (TrainVO train : trainList) {
+					System.out.println(address_end[0] + " " + train.destination);
+					System.out.println(this.showEntrainingReceiptVO(train).orderList.size());
 					if ((this.showEntrainingReceiptVO(train).orderList.size() <= 200000)
-							&& address_end[0] == train.destination) {
+							&& address_end[0].equals(train.destination)) {
 						this.showEntrainingReceiptVO(train).orderList
 								.add(order);
 						order.order_state = OrderState.TRANSFERING;
-						return OperationState.SUCCEED_OPERATION;
+						transfering.changeState(order);
+						System.out.println("heha");
 					}
 				}
 			} else if (order.expressType == ExpressType.ECONOMIC
 					&& distance <= ECONOMIC_TRAIN) {
 				for (TruckVO truck : truckList) {
 					if (this.showEntruckingReceiptVO(truck).orderList.size() <= 1000
-							&& address_end[0] == truck.destination) {
+							&& address_end[0].equals(truck.destination)) {
 						this.showEntruckingReceiptVO(truck).orderList
 								.add(order);
 						order.order_state = OrderState.TRANSFERING;
-						return OperationState.SUCCEED_OPERATION;
+						transfering.changeState(order);
+						System.out.println("hahe");
 					}
 				}
 			}
@@ -138,6 +143,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
 				"进行了装车分配操作"), GetDate.getTime());
 
+		saveEnIntermediateReceiptList();
 		fareBL.computeFare();
 		return OperationState.FAIL_OPERATION;
 	}

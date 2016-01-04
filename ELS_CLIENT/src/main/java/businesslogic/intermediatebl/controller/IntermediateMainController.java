@@ -102,18 +102,17 @@ public class IntermediateMainController {
 
 		for (PlaneVO plane : planeList)
 			enplaningReceiptList.add(new EnplaningReceiptVO(intermediateCentre,
-					plane, new ArrayList<OrderVO>(), 1000, "", "",
+					plane, new ArrayList<OrderVO>(), 1000, "ZZZXZCD" + plane.ID, GetDate.getTime(),
 					ReceiptState.DRAFT));
 
 		for (TrainVO train : trainList)
 			entrainingReceiptList.add(new EntrainingReceiptVO(
 					intermediateCentre, train, new ArrayList<OrderVO>(), 400,
-					"", "", ReceiptState.DRAFT));
+					"ZZZXZCD" + train.ID, GetDate.getTime(), ReceiptState.DRAFT));
 
 		for (TruckVO truck : truckList)
 			entruckingReceiptList.add(new EntruckingReceiptVO(
-					intermediateCentre, truck, new ArrayList<OrderVO>(), 20, "",
-					"", ReceiptState.DRAFT));
+					intermediateCentre, truck, new ArrayList<OrderVO>(), 20, "ZZZXZCD" + truck.ID, GetDate.getTime(), ReceiptState.DRAFT));
 
 		planeManager = new PlaneManagerBL(planeList, intermediateCentre,
 				intermediateData, intermediate);

@@ -354,7 +354,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		if (!file.exists()) {
-			return null;
+			return new ArrayList<FarePO>();
 		}
 
 		try {
@@ -380,6 +380,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 		File file = FileGetter.getFile(path);
 
 		ArrayList<FarePO> fareList = getFareInfo(organization_ID, date);
+		System.out.println(fareList.size());
 		fareList.add(fare);
 		try {
 			if (!file.exists()) {
