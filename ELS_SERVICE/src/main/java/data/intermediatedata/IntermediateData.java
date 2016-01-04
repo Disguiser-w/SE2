@@ -413,13 +413,14 @@ public class IntermediateData extends UnicastRemoteObject implements
 			ArrayList<TransferingReceiptPO> transferingReceiptList = (ArrayList<TransferingReceiptPO>) in
 					.readObject();
 			in.close();
-
+			ArrayList<TransferingReceiptPO> temp = new ArrayList<TransferingReceiptPO>();
 			for (TransferingReceiptPO transferingReceipt : transferingReceiptList) {
-				if (transferingReceipt.getReceiptState() != ReceiptState.SUBMIT)
-					transferingReceiptList.remove(transferingReceipt);
+				if (transferingReceipt.getReceiptState() == ReceiptState.SUBMIT) {
+					temp.add(transferingReceipt);
+				}
 			}
 
-			return transferingReceiptList;
+			return temp;
 
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
@@ -496,12 +497,13 @@ public class IntermediateData extends UnicastRemoteObject implements
 					.readObject();
 			in.close();
 
+			ArrayList<EnIntermediateReceiptPO> temp = new ArrayList<EnIntermediateReceiptPO>();
 			for (EnIntermediateReceiptPO enIntermediateReceipt : enIntermediateReceiptList) {
-				if (enIntermediateReceipt.getReceiptState() != ReceiptState.SUBMIT)
-					enIntermediateReceiptList.remove(enIntermediateReceipt);
+				if (enIntermediateReceipt.getReceiptState() == ReceiptState.SUBMIT)
+					temp.add(enIntermediateReceipt);
 			}
 
-			return enIntermediateReceiptList;
+			return temp;
 
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
