@@ -2,6 +2,7 @@ package presentation.mainui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -44,7 +45,6 @@ import common.FileGetter;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
-import presentation.commonui.MyTextLabel;
 import testConnection.TestConnection;
 import vo.LogVO;
 import vo.OrderVO;
@@ -537,6 +537,7 @@ public class MainFrame extends JFrame {
 			frame.remove(queryPanel);
 			QueryResultPanel panel = new QueryResultPanel(vo);
 			resultPanel = new JScrollPane(panel);
+//			resultPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 			resultPanel.setBounds(0, 0, 300, 500);
 
 			frame.add(resultPanel);
@@ -784,19 +785,7 @@ public class MainFrame extends JFrame {
 
 		// 调用bl层的方法登录
 		public void signIn(final String userID, String password) {
-			// try{
-			// UserPO userpo = udService.findUser(userID);
-			// if(userpo.equals(null)) //找不到该用户，返回2
-			// return new LogVO("nouser", null);
-			// else if(!(userpo.getPassword().equals(password))) //用户密码错误，返回1
-			// return new LogVO("falsepassword", null);
-			// else{
-			// return new LogVO("success", poToVO(userpo)); //登录成功，返回0
-			// }
-			// }catch(RemoteException exception){
-			// exception.printStackTrace();
-			// return new LogVO("The server failed", null);
-			// }
+
 
 			final LogVO logvo = userbl.login(userID, password);
 
@@ -901,6 +890,7 @@ public class MainFrame extends JFrame {
 			stateLabel = new JLabel();
 			historyLabel = new JLabel("历史转运流程:");
 			cancel = new JButton("返回");
+			setBackground(Color.WHITE);
 			this.vo = vo;
 			setResult();
 			setLayout(null);
@@ -953,7 +943,7 @@ public class MainFrame extends JFrame {
 			}
 
 			int center = 160;
-			String stateStr = "货物状态" + state;
+			String stateStr = "货物状态 : " + state;
 			stateLabel.setText(stateStr);
 			int l = getWidthByNum(stateStr);
 			stateLabel.setBounds(center - l / 2, 30, l, 25);
@@ -967,8 +957,10 @@ public class MainFrame extends JFrame {
 			setPreferredSize(new Dimension(300, 255 + 105 * (len - 1)));
 
 			int i = 0;
-			for (String record : vo.history) {
+			for (int j = vo.history.size() - 1; j >= 0; j--) {
+				String record = vo.history.get(j);
 				JLabel label = new JLabel(record);
+				label.setFont(new Font("Microsoft YaHei", Font.PLAIN, 15));
 				label.setHorizontalAlignment(JLabel.CENTER);
 				label.setToolTipText(record);
 				add(label);
@@ -987,7 +979,11 @@ public class MainFrame extends JFrame {
 			}
 
 			int l3 = getWidthByNum("返回");
-			cancel.setBounds(center - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
+
+			if (255 + 105 * (len - 1) <= frame.getHeight())
+				cancel.setBounds(center - l3 / 2 - 15, frame.getHeight() - 70, l3 + 30, 30);
+			else
+				cancel.setBounds(center - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
 		}
 
 		public int getWidthByNum(String str) {

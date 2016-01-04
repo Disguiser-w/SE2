@@ -41,6 +41,7 @@ public class WarehousingMainPanel extends OperationPanel {
 	public MyTable warehousingMessageTable;
 	
 	private ArrayList<GoodsVO> goods;
+	private ArrayList<GoodsVO> fliterGoods;
 	
 	private int selectedIndex;
 	
@@ -183,10 +184,18 @@ public class WarehousingMainPanel extends OperationPanel {
 			goods = goodsControl.findFreeGoodsByKeyword(keyword);
 		}
 		ArrayList<String[]> infos = new ArrayList<String[]>();
+		fliterGoods = new ArrayList<GoodsVO>();
 		
-		for(GoodsVO goodsvo: goods){
-			infos.add(new String[]{goodsvo.Order_ID, goodsvo.fee+"", goodsvo.departurePlace, goodsvo.destination});
+		for(int i=0;i<goods.size();i++){
+			GoodsVO goodsvo = goods.get(i);
+			if(!goodsvo.departurePlace.substring(0, 2).equals(goodsvo.destination.substring(0, 2)))
+				fliterGoods.add(goodsvo);
 		}
+		
+		for(GoodsVO flitergoodsvo: fliterGoods){
+			infos.add(new String[]{flitergoodsvo.Order_ID, flitergoodsvo.fee+"", flitergoodsvo.departurePlace, flitergoodsvo.destination});
+		}
+		
 		return infos;
 	}
 	
@@ -204,7 +213,7 @@ public class WarehousingMainPanel extends OperationPanel {
 			String[] IDStr = new String[size];
 			int count = 0;
 			for(int i : selectedIndexs){
-				String orderID = goods.get(i).Order_ID;
+				String orderID = fliterGoods.get(i).Order_ID;
 				IDStr[count] = orderID;
 				count++;
 			}
@@ -226,7 +235,7 @@ public class WarehousingMainPanel extends OperationPanel {
 			return;
 		}else{
 			selectedIndex = selectedIndexs.get(0);
-			GoodsVO goodsvo = goods.get(selectedIndex);
+			GoodsVO goodsvo = fliterGoods.get(selectedIndex);
 			String orderID = goodsvo.Order_ID;
 			repertoryFrame.changePanel(new GoodsDetailedInfoPanel(repertoryFrame, goodsControl, orderID));
 		}

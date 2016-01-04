@@ -60,11 +60,11 @@ public class ViewInventoryPanel extends OperationPanel {
 		
 		dateRange = new MyTextLabel("日期范围");
 		
-		startDateLabel = new MyLabel();
+		startDateLabel = new MyLabel("日期选择");
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-10-01");
 		startDateChooseLabel = new MyTextLabel("开始日期");
-		endDateLabel = new MyLabel();
+		endDateLabel = new MyLabel("日期选择");
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-10-01");
 		endDateChooseLabel = new MyTextLabel("结束日期");
@@ -186,6 +186,10 @@ public class ViewInventoryPanel extends OperationPanel {
 		String startDateStr = startDateField.getText();
 		String endDateStr = endDateField.getText();
 		
+		if(startDateStr.compareTo(endDateStr) > 0 ){
+			warning("起始日期晚于结束日期，重新输入吧");
+			return;
+		}
 		inventoryCheckVO = repertoryControl.inventoryCheck(startDateStr, endDateStr);
 
 		if(startDateStr.equals("") || endDateStr.equals("")){
@@ -204,4 +208,7 @@ public class ViewInventoryPanel extends OperationPanel {
 		}
 	}
 	
+	public void warning(String str){
+		JOptionPane.showMessageDialog(null, str, "哎呀，出错啦！╮(╯-╰)╭", JOptionPane.WARNING_MESSAGE);
+	}
 }

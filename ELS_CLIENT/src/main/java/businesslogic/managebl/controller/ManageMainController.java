@@ -1,4 +1,4 @@
-﻿package businesslogic.managebl.controller;
+package businesslogic.managebl.controller;
 
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
