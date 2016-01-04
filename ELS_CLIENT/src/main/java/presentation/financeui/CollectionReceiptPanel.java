@@ -93,7 +93,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		date_Input = new MyTextField("");
 		businessHallID_Input = new MyComboBox<String>();
 		ArrayList<OrganizationVO> organizationVOs = organizationController.showAllOrganizations();
-		businessHallID_Input.addItem("");
+		businessHallID_Input.addItem(" ");
 		for (OrganizationVO v : organizationVOs) {
 			if (v.category == OrganizationType.businessHall) {
 				businessHallID_Input.addItem(v.name);
@@ -235,11 +235,11 @@ public class CollectionReceiptPanel extends OperationPanel {
 				break ;
 			}
 		}
-		if (date_str.equals("") && hallName.equals("")) {
+		if (date_str.equals("") && hallName.equals(" ")) {
 			JOptionPane.showMessageDialog(null, "请输入至少一项信息哟！", "提示", JOptionPane.CLOSED_OPTION);
 		}
 		// 仅依据时间筛选
-		else if (hallName.equals("")) {
+		else if (hallName.equals(" ")) {
 			// 因为是采用日历格式所以不会有时间的错误（除非选择的时间已经超过当前时间）
 			if (date_str.compareTo(GetDate.getdate()) > 0) {
 				JOptionPane.showMessageDialog(null, "您输入的日期还没到呢，请重新输入！", "提示", JOptionPane.CLOSED_OPTION);

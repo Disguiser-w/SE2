@@ -274,7 +274,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		}
 		if(fare!=0&&rent!=0&&salary!=0){
 		PaymentReceiptVO vo = new PaymentReceiptVO(
-				"FKD-" + time.substring(0, 4) + time.substring(5, 7) + time.substring(8, 10), user.userID,
+				"FKD-" + time, user.userID,
 				ReceiptType.PAYMENTRECEIPT, ReceiptState.DRAFT, rent, fare, salary, time, "总账", user.userName);
 		int temp = controller.creatPaymentReceipt(vo);
 		if (temp == 0) {
