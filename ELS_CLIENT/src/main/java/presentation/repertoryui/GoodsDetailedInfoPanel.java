@@ -112,7 +112,7 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 		destinationField.setBounds((int) (width * 12.880921895006402 / 25), (int) (height * 8.0035714285714284 / 20),
 				(int) (width * 5.649167733674776 / 25), (int) (height * 1.2053571428571428 / 20));
 		intermediateMessageTable.setLocationAndSize((int) (width * 3.880921895006402 / 25), (int) (height * 11.0035714285714284 / 20),
-				(int) (width * 18.85403329065301 / 25), (int) (height * 6.651785714285714 / 20));
+				(int) (width * 18.85403329065301 / 25), (int) (height * 7.651785714285714 / 20));
 		
 		returnLabel.setBounds((int) (width * 11.479513444302176 / 25),(int) (height * 18.30285714285715 / 20), 
 				(int) (width * 3.23303457106274 / 25),(int) (height * 1.2539285714285714 / 20));
@@ -129,7 +129,7 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 	
 	private void setBaseInfos(){
 		String[] head = {"物流信息"};
-		int[] widths = {472};
+		int[] widths = {500};
 		
 		intermediateMessageTable = new MyTable(head, getInfos(), widths, false);
 		add(intermediateMessageTable);
