@@ -244,11 +244,11 @@ public class CheckReceiptPanel extends OperationPanel {
 			}
 			else if(patternNum == 3){
 				for(int i :selectedIndexs)
-					returnNum += receiptControl.approve(enIntermediateList.get(i).receiptID, enIntermediateList.get(i));
+					returnNum += receiptControl.approve(enIntermediateList.get(i).ID, enIntermediateList.get(i));
 			}
 			else if(patternNum == 4){
 				for(int i :selectedIndexs)
-					returnNum += receiptControl.approve(transferingList.get(i).receiptID, transferingList.get(i));
+					returnNum += receiptControl.approve(transferingList.get(i).ID, transferingList.get(i));
 			}
 			else if(patternNum == 5){
 				for(int i :selectedIndexs)
