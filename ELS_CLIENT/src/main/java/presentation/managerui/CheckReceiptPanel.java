@@ -181,7 +181,7 @@ public class CheckReceiptPanel extends OperationPanel {
 		case 3:
 			enIntermediateList = receiptControl.getAllSubmittedEnIntermediateReceipt();
 			for(EnIntermediateReceiptVO enIntermediatevo : enIntermediateList)
-				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.intermediateCentre.name, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.state)});
+				infos.add(new String[]{enIntermediatevo.ID, "中转中心装车单", enIntermediatevo.intermediateCentre.name, "中转中心业务员", enIntermediatevo.date, stateName(enIntermediatevo.receiptState)});
 			break;
 		case 4:
 			transferingList = receiptControl.getAllSubmittedTransferingReceipt();
@@ -240,7 +240,7 @@ public class CheckReceiptPanel extends OperationPanel {
 			}
 			else if(patternNum == 2){
 				for(int i :selectedIndexs)
-					returnNum += receiptControl.approve(paymentList.get(i).receiptID, paymentList.get(i));
+					returnNum += receiptControl.approve(paymentList.get(i).ID, paymentList.get(i));
 			}
 			else if(patternNum == 3){
 				for(int i :selectedIndexs)
