@@ -125,22 +125,31 @@ public class GoodsBL {
 			String intermediateMessageStr = "";
 			GoodsPO goods = gdService.findGoodsByID(goodID);
 			if(goods != null){
-				for(int i = 0; i < 4;i++){
-					if(goods.getEnterTime()[i].equals("无")){
-						
+					if(!goods.getEnterTime()[0].equals("无")){
+						intermediateMessageStr += goods.getEnterTime()[0] + "进入" + repertoryName(goods.getEnterRepertoryID()[0]) + "\n";
 					}
-					else{
-						intermediateMessageStr += goods.getEnterTime()[i] + "进入" + repertoryName(goods.getEnterRepertoryID()[i]) + "\n";
+					if(!goods.getLeaveTime()[0].equals("无")){
+						intermediateMessageStr += goods.getLeaveTime()[0] + "离开" + repertoryName(goods.getLeaveRepertoryID()[0]) + "\n";
 					}
-				}
-				for(int i=0;i<4 ;i++){
-					if(goods.getLeaveTime()[i].equals("无")){
-						
+					if(!goods.getEnterTime()[1].equals("无")){
+						intermediateMessageStr += goods.getEnterTime()[1] + "进入" + repertoryName(goods.getEnterRepertoryID()[1]) + "\n";
 					}
-					else{
-						intermediateMessageStr += goods.getLeaveTime()[i] + "离开" + repertoryName(goods.getLeaveRepertoryID()[i]) + "\n";
+					if(!goods.getLeaveTime()[1].equals("无")){
+						intermediateMessageStr += goods.getLeaveTime()[1] + "离开" + repertoryName(goods.getLeaveRepertoryID()[1]) + "\n";
 					}
-				}
+					if(!goods.getEnterTime()[2].equals("无")){
+						intermediateMessageStr += goods.getEnterTime()[2] + "进入" + repertoryName(goods.getEnterRepertoryID()[2]) + "\n";
+					}
+					if(!goods.getLeaveTime()[2].equals("无")){
+						intermediateMessageStr += goods.getLeaveTime()[2] + "离开" + repertoryName(goods.getLeaveRepertoryID()[2]) + "\n";
+					}
+					if(!goods.getEnterTime()[3].equals("无")){
+						intermediateMessageStr += goods.getEnterTime()[3] + "进入" + repertoryName(goods.getEnterRepertoryID()[3]) + "\n";
+					}
+					if(!goods.getLeaveTime()[3].equals("无")){
+						intermediateMessageStr += goods.getLeaveTime()[3] + "离开" + repertoryName(goods.getLeaveRepertoryID()[3]) + "\n";
+					}
+					
 				if(intermediateMessageStr != "")
 					return intermediateMessageStr;
 				else
