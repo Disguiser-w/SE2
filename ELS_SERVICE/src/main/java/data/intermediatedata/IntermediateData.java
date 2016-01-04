@@ -444,8 +444,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 
-			for (TransferingReceiptPO transferingReceipt : transferingReceiptList)
-				out.writeObject(transferingReceipt);
+			out.writeObject(transferingReceiptList);
 			out.close();
 
 			return OperationState.SUCCEED_OPERATION;
@@ -527,8 +526,7 @@ public class IntermediateData extends UnicastRemoteObject implements
 			ObjectOutputStream out = new ObjectOutputStream(
 					new FileOutputStream(file));
 
-			for (EnIntermediateReceiptPO enIntermediateReceipt : enIntermeidiateReceiptList)
-				out.writeObject(enIntermediateReceipt);
+			out.writeObject(enIntermeidiateReceiptList);
 			out.close();
 
 			return OperationState.SUCCEED_OPERATION;
