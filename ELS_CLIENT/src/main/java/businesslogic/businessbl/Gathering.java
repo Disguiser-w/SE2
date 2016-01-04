@@ -90,7 +90,7 @@ public class Gathering {
 					i--;
 				}
 			}
-			
+
 			expressData.deleteChargeInfos(organizationVO.organizationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -112,12 +112,13 @@ public class Gathering {
 			ArrayList<String> chargeCollection = new ArrayList<String>();
 			chargeCollection.add("0");
 			i.setChargeCollection(chargeCollection);
-			try {
-				expressData.updateChargeCollection(organizationVO.organizationID, i.getID(), chargeCollection);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			if (total >= 0)
+				try {
+					expressData.updateChargeCollection(organizationVO.organizationID, i.getID(), chargeCollection);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 		}
 

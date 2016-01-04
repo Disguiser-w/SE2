@@ -65,27 +65,31 @@ public class DistributeOrder {
 		ArrayList<OrderPO> distributingOrders = null;
 		try {
 			distributingOrders = expressData.getDistributingOrder(organizationVO.name);
+
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
+		if (distributingOrders == null || distributingOrders.size() == 0) {
+			return result;
+		}
 		try {
 
 			int j = 0;
 			int size = expressPOs.size();
-			for (OrderPO i : distributingOrders)
-				if (i.getOrder_state() == OrderState.WAITING_DISTRIBUTE) {
-					expressData.changeState(OrderState.DISTRIBUEING, i.getID());
-					expressData.addHistory("正在派件", null, i.getID());
-					expressData.addPendingOrder(organizationVO.organizationID, expressPOs.get(j).getID(), i.getID());
-					String str = expressPOs.get(j).getID() + " " + i.getRecipientAddress().split(" ")[2] + " "
-							+ i.getID();
-					result.add(str.split(" "));
-					result1.add(str);
-					j++;
-					if (j == size)
-						j = 0;
-				}
+
+			for (OrderPO i : distributingOrders) {
+
+				expressData.changeState(OrderState.DISTRIBUEING, i.getID());
+				expressData.addHistory("正在派件", null, i.getID());
+				expressData.addPendingOrder(organizationVO.organizationID, expressPOs.get(j).getID(), i.getID());
+				String str = expressPOs.get(j).getID() + " " + i.getRecipientAddress().split(" ")[2] + " " + i.getID();
+				result.add(str.split(" "));
+				result1.add(str);
+				j++;
+				if (j == size)
+					j = 0;
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

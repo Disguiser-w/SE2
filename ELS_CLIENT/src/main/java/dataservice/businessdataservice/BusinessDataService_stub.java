@@ -202,4 +202,22 @@ public class BusinessDataService_stub implements BusinessDataService {
 		return null;
 	}
 
+	@Override
+	public int getNumOfEnVechileReceipt(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNumOfOrderReceipt(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getNumOfOrderDistributeReceipt(String organizationID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

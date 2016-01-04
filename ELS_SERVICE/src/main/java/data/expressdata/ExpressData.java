@@ -409,9 +409,10 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 			ArrayList<OrderPO> orderPOs = (ArrayList<OrderPO>) in.readObject();
 			in.close();
-			for (OrderPO i : orderPOs)
+			for (OrderPO i : orderPOs) {
 				if (i.getID().equals(orderID))
 					i.setOrder_state(orderState);
+			}
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(orderPOs);
 			out.close();

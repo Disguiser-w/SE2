@@ -58,6 +58,7 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		return null;
 	}
 
+	
 	public VehiclePO getVehicleInfo(String organizationID, String vehicleID) throws RemoteException {
 
 		String path = "vehicleInfo/" + organizationID + "-vehicle.dat";
@@ -490,8 +491,9 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		for (File i : dir.listFiles()) {
 			File[] dirs = i.listFiles();
 			for (int j = 0; j < dirs.length; j++) {
+				
 				if (dirs[j].getName().contains(time))
-
+				{
 					try {
 						ObjectInputStream in = new ObjectInputStream(new FileInputStream(dirs[j]));
 						GatheringReceiptPO po = (GatheringReceiptPO) in.readObject();
@@ -503,7 +505,8 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 						System.out.println("读取收款汇总文件失败");
 						return null;
 					}
-
+					System.out.println(dirs[j].getName()+" "+time);
+				}
 			}
 
 		}
