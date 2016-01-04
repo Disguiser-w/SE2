@@ -77,6 +77,7 @@ class MessagePanel extends JPanel {
 				}
 				String address = in.next();
 				in.close();
+				boolean isConnecting = true;
 				while (true) {
 					refreshTime();
 					try {
@@ -93,7 +94,10 @@ class MessagePanel extends JPanel {
 
 							TestConnection test = (TestConnection) Naming.lookup("//" + address + "/TestConnection");
 							if (!test.getConnectionInfo()) {
-								throw new Exception();
+								if (isConnecting) {
+									isConnecting = false;
+									throw new Exception();
+								}
 							}
 
 						} catch (Exception e) {

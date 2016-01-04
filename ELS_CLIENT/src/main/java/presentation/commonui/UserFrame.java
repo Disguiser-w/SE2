@@ -72,7 +72,7 @@ public class UserFrame extends JFrame {
 		setSize(960, 640);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
-
+		setLocationRelativeTo(null);
 		setFocusable(false);
 		setResizable(false);
 	}

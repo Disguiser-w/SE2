@@ -92,7 +92,6 @@ public class EnVehicle {
 
 		// 开始根据车辆目的地和订单目的地来分配订单
 
-		String nowTime = df.format(Calendar.getInstance().getTime());
 
 		ArrayList<EnVehicleReceiptPO> enVehicleReceiptPOs = new ArrayList<EnVehicleReceiptPO>();
 		ArrayList<String[]> result = new ArrayList<String[]>();
@@ -112,7 +111,7 @@ public class EnVehicle {
 
 			enVehicle.setReceiptState(ReceiptState.SUBMIT);
 			enVehicle.setPlaceOfDeparture(OrganizationBL.organizationVOToPO(organizationVO));
-			enVehicle.setTime(nowTime);
+			enVehicle.setTime(time2);
 			enVehicle.setVehiclePO(i);
 			ArrayList<String> orderIDs = new ArrayList<String>();
 

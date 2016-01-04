@@ -1,5 +1,6 @@
 package presentation.mainui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -15,6 +16,7 @@ import java.rmi.Naming;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.ComboBoxEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,6 +44,7 @@ import common.FileGetter;
 import common.ImageGetter;
 import init.UserNameController;
 import presentation.commonui.LocationHelper;
+import presentation.commonui.MyTextLabel;
 import testConnection.TestConnection;
 import vo.LogVO;
 import vo.OrderVO;
@@ -415,7 +418,18 @@ public class MainFrame extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					isPressed = false;
 					queryButton.setIcon(query_hover);
-					// queryPanel
+
+				}
+
+				public void mouseClicked(MouseEvent e) {
+					String id = ID_input.getText();
+					if (id.equals("")) {
+						warnning("请输入订单号");
+						return;
+					}
+
+					query(id);
+
 				}
 			});
 
@@ -523,7 +537,7 @@ public class MainFrame extends JFrame {
 			frame.remove(queryPanel);
 			QueryResultPanel panel = new QueryResultPanel(vo);
 			resultPanel = new JScrollPane(panel);
-			resultPanel.setBounds(0, 0, 400, 300);
+			resultPanel.setBounds(0, 0, 300, 500);
 
 			frame.add(resultPanel);
 			frame.setVisible(true);
@@ -938,7 +952,7 @@ public class MainFrame extends JFrame {
 				break;
 			}
 
-			int center = 200;
+			int center = 160;
 			String stateStr = "货物状态" + state;
 			stateLabel.setText(stateStr);
 			int l = getWidthByNum(stateStr);
@@ -950,31 +964,34 @@ public class MainFrame extends JFrame {
 
 			int len = vo.history.size();
 
-			setPreferredSize(new Dimension(280, 255 + 105 * (len - 1)));
+			setPreferredSize(new Dimension(300, 255 + 105 * (len - 1)));
 
 			int i = 0;
 			for (String record : vo.history) {
 				JLabel label = new JLabel(record);
+				label.setHorizontalAlignment(JLabel.CENTER);
+				label.setToolTipText(record);
 				add(label);
 				int len1 = getWidthByNum(record);
-				label.setBounds(200 - len1 / 2, 130 + 105 * i, len1, 25);
+				label.setBounds(center - len1 / 2 - 4, 130 + 105 * i, len1, 25);
 
 				i++;
 				if (i != len) {
 					JLabel gap = new JLabel("|");
+					gap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					int len2 = getWidthByNum("|");
 
-					gap.setBounds(200 - len2 / 2, 130 + 105 * (i - 1) + 25, len2, 25);
+					gap.setBounds(center - len2 / 2, 130 + 105 * (i - 1) + 25, len2, 80);
 					add(gap);
 				}
 			}
 
 			int l3 = getWidthByNum("返回");
-			cancel.setBounds(200 - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
+			cancel.setBounds(center - l3 / 2 - 15, 255 + 105 * (len - 1) - 50, l3 + 30, 30);
 		}
 
 		public int getWidthByNum(String str) {
-			return 13 * str.length();
+			return 16 * str.length();
 		}
 	}
 

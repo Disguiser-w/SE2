@@ -96,7 +96,10 @@ public class DistributeOrder {
 		}
 
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
-		String nowTime = fm.format(new Date());
+		String IDTime = fm.format(new Date());
+		SimpleDateFormat fm1 = new SimpleDateFormat("yyyy-MM-dd");
+		String nowTime = fm1.format(new Date());
+		
 		int num = 0;
 		try {
 			num = businessData.getNumOfOrderDistributeReceipt(organizationVO.organizationID);
@@ -105,7 +108,7 @@ public class DistributeOrder {
 			e1.printStackTrace();
 		}
 		DistributeReceiptPO po = new DistributeReceiptPO(
-				"PJD-" + organizationVO.organizationID + "-" + nowTime + "-" + num, result1, nowTime,
+				"PJD-" + organizationVO.organizationID + "-" + IDTime + "-" + num, result1, nowTime,
 				ReceiptState.SUBMIT);
 		// 增加派件单，一天一个
 		try {
