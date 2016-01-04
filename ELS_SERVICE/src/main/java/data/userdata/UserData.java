@@ -509,27 +509,27 @@ public class UserData extends UnicastRemoteObject implements UserDataService {
 		try {
 			userData = new UserData();
 			try {
-
-				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
-						ProfessionType.manager, "总部",
-						SalaryPlanType.basicStaffSalaryPlan,
-						AuthorityType.highest, 0));
-				userData.addUser(new UserPO("丁二玉", "JL-00002", "123456",
-						ProfessionType.manager, "总部",
-						SalaryPlanType.basicStaffSalaryPlan,
-						AuthorityType.highest, 0));
-				userData.addUser(new UserPO("王丽莉", "CW-00001", "123456",
-						ProfessionType.financialStaff, "总部",
-						SalaryPlanType.basicStaffSalaryPlan,
-						AuthorityType.highest, 0));
-				userData.addUser(new UserPO("王腻腻", "CW-00002", "123456",
-						ProfessionType.financialStaff, "总部",
-						SalaryPlanType.basicStaffSalaryPlan,
-						AuthorityType.commonFianacialStaff, 0));
-				userData.addUser(new UserPO("魏彦淑", "admin", "admin",
-						ProfessionType.administrator, "总部",
-						SalaryPlanType.basicStaffSalaryPlan,
-						AuthorityType.administrator, 0));
+//
+//				userData.addUser(new UserPO("刘钦", "JL-00001", "123456",
+//						ProfessionType.manager, "总部",
+//						SalaryPlanType.basicStaffSalaryPlan,
+//						AuthorityType.highest, 0));
+//				userData.addUser(new UserPO("丁二玉", "JL-00002", "123456",
+//						ProfessionType.manager, "总部",
+//						SalaryPlanType.basicStaffSalaryPlan,
+//						AuthorityType.highest, 0));
+//				userData.addUser(new UserPO("王丽莉", "CW-00001", "123456",
+//						ProfessionType.financialStaff, "总部",
+//						SalaryPlanType.basicStaffSalaryPlan,
+//						AuthorityType.highest, 0));
+//				userData.addUser(new UserPO("王腻腻", "CW-00002", "123456",
+//						ProfessionType.financialStaff, "总部",
+//						SalaryPlanType.basicStaffSalaryPlan,
+//						AuthorityType.commonFianacialStaff, 0));
+//				userData.addUser(new UserPO("魏彦淑", "admin", "admin",
+//						ProfessionType.administrator, "总部",
+//						SalaryPlanType.basicStaffSalaryPlan,
+//						AuthorityType.administrator, 0));
 
 				/*
 				 * userData.addUser(new UserPO("张家盛", "ZZZX-00001", "123456",
