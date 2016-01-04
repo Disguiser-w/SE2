@@ -112,14 +112,18 @@ public class Gathering {
 			ArrayList<String> chargeCollection = new ArrayList<String>();
 			chargeCollection.add("0");
 			i.setChargeCollection(chargeCollection);
-			if (total >= 0)
-				try {
-					expressData.updateChargeCollection(organizationVO.organizationID, i.getID(), chargeCollection);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 
+			try {
+				expressData.updateChargeCollection(organizationVO.organizationID, i.getID(), chargeCollection);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		if (total <= 0) {
+			return 0f;
 		}
 
 		Date d = new Date();

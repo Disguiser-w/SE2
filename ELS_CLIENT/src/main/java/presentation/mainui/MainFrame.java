@@ -12,6 +12,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.FileNotFoundException;
 import java.rmi.Naming;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -870,7 +872,7 @@ public class MainFrame extends JFrame {
 		}
 	}
 
-	class QueryResultFrame extends JFrame {
+	class QueryResultFrame extends JFrame implements Observer {
 		private JLabel resultLabel;
 		private MyTable messageTable;
 		private MyLabel exitLabel;
@@ -959,6 +961,12 @@ public class MainFrame extends JFrame {
 
 		}
 
+		public void add(MyTable table) {
+			super.add(table);
+			table.addObervable(this);
+
+		}
+
 		public String getResult() {
 			String state = null;
 			switch (vo.order_state) {
@@ -986,6 +994,12 @@ public class MainFrame extends JFrame {
 				break;
 			}
 			return state;
+		}
+
+		@Override
+		public void update(Observable o, Object arg) {
+			repaint();
+
 		}
 
 	}
