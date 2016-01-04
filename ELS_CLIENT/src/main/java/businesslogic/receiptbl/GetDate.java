@@ -19,7 +19,7 @@ public class GetDate {
 	 * */
 	public static String getTime(){
 		Calendar rightNow = Calendar.getInstance();
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm::ss");
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm::ss");
         String sysDatetime = fmt.format(rightNow.getTime()); 
         return sysDatetime;
 	}

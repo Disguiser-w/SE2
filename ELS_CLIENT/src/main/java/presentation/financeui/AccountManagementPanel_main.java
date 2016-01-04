@@ -214,7 +214,7 @@ public class AccountManagementPanel_main extends OperationPanel {
 		ArrayList<Integer> selectedIndexs = accountTable.getSelectedIndex();
 		int size = selectedIndexs.size();
 		if(size!= 1){
-			JOptionPane.showMessageDialog(null, "选中某个账户后再删除哦！", 
+			JOptionPane.showMessageDialog(null, "选中某个账户后再修改哦！", 
 					"没有选择账户", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}

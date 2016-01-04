@@ -589,7 +589,7 @@ public class ExpressData extends UnicastRemoteObject implements ExpressDataServi
 	}
 
 	private String getTimes() {
-		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return fm.format(new Date());
 	}
 

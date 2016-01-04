@@ -54,7 +54,7 @@ public class TransferingBL implements TransferingBLService {
 		return transferingReceipt;
 	}
 
-	public String[] addOrder(String ID) throws RemoteException {
+	public String[] addOrder(String ID, boolean add) throws RemoteException {
 		// TODO 自动生成的方法存根
 		if (expressData.find(ID) == null)
 			return null;
@@ -64,9 +64,10 @@ public class TransferingBL implements TransferingBLService {
 		transferingReceipt.orderList.add(order);
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
 				"在本中转中心新接收了一个快件"), GetDate.getTime());
-		expressData.addHistory("订单已到达"
-				+ transferingReceipt.interdiateCentre.name + ",正等待中转", null,
-				order.ID);
+		if (add)
+			expressData.addHistory("订单已到达"
+					+ transferingReceipt.interdiateCentre.name + ",正等待中转",
+					null, order.ID);
 		String state = "";
 		switch (order.order_state) {
 		case WAITING_ENVEHICLE:

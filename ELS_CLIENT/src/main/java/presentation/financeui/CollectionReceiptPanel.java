@@ -282,7 +282,7 @@ public class CollectionReceiptPanel extends OperationPanel {
 		double money = controller.getTotalMoney(controller.getGatheringByTime(date_str));
 		infoLine.setText("日期：" + GetDate.getdate() + "    金额总和：" + money);
 		CollectionReceiptVO vo = new CollectionReceiptVO(controller.getCollectionListID(), user.userID,
-				ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, GetDate.getdate(), "boss");
+				ReceiptType.COLLECTIONRECEIPT, ReceiptState.SUBMIT, money, GetDate.getdate(), "总账");
 		int temp = controller.creatCollection(vo);
 		if (temp == 0) {
 			controller.excute(vo);
