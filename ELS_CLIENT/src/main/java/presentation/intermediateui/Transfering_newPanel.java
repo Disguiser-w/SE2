@@ -51,18 +51,19 @@ public class Transfering_newPanel extends OperationPanel {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					if (controller.getTransferingBL().addOrder(
-							order_ID_input.getText()) == null) {
+							order_ID_input.getText(), false) == null) {
 						warnning("错误的订单号");
 						frame.toMainPanel();
 					} else
 						try {
-							controller.getTransferingBL().deleteOrder(order_ID_input.getText());
+							controller.getTransferingBL().deleteOrder(
+									order_ID_input.getText());
 						} catch (Exception e1) {
 							// TODO 自动生成的 catch 块
 							e1.printStackTrace();
 						}
-						messageTable.addRow(controller.getTransferingBL()
-								.addOrder(order_ID_input.getText()));
+					messageTable.addRow(controller.getTransferingBL().addOrder(
+							order_ID_input.getText(), true));
 
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
