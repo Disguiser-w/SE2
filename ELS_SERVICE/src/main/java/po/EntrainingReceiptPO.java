@@ -5,16 +5,12 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
-public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements Serializable{
-	private OrganizationPO intermediateCentre;
+@SuppressWarnings("serial")
+public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements
+		Serializable {
 	private TrainPO train;
 
-	private ArrayList<OrderPO> orderList;
-
 	private final long orderNum_max = 200000;
-	private double fare;
-	private String date;
-	private String ID;
 
 	private ReceiptState receiptState;
 
@@ -23,7 +19,6 @@ public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements Seri
 		super(intermediateCentre, orderList, ID);
 		this.train = train;
 		this.fare = train.getFarePrice() * orderNum_max;
-		this.receiptState = ReceiptState.SUBMIT;
 	}
 
 	public ArrayList<OrderPO> getOrderList() {
@@ -32,14 +27,6 @@ public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements Seri
 
 	public void setOrderList(ArrayList<OrderPO> orderList) {
 		this.orderList = orderList;
-	}
-
-	public ReceiptState getReceiptState() {
-		return receiptState;
-	}
-
-	public void setReceiptState(ReceiptState receiptState) {
-		this.receiptState = receiptState;
 	}
 
 	public long getOrderNum_max() {
@@ -92,6 +79,14 @@ public class EntrainingReceiptPO extends EnIntermediateReceiptPO implements Seri
 
 	public void setFare(double fare) {
 		this.fare = fare;
+	}
+
+	public ReceiptState getReceiptState() {
+		return receiptState;
+	}
+
+	public void setReceiptState(ReceiptState receiptState) {
+		this.receiptState = receiptState;
 	}
 
 }

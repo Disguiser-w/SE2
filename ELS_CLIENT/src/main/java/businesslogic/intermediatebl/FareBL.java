@@ -56,6 +56,7 @@ public class FareBL implements FareBLService {
 
 	public OperationState saveFare() throws RemoteException {
 		// TODO 自动生成的方法存根
+		System.out.println(fare_sum);
 		intermediateData.saveFareInfo(intermediateCenter.organizationID,
 				IntermediateMainController.voToPO(new FareVO(
 						enplaningReceiptList.get(0).intermediateCentre,

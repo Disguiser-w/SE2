@@ -3,6 +3,7 @@ package businesslogicservice.intermediateblservice.envehicleblservice;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import businesslogicservice.intermediateblservice.TruckManageBLService;
 import type.OperationState;
 import vo.EntruckingReceiptVO;
 import vo.FareVO;

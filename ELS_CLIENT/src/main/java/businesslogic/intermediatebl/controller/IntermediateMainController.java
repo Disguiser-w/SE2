@@ -100,13 +100,28 @@ public class IntermediateMainController {
 		trainList = intermediateCentre.trainList;
 		truckList = intermediateCentre.truckList;
 
+		for (PlaneVO plane : planeList)
+			enplaningReceiptList.add(new EnplaningReceiptVO(intermediateCentre,
+					plane, new ArrayList<OrderVO>(), 1000, "", "",
+					ReceiptState.DRAFT));
+
+		for (TrainVO train : trainList)
+			entrainingReceiptList.add(new EntrainingReceiptVO(
+					intermediateCentre, train, new ArrayList<OrderVO>(), 400,
+					"", "", ReceiptState.DRAFT));
+
+		for (TruckVO truck : truckList)
+			entruckingReceiptList.add(new EntruckingReceiptVO(
+					intermediateCentre, truck, new ArrayList<OrderVO>(), 20, "",
+					"", ReceiptState.DRAFT));
+
 		planeManager = new PlaneManagerBL(planeList, intermediateCentre,
 				intermediateData, intermediate);
 		trainManager = new TrainManagerBL(trainList, intermediateCentre,
 				intermediateData, intermediate);
 		truckManager = new TruckManagerBL(truckList, intermediateCentre,
 				intermediateData, intermediate);
-		// System.out.println(orderList.size());
+
 		transferingReceipt = new TransferingReceiptVO(intermediateCentre,
 				orderList, "ZZZXDDD-" + GetDate.getdate() + "-"
 						+ intermediateCentre.organizationID, GetDate.getdate(),

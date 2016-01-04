@@ -174,7 +174,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 	public void printui() {
 		String beginTime = startDate_Input.getText();
 		String endTime = endDate_Input.getText();
-		if (beginTime != "" && endTime != "") {
+		if (!beginTime .equals("")&& !endTime.equals("")) {
 			BusinessStatementReceiptVO vo = controller.showBSList(beginTime, endTime);
 			collectionReceiptVOs = vo.cvos;
 			paymentReceiptVOs = vo.pvos;
@@ -212,6 +212,7 @@ public class BusinessStateReceiptPanel extends OperationPanel {
 		String[] head = new String[] { "单据编号", "日期", "金额", "操作人" };
 		try {
 			FileExporter.exportExcel("businessstatement.xls", head, BSRExcel);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -5,25 +5,18 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
-public class EntruckingReceiptPO extends EnIntermediateReceiptPO implements Serializable{
-	private OrganizationPO intermediateCentre;
+@SuppressWarnings("serial")
+public class EntruckingReceiptPO extends EnIntermediateReceiptPO implements
+		Serializable {
 	private TruckPO truck;
 
-	private ArrayList<OrderPO> orderList;
-
 	private final long orderNum_max = 1000;
-	private double fare;
-	private String date;
-	private String ID;
-
-	private ReceiptState receiptState;
 
 	public EntruckingReceiptPO(OrganizationPO intermediateCentre,
 			TruckPO truck, ArrayList<OrderPO> orderList, double fare, String ID) {
 		super(intermediateCentre, orderList, ID);
 		this.truck = truck;
 		this.fare = truck.getFarePrice() * orderNum_max;
-		this.setReceiptState(ReceiptState.SUBMIT);
 	}
 
 	public ArrayList<OrderPO> getOrderList() {

@@ -76,7 +76,7 @@ public class PaymentReceiptPanel extends OperationPanel {
 		dateChooseLabel = new MyLabel("日期");
 		dateOKButton = new MyLabel("确认");
 		totalButton = new MyLabel("合计");
-		cancelButton = new MyLabel("取消");
+		cancelButton = new MyLabel("返回");
 
 		clauseLabel = new MyTextLabel("条目");
 		date = new MyTextLabel("日期");
@@ -90,6 +90,8 @@ public class PaymentReceiptPanel extends OperationPanel {
 
 		paymentItemVOs = new ArrayList<PaymentItemVO>();
 		clauseInt = -1;
+		
+		clause = "";
 
 		setLayout(null);
 
@@ -199,7 +201,10 @@ public class PaymentReceiptPanel extends OperationPanel {
 	 */
 	public void ok() {
 		String time = date_Input.getText();
-		if(time.compareTo(GetDate.getdate())>0){
+		if(time.equals("")||clause.equals("")){
+			JOptionPane.showMessageDialog(null, "信息输入不全!", "提示", JOptionPane.WARNING_MESSAGE);
+		}
+		else if(time.compareTo(GetDate.getdate())>0){
 			JOptionPane.showMessageDialog(null, "输入的日期还未到!", "提示", JOptionPane.WARNING_MESSAGE);
 			return ;
 		}

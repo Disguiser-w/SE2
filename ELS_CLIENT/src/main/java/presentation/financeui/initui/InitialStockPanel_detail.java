@@ -261,7 +261,7 @@ public class InitialStockPanel_detail extends OperationPanel{
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
 		accountInfo.setBounds(PANEL_WIDTH *36/60, PANEL_HEIGHT * 2/ 32,
 				PANEL_WIDTH / 9, PANEL_HEIGHT / 16);
-		cancelLabel.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *46 / 48,
+		cancelLabel.setBounds(PANEL_WIDTH * 15 / 18, PANEL_HEIGHT *95 / 96,
 				PANEL_WIDTH *5 / 36, PANEL_HEIGHT *1 / 16);
 		table.setLocationAndSize(PANEL_WIDTH *1/ 25, PANEL_HEIGHT * 2 / 14,
 				PANEL_WIDTH *47 /50 , PANEL_HEIGHT *82/ 100);

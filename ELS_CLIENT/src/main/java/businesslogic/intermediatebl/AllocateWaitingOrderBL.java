@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import type.OrderState;
 import vo.OrderVO;
 import vo.TransferingReceiptVO;
-import businesslogicservice.intermediateblservice.envehicleblservice.AllocateWaitingOrderBLService;
+import businesslogicservice.intermediateblservice.AllocateWaitingOrderBLService;
 
 public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	private TransferingReceiptVO transferingReceipt;
@@ -18,12 +18,14 @@ public class AllocateWaitingOrderBL implements AllocateWaitingOrderBLService {
 	public ArrayList<OrderVO> updateWaitingList() {
 		// TODO 自动生成的方法存根
 		if (transferingReceipt.orderList == null) {
+			System.out.println("jiji");
 			return new ArrayList<OrderVO>();
 		} else {
 			for (OrderVO order : transferingReceipt.orderList) {
-				if (order.order_state == OrderState.TRANSFERING)
+//				if (order.order_state == OrderState.TRANSFERING)
 					waitingOrderList.add(order);
 			}
+			System.out.println("gaga");
 			return waitingOrderList;
 		}
 	}

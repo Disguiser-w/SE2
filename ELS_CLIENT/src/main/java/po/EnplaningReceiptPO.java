@@ -5,25 +5,17 @@ import java.util.ArrayList;
 
 import type.ReceiptState;
 
+@SuppressWarnings("serial")
 public class EnplaningReceiptPO extends EnIntermediateReceiptPO implements Serializable{
-	private OrganizationPO intermediateCentre;
 	private PlanePO plane;
 
-	private ArrayList<OrderPO> orderList;
-
 	private final long OrderNum_max = 5000;
-	private double fare;
-	private String date;
-	private String ID;
-
-	private ReceiptState receiptState;
 
 	public EnplaningReceiptPO(OrganizationPO intermediateCentre, PlanePO plane,
 			ArrayList<OrderPO> orderList, String ID) {
 		super(intermediateCentre, orderList, ID);
 		this.plane = plane;
 		this.fare = plane.getFarePrice() * OrderNum_max;
-		this.receiptState = ReceiptState.SUBMIT;
 	}
 
 	public ReceiptState getReceiptState() {

@@ -7,7 +7,7 @@ import businesslogic.financebl.LogDiaryBL;
 import businesslogic.intermediatebl.controller.IntermediateMainController;
 import businesslogic.managebl.CityDistanceBL;
 import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.envehicleblservice.EnvehicleBLService;
+import businesslogicservice.intermediateblservice.EnvehicleBLService;
 import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
@@ -44,9 +44,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private ArrayList<TrainVO> trainList = new ArrayList<TrainVO>();
 	private ArrayList<TruckVO> truckList = new ArrayList<TruckVO>();
 
-	private ArrayList<EnplaningReceiptVO> enplaningReceiptList = new ArrayList<EnplaningReceiptVO>();
-	private ArrayList<EntrainingReceiptVO> entrainingReceiptList = new ArrayList<EntrainingReceiptVO>();
-	private ArrayList<EntruckingReceiptVO> entruckingReceiptList = new ArrayList<EntruckingReceiptVO>();
+	private ArrayList<EnplaningReceiptVO> enplaningReceiptList;
+	private ArrayList<EntrainingReceiptVO> entrainingReceiptList;
+	private ArrayList<EntruckingReceiptVO> entruckingReceiptList;
 
 	private TransferingReceiptVO transferingReceipt;
 
@@ -87,7 +87,7 @@ public class EnvehicleBL implements EnvehicleBLService {
 
 	public OperationState envehicle() throws Exception {
 		// TODO 自动生成的方法存根
-        awobl.setTransferingReceipt(transferingReceipt);
+		awobl.setTransferingReceipt(transferingReceipt);
 		cdbl = new CityDistanceBL();
 		logDiary = new LogDiaryBL();
 		waitingOrderList = awobl.updateWaitingList();
@@ -101,12 +101,13 @@ public class EnvehicleBL implements EnvehicleBLService {
 					|| (order.expressType == ExpressType.STANDARD && distance > STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC && distance > ECONOMIC_PLANE)) {
 				for (PlaneVO plane : planeList) {
-					if ((this.showEnplaningReceipt(plane).orderList.size() <= 2000)
-							&& address_end[0] == plane.destination) {
-						this.showEnplaningReceipt(plane).orderList.add(order);
-						order.order_state = OrderState.TRANSFERING;
-						return OperationState.SUCCEED_OPERATION;
-					}
+					 if ((this.showEnplaningReceipt(plane).orderList.size() <=
+					 2000)
+					 && address_end[0] == plane.destination) {
+					 this.showEnplaningReceipt(plane).orderList.add(order);
+					 order.order_state = OrderState.TRANSFERING;
+					 return OperationState.SUCCEED_OPERATION;
+					 }
 				}
 			} else if ((order.expressType == ExpressType.STANDARD && distance <= STANDARD_PLANE)
 					|| (order.expressType == ExpressType.ECONOMIC
@@ -141,12 +142,22 @@ public class EnvehicleBL implements EnvehicleBLService {
 		return OperationState.FAIL_OPERATION;
 	}
 
+	public ArrayList<EnplaningReceiptVO> getEnplaningReceiptList() {
+		return enplaningReceiptList;
+	}
+
+	public void setEnplaningReceiptList(
+			ArrayList<EnplaningReceiptVO> enplaningReceiptList) {
+		this.enplaningReceiptList = enplaningReceiptList;
+	}
+
 	public EnplaningReceiptVO showEnplaningReceipt(PlaneVO plane)
 			throws Exception {
 		// TODO 自动生成的方法存根
 		for (EnplaningReceiptVO enplaningReceipt : enplaningReceiptList) {
-			if (enplaningReceipt.plane.equals(plane))
+			if (enplaningReceipt.plane.ID.equals(plane.ID)) {
 				return enplaningReceipt;
+			}
 		}
 		throw new Exception("未找到该飞机的装车单！");
 	}
