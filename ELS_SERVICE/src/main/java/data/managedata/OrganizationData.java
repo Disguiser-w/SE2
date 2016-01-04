@@ -269,9 +269,9 @@ public class OrganizationData extends UnicastRemoteObject implements Organizatio
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "025-0",
 						"南京中转中心", new RepertoryPO("025-0-CK", "CK-00001")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "021-0",
-						"上海中转中心", new RepertoryPO("021-0-CK", "CK-00002")));
+						"上海中转中心", new RepertoryPO("021-0-CK", "CK-00003")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "010-0",
-						"北京中转中心", new RepertoryPO("010-0-CK", "CK-00003")));
+						"北京中转中心", new RepertoryPO("010-0-CK", "CK-00002")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.intermediateCenter, "020-0",
 						"广州中转中心", new RepertoryPO("020-0-CK", "CK-00004")));
 				organizationData.addOrganization(new OrganizationPO(OrganizationType.businessHall, "025000", "南京市鼓楼营业厅",
