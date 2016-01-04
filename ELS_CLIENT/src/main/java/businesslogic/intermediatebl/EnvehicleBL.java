@@ -1,14 +1,10 @@
 package businesslogic.intermediatebl;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import businesslogic.financebl.LogDiaryBL;
-import businesslogic.intermediatebl.controller.IntermediateMainController;
-import businesslogic.managebl.CityDistanceBL;
-import businesslogic.receiptbl.GetDate;
-import businesslogicservice.intermediateblservice.EnvehicleBLService;
-import dataservice.intermediatedataservice.IntermediateDataService;
 import po.EnIntermediateReceiptPO;
 import po.EnplaningReceiptPO;
 import po.EntrainingReceiptPO;
@@ -26,6 +22,14 @@ import vo.TrainVO;
 import vo.TransferingReceiptVO;
 import vo.TruckVO;
 import vo.UserVO;
+import businesslogic.datafactory.DataFactory;
+import businesslogic.financebl.LogDiaryBL;
+import businesslogic.intermediatebl.controller.IntermediateMainController;
+import businesslogic.managebl.CityDistanceBL;
+import businesslogic.receiptbl.GetDate;
+import businesslogicservice.intermediateblservice.EnvehicleBLService;
+import dataservice.expressdataservice.ExpressDataService;
+import dataservice.intermediatedataservice.IntermediateDataService;
 
 public class EnvehicleBL implements EnvehicleBLService {
 	private UserVO intermediate;
@@ -38,6 +42,8 @@ public class EnvehicleBL implements EnvehicleBLService {
 	private TruckManagerBL truckManager;
 	private LogDiaryBL logDiary;
 	private FareBL fareBL;
+
+	private ExpressDataService expressData;
 
 	private ArrayList<OrderVO> waitingOrderList = new ArrayList<OrderVO>();
 	private ArrayList<PlaneVO> planeList = new ArrayList<PlaneVO>();
@@ -82,6 +88,19 @@ public class EnvehicleBL implements EnvehicleBLService {
 
 		awobl = new AllocateWaitingOrderBL(transferingReceipt);
 
+		try {
+			expressData = DataFactory.getExpressData();
+		} catch (MalformedURLException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
 		receipt_ID = 1;
 	}
 
@@ -114,8 +133,11 @@ public class EnvehicleBL implements EnvehicleBLService {
 							&& distance <= ECONOMIC_PLANE && distance > ECONOMIC_TRAIN)) {
 				System.out.println("heihei");
 				for (TrainVO train : trainList) {
-					System.out.println(address_end[0] + " " + train.destination);
-					System.out.println(this.showEntrainingReceiptVO(train).orderList.size());
+					System.out
+							.println(address_end[0] + " " + train.destination);
+					System.out
+							.println(this.showEntrainingReceiptVO(train).orderList
+									.size());
 					if ((this.showEntrainingReceiptVO(train).orderList.size() <= 200000)
 							&& address_end[0].equals(train.destination)) {
 						this.showEntrainingReceiptVO(train).orderList
@@ -138,6 +160,9 @@ public class EnvehicleBL implements EnvehicleBLService {
 					}
 				}
 			}
+			expressData.addHistory("快件已从"
+					+ transferingReceipt.interdiateCentre.name + "发出",
+					null, order.ID);
 		}
 		waitingOrderList = awobl.updateWaitingList();
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,

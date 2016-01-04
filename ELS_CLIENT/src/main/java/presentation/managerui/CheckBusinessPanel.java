@@ -53,11 +53,11 @@ public class CheckBusinessPanel extends OperationPanel {
 		businessStatementReceiptControl = businessStatementControl;
 
 		dateRange = new MyTextLabel("日期范围");
-		startDateLabel = new MyLabel();
+		startDateLabel = new MyLabel("日期选择");
 		startDateField = new MyTextField();
 		startDateField.setToolTipText("例:2015-12-08");
 		startDateChooseLabel = new MyTextLabel("开始日期");
-		endDateLabel = new MyLabel();
+		endDateLabel = new MyLabel("日期选择");
 		endDateField = new MyTextField();
 		endDateField.setToolTipText("例:2015-12-08");
 		endDateChooseLabel = new MyTextLabel("结束日期");

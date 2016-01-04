@@ -169,4 +169,13 @@ public class GoodsBL {
 		return new GoodsVO(goodspo.getOrder_ID(), goodspo.getFee(), goodspo.getDeparturePlace(), goodspo.getDestination(), goodspo.getEnterDate(), goodspo.getLeaveDate());
 	}
 	
+	
+	
+	public static void main(String[] args){
+		GoodsBL goodsBL = new GoodsBL();
+		ArrayList<GoodsVO> freeGoodsList = goodsBL.getAllFreeGoods();
+		for(GoodsVO goods : freeGoodsList){
+			System.out.println(goods.Order_ID+" "+goods.departurePlace+" " +goods.departurePlace+" "+goods.inRepertory);
+		}
+	}
 }

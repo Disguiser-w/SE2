@@ -64,6 +64,9 @@ public class TransferingBL implements TransferingBLService {
 		transferingReceipt.orderList.add(order);
 		logDiary.addLogDiary(new LogDiaryVO(GetDate.getTime(), intermediate,
 				"在本中转中心新接收了一个快件"), GetDate.getTime());
+		expressData.addHistory("订单已到达"
+				+ transferingReceipt.interdiateCentre.name + ",正等待中转", null,
+				order.ID);
 		String state = "";
 		switch (order.order_state) {
 		case WAITING_ENVEHICLE:
@@ -135,11 +138,12 @@ public class TransferingBL implements TransferingBLService {
 				"进行了保存中转中心到达单的操作"), GetDate.getTime());
 		return OperationState.SUCCEED_OPERATION;
 	}
-	
-	public OperationState changeState(OrderVO temp){
-		for(OrderVO vo:transferingReceipt.orderList){
-			if(vo.ID.equals(temp.ID)){
-				transferingReceipt.orderList.set(transferingReceipt.orderList.indexOf(vo), temp);
+
+	public OperationState changeState(OrderVO temp) {
+		for (OrderVO vo : transferingReceipt.orderList) {
+			if (vo.ID.equals(temp.ID)) {
+				transferingReceipt.orderList.set(
+						transferingReceipt.orderList.indexOf(vo), temp);
 				System.out.println(temp.order_state.toString() + " state");
 			}
 		}
