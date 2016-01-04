@@ -62,11 +62,9 @@ public class ImageLabel extends JLabel {
 
 	public void setBounds(int x, int y, int width, int height) {
 		super.setBounds(x, y, width, height);
-		day.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
-				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
+		day.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20), 30, 30);
 
-		night.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20),
-				(int) (width * 2.4229074889867843 / 25), (int) (height * 5.121951219512195 / 20));
+		night.setBounds((int) (width * 21.475770925110133 / 25), (int) (height * 2.4390243902439024 / 20), 30, 30);
 	}
 
 	public void paintComponent(Graphics g) {

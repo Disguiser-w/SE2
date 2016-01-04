@@ -32,7 +32,6 @@ public class UserNameController {
 	}
 
 	public boolean deleteName(String userName) {
-		System.out.println(userName);
 		try {
 			File file = FileGetter.getFile("users.dat");
 

@@ -982,7 +982,6 @@ public class BusinessData extends UnicastRemoteObject implements BusinessDataSer
 		File file = FileGetter.getFile("organizationInfo/organization.ser");
 
 		if (!file.exists()) {
-			System.out.println("notfind");
 			return new ArrayList<OrganizationPO>();
 
 		}
