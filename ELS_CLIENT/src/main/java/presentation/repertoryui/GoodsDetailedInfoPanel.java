@@ -131,7 +131,7 @@ public class GoodsDetailedInfoPanel extends OperationPanel{
 		String[] head = {"物流信息"};
 		int[] widths = {472};
 		
-		intermediateMessageTable = new MyTable(head, getInfos(), widths, true);
+		intermediateMessageTable = new MyTable(head, getInfos(), widths, false);
 		add(intermediateMessageTable);
 	}
 	
